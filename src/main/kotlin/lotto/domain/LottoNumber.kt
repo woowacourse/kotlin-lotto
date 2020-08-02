@@ -1,6 +1,6 @@
 package lotto.domain
 
-data class LottoNumber(val number: Int) : Comparable<LottoNumber> {
+class LottoNumber(val number: Int) : Comparable<LottoNumber> {
     companion object {
         const val LOTTO_FIRST_NUMBER = 1
         const val LOTTO_LAST_NUMBER = 45
