@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class LottoNumberTest {
     @Test
     internal fun `로또 숫자 조회`() {
-        val lottoNumber: LottoNumber = LottoNumber.of(1)
+        val lottoNumber: LottoNumber = LottoNumber.from(1)
 
         assertThat(lottoNumber.number).isEqualTo(1)
     }

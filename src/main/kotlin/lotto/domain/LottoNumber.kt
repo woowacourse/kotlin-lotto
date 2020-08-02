@@ -7,7 +7,7 @@ class LottoNumber(val number: Int) : Comparable<LottoNumber> {
 
         private val lottoNumbers: List<LottoNumber> = (LOTTO_FIRST_NUMBER..LOTTO_LAST_NUMBER).map { LottoNumber(it) }
 
-        fun of(number: Int): LottoNumber {
+        fun from(number: Int): LottoNumber {
             return lottoNumbers[number - 1]
         }
     }

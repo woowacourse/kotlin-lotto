@@ -7,8 +7,8 @@ import org.junit.jupiter.api.assertAll
 internal class LottoFactoryTest {
     @Test
     internal fun `개수에 맞는 로또 티켓들 발급`() {
-        val firstLottoTicket = LottoTicket((1..6).map { LottoNumber.of(it) })
-        val secondLottoTicket = LottoTicket((2..7).map { LottoNumber.of(it) })
+        val firstLottoTicket = LottoTicket((1..6).map { LottoNumber.from(it) })
+        val secondLottoTicket = LottoTicket((2..7).map { LottoNumber.from(it) })
         val purchaseAmount = PurchaseAmount(2000)
         val generateStrategy: GenerateStrategy =
             TestGenerateStrategy(mutableListOf(firstLottoTicket, secondLottoTicket))
