@@ -1,7 +1,7 @@
 package lotto.domain
 
-class TestGenerateStrategy(private val lottoNumbers: List<LottoNumber>) : GenerateStrategy {
+class TestGenerateStrategy(private val lottoTickets: MutableList<LottoTicket>) : GenerateStrategy {
     override fun generate(): LottoTicket {
-        return LottoTicket(lottoNumbers);
+        return lottoTickets.removeAt(0)
     }
 }
