@@ -10,4 +10,12 @@ class LottoResult(val result: Map<Rank, Int>) {
             return LottoResult(result.toSortedMap(reverseOrder()))
         }
     }
+
+    fun calculateProfit(purchaseAmount: PurchaseAmount): Double {
+        val sum = result.entries
+            .map { it.key.prize * it.value }
+            .sum().toDouble()
+
+        return purchaseAmount.calculateProfit(sum)
+    }
 }

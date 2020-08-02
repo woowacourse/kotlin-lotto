@@ -46,6 +46,21 @@ internal class LottoResultTest {
         )
     }
 
+    @ParameterizedTest
+    @MethodSource("createResultAndProfit")
+    internal fun `수익률 계산`(firstNumber: Int, lastNumber: Int, profit: Double) {
+        val purchaseAmount = PurchaseAmount(5000)
+        val lottoNumbers: List<LottoNumber> = (firstNumber..lastNumber).map { LottoNumber.from(it) }
+        val winningNumbers: List<LottoNumber> = (1..6).map { LottoNumber.from(it) }
+        val lottoTicket = LottoTicket(lottoNumbers)
+        val lottoTickets = LottoTickets(listOf(lottoTicket))
+        val winningLotto = WinningLotto(LottoTicket((winningNumbers)))
+
+        val lottoResult = LottoResult.of(lottoTickets, winningLotto)
+
+        assertThat(lottoResult.calculateProfit(purchaseAmount)).isEqualTo(profit)
+    }
+
     companion object {
         @JvmStatic
         fun createRangeAndResult() = listOf(
@@ -54,6 +69,15 @@ internal class LottoResultTest {
             Arguments.of(3, 8, 0, 0, 1, 0, 0),
             Arguments.of(2, 7, 0, 0, 0, 1, 0),
             Arguments.of(1, 6, 0, 0, 0, 0, 1)
+        )
+
+        @JvmStatic
+        fun createResultAndProfit() = listOf(
+            Arguments.of(5, 10, 0.00),
+            Arguments.of(4, 9, 1.00),
+            Arguments.of(3, 8, 10.00),
+            Arguments.of(2, 7, 300.00),
+            Arguments.of(1, 6, 400000.00)
         )
     }
 }
