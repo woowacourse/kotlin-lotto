@@ -1,6 +1,14 @@
 package lotto.domain
 
 class LottoResult(val result: Map<Rank, Int>) {
+    fun calculateProfit(purchaseAmount: PurchaseAmount): Double {
+        val sum = result.entries
+            .map { it.key.prize * it.value }
+            .sum().toDouble()
+
+        return purchaseAmount.calculateProfit(sum)
+    }
+
     companion object {
         fun of(lottoTickets: LottoTickets, winningLotto: WinningLotto): LottoResult {
             val result: MutableMap<Rank, Int> = lottoTickets.countOfRank(winningLotto).toMutableMap()
@@ -9,13 +17,5 @@ class LottoResult(val result: Map<Rank, Int>) {
             }
             return LottoResult(result.toSortedMap(reverseOrder()))
         }
-    }
-
-    fun calculateProfit(purchaseAmount: PurchaseAmount): Double {
-        val sum = result.entries
-            .map { it.key.prize * it.value }
-            .sum().toDouble()
-
-        return purchaseAmount.calculateProfit(sum)
     }
 }
