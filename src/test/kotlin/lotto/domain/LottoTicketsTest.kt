@@ -19,8 +19,8 @@ internal class LottoTicketsTest {
         val countOfRank = lottoTickets.countOfRank(winningLotto)
 
         assertAll("당첨 결과 확인",
-            {assertThat(countOfRank).hasSize(1)},
-            {assertThat(countOfRank[rank]).isEqualTo(1)}
+            { assertThat(countOfRank).hasSize(1) },
+            { assertThat(countOfRank[rank]).isEqualTo(1) }
         )
     }
 

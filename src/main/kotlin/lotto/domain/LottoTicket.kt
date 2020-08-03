@@ -1,9 +1,9 @@
 package lotto.domain
 
+const val LOTTO_TICKET_SIZE = 6
+
 data class LottoTicket(val lottoNumbers: List<LottoNumber>) {
     companion object {
-        const val LOTTO_TICKET_SIZE = 6
-
         fun from(lottoNumbers: List<LottoNumber>): LottoTicket {
             return LottoTicket(lottoNumbers.sorted())
         }

@@ -17,9 +17,9 @@ internal class LottoFactoryTest {
         val lottoTickets = lottoFactory.publishLottoTickets(purchaseAmount)
 
         assertAll("로또 티켓들 발급",
-            {assertThat(lottoTickets.lottoTickets.size).isEqualTo(2)},
-            {assertThat(lottoTickets.lottoTickets[0]).isEqualTo(firstLottoTicket)},
-            {assertThat(lottoTickets.lottoTickets[1]).isEqualTo(secondLottoTicket)}
+            { assertThat(lottoTickets.lottoTickets.size).isEqualTo(2) },
+            { assertThat(lottoTickets.lottoTickets[0]).isEqualTo(firstLottoTicket) },
+            { assertThat(lottoTickets.lottoTickets[1]).isEqualTo(secondLottoTicket) }
         )
     }
 }

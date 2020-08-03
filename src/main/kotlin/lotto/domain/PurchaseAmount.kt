@@ -1,6 +1,6 @@
 package lotto.domain
 
-const val LOTTO_TICKET_PRICE = 1000;
+private const val LOTTO_TICKET_PRICE = 1000
 
 data class PurchaseAmount(val purchaseAmount: Int) {
     fun isUnderCountOfLottoTicket(size: Int): Boolean {

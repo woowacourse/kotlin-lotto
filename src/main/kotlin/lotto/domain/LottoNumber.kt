@@ -1,10 +1,10 @@
 package lotto.domain
 
+const val LOTTO_FIRST_NUMBER = 1
+const val LOTTO_LAST_NUMBER = 45
+
 class LottoNumber(val number: Int) : Comparable<LottoNumber> {
     companion object {
-        const val LOTTO_FIRST_NUMBER = 1
-        const val LOTTO_LAST_NUMBER = 45
-
         private val lottoNumbers: List<LottoNumber> = (LOTTO_FIRST_NUMBER..LOTTO_LAST_NUMBER).map { LottoNumber(it) }
 
         fun from(number: Int): LottoNumber {
