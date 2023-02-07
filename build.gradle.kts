@@ -1,7 +1,6 @@
 plugins {
-    java
-    kotlin("jvm") version "1.3.72"
-    id("org.jlleitschuh.gradle.ktlint") version "9.3.0"
+    kotlin("jvm") version "1.8.10"
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
 }
 
 group = "camp.nextstep.edu"
@@ -12,26 +11,22 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    testImplementation("org.junit.jupiter", "junit-jupiter", "5.6.2")
-    testImplementation("org.assertj", "assertj-core", "3.16.1")
+    testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.2")
+    testImplementation("org.assertj", "assertj-core", "3.22.0")
+    testImplementation("io.kotest", "kotest-runner-junit5", "5.2.3")
 }
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-}
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
     test {
         useJUnitPlatform()
     }
     ktlint {
         verbose.set(true)
-        disabledRules.addAll("import-ordering")
     }
 }
