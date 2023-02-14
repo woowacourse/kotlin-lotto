@@ -18,7 +18,7 @@
     - [] 숫자가 아닌 경우
     - [X] 중복된 번호가 존재하는 경우
     - [X] 로또 숫자의 범위를 벗어나는 경우
-- [] 보너스 볼 입력 받기
+- [] 보너스 볼 입력 받기 
   - [] 당점 번호 예외 테스트
       - [] 아무것도 입력되지 않았을 때
       - [] null 일 때
@@ -29,3 +29,17 @@
 - [] 보너스 번호 당첨번호에 있는지 확인
 - [] 등수 확인
 - [] 수익률 확인
+
+## LottoNumber
+## Lotto - 당첨번호 비교 (List<LottoNumber))
+## Lottos - 몇 개 당첨인지 확인, 수익률
+## LottoManager - 수익률
+## LottoGenerator (interfate)
+## RandomLottoGenerator
+## TestLottoGenerator
+## enum
+## InputView
+## OutputView
+## Controller
+## WinnigResult
+

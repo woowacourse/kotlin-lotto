@@ -1,3 +1,5 @@
+package domain
+
 class Money(val price: Int?) {
 
     init {

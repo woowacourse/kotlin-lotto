@@ -1,4 +1,4 @@
-import kotlin.io.path.fileVisitor
+package domain
 
 class Lotto(val numbers: List<Int>?) {
 
