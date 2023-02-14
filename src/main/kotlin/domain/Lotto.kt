@@ -1,6 +1,6 @@
 package domain
 
-class LottoNumbers(private val numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
+class Lotto(private val numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
 
     constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) })
     init {
