@@ -1,12 +1,12 @@
 package lotto.domain
 
-class PurchaseMoney(val purchaseMoney: Int) {
+class PurchaseMoney(val value: Int) {
     init {
         validatePurchaseMoneyUnit()
     }
 
     private fun validatePurchaseMoneyUnit() {
-        require(purchaseMoney % PURCHASE_UNIT == 0) { PURCHASE_MONEY_UNIT_ERROR }
+        require(value % PURCHASE_UNIT == 0) { PURCHASE_MONEY_UNIT_ERROR }
     }
 
     companion object {
