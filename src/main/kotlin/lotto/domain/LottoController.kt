@@ -21,3 +21,5 @@ class LottoController {
         private const val LOTTO_PRICE = 1000
     }
 }
+
+fun String.isNumber() = this.chars().allMatch { Character.isDigit(it) }

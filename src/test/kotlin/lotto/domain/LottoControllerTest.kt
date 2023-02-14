@@ -2,6 +2,8 @@ package lotto.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class LottoControllerTest {
 
@@ -14,5 +16,13 @@ class LottoControllerTest {
     @Test
     fun `구매한 장 수 만큼 로또를 발급한다`() {
         assertThat(LottoController().generateLotto(5).size).isEqualTo(5)
+    }
+
+    @ValueSource(strings = ["a", "-1"])
+    @ParameterizedTest
+    fun `양의 정수가 아닌 값이 입력된 경우 false를 반환한다`(input: String) {
+        assertThat(
+            input.isNumber()
+        ).isFalse
     }
 }
