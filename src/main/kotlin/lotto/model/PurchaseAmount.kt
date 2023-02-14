@@ -1,7 +1,5 @@
 package lotto.model
 
-import java.lang.IllegalArgumentException
-
 class PurchaseAmount(
     val amount: Int
 ) {
