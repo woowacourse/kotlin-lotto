@@ -15,4 +15,10 @@ class LottoTest {
         assertThrows<IllegalArgumentException> { Lotto(null) }
     }
 
+    @Test
+    fun `길이가 6이 아닌 경우`(){
+        val lotto = Lotto(listOf(1,2,3,4,5,6))
+        assertThat(lotto.numbers?.size).isEqualTo(6)
+    }
+
 }
