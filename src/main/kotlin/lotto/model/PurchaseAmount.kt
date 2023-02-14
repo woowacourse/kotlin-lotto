@@ -8,6 +8,8 @@ class PurchaseAmount(
         checkUnit()
     }
 
+    fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
+
     private fun checkBoundary() {
         require(amount in PURCHASE_AMOUNT_LOWER_BOUNDARY..PURCHASE_AMOUNT_UPPER_BOUNDARY) {
             PURCHASE_AMOUNT_BOUNDARY_ERROR_MESSAGE
