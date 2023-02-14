@@ -1,7 +1,6 @@
 package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -32,12 +31,14 @@ class PurchaseAmountTest {
         }
     }
 
-    @Test
-    fun `구입금액이 1000원 단위면 에러가 발생하지 않는다`() {
-        assertDoesNotThrow { PurchaseAmount(1000) }
+    @ParameterizedTest
+    @ValueSource(ints = [1000, 50000])
+    fun `구입금액이 1000원 단위면 에러가 발생하지 않는다`(amount: Int) {
+        assertDoesNotThrow { PurchaseAmount(amount) }
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = [1001, 49999])
     fun `구입금액이 1000원 단위로 나누어 떨어지지 않으면 에러가 발생한다`() {
         assertThrows<IllegalArgumentException> { PurchaseAmount(1001) }
     }
