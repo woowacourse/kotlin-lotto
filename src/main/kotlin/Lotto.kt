@@ -1,4 +1,4 @@
-class Lotto(numbers: List<Int>) {
+class Lotto(numbers: Set<Int>) {
     init {
         require(
             numbers.all { number ->
