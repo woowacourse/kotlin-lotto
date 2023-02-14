@@ -1,6 +1,6 @@
 package domain
 
-class Lotto(private val numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
+data class Lotto(private val numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
 
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
