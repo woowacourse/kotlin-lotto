@@ -4,6 +4,10 @@ import lotto.constant.LOTTO_SIZE
 
 class Lotto(val lottoNumbers: List<LottoNumber>) {
     init {
+        validateLottoSize()
+    }
+
+    private fun validateLottoSize() {
         require(lottoNumbers.size == LOTTO_SIZE) { LOTTO_SIZE_ERROR }
     }
 
