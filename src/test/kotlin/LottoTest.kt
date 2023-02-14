@@ -10,4 +10,9 @@ class LottoTest {
         assertThat(lotto.numbers).isEqualTo(listOf(1,2,3,4,5,6))
     }
 
+    @Test
+    fun `로또 당첨번호가 null 일 때`(){
+        assertThrows<IllegalArgumentException> { Lotto(null) }
+    }
+
 }
