@@ -21,4 +21,11 @@ class LottoTest {
         assertThat(lotto.numbers?.size).isEqualTo(6)
     }
 
+    @Test
+    fun `중복된 번호가 존재하는 경우`() {
+        assertThrows<IllegalArgumentException> {
+            Lotto(listOf(1,2,3,4,5,5))
+        }
+    }
+
 }
