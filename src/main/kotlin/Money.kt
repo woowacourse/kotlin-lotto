@@ -1,0 +1,1 @@
+class Money(val price: Int) {}
