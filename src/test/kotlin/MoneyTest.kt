@@ -24,4 +24,11 @@ class MoneyTest {
         }
     }
 
+    @Test
+    fun `입력된 금액이 1000으로 안나눠지는 경우`(){
+        assertThrows<IllegalArgumentException> {
+            Money(925)
+        }
+    }
+
 }
