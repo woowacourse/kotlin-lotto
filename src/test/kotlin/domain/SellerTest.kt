@@ -15,4 +15,13 @@ class SellerTest {
         assertThat(actualResult).isEqualTo(count)
     }
 
+    @CsvSource(value = ["3000,3", "15000,15"])
+    @ParameterizedTest
+    fun `구매한 수량만큼의 로또를 생성한다`(money: Int, count: Int) {
+        //when
+        val actual = Seller(money).getTicket()
+        //then
+        assertThat(actual.size).isEqualTo(count)
+    }
+
 }
