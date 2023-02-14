@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class LottoGeneratorTest {
@@ -9,5 +10,11 @@ class LottoGeneratorTest {
             LottoGenerator(2500)
         }
     }
+
+    @Test
+    fun `구입 금액이 1000원인 경우`() {
+        assertDoesNotThrow { LottoGenerator(3000) }
+    }
+
 
 }
