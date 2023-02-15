@@ -7,4 +7,6 @@ class LottoStatistics(val winningLotto: WinningLotto) {
             winningNumbers.contains(number)
         }.size
     }
+
+    fun compareBonusNumber(numbers: Set<Int>): Boolean = numbers.contains(winningLotto.bonusNumber)
 }

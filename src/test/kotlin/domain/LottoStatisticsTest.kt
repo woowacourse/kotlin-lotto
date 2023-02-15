@@ -1,6 +1,7 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -16,6 +17,18 @@ class LottoStatisticsTest {
         val lottoStatistics = LottoStatistics(winningLotto)
         val actual = lottoStatistics.compareNumbers(lotto.numbers)
 
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `보너스 번호와 일치하는지 여부를 확인한다`() {
+        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 7
+        val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
+        val lotto = Lotto(setOf(1, 2, 3, 4, 5, 7))
+        val lottoStatistics = LottoStatistics(winningLotto)
+        val expected = lottoStatistics.compareBonusNumber(lotto.numbers)
+        val actual = true
         assertThat(actual).isEqualTo(expected)
     }
 
