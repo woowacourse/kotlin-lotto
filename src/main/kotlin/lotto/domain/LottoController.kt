@@ -2,6 +2,7 @@ package lotto.domain
 
 import lotto.model.Lotto
 import lotto.model.UserLotto
+import lotto.model.WinningLotto
 import lotto.model.generator.LottoGenerator
 import lotto.view.ERROR_NOT_DIVIDED
 import lotto.view.InputView
@@ -19,7 +20,7 @@ class LottoController(
         outputView.printPurchase(numberOfLotto)
         val myLotto = getUserLotto(numberOfLotto)
         outputView.printUserLotto(myLotto)
-        val winningNumber = getWinningNumber()
+        val winningLotto = getWinningLotto(getWinningNumber())
     }
 
     private fun getUserLotto(number: Int): UserLotto {
@@ -31,7 +32,7 @@ class LottoController(
         return UserLotto(lottos)
     }
 
-    fun getMoney(): Int {
+    private fun getMoney(): Int {
         outputView.printInsertMoneyMessage()
         val money = inputView.getNumber()
         val result = validateInput {
@@ -40,9 +41,22 @@ class LottoController(
         return if (result) money else getMoney()
     }
 
-    fun getWinningNumber(): Lotto {
+    private fun getWinningLotto(lotto: Lotto): WinningLotto {
+        return runCatching {
+            WinningLotto(lotto, getBonusNumber())
+        }.onFailure {
+            println(it.message)
+        }.getOrNull() ?: getWinningLotto(lotto)
+    }
+
+    private fun getBonusNumber(): Int {
+        outputView.printInsertBonusNumber()
+        return inputView.getNumber()
+    }
+
+    private fun getWinningNumber(): Lotto {
         outputView.printInsertWinningNumber()
-        return kotlin.runCatching {
+        return runCatching {
             Lotto(inputView.getNumberList())
         }.onFailure {
             println(it.message)
