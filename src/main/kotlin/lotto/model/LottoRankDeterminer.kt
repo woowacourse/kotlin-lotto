@@ -3,9 +3,8 @@ package lotto.model
 import lotto.entity.Lotto
 import lotto.entity.WinLotto
 
-class LottoRankDeterminer(private val lotto: Lotto, private val winLotto: WinLotto) :
-    RankDeterminer {
-    override fun determine(): Rank {
+class LottoRankDeterminer : RankDeterminer {
+    override fun determine(lotto: Lotto, winLotto: WinLotto): Rank {
         val isBonus = lotto.numbers.contains(winLotto.bonus.value)
         val countOfMatch = lotto.numbers.intersect(winLotto.winNumber.value.toSet()).size
 

@@ -1,5 +1,8 @@
 package lotto.model
 
+import lotto.entity.Lotto
+import lotto.entity.WinLotto
+
 interface RankDeterminer {
-    fun determine(): Rank
+    fun determine(lotto: Lotto, winLotto: WinLotto): Rank
 }
