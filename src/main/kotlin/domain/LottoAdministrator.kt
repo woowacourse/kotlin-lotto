@@ -9,5 +9,8 @@ class LottoAdministrator {
         return lottoNumber.contains(bonusNumber)
     }
 
+    fun getRank(countOfMatch: Int, matchBonus: Boolean): Rank? {
+        return Rank.valueOf(countOfMatch, matchBonus)
+    }
 
 }

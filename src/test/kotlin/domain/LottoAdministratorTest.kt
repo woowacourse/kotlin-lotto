@@ -18,7 +18,7 @@ class LottoAdministratorTest {
     }
 
     @Test
-    fun `보너스번호와 몇개 일치하는지 확인한다`() {
+    fun `보너스번호가 일치하는지 확인한다`() {
         //given
         val lottoNumber = listOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = 5
