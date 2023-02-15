@@ -1,6 +1,8 @@
 package lotto.model
 
-class SequentialLottoNumberGenerator(private val numbers: List<List<Int>>) : LottoGenerator {
+import lotto.entity.Lotto
+
+class SequentialLottoNumberGenerator(private val numbers: List<Lotto>) : LottoGenerator {
     private val index: Int = 0
-    override fun generate(): Lotto = Lotto(numbers[index])
+    override fun generate(): Lotto = numbers[index]
 }

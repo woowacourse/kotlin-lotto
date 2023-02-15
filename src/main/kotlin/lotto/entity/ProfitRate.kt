@@ -1,3 +1,3 @@
-package lotto.model
+package lotto.entity
 
 class ProfitRate(val value: Float)

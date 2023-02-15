@@ -1,4 +1,6 @@
-package lotto.model
+package lotto.entity
+
+import lotto.model.LottoGenerator
 
 class Lottos(inputMoney: Int, lottoPrice: Int, lottoGenerator: LottoGenerator) {
     val value: List<Lotto>
