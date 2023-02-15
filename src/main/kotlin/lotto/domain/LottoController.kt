@@ -4,8 +4,6 @@ import lotto.model.Lotto
 import lotto.model.UserLotto
 import lotto.model.generator.LottoGenerator
 import lotto.view.ERROR_NOT_DIVIDED
-import lotto.view.ERROR_NOT_POSITIVE_NUMBER
-import lotto.view.ERROR_SIZE_OF_LOTTO
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -37,20 +35,18 @@ class LottoController(
         outputView.printInsertMoneyMessage()
         val money = inputView.getNumber()
         val result = validateInput {
-            require(money.isNumber()) { ERROR_NOT_POSITIVE_NUMBER }
-            require(isDivided(money.toInt())) { ERROR_NOT_DIVIDED }
+            require(isDivided(money)) { ERROR_NOT_DIVIDED }
         }
-        return if (result) money.toInt() else getMoney()
+        return if (result) money else getMoney()
     }
 
     fun getWinningNumber(): Lotto {
         outputView.printInsertWinningNumber()
-        val winningNumber = inputView.getNumberList()
-        val result = validateInput {
-            require(winningNumber.isNumbers()) { ERROR_NOT_POSITIVE_NUMBER }
-            require(winningNumber.size == LOTTO_SIZE) { ERROR_SIZE_OF_LOTTO }
-        }
-        return if (result) Lotto(winningNumber.map { it.toInt() }) else getWinningNumber()
+        return kotlin.runCatching {
+            Lotto(inputView.getNumberList())
+        }.onFailure {
+            println(it.message)
+        }.getOrNull() ?: getWinningNumber()
     }
 
     private fun validateInput(validate: () -> Unit): Boolean {
@@ -79,14 +75,5 @@ class LottoController(
 
     companion object {
         private const val LOTTO_PRICE = 1000
-        private const val LOTTO_SIZE = 6
     }
-}
-
-fun String.isNumber() = this.chars().allMatch { Character.isDigit(it) }
-fun List<String>.isNumbers(): Boolean {
-    this.forEach {
-        if (!it.isNumber()) return false
-    }
-    return true
 }
