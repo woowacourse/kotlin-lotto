@@ -2,8 +2,17 @@ package lotto.domain
 
 import lotto.model.Lotto
 import lotto.model.generator.LottoGenerator
+import lotto.view.InputView
+import lotto.view.OutputView
 
-class LottoController {
+class LottoController(
+    private val inputView: InputView = InputView(),
+    private val outputView: OutputView = OutputView()
+) {
+
+    fun start() {
+
+    }
 
     fun getNumberOfLotto(money: Int): Int {
         return money / LOTTO_PRICE
