@@ -8,7 +8,7 @@ class WinningLottoTest {
     @Test
     fun `로또 번호, 로또 번호와 중복되지 않는 보너스 번호로 이루어진 당첨 번호를 생성할 수 있다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 10)
-        assertThat(winningLotto.lotto).isEqualTo(Lotto.create(listOf(1, 2, 3, 4, 5, 6)))
+        assertThat(winningLotto.lotto).isEqualTo(Lotto.create(listOf(1, 2, 3, 4, 5, 6).toSet()))
         assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber(10))
     }
 
@@ -18,13 +18,13 @@ class WinningLottoTest {
         val bonusNumber = 3
         assertThatIllegalArgumentException()
             .isThrownBy { WinningLotto(numbers, bonusNumber) }
-            .withMessage("보너스 번호는 당첨 번호와 중복될 수 없습니다. \n잘못된 값 : ${Lotto.create(numbers)}, ${LottoNumber(bonusNumber)}")
+            .withMessage("보너스 번호는 당첨 번호와 중복될 수 없습니다. \n잘못된 값 : ${Lotto.create(numbers.toSet())}, ${LottoNumber(bonusNumber)}")
     }
 
     @Test
     fun `당첨 번호는 로또에 대해 맞는 개수를 반환할 수 있다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 6))
+        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 6).toSet())
 
         val result = winningLotto.getCountOfMatch(lotto)
 
@@ -34,7 +34,7 @@ class WinningLottoTest {
     @Test
     fun `당첨 번호는 로또에 대해 보너스 번호 매치 여부를 반환할 수 있다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 7))
+        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 7).toSet())
 
         val result = winningLotto.matchBonus(lotto)
 
