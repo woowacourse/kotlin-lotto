@@ -1,12 +1,18 @@
 package lotto.view
 
+import lotto.entity.ProfitRate
 import lotto.entity.WinStatistics
+import kotlin.math.floor
 
 class OutputView {
     fun winStatisticsResult(winStatistics: WinStatistics, winStatisticsFormatter: WinStatisticsFormatter) {
         println("당첨 통계")
         println("---------")
         println(winStatisticsFormatter.format(winStatistics))
+    }
+
+    fun profitRateResult(profitRate: ProfitRate) {
+        println("총 수익률은 ${floor((profitRate.value * 100)) * 100}입니다.")
     }
 
     companion object {
