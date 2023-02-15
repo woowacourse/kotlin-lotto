@@ -1,5 +1,4 @@
 import domain.Lotto
-import domain.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -7,18 +6,11 @@ import org.junit.jupiter.api.assertThrows
 class LottoTest {
 
     private val lotto = Lotto(
-        listOf(
-            LottoNumber(1),
-            LottoNumber(2),
-            LottoNumber(3),
-            LottoNumber(4),
-            LottoNumber(5),
-            LottoNumber(6)
-        )
+        listOf(1, 2, 3, 4, 5, 6)
     )
     @Test
     fun `로또가 6개의 숫자로 잘 생성되었는지 확인`() {
-        assertThat(lotto.numbers!!.map { it.number }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+        assertThat(lotto.numbers).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
     }
 
     @Test
@@ -31,13 +23,7 @@ class LottoTest {
         assertThrows<IllegalArgumentException> {
             Lotto(
                 listOf(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5),
-                    LottoNumber(6),
-                    LottoNumber(7)
+                    1, 2, 3, 4, 5, 6, 7
                 )
             )
         }
@@ -47,15 +33,15 @@ class LottoTest {
     fun `중복된 번호가 존재하는 경우`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
-                listOf(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5),
-                    LottoNumber(5)
-                )
+                listOf(1, 2, 3, 4, 5, 5)
             )
+        }
+    }
+
+    @Test
+    fun `로또 번호가 1애서 45사이의 숫자가 아닌 경우`() {
+        assertThrows<IllegalArgumentException> {
+            Lotto(listOf(1, 12, 55, 44, 23, 65))
         }
     }
 }

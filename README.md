@@ -8,7 +8,7 @@
     - [x] 금액이 음수인 경우
     - [x] 금액이 1000원으로 안나눠지는 경우
 - [X] 로또가 6개의 숫자로 잘 생성되었는지 확인
-- [] 금액에 맞는 로또 생성 개수 확인
+- [ ] 금액에 맞는 로또 생성 개수 확인
 - [] 로또 생성이 잘 되었는지 확인*
 - [] 당첨 번호 입력 받기
   - [] 당점 번호 예외 테스트
@@ -34,7 +34,7 @@
 ## Lotto - 당첨번호 비교 (List<LottoNumber))
 ## Lottos - 몇 개 당첨인지 확인, 수익률
 ## LottoManager - 수익률
-## LottoGenerator (interfate)
+## LottoGenerator (interface)
 ## RandomLottoGenerator
 ## TestLottoGenerator
 ## enum
