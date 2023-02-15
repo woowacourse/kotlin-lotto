@@ -1,6 +1,7 @@
 import domain.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class LottoNumberTest {
 
@@ -10,4 +11,8 @@ class LottoNumberTest {
         assertThat(lottoNumber.number).isEqualTo(3)
     }
 
+    @Test
+    fun `로또 번호가 1-45 사이에 없는 경우`() {
+        assertThrows<IllegalArgumentException> { LottoNumber(46) }
+    }
 }

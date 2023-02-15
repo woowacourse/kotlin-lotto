@@ -12,24 +12,23 @@ class MoneyTest {
     }
 
     @Test
-    fun `입력된 금액이 null 인 경우`(){
+    fun `입력된 금액이 null 인 경우`() {
         assertThrows<IllegalArgumentException> {
             Money(null)
         }
     }
 
     @Test
-    fun `입력된 금액이 음수인 경우`(){
+    fun `입력된 금액이 음수인 경우`() {
         assertThrows<IllegalArgumentException> {
             Money(-9000)
         }
     }
 
     @Test
-    fun `입력된 금액이 1000으로 안나눠지는 경우`(){
+    fun `입력된 금액이 1000으로 안나눠지는 경우`() {
         assertThrows<IllegalArgumentException> {
             Money(925)
         }
     }
-
 }
