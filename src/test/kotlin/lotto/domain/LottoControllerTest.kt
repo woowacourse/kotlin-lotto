@@ -18,6 +18,13 @@ class LottoControllerTest {
         assertThat(LottoController().generateLotto(5).size).isEqualTo(5)
     }
 
+    @Test
+    fun `로또 가격으로 나누어 떨어지지 않는 경우 false를 반환한다`() {
+        assertThat(
+            LottoController().isDivided(14100)
+        ).isFalse
+    }
+
     @ValueSource(strings = ["a", "-1"])
     @ParameterizedTest
     fun `양의 정수가 아닌 값이 입력된 경우 false를 반환한다`(input: String) {
