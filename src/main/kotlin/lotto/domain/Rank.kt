@@ -11,7 +11,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int, description: Strin
     companion object {
         fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
             if (countOfMatch == 5) return decideSecondOrThird(matchBonus)
-            return values().find { it.countOfMatch == countOfMatch }!!
+            return values().find { it.countOfMatch == countOfMatch } ?: MISS
         }
 
         private fun decideSecondOrThird(matchBonus: Boolean): Rank {
