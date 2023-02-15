@@ -11,7 +11,7 @@ class LottosTest {
         Lotto(listOf(4, 6, 15, 18, 24, 35))
     )
     @Test
-    fun `금액에 맞는 로또 생성 개수 확인`() {
+    fun `로또 리스트가 생성되는지 확인`() {
         val lottos = Lottos(testLottos)
         assertThat(lottos.lottos.size).isEqualTo(10)
     }
