@@ -22,4 +22,7 @@ class Bank {
         )
         return Rank.convertToPrizeMoney(rank)
     }
+
+    fun getYieldRate(purchaseMoney: PurchaseMoney, totalPrizeMoney: Int): Double =
+        totalPrizeMoney / purchaseMoney.value.toDouble()
 }
