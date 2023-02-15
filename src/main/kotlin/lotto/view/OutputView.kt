@@ -1,13 +1,12 @@
 package lotto.view
 
 import lotto.entity.WinStatistics
-import lotto.model.Rank
 
 class OutputView {
     fun winStatisticsResult(winStatistics: WinStatistics, winStatisticsFormatter: WinStatisticsFormatter) {
         println("당첨 통계")
         println("---------")
-        Rank.values().reversed().forEach { println(winStatisticsFormatter.format(it, winStatistics)) }
+        println(winStatisticsFormatter.format(winStatistics))
     }
 
     companion object {
