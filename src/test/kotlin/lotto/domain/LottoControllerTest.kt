@@ -10,4 +10,9 @@ class LottoControllerTest {
         val money = 14000
         assertThat(LottoController().getNumberOfLotto(money)).isEqualTo(14)
     }
+
+    @Test
+    fun `구매한 장 수 만큼 로또를 발급한다`() {
+        assertThat(LottoController().generateLotto(5).size).isEqualTo(5)
+    }
 }
