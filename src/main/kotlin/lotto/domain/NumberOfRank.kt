@@ -15,6 +15,14 @@ class NumberOfRank(
         }
     }
 
+    fun calculateTotalPrize(): Long {
+        var prize = 0L
+        numbers.forEach { (name, count) ->
+            prize += Rank.calculatePrize(name, count)
+        }
+        return prize
+    }
+
     companion object {
         private const val NUMBER_DEFAULT_VALUE = 0
         private const val INCREASE_VALUE = 1

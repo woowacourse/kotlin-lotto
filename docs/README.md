@@ -35,7 +35,7 @@
 
 - NumberOfRank
 - [x] 등수를 받아 카운트한다.
-- [ ] 총 상금을 계산한다.
+- [x] 총 상금을 계산한다.
 
 
 - WinningResultCalculator
