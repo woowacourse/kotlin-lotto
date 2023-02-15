@@ -16,4 +16,10 @@ class PurchaseMoneyTest {
     fun `구입 금액은 0이상의 수이다`(value: Int) {
         assertThrows<IllegalArgumentException> { PurchaseMoney(value) }
     }
+
+    @ValueSource(ints = [100_000_000, 200_000, 100_001])
+    @ParameterizedTest
+    fun `구입 금액은 10만 이하의 수이다`(value: Int) {
+        assertThrows<IllegalArgumentException> { PurchaseMoney(value) }
+    }
 }
