@@ -16,5 +16,10 @@ class LottoGeneratorTest {
         assertDoesNotThrow { LottoGenerator(3000) }
     }
 
-
+    @Test
+    fun `구입 금액이 음수인 경우`() {
+        assertThrows<IllegalArgumentException> {
+            LottoGenerator(-1000)
+        }
+    }
 }
