@@ -19,13 +19,19 @@ class LottoController(
     fun getMoney(): Int {
         outputView.printInsertMoneyMessage()
         val money = inputView.getNumber()
-        val result = runCatching {
+        val result = validateInput {
             require(money.isNumber()) { ERROR_NOT_POSITIVE_NUMBER }
-            require(isDivided(money.toInt())) { ERROR_NOT_DIVIDED}
+            require(isDivided(money.toInt())) { ERROR_NOT_DIVIDED }
+        }
+        return if (result) money.toInt() else getMoney()
+    }
+
+    private fun validateInput(validate: () -> Unit): Boolean {
+        return runCatching {
+            validate()
         }.onFailure {
             println(it.message)
         }.isSuccess
-        return if (result) money.toInt() else getMoney()
     }
 
     fun getNumberOfLotto(money: Int): Int {
