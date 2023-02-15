@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.model.Rank
 import lotto.model.UserLotto
 
 class OutputView {
@@ -23,6 +24,27 @@ class OutputView {
 
     fun printInsertBonusNumber() {
         println(INSERT_BONUS_BALL)
+    }
+
+    fun printResult(ranks: List<Int>) {
+        println(WINNING_STATISTICS)
+        println(DIVIDER)
+
+        val size = Rank.values().size
+        Rank.values().reversed().subList(1, size).forEachIndexed { index, rank ->
+            printEachRankResult(ranks.reversed().subList(1, size)[index], rank)
+        }
+    }
+
+    private fun printEachRankResult(count: Int, rank: Rank) {
+        var result = MATCH_STANDARD.format(rank.countOfMatch)
+        if (rank == Rank.SECOND) {
+            result += MATCH_STANDARD_WITH_BONUS
+        }
+        result += MATCH_MONEY.format(rank.winningMoney)
+        result += MATCH_COUNT.format(count)
+
+        println(result)
     }
 
     companion object {

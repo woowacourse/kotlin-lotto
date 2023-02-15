@@ -21,6 +21,8 @@ class LottoController(
         val myLotto = getUserLotto(numberOfLotto)
         outputView.printUserLotto(myLotto)
         val winningLotto = getWinningLotto(getWinningNumber())
+        val ranks = myLotto.getWinningStatistics(winningLotto)
+        outputView.printResult(ranks)
     }
 
     private fun getUserLotto(number: Int): UserLotto {
