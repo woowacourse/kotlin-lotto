@@ -11,7 +11,7 @@ class LottoController(
 ) {
 
     fun start() {
-
+        val money = inputView.getNumber()
     }
 
     fun getNumberOfLotto(money: Int): Int {
