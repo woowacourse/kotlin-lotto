@@ -29,4 +29,13 @@ class LottoTest {
             .isThrownBy { Lotto.create(numbers) }
             .withMessage("로또 번호는 중복되어선 안된다. \n잘못된 값: $numbers")
     }
+
+    @Test
+    fun `로또 번호가 오름차순이 아니라면 에러가 발생한다`() {
+        val numbers = listOf(1, 2, 3, 4, 6, 5)
+
+        assertThatIllegalArgumentException()
+            .isThrownBy { Lotto.create(numbers) }
+            .withMessage("로또 번호는 정렬되어야 합니다.")
+    }
 }
