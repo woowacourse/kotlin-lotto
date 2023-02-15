@@ -42,10 +42,10 @@ class World {
         } as WinNumber
     }
 
-    private fun initBonus(winNumber: WinNumber): Bonus {
+    private fun initBonus(): Bonus {
         return tryAndRerun {
             OutputView.printMessage(OutputView.MESSAGE_BONUS)
-            InputView.readBonus(winNumber)
+            InputView.readBonus()
         } as Bonus
     }
 
@@ -61,7 +61,7 @@ class World {
         val lottos = initLottos(purchaseMoney)
         val winNumber = initWinNumber()
         return tryAndRerun {
-            val bonus = initBonus(winNumber)
+            val bonus = initBonus()
             val winLotto = WinLotto(winNumber, bonus)
             WinStatistics(lottos.value.map { LottoRankDeterminer().determine(it, winLotto) })
         } as WinStatistics
