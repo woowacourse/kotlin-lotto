@@ -30,6 +30,16 @@ class LotteryTest {
         assertThrows<IllegalArgumentException> { Lottery(lotteryNumbers) }
     }
 
+    @Test
+    fun `당첨 번호와 매치하는 로또번호가 몇 개인지 확인한다`() {
+        val lotteryNumbers = listOf(1, 10, 20, 30, 40, 45)
+        val winningNumbers = listOf(1, 15, 20, 35, 40, 44)
+        val lottery = Lottery(lotteryNumbers)
+        val winningLottery = Lottery(winningNumbers)
+
+        assertThat(lottery.countMatches(winningLottery)).isEqualTo(3)
+    }
+
     companion object {
         @JvmStatic
         fun lotteryNumbersErrorCase(): Stream<Arguments> {
