@@ -39,8 +39,8 @@
 - [x] 수익률을 받아 1 이상이면 이득, 1 미만이면 손해로 판단한다.
 
 
-- RandomLotteryNumberGenerator
-- [ ] 1이상 45이하의 숫자 하나를 생성한다.
+- LotteryNumberGenerator
+- [x] 로또 번호를 하나를 생성한다.
 
 
 - LotteriesGenerator
