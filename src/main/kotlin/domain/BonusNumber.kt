@@ -1,3 +1,3 @@
 package domain
 
-class BonusNumber(val number: Int)
+class BonusNumber(val number: Int?)
