@@ -13,6 +13,21 @@ class LotteryNumber(
         }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as LotteryNumber
+
+        if (number != other.number) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return number
+    }
+
     companion object {
         private const val LOTTERY_NUMBER_LOWER_BOUNDARY = 1
         private const val LOTTERY_NUMBER_UPPER_BOUNDARY = 45

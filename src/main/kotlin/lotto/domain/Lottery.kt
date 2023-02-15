@@ -1,12 +1,9 @@
 package lotto.domain
 
-class Lottery(numbers: List<Int>) {
-    private val _numbers: List<LotteryNumber>
-    val numbers: List<Int>
-        get() = _numbers.map { it.number }
-
+class Lottery(
+    val numbers: List<LotteryNumber>
+) {
     init {
-        this._numbers = numbers.map { LotteryNumber(it) }
         checkLotteryNumbersSize()
         checkNumbersDuplicate()
     }
@@ -14,7 +11,7 @@ class Lottery(numbers: List<Int>) {
     fun countMatches(winningLottery: Lottery): Int = winningLottery.numbers.count { numbers.contains(it) }
 
     fun containBonusNumber(bonusNumber: LotteryNumber): Boolean {
-        return numbers.contains(bonusNumber.number)
+        return numbers.contains(bonusNumber)
     }
 
     private fun checkLotteryNumbersSize() {
