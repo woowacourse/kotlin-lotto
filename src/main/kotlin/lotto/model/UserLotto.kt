@@ -1,6 +1,6 @@
 package lotto.model
 
-class UserLotto(private val lottos: List<Lotto>) {
+class UserLotto(val lottos: List<Lotto>) {
 
     fun getWinningStatistics(winningLotto: WinningLotto): List<Int> {
         val winningStatistics = MutableList(Rank.values().size) { 0 }

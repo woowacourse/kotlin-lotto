@@ -1,5 +1,7 @@
 package lotto.view
 
+import lotto.model.UserLotto
+
 class OutputView {
     fun printInsertMoneyMessage() {
         println(INSERT_MONEY)
@@ -7,6 +9,12 @@ class OutputView {
 
     fun printPurchase(number: Int) {
         println("$number$PURCHASE")
+    }
+
+    fun printUserLotto(userLotto: UserLotto) {
+        userLotto.lottos.forEach { lotto ->
+            println(lotto.lotto.toString())
+        }
     }
 
     companion object {

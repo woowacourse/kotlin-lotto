@@ -1,6 +1,7 @@
 package lotto.domain
 
 import lotto.model.Lotto
+import lotto.model.UserLotto
 import lotto.model.generator.LottoGenerator
 import lotto.view.ERROR_NOT_DIVIDED
 import lotto.view.ERROR_NOT_POSITIVE_NUMBER
@@ -9,13 +10,25 @@ import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView = InputView(),
-    private val outputView: OutputView = OutputView()
+    private val outputView: OutputView = OutputView(),
+    private val generator: LottoGenerator = LottoGenerator()
 ) {
 
     fun start() {
         val money = getMoney()
         val numberOfLotto = getNumberOfLotto(money)
         outputView.printPurchase(numberOfLotto)
+        val myLotto = getUserLotto(numberOfLotto)
+        outputView.printUserLotto(myLotto)
+    }
+
+    private fun getUserLotto(number: Int): UserLotto {
+        val lottos = mutableListOf<Lotto>()
+        repeat(number) {
+            lottos.add(Lotto(generator.generate()))
+        }
+
+        return UserLotto(lottos)
     }
 
     fun getMoney(): Int {
