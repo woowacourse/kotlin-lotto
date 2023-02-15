@@ -3,13 +3,16 @@ package lotto.controller
 import lotto.entity.Bonus
 import lotto.entity.LottoPrice
 import lotto.entity.Lottos
+import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
 import lotto.entity.WinNumber
 import lotto.entity.WinStatistics
+import lotto.model.LottoProfitRateCalculator
 import lotto.model.LottoRankDeterminer
 import lotto.model.RandomLottoGenerator
 import lotto.view.InputView
+import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
 
 class World {
@@ -39,8 +42,15 @@ class World {
         return InputView.readBonus()
     }
 
-    fun makeWinStatistics(): WinStatistics {
+    fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
+        val winStatistics = makeWinStatistics(purchaseMoney)
+        OutputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
+        val profitRate = makeProfitRate(purchaseMoney, winStatistics)
+        OutputView.profitRateResult(profitRate)
+    }
+
+    fun makeWinStatistics(purchaseMoney: PurchaseMoney): WinStatistics {
         val lottos = initLottos(purchaseMoney)
         val winLotto = WinLotto(initWinNumber(), initBonus())
         val winStatistics = WinStatistics(
@@ -49,6 +59,11 @@ class World {
             }
         )
         return winStatistics
+    }
+
+    fun makeProfitRate(purchaseMoney: PurchaseMoney, winStatistics: WinStatistics): ProfitRate {
+        val profitRateCalculator = LottoProfitRateCalculator(purchaseMoney, winStatistics)
+        return profitRateCalculator.calculate()
     }
 
     companion object {
