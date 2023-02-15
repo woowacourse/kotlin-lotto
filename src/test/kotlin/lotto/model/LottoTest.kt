@@ -1,6 +1,7 @@
 package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -14,6 +15,13 @@ class LottoTest {
         assertThat(
             Lotto(numbers).getCountOfMatch(winning)
         ).isEqualTo(result)
+    }
+
+    @Test
+    fun `로또 숫자 개수가 6개가 맞지 않는 경우 false를 반환한다`() {
+        assertThat(
+            Lotto(listOf(1, 2, 3, 4, 5)).size == 6
+        ).isFalse
     }
 
     companion object {

@@ -1,6 +1,10 @@
 package lotto.model
 
 class Lotto(val lotto: List<Int>) {
+
+    val size: Int
+        get() = lotto.size
+
     fun getCountOfMatch(winningLotto: WinningLotto): Rank {
         val count = lotto.count { winningLotto.winningNumbers.lotto.contains(it) }
         if (count == Rank.SECOND.countOfMatch) {
