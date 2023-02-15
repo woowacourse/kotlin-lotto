@@ -19,8 +19,16 @@ class WinningLotteryTest {
         )
         val bonusNumber = LotteryNumber(5)
         val winningLottery = WinningLottery(lottery, bonusNumber)
+        val expected = listOf(
+            LotteryNumber(1),
+            LotteryNumber(10),
+            LotteryNumber(20),
+            LotteryNumber(30),
+            LotteryNumber(40),
+            LotteryNumber(45)
+        )
 
-        assertThat(winningLottery.lottery.numbers).containsAll(lottery.numbers)
+        assertThat(winningLottery.lottery.numbers).containsAll(expected)
     }
 
     @Test
