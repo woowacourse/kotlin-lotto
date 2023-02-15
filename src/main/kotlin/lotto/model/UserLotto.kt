@@ -1,4 +1,4 @@
-package lotto
+package lotto.model
 
 class UserLotto(private val lottos: List<Lotto>) {
 

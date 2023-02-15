@@ -1,4 +1,4 @@
-package lotto
+package lotto.model
 
 class Lotto(val lotto: List<Int>) {
     fun getCountOfMatch(winningLotto: WinningLotto): Rank {

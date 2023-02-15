@@ -1,5 +1,6 @@
-package lotto
+package lotto.domain
 
+import lotto.model.Rank
 import java.text.DecimalFormat
 
 class WinningCalculator {
