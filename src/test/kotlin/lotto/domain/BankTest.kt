@@ -4,10 +4,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BankTest {
+    private val bank = Bank()
     @Test
     fun `로또 번호와 당첨번호가 6개 같다(6을 반환)`() {
         assertThat(
-            Bank().countMatchedMainLottoNumber(
+            bank.countMatchedMainLottoNumber(
                 Lotto(
                     listOf(
                         LottoNumber(1),
@@ -36,7 +37,7 @@ class BankTest {
     @Test
     fun `보너스 번호가 당첨되었다`() {
         assertThat(
-            Bank().checkMatchedBonusLottoNumber(
+            bank.checkMatchedBonusLottoNumber(
                 Lotto(
                     listOf(
                         LottoNumber(1),
