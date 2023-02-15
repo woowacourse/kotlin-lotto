@@ -10,10 +10,7 @@ class RandomLottoGenerator : LottoGenerator {
     }
 
     fun generateLotto(): Lotto {
-        val lotto = mutableSetOf<Int>()
-        while (lotto.size < LOTTO_LIMIT_SIZE) {
-            lotto.add((LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER).random())
-        }
+        val lotto = (1..45).shuffled().subList(0, LOTTO_LIMIT_SIZE)
         return Lotto(lotto.sorted())
     }
 
