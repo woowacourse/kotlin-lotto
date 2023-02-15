@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
@@ -38,6 +39,14 @@ class LotteryTest {
         val winningLottery = Lottery(winningNumbers)
 
         assertThat(lottery.countMatches(winningLottery)).isEqualTo(3)
+    }
+
+    @ParameterizedTest
+    @CsvSource("5, true", "10, false")
+    fun `보너스번호가 로또번호에 포함되어 있는지 확인한다`(bonusNumber: Int, expected: Boolean) {
+        val bonusNumber = BonusNumber(bonusNumber)
+        val lottery = Lottery(listOf(1, 2, 3, 4, 5, 6))
+        assertThat(lottery.containBonusNumber(bonusNumber)).isEqualTo(expected)
     }
 
     companion object {
