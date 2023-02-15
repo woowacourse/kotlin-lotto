@@ -1,6 +1,6 @@
 package lotto.domain
 
-open class LotteryNumber(
+class LotteryNumber(
     val number: Int
 ) {
     init {

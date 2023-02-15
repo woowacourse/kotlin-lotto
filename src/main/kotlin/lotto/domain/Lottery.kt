@@ -13,7 +13,7 @@ class Lottery(numbers: List<Int>) {
 
     fun countMatches(winningLottery: Lottery): Int = winningLottery.numbers.count { numbers.contains(it) }
 
-    fun containBonusNumber(bonusNumber: BonusNumber): Boolean {
+    fun containBonusNumber(bonusNumber: LotteryNumber): Boolean {
         return numbers.contains(bonusNumber.number)
     }
 
