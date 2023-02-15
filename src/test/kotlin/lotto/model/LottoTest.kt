@@ -19,14 +19,20 @@ class LottoTest {
     }
 
     @Test
-    fun `로또 숫자 개수가 6개가 맞지 않는 경우 false를 반환한다`() {
+    fun `로또 숫자 개수가 6개가 맞지 않는 경우 생성 시 오류가 발생한다`() {
         val list = listOf(1, 2, 3, 4, 5)
         assertThrows<IllegalArgumentException> { Lotto(list) }
     }
 
     @Test
-    fun `로또 번호 내에 중복된 번호가 있는 경우 false를 반환한다`() {
+    fun `로또 번호 내에 중복된 번호가 있는 경우 생성 시 오류가 발생한다`() {
         val list = listOf(1, 2, 3, 4, 4, 5)
+        assertThrows<IllegalArgumentException> { Lotto(list) }
+    }
+
+    @Test
+    fun `로또 번호 내에 범위를 벗어난 번호가 있는 경우 생성 시 오류가 발생한다`() {
+        val list = listOf(1, 2, 3, 4, 5, 66)
         assertThrows<IllegalArgumentException> { Lotto(list) }
     }
 

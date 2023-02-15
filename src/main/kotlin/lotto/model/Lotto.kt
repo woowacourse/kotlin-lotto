@@ -1,6 +1,7 @@
 package lotto.model
 
 import lotto.view.ERROR_DUPLICATE_NUMBER
+import lotto.view.ERROR_OUT_OF_RANGE
 import lotto.view.ERROR_SIZE_OF_LOTTO
 
 class Lotto(val lotto: List<Int>) {
@@ -11,6 +12,7 @@ class Lotto(val lotto: List<Int>) {
     init {
         require(lotto.size == LOTTO_SIZE) { ERROR_SIZE_OF_LOTTO }
         require(hasNoDuplicateNumber()) { ERROR_DUPLICATE_NUMBER }
+        require(isEveryNumberInRange()) { ERROR_OUT_OF_RANGE }
     }
 
     fun getCountOfMatch(winningLotto: WinningLotto): Rank {
@@ -26,8 +28,20 @@ class Lotto(val lotto: List<Int>) {
     private fun getRankByBonusNumber(winningLotto: WinningLotto) =
         if (lotto.contains(winningLotto.bonusNumber)) Rank.SECOND else Rank.THIRD
 
-    fun hasNoDuplicateNumber(): Boolean {
+    private fun hasNoDuplicateNumber(): Boolean {
         return lotto.size == lotto.distinct().size
+    }
+
+    private fun isEveryNumberInRange(): Boolean {
+        var result = true
+        lotto.forEach {
+            result = result and isInRange(it)
+        }
+        return result
+    }
+
+    private fun isInRange(number: Int): Boolean {
+        return number in 1..45
     }
 
     companion object {
