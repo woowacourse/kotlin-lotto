@@ -7,7 +7,7 @@ value class LottoNumber private constructor(val number: Int) {
     }
 
     companion object {
-        private const val PREFIX = "[Error]"
+        const val PREFIX = "[Error]"
         private const val LOTTO_NUMBER_MINIMUM = 1
         private const val LOTTO_NUMBER_MAXIMUM = 45
         private val LOTTO_NUMBER_RANGE = LOTTO_NUMBER_MINIMUM..LOTTO_NUMBER_MAXIMUM

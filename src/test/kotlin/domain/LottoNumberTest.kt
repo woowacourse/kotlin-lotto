@@ -16,7 +16,7 @@ class LottoNumberTest {
         // then
         assertThatIllegalArgumentException()
             .isThrownBy { LottoNumber.create(number) }
-            .withMessageContaining("[Error] 로또 넘버는 1~45여야합니다.")
+            .withMessageContaining("${LottoNumber.PREFIX} 로또 넘버는 1~45여야합니다.")
     }
 
     @ValueSource(ints = [1, 2, 44, 45])
