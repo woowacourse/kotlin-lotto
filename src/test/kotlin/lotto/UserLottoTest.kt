@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class UserLottoTest {
     @Test
     fun `각 로또마다 위의 확인 과정을 거쳐 최종 당첨 통계를 구한다`() {
-        val lottos = listOf<Lotto>(
+        val lottos = listOf(
             Lotto(listOf(1, 2, 3, 4, 5, 6)),
             Lotto(listOf(1, 2, 3, 4, 5, 7)),
             Lotto(listOf(1, 2, 3, 4, 9, 10)),
