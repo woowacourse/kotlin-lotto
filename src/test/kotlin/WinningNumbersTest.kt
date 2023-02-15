@@ -23,4 +23,24 @@ class WinningNumbersTest {
             )
         }
     }
+
+    @Test
+    fun `당첨 번호가 6개가 아닌 경우`() {
+        assertThrows<IllegalArgumentException> {
+            WinningNumbers(
+                setOf(1, 2, 3, 4, 5, 6, 7),
+                8
+            )
+        }
+    }
+
+    @Test
+    fun `당첨 번호가 6개인 경우`() {
+        assertDoesNotThrow {
+            WinningNumbers(
+                setOf(1, 2, 3, 4, 5, 6),
+                7
+            )
+        }
+    }
 }
