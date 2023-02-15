@@ -1,31 +1,12 @@
 package domain.lotto
 
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.params.provider.ValueSource
 
 class WinningLottoTest {
-
-    @ParameterizedTest
-    @MethodSource("provideValidRangeLottoNumber")
-    fun `1이사 45이하 숫자가 주어졌을 때, 로또 객체 생성시, 예외가 발생하지 않는다`(number: Int) {
-        val lottoNumber = LottoNumber(number)
-        Assertions.assertThat(lottoNumber.value).isBetween(1, 45)
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = [-1, 0, 46, 100])
-    fun `1미만 45초과 숫자가 주어졌을 때, 로또 객체 생성시, IllegalArgumentException이 발생한다`() {
-        Assertions.assertThatIllegalArgumentException().isThrownBy {
-            val lottoNumber = LottoNumber(0)
-            Assertions.assertThat(lottoNumber.value).isBetween(1, 45)
-        }
-    }
-
     @ParameterizedTest
     @MethodSource("provideSixLottoNumbersAndNotContainedBonusNumber")
     fun `당첨번호와 6개의 당첨번호에 포함되지 않는 보너스 번호가 주어졌을 때, WinningLotto 객체 생성시, 예외가 발생하지 않는다`(
@@ -49,10 +30,6 @@ class WinningLottoTest {
     }
 
     companion object {
-        @JvmStatic
-        fun provideValidRangeLottoNumber(): List<Arguments> =
-            (1..45).map { number -> Arguments.of(number) }
-
         @JvmStatic
         fun provideSixLottoNumbersAndNotContainedBonusNumber(): List<Arguments> =
             listOf(
