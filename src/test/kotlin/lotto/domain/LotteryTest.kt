@@ -30,4 +30,18 @@ class LotteryTest {
 
         assertThrows<IllegalArgumentException> { Lottery(lotteryNumbers) }
     }
+
+    @Test
+    fun `6개의 로또번호에 중복이 있으면 에러가 발생한다`() {
+        val lotteryNumbers = listOf(
+            LotteryNumber(10),
+            LotteryNumber(20),
+            LotteryNumber(30),
+            LotteryNumber(40),
+            LotteryNumber(10),
+            LotteryNumber(5)
+        )
+
+        assertThrows<IllegalArgumentException> { Lottery(lotteryNumbers) }
+    }
 }
