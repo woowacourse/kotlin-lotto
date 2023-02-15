@@ -1,4 +1,4 @@
-package domain
+package domain.lotto
 
 class LottoNumber(val value: Int) {
     init {
