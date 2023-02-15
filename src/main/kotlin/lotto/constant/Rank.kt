@@ -16,9 +16,13 @@ enum class Rank(val matchCount: Int, val bonusMatch: BonusResult, val prizeMoney
     companion object {
         fun convertToGrade(matchCount: Int, bonusMatch: BonusResult): Rank =
             Rank.values().find { it.matchCount == matchCount && it.bonusMatch == bonusMatch }
-                ?: throw IllegalStateException(CALC_GRADE_INPUT_ERROR)
+                ?: throw IllegalStateException(WRONG_MATCH_COUNT_ERROR)
 
-        private const val CALC_GRADE_INPUT_ERROR = "matchCount 의 값이 적절하지 못합니다."
+        fun convertToPrizeMoney(rank: Rank): Int =
+            Rank.values().find { it == rank }?.prizeMoney ?: throw IllegalStateException(WRONG_RANK_ERROR)
+
+        private const val WRONG_MATCH_COUNT_ERROR = "matchCount 의 값이 적절하지 못합니다."
+        private const val WRONG_RANK_ERROR = "주어진 Rank 값이 올바르지 않습니다."
     }
 }
 
