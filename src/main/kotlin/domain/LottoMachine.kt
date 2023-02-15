@@ -1,11 +1,13 @@
 package domain
 
+import model.Lotto
+
 class LottoMachine(private val numberGenerator: NumberGenerator) {
 
-    fun generateLotto(): List<Int> {
-      val lotto = numberGenerator.generate()
+    fun generateLotto(): Lotto {
+      val numbers = numberGenerator.generate()
 
-        return lotto
+        return Lotto(numbers)
     }
 
     companion object {
