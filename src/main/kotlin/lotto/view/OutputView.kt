@@ -22,7 +22,7 @@ object OutputView {
     }
 
     fun profitRateResult(profitRate: ProfitRate) {
-        println("총 수익률은 ${floor((profitRate.value * 100)) * 100}입니다.")
+        println("총 수익률은 ${floor((profitRate.value * 100)) / 100}입니다.")
     }
 
     fun lottosResult(lottos: Lottos) {
