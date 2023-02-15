@@ -1,6 +1,6 @@
 package lotto.model.generator
 
-class LottoGenerator: NumberGenerator {
+class LottoGenerator : NumberGenerator {
     override fun generate(): List<Int> {
         return (START_LOTTO_RANGE..END_LOTTO_RANGE).shuffled().sorted().subList(0, SIZE_OF_LOTTO)
     }
