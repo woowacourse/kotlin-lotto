@@ -3,13 +3,10 @@ package domain
 import common.MAXIMUM_LOTTO_RANGE
 import common.MINIMUM_LOTTO_RANGE
 
-class Lotto(private val _numbers: Set<Int>) {
-    val numbers: Set<Int>
-        get() = _numbers
-
+class Lotto(val numbers: Set<Int>) {
     init {
-        require(_numbers.size == LOTTO_SIZE) { ERROR_LOTTO_SIZE }
-        require(_numbers.all { number -> number in MINIMUM_LOTTO_RANGE..MAXIMUM_LOTTO_RANGE }) { ERROR_LOTTO_RANGE }
+        require(numbers.size == LOTTO_SIZE) { ERROR_LOTTO_SIZE }
+        require(numbers.all { number -> number in MINIMUM_LOTTO_RANGE..MAXIMUM_LOTTO_RANGE }) { ERROR_LOTTO_RANGE }
     }
 
     companion object {
