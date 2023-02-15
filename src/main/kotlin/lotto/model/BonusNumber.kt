@@ -1,5 +1,3 @@
 package lotto.model
 
-class BonusNumber(
-    val number: Int
-)
+class BonusNumber(number: Int) : LotteryNumber(number)

@@ -1,6 +1,6 @@
 package lotto.model
 
-class LotteryNumber(
+open class LotteryNumber(
     val number: Int
 ) {
     init {
