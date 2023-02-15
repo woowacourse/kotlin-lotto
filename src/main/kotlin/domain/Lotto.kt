@@ -9,6 +9,10 @@ class Lotto(val numbers: List<Int>?) {
         require(numbers.filter { number -> number in 1..45 }.size == 6) { INPUT_LOTTO_RANGE_ERROR_MESSAGE }
     }
 
+    fun countMatchNumber(lotto: Lotto): Int {
+        return numbers!!.filter { lotto.numbers!!.contains(it) }.size
+    }
+
     companion object {
         const val INPUT_LOTTO_NULL_ERROR_MESSAGE = "당첨 번호가 입력되지 않았습니다."
         const val INPUT_LOTTO_SIZE_ERROR_MESSAGE = "당첨 번호가 6개가 아닙니다"
