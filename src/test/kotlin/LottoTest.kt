@@ -35,7 +35,7 @@ class LottoTest {
     @Test
     fun `당첨 결과가 1등인 경우`() {
         assertThat(
-            Lotto(setOf(1, 2, 3, 4, 5, 6)).getResult(
+            Lotto(setOf(1, 2, 3, 4, 5, 6)).getLottoResult(
                 WinningNumbers(setOf(1, 2, 3, 4, 5, 6), 7)
             )
         ).isEqualTo(
@@ -46,7 +46,7 @@ class LottoTest {
     @Test
     fun `당첨 결과가 2등인 경우`() {
         assertThat(
-            Lotto(setOf(1, 2, 3, 4, 5, 6)).getResult(
+            Lotto(setOf(1, 2, 3, 4, 5, 6)).getLottoResult(
                 WinningNumbers(setOf(1, 2, 3, 4, 5, 10), 6)
             )
         ).isEqualTo(
@@ -57,7 +57,7 @@ class LottoTest {
     @Test
     fun `당첨 결과가 3등인 경우`() {
         assertThat(
-            Lotto(setOf(1, 2, 3, 4, 5, 6)).getResult(
+            Lotto(setOf(1, 2, 3, 4, 5, 6)).getLottoResult(
                 WinningNumbers(setOf(1, 2, 3, 4, 5, 10), 9)
             )
         ).isEqualTo(
@@ -68,7 +68,7 @@ class LottoTest {
     @Test
     fun `당첨되지 않은 경우`() {
         assertThat(
-            Lotto(setOf(1, 2, 3, 4, 5, 6)).getResult(
+            Lotto(setOf(1, 2, 3, 4, 5, 6)).getLottoResult(
                 WinningNumbers(setOf(1, 2, 8, 9, 10, 11), 6)
             )
         ).isEqualTo(
