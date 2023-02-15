@@ -22,6 +22,8 @@ class WinningResult(
         }
     }
 
+    fun isGain(yield: Double): Boolean = yield >= 1
+
     private fun calculateTotalPrize(): Long {
         var totalPrize: Long = 0
 
