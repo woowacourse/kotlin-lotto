@@ -1,11 +1,11 @@
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class LottosTest {
+class PurchasedLottosTest {
 
     @Test
     fun `구입한 로또 전체의 당첨 결과를 확인한다`() {
-        val purchasedLottos = Lottos(
+        val purchasedLottos = PurchasedLottos(
             listOf(
                 Lotto(setOf(1, 2, 3, 4, 5, 6)),
                 Lotto(setOf(1, 2, 3, 4, 5, 7)),
