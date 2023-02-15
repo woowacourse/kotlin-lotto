@@ -1,4 +1,5 @@
 
+import domain.BonusNumber
 import domain.Lotto
 import domain.RandomLottoGenerator
 import org.assertj.core.api.Assertions.assertThat
@@ -59,5 +60,13 @@ class LottoTest {
         val winnigLotto = Lotto(listOf(1, 3, 5, 7, 10, 25))
 
         assertThat(testLotto.countMatchNumber(winnigLotto)).isEqualTo(3)
+    }
+
+    @Test
+    fun `생성된 로또에 보너스 번호가 존재하는지 확인`() {
+        val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = BonusNumber(3)
+
+        assertThat(testLotto.hasBonusNumber(bonusNumber)).isEqualTo(true)
     }
 }
