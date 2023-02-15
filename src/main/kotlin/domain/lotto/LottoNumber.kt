@@ -9,6 +9,13 @@ class LottoNumber(val value: Int) {
         require(value in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER) { ERROR_MESSAGE_LOTTO_NUMBER_OUT_OF_RANGE }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (other is LottoNumber) {
+            return this.value == other.value
+        }
+        return false
+    }
+
     companion object {
         private const val MIN_LOTTO_NUMBER = 1
         private const val MAX_LOTTO_NUMBER = 45
