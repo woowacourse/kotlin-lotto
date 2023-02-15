@@ -16,7 +16,7 @@ class LottoNumberTest {
 
     @ParameterizedTest
     @ValueSource(ints = [-1, 0, 46, 100])
-    fun `1미만 45초과 숫자가 주어졌을 때, 로또 객체 생성시, IllegalArgumentException 가 발생한다`() {
+    fun `1미만 45초과 숫자가 주어졌을 때, 로또 객체 생성시, IllegalArgumentException이 발생한다`() {
         Assertions.assertThatIllegalArgumentException().isThrownBy {
             val lottoNumber = LottoNumber(0)
             Assertions.assertThat(lottoNumber.value).isBetween(1, 45)
