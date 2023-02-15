@@ -17,4 +17,10 @@ class WinningResultTest {
         winningResult.countRank(Rank.SECOND)
         assertThat(winningResult.countMatchRanks).isEqualTo(listOf(1, 1, 0, 0, 0, 0))
     }
+
+    @Test
+    fun `지불 금액을 받아 수익률을 계산해 알려준다`() {
+        val winningResult = WinningResult(mutableListOf(0, 0, 0, 0, 1, 13))
+        assertThat(winningResult.calculateYield(14000)).isEqualTo(0.35)
+    }
 }
