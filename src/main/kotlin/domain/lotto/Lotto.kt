@@ -1,6 +1,6 @@
 package domain.lotto
 
-class Lotto(private val numbers: List<LottoNumber>) {
+open class Lotto(numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
     init {
         validateLottoNumbers()
     }
@@ -11,11 +11,11 @@ class Lotto(private val numbers: List<LottoNumber>) {
     }
 
     private fun validateLottoNumbersSize() {
-        require(numbers.size == LOTTO_SIZE) { ERROR_MESSAGE_INVALID_LOTTO_SIZE }
+        require(size == LOTTO_SIZE) { ERROR_MESSAGE_INVALID_LOTTO_SIZE }
     }
 
     private fun validateLottoNumbersDuplication() {
-        check(numbers.distinctBy { it.value }.size == LOTTO_SIZE) { ERROR_MESSAGE_DUPLICATED_LOTTO_NUMBER }
+        check(distinctBy { it.value }.size == LOTTO_SIZE) { ERROR_MESSAGE_DUPLICATED_LOTTO_NUMBER }
     }
 
     companion object {
