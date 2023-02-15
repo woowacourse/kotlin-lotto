@@ -2,14 +2,19 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoGenerator
+import lotto.domain.UserLotto
 import lotto.domain.WinningNumbers
+import lotto.domain.YieldCalculator
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class Controller {
     fun start() {
         val lottoNumbers = initializeLotto()
+        val userLotto = UserLotto(lottoNumbers)
         val winningNumbers = readBonusNumber(readWinningLotto())
+        val ranks = userLotto.calculateTotalRank(winningNumbers)
+        OutputView.printResult(ranks, YieldCalculator().calculateYield(lottoNumbers.size, ranks))
     }
 
     private fun initializeLotto(): List<Lotto> {
