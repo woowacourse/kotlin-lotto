@@ -1,16 +1,16 @@
 package domain.lotto
 
-class WinningLotto(numbers: List<LottoNumber>, bonusNumber: LottoNumber) : Lotto(numbers) {
+class WinningLotto(numbers: List<LottoNumber>) : Lotto(numbers) {
+    fun matchLotto(purchasedLotto: PurchasedLotto, bonusNumber: BonusNumber): Pair<Int, Boolean> {
+        val countOfMatch = matchPurchasedLotto(purchasedLotto)
+        val matchBonus = matchBonusNumber(purchasedLotto, bonusNumber)
 
-    init {
-        validateContainedBonusNumber(bonusNumber)
+        return Pair(countOfMatch, matchBonus)
     }
 
-    private fun validateContainedBonusNumber(bonusNumber: LottoNumber) {
-        check(this.none { it.value == bonusNumber.value }) { ERROR_MESSAGE_CONTAINED_BONUS_NUMBER }
-    }
+    private fun matchPurchasedLotto(purchasedLotto: PurchasedLotto): Int =
+        purchasedLotto.count { this.contains(it) }
 
-    companion object {
-        private const val ERROR_MESSAGE_CONTAINED_BONUS_NUMBER = "[ERROR] 6개의 로또 당첨 번호에 보너스 번호가 포함될 수 없습니다."
-    }
+    private fun matchBonusNumber(purchasedLotto: PurchasedLotto, bonusNumber: BonusNumber): Boolean =
+        purchasedLotto.any { it.value == bonusNumber.value }
 }
