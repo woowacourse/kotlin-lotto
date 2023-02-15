@@ -2,6 +2,7 @@ package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -19,17 +20,14 @@ class LottoTest {
 
     @Test
     fun `로또 숫자 개수가 6개가 맞지 않는 경우 false를 반환한다`() {
-        assertThat(
-            Lotto(listOf(1, 2, 3, 4, 5)).size == 6
-        ).isFalse
+        val list = listOf(1, 2, 3, 4, 5)
+        assertThrows<IllegalArgumentException> { Lotto(list) }
     }
 
     @Test
     fun `로또 번호 내에 중복된 번호가 있는 경우 false를 반환한다`() {
         val list = listOf(1, 2, 3, 4, 4, 5)
-        assertThat(
-            Lotto(list).hasNoDuplicateNumber()
-        ).isFalse
+        assertThrows<IllegalArgumentException> { Lotto(list) }
     }
 
     companion object {

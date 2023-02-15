@@ -24,12 +24,4 @@ class LottoControllerTest {
             LottoController().isDivided(14100)
         ).isFalse
     }
-
-    @ValueSource(strings = ["a", "-1"])
-    @ParameterizedTest
-    fun `양의 정수가 아닌 값이 입력된 경우 false를 반환한다`(input: String) {
-        assertThat(
-            input.isNumber()
-        ).isFalse
-    }
 }
