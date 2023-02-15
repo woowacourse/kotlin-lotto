@@ -14,9 +14,9 @@ internal class RankTest {
         val winNumber = WinNumber(listOf(1, 2, 3, 4, 5, 7))
         val bonus = Bonus(6)
         val winLotto = WinLotto(winNumber, bonus)
-        val rankDeterminer = LottoRankDeterminer(lotto, winLotto)
+        val rankDeterminer = LottoRankDeterminer()
 
-        assertThat(rankDeterminer.determine()).isEqualTo(Rank.SECOND)
+        assertThat(rankDeterminer.determine(lotto, winLotto)).isEqualTo(Rank.SECOND)
     }
 
     @Test
@@ -25,8 +25,8 @@ internal class RankTest {
         val winNumber = WinNumber(listOf(1, 2, 3, 4, 7, 8))
         val bonus = Bonus(6)
         val winLotto = WinLotto(winNumber, bonus)
-        val rankDeterminer = LottoRankDeterminer(lotto, winLotto)
+        val rankDeterminer = LottoRankDeterminer()
 
-        assertThat(rankDeterminer.determine()).isEqualTo(Rank.FOURTH)
+        assertThat(rankDeterminer.determine(lotto, winLotto)).isEqualTo(Rank.FOURTH)
     }
 }

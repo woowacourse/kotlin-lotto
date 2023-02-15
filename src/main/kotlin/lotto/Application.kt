@@ -3,6 +3,10 @@ package lotto
 import lotto.controller.World
 
 fun main() {
-    val world = World()
-    world.processLotto()
+    runCatching {
+        val world = World()
+        world.processLotto()
+    }.onFailure {
+        println("[ERROR]: " + it.message)
+    }
 }

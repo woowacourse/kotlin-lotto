@@ -60,9 +60,11 @@ class World {
     private fun makeWinStatistics(purchaseMoney: PurchaseMoney): WinStatistics {
         val lottos = initLottos(purchaseMoney)
         val winNumber = initWinNumber()
-        val bonus = initBonus(winNumber)
-        val winLotto = WinLotto(winNumber, bonus)
-        return WinStatistics(lottos.value.map { LottoRankDeterminer().determine(it, winLotto) })
+        return tryAndRerun {
+            val bonus = initBonus(winNumber)
+            val winLotto = WinLotto(winNumber, bonus)
+            WinStatistics(lottos.value.map { LottoRankDeterminer().determine(it, winLotto) })
+        } as WinStatistics
     }
 
     private fun makeProfitRate(purchaseMoney: PurchaseMoney, winStatistics: WinStatistics): ProfitRate {
