@@ -27,7 +27,7 @@ object InputView {
         return WinNumber(splittedInput.map { it.toInt() })
     }
 
-    fun readBonus(winNumber: WinNumber): Bonus {
+    fun readBonus(): Bonus {
         val input = readln()
         require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
         return Bonus(input.toInt())
