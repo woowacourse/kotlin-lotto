@@ -40,7 +40,10 @@
 
 - WinningResultCalculator
 - [x] 수익률을 계산한다.
-- [ ] 수익률을 받아 손해인지, 이득인지 계산한다.
+
+
+- Revenue
+- [x] 손해인지, 이득인지 알려준다.
 
 
 - RandomLotteryNumberGenerator
