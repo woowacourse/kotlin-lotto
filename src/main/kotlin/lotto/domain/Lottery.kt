@@ -1,9 +1,12 @@
 package lotto.domain
 
-class Lottery(
-    val numbers: List<LotteryNumber>
-) {
+class Lottery(numbers: List<Int>) {
+    private val _numbers: List<LotteryNumber>
+    val numbers: List<Int>
+        get() = _numbers.map { it.number }
+
     init {
+        this._numbers = numbers.map { LotteryNumber(it) }
         checkLotteryNumbersSize()
         checkNumbersDuplicate()
     }
@@ -13,7 +16,7 @@ class Lottery(
     }
 
     private fun checkNumbersDuplicate() {
-        require(numbers.size == numbers.distinctBy { it.number }.size) { LOTTERY_NUMBERS_DUPLICATE_ERROR }
+        require(numbers.size == numbers.distinct().size) { LOTTERY_NUMBERS_DUPLICATE_ERROR }
     }
 
     companion object {

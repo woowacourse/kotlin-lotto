@@ -9,14 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class LotteryTest {
     @Test
     fun `6개의 로또번호를 가진다`() {
-        val lotteryNumbers = listOf(
-            LotteryNumber(1),
-            LotteryNumber(10),
-            LotteryNumber(20),
-            LotteryNumber(30),
-            LotteryNumber(40),
-            LotteryNumber(45)
-        )
+        val lotteryNumbers = listOf(1, 10, 20, 30, 40, 45)
         val lottery = Lottery(lotteryNumbers)
 
         assertThat(lottery.numbers.size).isEqualTo(6)
@@ -25,22 +18,14 @@ class LotteryTest {
     @ParameterizedTest
     @ValueSource(strings = ["1,10,20,30,40", "1,2,10,20,30,40,45"])
     fun `로또번호가 6개가 아니면 에러가 발생한다`(numbers: String) {
-        val lotteryNumbers = numbers.split(",")
-            .map { LotteryNumber(it.toInt()) }
+        val lotteryNumbers = numbers.split(",").map { it.toInt() }
 
         assertThrows<IllegalArgumentException> { Lottery(lotteryNumbers) }
     }
 
     @Test
     fun `6개의 로또번호에 중복이 있으면 에러가 발생한다`() {
-        val lotteryNumbers = listOf(
-            LotteryNumber(10),
-            LotteryNumber(20),
-            LotteryNumber(30),
-            LotteryNumber(40),
-            LotteryNumber(10),
-            LotteryNumber(5)
-        )
+        val lotteryNumbers = listOf(10, 20, 30, 40, 10, 5)
 
         assertThrows<IllegalArgumentException> { Lottery(lotteryNumbers) }
     }
