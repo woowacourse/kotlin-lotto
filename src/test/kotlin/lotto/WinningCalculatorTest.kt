@@ -13,4 +13,14 @@ class WinningCalculatorTest {
             WinningCalculator().getWinningMoney(statistics)
         ).isEqualTo(money)
     }
+
+    @Test
+    fun `수익률을 계산한다`() {
+        val purchase = 14000
+        val winning = 5000
+
+        assertThat(
+            WinningCalculator().getEarningRate(purchase, winning)
+        ).isEqualTo(0.36)
+    }
 }
