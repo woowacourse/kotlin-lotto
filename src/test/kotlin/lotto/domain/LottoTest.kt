@@ -34,9 +34,9 @@ class LottoTest {
     @ParameterizedTest
     fun `당첨 번호와 몇개 일치 하는지 판단 한다`(numbers: List<Int>, matchCount: Int) {
         val lotto = Lotto(numbers)
-        val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
 
-        assertThat(lotto.countMatchingNumbers(winningNumbers)).isEqualTo(matchCount)
+        assertThat(lotto.countMatchingNumbers(winningLotto)).isEqualTo(matchCount)
     }
 
     @MethodSource("matchingBonusNumber")

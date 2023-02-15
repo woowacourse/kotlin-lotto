@@ -9,7 +9,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     MISS(0, 0);
 
     companion object {
-        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank? {
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
             if (matchBonus and (countOfMatch == 5)) {
                 return SECOND
             }
@@ -18,7 +18,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             }
             return values().findLast { rank ->
                 rank.countOfMatch == countOfMatch
-            }
+            }!!
         }
     }
 }

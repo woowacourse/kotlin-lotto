@@ -1,6 +1,6 @@
 package lotto.domain
 
-class WinningNumbers(winningLotto: Lotto, bonusNumber: Int) {
+class WinningNumbers(val winningLotto: Lotto, val bonusNumber: Int) {
     init {
         require(!winningLotto.numbers.contains(bonusNumber)) { BONUS_NUMBER_DUPLICATE_ERROR }
     }

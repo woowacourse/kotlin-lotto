@@ -7,8 +7,8 @@ class Lotto(val numbers: List<Int>) {
         require(numbers.distinct().size == 6) { LOTTO_DUPLICATE_ERROR }
     }
 
-    fun countMatchingNumbers(winningNumbers: List<Int>): Int {
-        return numbers.count { number -> winningNumbers.contains(number) }
+    fun countMatchingNumbers(winningLotto: Lotto): Int {
+        return numbers.count { number -> winningLotto.numbers.contains(number) }
     }
 
     fun checkMatchingBonusNumber(bonusNumber: Int): Boolean {
