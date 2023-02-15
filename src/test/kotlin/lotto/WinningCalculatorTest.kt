@@ -11,7 +11,7 @@ class WinningCalculatorTest {
         val money = 2_000_000_000 + 30_000_000 + 50_000 + 5_000 + 0
 
         assertThat(
-            WinningCalculator().getWinningMoney(statistics)
+            WinningCalculator.getWinningMoney(statistics)
         ).isEqualTo(money)
     }
 
@@ -21,7 +21,7 @@ class WinningCalculatorTest {
         val winning = 5000
 
         assertThat(
-            WinningCalculator().getEarningRate(purchase, winning)
-        ).isEqualTo(0.36)
+            WinningCalculator.getEarningRate(purchase, winning)
+        ).isEqualTo("0.36")
     }
 }

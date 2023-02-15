@@ -26,13 +26,20 @@ class OutputView {
         println(INSERT_BONUS_BALL)
     }
 
-    fun printResult(ranks: List<Int>) {
+    fun printResult(ranks: List<Int>, rates: String) {
         println(WINNING_STATISTICS)
         println(DIVIDER)
 
         val size = Rank.values().size
         Rank.values().reversed().subList(1, size).forEachIndexed { index, rank ->
             printEachRankResult(ranks.reversed().subList(1, size)[index], rank)
+        }
+
+        print(EARNING_RATE.format(rates))
+        if (rates.toDouble() < 1) {
+            println(LOSING_MONEY)
+        } else {
+            println()
         }
     }
 
@@ -59,7 +66,7 @@ class OutputView {
         private const val MATCH_STANDARD_WITH_BONUS = ", 보너스볼 일치"
         private const val MATCH_MONEY = "(%d원)"
         private const val MATCH_COUNT = "- %d개"
-        private const val EARNING_RATE = "총 수익률은 %f입니다."
+        private const val EARNING_RATE = "총 수익률은 %s입니다."
         private const val LOSING_MONEY = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
     }
 }
