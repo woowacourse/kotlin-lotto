@@ -5,7 +5,9 @@ import lotto.model.Rank
 
 class LottoWinStatisticsFormatter : WinStatisticsFormatter {
     override fun format(winStatistics: WinStatistics): String {
-        return Rank.values().reversed().joinToString("\n") {
+        val ranks = Rank.values()
+        val targetRanks = ranks.reversed().filter { it != Rank.MISS }
+        return targetRanks.joinToString("\n") {
             formatRank(it, winStatistics)
         }
     }
@@ -13,8 +15,6 @@ class LottoWinStatisticsFormatter : WinStatisticsFormatter {
     private fun formatRank(rank: Rank, winStatistics: WinStatistics): String {
         var additionalMessage = " "
 
-        if (rank == Rank.MISS)
-            return ""
         if (rank == Rank.SECOND)
             additionalMessage = ", 보너스 볼 일치"
 
