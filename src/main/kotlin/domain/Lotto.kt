@@ -13,6 +13,10 @@ class Lotto(val numbers: List<Int>?) {
         return numbers!!.filter { lotto.numbers!!.contains(it) }.size
     }
 
+    fun hasBonusNumber(bonusNumber: BonusNumber): Boolean {
+        return numbers!!.contains(bonusNumber.number)
+    }
+
     companion object {
         const val INPUT_LOTTO_NULL_ERROR_MESSAGE = "당첨 번호가 입력되지 않았습니다."
         const val INPUT_LOTTO_SIZE_ERROR_MESSAGE = "당첨 번호가 6개가 아닙니다"
