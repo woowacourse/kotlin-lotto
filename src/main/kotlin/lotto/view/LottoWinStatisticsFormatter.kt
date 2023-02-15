@@ -5,9 +5,9 @@ import lotto.model.Rank
 
 class LottoWinStatisticsFormatter : WinStatisticsFormatter {
     override fun format(winStatistics: WinStatistics): String {
-        return Rank.values().reversed().map {
+        return Rank.values().reversed().joinToString("\n") {
             formatRank(it, winStatistics)
-        }.joinToString { "\n" }
+        }
     }
 
     private fun formatRank(rank: Rank, winStatistics: WinStatistics): String {
