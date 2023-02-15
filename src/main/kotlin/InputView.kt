@@ -12,6 +12,6 @@ object InputView {
     fun requestCatchNumbers(): List<String> {
         println(CATCH_NUMBER_REQUEST_MESSAGE)
 
-        return readln().split(TOKENIZER)
+        return readln().split(TOKENIZER).map { it.trim() }
     }
 }
