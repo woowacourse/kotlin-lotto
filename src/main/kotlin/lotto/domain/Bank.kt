@@ -9,7 +9,13 @@ class Bank {
     fun checkMatchedBonusLottoNumber(lotto: Lotto, winningLotto: WinningLotto): Boolean =
         winningLotto.bonusLottoNumber.value in lotto.lottoNumbers.map { lottoNumber -> lottoNumber.value }
 
-    fun getPrizeMoney(lotto: Lotto, winningLotto: WinningLotto): Int {
+    fun sumTotalPrizeMoney(lottoBunch: LottoBunch, winningLotto: WinningLotto): Int {
+        var totalPrize = 0
+        lottoBunch.value.forEach { lotto -> totalPrize += getPrizeMoney(lotto, winningLotto) }
+        return totalPrize
+    }
+
+    private fun getPrizeMoney(lotto: Lotto, winningLotto: WinningLotto): Int {
         val rank = Rank.convertToGrade(
             countMatchedMainLottoNumber(lotto, winningLotto),
             checkMatchedBonusLottoNumber(lotto, winningLotto),

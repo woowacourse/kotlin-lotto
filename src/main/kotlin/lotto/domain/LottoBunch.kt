@@ -1,7 +1,7 @@
 package lotto.domain
 
 class LottoBunch(vararg lotto: Lotto) {
-    private var _lottoBunch: List<Lotto> = lotto.toList()
-    val lottoBunch: List<Lotto>
-        get() = _lottoBunch
+    private var _value: List<Lotto> = lotto.toList()
+    val value: List<Lotto>
+        get() = _value
 }
