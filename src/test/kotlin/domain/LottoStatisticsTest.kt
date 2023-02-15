@@ -1,6 +1,7 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -28,6 +29,19 @@ class LottoStatisticsTest {
         val lottoStatistics = LottoStatistics(winningLotto)
         val actual = lottoStatistics.compareBonusNumber(lotto.numbers)
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `단일 로또를 넘겨 받아서 당첨 결과를 반환한다`() {
+        val lotto = Lotto(setOf(1, 2, 3, 4, 5, 6))
+        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 7
+
+        val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
+        val lottoStatistics = LottoStatistics(winningLotto)
+        val rank = lottoStatistics.compare(lotto)
+
+        assertThat(rank).isEqualTo(Rank.FIRST)
     }
 
     companion object {

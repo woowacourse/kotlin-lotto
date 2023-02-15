@@ -9,4 +9,10 @@ class LottoStatistics(val winningLotto: WinningLotto) {
     }
 
     fun compareBonusNumber(numbers: Set<Int>): Boolean = numbers.contains(winningLotto.bonusNumber)
+
+    fun compare(lotto: Lotto): Rank {
+        val countOfMatch = compareNumbers(lotto.numbers)
+        val matchBonus = compareBonusNumber(lotto.numbers)
+        return Rank.valueOf(countOfMatch, matchBonus)
+    }
 }
