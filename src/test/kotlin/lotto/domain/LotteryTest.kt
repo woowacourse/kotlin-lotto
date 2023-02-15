@@ -4,7 +4,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 class LotteryTest {
     @Test
@@ -16,11 +18,9 @@ class LotteryTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1,10,20,30,40", "1,2,10,20,30,40,45"])
-    fun `로또번호가 6개가 아니면 에러가 발생한다`(numbers: String) {
-        val lotteryNumbers = numbers.split(",").map { it.toInt() }
-
-        assertThrows<IllegalArgumentException> { Lottery(lotteryNumbers) }
+    @MethodSource("lotteryNumbersErrorCase")
+    fun `로또번호가 6개가 아니면 에러가 발생한다`(numbers: List<Int>) {
+        assertThrows<IllegalArgumentException> { Lottery(numbers) }
     }
 
     @Test
@@ -28,5 +28,15 @@ class LotteryTest {
         val lotteryNumbers = listOf(10, 20, 30, 40, 10, 5)
 
         assertThrows<IllegalArgumentException> { Lottery(lotteryNumbers) }
+    }
+
+    companion object {
+        @JvmStatic
+        fun lotteryNumbersErrorCase(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(listOf(1, 10, 20, 30, 40)),
+                Arguments.of(listOf(1, 2, 10, 20, 30, 40, 45))
+            )
+        }
     }
 }
