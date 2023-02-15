@@ -14,6 +14,8 @@ class LottoController(
 
     fun start() {
         val money = getMoney()
+        val numberOfLotto = getNumberOfLotto(money)
+        outputView.printPurchase(numberOfLotto)
     }
 
     fun getMoney(): Int {
