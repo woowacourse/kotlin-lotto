@@ -2,6 +2,7 @@ package controller
 
 import domain.Lotto
 import domain.LottoNumber
+import domain.LottoResult
 import domain.LottoStore
 import domain.WinningLotto
 import view.InputView
@@ -13,8 +14,11 @@ class LottoController {
 
     fun run() {
         val amount = askAmount()
-        printPurchaseResult(amount)
+        val lottos = buyLotto(amount)
+        outputView.outputLottos(lottos)
         val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
+        val result = LottoResult.of(lottos, winningLotto)
+        outputView.outputResult(result)
     }
 
     private fun askAmount(): Int {
@@ -22,10 +26,9 @@ class LottoController {
         return inputView.inputAmount()
     }
 
-    private fun printPurchaseResult(amount: Int) {
+    private fun buyLotto(amount: Int): List<Lotto> {
         val store = LottoStore()
-        val lottos = store.buyLotto(amount)
-        outputView.outputLottos(lottos)
+        return store.buyLotto(amount)
     }
 
     private fun askWinningNumbers(): Lotto {
