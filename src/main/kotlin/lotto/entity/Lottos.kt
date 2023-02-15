@@ -2,11 +2,11 @@ package lotto.entity
 
 import lotto.model.LottoGenerator
 
-class Lottos(inputMoney: Int, lottoPrice: Int, lottoGenerator: LottoGenerator) {
+class Lottos(purchaseMoney: PurchaseMoney, lottoPrice: LottoPrice, lottoGenerator: LottoGenerator) {
     val value: List<Lotto>
 
     init {
-        val count = inputMoney / lottoPrice
+        val count = purchaseMoney.value / lottoPrice.value
         value = (0 until count).map {
             lottoGenerator.generate()
         }

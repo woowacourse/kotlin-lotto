@@ -1,10 +1,20 @@
 package lotto.view
 
+import lotto.entity.Lottos
 import lotto.entity.ProfitRate
 import lotto.entity.WinStatistics
 import kotlin.math.floor
 
-class OutputView {
+object OutputView {
+    const val MESSAGE_INPUT_MONEY = "구입금액을 입력해 주세요."
+    const val MESSAGE_PURCHASE_COUNT = "개를 구매했습니다."
+    const val MESSAGE_WIN_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
+    const val MESSAGE_BONUS = "보너스 볼을 입력해 주세요."
+
+    fun printMessage(message: String, vararg args: Any) {
+        println(String.format(message, args))
+    }
+
     fun winStatisticsResult(winStatistics: WinStatistics, winStatisticsFormatter: WinStatisticsFormatter) {
         println("당첨 통계")
         println("---------")
@@ -15,10 +25,9 @@ class OutputView {
         println("총 수익률은 ${floor((profitRate.value * 100)) * 100}입니다.")
     }
 
-    companion object {
-        private const val MESSAGE_INPUT_MONEY = "구입금액을 입력해 주세요."
-        private const val MESSAGE_PURCHASE_COUNT = "개를 구매했습니다."
-        private const val MESSAGE_WIN_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
-        private const val MESSAGE_BONUS = "보너스 볼을 입력해 주세요."
+    fun lottosResult(lottos: Lottos) {
+        lottos.value.forEach {
+            println(it.numbers.toString())
+        }
     }
 }
