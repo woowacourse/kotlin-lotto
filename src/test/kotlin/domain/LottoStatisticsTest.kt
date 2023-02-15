@@ -1,7 +1,6 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -20,15 +19,14 @@ class LottoStatisticsTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    @Test
-    fun `보너스 번호와 일치하는지 여부를 확인한다`() {
+    @ParameterizedTest(name = "{1}인 경우")
+    @MethodSource("provideLottoAndBonusMatchResult")
+    fun `보너스 번호와 일치하는지 여부를 확인한다`(lotto: Lotto, expected: Boolean) {
         val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = 7
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
-        val lotto = Lotto(setOf(1, 2, 3, 4, 5, 7))
         val lottoStatistics = LottoStatistics(winningLotto)
-        val expected = lottoStatistics.compareBonusNumber(lotto.numbers)
-        val actual = true
+        val actual = lottoStatistics.compareBonusNumber(lotto.numbers)
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -40,6 +38,14 @@ class LottoStatisticsTest {
                 Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 7)), 5),
                 Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 8, 7)), 4),
                 Arguments.arguments(Lotto(setOf(1, 2, 3, 9, 8, 7)), 3),
+            )
+        }
+
+        @JvmStatic
+        fun provideLottoAndBonusMatchResult(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 6)), false),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 7)), true)
             )
         }
     }
