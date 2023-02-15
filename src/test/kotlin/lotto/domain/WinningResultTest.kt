@@ -10,4 +10,11 @@ class WinningResultTest {
         val winningResult = WinningResult(mutableListOf(1, 0, 0, 0, 0))
         assertThat(winningResult.countMatchRanks).isEqualTo(mutableListOf(1, 0, 0, 0, 0))
     }
+
+    @Test
+    fun `등수를 받아 카운트한다`() {
+        val winningResult = WinningResult(mutableListOf(1, 0, 0, 0, 0))
+        winningResult.countRank(Rank.SECOND)
+        assertThat(winningResult.countMatchRanks).isEqualTo(listOf(1, 1, 0, 0, 0))
+    }
 }
