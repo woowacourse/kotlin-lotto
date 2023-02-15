@@ -2,6 +2,7 @@
 import domain.BonusNumber
 import domain.Lotto
 import domain.RandomLottoGenerator
+import domain.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -68,5 +69,14 @@ class LottoTest {
         val bonusNumber = BonusNumber(3)
 
         assertThat(testLotto.hasBonusNumber(bonusNumber)).isEqualTo(true)
+    }
+
+    @Test
+    fun `당첨된 로또가 몇 등인지 확인`() {
+        val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winnigLotto = Lotto(listOf(1, 2, 3, 4, 5, 10))
+        val bonusNumber = BonusNumber(6)
+
+        assertThat(testLotto.matchLotto(winnigLotto, bonusNumber)).isEqualTo(Rank.SECOND)
     }
 }
