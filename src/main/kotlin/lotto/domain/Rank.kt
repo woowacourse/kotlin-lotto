@@ -14,6 +14,13 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int, description: Strin
             return values().find { it.countOfMatch == countOfMatch } ?: MISS
         }
 
+        fun calculatePrize(name: String, count: Int): Long {
+            if (values().map { it.name }.contains(name)) {
+                return Rank.valueOf(name).winningMoney.toLong() * count
+            }
+            return 0
+        }
+
         private fun decideSecondOrThird(matchBonus: Boolean): Rank {
             if (matchBonus) return SECOND
             return THIRD
