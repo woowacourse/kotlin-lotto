@@ -24,6 +24,14 @@ class LottoTest {
         ).isFalse
     }
 
+    @Test
+    fun `로또 번호 내에 중복된 번호가 있는 경우 false를 반환한다`() {
+        val list = listOf(1, 2, 3, 4, 4, 5)
+        assertThat(
+            Lotto(list).hasNoDuplicateNumber()
+        ).isFalse
+    }
+
     companion object {
         @JvmStatic
         private fun matchLottoNumbers(): Stream<Arguments> {

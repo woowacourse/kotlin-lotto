@@ -17,4 +17,8 @@ class Lotto(val lotto: List<Int>) {
 
     private fun getRankByBonusNumber(winningLotto: WinningLotto) =
         if (lotto.contains(winningLotto.bonusNumber)) Rank.SECOND else Rank.THIRD
+
+    fun hasNoDuplicateNumber(): Boolean {
+        return lotto.size == lotto.distinct().size
+    }
 }
