@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.domain
 
 open class LotteryNumber(
     val number: Int
