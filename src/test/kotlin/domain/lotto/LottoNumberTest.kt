@@ -26,8 +26,6 @@ class LottoNumberTest {
     companion object {
         @JvmStatic
         fun provideValidRangeLottoNumber(): List<Arguments> =
-            (1..45).map { number ->
-                Arguments.of(number)
-            }
+            (1..45).map { number -> Arguments.of(number) }
     }
 }
