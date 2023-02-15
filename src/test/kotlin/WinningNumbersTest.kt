@@ -63,4 +63,24 @@ class WinningNumbersTest {
             )
         }
     }
+
+    @Test
+    fun `보너스 번호가 1이상 45이하가 아닌 경우`() {
+        assertThrows<IllegalArgumentException> {
+            WinningNumbers(
+                setOf(1, 2, 3, 4, 5, 6),
+                -5
+            )
+        }
+    }
+
+    @Test
+    fun `보너스 번호가 1이상 45이하인 경우`() {
+        assertDoesNotThrow {
+            WinningNumbers(
+                setOf(1, 2, 3, 4, 5, 6),
+                7
+            )
+        }
+    }
 }
