@@ -1,6 +1,5 @@
 package lotto.domain
 
-import lotto.domain.Lotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -40,6 +39,13 @@ class LottoTest {
         assertThat(lotto.countMatchingNumbers(winningNumbers)).isEqualTo(matchCount)
     }
 
+    @MethodSource("matchingBonusNumber")
+    @ParameterizedTest
+    fun `보너스 번호와 일치하는지 판단한다`(numbers: List<Int>, bonusNumber:Int, isCorrect:Boolean) {
+        val lotto = Lotto(numbers)
+        assertThat(lotto.checkMatchingBonusNumber(bonusNumber)).isEqualTo(isCorrect)
+    }
+
     companion object {
         @JvmStatic
         fun numbers(): List<Arguments> {
@@ -55,7 +61,15 @@ class LottoTest {
                 Arguments.of(listOf(1, 2, 3, 4, 8, 9), 4),
                 Arguments.of(listOf(1, 2, 3, 4, 5, 9), 5),
                 Arguments.of(listOf(1, 2, 3, 4, 5, 6), 6),
-                )
+            )
+        }
+
+        @JvmStatic
+        fun matchingBonusNumber(): List<Arguments> {
+            return listOf(
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6), 3, true),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6), 7, false)
+            )
         }
     }
 
@@ -63,6 +77,5 @@ class LottoTest {
         override fun generate(): List<Int> {
             return numbers
         }
-
     }
 }
