@@ -2,6 +2,8 @@ package lotto.domain
 
 import lotto.model.Lotto
 import lotto.model.generator.LottoGenerator
+import lotto.view.ERROR_NOT_DIVIDED
+import lotto.view.ERROR_NOT_POSITIVE_NUMBER
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -11,7 +13,19 @@ class LottoController(
 ) {
 
     fun start() {
+        val money = getMoney()
+    }
+
+    fun getMoney(): Int {
+        outputView.printInsertMoneyMessage()
         val money = inputView.getNumber()
+        val result = runCatching {
+            require(money.isNumber()) { ERROR_NOT_POSITIVE_NUMBER }
+            require(isDivided(money.toInt())) { ERROR_NOT_DIVIDED}
+        }.onFailure {
+            println(it.message)
+        }.isSuccess
+        return if (result) money.toInt() else getMoney()
     }
 
     fun getNumberOfLotto(money: Int): Int {

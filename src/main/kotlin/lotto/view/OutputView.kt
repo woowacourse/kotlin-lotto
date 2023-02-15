@@ -1,6 +1,9 @@
 package lotto.view
 
 class OutputView {
+    fun printInsertMoneyMessage() {
+        println(INSERT_MONEY)
+    }
 
     companion object {
         private const val INSERT_MONEY = "구입금액을 입력해 주세요."
