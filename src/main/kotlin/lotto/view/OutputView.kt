@@ -17,6 +17,10 @@ class OutputView {
         }
     }
 
+    fun printInsertWinningNumber() {
+        println(INSERT_WINNING_NUMBER)
+    }
+
     companion object {
         private const val INSERT_MONEY = "구입금액을 입력해 주세요."
         private const val INSERT_WINNING_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
