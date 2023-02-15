@@ -1,18 +1,14 @@
 package domain
 
 class LottoStatistics(val winningLotto: WinningLotto) {
-    fun compareNumbers(numbers: Set<Int>): Int {
+    fun compareNumbers(lotto: Lotto): Int {
         val winningNumbers = winningLotto.getWinningNumbers()
-        return numbers.filter { number ->
+        return lotto.numbers.filter { number ->
             winningNumbers.contains(number)
         }.size
     }
 
-    fun compareBonusNumber(numbers: Set<Int>): Boolean = numbers.contains(winningLotto.bonusNumber)
+    fun compareBonusNumber(lotto: Lotto): Boolean = lotto.numbers.contains(winningLotto.bonusNumber)
 
-    fun compare(lotto: Lotto): Rank {
-        val countOfMatch = compareNumbers(lotto.numbers)
-        val matchBonus = compareBonusNumber(lotto.numbers)
-        return Rank.valueOf(countOfMatch, matchBonus)
-    }
+    fun compare(lotto: Lotto): Rank = Rank.valueOf(compareNumbers(lotto), compareBonusNumber(lotto))
 }
