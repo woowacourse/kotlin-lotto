@@ -1,5 +1,5 @@
 package domain
 
 interface NumberGenerator {
-    fun generateNumber(): Int
+    fun generateNumbers(): List<Int>
 }
