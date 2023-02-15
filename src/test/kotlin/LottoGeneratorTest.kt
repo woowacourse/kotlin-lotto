@@ -1,3 +1,4 @@
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -26,5 +27,14 @@ class LottoGeneratorTest {
         assertDoesNotThrow {
             lottoGenerator.generateLottos(purchaseMoney)
         }
+    }
+
+    @Test
+    fun `구입 금액만큼 로또를 발행한다`() {
+        assertThat(
+            lottoGenerator.generateLottos(
+                PurchaseMoney(5000)
+            ).size
+        ).isEqualTo(5)
     }
 }
