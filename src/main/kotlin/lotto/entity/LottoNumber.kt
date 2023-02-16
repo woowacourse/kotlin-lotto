@@ -1,6 +1,6 @@
 package lotto.entity
 
-class LottoNumber(val value: Int) {
+data class LottoNumber(val value: Int) {
     init {
         require(value in (Lotto.MINIMUM_LOTTO_NUMBER..Lotto.MAXIMUM_LOTTO_NUMBER)) { ERROR_MESSAGE_RANGE_1_TO_45 }
     }
