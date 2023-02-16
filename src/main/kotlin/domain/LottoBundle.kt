@@ -1,4 +1,3 @@
 package domain
 
-class LottoBundle(val lottos: List<Lotto>) {
-}
+class LottoBundle(val lottos: List<Lotto>)
