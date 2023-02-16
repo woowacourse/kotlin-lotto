@@ -14,12 +14,10 @@ class LottoController(
     private val outputView: OutputView = OutputView(),
     private val generator: LottoGenerator = LottoGenerator()
 ) {
-
     fun start() {
         val money = getMoney()
         val numberOfLotto = getNumberOfLotto(money)
         outputView.printPurchase(numberOfLotto)
-
         val myLotto = getUserLotto(numberOfLotto)
         outputView.printUserLotto(myLotto)
 
@@ -82,14 +80,6 @@ class LottoController(
 
     fun getNumberOfLotto(money: Int): Int {
         return money / LOTTO_PRICE
-    }
-
-    fun generateLotto(number: Int): List<Lotto> {
-        val lotto = mutableListOf<Lotto>()
-        repeat(number) {
-            lotto.add(Lotto(LottoGenerator().generate()))
-        }
-        return lotto
     }
 
     fun isDivided(money: Int): Boolean {
