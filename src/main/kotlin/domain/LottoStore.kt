@@ -1,10 +1,12 @@
 package domain
 
-class LottoStore {
+class LottoStore(
+    private val lottoGenerator: LottoGenerator,
+) {
 
     fun buyLotto(amount: Int): List<Lotto> {
         require(amount in MINIMUM_AMOUNT..MAXIMUM_AMOUNT) { ERROR_CREATE_COUNT.format(amount) }
-        val lottoFactory = LottoFactory(RandomLottoGenerator())
+        val lottoFactory = LottoFactory(lottoGenerator)
         return lottoFactory.create(getCount(amount))
     }
 

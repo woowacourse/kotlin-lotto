@@ -3,6 +3,7 @@ package controller
 import domain.Lotto
 import domain.LottoNumber
 import domain.LottoStore
+import domain.RandomLottoGenerator
 import domain.WinningLotto
 import view.InputView
 import view.OutputView
@@ -26,7 +27,7 @@ class LottoController {
     }
 
     private fun buyLotto(amount: Int): List<Lotto> {
-        val store = LottoStore()
+        val store = LottoStore(RandomLottoGenerator())
         return store.buyLotto(amount)
     }
 
