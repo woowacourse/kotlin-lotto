@@ -1,8 +1,11 @@
 package lotto.controller
 
 import lotto.domain.LotteriesGenerator
+import lotto.domain.Lottery
+import lotto.domain.LotteryNumber
 import lotto.domain.LotteryNumberGenerator
 import lotto.domain.PurchaseAmount
+import lotto.domain.WinningLottery
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -13,6 +16,7 @@ class Controller(
 ) {
     fun run() {
         publishLotteries()
+        val winningLottery = getWinningLottery()
     }
 
     private fun publishLotteries() {
@@ -20,5 +24,11 @@ class Controller(
         val lotteries = LotteriesGenerator().generate(generator, money.getPurchaseQuantity())
         outputView.printLotteries(lotteries)
         outputView.printInterval()
+    }
+
+    private fun getWinningLottery(): WinningLottery {
+        val winningNumbers = Lottery(inputView.readWinningNumbers().map { LotteryNumber(it) })
+        val bonusNumber = LotteryNumber(inputView.readBonusNumber())
+        return WinningLottery(winningNumbers, bonusNumber)
     }
 }

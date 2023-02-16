@@ -14,7 +14,7 @@ class LotteriesGenerator {
         while (numbers.size != LOTTERY_SIZE) {
             numbers.add(numberGenerator.generate())
         }
-        return Lottery(*(numbers.toIntArray()))
+        return Lottery(numbers.map { LotteryNumber(it) })
     }
 
     companion object {
