@@ -26,5 +26,6 @@ class LottoController(
         ResultView.printPurchasedLottos(purchasedLottos)
         val lottoResults = purchasedLottos.getTotalLottoResults(winningNumbers)
         val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
+        ResultView.printLottoResults(lottoResults, profit)
     }
 }
