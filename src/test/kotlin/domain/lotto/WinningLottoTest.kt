@@ -1,6 +1,8 @@
 package domain.lotto
 
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -45,19 +47,19 @@ class WinningLottoTest {
         fun provideWinningLottoAndPurchasedLottoAndMatchedResult(): List<Arguments> =
             listOf(
                 Arguments.of(
-                    WinningLotto((1..6).map { number -> LottoNumber(number) }),
+                    WinningLotto((1..6).map { number -> LottoNumber(number) }, BonusNumber(10)),
                     BonusNumber(10),
                     PurchasedLotto((1..6).map { number -> LottoNumber(number) }),
                     Pair(6, false)
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }),
+                    WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, BonusNumber(10)),
                     BonusNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 8, 10, 12).map { number -> LottoNumber(number) }),
                     Pair(5, true)
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }),
+                    WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, BonusNumber(10)),
                     BonusNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 8, 12, 45).map { number -> LottoNumber(number) }),
                     Pair(5, false)
