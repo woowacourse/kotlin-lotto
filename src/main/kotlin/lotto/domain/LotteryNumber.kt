@@ -28,6 +28,10 @@ class LotteryNumber(
         return number
     }
 
+    override fun toString(): String {
+        return "$number"
+    }
+
     companion object {
         private const val LOTTERY_NUMBER_LOWER_BOUNDARY = 1
         private const val LOTTERY_NUMBER_UPPER_BOUNDARY = 45

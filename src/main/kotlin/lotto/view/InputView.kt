@@ -6,12 +6,10 @@ import lotto.domain.PurchaseAmount
 
 class InputView {
 
-    fun readPurchaseAmount(): PurchaseAmount {
-        println(REQUIRE_MESSAGE_PURCHASE_AMOUNT)
+    fun readBonusNumber(): LotteryNumber {
+        println(REQUIRE_MESSAGE_BONUS_NUMBER)
         val input = readln()
-        val purchaseAmount = PurchaseAmount(input.toInt())
-        println(NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY.format(purchaseAmount.getPurchaseQuantity()))
-        return purchaseAmount
+        return LotteryNumber(input.toInt())
     }
 
     fun readLottery(): Lottery {
@@ -21,10 +19,12 @@ class InputView {
         return Lottery(lotteryNumbers)
     }
 
-    fun readBonusNumber(): LotteryNumber {
-        println(REQUIRE_MESSAGE_BONUS_NUMBER)
+    fun readPurchaseAmount(): PurchaseAmount {
+        println(REQUIRE_MESSAGE_PURCHASE_AMOUNT)
         val input = readln()
-        return LotteryNumber(input.toInt())
+        val purchaseAmount = PurchaseAmount(input.toInt())
+        println(NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY.format(purchaseAmount.getPurchaseQuantity()))
+        return purchaseAmount
     }
 
     companion object {

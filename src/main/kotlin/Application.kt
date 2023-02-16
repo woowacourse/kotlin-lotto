@@ -1,7 +1,6 @@
-import lotto.domain.LotteryGenerator
+import lotto.controller.LottoController
 
 fun main() {
-    repeat(6) {
-        print(LotteryGenerator().generateLottery().numbers[it].number.toString() + ", ")
-    }
+    val lottoController = LottoController()
+    lottoController.run()
 }
