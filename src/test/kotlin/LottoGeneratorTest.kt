@@ -37,4 +37,14 @@ class LottoGeneratorTest {
             ).size
         ).isEqualTo(5)
     }
+
+    @Test
+    fun `로또를 발행한다`() {
+        val lottoGenerator = LottoGenerator {
+            setOf(1, 2, 3, 4, 5, 6)
+        }
+        val lotto = lottoGenerator.generateLottos(PurchaseMoney(1000)).first()
+
+        assertThat(lotto.numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6))
+    }
 }
