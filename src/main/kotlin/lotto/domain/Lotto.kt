@@ -2,7 +2,9 @@ package lotto.domain
 
 import lotto.constant.LOTTO_SIZE
 
-class Lotto(val lottoNumbers: List<LottoNumber>) {
+class Lotto(lottoNumbers: List<LottoNumber>) {
+    val lottoNumbers: List<LottoNumber> = lottoNumbers.sortedBy { it.value }
+
     init {
         validateLottoSize()
         validateDuplicateLottoNumber()
