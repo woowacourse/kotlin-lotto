@@ -53,4 +53,8 @@
 
 # Controller
 ## Controller
-- [ ] 전체 로직을 담당한다.  
+- [X] 전체 로직을 담당한다.  
+  - [X] 구입 금액을 입력받아 Lotto들이 담겨있는 Ticket 생성
+  - [X] 당첨 번호와 보너스 볼을 입력받아 WinningLotto 생성
+  - [X] LottoStatistics를 통해 당첨 통계 계산
+  - [X] resultView에 결과를 전달하여 출력
