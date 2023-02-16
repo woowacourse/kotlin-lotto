@@ -43,5 +43,5 @@
 - [x] 로또 번호를 하나를 생성한다.
 
 
-- LotteriesGenerator
-- [ ] 구입 로또 개수만큼 로또를 발행한다.
+- LotteryGenerator
+- [x] 로또를 발행한다.
