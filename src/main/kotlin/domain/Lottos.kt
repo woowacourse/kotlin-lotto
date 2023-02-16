@@ -6,7 +6,7 @@ class Lottos(val lottos: List<Lotto>) {
 
         lottos.forEach { lotto ->
             var rank = lotto.matchLotto(winningLotto, bonusNumber)
-            winningResult.setWinnigResult(rank!!)
+            if (rank != null) winningResult.setWinnigResult(rank)
         }
         return winningResult
     }
