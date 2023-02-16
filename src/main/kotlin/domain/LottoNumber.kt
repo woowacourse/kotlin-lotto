@@ -5,7 +5,7 @@ data class LottoNumber(val number: Int) {
         require(number in MINIMUM_NUMBER..MAXIMUM_NUMBER) { ERROR_NUMBER_IN_RANGE.format(number) }
     }
 
-    override fun toString() = number.toString()
+    override fun toString(): String = number.toString()
 
     companion object {
         const val MINIMUM_NUMBER = 1

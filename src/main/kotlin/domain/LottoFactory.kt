@@ -8,7 +8,7 @@ class LottoFactory(private val lottoGenerator: LottoGenerator) {
         return List(count) { createLotto() }
     }
 
-    private fun createLotto() = lottoGenerator.generateLotto()
+    private fun createLotto(): Lotto = lottoGenerator.generateLotto()
 
     companion object {
         private const val MINIMUM_COUNT = 1

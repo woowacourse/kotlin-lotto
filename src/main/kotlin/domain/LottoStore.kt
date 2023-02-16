@@ -8,7 +8,7 @@ class LottoStore {
         return lottoFactory.create(getCount(amount))
     }
 
-    private fun getCount(amount: Int) = amount / LOTTO_PRICE
+    private fun getCount(amount: Int): Int = amount / LOTTO_PRICE
 
     companion object {
         private const val MINIMUM_AMOUNT = 1000
