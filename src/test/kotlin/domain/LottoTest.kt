@@ -22,7 +22,7 @@ class LottoTest {
         val lotto = listOf(1, 2, 2, 3, 4, 47)
 
         assertThrows<IllegalArgumentException> { Lotto(lotto) }
-        Rank.valueOf(3,true)
+        Rank.valueOf(3, true)
     }
 
     @Test
@@ -32,6 +32,4 @@ class LottoTest {
 
         assertThrows<IllegalArgumentException> { Lotto(lotto) }
     }
-
-
 }

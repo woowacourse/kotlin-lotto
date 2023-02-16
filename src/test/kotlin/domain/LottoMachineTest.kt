@@ -12,5 +12,4 @@ class LottoMachineTest {
 
         assertThat(actual.size).isEqualTo(6)
     }
-
 }
