@@ -1,5 +1,5 @@
 package domain
 
 interface LottoGenerator {
-    fun generateLottos(money: Int): Lottos
+    fun generateLottos(money: Money): Lottos
 }

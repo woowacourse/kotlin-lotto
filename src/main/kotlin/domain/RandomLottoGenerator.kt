@@ -2,8 +2,8 @@ package domain
 
 class RandomLottoGenerator : LottoGenerator {
 
-    override fun generateLottos(money: Int): Lottos {
-        val count = money / LOTTO_PRICE
+    override fun generateLottos(money: Money): Lottos {
+        val count = money.price!! / LOTTO_PRICE
         var lottos = mutableListOf<Lotto>()
         repeat(count) { lottos.add(generateLotto()) }
         return Lottos(lottos)
