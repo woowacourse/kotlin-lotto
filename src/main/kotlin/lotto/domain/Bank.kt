@@ -2,7 +2,7 @@ package lotto.domain
 
 import lotto.constant.Rank
 
-class Bank {
+object Bank {
     fun countMatchedMainLottoNumber(lotto: Lotto, winningLotto: WinningLotto): Int =
         lotto.lottoNumbers.count { lottoNumber -> lottoNumber.value in winningLotto.mainLottoNumbers.map { it.value } }
 
@@ -21,7 +21,7 @@ class Bank {
     fun getYieldRate(purchaseMoney: PurchaseMoney, totalPrizeMoney: Int): Double =
         totalPrizeMoney / purchaseMoney.value.toDouble()
 
-    private fun getRank(lotto: Lotto, winningLotto: WinningLotto): Rank =
+    fun getRank(lotto: Lotto, winningLotto: WinningLotto): Rank =
         Rank.convertToGrade(
             countMatchedMainLottoNumber(lotto, winningLotto),
             checkMatchedBonusLottoNumber(lotto, winningLotto),

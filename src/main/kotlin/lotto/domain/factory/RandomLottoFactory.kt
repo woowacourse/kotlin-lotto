@@ -6,7 +6,7 @@ import lotto.constant.LOTTO_SIZE
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 
-object RandomLottoFactory : LottoFactory {
+class RandomLottoFactory : LottoFactory {
     override fun createLotto(): Lotto = Lotto(getRandomNumbers().map { LottoNumber(it) })
 
     private fun getRandomNumbers(): List<Int> = (LOTTO_MINIMUM_NUMBER..LOTTO_MAXIMUM_NUMBER).shuffled().take(LOTTO_SIZE)

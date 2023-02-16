@@ -1,16 +1,42 @@
 package lotto
 
+import lotto.domain.Bank
+import lotto.domain.Lotto
+import lotto.domain.LottoBunch
 import lotto.domain.LottoNumber
 import lotto.domain.PurchaseMoney
 import lotto.domain.Validator
 import lotto.domain.Validator.ERROR_INPUT_HANDLER
 import lotto.domain.Validator.ERROR_NOT_NUMBER
 import lotto.domain.WinningLotto
+import lotto.domain.WinningResult
+import lotto.domain.factory.LottoFactory
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class LottoController {
+class LottoController(private val lottoFactory: LottoFactory) {
     fun runLotto() {
+        val purchaseMoney = getPurchaseMoney()
+        val lottoBunch = getLottoBunch(purchaseMoney.getPurchaseCount())
+        val winningLotto = getWinningLotto()
+
+        OutputView.printWinningStatsScript()
+        val ranks = lottoBunch.value.map { Bank.getRank(it, winningLotto) }
+        val winningResult = WinningResult.from(ranks)
+        OutputView.printWinningResult(winningResult.toString())
+
+        OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
+    }
+
+    fun getLottoBunch(purchaseCount: Int): LottoBunch {
+        val lottoes = mutableListOf<Lotto>()
+        repeat(purchaseCount) {
+            lottoes.add(lottoFactory.createLotto())
+        }
+
+        val lottoBunch = LottoBunch(lottoes)
+        OutputView.printPurchaseResult(lottoBunch.toString(), purchaseCount)
+        return lottoBunch
     }
 
     private fun getPurchaseMoney(): PurchaseMoney {
