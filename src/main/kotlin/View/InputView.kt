@@ -26,6 +26,14 @@ class InputView : InputViewInterface {
     }
 
     override fun getBonusNumber(): Int {
-        TODO("Not yet implemented")
+        println("보너스 볼을 입력해 주세요.")
+        val bonusNumber = readln()
+        var result = 0
+        runCatching { result = bonusNumber.toInt() }
+            .onSuccess { return result }
+            .onFailure {
+                result = getBonusNumber()
+            }
+        return result
     }
 }
