@@ -16,13 +16,13 @@ class LottosTest {
         Lotto(listOf(4, 6, 15, 18, 24, 35))
     )
     @Test
-    fun `로또 리스트가 생성되는지 확인`() {
+    fun `로또 리스트가 4개 생성되었는지 확인`() {
         val lottos = Lottos(testLottos)
         assertThat(lottos.lottos.size).isEqualTo(4)
     }
 
     @Test
-    fun `금액에 맞게 로또 리스트가 생성되는지 확인`() {
+    fun `금액 10000원을 입력하면 10개의 로또가 생성되는지 확인`() {
         val lottos = RandomLottoGenerator().generateLottos(Money(10000))
         assertThat(lottos.lottos.size).isEqualTo(10)
     }
