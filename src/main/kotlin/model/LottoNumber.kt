@@ -1,9 +1,9 @@
 package model
 
-class LottoNumber(val lottoNumber: Int) {
+class LottoNumber(val number: Int) {
 
     init {
-        require(lottoNumber in range) { LOTTO_NUMBER_RANGE_ERROR_MESSAGE }
+        require(number in range) { LOTTO_NUMBER_RANGE_ERROR_MESSAGE }
     }
 
     companion object {
