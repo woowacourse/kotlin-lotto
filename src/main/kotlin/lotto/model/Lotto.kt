@@ -5,9 +5,6 @@ import lotto.view.ERROR_SIZE_OF_LOTTO
 
 class Lotto(val lotto: List<LottoNumber>) {
 
-    val size: Int
-        get() = lotto.size
-
     init {
         require(lotto.size == LOTTO_SIZE) { ERROR_SIZE_OF_LOTTO }
         require(hasNoDuplicateNumber()) { ERROR_DUPLICATE_NUMBER }

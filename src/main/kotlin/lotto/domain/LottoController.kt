@@ -19,8 +19,10 @@ class LottoController(
         val money = getMoney()
         val numberOfLotto = getNumberOfLotto(money)
         outputView.printPurchase(numberOfLotto)
+
         val myLotto = getUserLotto(numberOfLotto)
         outputView.printUserLotto(myLotto)
+
         val winningLotto = getWinningLotto(getWinningNumber())
         val ranks = myLotto.getWinningStatistics(winningLotto)
         val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
@@ -42,6 +44,7 @@ class LottoController(
         val result = validateInput {
             require(isDivided(money)) { ERROR_NOT_DIVIDED }
         }
+
         return if (result) money else getMoney()
     }
 
