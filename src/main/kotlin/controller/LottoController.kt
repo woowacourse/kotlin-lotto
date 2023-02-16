@@ -2,7 +2,6 @@ package controller
 
 import domain.Lotto
 import domain.LottoNumber
-import domain.LottoResult
 import domain.LottoStore
 import domain.WinningLotto
 import view.InputView
@@ -17,7 +16,7 @@ class LottoController {
         val lottos = buyLotto(amount)
         outputView.outputLottos(lottos)
         val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
-        val result = LottoResult.of(lottos, winningLotto)
+        val result = winningLotto.match(lottos)
         outputView.outputResult(result)
     }
 

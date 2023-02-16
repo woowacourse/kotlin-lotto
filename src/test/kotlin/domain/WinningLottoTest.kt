@@ -1,6 +1,5 @@
 package domain
 
-import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -32,22 +31,24 @@ class WinningLottoTest {
     }
 
     @Test
-    fun `당첨 번호는 로또에 대해 맞는 개수를 반환할 수 있다`() {
+    fun `로또 결과를 정상적으로 저장할 수 있다`() {
+        val lottos = listOf(
+            Lotto(1, 2, 3, 4, 5, 6), // 1등
+            Lotto(2, 3, 4, 5, 6, 7), // 2등
+            Lotto(3, 4, 5, 6, 7, 8), // 4등
+        )
         val winningLotto = WinningLotto(intArrayOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = Lotto(1, 2, 3, 4, 5, 6)
-
-        val result = winningLotto.getCountOfMatch(lotto)
-
-        assertThat(result).isEqualTo(6)
-    }
-
-    @Test
-    fun `당첨 번호는 로또에 대해 보너스 번호 매치 여부를 반환할 수 있다`() {
-        val winningLotto = WinningLotto(intArrayOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = Lotto(1, 2, 3, 4, 5, 7)
-
-        val result = winningLotto.matchBonus(lotto)
-
-        assertThat(result).isTrue
+        val result = winningLotto.match(lottos)
+        val expect = LottoResult(
+            mapOf(
+                Rank.FIRST to 1,
+                Rank.SECOND to 1,
+                Rank.THIRD to 0,
+                Rank.FOURTH to 1,
+                Rank.FIFTH to 0,
+                Rank.MISS to 0,
+            ),
+        )
+        assertEquals(result, expect)
     }
 }
