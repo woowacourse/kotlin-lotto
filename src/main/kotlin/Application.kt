@@ -1,4 +1,4 @@
-import domain.controller.LottoGame
+import controller.LottoGame
 
 fun main() {
     LottoGame().run()

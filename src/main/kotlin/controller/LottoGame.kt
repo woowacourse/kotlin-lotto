@@ -1,4 +1,4 @@
-package domain.controller
+package controller
 
 import domain.Lottos
 import domain.Money
