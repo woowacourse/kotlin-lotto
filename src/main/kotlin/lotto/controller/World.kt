@@ -18,42 +18,44 @@ import lotto.view.OutputView
 
 class World {
     private val lottoPrice = LottoPrice(DEFAULT_LOTTO_PRICE)
+    private val inputView = InputView()
+    private val outputView = OutputView()
 
     private fun initPurchaseMoney(): PurchaseMoney {
         return tryAndRerun {
-            OutputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
-            PurchaseMoney(InputView.readInt())
+            outputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
+            PurchaseMoney(inputView.readInt())
         } as PurchaseMoney
     }
 
     private fun initWinNumber(): Lotto {
         return tryAndRerun {
-            OutputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
-            Lotto(InputView.readIntList())
+            outputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
+            Lotto(inputView.readIntList())
         } as Lotto
     }
 
     private fun initBonus(): LottoNumber {
         return tryAndRerun {
-            OutputView.printMessage(OutputView.MESSAGE_BONUS)
-            LottoNumber(InputView.readInt())
+            outputView.printMessage(OutputView.MESSAGE_BONUS)
+            LottoNumber(inputView.readInt())
         } as LottoNumber
     }
 
     private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
         val lottoGenerator = RandomLottoGenerator()
         val lottos = Lottos(purchaseMoney, lottoPrice, lottoGenerator)
-        OutputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottos.value.size)
-        OutputView.lottosResult(lottos)
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottos.value.size)
+        outputView.lottosResult(lottos)
         return lottos
     }
 
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
         val winStatistics = makeWinStatistics(purchaseMoney)
-        OutputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
+        outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
         val profitRate = makeProfitRate(purchaseMoney, winStatistics)
-        OutputView.profitRateResult(profitRate)
+        outputView.profitRateResult(profitRate)
     }
 
     private fun makeWinStatistics(purchaseMoney: PurchaseMoney): WinStatistics {

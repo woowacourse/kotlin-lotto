@@ -6,12 +6,7 @@ import lotto.entity.ProfitRate
 import lotto.entity.WinStatistics
 import kotlin.math.floor
 
-object OutputView {
-    const val MESSAGE_INPUT_MONEY = "구입금액을 입력해 주세요."
-    const val MESSAGE_PURCHASE_COUNT = "%d개를 구매했습니다."
-    const val MESSAGE_WIN_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
-    const val MESSAGE_BONUS = "보너스 볼을 입력해 주세요."
-
+class OutputView {
     fun printMessage(message: String, vararg args: Any?) {
         println(String.format(message, *args))
     }
@@ -34,5 +29,12 @@ object OutputView {
 
     private fun formatLotto(lotto: Lotto): String {
         return "[${lotto.numbers.joinToString(", ") { it.value.toString() }}]"
+    }
+
+    companion object {
+        const val MESSAGE_INPUT_MONEY = "구입금액을 입력해 주세요."
+        const val MESSAGE_PURCHASE_COUNT = "%d개를 구매했습니다."
+        const val MESSAGE_WIN_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
+        const val MESSAGE_BONUS = "보너스 볼을 입력해 주세요."
     }
 }
