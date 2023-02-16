@@ -1,9 +1,9 @@
 package model
 
-class Money(money: Int) {
+class Payment(val money: Int) {
 
     init {
-        require(money < MINIMUM_PRICE) { MINIMUM_PRICE_ERROR_MESSAGE }
+        require(money >= MINIMUM_PRICE) { MINIMUM_PRICE_ERROR_MESSAGE }
         require(money % MINIMUM_PRICE == DIVISIBLE) { NOT_THOUSAND_PER_MONEY_ERROR_MESSAGE }
     }
 

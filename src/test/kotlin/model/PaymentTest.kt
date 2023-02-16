@@ -3,7 +3,7 @@ package model
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class MoneyTest {
+class PaymentTest {
 
     @Test
     fun `구입금액은 천원이상이여야 한다`() {
@@ -12,7 +12,7 @@ class MoneyTest {
 
         // then
         assertThrows<IllegalArgumentException> {
-            Money(money)
+            Payment(money)
         }
     }
 
@@ -23,7 +23,7 @@ class MoneyTest {
 
         // then
         assertThrows<IllegalArgumentException> {
-            Money(money)
+            Payment(money)
         }
     }
 }
