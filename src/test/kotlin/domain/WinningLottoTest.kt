@@ -2,14 +2,18 @@ package domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class WinningLottoTest {
     @Test
     fun `로또 번호, 로또 번호와 중복되지 않는 보너스 번호로 이루어진 당첨 번호를 생성할 수 있다`() {
         val winningLotto = WinningLotto(intArrayOf(1, 2, 3, 4, 5, 6), 10)
-        assertThat(winningLotto.lotto).isEqualTo(Lotto(1, 2, 3, 4, 5, 6))
-        assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber(10))
+        assertAll(
+            { assertEquals(winningLotto.lotto, Lotto(1, 2, 3, 4, 5, 6)) },
+            { assertEquals(winningLotto.bonusNumber, LottoNumber(10)) },
+        )
     }
 
     @Test
@@ -18,7 +22,13 @@ class WinningLottoTest {
         val bonusNumber = 3
         assertThatIllegalArgumentException()
             .isThrownBy { WinningLotto(numbers, bonusNumber) }
-            .withMessage("보너스 번호는 당첨 번호와 중복될 수 없습니다. \n잘못된 값 : ${Lotto(numbers.map(::LottoNumber).toSet())}, ${LottoNumber(bonusNumber)}")
+            .withMessage(
+                "보너스 번호는 당첨 번호와 중복될 수 없습니다. \n잘못된 값 : ${
+                    Lotto(
+                        numbers.map(::LottoNumber).toSet(),
+                    )
+                }, ${LottoNumber(bonusNumber)}",
+            )
     }
 
     @Test
