@@ -2,7 +2,7 @@ package domain
 
 data class LottoResult(private val result: Map<Rank, Int>) : Map<Rank, Int> by result {
     init {
-        require(result.values.sum() > 0) { ERROR_COUNT_OF_LOTTO_AT_LEAST_ONE }
+        require(getInvestment() > 0) { ERROR_COUNT_OF_LOTTO_AT_LEAST_ONE }
     }
     fun getRateOfReturn(): Double = getRevenue() / getInvestment()
 
