@@ -26,6 +26,17 @@ class InputView {
         return inputs.map { it.toInt() }
     }
 
+    fun readBonusNumber(): Int {
+        var correctInput = false
+        var input = ""
+        while (!correctInput) {
+            println(BONUS_NUMBERS_GUIDE)
+            input = readLine()
+            correctInput = isInteger(input, BONUS_NUMBERS_TYPE_ERROR)
+        }
+        return input.toInt()
+    }
+
     private fun readLine(): String {
         return readln()
     }
@@ -50,6 +61,8 @@ class InputView {
     }
 
     companion object {
+        private const val BONUS_NUMBERS_GUIDE = "보너스 볼을 입력해 주세요."
+        private const val BONUS_NUMBERS_TYPE_ERROR = "보너스 번호는 정수여야 합니다."
         private const val ERROR_HEADER = "[ERROR]"
         private const val PURCHASE_AMOUNT_GUIDE = "구입금액을 입력해 주세요."
         private const val PURCHASE_AMOUNT_TYPE_ERROR = "구매금액은 정수여야 합니다."
