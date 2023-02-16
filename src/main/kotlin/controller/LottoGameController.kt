@@ -1,0 +1,3 @@
+package controller
+
+class LottoGameController
