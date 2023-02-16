@@ -1,6 +1,6 @@
 class LottoGenerator(
     private val numberGenerator: () -> Set<Int> = {
-        (MINIMUM_NUMBER..MAXIMUM_NUMBER).shuffled().subList(ZERO, NUMBER_COUNT).sorted().toSet()
+        (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLotteryNumbers()
     }
 ) {
 
@@ -25,5 +25,7 @@ class LottoGenerator(
         private const val LOTTO_PRICE = 1000
         private const val NUMBER_UNIT_ERROR = "[ERROR] 천원 단위로 입력해주세요."
         private const val ZERO = 0
+
+        private fun IntRange.drawLotteryNumbers() = this.shuffled().subList(ZERO, NUMBER_COUNT).sorted().toSet()
     }
 }
