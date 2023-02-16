@@ -1,3 +1,3 @@
 fun main() {
-    LottoController().play()
+    LottoController().run()
 }
