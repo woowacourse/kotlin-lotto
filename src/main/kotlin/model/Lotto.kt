@@ -1,6 +1,6 @@
 package model
 
-class Lotto(lottoNumbers: List<Int>) {
+class Lotto(val lottoNumbers: List<Int>) {
     init {
         require(lottoNumbers.size == LOTTO_NUMBER_COUNT_RULE) { LOTTO_NUMBER_COUNT_ERROR_MESSAGE }
         require(lottoNumbers.max() <= MAXIMUM_LOTTO_NUMBER && lottoNumbers.min() >= MINIMUM_LOTTO_NUMBER) { LOTTO_NUMBER_RANGE_ERROR_MESSAGE }
@@ -14,6 +14,5 @@ class Lotto(lottoNumbers: List<Int>) {
         private const val LOTTO_NUMBER_COUNT_ERROR_MESSAGE = "[ERROR] 로또 번호의 개수가 6개가 아닙니다"
         private const val LOTTO_NUMBER_RANGE_ERROR_MESSAGE = "[ERROR] 로또 번호가 1~45가 아닙니다"
         private const val LOTTO_NUMBER_DUPLICATE_ERROR_MESSAGE = "[ERROR] 로또 번호가 중복입니다"
-
     }
 }

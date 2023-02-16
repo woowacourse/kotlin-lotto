@@ -10,7 +10,6 @@ class ShuffledNumberGenerator : NumberGenerator {
         }
 
         return lottoNumbers.shuffled().take(LOTTO_NUMBER_COUNT).sorted()
-
     }
 
     companion object {
