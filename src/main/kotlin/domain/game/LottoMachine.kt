@@ -6,7 +6,7 @@ import domain.lotto.number.LottoNumber
 import util.common.divideByThousand
 import util.common.generateDistinctRandomNumbers
 
-class LottoGame {
+class LottoMachine {
     fun purchaseLottos(money: Int): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
         val lottoCount = money.divideByThousand()
 
