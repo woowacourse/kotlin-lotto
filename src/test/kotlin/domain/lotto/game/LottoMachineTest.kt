@@ -3,7 +3,6 @@ package domain.lotto.game
 import domain.game.LottoMachine
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -30,9 +29,5 @@ class LottoMachineTest {
         assertThrows<IllegalArgumentException> {
             lottoMachine.purchaseLottos(money)
         }
-    }
-
-    @Test
-    fun `구매금액이 주어졌을 때, buyLotto 호출시, 구매금액을 1000으로 나눈 몫만큼 로또 리스트를 반환한다`() {
     }
 }
