@@ -1,5 +1,7 @@
 package domain
 
+import kotlin.math.floor
+
 class LottoStatistics(val winningLotto: WinningLotto) {
 
     fun compareNumbers(lotto: Lotto): Int {
@@ -19,5 +21,15 @@ class LottoStatistics(val winningLotto: WinningLotto) {
             result[compare(lotto).ordinal] += 1
         }
         return result
+    }
+
+    fun yield(result: List<Int>): String {
+        var sum = 0.0
+        var totalCount = 0.0
+        for ((index, count) in result.withIndex()) {
+            sum += Rank.values()[index].winningMoney * count
+            totalCount += count
+        }
+        return (floor((sum / (totalCount * 1000)) * 100) / 100).toString()
     }
 }

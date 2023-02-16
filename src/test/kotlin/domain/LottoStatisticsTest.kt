@@ -65,6 +65,18 @@ class LottoStatisticsTest {
         assertThat(result[2]).isEqualTo(1)
     }
 
+    @Test
+    fun `총 수익률을 계산한다`() {
+        val winResult = listOf(0, 0, 0, 0, 1, 13)
+        val winningNumber = setOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 13
+        val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
+        val lottoStatistics = LottoStatistics(winningLotto)
+        val result = lottoStatistics.yield(winResult)
+        val expected = "0.35"
+        assertThat(result).isEqualTo(expected)
+    }
+
     companion object {
         @JvmStatic
         fun provideLottoAndMatchCount(): Stream<Arguments> {
