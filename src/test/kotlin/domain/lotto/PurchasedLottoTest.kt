@@ -1,5 +1,8 @@
 package domain.lotto
 
+import domain.lotto.number.BonusNumber
+import domain.lotto.number.LottoNumber
+import domain.rank.Rank
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

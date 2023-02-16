@@ -1,4 +1,4 @@
-package domain.lotto
+package domain.lotto.number
 
 open class LottoNumber(val value: Int) {
     init {

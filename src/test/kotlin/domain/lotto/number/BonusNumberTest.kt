@@ -1,4 +1,4 @@
-package domain.lotto
+package domain.lotto.number
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest

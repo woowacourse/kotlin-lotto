@@ -1,5 +1,8 @@
 package domain.lotto
 
+import domain.lotto.number.BonusNumber
+import domain.lotto.number.LottoNumber
+
 class WinningLotto(numbers: List<LottoNumber>, bonusNumber: BonusNumber) : Lotto(numbers) {
     init {
         check(!this.contains(bonusNumber)) { ERROR_MESSAGE_CONTAINED_BONUS_NUMBER }

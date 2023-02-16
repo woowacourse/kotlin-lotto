@@ -1,5 +1,7 @@
 package domain.lotto
 
+import domain.lotto.number.LottoNumber
+
 open class Lotto(numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
     init {
         validateLottoNumbers()
