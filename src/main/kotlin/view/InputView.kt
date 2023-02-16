@@ -11,8 +11,8 @@ class InputView {
 
     private fun getInputMoney(input: String?): Money {
         return run {
-            require(input != null) {}
-            require(input != "") {}
+            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
+            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
             Money(input.toInt())
         }
     }
@@ -23,8 +23,8 @@ class InputView {
 
     private fun getInputWinningLotto(input: String?): Lotto {
         return run {
-            require(input != null) {}
-            require(input != "") {}
+            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
+            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
             Lotto(input.split(",").map { number -> number.toInt() })
         }
     }
@@ -35,9 +35,13 @@ class InputView {
 
     private fun getInputBonusNumber(input: String?): BonusNumber {
         return run {
-            require(input != null) {}
-            require(input != "") {}
+            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
+            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
             BonusNumber(input.toInt())
         }
+    }
+
+    companion object {
+        const val INPUT_VALUE_ERROR_MESSAGE = "값이 입력되지 않았습니다."
     }
 }
