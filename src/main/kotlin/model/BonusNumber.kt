@@ -1,6 +1,6 @@
 package model
 
-class BonusNumber(val lotto: Lotto, val bonusNumber: LottoNumber) {
+class BonusNumber(private val lotto: Lotto, private val bonusNumber: LottoNumber) {
 
     init {
         require(checkDuplicateNumber()) { DUPLICATE_BONUS_NUMBER }
@@ -11,6 +11,10 @@ class BonusNumber(val lotto: Lotto, val bonusNumber: LottoNumber) {
             if (lottoNumber.number == bonusNumber.number) return false
         }
         return true
+    }
+
+    fun getBonusNumber(): Int {
+        return bonusNumber.number
     }
 
     companion object {

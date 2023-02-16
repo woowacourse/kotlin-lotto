@@ -5,11 +5,13 @@ import model.Lotto
 
 class LottoAdministrator {
     fun getMatchOfNumber(lottoNumber: Lotto, winningNumber: Lotto): Int {
-        return lottoNumber.lottoNumbers.filter { winningNumber.lottoNumbers.contains(it) }.size
+        val lottoNumbers = lottoNumber.getNumbers()
+        return lottoNumbers.filter { winningNumber.getNumbers().contains(it) }.size
     }
 
     fun isMatchBonus(lottoNumber: Lotto, bonusNumber: BonusNumber): Boolean {
-        return lottoNumber.lottoNumbers.contains(bonusNumber.bonusNumber)
+        val lottoNumbers = lottoNumber.getNumbers()
+        return lottoNumbers.contains(bonusNumber.getBonusNumber())
     }
 
     fun getRank(countOfMatch: Int, matchBonus: Boolean): Rank? {

@@ -10,8 +10,8 @@ class LottoResult {
     }
 
     fun getProfitRate(result: HashMap<Rank, Int>): Double {
-        var profit: Double = 0.00
-        var countOfTicket: Double = 0.00
+        var profit = 0.00
+        var countOfTicket = 0.00
         result.forEach { (rank, count) ->
             profit += (rank.winningMoney * count)
             countOfTicket += count
