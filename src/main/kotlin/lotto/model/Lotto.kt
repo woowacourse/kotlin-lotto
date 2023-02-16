@@ -10,6 +10,8 @@ class Lotto(val lotto: List<LottoNumber>) {
         require(hasNoDuplicateNumber()) { ERROR_DUPLICATE_NUMBER }
     }
 
+    constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber))
+
     fun getCountOfMatch(winningLotto: WinningLotto): Rank {
         val count = lotto.count { winningLotto.winningNumbers.lotto.contains(it) }
         if (count == Rank.SECOND.countOfMatch) {
