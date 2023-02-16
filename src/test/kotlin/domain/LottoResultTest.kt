@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
-class LottoResultTest {
+class gLottoResultTest {
     @Test
     fun `로또 결과를 정상적으로 저장할 수 있다`() {
         val lottos = listOf(
