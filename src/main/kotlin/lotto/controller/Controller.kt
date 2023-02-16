@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoGenerator
+import lotto.domain.LottoNumber
 import lotto.domain.UserLotto
 import lotto.domain.WinningNumbers
 import lotto.domain.YieldCalculator
@@ -50,7 +51,7 @@ class Controller {
         }
     }
 
-    private fun readBonusNumber(winningLotto: Lotto): Int {
+    private fun readBonusNumber(winningLotto: Lotto): LottoNumber {
         return try {
             OutputView.printInputBonusNumberPrompt()
             val bonusNumber = InputView.readInputBonusNumber()

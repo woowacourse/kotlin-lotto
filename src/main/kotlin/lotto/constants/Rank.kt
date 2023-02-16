@@ -13,7 +13,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             if (matchBonus and (countOfMatch == 5)) {
                 return SECOND
             }
-            if (countOfMatch in 1 .. 2) {
+            if (countOfMatch in 1..2) {
                 return MISS
             }
             return values().findLast { rank ->

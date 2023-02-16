@@ -30,7 +30,7 @@ object OutputView {
     }
 
     private fun printLotto(lotto: Lotto) {
-        println("[${lotto.numbers.joinToString(", ")}]")
+        println("[${lotto.numbers.map { it.number }.joinToString(", ")}]")
     }
 
     fun printInputWinningNumbersPrompt() {

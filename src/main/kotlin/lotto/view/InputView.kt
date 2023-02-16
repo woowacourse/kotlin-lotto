@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.exception.Validator
 
 object InputView {
@@ -12,12 +13,12 @@ object InputView {
 
     fun readInputWinningLotto(): Lotto {
         val input = readln()
-        return Lotto(input.split(",").map { it.toInt() })
+        return Lotto(input.split(",").map { LottoNumber(it.toInt()) })
     }
 
-    fun readInputBonusNumber(): Int {
+    fun readInputBonusNumber(): LottoNumber {
         val input = readln()
         Validator.checkInputBonusNumber(input)
-        return input.toInt()
+        return LottoNumber(input.toInt())
     }
 }

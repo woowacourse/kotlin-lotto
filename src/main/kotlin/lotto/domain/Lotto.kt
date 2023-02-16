@@ -1,18 +1,19 @@
 package lotto.domain
 
-class Lotto(val numbers: List<Int>) {
+class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == 6) { LOTTO_SIZE_ERROR }
-        require(numbers.all { it in 1..45 }) { LOTTO_RANGE_ERROR }
-        require(numbers.distinct().size == 6) { LOTTO_DUPLICATE_ERROR }
+        require(numbers.map { it.number }.distinct().size == 6) { LOTTO_DUPLICATE_ERROR }
     }
 
     fun countMatchingNumbers(winningLotto: Lotto): Int {
-        return numbers.count { number -> winningLotto.numbers.contains(number) }
+        val numbers = numbers.map { it.number }
+        val winningNumbers = winningLotto.numbers.map { it.number }
+        return numbers.count { winningNumbers.contains(it) }
     }
 
-    fun checkMatchingBonusNumber(bonusNumber: Int): Boolean {
-        return numbers.contains(bonusNumber)
+    fun checkMatchingBonusNumber(bonusNumber: LottoNumber): Boolean {
+        return numbers.any { it.number == bonusNumber.number }
     }
 
     companion object {
