@@ -15,4 +15,9 @@ class LottoNumber(val number: Int): Comparable<LottoNumber> {
     override fun equals(other: Any?): Boolean {
         return number == (other as LottoNumber).number
     }
+
+    companion object {
+        const val START_LOTTO_RANGE = 1
+        const val END_LOTTO_RANGE = 45
+    }
 }
