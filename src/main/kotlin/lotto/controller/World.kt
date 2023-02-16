@@ -1,12 +1,12 @@
 package lotto.controller
 
 import lotto.entity.Bonus
+import lotto.entity.Lotto
 import lotto.entity.LottoPrice
 import lotto.entity.Lottos
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
-import lotto.entity.WinNumber
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
@@ -35,11 +35,11 @@ class World {
         return lottos
     }
 
-    private fun initWinNumber(): WinNumber {
+    private fun initWinNumber(): Lotto {
         return tryAndRerun {
             OutputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
             InputView.readWinNumber()
-        } as WinNumber
+        } as Lotto
     }
 
     private fun initBonus(): Bonus {

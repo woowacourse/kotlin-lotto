@@ -1,9 +1,9 @@
 package lotto.view
 
 import lotto.entity.Bonus
+import lotto.entity.Lotto
 import lotto.entity.LottoPrice
 import lotto.entity.PurchaseMoney
-import lotto.entity.WinNumber
 
 object InputView {
     private const val ERROR_MESSAGE_ONLY_NUMBER = "숫자로만 이루어져야 합니다"
@@ -19,12 +19,12 @@ object InputView {
         return purchaseMoney
     }
 
-    fun readWinNumber(): WinNumber {
+    fun readWinNumber(): Lotto {
         val input = readln()
         require(input.contains(",")) { ERROR_MESSAGE_SPLIT_BY_COMMA }
         val splittedInput = input.split(",").map { it.trim() }
         require(splittedInput.all { it.toIntOrNull() != null }) { ERROR_MESSAGE_SPLIT_ONLY_NUMBER }
-        return WinNumber(splittedInput.map { it.toInt() })
+        return Lotto(splittedInput.map { it.toInt() })
     }
 
     fun readBonus(): Bonus {

@@ -6,7 +6,7 @@ import lotto.entity.WinLotto
 class LottoRankDeterminer : RankDeterminer {
     override fun determine(lotto: Lotto, winLotto: WinLotto): Rank {
         val isBonus = lotto.numbers.contains(winLotto.bonus.value)
-        val countOfMatch = lotto.numbers.intersect(winLotto.winNumber.value.toSet()).size
+        val countOfMatch = lotto.numbers.intersect(winLotto.winNumber.numbers.toSet()).size
 
         if (isBonus && countOfMatch == BONUS_MATCH_COUNT)
             return Rank.SECOND
