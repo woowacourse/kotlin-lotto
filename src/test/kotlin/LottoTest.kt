@@ -20,7 +20,7 @@ class LottoTest {
     @Test
     fun `랜덤으로 생성된 로또가 6개의 숫자로 이루어졌는지 확인`() {
         val lotto = RandomLottoGenerator().generateLotto()
-        assertThat(lotto.numbers!!.size).isEqualTo(6)
+        assertThat(lotto.numbers.size).isEqualTo(6)
     }
 
     @Test
