@@ -6,6 +6,8 @@ class PurchaseMoney(val value: Int) {
         validatePurchaseMoneyRange()
     }
 
+    fun getPurchaseCount() = value / PURCHASE_UNIT
+
     private fun validatePurchaseMoneyUnit() {
         require(value % PURCHASE_UNIT == 0) { PURCHASE_MONEY_UNIT_ERROR }
     }
