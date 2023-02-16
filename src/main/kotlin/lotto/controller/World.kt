@@ -1,14 +1,15 @@
 package lotto.controller
 
+import lotto.entity.Game
 import lotto.entity.Lotto
 import lotto.entity.LottoNumber
 import lotto.entity.LottoPrice
-import lotto.entity.Lottos
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
+import lotto.model.GameGenerator
 import lotto.model.LottoProfitRateCalculator
 import lotto.model.LottoRankDeterminer
 import lotto.model.RandomLottoGenerator
@@ -42,12 +43,13 @@ class World {
         } as LottoNumber
     }
 
-    private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
+    private fun initLottos(purchaseMoney: PurchaseMoney): Game {
         val lottoGenerator = RandomLottoGenerator()
-        val lottos = Lottos(purchaseMoney, lottoPrice, lottoGenerator)
-        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottos.value.size)
-        outputView.lottosResult(lottos)
-        return lottos
+        val gameGenerator = GameGenerator(lottoGenerator)
+        val game = gameGenerator.generate(purchaseMoney, lottoPrice)
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, game.value.size)
+        outputView.gameResult(game)
+        return game
     }
 
     fun processLotto() {
