@@ -1,19 +1,13 @@
 package domain.lotto.number
 
-open class LottoNumber(val value: Int) {
+@JvmInline
+value class LottoNumber(val value: Int) {
     init {
         validateLottoNumberRange()
     }
 
     private fun validateLottoNumberRange() {
         require(value in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER) { ERROR_MESSAGE_LOTTO_NUMBER_OUT_OF_RANGE }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other is LottoNumber) {
-            return this.value == other.value
-        }
-        return false
     }
 
     companion object {
