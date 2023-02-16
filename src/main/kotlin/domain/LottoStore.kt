@@ -4,7 +4,7 @@ class LottoStore {
 
     fun buyLotto(amount: Int): List<Lotto> {
         require(amount in MINIMUM_AMOUNT..MAXIMUM_AMOUNT) { ERROR_CREATE_COUNT.format(amount) }
-        val lottoFactory = LottoFactory(RandomNumberGenerator())
+        val lottoFactory = LottoFactory(RandomLottoGenerator())
         return lottoFactory.create(getCount(amount))
     }
 
