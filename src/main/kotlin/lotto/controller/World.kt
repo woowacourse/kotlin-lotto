@@ -1,12 +1,12 @@
 package lotto.controller
 
 import lotto.entity.Bonus
+import lotto.entity.Lotto
 import lotto.entity.LottoPrice
 import lotto.entity.Lottos
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
-import lotto.entity.WinNumber
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
@@ -22,31 +22,30 @@ class World {
     private fun initPurchaseMoney(): PurchaseMoney {
         return tryAndRerun {
             OutputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
-            InputView.readPurchaseMoney(lottoPrice)
+            PurchaseMoney(InputView.readInt())
         } as PurchaseMoney
     }
 
-    private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
-        val lottoCount = purchaseMoney.value / lottoPrice.value
-        OutputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottoCount)
-        val lottoGenerator = RandomLottoGenerator()
-        val lottos = Lottos(purchaseMoney, lottoPrice, lottoGenerator)
-        OutputView.lottosResult(lottos)
-        return lottos
-    }
-
-    private fun initWinNumber(): WinNumber {
+    private fun initWinNumber(): Lotto {
         return tryAndRerun {
             OutputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
-            InputView.readWinNumber()
-        } as WinNumber
+            Lotto(InputView.readIntList())
+        } as Lotto
     }
 
     private fun initBonus(): Bonus {
         return tryAndRerun {
             OutputView.printMessage(OutputView.MESSAGE_BONUS)
-            InputView.readBonus()
+            Bonus(InputView.readInt())
         } as Bonus
+    }
+
+    private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
+        val lottoGenerator = RandomLottoGenerator()
+        val lottos = Lottos(purchaseMoney, lottoPrice, lottoGenerator)
+        OutputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottos.value.size)
+        OutputView.lottosResult(lottos)
+        return lottos
     }
 
     fun processLotto() {
@@ -60,11 +59,9 @@ class World {
     private fun makeWinStatistics(purchaseMoney: PurchaseMoney): WinStatistics {
         val lottos = initLottos(purchaseMoney)
         val winNumber = initWinNumber()
-        return tryAndRerun {
-            val bonus = initBonus()
-            val winLotto = WinLotto(winNumber, bonus)
-            WinStatistics(lottos.value.map { LottoRankDeterminer().determine(it, winLotto) })
-        } as WinStatistics
+        val bonus = initBonus()
+        val winLotto = WinLotto(winNumber, bonus)
+        return LottoRankDeterminer(lottos, winLotto).determine()
     }
 
     private fun makeProfitRate(purchaseMoney: PurchaseMoney, winStatistics: WinStatistics): ProfitRate {

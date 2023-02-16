@@ -6,6 +6,8 @@ class Lotto(val numbers: Set<LottoNumber>) {
         require(numbers.intersect(numbers).size == LOTTO_COUNT) { ERROR_MESSAGE_DUPLICATED_NUMBER }
     }
 
+    constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) }.toSet())
+
     companion object {
         private const val ERROR_MESSAGE_WIN_NUMBER_IS_SIX = "당첨 번호는 6개여야 합니다"
         private const val ERROR_MESSAGE_DUPLICATED_NUMBER = "당첨 번호는 서로 중복될 수 없습니다"
