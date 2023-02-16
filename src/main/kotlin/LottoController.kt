@@ -1,6 +1,7 @@
 class LottoController(
     private val numericValidator: NumericValidator = NumericValidator(),
-    private val lottoGenerator: LottoGenerator = LottoGenerator()
+    private val lottoGenerator: LottoGenerator = LottoGenerator(),
+    private val profitCalculator: ProfitCalculator = ProfitCalculator()
 ) {
 
     private val purchaseMoney: PurchaseMoney by lazy {
@@ -21,6 +22,7 @@ class LottoController(
 
     fun play() {
         val purchasedLottos = PurchasedLottos(lottoGenerator.generateLottos(purchaseMoney))
-        purchasedLottos.getTotalLottoResults(winningNumbers)
+        val lottoResults = purchasedLottos.getTotalLottoResults(winningNumbers)
+        val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
     }
 }
