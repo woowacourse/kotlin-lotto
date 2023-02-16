@@ -4,5 +4,17 @@ enum class LottoResult(val prizeMoney: Int, val matchCount: Int) {
     FORTH(50_000, 4),
     THIRD(1_500_000, 5),
     SECOND(30_000_000, 5),
-    FIRST(2_000_000_000, 6)
+    FIRST(2_000_000_000, 6);
+
+    companion object {
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean): LottoResult {
+            if (countOfMatch == 5 && matchBonus) {
+                return SECOND
+            }
+            return values().find { lottoResult ->
+                lottoResult.matchCount == countOfMatch
+            } ?: MISS
+        }
+    }
 }
+

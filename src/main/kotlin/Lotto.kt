@@ -8,14 +8,12 @@ class Lotto(val numbers: Set<Int>) {
         require(numbers.size == NUMBER_COUNT)
     }
 
-    fun getLottoResult(winningNumbers: WinningNumbers): LottoResult =
-        when (numbers.getMatchCount(winningNumbers)) {
-            6 -> LottoResult.FIRST
-            5 -> numbers.decideSecondOrThird(winningNumbers.bonusNumber)
-            4 -> LottoResult.FORTH
-            3 -> LottoResult.FIFTH
-            else -> LottoResult.MISS
-        }
+    fun getLottoResult(winningNumbers: WinningNumbers): LottoResult {
+        val matchCount = numbers.getMatchCount(winningNumbers)
+        val hasBonusNumber = numbers.contains(winningNumbers.bonusNumber)
+
+        return LottoResult.valueOf(matchCount, hasBonusNumber)
+    }
 
     private fun Set<Int>.getMatchCount(winningNumbers: WinningNumbers) =
         this.count { winningNumbers.catchNumbers.contains(it) }
