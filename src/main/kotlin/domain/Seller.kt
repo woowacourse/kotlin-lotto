@@ -1,8 +1,11 @@
 package domain
 
-class Seller(private val money: Int) {
+import model.Count
+import model.Payment
 
-    fun getLottoCount(): Int = money / ONE_TICKET_PRICE
+class Seller(private val payment: Payment) {
+
+    fun getLottoCount(): Count = Count(payment.money / ONE_TICKET_PRICE)
 
     companion object {
         private const val ONE_TICKET_PRICE = 1000
