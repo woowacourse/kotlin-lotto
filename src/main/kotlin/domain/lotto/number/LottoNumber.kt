@@ -17,8 +17,8 @@ open class LottoNumber(val value: Int) {
     }
 
     companion object {
-        private const val MIN_LOTTO_NUMBER = 1
-        private const val MAX_LOTTO_NUMBER = 45
+        const val MIN_LOTTO_NUMBER = 1
+        const val MAX_LOTTO_NUMBER = 45
         private const val ERROR_MESSAGE_LOTTO_NUMBER_OUT_OF_RANGE = "[ERROR] 로또 번호는 1이상 45이하여야 합니다."
     }
 }
