@@ -10,7 +10,7 @@ class WinningLottoTest {
     fun `로또 번호, 로또 번호와 중복되지 않는 보너스 번호로 이루어진 당첨 번호를 생성할 수 있다`() {
         val winningLotto = WinningLotto(intArrayOf(1, 2, 3, 4, 5, 6), 10)
         assertAll(
-            { assertEquals(winningLotto.lotto, Lotto(1, 2, 3, 4, 5, 6)) },
+            { assertEquals(winningLotto.lotto.toString(), Lotto(1, 2, 3, 4, 5, 6).toString()) },
             { assertEquals(winningLotto.bonusNumber, LottoNumber(10)) },
         )
     }
