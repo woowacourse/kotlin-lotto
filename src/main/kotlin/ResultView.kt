@@ -2,7 +2,7 @@ object ResultView {
 
     private const val NUMBER_OF_PURCHASED_LOTTO = "%s개를 구매했습니다."
     private const val LOTTO_RESULT_TITLE = "당첨 통계\n---------"
-    private const val MATCH_RESULT = "%s개 일치 (%s원) - %s개\n"
+    private const val MATCH_RESULT = "%s개 일치 (%s원) - %s개"
     private const val PROFIT_RESULT = "총 수익률은 %s입니다."
 
     fun printPurchasedNumberOfLottos(numberOfLotto: Int) {
@@ -19,20 +19,18 @@ object ResultView {
         println(LOTTO_RESULT_TITLE)
 
         LottoResult.values().forEach { lottoResult ->
-            print(lottoResult.formatMatchResult(lottoResults))
+            println(lottoResult.formatMatchResult(lottoResults))
         }
 
         println(PROFIT_RESULT.format(profit))
     }
 
     private fun LottoResult.formatMatchResult(lottoResults: List<LottoResult>): String =
-        if (this == LottoResult.MISS) {
-            ""
-        } else {
-            MATCH_RESULT.format(
-                this.matchCount, this.prizeMoney,
-                lottoResults.count { lottoResult ->
-                    lottoResult == this
-                })
-        }
+        MATCH_RESULT.format(
+            this.matchCount,
+            this.prizeMoney,
+            lottoResults.count { lottoResult ->
+                lottoResult == this
+            }
+        )
 }

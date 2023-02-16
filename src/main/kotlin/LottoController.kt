@@ -29,12 +29,14 @@ class LottoController(
         val purchasedLottos = PurchasedLottos(lottoGenerator.generateLottos(purchaseMoney))
         ResultView.printPurchasedNumberOfLottos(purchasedLottos.lottos.size)
         ResultView.printPurchasedLottos(purchasedLottos)
+
         return purchasedLottos
     }
 
     private fun checkPurchasedLottosResult(purchasedLottos: PurchasedLottos) {
         val lottoResults = purchasedLottos.getTotalLottoResults(winningNumbers)
         val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
+
         ResultView.printLottoResults(lottoResults, profit)
     }
 }
