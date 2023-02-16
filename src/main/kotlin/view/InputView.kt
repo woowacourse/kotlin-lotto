@@ -1,4 +1,4 @@
-package View
+package view
 
 class InputView : InputViewInterface {
     override fun getMoney(): Int {
