@@ -14,13 +14,11 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             require(countOfMatch in 0..6) { ERROR_COUNT_OF_MATCH_RANGE.format(countOfMatch) }
             require(countOfMatch != 6 || matchBonus.not()) { ERROR_IMPOSSIBLE_CASE }
 
-            return when (countOfMatch) {
-                6 -> FIRST
-                5 -> if (matchBonus) SECOND else THIRD
-                4 -> FOURTH
-                3 -> FIFTH
-                else -> MISS
+            var rank = values().find { countOfMatch == it.countOfMatch } ?: MISS
+            if (rank in listOf(SECOND, THIRD)) {
+                rank = if (matchBonus) SECOND else THIRD
             }
+            return rank
         }
 
         private const val ERROR_COUNT_OF_MATCH_RANGE = "맞는 숫자의 개수는 0 이상 6 이하여야 합니다.\n잘못된 값: %d"
