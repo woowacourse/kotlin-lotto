@@ -41,6 +41,10 @@ class OutputView {
         }
     }
 
+    fun outputYield(yield: Double) {
+        println(YIELD_MESSAGE.format(yield))
+    }
+
     companion object {
         const val OUTPUT_MONEY_MESSAGE = "구입금액을 입력해 주세요."
         const val OUTPUT_LOTTO_SIZE_MESSAGE = "개를 구매했습니다."
@@ -51,5 +55,6 @@ class OutputView {
         const val OUTPUT_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
         const val OUTPUT_WINNING_RESULT_MESSAGE = "당첨 통계"
         const val SEPERATE_MESSAGE = "---------"
+        const val YIELD_MESSAGE = "총 수익률은 %.2f입니다."
     }
 }
