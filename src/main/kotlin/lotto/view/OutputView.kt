@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.entity.Lotto
 import lotto.entity.Lottos
 import lotto.entity.ProfitRate
 import lotto.entity.WinStatistics
@@ -27,7 +28,11 @@ object OutputView {
 
     fun lottosResult(lottos: Lottos) {
         lottos.value.forEach {
-            println(it.numbers.toString())
+            println(formatLotto(it))
         }
+    }
+
+    private fun formatLotto(lotto: Lotto): String {
+        return "[${lotto.numbers.joinToString(", ") { it.value.toString() }}]"
     }
 }
