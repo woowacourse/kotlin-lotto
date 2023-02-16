@@ -1,6 +1,5 @@
 package domain.lotto.number
 
-import domain.lotto.number.LottoNumber
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

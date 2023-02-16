@@ -2,8 +2,10 @@ package util.common
 
 import io.kotest.inspectors.forAll
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class ExtensionsTest {
@@ -20,6 +22,13 @@ class ExtensionsTest {
         actual.forAll { randomNumber ->
             Assertions.assertThat(randomNumber).isBetween(START, END_INCLUSIVE)
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["10000,10", "50000,50", "100000,100", "1450,1", "0,0", "-1000,0"])
+    fun `정수가 주어졌을 때, divideByThousand 호출시, 1000으로 나눈 몫을 반환한다`(money: Int, expected: Int) {
+        val actual = money.divideByThousand()
+        assertEquals(actual, expected)
     }
 
     companion object {
