@@ -5,6 +5,11 @@ import lotto.domain.Rank
 import lotto.domain.WinningResult
 
 class OutputView {
+
+    fun printMessage(message: String) {
+        println(message)
+    }
+
     fun printWinningStats(amount: PurchaseAmount, result: WinningResult) {
         println(NOTICE_MESSAGE_WINNING_STAT)
         println(DIVIDER_LINE)
