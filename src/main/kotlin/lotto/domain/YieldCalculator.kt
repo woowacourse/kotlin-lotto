@@ -3,7 +3,7 @@ package lotto.domain
 import kotlin.math.floor
 import lotto.constants.Rank
 
-class YieldCalculator {
+object YieldCalculator {
     fun calculateYield(lottoCount: Int, ranks: List<Rank>): Double {
         val yield = calculatePrize(ranks).toDouble() / (lottoCount * 1000)
         return floor(yield * 100.0) / 100.0

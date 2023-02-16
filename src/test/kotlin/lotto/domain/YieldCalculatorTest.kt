@@ -11,8 +11,7 @@ class YieldCalculatorTest {
     @MethodSource("yieldTestNumbers")
     @ParameterizedTest
     fun `수익률을 계산한다`(lottoCount: Int, ranks: List<Rank>, yield: Double) {
-        val calculator = YieldCalculator()
-        assertThat(calculator.calculateYield(lottoCount, ranks)).isEqualTo(yield)
+        assertThat(YieldCalculator.calculateYield(lottoCount, ranks)).isEqualTo(yield)
     }
 
     companion object {
