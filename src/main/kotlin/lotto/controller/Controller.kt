@@ -27,6 +27,7 @@ class Controller(
 
         val counter = getRankCounter(lotteries, winningLottery)
         val profit = getProfit(purchase, counter.calculateTotalPrize())
+        outputView.printWinningResult(counter, profit)
     }
 
     private fun getPurchase(): PurchaseAmount {

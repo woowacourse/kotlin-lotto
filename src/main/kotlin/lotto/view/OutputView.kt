@@ -30,6 +30,7 @@ class OutputView {
     }
 
     private fun getRankAnnouncement(name: String, count: Int): String {
+        if (name == "MISS") return ""
         if (Rank.values().map { it.name }.contains(name)) {
             val rank = Rank.valueOf(name)
             return "${rank.description} (${rank.winningMoney}원) - ${count}개\n"
