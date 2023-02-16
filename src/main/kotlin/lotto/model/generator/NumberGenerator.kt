@@ -1,5 +1,7 @@
 package lotto.model.generator
 
+import lotto.model.LottoNumber
+
 interface NumberGenerator {
-    fun generate(): List<Int>
+    fun generate(): List<LottoNumber>
 }

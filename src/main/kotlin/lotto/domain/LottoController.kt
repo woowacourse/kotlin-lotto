@@ -1,6 +1,7 @@
 package lotto.domain
 
 import lotto.model.Lotto
+import lotto.model.LottoNumber
 import lotto.model.UserLotto
 import lotto.model.WinningLotto
 import lotto.model.generator.LottoGenerator
@@ -52,9 +53,13 @@ class LottoController(
         }.getOrNull() ?: getWinningLotto(lotto)
     }
 
-    private fun getBonusNumber(): Int {
+    private fun getBonusNumber(): LottoNumber {
         outputView.printInsertBonusNumber()
-        return inputView.getNumber()
+        return runCatching {
+            LottoNumber(inputView.getNumber())
+        }.onFailure {
+            println(it.message)
+        }.getOrNull() ?: getBonusNumber()
     }
 
     private fun getWinningNumber(): Lotto {
