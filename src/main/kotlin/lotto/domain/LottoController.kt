@@ -41,45 +41,41 @@ class LottoController(
     private fun getMoney(): Int {
         outputView.printInsertMoneyMessage()
         val money = inputView.getNumber()
-        val result = validateInput {
+        val result = runCatching {
             require(isDivided(money)) { ERROR_NOT_DIVIDED }
-        }
+        }.onFailure {
+            println(it.message)
+        }.isSuccess
 
         return if (result) money else getMoney()
     }
 
     private fun getWinningLotto(lotto: Lotto): WinningLotto {
-        return runCatching {
+        return validateInput {
             WinningLotto(lotto, getBonusNumber())
-        }.onFailure {
-            println(it.message)
-        }.getOrNull() ?: getWinningLotto(lotto)
+        } ?: getWinningLotto(lotto)
     }
 
     private fun getBonusNumber(): LottoNumber {
         outputView.printInsertBonusNumber()
-        return runCatching {
+
+        return validateInput {
             LottoNumber(inputView.getNumber())
-        }.onFailure {
-            println(it.message)
-        }.getOrNull() ?: getBonusNumber()
+        } ?: getBonusNumber()
     }
 
     private fun getWinningNumber(): Lotto {
         outputView.printInsertWinningNumber()
-        return runCatching {
+
+        return validateInput {
             Lotto(inputView.getNumberList())
-        }.onFailure {
-            println(it.message)
-        }.getOrNull() ?: getWinningNumber()
+        } ?: getWinningNumber()
     }
 
-    private fun validateInput(validate: () -> Unit): Boolean {
+    private fun <T> validateInput(create: () -> T): T? {
         return runCatching {
-            validate()
-        }.onFailure {
-            println(it.message)
-        }.isSuccess
+            create()
+        }.onFailure { it.message }.getOrNull()
     }
 
     fun getNumberOfLotto(money: Int): Int {

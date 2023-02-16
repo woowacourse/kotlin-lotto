@@ -2,7 +2,7 @@ package lotto.model
 
 import lotto.view.ERROR_OUT_OF_RANGE
 
-class LottoNumber(val number: Int): Comparable<LottoNumber> {
+class LottoNumber(val number: Int) : Comparable<LottoNumber> {
 
     init {
         require(number in 1..45) { ERROR_OUT_OF_RANGE }
