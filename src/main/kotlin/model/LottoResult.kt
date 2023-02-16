@@ -2,17 +2,8 @@ package model
 
 import domain.Rank
 
-class LottoResult() {
+class LottoResult {
     var result: HashMap<Rank, Int> = hashMapOf()
-
-    init {
-        result[Rank.MISS] = 0
-        result[Rank.FIRST] = 0
-        result.put(Rank.SECOND, 0)
-        result.put(Rank.THIRD, 0)
-        result.put(Rank.FOURTH, 0)
-        result.put(Rank.FIFTH, 0)
-    }
 
     fun plusRankCount(rank: Rank, lottoResult: HashMap<Rank, Int>) {
         lottoResult[rank] = (lottoResult[rank] ?: 0) + 1
