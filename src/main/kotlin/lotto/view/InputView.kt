@@ -6,8 +6,8 @@ class InputView {
     fun getNumber(): Int {
         val input = readlnOrNull()?.trim()
         val result = validateInput {
-            require(!input.isNullOrBlank()) { ERROR_NULL_OR_BLANK }
-            require(input.isNumber()) { ERROR_NOT_POSITIVE_NUMBER }
+            require(!input.isNullOrBlank())
+            require(input.isNumber()) { println(ERROR_NOT_POSITIVE_NUMBER) }
         }
         return if (result) input!!.toInt() else getNumber()
     }
@@ -15,8 +15,8 @@ class InputView {
     fun getNumberList(): List<LottoNumber> {
         val input = readlnOrNull()?.trim()
         val result = validateInput {
-            require(!input.isNullOrBlank()) { ERROR_NULL_OR_BLANK }
-            require(input.split(",").isNumbers()) { ERROR_NOT_POSITIVE_NUMBER }
+            require(!input.isNullOrBlank())
+            require(input.split(",").isNumbers()) { println(ERROR_NOT_POSITIVE_NUMBER) }
         }
         return if (result) input!!.split(",").map { LottoNumber(it.trim().toInt()) } else getNumberList()
     }
@@ -24,8 +24,6 @@ class InputView {
     private fun validateInput(validate: () -> Unit): Boolean {
         return runCatching {
             validate()
-        }.onFailure {
-            println(it.message)
         }.isSuccess
     }
 

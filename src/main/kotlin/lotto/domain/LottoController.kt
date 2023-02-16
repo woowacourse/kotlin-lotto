@@ -75,7 +75,9 @@ class LottoController(
     private fun <T> validateInput(create: () -> T): T? {
         return runCatching {
             create()
-        }.onFailure { it.message }.getOrNull()
+        }.onFailure {
+            println(it.message)
+        }.getOrNull()
     }
 
     fun getNumberOfLotto(money: Int): Int {
