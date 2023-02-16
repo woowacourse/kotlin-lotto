@@ -2,6 +2,8 @@ package lotto.domain
 
 class RandomNumberGenerator : LottoNumberGenerator {
     override fun generate(): List<LottoNumber> {
-        return (1..45).toList().shuffled().slice(0..5).sorted().map { number -> LottoNumber(number) }
+        return (LottoNumber.MINIMUM_LOTTO_NUMBER..LottoNumber.MAXIMUM_LOTTO_NUMBER).toList().shuffled()
+            .slice(0 until Lotto.LOTTO_SIZE)
+            .sorted().map { number -> LottoNumber(number) }
     }
 }
