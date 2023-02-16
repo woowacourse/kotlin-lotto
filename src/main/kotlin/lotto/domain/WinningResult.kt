@@ -5,7 +5,7 @@ import lotto.constant.Rank
 class WinningResult(val map: Map<Rank, Int>) {
 
     override fun toString(): String {
-        return map.keys.joinToString(
+        return map.keys.reversed().drop(1).joinToString(
             separator = WINNING_RESULT_TO_STRING_SEPARATOR,
         ) { EACH_RANK_SCRIPT.format(it.matchCount, it.prizeMoney, map[it]) }
     }
@@ -15,9 +15,9 @@ class WinningResult(val map: Map<Rank, Int>) {
         private const val WINNING_RESULT_TO_STRING_SEPARATOR = "\n"
 
         fun from(ranks: List<Rank>): WinningResult {
-            val value = Rank.values().associateWith { 0 }.toMutableMap()
-            ranks.forEach { rank -> value[rank]?.plus(1) }
-            return WinningResult(value)
+            val value = Rank.values().map { rank -> Pair(rank, ranks.count { it == rank }) }
+
+            return WinningResult(value.toMap())
         }
     }
 }
