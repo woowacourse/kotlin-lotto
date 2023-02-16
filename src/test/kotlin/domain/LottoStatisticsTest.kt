@@ -1,6 +1,7 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -41,6 +42,27 @@ class LottoStatisticsTest {
         val actual = lottoStatistics.compare(lotto)
 
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Ticket을 넘겨 받아서 당첨 번호와 비교한다`() {
+        val ticket = Ticket(
+            listOf(
+                Lotto(setOf(1, 2, 3, 4, 5, 6)),
+                Lotto(setOf(1, 2, 3, 4, 5, 6)),
+                Lotto(setOf(1, 2, 3, 4, 5, 13)),
+                Lotto(setOf(1, 2, 3, 4, 5, 9)),
+            )
+        )
+        val winningNumber = setOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 13
+        val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
+        val lottoStatistics = LottoStatistics(winningLotto)
+        val result: List<Int> = lottoStatistics.compareTicket(ticket)
+
+        assertThat(result[0]).isEqualTo(2)
+        assertThat(result[1]).isEqualTo(1)
+        assertThat(result[2]).isEqualTo(1)
     }
 
     companion object {
