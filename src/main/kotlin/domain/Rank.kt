@@ -8,9 +8,6 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     FIFTH(3, 5_000),
     MISS(0, 0);
 
-    // companion object {
-    //     fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
-    //
-    //     }
-    // }
+    companion object {
+    }
 }
