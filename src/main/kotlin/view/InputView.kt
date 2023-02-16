@@ -1,5 +1,6 @@
 package view
 
+import domain.BonusNumber
 import domain.Lotto
 import domain.Money
 
@@ -16,7 +17,7 @@ class InputView {
         }
     }
 
-    fun inputWinningLotto(): Lotto? {
+    fun inputWinningLotto(): Lotto {
         return getInputWinningLotto(readLine())
     }
 
@@ -25,6 +26,18 @@ class InputView {
             require(input != null) {}
             require(input != "") {}
             Lotto(input.split(",").map { number -> number.toInt() })
+        }
+    }
+
+    fun inputBonusNumber(): BonusNumber {
+        return getInputBonusNumber(readLine())
+    }
+
+    private fun getInputBonusNumber(input: String?): BonusNumber {
+        return run {
+            require(input != null) {}
+            require(input != "") {}
+            BonusNumber(input.toInt())
         }
     }
 }
