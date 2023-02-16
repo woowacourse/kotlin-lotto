@@ -33,7 +33,7 @@ class LottoController {
 
     private fun askWinningNumbers(): Lotto {
         outputView.outputGetWinningNumbers()
-        return Lotto.create(inputView.inputWinningNumbers())
+        return Lotto(*inputView.inputWinningNumbers())
     }
 
     private fun askBonusNumber(): LottoNumber {
