@@ -17,8 +17,15 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     }
 
     companion object {
-        override fun toString(): String {
-            return RANK_MESSAGE
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank? {
+            var rank = values().find {
+                it.countOfMatch == countOfMatch
+            }
+
+            if (rank in listOf(SECOND, THIRD)) {
+                rank = if (matchBonus) SECOND else THIRD
+            }
+            return rank
         }
         const val RANK_MESSAGE = "%d개 일치 (%d원)- "
         const val RANK_BONUS_MESSAGE = "%d개 일치, 보너스 볼 일치(%d원)- "

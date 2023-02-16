@@ -17,19 +17,8 @@ class Lotto(val numbers: List<Int>?) {
         return numbers!!.contains(bonusNumber.number)
     }
 
-    fun matchLotto(lotto: Lotto, bonusNumber: BonusNumber): Rank =
-        when (countMatchNumber(lotto)) {
-            6 -> Rank.FIRST
-            5 -> checkBonusNumber(bonusNumber)
-            4 -> Rank.FOURTH
-            3 -> Rank.FIFTH
-            else -> Rank.MISS
-        }
-
-    fun checkBonusNumber(bonusNumber: BonusNumber): Rank {
-        if (hasBonusNumber(bonusNumber)) return Rank.SECOND
-        return Rank.THIRD
-    }
+    fun matchLotto(lotto: Lotto, bonusNumber: BonusNumber): Rank? =
+        Rank.valueOf(countMatchNumber(lotto), hasBonusNumber(bonusNumber))
 
     companion object {
         const val INPUT_LOTTO_NULL_ERROR_MESSAGE = "당첨 번호가 입력되지 않았습니다."
