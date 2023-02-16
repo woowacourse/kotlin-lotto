@@ -18,6 +18,7 @@ class LottoController(
         val lotteries = createLotteries(purchaseAmount)
         val winningLottery = WinningLottery(inputView.readLottery(), inputView.readBonusNumber())
         val winningResult = calculateResult(lotteries, winningLottery)
+        println()
         outputView.printWinningStats(purchaseAmount, winningResult)
     }
 
@@ -41,7 +42,11 @@ class LottoController(
             lotteries.add(generator.generateLottery())
         }
 
-        repeat(lotteries.size) { outputView.printMessage(lotteries[it].numbers.toString()) }
+        repeat(lotteries.size) {
+            val numbers = lotteries[it].numbers.sortedBy { it.number }
+            outputView.printMessage(numbers.toString())
+        }
+        println()
         return lotteries
     }
 }
