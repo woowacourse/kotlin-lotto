@@ -7,12 +7,11 @@ class WinningResult {
         Rank.FOURTH to 0,
         Rank.THIRD to 0,
         Rank.SECOND to 0,
-        Rank.FIRST to 0,
-        Rank.MISS to 0
+        Rank.FIRST to 0
     )
 
     fun setWinnigResult(rank: Rank) {
-        result.put(rank, result.getOrDefault(rank, 0) + 1)
+        if (!rank.equals(Rank.MISS)) result.put(rank, result.getOrDefault(rank, 0) + 1)
     }
 
     fun getWinningMoney(): Int {
