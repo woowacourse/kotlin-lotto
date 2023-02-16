@@ -19,13 +19,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         val purchaseMoney = getPurchaseMoney()
         val lottoBunch = getLottoBunch(purchaseMoney.getPurchaseCount())
         val winningLotto = getWinningLotto()
-
-        OutputView.printWinningStatsScript()
-        val ranks = lottoBunch.value.map { Bank.getRank(it, winningLotto) }
-        val winningResult = WinningResult.from(ranks)
-        OutputView.printWinningResult(winningResult.toString())
-
-        OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
+        confirmLottoWinning(lottoBunch, winningLotto, purchaseMoney)
     }
 
     fun getLottoBunch(purchaseCount: Int): LottoBunch {
@@ -110,5 +104,14 @@ class LottoController(private val lottoFactory: LottoFactory) {
     ): Any {
         println(error.message)
         return repeatFunction()
+    }
+
+    private fun confirmLottoWinning(lottoBunch: LottoBunch, winningLotto: WinningLotto, purchaseMoney: PurchaseMoney) {
+        OutputView.printWinningStatsScript()
+        val ranks = lottoBunch.value.map { Bank.getRank(it, winningLotto) }
+        val winningResult = WinningResult.from(ranks)
+        OutputView.printWinningResult(winningResult.toString())
+
+        OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
     }
 }
