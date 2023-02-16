@@ -1,7 +1,7 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
@@ -17,7 +17,7 @@ class RankTest {
     fun `번호 매치 개수와 보너스 번호 매치 여부를 받으면 그에 맞는 랭크를 반환할 수 있다`(countOfMatch: Int, matchBonus: Boolean, rank: Rank) {
         val result = Rank.valueOf(countOfMatch, matchBonus)
 
-        assertEquals(result, rank)
+        assertThat(result).isEqualTo(rank)
     }
 
     @ParameterizedTest

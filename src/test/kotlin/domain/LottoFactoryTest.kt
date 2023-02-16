@@ -1,7 +1,7 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -14,7 +14,7 @@ class LottoFactoryTest {
 
         val result = lottoFactory.create(count)
 
-        assertEquals(result.size, count)
+        assertThat(result.size).isEqualTo(count)
     }
 
     @ParameterizedTest

@@ -1,7 +1,7 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class LottoResultTest {
@@ -21,7 +21,7 @@ class LottoResultTest {
         val expect =
             (Rank.FIRST.winningMoney.toDouble() + Rank.SECOND.winningMoney + Rank.FOURTH.winningMoney) / (lottoResult.values.sum() * LottoStore.LOTTO_PRICE)
 
-        assertEquals(result, expect)
+        assertThat(result).isEqualTo(expect)
     }
 
     @Test

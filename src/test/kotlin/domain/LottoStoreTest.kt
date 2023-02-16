@@ -1,7 +1,7 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -10,7 +10,7 @@ class LottoStoreTest {
     @ParameterizedTest
     fun `구매금액이 1000원 이상 100001원 이하면 개수만큼 로또를 반환할 수 있다`(amount: Int) {
         val lotto: List<Lotto> = LottoStore().buyLotto(amount)
-        assertEquals(lotto.size, amount / 1000)
+        assertThat(lotto.size).isEqualTo(amount / 1000)
     }
 
     @ValueSource(ints = [-1, 100001])
