@@ -86,7 +86,13 @@ class LottoController(private val lottoFactory: LottoFactory) {
         return LottoNumber(input.toInt())
     }
 
-    fun getWinningLotto(): WinningLotto = WinningLotto(getMainLottoNumber(), getBonusLottoNumber())
+    fun getWinningLotto(): WinningLotto {
+        return runCatching {
+            WinningLotto(getMainLottoNumber(), getBonusLottoNumber())
+        }.getOrElse { error ->
+            inputErrorHandler(error, ::getWinningLotto) as WinningLotto
+        }
+    }
 
     private fun inputErrorHandler(
         error: Throwable,
