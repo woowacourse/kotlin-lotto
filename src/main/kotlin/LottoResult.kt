@@ -11,6 +11,7 @@ enum class LottoResult(val prizeMoney: Int, val matchCount: Int) {
             if (countOfMatch == 5 && matchBonus) {
                 return SECOND
             }
+
             return values().find { lottoResult ->
                 lottoResult.matchCount == countOfMatch
             } ?: MISS

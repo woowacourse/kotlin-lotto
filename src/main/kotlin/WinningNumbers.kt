@@ -3,23 +3,30 @@ class WinningNumbers(
     val bonusNumber: Int
 ) {
     init {
-        require(
-            catchNumbers.all { number ->
-                number.checkNumberRange()
-            }
-        ) {
+        validateCatchNumbers()
+        validateBonusNumber()
+    }
+
+    private fun validateCatchNumbers() {
+        require(catchNumbers.checkNumbersRange()) {
             CATCH_NUMBER_RANGE_ERROR
         }
-
         require(catchNumbers.size == CATCH_NUMBERS_COUNT) {
             CATCH_NUMBER_COUNT_ERROR
         }
+    }
+
+    private fun validateBonusNumber() {
         require(!catchNumbers.contains(bonusNumber)) {
             OVERLAPPED_ERROR
         }
-        require(bonusNumber.checkNumberRange()){
+        require(bonusNumber.checkNumberRange()) {
             BONUS_NUMBER_RANGE_ERROR
         }
+    }
+
+    private fun Set<Int>.checkNumbersRange() = this.all { number ->
+        number.checkNumberRange()
     }
 
     private fun Int.checkNumberRange() = this in MINIMUM_NUMBER..MAXIMUM_NUMBER

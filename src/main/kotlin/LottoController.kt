@@ -14,7 +14,6 @@ class LottoController(
         val catchNumbers = InputView.requestCatchNumbers().map { number ->
             numericValidator.validate(number)
         }.toSet()
-
         val bonusNumber = numericValidator.validate(InputView.requestBonusNumber())
 
         WinningNumbers(catchNumbers, bonusNumber)
@@ -22,11 +21,13 @@ class LottoController(
 
     fun run() {
         val purchasedLottos = purchaseLottos()
+
         checkPurchasedLottosResult(purchasedLottos)
     }
 
     private fun purchaseLottos(): PurchasedLottos {
         val purchasedLottos = PurchasedLottos(lottoGenerator.generateLottos(purchaseMoney))
+
         ResultView.printPurchasedNumberOfLottos(purchasedLottos.lottos.size)
         ResultView.printPurchasedLottos(purchasedLottos)
 

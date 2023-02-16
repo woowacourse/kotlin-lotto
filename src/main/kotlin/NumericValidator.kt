@@ -8,7 +8,9 @@ class NumericValidator {
     }
 
     private fun String.isNumeric(): Boolean =
-        this.chars().allMatch { Character.isDigit(it) }
+        this.chars().allMatch { char ->
+            Character.isDigit(char)
+        }
 
     companion object {
         private const val NUMERIC_ERROR = "[ERROR] 숫자가 아닌 입력은 허용하지 않습니다."
