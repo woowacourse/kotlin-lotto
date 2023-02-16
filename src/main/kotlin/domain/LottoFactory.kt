@@ -5,7 +5,7 @@ class LottoFactory(private val numberGenerator: NumberGenerator) {
     fun create(count: Int): List<Lotto> {
         require(count in MINIMUM_COUNT..MAXIMUM_COUNT) { ERROR_CREATE_COUNT.format(count) }
 
-        return (1..count).map { createLotto() }
+        return List(count) { createLotto() }
     }
 
     private fun createLotto() = Lotto(*numberGenerator.generateNumbers())
