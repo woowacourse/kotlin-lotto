@@ -4,7 +4,7 @@ object LottoVendingMachine {
     const val LOTTO_PRICE = 1000
 
     fun getLottoCount(money: Money): Int {
-        return money.amount / LOTTO_PRICE
+        return (money.amount / LOTTO_PRICE).toInt()
     }
 
     fun getLottoBundle(lottoCount: Int, lottoGenerator: LottoGenerator): LottoBundle {
