@@ -1,3 +1,6 @@
+import domain.ProfitCalculator
+import domain.model.LottoResult
+import domain.model.PurchaseMoney
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

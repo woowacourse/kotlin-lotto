@@ -1,3 +1,5 @@
+package domain.model
+
 class PurchaseMoney(
     val money: Int
 ) {

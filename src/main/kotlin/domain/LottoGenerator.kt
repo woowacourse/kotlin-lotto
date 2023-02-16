@@ -1,3 +1,8 @@
+package domain
+
+import domain.model.PurchaseMoney
+import domain.model.lotto.Lotto
+
 class LottoGenerator(
     private val numberGenerator: () -> Set<Int> = {
         (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLotteryNumbers()
@@ -12,11 +17,11 @@ class LottoGenerator(
         }
     }
 
-    private fun PurchaseMoney.validateMoneyUnit() = require(this.money % LOTTO_PRICE == ZERO) {
-        NUMBER_UNIT_ERROR
+    private fun PurchaseMoney.validateMoneyUnit() = require(this.money % domain.LottoGenerator.LOTTO_PRICE == domain.LottoGenerator.ZERO) {
+        domain.LottoGenerator.NUMBER_UNIT_ERROR
     }
 
-    private fun PurchaseMoney.getNumberOfLottos(): Int = this.money / LOTTO_PRICE
+    private fun PurchaseMoney.getNumberOfLottos(): Int = this.money / domain.LottoGenerator.LOTTO_PRICE
 
     companion object {
         private const val MINIMUM_NUMBER = 1

@@ -1,3 +1,5 @@
+package domain.model
+
 enum class LottoResult(val prizeMoney: Int, val matchCount: Int) {
     MISS(0, 0),
     FIFTH(5_000, 3),

@@ -1,3 +1,4 @@
+import domain.model.PurchaseMoney
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

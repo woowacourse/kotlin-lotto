@@ -1,3 +1,8 @@
+package domain.model.lotto
+
+import domain.model.LottoResult
+import domain.model.WinningNumbers
+
 class Lotto(val numbers: Set<Int>) {
     init {
         require(numbers.checkNumbersRange()) {

@@ -1,3 +1,5 @@
+package domain.validator
+
 class NumericValidator {
     fun validate(input: String): Int {
         require(input.isNumeric()) {

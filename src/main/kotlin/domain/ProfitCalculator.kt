@@ -1,3 +1,7 @@
+package domain
+
+import domain.model.LottoResult
+import domain.model.PurchaseMoney
 import kotlin.math.floor
 
 class ProfitCalculator {

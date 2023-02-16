@@ -1,3 +1,8 @@
+package view
+
+import domain.model.LottoResult
+import domain.model.lotto.PurchasedLottos
+
 object ResultView {
 
     private const val NUMBER_OF_PURCHASED_LOTTO = "%s개를 구매했습니다."
@@ -26,7 +31,7 @@ object ResultView {
     }
 
     private fun LottoResult.formatMatchResult(lottoResults: List<LottoResult>): String =
-        MATCH_RESULT.format(
+        view.ResultView.MATCH_RESULT.format(
             this.matchCount,
             this.prizeMoney,
             lottoResults.count { lottoResult ->
