@@ -13,8 +13,16 @@ class InputView : InputViewInterface {
         return result
     }
 
-    override fun getNumbers(): List<Int> {
-        TODO("Not yet implemented")
+    override fun getNumbers(): Set<Int> {
+        println("지난 주 당첨 번호를 입력해 주세요.")
+        val numbers = readln()
+        var result = setOf<Int>()
+        runCatching { result = numbers.split(",").map { it.toInt() }.toSet() }
+            .onSuccess { return result }
+            .onFailure {
+                result = getNumbers()
+            }
+        return result
     }
 
     override fun getBonusNumber(): Int {
