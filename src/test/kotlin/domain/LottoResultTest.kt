@@ -3,6 +3,7 @@ package domain
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
+import kotlin.math.floor
 
 class LottoResultTest {
     @Test
@@ -41,7 +42,7 @@ class LottoResultTest {
                 Rank.MISS to 0,
             ),
         )
-        assertThat(lottoResult.getRateOfReturn()).isEqualTo((Rank.FIRST.winningMoney.toDouble() + Rank.SECOND.winningMoney + Rank.FOURTH.winningMoney) / (lottoResult.values.sum() * LottoStore.LOTTO_PRICE))
+        assertThat(lottoResult.getRateOfReturn()).isEqualTo(floor(((Rank.FIRST.winningMoney + Rank.SECOND.winningMoney + Rank.FOURTH.winningMoney).toDouble() / (lottoResult.values.sum() * LottoStore.LOTTO_PRICE).toDouble() * 100)) / 100)
     }
 
     @Test
