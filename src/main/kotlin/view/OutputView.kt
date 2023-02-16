@@ -2,6 +2,7 @@ package view
 
 import domain.Lotto
 import domain.Lottos
+import domain.Money
 import domain.Rank
 import domain.WinningResult
 
@@ -10,8 +11,8 @@ class OutputView {
         println(OUTPUT_MONEY_MESSAGE)
     }
 
-    fun outputLottoSizeMessage(size: Int) {
-        println(size.toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
+    fun outputLottoSizeMessage(money: Money) {
+        println((money.price!! / LOTTO_PRICE).toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
     }
 
     fun outputLottos(lottos: Lottos) {
@@ -56,5 +57,6 @@ class OutputView {
         const val OUTPUT_WINNING_RESULT_MESSAGE = "당첨 통계"
         const val SEPERATE_MESSAGE = "---------"
         const val YIELD_MESSAGE = "총 수익률은 %.2f입니다."
+        const val LOTTO_PRICE = 1000
     }
 }
