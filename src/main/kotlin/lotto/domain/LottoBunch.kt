@@ -1,7 +1,6 @@
 package lotto.domain
 
-class LottoBunch(vararg lotto: Lotto) {
-    val value: List<Lotto> = lotto.toList()
+class LottoBunch(val value: List<Lotto>) {
 
     override fun toString(): String =
         value.joinToString(separator = LOTTO_BUNCH_TO_STRING_SEPARATOR) { lotto -> lotto.toString() }
