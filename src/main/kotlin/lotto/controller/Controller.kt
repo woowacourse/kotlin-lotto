@@ -12,7 +12,7 @@ class Controller {
     fun start() {
         val lottoNumbers = initializeLotto()
         val userLotto = UserLotto(lottoNumbers)
-        val winningNumbers = readBonusNumber(readWinningLotto())
+        val winningNumbers = readWinningNumbers()
         val ranks = userLotto.calculateTotalRank(winningNumbers)
         OutputView.printResult(ranks, YieldCalculator().calculateYield(lottoNumbers.size, ranks))
     }
@@ -35,6 +35,12 @@ class Controller {
         }
     }
 
+    private fun readWinningNumbers(): WinningNumbers {
+        val winningLotto = readWinningLotto()
+        val bonusNumber = readBonusNumber(winningLotto)
+        return WinningNumbers(winningLotto, bonusNumber)
+    }
+
     private fun readWinningLotto(): Lotto {
         return try {
             OutputView.printInputWinningNumbersPrompt()
@@ -45,10 +51,12 @@ class Controller {
         }
     }
 
-    private fun readBonusNumber(winningLotto: Lotto): WinningNumbers {
+    private fun readBonusNumber(winningLotto: Lotto): Int {
         return try {
             OutputView.printInputBonusNumberPrompt()
-            WinningNumbers(winningLotto, InputView.readInputBonusNumber())
+            val bonusNumber = InputView.readInputBonusNumber()
+            WinningNumbers(winningLotto, bonusNumber)
+            bonusNumber
         } catch (e: IllegalArgumentException) {
             println("[ERROR] ${e.message}")
             readBonusNumber(winningLotto)
