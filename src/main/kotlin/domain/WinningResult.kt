@@ -14,4 +14,8 @@ class WinningResult {
     fun setWinnigResult(rank: Rank) {
         result.put(rank, result.getOrDefault(rank, 0) + 1)
     }
+
+    fun getWinningMoney(): Int {
+        return result.map { it.key.winningMoney * it.value }.sum()
+    }
 }
