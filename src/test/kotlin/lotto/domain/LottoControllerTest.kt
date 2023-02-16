@@ -13,7 +13,7 @@ class LottoControllerTest {
 
     @Test
     fun `구매한 장 수 만큼 로또를 발급한다`() {
-        assertThat(LottoController().getUserLotto(5).lottos.size).isEqualTo(5)
+        assertThat(LottoController().getUserLotto(5).lotto.size).isEqualTo(5)
     }
 
     @Test

@@ -26,7 +26,7 @@ class Lotto(val lotto: List<LottoNumber>) {
         if (lotto.contains(winningLotto.bonusNumber)) Rank.SECOND else Rank.THIRD
 
     private fun hasNoDuplicateNumber(): Boolean {
-        return lotto.size == lotto.distinct().size
+        return lotto.size == lotto.map { it.number }.toSet().size
     }
 
     override fun toString(): String {

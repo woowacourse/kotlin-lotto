@@ -13,7 +13,7 @@ class OutputView {
     }
 
     fun printUserLotto(userLotto: UserLotto) {
-        userLotto.lottos.forEach { lotto ->
+        userLotto.lotto.forEach { lotto ->
             println(lotto)
         }
     }
