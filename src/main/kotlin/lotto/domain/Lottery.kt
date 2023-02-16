@@ -8,6 +8,8 @@ class Lottery(
         checkNumbersDuplicate()
     }
 
+    constructor(vararg numbers: Int) : this(numbers.map(::LotteryNumber))
+
     fun countMatches(winningLottery: Lottery): Int = winningLottery.numbers.count { numbers.contains(it) }
 
     fun containBonusNumber(bonusNumber: LotteryNumber): Boolean {

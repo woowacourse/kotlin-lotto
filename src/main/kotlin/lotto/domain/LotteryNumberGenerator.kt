@@ -1,5 +1,5 @@
 package lotto.domain
 
-interface LotteryNumberGenerator {
+fun interface LotteryNumberGenerator {
     fun generate(): Int
 }
