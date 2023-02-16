@@ -47,7 +47,7 @@
 
 
 - RandomLotteryNumberGenerator
-- [ ] 1이상 45이하의 숫자 하나를 생성한다.
+- [x] 1이상 45이하의 숫자 하나를 생성한다.
 
 
 - LotteriesGenerator
