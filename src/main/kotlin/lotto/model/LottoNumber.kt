@@ -5,7 +5,7 @@ import lotto.view.ERROR_OUT_OF_RANGE
 class LottoNumber(val number: Int) : Comparable<LottoNumber> {
 
     init {
-        require(number in 1..45) { ERROR_OUT_OF_RANGE }
+        require(number in START_LOTTO_RANGE..END_LOTTO_RANGE) { ERROR_OUT_OF_RANGE }
     }
 
     override fun compareTo(other: LottoNumber): Int {

@@ -27,13 +27,9 @@ class Lotto(val lotto: List<LottoNumber>) {
     private fun getRankByBonusNumber(winningLotto: WinningLotto) =
         if (isContained(winningLotto.bonusNumber)) Rank.SECOND else Rank.THIRD
 
-    private fun hasNoDuplicateNumber(): Boolean {
-        return lotto.size == lotto.map { it.number }.toSet().size
-    }
+    private fun hasNoDuplicateNumber(): Boolean = lotto.size == lotto.map { it.number }.toSet().size
 
-    override fun toString(): String {
-        return lotto.map { it.number }.joinToString(", ")
-    }
+    override fun toString(): String = lotto.map { it.number }.joinToString(", ")
 
     companion object {
         private const val LOTTO_SIZE = 6

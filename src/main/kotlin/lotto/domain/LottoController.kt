@@ -44,9 +44,7 @@ class LottoController(
         outputView.printInsertMoneyMessage()
         val money = inputView.getNumber()
         val result = runCatching {
-            require(isDivided(money)) { ERROR_NOT_DIVIDED }
-        }.onFailure {
-            println(it.message)
+            require(isDivided(money)) { println(ERROR_NOT_DIVIDED) }
         }.isSuccess
 
         return if (result) money else getMoney()
