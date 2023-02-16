@@ -1,6 +1,6 @@
 package domain
 
-class Lotto(private val numbers: Set<LottoNumber>) : Set<LottoNumber> by numbers {
+class Lotto(val numbers: Set<LottoNumber>) {
     constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber).toSet())
 
     init {

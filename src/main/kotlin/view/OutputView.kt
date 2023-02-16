@@ -20,7 +20,7 @@ class OutputView {
 
     fun outputLottos(lottos: List<Lotto>) {
         println("${lottos.size}개를 구매했습니다.")
-        lottos.forEach { println(it.toList()) }
+        lottos.forEach { println(it.numbers.toList()) }
         println()
     }
 
