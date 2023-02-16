@@ -1,5 +1,7 @@
 package domain
 
+import model.LottoNumber
+
 interface NumberGenerator {
-    fun generate(): List<Int>
+    fun generate(): List<LottoNumber>
 }
