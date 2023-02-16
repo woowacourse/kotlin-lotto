@@ -25,6 +25,10 @@ class OutputView {
         println("${TOTAL_PROFIT_GUIDE.format(profit)}${Revenue.valueOf(profit).description}")
     }
 
+    fun printInterval() {
+        println()
+    }
+
     private fun getRankAnnouncement(name: String, count: Int): String {
         if (Rank.values().map { it.name }.contains(name)) {
             val rank = Rank.valueOf(name)
