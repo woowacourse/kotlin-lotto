@@ -15,14 +15,15 @@ class Bank {
         return totalPrize
     }
 
-    private fun getPrizeMoney(lotto: Lotto, winningLotto: WinningLotto): Int {
-        val rank = Rank.convertToGrade(
-            countMatchedMainLottoNumber(lotto, winningLotto),
-            checkMatchedBonusLottoNumber(lotto, winningLotto),
-        )
-        return Rank.convertToPrizeMoney(rank)
-    }
+    private fun getPrizeMoney(lotto: Lotto, winningLotto: WinningLotto): Int =
+        Rank.convertToPrizeMoney(getRank(lotto, winningLotto))
 
     fun getYieldRate(purchaseMoney: PurchaseMoney, totalPrizeMoney: Int): Double =
         totalPrizeMoney / purchaseMoney.value.toDouble()
+
+    private fun getRank(lotto: Lotto, winningLotto: WinningLotto): Rank =
+        Rank.convertToGrade(
+            countMatchedMainLottoNumber(lotto, winningLotto),
+            checkMatchedBonusLottoNumber(lotto, winningLotto),
+        )
 }
