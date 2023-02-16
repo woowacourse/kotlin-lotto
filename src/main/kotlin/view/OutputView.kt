@@ -2,7 +2,6 @@ package view
 
 import domain.Rank
 import model.Lotto
-import java.text.DecimalFormat
 
 class OutputView {
 
@@ -27,9 +26,7 @@ class OutputView {
     }
 
     fun printLottoProfitRate(profitRate: Double) {
-        val formattingNum = DecimalFormat("##.00")
-
-        println("총 수익률은 ${formattingNum.format(profitRate)}입니다.")
+        println("총 수익률은 ${String.format("%.2f", profitRate)}입니다.")
     }
 
     companion object {
