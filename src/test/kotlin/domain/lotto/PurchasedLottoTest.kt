@@ -1,6 +1,5 @@
 package domain.lotto
 
-import domain.lotto.number.BonusNumber
 import domain.lotto.number.LottoNumber
 import domain.rank.Rank
 import org.assertj.core.api.Assertions
@@ -35,7 +34,7 @@ class PurchasedLottoTest {
     @MethodSource("provideWinningLottoAndBonusNumberAndResultRank")
     fun `WinningLotto와 BonusNumber가 주어졌을 때, matchLotto 호출시, expected와 동일한 Rank를 반환한다`(
         winningLotto: WinningLotto,
-        bonusNumber: BonusNumber,
+        bonusNumber: LottoNumber,
         expected: Rank
     ) {
         val actual = purchasedLotto.matchLotto(winningLotto, bonusNumber)
@@ -64,73 +63,73 @@ class PurchasedLottoTest {
         fun provideWinningLottoAndBonusNumberAndResultRank(): List<Arguments> =
             listOf(
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 43, 44, 45).map { number -> LottoNumber(number) }, BonusNumber(42)),
-                    BonusNumber(42),
+                    WinningLotto(listOf(1, 2, 3, 43, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    LottoNumber(42),
                     Rank.FIFTH
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(3, 4, 5, 43, 44, 45).map { number -> LottoNumber(number) }, BonusNumber(6)),
-                    BonusNumber(6),
+                    WinningLotto(listOf(3, 4, 5, 43, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(6)),
+                    LottoNumber(6),
                     Rank.FIFTH
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(4, 3, 2, 43, 44, 45).map { number -> LottoNumber(number) }, BonusNumber(42)),
-                    BonusNumber(42),
+                    WinningLotto(listOf(4, 3, 2, 43, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    LottoNumber(42),
                     Rank.FIFTH
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 4, 44, 45).map { number -> LottoNumber(number) }, BonusNumber(42)),
-                    BonusNumber(42),
+                    WinningLotto(listOf(1, 2, 3, 4, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    LottoNumber(42),
                     Rank.FOURTH
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(3, 4, 5, 6, 44, 45).map { number -> LottoNumber(number) }, BonusNumber(1)),
-                    BonusNumber(1),
+                    WinningLotto(listOf(3, 4, 5, 6, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(1)),
+                    LottoNumber(1),
                     Rank.FOURTH
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(4, 3, 2, 1, 44, 45).map { number -> LottoNumber(number) }, BonusNumber(43)),
-                    BonusNumber(43),
+                    WinningLotto(listOf(4, 3, 2, 1, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(43)),
+                    LottoNumber(43),
                     Rank.FOURTH
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }, BonusNumber(42)),
-                    BonusNumber(42),
+                    WinningLotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    LottoNumber(42),
                     Rank.THIRD
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(3, 4, 5, 1, 2, 45).map { number -> LottoNumber(number) }, BonusNumber(42)),
-                    BonusNumber(42),
+                    WinningLotto(listOf(3, 4, 5, 1, 2, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    LottoNumber(42),
                     Rank.THIRD
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(4, 3, 2, 1, 5, 45).map { number -> LottoNumber(number) }, BonusNumber(42)),
-                    BonusNumber(42),
+                    WinningLotto(listOf(4, 3, 2, 1, 5, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    LottoNumber(42),
                     Rank.THIRD
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }, BonusNumber(6)),
-                    BonusNumber(6),
+                    WinningLotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }, LottoNumber(6)),
+                    LottoNumber(6),
                     Rank.SECOND
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(3, 4, 5, 1, 2, 37).map { number -> LottoNumber(number) }, BonusNumber(6)),
-                    BonusNumber(6),
+                    WinningLotto(listOf(3, 4, 5, 1, 2, 37).map { number -> LottoNumber(number) }, LottoNumber(6)),
+                    LottoNumber(6),
                     Rank.SECOND
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(4, 3, 2, 1, 5, 43).map { number -> LottoNumber(number) }, BonusNumber(6)),
-                    BonusNumber(6),
+                    WinningLotto(listOf(4, 3, 2, 1, 5, 43).map { number -> LottoNumber(number) }, LottoNumber(6)),
+                    LottoNumber(6),
                     Rank.SECOND
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 4, 5, 6).map { number -> LottoNumber(number) }, BonusNumber(7)),
-                    BonusNumber(7),
+                    WinningLotto(listOf(1, 2, 3, 4, 5, 6).map { number -> LottoNumber(number) }, LottoNumber(7)),
+                    LottoNumber(7),
                     Rank.FIRST
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(6, 5, 4, 3, 2, 1).map { number -> LottoNumber(number) }, BonusNumber(7)),
-                    BonusNumber(7),
+                    WinningLotto(listOf(6, 5, 4, 3, 2, 1).map { number -> LottoNumber(number) }, LottoNumber(7)),
+                    LottoNumber(7),
                     Rank.FIRST
                 )
             )
