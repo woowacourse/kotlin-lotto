@@ -43,7 +43,7 @@ class World {
         } as LottoNumber
     }
 
-    private fun initLottos(purchaseMoney: PurchaseMoney): Game {
+    private fun initGame(purchaseMoney: PurchaseMoney): Game {
         val lottoGenerator = RandomLottoGenerator()
         val gameGenerator = GameGenerator(lottoGenerator)
         val game = gameGenerator.generate(purchaseMoney, lottoPrice)
@@ -52,26 +52,31 @@ class World {
         return game
     }
 
+    private fun initWinLotto(): WinLotto {
+        return tryAndRerun {
+            val winNumber = initWinNumber()
+            val bonus = initBonus()
+            WinLotto(winNumber, bonus)
+        } as WinLotto
+    }
+
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
-        val winStatistics = makeWinStatistics(purchaseMoney)
+        val game = initGame(purchaseMoney)
+        val winLotto = initWinLotto()
+
+        val winStatistics = makeWinStatistics(game, winLotto)
         outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
-        val profitRate = makeProfitRate(purchaseMoney, winStatistics)
+
+        val profitRate = makeProfitRate(LottoProfitRateCalculator(purchaseMoney, winStatistics))
         outputView.profitRateResult(profitRate)
     }
 
-    private fun makeWinStatistics(purchaseMoney: PurchaseMoney): WinStatistics {
-        val lottos = initLottos(purchaseMoney)
-        val winNumber = initWinNumber()
-        val bonus = initBonus()
-        val winLotto = WinLotto(winNumber, bonus)
-        return LottoRankDeterminer(lottos, winLotto).determine()
-    }
+    private fun makeWinStatistics(game: Game, winLotto: WinLotto): WinStatistics =
+        LottoRankDeterminer(game, winLotto).determine()
 
-    private fun makeProfitRate(purchaseMoney: PurchaseMoney, winStatistics: WinStatistics): ProfitRate {
-        val profitRateCalculator = LottoProfitRateCalculator(purchaseMoney, winStatistics)
-        return profitRateCalculator.calculate()
-    }
+    private fun makeProfitRate(profitRateCalculator: LottoProfitRateCalculator): ProfitRate =
+        profitRateCalculator.calculate()
 
     companion object {
         private const val DEFAULT_LOTTO_PRICE = 1000
