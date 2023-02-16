@@ -12,24 +12,22 @@ class LottoAdministratorTest {
     @ParameterizedTest
     fun `당첨번호와 몇개 일치하는지 확인한다`(lottoNumber: List<Int>, winningNumber: List<Int>, matchCount: Int) {
         // when
-        val actual = LottoAdministrator().compareWinningNumber(lottoNumber, winningNumber)
+        val actual = LottoAdministrator().getMatchOfNumber(lottoNumber, winningNumber)
         // then
         assertThat(actual).isEqualTo(matchCount)
     }
 
     @Test
     fun `보너스번호가 일치하는지 확인한다`() {
-        //given
+        // given
         val lottoNumber = listOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = 5
 
-        //when
-        val actual = LottoAdministrator().compareBonusNumber(lottoNumber, bonusNumber)
-        //then
+        // when
+        val actual = LottoAdministrator().isMatchBonus(lottoNumber, bonusNumber)
+        // then
         assertThat(actual).isEqualTo(true)
-
     }
-
 
     companion object {
         @JvmStatic
