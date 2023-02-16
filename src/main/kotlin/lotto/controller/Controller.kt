@@ -12,9 +12,8 @@ class Controller {
     fun start() {
         val lottoNumbers = initializeLotto()
         val userLotto = UserLotto(lottoNumbers)
-        val winningNumbers = readWinningNumbers()
-        val ranks = userLotto.calculateTotalRank(winningNumbers)
-        OutputView.printResult(ranks, YieldCalculator.calculateYield(lottoNumbers.size, ranks))
+        val ranks = userLotto.calculateTotalRank(readWinningNumbers())
+        OutputView.printResult(ranks, YieldCalculator.calculateYield(userLotto.calculateCount(), ranks))
     }
 
     private fun initializeLotto(): List<Lotto> {
