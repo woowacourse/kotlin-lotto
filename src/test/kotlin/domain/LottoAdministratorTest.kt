@@ -1,5 +1,8 @@
 package domain
 
+import model.BonusNumber
+import model.Lotto
+import model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -10,7 +13,7 @@ class LottoAdministratorTest {
 
     @MethodSource("provideNumber")
     @ParameterizedTest
-    fun `당첨번호와 몇개 일치하는지 확인한다`(lottoNumber: List<Int>, winningNumber: List<Int>, matchCount: Int) {
+    fun `당첨번호와 몇개 일치하는지 확인한다`(lottoNumber: Lotto, winningNumber: Lotto, matchCount: Int) {
         // when
         val actual = LottoAdministrator().getMatchOfNumber(lottoNumber, winningNumber)
         // then
@@ -20,8 +23,17 @@ class LottoAdministratorTest {
     @Test
     fun `보너스번호가 일치하는지 확인한다`() {
         // given
-        val lottoNumber = listOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 5
+        val lottoNumber = Lotto(
+            listOf(
+                LottoNumber(1),
+                LottoNumber(2),
+                LottoNumber(3),
+                LottoNumber(4),
+                LottoNumber(5),
+                LottoNumber(6),
+            ),
+        )
+        val bonusNumber = BonusNumber(lottoNumber, LottoNumber(3))
 
         // when
         val actual = LottoAdministrator().isMatchBonus(lottoNumber, bonusNumber)
