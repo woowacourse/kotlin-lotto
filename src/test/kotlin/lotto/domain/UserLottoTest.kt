@@ -1,8 +1,8 @@
 package lotto.domain
 
 import lotto.constants.Rank
-import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 class UserLottoTest {
     @Test
@@ -42,7 +42,8 @@ class UserLottoTest {
                             LottoNumber(5),
                             LottoNumber(6)
                         )
-                    ), LottoNumber(7)
+                    ),
+                    LottoNumber(7)
                 )
             )
         ).isEqualTo(

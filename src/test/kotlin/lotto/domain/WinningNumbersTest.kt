@@ -17,7 +17,8 @@ class WinningNumbersTest {
                         LottoNumber(5),
                         LottoNumber(6)
                     )
-                ), LottoNumber(5)
+                ),
+                LottoNumber(5)
             )
         }
     }

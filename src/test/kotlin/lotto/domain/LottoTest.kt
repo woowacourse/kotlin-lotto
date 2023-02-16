@@ -28,7 +28,8 @@ class LottoTest {
             Lotto(
                 TestNumberGenerator(
                     listOf(
-                        LottoNumber(4), LottoNumber(3), LottoNumber(1), LottoNumber(2), LottoNumber(2), LottoNumber(
+                        LottoNumber(4), LottoNumber(3), LottoNumber(1), LottoNumber(2), LottoNumber(2),
+                        LottoNumber(
                             2
                         )
                     )
@@ -43,7 +44,8 @@ class LottoTest {
         val lotto = Lotto(numbers)
         val winningLotto = Lotto(
             listOf(
-                LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(
+                LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
+                LottoNumber(
                     6
                 )
             )
@@ -72,14 +74,17 @@ class LottoTest {
                         LottoNumber(7),
                         LottoNumber(8),
                         LottoNumber(9)
-                    ), 3
+                    ),
+                    3
                 ),
                 Arguments.of(
                     listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(
+                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
+                        LottoNumber(
                             6
                         )
-                    ), 6
+                    ),
+                    6
                 )
             )
         }
@@ -95,14 +100,17 @@ class LottoTest {
                         LottoNumber(4),
                         LottoNumber(5),
                         LottoNumber(6)
-                    ), LottoNumber(3), true
+                    ),
+                    LottoNumber(3), true
                 ),
                 Arguments.of(
                     listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(
+                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
+                        LottoNumber(
                             6
                         )
-                    ), LottoNumber(7), false
+                    ),
+                    LottoNumber(7), false
                 )
             )
         }

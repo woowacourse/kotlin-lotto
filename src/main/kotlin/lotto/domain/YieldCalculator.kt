@@ -1,7 +1,7 @@
 package lotto.domain
 
-import kotlin.math.floor
 import lotto.constants.Rank
+import kotlin.math.floor
 
 object YieldCalculator {
     fun calculateYield(lottoCount: Int, ranks: List<Rank>): Double {
