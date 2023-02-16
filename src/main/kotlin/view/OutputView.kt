@@ -12,7 +12,7 @@ class OutputView {
     }
 
     fun outputLottoSizeMessage(money: Money) {
-        println((money.price!! / LOTTO_PRICE).toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
+        println((money.price / LOTTO_PRICE).toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
     }
 
     fun outputLottos(lottos: Lottos) {
@@ -21,7 +21,7 @@ class OutputView {
     }
 
     fun outputLotto(lotto: Lotto) {
-        println(lotto.numbers!!.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK))
+        println(lotto.numbers.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK))
     }
 
     fun outputWinningLottoMessage() {
