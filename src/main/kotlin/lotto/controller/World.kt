@@ -43,15 +43,6 @@ class World {
         } as LottoNumber
     }
 
-    private fun initGame(purchaseMoney: PurchaseMoney): Game {
-        val lottoGenerator = RandomLottoGenerator()
-        val gameGenerator = GameGenerator(lottoGenerator)
-        val game = gameGenerator.generate(purchaseMoney, lottoPrice)
-        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, game.value.size)
-        outputView.gameResult(game)
-        return game
-    }
-
     private fun initWinLotto(): WinLotto {
         return tryAndRerun {
             val winNumber = initWinNumber()
@@ -60,9 +51,19 @@ class World {
         } as WinLotto
     }
 
+    private fun generateGame(purchaseMoney: PurchaseMoney): Game {
+        val lottoGenerator = RandomLottoGenerator()
+        val gameGenerator = GameGenerator(lottoGenerator)
+        return gameGenerator.generate(purchaseMoney, lottoPrice)
+    }
+
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
-        val game = initGame(purchaseMoney)
+
+        val game = generateGame(purchaseMoney)
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, game.value.size)
+        outputView.gameResult(game)
+
         val winLotto = initWinLotto()
 
         val winStatistics = makeWinStatistics(game, winLotto)
