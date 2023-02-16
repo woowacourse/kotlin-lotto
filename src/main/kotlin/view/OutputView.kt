@@ -11,7 +11,11 @@ class OutputView {
     fun printInputBonusNumber() = println(ENTER_BONUS_NUMBER)
 
     fun printLotto(lotto: Lotto) {
-        println(lotto.lottoNumbers)
+        val lottoNumbers = mutableListOf<Int>()
+        lotto.lottoNumbers.forEach { lottoNumber ->
+            lottoNumbers.add(lottoNumber.number)
+        }
+        println(lottoNumbers)
     }
 
     fun printLottoResult(lottoResult: HashMap<Rank, Int>) {
