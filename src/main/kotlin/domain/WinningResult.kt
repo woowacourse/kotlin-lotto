@@ -19,6 +19,6 @@ class WinningResult {
     }
 
     fun calculateYield(money: Money): Double {
-        return getWinningMoney() / money.price!!.toDouble()
+        return getWinningMoney() / money.price.toDouble()
     }
 }

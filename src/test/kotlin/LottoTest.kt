@@ -24,11 +24,6 @@ class LottoTest {
     }
 
     @Test
-    fun `로또 당첨번호가 null 일 때`() {
-        assertThrows<IllegalArgumentException> { Lotto(null) }
-    }
-
-    @Test
     fun `길이가 6이 아닌 경우`() {
         assertThrows<IllegalArgumentException> {
             Lotto(

@@ -13,13 +13,6 @@ class BonusNumberTest {
         assertThat(bonusNumber.number).isEqualTo(3)
     }
 
-    @Test
-    fun `보너스 번호가 null일 경우`() {
-        assertThrows<IllegalArgumentException> {
-            BonusNumber(null)
-        }
-    }
-
     @ValueSource(ints = [0, 46, -1])
     @ParameterizedTest
     fun `보너스 번호가 1에서 45 사이의 값이 아닌 경우`(number: Int) {
