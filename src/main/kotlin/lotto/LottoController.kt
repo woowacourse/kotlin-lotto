@@ -5,6 +5,7 @@ import lotto.domain.PurchaseMoney
 import lotto.domain.Validator
 import lotto.domain.Validator.ERROR_INPUT_HANDLER
 import lotto.domain.Validator.ERROR_NOT_NUMBER
+import lotto.domain.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -12,11 +13,13 @@ class LottoController {
     fun runLotto() {
     }
 
-    fun getPurchaseMoney(): PurchaseMoney {
+    private fun getPurchaseMoney(): PurchaseMoney {
         return runCatching {
             OutputView.printGetPurchaseMoneyScript()
             getVerifiedPurchaseMoney(InputView.getUserInput())
-        }.getOrElse { getPurchaseMoney() }
+        }.getOrElse { error ->
+            inputErrorHandler(error, ::getPurchaseMoney) as PurchaseMoney
+        }
     }
 
     private fun getVerifiedPurchaseMoney(input: String): PurchaseMoney {
@@ -25,11 +28,13 @@ class LottoController {
         return PurchaseMoney(input.toInt())
     }
 
-    fun getMainLottoNumber(): List<LottoNumber> {
+    private fun getMainLottoNumber(): List<LottoNumber> {
         return kotlin.runCatching {
             OutputView.printGetMainLottoNumbersScript()
             getVerifiedMainLottoNumber(InputView.getUserInput())
-        }.getOrElse { getMainLottoNumber() }
+        }.getOrElse { error ->
+            inputErrorHandler(error, ::getMainLottoNumber) as List<LottoNumber>
+        }
     }
 
     private fun getVerifiedMainLottoNumber(input: String): List<LottoNumber> {
@@ -40,11 +45,13 @@ class LottoController {
         return lottoNumbers.map { LottoNumber(it.toInt()) }
     }
 
-    fun getBonusLottoNumber(): LottoNumber {
+    private fun getBonusLottoNumber(): LottoNumber {
         return runCatching {
             OutputView.printGetBonusLottoNumberScript()
             getVerifiedBonusLottoNumber(InputView.getUserInput())
-        }.getOrElse { getBonusLottoNumber() }
+        }.getOrElse { error ->
+            inputErrorHandler(error, ::getBonusLottoNumber) as LottoNumber
+        }
     }
 
     private fun getVerifiedBonusLottoNumber(input: String): LottoNumber {
@@ -52,6 +59,8 @@ class LottoController {
 
         return LottoNumber(input.toInt())
     }
+
+    fun getWinningLotto(): WinningLotto = WinningLotto(getMainLottoNumber(), getBonusLottoNumber())
 
     private fun inputErrorHandler(
         error: Throwable,
