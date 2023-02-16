@@ -13,7 +13,7 @@ class Lotto(val lotto: List<LottoNumber>) {
     constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber))
 
     fun getCountOfMatch(winningLotto: WinningLotto): Rank {
-        val count = lotto.count { winningLotto.winningNumbers.lotto.contains(it) }
+        val count = lotto.count { winningLotto.winningNumbers.isContained(it) }
         if (count == Rank.SECOND.countOfMatch) {
             return getRankByBonusNumber(winningLotto)
         }
@@ -22,8 +22,10 @@ class Lotto(val lotto: List<LottoNumber>) {
         } ?: Rank.MISS
     }
 
+    fun isContained(findNumber: LottoNumber): Boolean = lotto.contains(findNumber)
+
     private fun getRankByBonusNumber(winningLotto: WinningLotto) =
-        if (lotto.contains(winningLotto.bonusNumber)) Rank.SECOND else Rank.THIRD
+        if (isContained(winningLotto.bonusNumber)) Rank.SECOND else Rank.THIRD
 
     private fun hasNoDuplicateNumber(): Boolean {
         return lotto.size == lotto.map { it.number }.toSet().size

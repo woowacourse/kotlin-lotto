@@ -10,7 +10,7 @@ class WinningLotto(val winningNumbers: Lotto, val bonusNumber: LottoNumber) {
 
     constructor(winningLotto: IntArray, bonusNumber: Int) : this(Lotto(*winningLotto), LottoNumber(bonusNumber))
 
-    fun hasNoDuplicateNumber(): Boolean {
-        return !winningNumbers.lotto.contains(bonusNumber)
+    private fun hasNoDuplicateNumber(): Boolean {
+        return !winningNumbers.isContained(bonusNumber)
     }
 }
