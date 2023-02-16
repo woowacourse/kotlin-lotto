@@ -8,9 +8,7 @@ import domain.WinningLotto
 import view.InputView
 import view.OutputView
 
-class LottoController {
-    private val inputView by lazy { InputView() }
-    private val outputView by lazy { OutputView() }
+class LottoController(private val inputView: InputView, private val outputView: OutputView) {
 
     fun run() {
         val amount = askAmount()
