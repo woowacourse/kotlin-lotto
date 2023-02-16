@@ -27,7 +27,7 @@ class LottoController {
     }
 
     private fun buyLotto(amount: Int): List<Lotto> {
-        val store = LottoStore(RandomLottoGenerator())
+        val store = LottoStore(RandomLottoGenerator)
         return store.buyLotto(amount)
     }
 
