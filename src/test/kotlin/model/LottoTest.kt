@@ -1,6 +1,6 @@
-package domain
+package model
 
-import model.Lotto
+import domain.Rank
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

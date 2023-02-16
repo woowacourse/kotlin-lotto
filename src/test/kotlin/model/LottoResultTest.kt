@@ -1,6 +1,6 @@
-package domain
+package model
 
-import model.LottoResult
+import domain.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
