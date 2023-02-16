@@ -1,15 +1,17 @@
 package domain
 
+import model.LottoNumber
+
 class ShuffledNumberGenerator : NumberGenerator {
-    override fun generate(): List<Int> {
-        val lottoNumbers: MutableList<Int> = mutableListOf()
+    override fun generate(): List<LottoNumber> {
+        val lottoNumbers: MutableList<LottoNumber> = mutableListOf()
         var lottoNumber: Int = MINIMUM_LOTTO_NUMBER
 
-        repeat(MAXIMUM_LOTTO_NUMBER) {
-            lottoNumbers.add(lottoNumber++)
-        }
+        repeat(MAXIMUM_LOTTO_NUMBER) { lottoNumbers.add(LottoNumber(lottoNumber++)) }
 
-        return lottoNumbers.shuffled().take(LOTTO_NUMBER_COUNT).sorted()
+        return lottoNumbers.shuffled()
+            .take(LOTTO_NUMBER_COUNT)
+            .sortedBy { lottoNumber -> lottoNumber.number }
     }
 
     companion object {
