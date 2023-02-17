@@ -44,10 +44,7 @@ class LottoTest {
         val lotto = Lotto(numbers)
         val winningLotto = Lotto(
             listOf(
-                LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
-                LottoNumber(
-                    6
-                )
+                LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6)
             )
         )
 
@@ -62,30 +59,52 @@ class LottoTest {
     }
 
     companion object {
-
         @JvmStatic
         fun matchingCountNumbers(): List<Arguments> {
             return listOf(
                 Arguments.of(
                     listOf(
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(7),
-                        LottoNumber(8),
-                        LottoNumber(9)
+                        LottoNumber(7), LottoNumber(8), LottoNumber(9), LottoNumber(10), LottoNumber(11), LottoNumber(12)
+                    ),
+                    0
+                ),
+                Arguments.of(
+                    listOf(
+                        LottoNumber(1), LottoNumber(7), LottoNumber(8), LottoNumber(9), LottoNumber(10), LottoNumber(11)
+                    ),
+                    1
+                ),
+                Arguments.of(
+                    listOf(
+                        LottoNumber(1), LottoNumber(2), LottoNumber(7), LottoNumber(8), LottoNumber(9), LottoNumber(10)
+                    ),
+                    2
+                ),
+                Arguments.of(
+                    listOf(
+                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(7), LottoNumber(8), LottoNumber(9)
                     ),
                     3
                 ),
                 Arguments.of(
                     listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
-                        LottoNumber(
-                            6
-                        )
+                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(7), LottoNumber(8)
+                    ),
+                    4
+                ),
+                Arguments.of(
+                    listOf(
+                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(7)
+                    ),
+                    5
+                ),
+                Arguments.of(
+                    listOf(
+                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6)
                     ),
                     6
                 )
+
             )
         }
 

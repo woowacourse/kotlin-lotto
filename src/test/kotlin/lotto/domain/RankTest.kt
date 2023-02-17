@@ -21,7 +21,10 @@ class RankTest {
                 Arguments.of(5, true, Rank.SECOND),
                 Arguments.of(5, false, Rank.THIRD),
                 Arguments.of(4, true, Rank.FOURTH),
+                Arguments.of(3, true, Rank.FIFTH),
+                Arguments.of(2, false, Rank.MISS),
                 Arguments.of(1, true, Rank.MISS),
+                Arguments.of(0, false, Rank.MISS),
             )
         }
     }

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class LottoGeneratorTest {
     @Test
-    fun `구입 금액만큼 로또를 발행한다`() {
+    fun `구입 개수만큼 로또를 발행한다`() {
         assertThat(LottoGenerator.generate(14).size).isEqualTo(14)
     }
 }
