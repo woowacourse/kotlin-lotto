@@ -1,3 +1,13 @@
 package lotto.entity
 
-class PurchaseMoney(val value: Int)
+import lotto.controller.World
+
+class PurchaseMoney(val value: Int) {
+    init {
+        require(value >= World.DEFAULT_LOTTO_PRICE) { String.format(ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO, value) }
+    }
+
+    companion object {
+        private const val ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO = "구입 금액이 로또 가격보다 적습니다. 입력된 구입 금액은 %d원 입니다."
+    }
+}
