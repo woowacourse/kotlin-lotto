@@ -7,6 +7,6 @@ class RandomLottoGenerator : LottoGenerator {
 
     override fun generate(): Lotto {
         val shuffledNumbers = numbers.shuffled()
-        return Lotto(shuffledNumbers.slice(Lotto.LOTTO_MINIMUM_RANGE until Lotto.LOTTO_COUNT).sorted())
+        return Lotto(shuffledNumbers.take(Lotto.LOTTO_COUNT).sorted())
     }
 }
