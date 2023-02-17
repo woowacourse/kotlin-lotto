@@ -3,7 +3,6 @@ package domain
 @JvmInline
 value class Money private constructor(val amount: Long) {
 
-
     init {
         require((amount % 1000L == 0L) and (amount != 0L)) { "$PREFIX $amount ${amount % 1000L} 받은 돈이 1000원 단위여야합니다." }
     }
