@@ -3,17 +3,17 @@ package view
 import domain.Rank
 
 class ResultView : ResultViewInterface {
-    override fun printResult(statisticsResult: List<Int>, profit: String) {
+    override fun printResult(statisticsResult: Map<Rank, Int>, profit: String) {
         printStatistics(statisticsResult)
         printProfit(profit)
     }
 
-    override fun printStatistics(statisticsResult: List<Int>) {
+    override fun printStatistics(statisticsResult: Map<Rank, Int>) {
         println("당첨 통계")
         println("---------")
-        for ((index, count) in statisticsResult.take(5).reversed().withIndex()) {
-            val rank = Rank.values()[4 - index]
-            println("${rank.countOfMatch}개 일치${printBonus(rank)}(${rank.winningMoney}원)- ${count}개")
+        for (rank in Rank.values().take(5).reversed()) {
+            val rankCount = statisticsResult[rank]
+            println("${rank.countOfMatch}개 일치${printBonus(rank)}(${rank.winningMoney}원)- ${rankCount}개")
         }
     }
 

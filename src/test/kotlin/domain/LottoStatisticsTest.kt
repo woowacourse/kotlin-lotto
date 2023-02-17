@@ -58,16 +58,23 @@ class LottoStatisticsTest {
         val bonusNumber = 13
         val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val result: List<Int> = lottoStatistics.compareTicket(ticket)
+        val result: Map<Rank, Int> = lottoStatistics.compareTicket(ticket)
 
-        assertThat(result[0]).isEqualTo(2)
-        assertThat(result[1]).isEqualTo(1)
-        assertThat(result[2]).isEqualTo(1)
+        assertThat(result[Rank.FIRST]).isEqualTo(2)
+        assertThat(result[Rank.SECOND]).isEqualTo(1)
+        assertThat(result[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
     fun `총 수익률을 계산한다`() {
-        val winResult = listOf(0, 0, 0, 0, 1, 13)
+        val winResult: MutableMap<Rank, Int> = Rank.values().associateWith { 0 }.toMutableMap()
+        winResult[Rank.FIRST] = 0
+        winResult[Rank.SECOND] = 0
+        winResult[Rank.THIRD] = 0
+        winResult[Rank.FOURTH] = 0
+        winResult[Rank.FIFTH] = 1
+        winResult[Rank.MISS] = 13
+
         val winningNumber = setOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = 13
         val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
