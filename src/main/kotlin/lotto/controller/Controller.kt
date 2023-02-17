@@ -63,7 +63,7 @@ class Controller {
         }
     }
 
-    companion object{
+    companion object {
         const val MONEY_UNIT = 1000
     }
 }

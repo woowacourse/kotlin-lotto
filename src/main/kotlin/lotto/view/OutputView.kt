@@ -9,11 +9,11 @@ object OutputView {
     private const val INPUT_WINNING_NUMBERS_PROMPT = "지난 주 당첨 번호를 입력해 주세요."
     private const val INPUT_BONUS_NUMBER_PROMPT = "보너스 볼을 입력해 주세요."
     private const val RESULT_MESSAGE = "당첨 통계\n-----------------"
-    private const val FIFTH_PRIZE_MESSAGE = "3개 일치 (5000원) - %d개"
-    private const val FOURTH_PRIZE_MESSAGE = "4개 일치 (50000원) - %d개"
-    private const val THIRD_PRIZE_MESSAGE = "5개 일치 (1500000원) - %d개"
-    private const val SECOND_PRIZE_MESSAGE = "5개 일치, 보너스 볼 일치 (30000000원) - %d개"
-    private const val FIRST_PRIZE_MESSAGE = "6개 일치 (2000000000원) - %d개"
+    private const val FIFTH_PRIZE_MESSAGE = "%d개 일치 (%d원) - %d개"
+    private const val FOURTH_PRIZE_MESSAGE = "%d일치 (%d원) - %d개"
+    private const val THIRD_PRIZE_MESSAGE = "%d개 일치 (%d원) - %d개"
+    private const val SECOND_PRIZE_MESSAGE = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
+    private const val FIRST_PRIZE_MESSAGE = "%d개 일치 (%d원) - %d개"
     private const val YIELD_MESSAGE = "총 수익률은 %.2f입니다."
 
     fun printInputMoneyPrompt() {
@@ -59,7 +59,13 @@ object OutputView {
             Pair(FIRST_PRIZE_MESSAGE, Rank.FIRST)
         )
         messages.forEach { prize ->
-            println(prize.first.format(ranks.count { rank -> rank == prize.second }))
+            println(
+                prize.first.format(
+                    prize.second.countOfMatch,
+                    prize.second.winningMoney,
+                    ranks.count { rank -> rank == prize.second }
+                )
+            )
         }
     }
 
