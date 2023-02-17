@@ -7,7 +7,7 @@ import domain.model.lotto.LottoNumber
 class LottoGenerator(
     private val numberGenerator: () -> Set<LottoNumber> = {
         (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLottoNumbers()
-    }
+    },
 ) {
 
     fun generateLottos(purchaseMoney: PurchaseMoney): List<Lotto> {
@@ -32,6 +32,7 @@ class LottoGenerator(
         private const val NUMBER_UNIT_ERROR = "[ERROR] 천원 단위로 입력해주세요."
         private const val ZERO = 0
 
-        private fun IntRange.drawLottoNumbers() = this.shuffled().subList(ZERO, NUMBER_COUNT).sorted().map { number -> LottoNumber.from(number) }.toSet()
+        private fun IntRange.drawLottoNumbers() =
+            this.shuffled().subList(ZERO, NUMBER_COUNT).sorted().map { number -> LottoNumber.from(number) }.toSet()
     }
 }

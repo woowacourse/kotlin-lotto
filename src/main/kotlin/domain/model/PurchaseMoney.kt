@@ -1,7 +1,7 @@
 package domain.model
 
 class PurchaseMoney(
-    val money: Int
+    val money: Int,
 ) {
     init {
         require(money > ZERO) {

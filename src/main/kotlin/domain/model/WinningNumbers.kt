@@ -5,8 +5,9 @@ import domain.model.lotto.LottoNumber
 
 class WinningNumbers(
     val winningLotto: Lotto,
-    val bonusNumber: LottoNumber
+    val bonusNumber: LottoNumber,
 ) {
+
     init {
         require(!winningLotto.numbers.contains(bonusNumber)) {
             OVERLAPPED_ERROR
