@@ -12,9 +12,9 @@ class LottoGame(
     private lateinit var winningLotto: WinningLotto
     private var bonusNumber: LottoNumber? = null
 
-    fun initWinningLottoNumbers(_lottoNumbers: List<Int>, _bonusNumber: Int) {
-        bonusNumber = LottoNumber(_bonusNumber)
-        winningLotto = WinningLotto(_lottoNumbers.map { LottoNumber(it) }, bonusNumber!!)
+    fun initWinningLottoNumbers(lottoNumbers: List<Int>, bonusNumber: Int) {
+        this.bonusNumber = LottoNumber(bonusNumber)
+        winningLotto = WinningLotto(lottoNumbers.map { LottoNumber(it) }, this.bonusNumber!!)
     }
 
     fun purchaseLottos(money: Int): List<PurchasedLotto> = lottoMachine.purchaseLottos(money)
