@@ -17,25 +17,37 @@ class LottoController(
 ) {
 
     private val purchaseMoney: PurchaseMoney by lazy {
-        val money = numericValidator.validate(InputView.requestPurchaseMoney())
+        val input = InputView.requestPurchaseMoney()
+        val money = numericValidator.validate(input)
 
         PurchaseMoney(money)
     }
 
     private val winningNumbers: WinningNumbers by lazy {
-        val catchNumbers = InputView.requestCatchNumbers().map { number ->
-            val inputNumber = numericValidator.validate(number)
-            LottoNumber.from(inputNumber)
-        }.toSet()
-        val bonusNumber = numericValidator.validate(InputView.requestBonusNumber())
-
-        WinningNumbers(catchNumbers, LottoNumber.from(bonusNumber))
+        WinningNumbers(
+            initializeCatchNumber(),
+            initializeBonusNumber()
+        )
     }
 
     fun run() {
         val purchasedLottos = purchaseLottos()
 
         checkPurchasedLottosResult(purchasedLottos)
+    }
+
+    private fun initializeCatchNumber(): Set<LottoNumber> {
+        val input = InputView.requestCatchNumbers()
+
+        return input.map { number ->
+            val verifiedNumber = numericValidator.validate(number)
+            LottoNumber.from(verifiedNumber)
+        }.toSet()
+    }
+
+    private fun initializeBonusNumber(): LottoNumber {
+        val input = InputView.requestBonusNumber()
+        return LottoNumber.from(numericValidator.validate(input))
     }
 
     private fun purchaseLottos(): PurchasedLottos {
