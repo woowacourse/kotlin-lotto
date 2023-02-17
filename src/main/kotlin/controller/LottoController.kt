@@ -20,34 +20,15 @@ class LottoController(
         resultView.printResult(result, profit)
     }
 
-    private fun initializeTicket(): Ticket {
-        while (true) {
-            runCatching { inputView.getMoney() }
-                .onSuccess { return lottoSeller.sellLottos(it) }
-        }
-    }
+    private fun initializeTicket(): Ticket = lottoSeller.sellLottos(inputView.getMoney().purchaseCount)
 
     private fun initializeWinningLotto(): WinningLotto {
         while (true) {
-            val winningNumbers = makeWinningNumbers()
-            val bonusNumber = makeBonusNumber()
+            val winningNumbers = inputView.getWinningNumbers()
+            val bonusNumber = inputView.getBonusNumber()
             runCatching { WinningLotto(winningNumbers, bonusNumber) }
                 .onSuccess { return it }
-        }
-    }
-
-    private fun makeWinningNumbers(): Lotto {
-        while (true) {
-            runCatching { Lotto(inputView.getNumbers().map { LottoNumber.from(it) }.toSet()) }
-                .onSuccess { return it }
-        }
-    }
-
-    private fun makeBonusNumber(): LottoNumber {
-        while (true) {
-            val bonusNumber = inputView.getBonusNumber()
-            runCatching { LottoNumber.from(bonusNumber) }
-                .onSuccess { return it }
+                .onFailure { println(it.message) }
         }
     }
 }
