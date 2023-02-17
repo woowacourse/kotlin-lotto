@@ -20,7 +20,7 @@ class LottoGame {
         startGame()
         endGame()
     }
-    fun initGame() {
+    private fun initGame() {
         output.outputMoneyMessage()
         money = input.inputMoney()
         output.outputLottoSizeMessage(money)
@@ -28,7 +28,7 @@ class LottoGame {
         output.outputLottos(lottos)
     }
 
-    fun startGame() {
+    private fun startGame() {
         output.outputWinningLottoMessage()
         val winningLotto = input.inputWinningLotto()
         output.outputBonusNumberMessage()
@@ -36,7 +36,7 @@ class LottoGame {
         winningResult = lottos.matchLottos(winningLotto, bonusNumber)
     }
 
-    fun endGame() {
+    private fun endGame() {
         output.outputWinningResult(winningResult)
         output.outputYield(winningResult.calculateYield(money))
     }
