@@ -9,9 +9,10 @@ import org.junit.jupiter.api.assertThrows
 class LottoTest {
     @Test
     fun `로또 번호는 1 이상 45 이하가 아닌 경우 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
+        val errorMessage = assertThrows<IllegalArgumentException> {
             Lotto(setOf(1, 2, 3, 4, 5, 50))
-        }
+        }.message
+        assertThat(errorMessage).isEqualTo("[ERROR] 번호는 1 이상 45 이하입니다.")
     }
 
     @Test
@@ -23,9 +24,10 @@ class LottoTest {
 
     @Test
     fun `로또 번호는 6개가 아닌 경우 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
+        val errorMessage = assertThrows<IllegalArgumentException> {
             Lotto(setOf(1, 2, 3, 4, 5, 6, 7))
-        }
+        }.message
+        assertThat(errorMessage).isEqualTo("[ERROR] 로또 번호는 6개의 숫자로 이루어져야 합니다.")
     }
 
     @Test
