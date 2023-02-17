@@ -38,7 +38,7 @@ class LottoTest {
     }
 
     @Test
-    fun `당첨 결과가 1등인 경우`() {
+    fun `로또번호가 6개 일치하는 경우, 결과는 1등이다`() {
         assertThat(
             Lotto(setOf(1, 2, 3, 4, 5, 6)).getLottoResult(
                 WinningNumbers(setOf(1, 2, 3, 4, 5, 6), 7)
@@ -49,7 +49,7 @@ class LottoTest {
     }
 
     @Test
-    fun `당첨 결과가 2등인 경우`() {
+    fun `로또번호가 5개와 보너스 번호가 일치하는 경우, 결과는 2등이다`() {
         assertThat(
             Lotto(setOf(1, 2, 3, 4, 5, 6)).getLottoResult(
                 WinningNumbers(setOf(1, 2, 3, 4, 5, 10), 6)
@@ -60,7 +60,7 @@ class LottoTest {
     }
 
     @Test
-    fun `당첨 결과가 3등인 경우`() {
+    fun `로또번호가 5개가 일치하고 보너스 번호가 일치하지 않는 경우, 결과는 3등이다`() {
         assertThat(
             Lotto(setOf(1, 2, 3, 4, 5, 6)).getLottoResult(
                 WinningNumbers(setOf(1, 2, 3, 4, 5, 10), 9)
@@ -71,7 +71,7 @@ class LottoTest {
     }
 
     @Test
-    fun `당첨되지 않은 경우`() {
+    fun `로또번호가 2개 이하 일치하는 경우, 당첨되지 않는다`() {
         assertThat(
             Lotto(setOf(1, 2, 3, 4, 5, 6)).getLottoResult(
                 WinningNumbers(setOf(1, 2, 8, 9, 10, 11), 6)
