@@ -8,11 +8,8 @@ object OutputView {
     private const val PURCHASE_COUNT_SCRIPT = "%d개를 구매했습니다."
     private const val YIELD_RATE_SCRIPT = "총 수익률은 %.2f입니다.(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
 
-    fun printWinningStatsScript() {
-        println(WINNING_STATS_SCRIPT)
-    }
-
     fun printWinningResult(winningResult: String) {
+        println(WINNING_STATS_SCRIPT)
         println(winningResult)
     }
 

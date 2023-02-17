@@ -1,9 +1,6 @@
 package lotto
 
 import lotto.domain.Bank
-import lotto.domain.InputNumberValidator
-import lotto.domain.InputNumberValidator.ERROR_INPUT_HANDLER
-import lotto.domain.InputNumberValidator.ERROR_NOT_NUMBER
 import lotto.domain.LottoBunch
 import lotto.domain.LottoNumber
 import lotto.domain.PurchaseMoney
@@ -29,57 +26,41 @@ class LottoController(private val lottoFactory: LottoFactory) {
 
     private fun getPurchaseMoney(): PurchaseMoney {
         return runCatching {
-            OutputView.printGetPurchaseMoneyScript()
-            getVerifiedPurchaseMoney(InputView.getUserInput())
+            PurchaseMoney(InputView.getPurchaseMoney())
         }.getOrElse { error ->
             inputErrorHandler(error, ::getPurchaseMoney) as PurchaseMoney
         }
     }
 
-    private fun getVerifiedPurchaseMoney(input: String): PurchaseMoney {
-        require(InputNumberValidator.isNumber(input)) { ERROR_NOT_NUMBER }
-
-        return PurchaseMoney(input.toInt())
-    }
-
     private fun getMainLottoNumber(): List<LottoNumber> {
-        return kotlin.runCatching {
-            OutputView.printGetMainLottoNumbersScript()
-            getVerifiedMainLottoNumber(InputView.getUserInput())
+        return runCatching {
+            InputView.getMainLottoNumber().map { number -> LottoNumber(number) }
         }.getOrElse { error ->
             inputErrorHandler(error, ::getMainLottoNumber) as List<LottoNumber>
         }
     }
 
-    private fun getVerifiedMainLottoNumber(input: String): List<LottoNumber> {
-        val lottoNumbers = input.split(",").map { number -> number.trim() }
-
-        lottoNumbers.forEach { require(InputNumberValidator.isNumber(it)) { ERROR_NOT_NUMBER } }
-
-        return lottoNumbers.map { LottoNumber(it.toInt()) }
-    }
-
     private fun getBonusLottoNumber(): LottoNumber {
         return runCatching {
-            OutputView.printGetBonusLottoNumberScript()
-            getVerifiedBonusLottoNumber(InputView.getUserInput())
+            LottoNumber(InputView.getBonusLottoNumber())
         }.getOrElse { error ->
             inputErrorHandler(error, ::getBonusLottoNumber) as LottoNumber
         }
     }
 
-    private fun getVerifiedBonusLottoNumber(input: String): LottoNumber {
-        require(InputNumberValidator.isNumber(input)) { ERROR_NOT_NUMBER }
-
-        return LottoNumber(input.toInt())
-    }
-
-    fun getWinningLotto(): WinningLotto {
+    private fun getWinningLotto(): WinningLotto {
         return runCatching {
             WinningLotto(getMainLottoNumber(), getBonusLottoNumber())
         }.getOrElse { error ->
             inputErrorHandler(error, ::getWinningLotto) as WinningLotto
         }
+    }
+
+    private fun confirmLottoWinning(lottoBunch: LottoBunch, winningLotto: WinningLotto, purchaseMoney: PurchaseMoney) {
+        val ranks = lottoBunch.value.map { Bank.getRank(it, winningLotto) }
+        val winningResult = WinningResult.from(ranks)
+        OutputView.printWinningResult(winningResult.toString())
+        OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
     }
 
     private fun inputErrorHandler(
@@ -100,12 +81,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         return repeatFunction()
     }
 
-    private fun confirmLottoWinning(lottoBunch: LottoBunch, winningLotto: WinningLotto, purchaseMoney: PurchaseMoney) {
-        OutputView.printWinningStatsScript()
-        val ranks = lottoBunch.value.map { Bank.getRank(it, winningLotto) }
-        val winningResult = WinningResult.from(ranks)
-        OutputView.printWinningResult(winningResult.toString())
-
-        OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
+    companion object {
+        private const val ERROR_INPUT_HANDLER = "값 전달 과정에 상태 오류가 발생했습니다."
     }
 }
