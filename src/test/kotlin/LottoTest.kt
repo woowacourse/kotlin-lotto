@@ -21,4 +21,21 @@ class LottoTest {
             Lotto(numbers)
         }
     }
+
+    @Test
+    fun `로또의 번호가 6개가 아닌 경우 예외가 발생`() {
+        val numbers = setOf(
+            LottoNumber.from(1),
+            LottoNumber.from(2),
+            LottoNumber.from(3),
+            LottoNumber.from(4),
+            LottoNumber.from(5),
+            LottoNumber.from(6),
+            LottoNumber.from(7)
+        )
+
+        assertThrows<IllegalArgumentException> {
+            Lotto(numbers)
+        }
+    }
 }
