@@ -1,6 +1,7 @@
 package domain.lotto
 
 import domain.lotto.number.LottoNumber
+import util.common.constant.ERROR_PREFIX
 
 class WinningLotto(numbers: List<LottoNumber>, bonusNumber: LottoNumber) : Lotto(numbers) {
     init {
@@ -21,6 +22,6 @@ class WinningLotto(numbers: List<LottoNumber>, bonusNumber: LottoNumber) : Lotto
         purchasedLotto.any { it.value == bonusNumber.value }
 
     companion object {
-        private const val ERROR_MESSAGE_CONTAINED_BONUS_NUMBER = "[ERROR] 6개의 로또 당첨 번호에 보너스 번호가 포함될 수 없습니다."
+        private const val ERROR_MESSAGE_CONTAINED_BONUS_NUMBER = "$ERROR_PREFIX 6개의 로또 당첨 번호에 보너스 번호가 포함될 수 없습니다."
     }
 }
