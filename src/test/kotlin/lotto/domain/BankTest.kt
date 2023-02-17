@@ -1,5 +1,6 @@
 package lotto.domain
 
+import lotto.constant.BonusResult.BONUS_MATCH
 import lotto.domain.factory.LottoFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -61,7 +62,7 @@ class BankTest {
                     LottoNumber(7),
                 ),
             ),
-        ).isTrue
+        ).isEqualTo(BONUS_MATCH)
     }
 
     @Test
@@ -102,7 +103,7 @@ class BankTest {
                         ),
                     ),
                 ),
-                3
+                3,
             ),
             WinningLotto(
                 listOf(

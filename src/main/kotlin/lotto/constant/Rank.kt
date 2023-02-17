@@ -1,22 +1,22 @@
 package lotto.constant
 
-enum class Rank(val matchCount: Int, val prizeMoney: Int) {
-    FIRST(6, 2_000_000_000),
-    SECOND(5, 30_000_000),
-    THIRD(5, 1_500_000),
-    FOURTH(4, 50_000),
-    FIFTH(3, 5_000),
-    NOTHING(-1, 0),
+import lotto.constant.BonusResult.ANY
+import lotto.constant.BonusResult.BONUS_MATCH
+import lotto.constant.BonusResult.BONUS_MISMATCH
+
+enum class Rank(val matchCount: Int, val bonusResult: BonusResult, val prizeMoney: Int) {
+    FIRST(6, ANY, 2_000_000_000),
+    SECOND(5, BONUS_MATCH, 30_000_000),
+    THIRD(5, BONUS_MISMATCH, 1_500_000),
+    FOURTH(4, ANY, 50_000),
+    FIFTH(3, ANY, 5_000),
+    NOTHING(-1, ANY, 0),
     ;
 
     companion object {
-        fun convertToGrade(matchCount: Int, bonusMatch: Boolean): Rank {
-            if (matchCount == 5) {
-                if (bonusMatch) return SECOND
-                return THIRD
-            }
-
-            return Rank.values().find { it.matchCount == matchCount }
+        fun convertToGrade(matchCount: Int, bonusResult: BonusResult): Rank {
+            return Rank.values()
+                .find { rank -> rank.matchCount == matchCount && (rank.bonusResult == bonusResult || rank.bonusResult == ANY) }
                 ?: NOTHING
         }
 

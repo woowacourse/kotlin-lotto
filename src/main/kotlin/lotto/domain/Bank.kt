@@ -1,13 +1,18 @@
 package lotto.domain
 
+import lotto.constant.BonusResult
 import lotto.constant.Rank
 
 object Bank {
     fun countMatchedMainLottoNumber(lotto: Lotto, winningLotto: WinningLotto): Int =
         lotto.lottoNumbers.count { lottoNumber -> lottoNumber.value in winningLotto.mainLottoNumbers.map { it.value } }
 
-    fun checkMatchedBonusLottoNumber(lotto: Lotto, winningLotto: WinningLotto): Boolean =
-        winningLotto.bonusLottoNumber.value in lotto.lottoNumbers.map { lottoNumber -> lottoNumber.value }
+    fun checkMatchedBonusLottoNumber(lotto: Lotto, winningLotto: WinningLotto): BonusResult {
+        if (winningLotto.bonusLottoNumber.value in lotto.lottoNumbers.map { lottoNumber -> lottoNumber.value }) {
+            return BonusResult.BONUS_MATCH
+        }
+        return BonusResult.BONUS_MISMATCH
+    }
 
     fun sumTotalPrizeMoney(lottoBunch: LottoBunch, winningLotto: WinningLotto): Int {
         var totalPrize = 0

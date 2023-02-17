@@ -1,12 +1,12 @@
 package lotto
 
 import lotto.domain.Bank
-import lotto.domain.LottoBunch
-import lotto.domain.LottoNumber
-import lotto.domain.PurchaseMoney
 import lotto.domain.InputNumberValidator
 import lotto.domain.InputNumberValidator.ERROR_INPUT_HANDLER
 import lotto.domain.InputNumberValidator.ERROR_NOT_NUMBER
+import lotto.domain.LottoBunch
+import lotto.domain.LottoNumber
+import lotto.domain.PurchaseMoney
 import lotto.domain.WinningLotto
 import lotto.domain.WinningResult
 import lotto.domain.factory.LottoFactory
