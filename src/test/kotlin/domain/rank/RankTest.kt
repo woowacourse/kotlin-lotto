@@ -59,10 +59,10 @@ class RankTest {
     }
 
     companion object {
-        private const val SIX_MATCH = 6
-        private const val FIVE_MATCH = 5
-        private const val FOUR_MATCH = 4
-        private const val THREE_MATCH = 3
+        private val SIX_MATCH = Rank.FIRST.countOfMatch
+        private val FIVE_MATCH = Rank.SECOND.countOfMatch
+        private val FOUR_MATCH = Rank.FOURTH.countOfMatch
+        private val THREE_MATCH = Rank.FIFTH.countOfMatch
         private const val TWO_MATCH = 2
         private const val ONE_MATCH = 1
         private const val ZERO_MATCH = 0

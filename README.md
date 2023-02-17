@@ -51,4 +51,4 @@
 - [ ] LottoController에서 멤버 변수를 사용하지 않는 구조로 변경한다.
 - [ ] LottoGame 변수명 앞에 언더바 제거한다.
 - [ ] initWinningLottoNumbers()를 호출되지 않은 상태에서 matchLottos()를 호출할 수 있도록 변경한다.
-- [ ] RankTest에서 로또 숫자 일치 상수값을 Rank의 enum값으로 변경한다.
+- [x] RankTest에서 로또 숫자 일치 상수값을 Rank의 enum값으로 변경한다.
