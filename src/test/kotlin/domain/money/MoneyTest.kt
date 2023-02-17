@@ -1,8 +1,10 @@
 package domain.money
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class MoneyTest {
@@ -20,5 +22,14 @@ class MoneyTest {
         assertThrows<IllegalArgumentException> {
             Money(amount)
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["10000,10", "50000,50", "100000,100", "1450,1", "0,0"])
+    fun `0 이상의 정수가 주어졌을 때, divideByThousand 호출시, 현재 금액에서 1000으로 나눈 몫을 반환한다`(amount: Int, expected: Int) {
+        val money = Money(amount)
+        val actual = money.divideByThousand()
+
+        assertEquals(actual, expected)
     }
 }
