@@ -25,20 +25,18 @@ class LottoVendingMachineTest {
         val lottoCount: Int = 5
         val lotto = Lotto(
             setOf(
-                LottoNumber.create(1),
-                LottoNumber.create(2),
-                LottoNumber.create(3),
-                LottoNumber.create(4),
-                LottoNumber.create(5),
-                LottoNumber.create(6)
-            )
+                LottoNumber.of(1),
+                LottoNumber.of(2),
+                LottoNumber.of(3),
+                LottoNumber.of(4),
+                LottoNumber.of(5),
+                LottoNumber.of(6),
+            ),
         )
         // when
-        val lottoBundle = LottoVendingMachine.getLottoBundle(lottoCount) {lotto}
+        val lottoBundle = LottoVendingMachine.getLottoBundle(lottoCount) { lotto }
 
         // then
         assertThat(lottoBundle.lottos.size).isEqualTo(lottoCount)
     }
-
-
 }

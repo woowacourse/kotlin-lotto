@@ -25,7 +25,7 @@ class LottoController {
         OutputView.printEarningRate(winStatistics.getTotalIncome(), spendMoney)
     }
 
-    private fun getWinningNumbers(): WinningNumbers{
+    private fun getWinningNumbers(): WinningNumbers {
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
         return WinningNumbers(winningLotto, bonusNumber)
@@ -46,7 +46,6 @@ class LottoController {
     private fun getBonusNumber(): LottoNumber {
         UI.printRequestBonusNumber()
         val bonusNumber = InputView.inputBonusNumber()
-        return LottoNumber.create(bonusNumber)
+        return LottoNumber.of(bonusNumber)
     }
-
 }

@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import util.PREFIX
 
 class LottoNumberTest {
     @ValueSource(ints = [-1, 0, 46, 47])
@@ -15,8 +16,8 @@ class LottoNumberTest {
 
         // then
         assertThatIllegalArgumentException()
-            .isThrownBy { LottoNumber.create(number) }
-            .withMessageContaining("${LottoNumber.PREFIX} 로또 넘버는 1~45여야합니다.")
+            .isThrownBy { LottoNumber.of(number) }
+            .withMessageContaining("$PREFIX 로또 넘버는 1~45여야합니다.")
     }
 
     @ValueSource(ints = [1, 2, 44, 45])
@@ -25,7 +26,7 @@ class LottoNumberTest {
         // given
 
         // when
-        val lottoNumber: LottoNumber = LottoNumber.create(number)
+        val lottoNumber: LottoNumber = LottoNumber.of(number)
 
         // then
         assertDoesNotThrow { lottoNumber }
