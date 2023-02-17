@@ -2,10 +2,11 @@ package domain
 
 import domain.model.PurchaseMoney
 import domain.model.lotto.Lotto
+import domain.model.lotto.LottoNumber
 
 class LottoGenerator(
-    private val numberGenerator: () -> Set<Int> = {
-        (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLotteryNumbers()
+    private val numberGenerator: () -> Set<LottoNumber> = {
+        (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLottoNumbers()
     }
 ) {
 
@@ -17,11 +18,11 @@ class LottoGenerator(
         }
     }
 
-    private fun PurchaseMoney.validateMoneyUnit() = require(this.money % domain.LottoGenerator.LOTTO_PRICE == domain.LottoGenerator.ZERO) {
-        domain.LottoGenerator.NUMBER_UNIT_ERROR
+    private fun PurchaseMoney.validateMoneyUnit() = require(this.money % LOTTO_PRICE == ZERO) {
+        NUMBER_UNIT_ERROR
     }
 
-    private fun PurchaseMoney.getNumberOfLottos(): Int = this.money / domain.LottoGenerator.LOTTO_PRICE
+    private fun PurchaseMoney.getNumberOfLottos(): Int = this.money / LOTTO_PRICE
 
     companion object {
         private const val MINIMUM_NUMBER = 1
@@ -31,6 +32,6 @@ class LottoGenerator(
         private const val NUMBER_UNIT_ERROR = "[ERROR] 천원 단위로 입력해주세요."
         private const val ZERO = 0
 
-        private fun IntRange.drawLotteryNumbers() = this.shuffled().subList(ZERO, NUMBER_COUNT).sorted().toSet()
+        private fun IntRange.drawLottoNumbers() = this.shuffled().subList(ZERO, NUMBER_COUNT).sorted().map { number -> LottoNumber.from(number) }.toSet()
     }
 }

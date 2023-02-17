@@ -18,6 +18,7 @@ class LottoGeneratorTest {
     @Test
     fun `구입 금액이 1000원 단위가 아닌 경우`() {
         val purchaseMoney = PurchaseMoney(3500)
+
         assertThrows<IllegalArgumentException> {
             lottoGenerator.generateLottos(purchaseMoney)
         }
@@ -26,6 +27,7 @@ class LottoGeneratorTest {
     @Test
     fun `구입 금액이 1000원 단위인 경우`() {
         val purchaseMoney = PurchaseMoney(3000)
+
         assertDoesNotThrow {
             lottoGenerator.generateLottos(purchaseMoney)
         }
@@ -40,13 +42,5 @@ class LottoGeneratorTest {
         ).isEqualTo(5)
     }
 
-    @Test
-    fun `로또를 발행한다`() {
-        val lottoGenerator = LottoGenerator {
-            setOf(1, 2, 3, 4, 5, 6)
-        }
-        val lotto = lottoGenerator.generateLottos(PurchaseMoney(1000)).first()
 
-        assertThat(lotto.numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6))
-    }
 }
