@@ -4,5 +4,9 @@ import lotto.controller.Controller
 
 fun main() {
     val controller = Controller()
-    controller.start()
+    try {
+        controller.start()
+    } catch (e: IllegalArgumentException) {
+        println(e.message)
+    }
 }
