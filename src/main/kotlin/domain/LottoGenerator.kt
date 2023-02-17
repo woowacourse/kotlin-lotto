@@ -2,9 +2,10 @@ package domain
 
 import domain.model.PurchaseMoney
 import domain.model.lotto.Lotto
+import domain.model.lotto.LottoNumber
 
 class LottoGenerator(
-    private val numberGenerator: () -> Set<Int> = {
+    private val numberGenerator: () -> List<Int> = {
         (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLotteryNumbers()
     }
 ) {
@@ -13,7 +14,12 @@ class LottoGenerator(
         purchaseMoney.validateMoneyUnit()
 
         return List(purchaseMoney.getNumberOfLottos()) {
-            Lotto(numberGenerator())
+            val numbers = numberGenerator()
+            Lotto(
+                numbers.map { number ->
+                    LottoNumber.from(number)
+                }.toSet()
+            )
         }
     }
 
@@ -31,6 +37,6 @@ class LottoGenerator(
         private const val NUMBER_UNIT_ERROR = "[ERROR] 천원 단위로 입력해주세요."
         private const val ZERO = 0
 
-        private fun IntRange.drawLotteryNumbers() = this.shuffled().subList(ZERO, NUMBER_COUNT).sorted().toSet()
+        private fun IntRange.drawLotteryNumbers() = this.shuffled().subList(ZERO, NUMBER_COUNT).sorted()
     }
 }

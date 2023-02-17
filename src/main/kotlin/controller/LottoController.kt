@@ -5,6 +5,7 @@ import domain.model.lotto.PurchasedLottos
 import domain.LottoGenerator
 import domain.model.PurchaseMoney
 import domain.model.WinningNumbers
+import domain.model.lotto.LottoNumber
 import domain.validator.NumericValidator
 import view.InputView
 import view.ResultView
@@ -23,11 +24,12 @@ class LottoController(
 
     private val winningNumbers: WinningNumbers by lazy {
         val catchNumbers = InputView.requestCatchNumbers().map { number ->
-            numericValidator.validate(number)
+            val inputNumber = numericValidator.validate(number)
+            LottoNumber.from(inputNumber)
         }.toSet()
         val bonusNumber = numericValidator.validate(InputView.requestBonusNumber())
 
-        WinningNumbers(catchNumbers, bonusNumber)
+        WinningNumbers(catchNumbers, LottoNumber.from(bonusNumber))
     }
 
     fun run() {

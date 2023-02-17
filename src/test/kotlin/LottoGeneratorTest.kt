@@ -1,5 +1,7 @@
 import domain.LottoGenerator
 import domain.model.PurchaseMoney
+import domain.model.WinningNumbers
+import domain.model.lotto.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -43,10 +45,19 @@ class LottoGeneratorTest {
     @Test
     fun `로또를 발행한다`() {
         val lottoGenerator = LottoGenerator {
-            setOf(1, 2, 3, 4, 5, 6)
+            listOf(1, 2, 3, 4, 5, 6)
         }
         val lotto = lottoGenerator.generateLottos(PurchaseMoney(1000)).first()
 
-        assertThat(lotto.numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6))
+        assertThat(lotto.numbers).isEqualTo(
+            setOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6)
+            )
+        )
     }
 }
