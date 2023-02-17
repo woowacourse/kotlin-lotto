@@ -1,7 +1,6 @@
 package lotto
 
 import lotto.domain.Bank
-import lotto.domain.Lotto
 import lotto.domain.LottoBunch
 import lotto.domain.LottoNumber
 import lotto.domain.PurchaseMoney
@@ -22,13 +21,8 @@ class LottoController(private val lottoFactory: LottoFactory) {
         confirmLottoWinning(lottoBunch, winningLotto, purchaseMoney)
     }
 
-    fun getLottoBunch(purchaseCount: Int): LottoBunch {
-        val lottoes = mutableListOf<Lotto>()
-        repeat(purchaseCount) {
-            lottoes.add(lottoFactory.createLotto())
-        }
-
-        val lottoBunch = LottoBunch(lottoes)
+    private fun getLottoBunch(purchaseCount: Int): LottoBunch {
+        val lottoBunch = LottoBunch(lottoFactory, purchaseCount)
         OutputView.printPurchaseResult(lottoBunch.toString(), purchaseCount)
         return lottoBunch
     }
