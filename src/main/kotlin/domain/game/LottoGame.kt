@@ -10,16 +10,12 @@ import kotlin.math.floor
 class LottoGame(
     private val winningLotto: WinningLotto,
     private val bonusNumber: LottoNumber,
-    private val lottoMachine: LottoMachine,
 ) {
-    fun purchaseLottos(money: Money): List<PurchasedLotto> = lottoMachine.purchaseLottos(money)
-
     fun matchLottos(purchasedLottos: List<PurchasedLotto>): Map<Rank, Int> {
         val matchResult = mutableMapOf<Rank, Int>()
         purchasedLottos.forEach {
             val rank = it.matchLotto(winningLotto, bonusNumber)
             val originCount = matchResult.getOrDefault(rank, 0)
-
             matchResult[rank] = originCount + 1
         }
 

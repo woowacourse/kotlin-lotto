@@ -14,15 +14,43 @@ class LottoGameController(
     private val resultView: ResultView = ResultView(),
 ) {
     fun startLottoGame() {
-        val purchasedMoney = inputView.inputPurchasingMoney()
-        val winningNumbers = inputView.inputLastWeekWinningNumbers().map { LottoNumber.from(it) }
-        val bonusNumber = inputView.inputBonusBallNumber()
-        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
-        val lottoGame = LottoGame(winningLotto, bonusNumber, LottoMachine())
-        val purchasedLottos = lottoGame.purchaseLottos(purchasedMoney)
+        val (lottoGame, purchasedLottos, money) = initLottoGame()
+        matchLottos(lottoGame, purchasedLottos, money)
+    }
 
+    private fun initLottoGame(): Triple<LottoGame, List<PurchasedLotto>, Money> {
+        val (money, purchasedLottos) = purchaseLotto()
+        val (bonusNumber, winningLotto) = inputWinnings()
+        val lottoGame = LottoGame(winningLotto, bonusNumber)
+        return Triple(lottoGame, purchasedLottos, money)
+    }
+
+    private fun purchaseLotto(): Pair<Money, List<PurchasedLotto>> {
+        val money = inputPurchasingMoney()
+        val purchasedLottos = purchaseLottos(money)
+        printPurchasedLotto(purchasedLottos)
+        return Pair(money, purchasedLottos)
+    }
+
+    private fun inputPurchasingMoney(): Money = inputView.inputPurchasingMoney()
+
+    private fun inputWinnings(): Pair<LottoNumber, WinningLotto> {
+        val winningLottoNumbers = inputLastWeekWinningNumbers()
+        val bonusNumber = inputBonusNumber()
+        val winningLotto = WinningLotto(winningLottoNumbers, bonusNumber)
+        return Pair(bonusNumber, winningLotto)
+    }
+
+    private fun purchaseLottos(purchasedMoney: Money): List<PurchasedLotto> =
+        LottoMachine().purchaseLottos(purchasedMoney)
+
+    private fun inputLastWeekWinningNumbers(): List<LottoNumber> =
+        inputView.inputLastWeekWinningNumbers().map { LottoNumber.from(it) }
+
+    private fun inputBonusNumber(): LottoNumber = inputView.inputBonusBallNumber()
+
+    private fun printPurchasedLotto(purchasedLottos: List<PurchasedLotto>) {
         resultView.printPurchasedLottos(purchasedLottos)
-        matchLottos(lottoGame, purchasedLottos, purchasedMoney)
     }
 
     private fun matchLottos(lottoGame: LottoGame, purchasedLottos: List<PurchasedLotto>, purchasedMoney: Money) {
