@@ -10,14 +10,26 @@ import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
-import lotto.model.LottoRankDeterminer
 import lotto.model.RandomLottoGenerator
+import lotto.model.Rank
 import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
 
 class World {
     private val lottoPrice = LottoPrice(DEFAULT_LOTTO_PRICE)
+
+    fun processLotto() {
+        val purchaseMoney = initPurchaseMoney()
+        val lottos = initLottos(purchaseMoney)
+        val winNumber = initWinNumber()
+        val bonus = initBonus(winNumber)
+        val winLotto = WinLotto(winNumber, bonus)
+        val winStatistics = makeWinStatistics(lottos, winLotto)
+        OutputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
+        val profitRate = makeProfitRate(purchaseMoney, winStatistics)
+        OutputView.profitRateResult(profitRate)
+    }
 
     private fun initPurchaseMoney(): PurchaseMoney {
         return tryAndRerun {
@@ -27,10 +39,9 @@ class World {
     }
 
     private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
-        val lottoCount = purchaseMoney.value / lottoPrice.value
-        OutputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottoCount)
         val lottoGenerator = RandomLottoGenerator()
         val lottos = Lottos(purchaseMoney, lottoPrice, lottoGenerator)
+        OutputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottos.value.size)
         OutputView.lottosResult(lottos)
         return lottos
     }
@@ -42,28 +53,25 @@ class World {
         } as Lotto
     }
 
-    private fun initBonus(): Bonus {
+    private fun initBonus(winNumber: Lotto): Bonus {
         return tryAndRerun {
             OutputView.printMessage(OutputView.MESSAGE_BONUS)
-            InputView.readBonus()
+            val bonus = InputView.readBonus()
+            WinLotto(winNumber, bonus)
+            bonus
         } as Bonus
     }
 
-    fun processLotto() {
-        val purchaseMoney = initPurchaseMoney()
-        val winStatistics = makeWinStatistics(purchaseMoney)
-        OutputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
-        val profitRate = makeProfitRate(purchaseMoney, winStatistics)
-        OutputView.profitRateResult(profitRate)
-    }
-
-    private fun makeWinStatistics(purchaseMoney: PurchaseMoney): WinStatistics {
-        val lottos = initLottos(purchaseMoney)
-        val winNumber = initWinNumber()
+    private fun makeWinStatistics(lottos: Lottos, winLotto: WinLotto): WinStatistics {
         return tryAndRerun {
-            val bonus = initBonus()
-            val winLotto = WinLotto(winNumber, bonus)
-            WinStatistics(lottos.value.map { LottoRankDeterminer().determine(it, winLotto) })
+            WinStatistics(
+                lottos.value.map {
+                    Rank.valueOf(
+                        it.numbers.intersect(winLotto.winNumber.numbers.toSet()).size,
+                        it.numbers.contains(winLotto.bonus.value)
+                    )
+                }
+            )
         } as WinStatistics
     }
 
