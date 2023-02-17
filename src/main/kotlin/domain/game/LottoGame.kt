@@ -8,22 +8,16 @@ import domain.rank.Rank
 import kotlin.math.floor
 
 class LottoGame(
+    private val winningLotto: WinningLotto,
+    private val bonusNumber: LottoNumber,
     private val lottoMachine: LottoMachine,
 ) {
-    private lateinit var winningLotto: WinningLotto
-    private var bonusNumber: LottoNumber? = null
-
-    fun initWinningLottoNumbers(_lottoNumbers: List<Int>, _bonusNumber: Int) {
-        bonusNumber = LottoNumber(_bonusNumber)
-        winningLotto = WinningLotto(_lottoNumbers.map { LottoNumber(it) }, bonusNumber!!)
-    }
-
-    fun purchaseLottos(money: Int): List<PurchasedLotto> = lottoMachine.purchaseLottos(Money(money))
+    fun purchaseLottos(money: Money): List<PurchasedLotto> = lottoMachine.purchaseLottos(money)
 
     fun matchLottos(purchasedLottos: List<PurchasedLotto>): Map<Rank, Int> {
         val matchResult = mutableMapOf<Rank, Int>()
         purchasedLottos.forEach {
-            val rank = it.matchLotto(winningLotto, bonusNumber!!)
+            val rank = it.matchLotto(winningLotto, bonusNumber)
             val originCount = matchResult.getOrDefault(rank, 0)
 
             matchResult[rank] = originCount + 1
@@ -32,9 +26,9 @@ class LottoGame(
         return matchResult
     }
 
-    fun calculateIncomeRate(matchResult: Map<Rank, Int>, investMoney: Int): Double {
+    fun calculateIncomeRate(matchResult: Map<Rank, Int>, investMoney: Money): Double {
         val income = calculateIncome(matchResult)
-        return floor((income / investMoney.toDouble()) * 100) / 100
+        return floor((income / investMoney.amount.toDouble()) * 100) / 100
     }
 
     private fun calculateIncome(matchResult: Map<Rank, Int>): Long {

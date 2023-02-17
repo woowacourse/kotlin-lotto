@@ -1,23 +1,22 @@
 package view
 
-import util.validator.InputValidator
+import domain.lotto.number.LottoNumber
+import domain.money.Money
 
-class InputView(
-    private val inputValidator: InputValidator
-) {
-    fun inputPurchasingMoney(): Int {
+class InputView {
+    fun inputPurchasingMoney(): Money {
         println(PURCHASING_MONEY_INPUT_MESSAGE)
-        return inputValidator.validateNumeric(readln().trim())
+        return Money.from(readln().trim())
     }
 
-    fun inputLastWeekWinningNumbers(): List<Int> {
+    fun inputLastWeekWinningNumbers(): List<String> {
         println(LAST_WEEK_WINNING_NUMBERS_INPUT_MESSAGE)
-        return inputValidator.validateWinningNumbersIsNumeric(readln().split(WINNING_NUMBER_DELIMITER))
+        return readln().split(WINNING_NUMBER_DELIMITER)
     }
 
-    fun inputBonusBallNumber(): Int {
+    fun inputBonusBallNumber(): LottoNumber {
         println(BONUS_BALL_NUMBERS_INPUT_MESSAGE)
-        return inputValidator.validateNumeric(readln().trim())
+        return LottoNumber.from(readln().trim())
     }
 
     companion object {

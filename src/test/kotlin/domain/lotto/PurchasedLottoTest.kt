@@ -22,7 +22,7 @@ class PurchasedLottoTest {
     @MethodSource("providePurchasedLotto")
     fun `구매한 로또가 주어졌을 때, getSortedLotto 호출시, 정렬된 Lotto를 반환한다`(
         purchasedLotto: PurchasedLotto,
-        expectedLotto: PurchasedLotto
+        expectedLotto: PurchasedLotto,
     ) {
         val sortedPurchasedLotto = purchasedLotto.getSortedLotto()
         for (i in sortedPurchasedLotto.indices) {
@@ -35,7 +35,7 @@ class PurchasedLottoTest {
     fun `WinningLotto와 BonusNumber가 주어졌을 때, matchLotto 호출시, expected와 동일한 Rank를 반환한다`(
         winningLotto: WinningLotto,
         bonusNumber: LottoNumber,
-        expected: Rank
+        expected: Rank,
     ) {
         val actual = purchasedLotto.matchLotto(winningLotto, bonusNumber)
         Assertions.assertThat(expected).isEqualTo(actual)

@@ -3,7 +3,9 @@ package domain.lotto.game
 import domain.game.LottoGame
 import domain.game.LottoMachine
 import domain.lotto.PurchasedLotto
+import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
+import domain.money.Money
 import domain.rank.Rank
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -14,14 +16,16 @@ class LottoGameTest {
 
     @BeforeEach
     fun setUp() {
-        lottoGame = LottoGame(LottoMachine())
-        lottoGame.initWinningLottoNumbers((1..6).toList(), 7)
+        val bonusNumber = LottoNumber(7)
+        val winningLotto = WinningLotto((1..6).map { LottoNumber(it) }, bonusNumber)
+        lottoGame = LottoGame(winningLotto, bonusNumber, LottoMachine())
     }
 
     @Test
     fun `매치 결과와 투자 금액이 주어졌을 때, calculateIncomeRate 호출시, 수익률을 반환한다`() {
         val actual = lottoGame.calculateIncomeRate(
-            mapOf(Rank.FIFTH to 1), 14000
+            mapOf(Rank.FIFTH to 1),
+            Money(14000)
         )
         Assertions.assertEquals(0.35, actual)
     }
