@@ -26,6 +26,6 @@ object Bank {
     )
 
     fun getEarningRate(totalPrize: Money, spendMoney: Money): Double {
-        return totalPrize.amount / spendMoney.amount.toDouble()
+        return totalPrize / spendMoney
     }
 }

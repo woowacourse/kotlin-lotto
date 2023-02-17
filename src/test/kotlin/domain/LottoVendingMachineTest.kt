@@ -13,7 +13,7 @@ class LottoVendingMachineTest {
     @ParameterizedTest
     fun `구입금액에 해당하는 로또 개수 계산`(amount: Int) {
         // given
-        val money = Money.create(amount)
+        val money = Money(amount)
 
         // when
         val lottoCount: Int = LottoVendingMachine.getLottoCount(money)

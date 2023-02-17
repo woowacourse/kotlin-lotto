@@ -14,10 +14,10 @@ class WinStatisticsTest {
                 Rank.THIRD to 2,
                 Rank.FOURTH to 0,
                 Rank.FIFTH to 0,
-            )
+            ),
         )
 
-        val expected: Money = Money.create(4033000000)
+        val expected: Money = Money(4033000000)
 
         // when
         val actual = winStatistics.getTotalIncome()

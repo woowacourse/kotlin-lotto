@@ -43,7 +43,7 @@ class LottoController {
     private fun getMoney(): Money {
         UI.printRequestMoney()
         val money = InputView.inputMoney()
-        return Money.create(money)
+        return Money(money)
     }
 
     private fun getWinningLotto(): Lotto {
