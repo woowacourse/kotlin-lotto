@@ -29,8 +29,9 @@ class LottoGenerator(
         private const val MAXIMUM_NUMBER = 45
         private const val NUMBER_COUNT = 6
         private const val LOTTO_PRICE = 1000
-        private const val NUMBER_UNIT_ERROR = "[ERROR] 천원 단위로 입력해주세요."
         private const val ZERO = 0
+
+        private const val NUMBER_UNIT_ERROR = "[ERROR] 천원 단위로 입력해주세요."
 
         private fun IntRange.drawLottoNumbers() =
             this.shuffled().subList(ZERO, NUMBER_COUNT).sorted().map { number -> LottoNumber.from(number) }.toSet()
