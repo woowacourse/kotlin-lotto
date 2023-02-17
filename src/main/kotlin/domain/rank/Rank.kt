@@ -6,20 +6,15 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     THIRD(5, 1_500_000),
     FOURTH(4, 50_000),
     FIFTH(3, 5_000),
-    MISS(0, 0);
+    MISS(0, 0),
+    ;
 
     companion object {
-        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank = when (countOfMatch) {
-            FIRST.countOfMatch -> FIRST
-            SECOND.countOfMatch -> judgeEitherSecondOrThird(matchBonus)
-            FOURTH.countOfMatch -> FOURTH
-            FIFTH.countOfMatch -> FIFTH
-            else -> MISS
-        }
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
+            if (SECOND.countOfMatch == countOfMatch && matchBonus) return SECOND
+            if (SECOND.countOfMatch == countOfMatch && !matchBonus) return THIRD
 
-        private fun judgeEitherSecondOrThird(matchBonus: Boolean): Rank {
-            if (matchBonus) return SECOND
-            return THIRD
+            return Rank.values().find { it.countOfMatch == countOfMatch } ?: MISS
         }
     }
 }
