@@ -1,12 +1,12 @@
 package domain.lotto.game
 
 import domain.game.LottoMachine
+import domain.money.Money
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class LottoMachineTest {
     private lateinit var lottoMachine: LottoMachine
@@ -17,17 +17,19 @@ class LottoMachineTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = ["10000,10", "100,0", "12500, 12", "0,0"])
-    fun `0이상의 구매금액이 주어졌을 때, purchaseLotto 호출시, 구매금액을 1000으로 나눈 몫만큼 로또를 반환한다`(money: Int, expected: Int) {
+    @MethodSource("provideMoneyAndDividedByThousandValue")
+    fun `0 이상의 Money 객체가 주어졌을 때, purchaseLotto 호출시, 구매 금액을 1000으로 나눈 몫만큼 로또를 반환한다`(money: Money, expected: Int) {
         val actual = lottoMachine.purchaseLottos(money).size
         assertEquals(expected, actual)
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = [-1, -1000, -20000])
-    fun `0미만의 구매금액이 주어졌을 때, purchaseLotto 호출시, IllegalArgumentException이 발생한다`(money: Int) {
-        assertThrows<IllegalArgumentException> {
-            lottoMachine.purchaseLottos(money)
-        }
+    companion object {
+        @JvmStatic
+        fun provideMoneyAndDividedByThousandValue(): List<Arguments> = listOf(
+            Arguments.of(Money(10000), 10),
+            Arguments.of(Money(100), 0),
+            Arguments.of(Money(12500), 12),
+            Arguments.of(Money(0), 0)
+        )
     }
 }

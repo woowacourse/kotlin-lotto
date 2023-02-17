@@ -3,11 +3,12 @@ package domain.game
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
+import domain.money.Money
 import domain.rank.Rank
 import kotlin.math.floor
 
 class LottoGame(
-    private val lottoMachine: LottoMachine
+    private val lottoMachine: LottoMachine,
 ) {
     private lateinit var winningLotto: WinningLotto
     private var bonusNumber: LottoNumber? = null
@@ -17,7 +18,7 @@ class LottoGame(
         winningLotto = WinningLotto(_lottoNumbers.map { LottoNumber(it) }, bonusNumber!!)
     }
 
-    fun purchaseLottos(money: Int): List<PurchasedLotto> = lottoMachine.purchaseLottos(money)
+    fun purchaseLottos(money: Int): List<PurchasedLotto> = lottoMachine.purchaseLottos(Money(money))
 
     fun matchLottos(purchasedLottos: List<PurchasedLotto>): Map<Rank, Int> {
         val matchResult = mutableMapOf<Rank, Int>()
