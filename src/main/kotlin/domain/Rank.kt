@@ -12,12 +12,12 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     companion object {
         fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank? {
             return values().find { rank ->
-                check(countOfMatch, matchBonus, rank)
+                checkRankCondition(countOfMatch, matchBonus, rank)
             }
         }
 
-        private fun check(countOfMatch: Int, matchBonus: Boolean, rank: Rank): Boolean {
-            if (countOfMatch == 5 && !matchBonus) return rank.winningMoney == 1_500_000
+        private fun checkRankCondition(countOfMatch: Int, matchBonus: Boolean, rank: Rank): Boolean {
+            if (countOfMatch == 5 && !matchBonus) return rank == THIRD
             if (countOfMatch < 3) return rank.countOfMatch < 3
             return countOfMatch == rank.countOfMatch
         }
