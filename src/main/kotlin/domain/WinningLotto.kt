@@ -5,7 +5,7 @@ class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
         require(lotto.contains(bonusNumber).not()) { ERROR_DUPLICATE_BONUS_NUMBER.format(lotto, bonusNumber) }
     }
 
-    constructor(numbers: IntArray, bonusNumber: Int) : this(Lotto(*numbers), LottoNumber(bonusNumber))
+    constructor(numbers: IntArray, bonusNumber: Int) : this(Lotto(*numbers), LottoNumber.from(bonusNumber))
 
     fun match(lottos: List<Lotto>): LottoResult =
         LottoResult(

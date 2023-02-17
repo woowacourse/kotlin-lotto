@@ -1,7 +1,7 @@
 package domain
 
 class Lotto(private val numbers: Set<LottoNumber>) {
-    constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber).toSet())
+    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) }.toSet())
 
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }

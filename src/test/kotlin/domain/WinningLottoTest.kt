@@ -17,7 +17,7 @@ class WinningLottoTest {
         val winningLotto = WinningLotto(intArrayOf(1, 2, 3, 4, 5, 6), 10)
         assertAll(
             { assertThat(winningLotto.lotto.toString()).isEqualTo(Lotto(1, 2, 3, 4, 5, 6).toString()) },
-            { assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber(10)) },
+            { assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber.from(10)) },
         )
     }
 
