@@ -31,7 +31,7 @@ object ResultView {
     }
 
     private fun LottoResult.formatMatchResult(lottoResults: List<LottoResult>): String =
-        view.ResultView.MATCH_RESULT.format(
+        MATCH_RESULT.format(
             this.matchCount,
             this.prizeMoney,
             lottoResults.count { lottoResult ->
