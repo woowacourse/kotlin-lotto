@@ -16,23 +16,12 @@ enum class Rank(val countOfMatch: Int, val needBonus: Boolean, val winningMoney:
 
         fun determine(lotto: Lotto, winLotto: WinLotto): Rank {
             val determinedRank = Rank.values().filter {
-                determineSingle(it, lotto, winLotto)
+                lotto.determineRank(it, winLotto)
             }
             check(determinedRank.size == 1) {
                 String.format(ERROR_DETERMINED_RANK_IS_EMPTY, determinedRank.size)
             }
             return determinedRank[0]
-        }
-
-        private fun determineSingle(condition: Rank, lotto: Lotto, winLotto: WinLotto): Boolean {
-            val countOfMatch = lotto.matchLottoNumberCount(winLotto.winNumber)
-            var isMatch = countOfMatch == condition.countOfMatch
-            if (condition == MISS && countOfMatch in 0..2)
-                return true
-            if (condition.needBonus && !lotto.isMatchBonus(winLotto.bonus)) {
-                isMatch = false
-            }
-            return isMatch
         }
     }
 }
