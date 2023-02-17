@@ -15,7 +15,7 @@ class LottoWinStatisticsFormatter : WinStatisticsFormatter {
     private fun formatRank(rank: Rank, winStatistics: WinStatistics): String {
         var additionalMessage = " "
 
-        if (rank == Rank.SECOND)
+        if (rank.matchBonus)
             additionalMessage = ", 보너스 볼 일치"
 
         return ("${rank.countOfMatch}개 일치$additionalMessage(${rank.winningMoney}원) - ${winStatistics.value.count { it.name == rank.name }}개")
