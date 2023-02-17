@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.entity.Game
 import lotto.entity.Lotto
+import lotto.entity.LottoGame
 import lotto.entity.ProfitRate
 import lotto.entity.WinStatistics
 import kotlin.math.floor
@@ -21,8 +21,8 @@ class OutputView {
         println("총 수익률은 ${floor((profitRate.value * 100)) / 100}입니다.")
     }
 
-    fun gameResult(game: Game) {
-        game.value.forEach {
+    fun gameResult(lottoGame: LottoGame) {
+        lottoGame.value.forEach {
             println(formatLotto(it))
         }
     }

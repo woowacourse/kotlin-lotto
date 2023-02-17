@@ -1,7 +1,7 @@
 package lotto.model
 
-import lotto.entity.Game
 import lotto.entity.Lotto
+import lotto.entity.LottoGame
 import lotto.entity.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeAll
@@ -14,12 +14,12 @@ internal class LottoGeneratorTest {
         @BeforeAll
         @JvmStatic
         fun init() {
-            val game = Game(
+            val lottoGame = LottoGame(
                 listOf(
                     Lotto(listOf(1, 2, 3, 4, 5, 6)),
                 )
             )
-            lottoGenerator = SequentialLottoNumberGenerator(game)
+            lottoGenerator = SequentialLottoNumberGenerator(lottoGame)
         }
     }
 
