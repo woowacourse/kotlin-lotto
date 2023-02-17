@@ -4,9 +4,9 @@ import lotto.domain.Bank
 import lotto.domain.LottoBunch
 import lotto.domain.LottoNumber
 import lotto.domain.PurchaseMoney
-import lotto.domain.Validator
-import lotto.domain.Validator.ERROR_INPUT_HANDLER
-import lotto.domain.Validator.ERROR_NOT_NUMBER
+import lotto.domain.InputNumberValidator
+import lotto.domain.InputNumberValidator.ERROR_INPUT_HANDLER
+import lotto.domain.InputNumberValidator.ERROR_NOT_NUMBER
 import lotto.domain.WinningLotto
 import lotto.domain.WinningResult
 import lotto.domain.factory.LottoFactory
@@ -37,7 +37,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
     }
 
     private fun getVerifiedPurchaseMoney(input: String): PurchaseMoney {
-        require(Validator.isNumber(input)) { ERROR_NOT_NUMBER }
+        require(InputNumberValidator.isNumber(input)) { ERROR_NOT_NUMBER }
 
         return PurchaseMoney(input.toInt())
     }
@@ -54,7 +54,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
     private fun getVerifiedMainLottoNumber(input: String): List<LottoNumber> {
         val lottoNumbers = input.split(",").map { number -> number.trim() }
 
-        lottoNumbers.forEach { require(Validator.isNumber(it)) { ERROR_NOT_NUMBER } }
+        lottoNumbers.forEach { require(InputNumberValidator.isNumber(it)) { ERROR_NOT_NUMBER } }
 
         return lottoNumbers.map { LottoNumber(it.toInt()) }
     }
@@ -69,7 +69,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
     }
 
     private fun getVerifiedBonusLottoNumber(input: String): LottoNumber {
-        require(Validator.isNumber(input)) { ERROR_NOT_NUMBER }
+        require(InputNumberValidator.isNumber(input)) { ERROR_NOT_NUMBER }
 
         return LottoNumber(input.toInt())
     }
