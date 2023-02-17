@@ -1,6 +1,9 @@
 # kotlin-lotto
 
 # domain
+## LottoNumber
+- [X] 로또 숫자의 원시 값을 포장
+
 ## Lotto
 - [X] 일급 컬렉션으로 사용(Set)  
 - [X] 검증이 필요한 부분  
