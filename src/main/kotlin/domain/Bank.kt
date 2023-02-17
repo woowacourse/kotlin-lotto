@@ -9,7 +9,7 @@ object Bank {
     }
 
     private fun setWinStatistics(winningResult: WinningResult, winStatistics: WinStatistics) {
-        winningResult.comparingResultDtos.forEach {
+        winningResult.comparingResultDto.forEach {
             val rank = Rank.valueOf(it.matchedCount, it.isBonusMatched)
             winStatistics.plusValue(rank, 1)
         }
