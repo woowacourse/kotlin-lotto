@@ -11,8 +11,12 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
 
     companion object {
         fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
-            require(countOfMatch in 0..6) { ERROR_COUNT_OF_MATCH_RANGE.format(countOfMatch) }
-            require(countOfMatch != 6 || matchBonus.not()) { ERROR_IMPOSSIBLE_CASE }
+            require(countOfMatch in MIN_COUNT_OF_MATCH..MAX_COUNT_OF_MATCH) {
+                ERROR_COUNT_OF_MATCH_RANGE.format(
+                    countOfMatch,
+                )
+            }
+            require(countOfMatch != MAX_COUNT_OF_MATCH || matchBonus.not()) { ERROR_IMPOSSIBLE_CASE }
 
             return when (countOfMatch) {
                 6 -> FIRST
@@ -23,7 +27,11 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             }
         }
 
-        private const val ERROR_COUNT_OF_MATCH_RANGE = "맞는 숫자의 개수는 0 이상 6 이하여야 합니다.\n잘못된 값: %d"
-        private const val ERROR_IMPOSSIBLE_CASE = "숫자가 6개 맞으면 보너스 번호가 매치될 수 없습니다."
+        private const val MIN_COUNT_OF_MATCH = 0
+        private const val MAX_COUNT_OF_MATCH = 6
+
+        private const val ERROR_COUNT_OF_MATCH_RANGE =
+            "맞는 숫자의 개수는 $MIN_COUNT_OF_MATCH 이상 $MAX_COUNT_OF_MATCH 이하여야 합니다.\n잘못된 값: %d"
+        private const val ERROR_IMPOSSIBLE_CASE = "숫자가 ${MAX_COUNT_OF_MATCH}개 맞으면 보너스 번호가 매치될 수 없습니다."
     }
 }
