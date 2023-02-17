@@ -20,11 +20,12 @@ class OutputView {
 
     fun outputLottos(lottos: List<Lotto>) {
         println("${lottos.size}개를 구매했습니다.")
-        lottos.forEach { println(it.numbers.toList()) }
+        lottos.forEach { println(it.toList()) }
         println()
     }
 
     fun outputResult(lottoResult: LottoResult) {
+        lottoResult[Rank.FOURTH]
         println("\n당첨 통계")
         println("---------")
         println("3개 일치 (${Rank.FIFTH.winningMoney})원 - ${lottoResult[Rank.FIFTH]}개")

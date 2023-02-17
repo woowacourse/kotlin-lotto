@@ -1,12 +1,19 @@
 package domain
 
-class Lotto(val numbers: Set<LottoNumber>) {
+class Lotto(private val numbers: Set<LottoNumber>) {
     constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber).toSet())
 
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
     }
 
+    fun get(): Set<LottoNumber> = numbers
+
+    fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
+
+    fun count(predict: (LottoNumber) -> Boolean): Int = numbers.count(predict)
+
+    fun toList() = numbers.toList()
     override fun toString(): String = numbers.joinToString("")
 
     companion object {

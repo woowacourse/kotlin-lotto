@@ -2,7 +2,7 @@ package domain
 
 class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(lotto.numbers.contains(bonusNumber).not()) { ERROR_DUPLICATE_BONUS_NUMBER.format(lotto, bonusNumber) }
+        require(lotto.contains(bonusNumber).not()) { ERROR_DUPLICATE_BONUS_NUMBER.format(lotto, bonusNumber) }
     }
 
     constructor(numbers: IntArray, bonusNumber: Int) : this(Lotto(*numbers), LottoNumber(bonusNumber))
@@ -14,9 +14,9 @@ class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
             },
         )
 
-    private fun getCountOfMatch(anyLotto: Lotto): Int = anyLotto.numbers.count { lotto.numbers.contains(it) }
+    private fun getCountOfMatch(anyLotto: Lotto): Int = anyLotto.count { lotto.contains(it) }
 
-    private fun matchBonus(anyLotto: Lotto): Boolean = anyLotto.numbers.contains(bonusNumber)
+    private fun matchBonus(anyLotto: Lotto): Boolean = anyLotto.contains(bonusNumber)
 
     override fun toString(): String = lotto.toString() + bonusNumber.toString()
     companion object {
