@@ -2,6 +2,7 @@ package domain
 
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
+import util.PREFIX
 
 class WinningNumbersTest {
     @Test
@@ -25,6 +26,6 @@ class WinningNumbersTest {
         // then
         assertThatIllegalArgumentException()
             .isThrownBy { WinningNumbers(lotto, bonusNumber) }
-            .withMessageContaining("${WinningNumbers.PREFIX} 보너스 번호가 당첨 번호와 중복되면 안된다.")
+            .withMessageContaining("$PREFIX 보너스 번호가 당첨 번호와 중복되면 안된다.")
     }
 }
