@@ -35,7 +35,7 @@ class World {
     private fun initBonus(): LottoNumber {
         return tryAndRerun {
             outputView.printMessage(OutputView.MESSAGE_BONUS)
-            LottoNumber(inputView.readInt())
+            LottoNumber.from(inputView.readInt())
         } as LottoNumber
     }
 

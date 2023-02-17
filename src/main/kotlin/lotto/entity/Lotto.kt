@@ -6,7 +6,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
         require(numbers.intersect(numbers).size == LOTTO_COUNT) { ERROR_MESSAGE_DUPLICATED_NUMBER }
     }
 
-    constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) }.toSet())
+    constructor(numbers: List<Int>) : this(numbers.map { LottoNumber.from(it) }.toSet())
 
     fun matchLottoNumberCount(lotto: Lotto): Int = numbers.intersect(lotto.numbers).size
 
