@@ -22,7 +22,7 @@ open class Lotto(numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
 
     companion object {
         const val LOTTO_SIZE = 6
-        private const val ERROR_MESSAGE_INVALID_LOTTO_SIZE = "[ERROR] 로또 번호 6개이어야 합니다."
+        private const val ERROR_MESSAGE_INVALID_LOTTO_SIZE = "[ERROR] 로또 번호는 ${LOTTO_SIZE}개이어야 합니다."
         private const val ERROR_MESSAGE_DUPLICATED_LOTTO_NUMBER = "[ERROR] 로또 번호는 중복되지 않아야 합니다."
     }
 }
