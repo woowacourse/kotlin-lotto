@@ -10,6 +10,7 @@ class PurchasedLottosTest {
 
     @Test
     fun `구입한 로또 전체의 당첨 결과를 확인한다`() {
+        // given
         val purchasedLottos = PurchasedLottos(
             listOf(
                 Lotto(
@@ -56,8 +57,11 @@ class PurchasedLottosTest {
             ),
             LottoNumber.from(7)
         )
+        // when
+        val actual = purchasedLottos.getTotalLottoResults(winningNumbers)
+        // then
         assertThat(
-            purchasedLottos.getTotalLottoResults(winningNumbers)
+            actual
         ).isEqualTo(
             listOf(
                 LottoResult.FIRST,

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.assertThrows
 
 class WinningNumbersTest {
     @Test
-    fun `당첨 번호가 6개가 아닌 경우`() {
+    fun `당첨 번호가 6개가 아닌 경우 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             WinningNumbers(
                 setOf(
@@ -41,7 +41,7 @@ class WinningNumbersTest {
     }
 
     @Test
-    fun `보너스 번호가 당첨 번호와 중복된 경우`() {
+    fun `보너스 번호가 당첨 번호와 중복된 경우 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             WinningNumbers(
                 setOf(

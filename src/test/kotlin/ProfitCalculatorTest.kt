@@ -8,13 +8,14 @@ class ProfitCalculatorTest {
 
     @Test
     fun `수익률을 계산한다`() {
+        // given
         val profitCalculator = ProfitCalculator()
-
-        assertThat(
-            profitCalculator.getProfit(
-                PurchaseMoney(14000),
-                listOf(LottoResult.FIFTH)
-            )
-        ).isEqualTo(0.35)
+        // when
+        val actual = profitCalculator.getProfit(
+            PurchaseMoney(14000),
+            listOf(LottoResult.FIFTH)
+        )
+        // then
+        assertThat(actual).isEqualTo(0.35)
     }
 }

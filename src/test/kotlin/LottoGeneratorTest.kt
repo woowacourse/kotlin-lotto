@@ -1,6 +1,5 @@
 import domain.LottoGenerator
 import domain.model.PurchaseMoney
-import domain.model.WinningNumbers
 import domain.model.lotto.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -18,7 +17,7 @@ class LottoGeneratorTest {
     }
 
     @Test
-    fun `구입 금액이 1000원 단위가 아닌 경우`() {
+    fun `구입 금액이 1000원 단위가 아닌 경우 예외가 발생한다`() {
         val purchaseMoney = PurchaseMoney(3500)
         assertThrows<IllegalArgumentException> {
             lottoGenerator.generateLottos(purchaseMoney)
@@ -34,7 +33,7 @@ class LottoGeneratorTest {
     }
 
     @Test
-    fun `구입 금액만큼 로또를 발행한다`() {
+    fun `구입 금액에 해당하는 수의 로또를 발행한다`() {
         assertThat(
             lottoGenerator.generateLottos(
                 PurchaseMoney(5000)
@@ -44,11 +43,13 @@ class LottoGeneratorTest {
 
     @Test
     fun `로또를 발행한다`() {
+        // given
         val lottoGenerator = LottoGenerator {
             listOf(1, 2, 3, 4, 5, 6)
         }
+        // when
         val lotto = lottoGenerator.generateLottos(PurchaseMoney(1000)).first()
-
+        // then
         assertThat(lotto.numbers).isEqualTo(
             setOf(
                 LottoNumber.from(1),
