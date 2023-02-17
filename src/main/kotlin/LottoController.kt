@@ -3,7 +3,7 @@ import domain.Judgement
 import domain.Money
 import domain.WinningNumbers
 import domain.lotto.Lotto
-import domain.lotto.LottoBundle
+import domain.lotto.LottoBundleDto
 import domain.lotto.LottoNumber
 import domain.lotto.generator.LottoGenerator
 import domain.lotto.generator.LottoVendingMachine
@@ -26,8 +26,8 @@ class LottoController {
         produceResult(lottoBundle, spendMoney)
     }
 
-    private fun produceResult(lottoBundle: LottoBundle, spendMoney: Money) {
-        val winningResult = Judgement.compareLottoBundle(getWinningNumbers(), lottoBundle)
+    private fun produceResult(lottoBundleDto: LottoBundleDto, spendMoney: Money) {
+        val winningResult = Judgement.compareLottoBundle(getWinningNumbers(), lottoBundleDto)
         val winStatistics = Bank.getWinStatistics(winningResult)
 
         OutputView.printWinStatistics(winStatistics)

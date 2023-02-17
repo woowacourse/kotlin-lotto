@@ -1,3 +1,3 @@
 package domain
 
-data class WinningResult(val comparingResults: List<ComparingResult>)
+data class WinningResult(val comparingResultDtos: List<ComparingResultDto>)

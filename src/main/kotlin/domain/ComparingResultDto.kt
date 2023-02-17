@@ -1,6 +1,6 @@
 package domain
 
-data class ComparingResult(
+data class ComparingResultDto(
     val matchedCount: Int,
     val isBonusMatched: Boolean,
 )

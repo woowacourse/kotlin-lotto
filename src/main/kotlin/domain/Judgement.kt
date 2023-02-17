@@ -1,14 +1,14 @@
 package domain
 
 import domain.lotto.Lotto
-import domain.lotto.LottoBundle
+import domain.lotto.LottoBundleDto
 
 object Judgement {
-    fun compareLottoBundle(winningNumbers: WinningNumbers, lottoBundle: LottoBundle): WinningResult {
-        return WinningResult(lottoBundle.lottos.map { compareLotto(winningNumbers, it) })
+    fun compareLottoBundle(winningNumbers: WinningNumbers, lottoBundleDto: LottoBundleDto): WinningResult {
+        return WinningResult(lottoBundleDto.lottos.map { compareLotto(winningNumbers, it) })
     }
 
-    private fun compareLotto(winningNumbers: WinningNumbers, lotto: Lotto): ComparingResult {
+    private fun compareLotto(winningNumbers: WinningNumbers, lotto: Lotto): ComparingResultDto {
         return winningNumbers.compareLotto(lotto)
     }
 }

@@ -1,7 +1,7 @@
 package domain
 
 import domain.lotto.Lotto
-import domain.lotto.LottoBundle
+import domain.lotto.LottoBundleDto
 import domain.lotto.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,7 +18,7 @@ class JudgementTest {
         val firstRankLottoNumbers = (1..6).map { LottoNumber.of(it) }.toSet()
         val secondRankLottoNumbers = (2..7).map { LottoNumber.of(it) }.toSet()
         val fourthRankLottoNumbers = (3..8).map { LottoNumber.of(it) }.toSet()
-        val lottoBundle = LottoBundle(
+        val lottoBundleDto = LottoBundleDto(
             listOf(
                 Lotto(firstRankLottoNumbers),
                 Lotto(secondRankLottoNumbers),
@@ -27,13 +27,13 @@ class JudgementTest {
         )
         val expected = WinningResult(
             listOf(
-                ComparingResult(6, false),
-                ComparingResult(5, true),
-                ComparingResult(4, true),
+                ComparingResultDto(6, false),
+                ComparingResultDto(5, true),
+                ComparingResultDto(4, true),
             ),
         )
         // when
-        val actual: WinningResult = Judgement.compareLottoBundle(winningNumbers, lottoBundle)
+        val actual: WinningResult = Judgement.compareLottoBundle(winningNumbers, lottoBundleDto)
 
         // then
         assertThat(actual).isEqualTo(expected)

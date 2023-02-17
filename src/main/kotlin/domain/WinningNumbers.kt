@@ -9,8 +9,8 @@ class WinningNumbers(private val lotto: Lotto, private val bonusNumber: LottoNum
         require(!lotto.has(bonusNumber)) { "$PREFIX 보너스 번호가 당첨 번호와 중복되면 안된다." }
     }
 
-    fun compareLotto(purchasedLotto: Lotto): ComparingResult {
-        return ComparingResult(
+    fun compareLotto(purchasedLotto: Lotto): ComparingResultDto {
+        return ComparingResultDto(
             purchasedLotto.countSameNumber(lotto),
             purchasedLotto.has(bonusNumber),
         )

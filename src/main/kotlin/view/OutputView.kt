@@ -4,7 +4,7 @@ import domain.Bank
 import domain.Money
 import domain.Rank
 import domain.WinStatistics
-import domain.lotto.LottoBundle
+import domain.lotto.LottoBundleDto
 import domain.lotto.LottoNumber
 
 object OutputView {
@@ -12,8 +12,8 @@ object OutputView {
         println("${lottoCount}개를 구매했습니다.")
     }
 
-    fun printPurchasedLotto(lottoBundle: LottoBundle) {
-        lottoBundle.lottos.forEach {
+    fun printPurchasedLotto(lottoBundleDto: LottoBundleDto) {
+        lottoBundleDto.lottos.forEach {
             println(it.lottoNumbers.map { lottoNumber: LottoNumber -> lottoNumber.number })
         }
         println()
