@@ -5,22 +5,22 @@ import org.junit.jupiter.api.Test
 
 class WinStatisticsTest {
     @Test
-    fun `당첨통계를 통해 총 수익이 얼마인지 반환한다`() {
+    fun `당첨 통계와 사용한 돈에 따라 수익률을 계산한다`() {
         // given
         val winStatistics: WinStatistics = WinStatistics(
-            mutableMapOf(
-                Rank.FIRST to 2,
-                Rank.SECOND to 1,
-                Rank.THIRD to 2,
-                Rank.FOURTH to 0,
-                Rank.FIFTH to 0,
+            listOf(
+                ComparingResultDto(6, false),
+                ComparingResultDto(6, false),
+                ComparingResultDto(5, true),
+                ComparingResultDto(5, false),
+                ComparingResultDto(5, false),
             ),
-        )
-
-        val expected: Money = Money(4033000000)
+        ) // 당첨 상금: 4033000000
+        val spentMoney: Money = Money(5000)
+        val expected: Double = 806600.0
 
         // when
-        val actual = winStatistics.getTotalIncome()
+        val actual = winStatistics.calculateEarningRate(spentMoney)
 
         // then
         assertThat(actual).isEqualTo(expected)

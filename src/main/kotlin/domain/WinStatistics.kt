@@ -1,23 +1,24 @@
 package domain
 
-class WinStatistics(_rankCount: Map<Rank, Int>) {
-    private val _rankCount: MutableMap<Rank, Int>
-    val rankCount: Map<Rank, Int> get() = _rankCount
+class WinStatistics(comparingResults: List<ComparingResultDto>) {
+    val rankCount: Map<Rank, Int>
 
     init {
-        this._rankCount = _rankCount.toMutableMap()
+        rankCount = comparingResults
+            .groupingBy { Rank.valueOf(it.matchedCount, it.isBonusMatched) }
+            .eachCount()
     }
 
-    fun plusValue(key: Rank, value: Int) {
-        _rankCount[key] = (_rankCount[key] ?: 0).plus(value)
-    }
-
-    fun getTotalIncome(): Money {
+    private fun getTotalIncome(): Money {
         return Money(
             rankCount
                 .map { it.key.winningMoney * it.value.toLong() }
                 .sum(),
         )
+    }
+
+    fun calculateEarningRate(spentMoney: Money): Double {
+        return getTotalIncome() / spentMoney
     }
 
     override fun equals(other: Any?): Boolean {

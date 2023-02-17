@@ -17,7 +17,7 @@ class WinningNumbers(private val lotto: Lotto, private val bonusNumber: LottoNum
         )
     }
 
-    fun compareLottoBundle(purchasedLottoBundle: LottoBundleDto): WinningResultDto {
-        return WinningResultDto(purchasedLottoBundle.lottos.map { compareLotto(it) })
+    fun compareLottoBundle(purchasedLottoBundle: LottoBundleDto): List<ComparingResultDto> {
+        return purchasedLottoBundle.lottos.map { compareLotto(it) }
     }
 }

@@ -35,15 +35,13 @@ class WinningNumbersTest {
                 Lotto(3, 4, 5, 6, 7, 8),
             ),
         )
-        val expected = WinningResultDto(
-            listOf(
-                ComparingResultDto(6, false),
-                ComparingResultDto(5, true),
-                ComparingResultDto(4, true),
-            ),
+        val expected = listOf(
+            ComparingResultDto(6, false),
+            ComparingResultDto(5, true),
+            ComparingResultDto(4, true),
         )
         // when
-        val actual: WinningResultDto = winningNumbers.compareLottoBundle(purchasedLottoBundle)
+        val actual: List<ComparingResultDto> = winningNumbers.compareLottoBundle(purchasedLottoBundle)
 
         // then
         assertThat(actual).isEqualTo(expected)

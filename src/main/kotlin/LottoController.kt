@@ -1,5 +1,5 @@
-import domain.Bank
 import domain.Money
+import domain.WinStatistics
 import domain.WinningNumbers
 import domain.lotto.Lotto
 import domain.lotto.LottoBundleDto
@@ -27,10 +27,10 @@ class LottoController {
 
     private fun produceResult(lottoBundleDto: LottoBundleDto, spendMoney: Money) {
         val winningResult = getWinningNumbers().compareLottoBundle(lottoBundleDto)
-        val winStatistics = Bank.getWinStatistics(winningResult)
+        val winStatistics = WinStatistics(winningResult)
 
         OutputView.printWinStatistics(winStatistics)
-        OutputView.printEarningRate(winStatistics.getTotalIncome(), spendMoney)
+        OutputView.printEarningRate(winStatistics.calculateEarningRate(spendMoney))
     }
 
     private fun getWinningNumbers(): WinningNumbers {
