@@ -1,5 +1,6 @@
 package domain
 
+import common.convertToLottoNumberSet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -12,10 +13,10 @@ class LottoStatisticsTest {
     @MethodSource("provideLottoAndMatchCount")
     fun `당첨 번호와 일치하는 숫자의 개수를 찾는다`(lotto: Lotto, expected: Int) {
         val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
-        val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
+        val bonusNumber = LottoNumber.from(7)
+        val winningLotto = WinningLotto(Lotto(winningNumbers.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val actual = lottoStatistics.compareNumbers(lotto)
+        val actual = lottoStatistics.matchNumbers(lotto)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -24,10 +25,10 @@ class LottoStatisticsTest {
     @MethodSource("provideLottoAndBonusMatchResult")
     fun `보너스 번호와 일치하는지 여부를 확인한다`(lotto: Lotto, expected: Boolean) {
         val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
-        val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
+        val bonusNumber = LottoNumber.from(7)
+        val winningLotto = WinningLotto(Lotto(winningNumbers.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val actual = lottoStatistics.compareBonusNumber(lotto)
+        val actual = lottoStatistics.matchBonusNumber(lotto)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -36,10 +37,10 @@ class LottoStatisticsTest {
     @MethodSource("provideLottoAndRankMatchResult")
     fun `단일 로또를 넘겨 받아서 당첨 결과를 반환한다`(lotto: Lotto, expected: Rank) {
         val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
-        val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
+        val bonusNumber = LottoNumber.from(7)
+        val winningLotto = WinningLotto(Lotto(winningNumbers.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val actual = lottoStatistics.compare(lotto)
+        val actual = lottoStatistics.match(lotto)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -48,17 +49,17 @@ class LottoStatisticsTest {
     fun `Ticket을 넘겨 받아서 당첨 번호와 비교한다`() {
         val ticket = Ticket(
             listOf(
-                Lotto(setOf(1, 2, 3, 4, 5, 6)),
-                Lotto(setOf(1, 2, 3, 4, 5, 6)),
-                Lotto(setOf(1, 2, 3, 4, 5, 13)),
-                Lotto(setOf(1, 2, 3, 4, 5, 9)),
+                Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()),
+                Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()),
+                Lotto(setOf(1, 2, 3, 4, 5, 13).convertToLottoNumberSet()),
+                Lotto(setOf(1, 2, 3, 4, 5, 9).convertToLottoNumberSet()),
             )
         )
         val winningNumber = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 13
-        val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
+        val bonusNumber = LottoNumber.from(13)
+        val winningLotto = WinningLotto(Lotto(winningNumber.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val result: Map<Rank, Int> = lottoStatistics.compareTicket(ticket)
+        val result: Map<Rank, Int> = lottoStatistics.matchTicket(ticket)
 
         assertThat(result[Rank.FIRST]).isEqualTo(2)
         assertThat(result[Rank.SECOND]).isEqualTo(1)
@@ -76,8 +77,8 @@ class LottoStatisticsTest {
         winResult[Rank.MISS] = 13
 
         val winningNumber = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 13
-        val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
+        val bonusNumber = LottoNumber.from(13)
+        val winningLotto = WinningLotto(Lotto(winningNumber.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
         val result = lottoStatistics.yield(winResult)
         val expected = "0.35"
@@ -88,30 +89,30 @@ class LottoStatisticsTest {
         @JvmStatic
         fun provideLottoAndMatchCount(): Stream<Arguments> {
             return Stream.of(
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 6)), 6),
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 7)), 5),
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 8, 7)), 4),
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 9, 8, 7)), 3),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()), 6),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 7).convertToLottoNumberSet()), 5),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 8, 7).convertToLottoNumberSet()), 4),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 9, 8, 7).convertToLottoNumberSet()), 3),
             )
         }
 
         @JvmStatic
         fun provideLottoAndBonusMatchResult(): Stream<Arguments> {
             return Stream.of(
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 6)), false),
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 7)), true)
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()), false),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 7).convertToLottoNumberSet()), true)
             )
         }
 
         @JvmStatic
         fun provideLottoAndRankMatchResult(): Stream<Arguments> {
             return Stream.of(
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 6)), Rank.FIRST),
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 7)), Rank.SECOND),
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 10)), Rank.THIRD),
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 10, 11)), Rank.FOURTH),
-                Arguments.arguments(Lotto(setOf(1, 2, 3, 11, 12, 45)), Rank.FIFTH),
-                Arguments.arguments(Lotto(setOf(1, 2, 11, 12, 15, 45)), Rank.MISS),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()), Rank.FIRST),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 7).convertToLottoNumberSet()), Rank.SECOND),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 5, 10).convertToLottoNumberSet()), Rank.THIRD),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 4, 10, 11).convertToLottoNumberSet()), Rank.FOURTH),
+                Arguments.arguments(Lotto(setOf(1, 2, 3, 11, 12, 45).convertToLottoNumberSet()), Rank.FIFTH),
+                Arguments.arguments(Lotto(setOf(1, 2, 11, 12, 15, 45).convertToLottoNumberSet()), Rank.MISS),
             )
         }
     }

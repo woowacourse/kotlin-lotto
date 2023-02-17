@@ -4,21 +4,19 @@ import kotlin.math.floor
 
 class LottoStatistics(private val winningLotto: WinningLotto) {
 
-    fun compareNumbers(lotto: Lotto): Int {
+    fun matchNumbers(lotto: Lotto): Int {
         val winningNumbers = winningLotto.getWinningNumbers()
-        return lotto.numbers.filter { number ->
-            winningNumbers.contains(number)
-        }.size
+        return lotto.numbers.count { winningNumbers.contains(it) }
     }
 
-    fun compareBonusNumber(lotto: Lotto): Boolean = lotto.numbers.contains(winningLotto.bonusNumber)
+    fun matchBonusNumber(lotto: Lotto): Boolean = lotto.numbers.contains(winningLotto.bonusNumber)
 
-    fun compare(lotto: Lotto): Rank = Rank.valueOf(compareNumbers(lotto), compareBonusNumber(lotto))
+    fun match(lotto: Lotto): Rank = Rank.valueOf(matchNumbers(lotto), matchBonusNumber(lotto))
 
-    fun compareTicket(ticket: Ticket): Map<Rank, Int> {
+    fun matchTicket(ticket: Ticket): Map<Rank, Int> {
         val result = Rank.values().associateWith { 0 }.toMutableMap()
         ticket.lottos.forEach { lotto ->
-            result[compare(lotto)] = (result[compare(lotto)] ?: 0) + 1
+            result[match(lotto)] = (result[match(lotto)] ?: 0) + 1
         }
         return result
     }
@@ -30,6 +28,10 @@ class LottoStatistics(private val winningLotto: WinningLotto) {
             sum += rank.winningMoney * count
             totalCount += count
         }
-        return (floor((sum / (totalCount * 1000)) * 100) / 100).toString()
+        return (floor((sum / (totalCount * ONE_LOTTO_MONEY)) * 100) / 100).toString()
+    }
+
+    companion object {
+        private const val ONE_LOTTO_MONEY = 1000
     }
 }

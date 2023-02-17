@@ -1,5 +1,6 @@
 package domain
 
+import common.convertToLottoNumberSet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -10,7 +11,7 @@ class LottoSellerTest {
     fun `로또를 한 장 발급한다`() {
         val lottoSeller = LottoSeller(TestNumberGenerator())
         val lotto = lottoSeller.sellLotto()
-        assertThat(lotto.numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6))
+        assertThat(lotto.numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet())
     }
 
     @ParameterizedTest(name = "{0}개의 로또를 발급한다.")
@@ -20,7 +21,7 @@ class LottoSellerTest {
         val lottoSeller = LottoSeller(generator)
         val ticket = lottoSeller.sellLottos(count)
         assertThat(ticket.lottos.map { lotto -> lotto.numbers }).isEqualTo(
-            generator.pattern.subList(0, count)
+            generator.pattern.map { it.convertToLottoNumberSet() }.take(count)
         )
     }
 
