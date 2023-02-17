@@ -1,15 +1,15 @@
 package domain
 
 object Bank {
-    fun getWinStatistics(winningResult: WinningResult): WinStatistics {
+    fun getWinStatistics(winningResultDto: WinningResultDto): WinStatistics {
         val winStatistics = initWinStatistics()
-        setWinStatistics(winningResult, winStatistics)
+        setWinStatistics(winningResultDto, winStatistics)
 
         return winStatistics
     }
 
-    private fun setWinStatistics(winningResult: WinningResult, winStatistics: WinStatistics) {
-        winningResult.comparingResultDto.forEach {
+    private fun setWinStatistics(winningResultDto: WinningResultDto, winStatistics: WinStatistics) {
+        winningResultDto.comparingResultDto.forEach {
             val rank = Rank.valueOf(it.matchedCount, it.isBonusMatched)
             winStatistics.plusValue(rank, 1)
         }

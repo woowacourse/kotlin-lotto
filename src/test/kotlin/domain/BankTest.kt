@@ -7,7 +7,7 @@ class BankTest {
     @Test
     fun `당첨 통계를 계산한다`() {
         // given
-        val winningResult: WinningResult = WinningResult(
+        val winningResultDto: WinningResultDto = WinningResultDto(
             listOf(
                 ComparingResultDto(6, false),
                 ComparingResultDto(5, true),
@@ -27,7 +27,7 @@ class BankTest {
         )
 
         // when
-        val actual: WinStatistics = Bank.getWinStatistics(winningResult)
+        val actual: WinStatistics = Bank.getWinStatistics(winningResultDto)
 
         // then
         assertThat(actual).isEqualTo(expected)
