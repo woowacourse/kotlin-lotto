@@ -7,18 +7,22 @@ import domain.model.lotto.LottoNumber
 class LottoGenerator(
     private val numberGenerator: () -> Set<LottoNumber> = {
         (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLottoNumbers()
-    },
+    }
 ) {
 
     fun generateLottos(purchaseMoney: PurchaseMoney): List<Lotto> {
         purchaseMoney.validateMoneyUnit()
 
-        return List(purchaseMoney.getNumberOfLottos()) {
-            Lotto(numberGenerator())
-        }
+        return
     }
 
-    private fun PurchaseMoney.validateMoneyUnit() = require(this.money % LOTTO_PRICE == ZERO) {
+    private fun generateLottosAutomatically(count: Int): List<Lotto> =
+        List(count) { Lotto(numberGenerator()) }
+
+    private fun generateLottosManually(lottoNumbers: Set<LottoNumber>, count: Int): List<Lotto> =
+        List(count) { Lotto(lottoNumbers) }
+
+    fun PurchaseMoney.validateMoneyUnit() = require(this.money % LOTTO_PRICE == ZERO) {
         NUMBER_UNIT_ERROR
     }
 
