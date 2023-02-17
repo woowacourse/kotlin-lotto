@@ -6,9 +6,6 @@ object Judgement {
     }
 
     private fun compareLotto(winningNumbers: WinningNumbers, lotto: Lotto): ComparingResult {
-        val matchedCount: Int = lotto.countSameNumber(winningNumbers.lotto)
-        val isBonusMatched: Boolean = lotto.has(winningNumbers.bonusNumber)
-
-        return ComparingResult(matchedCount, isBonusMatched)
+        return winningNumbers.compareLotto(lotto)
     }
 }
