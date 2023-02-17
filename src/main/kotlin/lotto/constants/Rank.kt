@@ -16,9 +16,12 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             if (countOfMatch in 1..2) {
                 return MISS
             }
-            return values().findLast { rank ->
-                rank.countOfMatch == countOfMatch
-            }!!
+            return try {
+                values().last { rank -> rank.countOfMatch == countOfMatch }
+            } catch (e: IllegalStateException) {
+                println("[ERROR] " + e.message)
+                MISS
+            }
         }
     }
 }
