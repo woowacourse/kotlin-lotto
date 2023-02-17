@@ -1,6 +1,6 @@
 package domain.model.lotto
 
-class LottoNumber private constructor(val value: Int) {
+class LottoNumber private constructor(private val value: Int) {
     companion object {
         private const val MINIMUM_NUMBER = 1
         private const val MAXIMUM_NUMBER = 45
