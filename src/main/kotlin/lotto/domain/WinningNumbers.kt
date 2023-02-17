@@ -2,7 +2,7 @@ package lotto.domain
 
 class WinningNumbers(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(!winningLotto.numbers.any { lottoNumber -> lottoNumber.number == bonusNumber.number }) { BONUS_NUMBER_DUPLICATE_ERROR }
+        require(!winningLotto.numbers.any { lottoNumber -> lottoNumber == bonusNumber }) { BONUS_NUMBER_DUPLICATE_ERROR }
     }
 
     companion object {
