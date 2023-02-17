@@ -16,7 +16,10 @@ import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
 
-class World {
+class World(
+    private val inputView: InputView,
+    private val outputView: OutputView
+) {
     private val lottoPrice = LottoPrice(DEFAULT_LOTTO_PRICE)
 
     fun processLotto() {
@@ -26,37 +29,37 @@ class World {
         val bonus = initBonus(winNumber)
         val winLotto = WinLotto(winNumber, bonus)
         val winStatistics = makeWinStatistics(lottos, winLotto)
-        OutputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
+        outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
         val profitRate = makeProfitRate(purchaseMoney, winStatistics)
-        OutputView.profitRateResult(profitRate)
+        outputView.profitRateResult(profitRate)
     }
 
     private fun initPurchaseMoney(): PurchaseMoney {
         return tryAndRerun {
-            OutputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
-            InputView.readPurchaseMoney(lottoPrice)
+            outputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
+            inputView.readPurchaseMoney(lottoPrice)
         } as PurchaseMoney
     }
 
     private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
         val lottoGenerator = RandomLottoGenerator()
         val lottos = Lottos(purchaseMoney, lottoPrice, lottoGenerator)
-        OutputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottos.value.size)
-        OutputView.lottosResult(lottos)
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottos.value.size)
+        outputView.lottosResult(lottos)
         return lottos
     }
 
     private fun initWinNumber(): Lotto {
         return tryAndRerun {
-            OutputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
-            InputView.readWinNumber()
+            outputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
+            inputView.readWinNumber()
         } as Lotto
     }
 
     private fun initBonus(winNumber: Lotto): Bonus {
         return tryAndRerun {
-            OutputView.printMessage(OutputView.MESSAGE_BONUS)
-            val bonus = InputView.readBonus()
+            outputView.printMessage(OutputView.MESSAGE_BONUS)
+            val bonus = inputView.readBonus()
             WinLotto(winNumber, bonus)
             bonus
         } as Bonus
