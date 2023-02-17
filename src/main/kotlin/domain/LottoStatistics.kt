@@ -1,5 +1,6 @@
 package domain
 
+import domain.PurchaseLottoMoney.Companion.ONE_LOTTO_MONEY
 import kotlin.math.floor
 
 class LottoStatistics(private val winningLotto: WinningLotto) {
@@ -29,9 +30,5 @@ class LottoStatistics(private val winningLotto: WinningLotto) {
             totalCount += count
         }
         return (floor((sum / (totalCount * ONE_LOTTO_MONEY)) * 100) / 100).toString()
-    }
-
-    companion object {
-        private const val ONE_LOTTO_MONEY = 1000
     }
 }
