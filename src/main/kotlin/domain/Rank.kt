@@ -17,9 +17,9 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
         }
 
         private fun checkRankCondition(countOfMatch: Int, matchBonus: Boolean, rank: Rank): Boolean {
-            if (countOfMatch == 5 && !matchBonus) return rank == THIRD
-            if (countOfMatch < 3) return rank.countOfMatch < 3
-            return countOfMatch == rank.countOfMatch
+            if (countOfMatch == SECOND.countOfMatch && !matchBonus) return rank == THIRD
+            if (countOfMatch < FIFTH.countOfMatch) return rank == MISS
+            return rank.countOfMatch == countOfMatch
         }
     }
 }
