@@ -1,5 +1,7 @@
 package domain
 
+import domain.lotto.Lotto
+import domain.lotto.LottoNumber
 import util.PREFIX
 
 class WinningNumbers(private val lotto: Lotto, private val bonusNumber: LottoNumber) {

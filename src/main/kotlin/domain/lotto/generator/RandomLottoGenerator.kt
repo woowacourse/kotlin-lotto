@@ -1,4 +1,7 @@
-package domain
+package domain.lotto.generator
+
+import domain.lotto.Lotto
+import domain.lotto.LottoNumber
 
 class RandomLottoGenerator : LottoGenerator {
     override fun generate(): Lotto {

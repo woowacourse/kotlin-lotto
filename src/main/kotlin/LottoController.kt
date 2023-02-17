@@ -1,4 +1,13 @@
-import domain.*
+import domain.Bank
+import domain.Judgement
+import domain.Money
+import domain.WinningNumbers
+import domain.lotto.Lotto
+import domain.lotto.LottoBundle
+import domain.lotto.LottoNumber
+import domain.lotto.generator.LottoGenerator
+import domain.lotto.generator.LottoVendingMachine
+import domain.lotto.generator.RandomLottoGenerator
 import view.InputView
 import view.OutputView
 import view.UI

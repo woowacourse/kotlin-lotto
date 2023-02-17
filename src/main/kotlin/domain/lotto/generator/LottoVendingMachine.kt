@@ -1,4 +1,8 @@
-package domain
+package domain.lotto.generator
+
+import domain.Money
+import domain.lotto.Lotto
+import domain.lotto.LottoBundle
 
 object LottoVendingMachine {
     const val LOTTO_PRICE = 1000

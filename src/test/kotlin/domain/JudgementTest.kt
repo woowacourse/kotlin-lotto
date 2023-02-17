@@ -1,5 +1,8 @@
 package domain
 
+import domain.lotto.Lotto
+import domain.lotto.LottoBundle
+import domain.lotto.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

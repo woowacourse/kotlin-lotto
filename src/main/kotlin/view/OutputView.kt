@@ -1,6 +1,11 @@
 package view
 
-import domain.*
+import domain.Bank
+import domain.Money
+import domain.Rank
+import domain.WinStatistics
+import domain.lotto.LottoBundle
+import domain.lotto.LottoNumber
 
 object OutputView {
     fun printPurchasedLottoCount(lottoCount: Int) {
@@ -9,7 +14,7 @@ object OutputView {
 
     fun printPurchasedLotto(lottoBundle: LottoBundle) {
         lottoBundle.lottos.forEach {
-            println(it.lottoNumbers.map { lottoNumber : LottoNumber -> lottoNumber.number })
+            println(it.lottoNumbers.map { lottoNumber: LottoNumber -> lottoNumber.number })
         }
         println()
     }
@@ -23,18 +28,18 @@ object OutputView {
         }
     }
 
-    private fun printRankCount(rankCount: Pair<Rank, Int>){
-        if(rankCount.first == Rank.SECOND){
+    private fun printRankCount(rankCount: Pair<Rank, Int>) {
+        if (rankCount.first == Rank.SECOND) {
             println("${rankCount.first.countOfMatch}개 일치, 보너스 볼 일치(${rankCount.first.winningMoney}원)- ${rankCount.second}개")
             return
         }
-        if(rankCount.first == Rank.MISS){
+        if (rankCount.first == Rank.MISS) {
             return
         }
         println("${rankCount.first.countOfMatch}개 일치 (${rankCount.first.winningMoney}원)- ${rankCount.second}개")
     }
 
-    fun printEarningRate(totalPrize : Money, spendMoney: Money ){
+    fun printEarningRate(totalPrize: Money, spendMoney: Money) {
         println("총 수익률은 ${Bank.getEarningRate(totalPrize, spendMoney)}입니다.")
     }
 }
