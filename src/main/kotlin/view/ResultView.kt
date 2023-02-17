@@ -6,27 +6,30 @@ import domain.rank.Rank
 class ResultView {
     fun printPurchasedLottos(lottos: List<PurchasedLotto>) {
         println(PURCHASED_LOTTO_SIZE_FORMAT.format(lottos.size))
-        lottos.map { it.getSortedLotto() }
-            .forEach { sortedNumber ->
-                println(sortedNumber.map { it.value }.joinToString(", ", "[", "]"))
-            }
+        lottos.map { it.getSortedLotto() }.forEach { sortedNumber ->
+            println(sortedNumber.map { it.value }.joinToString(", ", "[", "]"))
+        }
         println()
     }
 
-    fun printWinningRate(resultRank: Map<Rank, Int>, incomeRate: Double) {
+    fun printIncomeStatics(resultRank: Map<Rank, Int>, incomeRate: Double) {
+        printStaticsHead()
+        printLottoMatchResult(resultRank)
+        printIncomeRate(incomeRate)
+    }
+
+    private fun printLottoMatchResult(resultRank: Map<Rank, Int>) {
+        Rank.values().slice(0 until Rank.values().size - 1).reversed().forEach { rank ->
+            println(RANK_PRINT_FORMAT.format(rank.countOfMatch, rank.winningMoney, resultRank[rank] ?: DEFAULT_MATCHED_SIZE))
+        }
+    }
+
+    private fun printStaticsHead() {
         println(WINNING_RATE_TITLE)
         println(DIVIDER)
+    }
 
-        Rank.values().slice(0 until Rank.values().size - 1).reversed().forEach { rank ->
-            println(
-                RANK_PRINT_FORMAT.format(
-                    rank.countOfMatch,
-                    rank.winningMoney,
-                    resultRank[rank] ?: DEFAULT_MATCHED_SIZE
-                )
-            )
-        }
-
+    private fun printIncomeRate(incomeRate: Double) {
         print(TOTAL_INCOME_RATE_FORMAT.format(incomeRate))
         if (incomeRate < LOSS_RATE_STANDARD) println(LOSS_MESSAGE)
     }

@@ -27,6 +27,6 @@ class LottoGameController(
 
     private fun matchLottos(lottoGame: LottoGame, purchasedLottos: List<PurchasedLotto>, purchasedMoney: Money) {
         val matchResult = lottoGame.matchLottos(purchasedLottos)
-        resultView.printWinningRate(matchResult, lottoGame.calculateIncomeRate(matchResult, purchasedMoney))
+        resultView.printIncomeStatics(matchResult, lottoGame.calculateIncomeRate(matchResult, purchasedMoney))
     }
 }
