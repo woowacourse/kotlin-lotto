@@ -12,21 +12,20 @@ class LottoResultTest {
         val lottoResult = LottoResult()
         // when
         repeat(countOfTicket) {
-            lottoResult.plusRankCount(Rank.THIRD, lottoResult.result)
+            lottoResult.updateLottoResult(Rank.THIRD)
         }
         // then
         assertThat(lottoResult.result[Rank.THIRD]).isEqualTo(countOfTicket)
     }
 
     @Test
-    fun `수익률을 계산한다`() {
+    fun `로또 하나를 사서 5등이 한번 당첨됐을 때 수익률은 5이다`() {
         // given
-        val result = hashMapOf(Rank.FOURTH to 2)
-        val lottoResult = LottoResult()
-
+        val result = LottoResult()
+        result.updateLottoResult(Rank.FIFTH)
         // when
-        val actual = lottoResult.getProfitRate(result)
+        val actual = result.getProfitRate()
         // then
-        assertThat(actual).isEqualTo(50.0)
+        assertThat(actual).isEqualTo(5.0)
     }
 }

@@ -3,16 +3,15 @@ package model
 import domain.Rank
 
 class LottoResult {
-    var result: HashMap<Rank, Int> = hashMapOf()
-
-    fun plusRankCount(rank: Rank, lottoResult: HashMap<Rank, Int>) {
-        lottoResult[rank] = (lottoResult[rank] ?: NULL) + 1
+    val result = HashMap<Rank, Int>()
+    fun updateLottoResult(rank: Rank) {
+        this.result[rank] = (this.result[rank] ?: INITIALIZE_TO_ZERO) + PLUS_ONE
     }
 
-    fun getProfitRate(result: HashMap<Rank, Int>): Double {
+    fun getProfitRate(): Double {
         var profit = DOUBLE_ZERO
         var countOfTicket = DOUBLE_ZERO
-        result.forEach { (rank, count) ->
+        this.result.forEach { (rank, count) ->
             profit += (rank.winningMoney * count)
             countOfTicket += count
         }
@@ -21,8 +20,9 @@ class LottoResult {
     }
 
     companion object {
-        private const val NULL = 0
+        private const val INITIALIZE_TO_ZERO = 0
         private const val DOUBLE_ZERO = 0.00
         private const val ONE_LOTTO_PRICE = 1000
+        private const val PLUS_ONE = 1
     }
 }
