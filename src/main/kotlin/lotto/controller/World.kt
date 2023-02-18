@@ -13,6 +13,7 @@ import lotto.model.RandomLottoGenerator
 import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
+import lotto.view.WinStatisticsFormatter
 
 class World {
     private val inputView = InputView()
@@ -49,17 +50,31 @@ class World {
 
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
-
         val lottoGame = makeLottoGame(purchaseMoney.value / DEFAULT_LOTTO_PRICE)
-        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottoGame.value.size)
-        outputView.gameResult(lottoGame)
+
+        processLottoGame(lottoGame)
 
         val winLotto = initWinLotto()
-
         val winStatistics = makeWinStatistics(lottoGame, winLotto)
-        outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
+        val winStatisticsFormatter = LottoWinStatisticsFormatter()
 
-        val profitRate = makeProfitRate(LottoProfitRateCalculator(purchaseMoney, winStatistics))
+        processWinStatistics(winStatistics, winStatisticsFormatter)
+        processProfitRate(winStatistics, purchaseMoney)
+    }
+
+    private fun processLottoGame(lottoGame: LottoGame) {
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottoGame.value.size)
+        outputView.gameResult(lottoGame)
+    }
+
+    private fun processWinStatistics(winStatistics: WinStatistics, winStatisticsFormatter: WinStatisticsFormatter) {
+        outputView.winStatisticsResult(winStatistics, winStatisticsFormatter)
+    }
+
+    private fun processProfitRate(winStatistics: WinStatistics, purchaseMoney: PurchaseMoney) {
+        val profitRateCalculator = LottoProfitRateCalculator()
+        val winMoney = profitRateCalculator.calculateWinMoney(winStatistics)
+        val profitRate = makeProfitRate(LottoProfitRateCalculator(), purchaseMoney, winMoney)
         outputView.profitRateResult(profitRate)
     }
 
@@ -69,8 +84,12 @@ class World {
     private fun makeWinStatistics(lottoGame: LottoGame, winLotto: WinLotto): WinStatistics =
         WinStatistics.from(lottoGame, winLotto)
 
-    private fun makeProfitRate(profitRateCalculator: LottoProfitRateCalculator): ProfitRate =
-        profitRateCalculator.calculate()
+    private fun makeProfitRate(
+        profitRateCalculator: LottoProfitRateCalculator,
+        purchaseMoney: PurchaseMoney,
+        winMoney: Int
+    ): ProfitRate =
+        profitRateCalculator.calculate(purchaseMoney.value, winMoney)
 
     companion object {
         const val DEFAULT_LOTTO_PRICE = 1000

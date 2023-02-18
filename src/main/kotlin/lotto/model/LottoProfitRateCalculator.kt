@@ -4,9 +4,10 @@ import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinStatistics
 
-class LottoProfitRateCalculator(private val purchaseMoney: PurchaseMoney, private val winStatistics: WinStatistics) : ProfitRateCalculator {
-    override fun calculate(): ProfitRate {
-        val winMoney = winStatistics.value.sumOf { it.winningMoney }
-        return ProfitRate(winMoney / purchaseMoney.value.toFloat())
+class LottoProfitRateCalculator : ProfitRateCalculator {
+    override fun calculate(purchaseMoney: Int, winMoney: Int): ProfitRate {
+        return ProfitRate(winMoney / purchaseMoney.toFloat())
     }
+
+    fun calculateWinMoney(winStatistics: WinStatistics): Int = winStatistics.value.sumOf { it.winningMoney }
 }
