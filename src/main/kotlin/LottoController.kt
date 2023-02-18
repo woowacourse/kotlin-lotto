@@ -1,11 +1,11 @@
-import domain.LottoAdministrator
 import domain.LottoMachine
+import domain.Rank
 import domain.Seller
-import model.WinningLotto
 import model.Lotto
 import model.LottoNumber
 import model.LottoResult
 import model.Payment
+import model.WinningLotto
 import view.InputView
 import view.OutputView
 
@@ -13,17 +13,16 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
     private val lottoMachine: LottoMachine,
-    private val lottoAdministrator: LottoAdministrator,
     private val lottoResult: LottoResult,
 ) {
 
     fun run() {
         val lottoCount = getLottoCount()
-        val lotteries = getLotto(lottoCount)
+        val lotteries = getLotteries(lottoCount)
         printLotto(lotteries)
         val winningNumber = getWinningNumber()
-        val bonusNumber = getBonusNumber(winningNumber)
-        printLottoResult(lotteries, winningNumber, bonusNumber)
+        val winningLotto = getBonusNumber(winningNumber)
+        printLottoResult(lotteries, winningLotto)
     }
 
     private fun printLotto(lotteries: List<Lotto>) {
@@ -32,12 +31,12 @@ class LottoController(
         }
     }
 
-    private fun printLottoResult(lotteries: List<Lotto>, winningNumber: Lotto, winningLotto: WinningLotto) {
+    private fun printLottoResult(lotteries: List<Lotto>, winningLotto: WinningLotto) {
         lotteries.forEach { lotto ->
-            val matchOfCount = compareLottoNumber(lotto, winningNumber)
-            val isMatchBonus = checkBonusNumber(lotto, winningLotto)
-            val rank = lottoAdministrator.getRank(matchOfCount, isMatchBonus)
-            lottoResult.plusRankCount(rank!!, lottoResult.result)
+            val rank = Rank.getRank(lotto, winningLotto)
+            if (rank != null) {
+                lottoResult.plusRankCount(rank, lottoResult.result)
+            }
         }
         showLottoResult()
     }
@@ -50,14 +49,9 @@ class LottoController(
         return lottoCount.count
     }
 
-    private fun getLotto(lottoCount: Int): List<Lotto> {
+    private fun getLotteries(lottoCount: Int): List<Lotto> {
         val lotteries = mutableListOf<Lotto>()
-
-        repeat(lottoCount) {
-            val lotto = lottoMachine.generateLotto()
-            lotteries.add(lotto)
-        }
-
+        repeat(lottoCount) { lotteries.add(lottoMachine.generateLotto()) }
         return lotteries
     }
 
@@ -71,14 +65,6 @@ class LottoController(
     private fun getBonusNumber(winningNumber: Lotto): WinningLotto {
         outputView.printInputBonusNumber()
         return WinningLotto(winningNumber, LottoNumber.from(inputView.inputBonusNumber()))
-    }
-
-    private fun compareLottoNumber(lotto: Lotto, winningNumber: Lotto): Int {
-        return lottoAdministrator.getMatchOfNumber(lotto, winningNumber)
-    }
-
-    private fun checkBonusNumber(lotto: Lotto, winningLotto: WinningLotto): Boolean {
-        return lottoAdministrator.isMatchBonus(lotto, winningLotto)
     }
 
     private fun showLottoResult() {

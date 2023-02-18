@@ -1,4 +1,3 @@
-import domain.LottoAdministrator
 import domain.LottoMachine
 import domain.ShuffledNumbersGenerator
 import model.LottoResult
@@ -9,6 +8,5 @@ fun main() = LottoController(
     InputView(),
     OutputView(),
     LottoMachine(ShuffledNumbersGenerator()),
-    LottoAdministrator(),
     LottoResult(),
 ).run()
