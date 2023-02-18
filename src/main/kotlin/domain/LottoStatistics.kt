@@ -5,10 +5,7 @@ import kotlin.math.floor
 class LottoStatistics(val winningLotto: WinningLotto) {
 
     private fun getCountOfMatch(lotto: Lotto): Int {
-        val winningNumbers = winningLotto.getWinningNumbers()
-        return lotto.numbers.filter { number ->
-            winningNumbers.contains(number)
-        }.size
+        return winningLotto.match(lotto)
     }
 
     private fun isBonusNumberMatch(lotto: Lotto): Boolean = lotto.numbers.contains(winningLotto.bonusNumber)

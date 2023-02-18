@@ -1,11 +1,15 @@
 package domain
 
-class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
+class WinningLotto(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(!lotto.numbers.contains(bonusNumber)) { ERROR_CONTAIN_BONUS_NUMBER_IN_LOTTO }
+        require(!winningLotto.numbers.contains(bonusNumber)) { ERROR_CONTAIN_BONUS_NUMBER_IN_LOTTO }
     }
 
-    fun getWinningNumbers(): Set<LottoNumber> = lotto.numbers
+    fun match(lotto: Lotto): Int {
+        return lotto.numbers.filter { number ->
+            winningLotto.contains(number)
+        }.size
+    }
 
     companion object {
         const val ERROR_CONTAIN_BONUS_NUMBER_IN_LOTTO = "로또 번호와 보너스 번호는 같을 수 없습니다."
