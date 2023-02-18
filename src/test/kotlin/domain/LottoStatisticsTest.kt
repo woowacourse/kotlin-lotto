@@ -19,7 +19,7 @@ class LottoStatisticsTest {
         val lottoStatistics = LottoStatistics(winningLotto)
 
         val method = lottoStatistics.javaClass.declaredMethods.find {
-            it.name == "compareNumbers"
+            it.name == "getCountOfMatch"
         }
         method?.isAccessible = true
 
@@ -40,7 +40,7 @@ class LottoStatisticsTest {
         val lottoStatistics = LottoStatistics(winningLotto)
 
         val method: Method? = lottoStatistics.javaClass.declaredMethods.find {
-            it.name == "compareBonusNumber"
+            it.name == "isBonusNumberMatch"
         }
         method?.isAccessible = true
 
@@ -61,7 +61,7 @@ class LottoStatisticsTest {
         val lottoStatistics = LottoStatistics(winningLotto)
 
         val method: Method? = lottoStatistics.javaClass.declaredMethods.find {
-            it.name == "compare"
+            it.name == "getRank"
         }
         method?.isAccessible = true
 
@@ -86,22 +86,32 @@ class LottoStatisticsTest {
         val bonusNumber = LottoNumber(13)
         val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val result: List<Int> = lottoStatistics.compareTicket(ticket)
+        val result: Map<Rank, Int> = lottoStatistics.compareTicket(ticket)
 
-        assertThat(result[0]).isEqualTo(2)
-        assertThat(result[1]).isEqualTo(1)
-        assertThat(result[2]).isEqualTo(1)
+        assertThat(result[Rank.FIRST]).isEqualTo(2)
+        assertThat(result[Rank.SECOND]).isEqualTo(1)
+        assertThat(result[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
     fun `총 수익률을 계산한다`() {
-        val winResult = listOf(0, 0, 0, 0, 1, 13)
+        // given
+        val winResult = mutableMapOf(
+            Pair(Rank.FIRST, 0),
+            Pair(Rank.SECOND, 0),
+            Pair(Rank.THIRD, 0),
+            Pair(Rank.FOURTH, 0),
+            Pair(Rank.FIFTH, 1),
+            Pair(Rank.MISS, 13)
+        )
         val winningNumber = listOf(1, 2, 3, 4, 5, 6).map { number -> LottoNumber(number) }.toSet()
         val bonusNumber = LottoNumber(13)
         val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
         val result = lottoStatistics.calculateProfitToString(winResult)
         val expected = "0.35"
+
+        // then
         assertThat(result).isEqualTo(expected)
     }
 

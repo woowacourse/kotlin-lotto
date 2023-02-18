@@ -1,8 +1,10 @@
 package view
 
-interface ResultViewInterface {
-    fun printResult(statisticsResult: List<Int>, profit: String)
+import domain.Rank
 
-    fun printStatistics(statisticsResult: List<Int>)
+interface ResultViewInterface {
+    fun printResult(statisticsResult: Map<Rank, Int>, profit: String)
+
+    fun printStatistics(statisticsResult: Map<Rank, Int>)
     fun printProfit(profit: String)
 }

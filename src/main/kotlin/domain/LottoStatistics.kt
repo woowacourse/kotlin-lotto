@@ -15,21 +15,23 @@ class LottoStatistics(val winningLotto: WinningLotto) {
 
     private fun getRank(lotto: Lotto): Rank = Rank.valueOf(getCountOfMatch(lotto), isBonusNumberMatch(lotto))
 
-    fun compareTicket(ticket: Ticket): List<Int> {
-        val result = MutableList(6) { 0 }
+    fun compareTicket(ticket: Ticket): Map<Rank, Int> {
+        val result = Rank.values().associateWith { 0 }.toMutableMap()
         ticket.lottos.forEach { lotto ->
-            result[getRank(lotto).ordinal] += 1
+            result[getRank(lotto)] = result[getRank(lotto)]!! + 1
         }
+
         return result
     }
 
-    fun calculateProfitToString(result: List<Int>): String {
+    fun calculateProfitToString(results: Map<Rank, Int>): String {
         var sum = 0.0
         var totalCount = 0.0
-        for ((index, count) in result.withIndex()) {
-            sum += Rank.values()[index].winningMoney * count
-            totalCount += count
+        for (result in results) {
+            sum += Rank.values()[result.key.ordinal].winningMoney * result.value
+            totalCount += result.value
         }
+
         return (floor((sum / (totalCount * 1000)) * 100) / 100).toString()
     }
 }
