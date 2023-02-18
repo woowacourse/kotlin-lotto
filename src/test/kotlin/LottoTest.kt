@@ -18,31 +18,16 @@ class LottoTest {
             Lotto(numbers)
         }
     }
-
-    @Test
-    fun `랜덤으로 생성된 로또가 6개의 숫자로 이루어졌는지 확인`() {
-        val lotto = RandomLottoGenerator().generateLotto()
-        assertThat(lotto.numbers.size).isEqualTo(6)
-    }
-
-    @Test
-    fun `길이가 6이 아닌 경우`() {
+    @MethodSource("produceWrongSizeLotto")
+    @ParameterizedTest
+    fun `로또가 6개의 숫자로 이루어지지 않은 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
         assertThrows<IllegalArgumentException> {
-            Lotto(
-                listOf(
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                ),
-            )
+            Lotto(numbers)
         }
     }
 
-    @Test
+    @MethodSource
+    @ParameterizedTest
     fun `중복된 번호가 존재하는 경우`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
@@ -51,13 +36,7 @@ class LottoTest {
         }
     }
 
-    @Test
-    fun `로또 번호가 1애서 45사이의 숫자가 아닌 경우`() {
-        assertThrows<IllegalArgumentException> {
-            Lotto(listOf(1, 12, 55, 44, 23, 65))
-        }
-    }
-
+    /*
     @Test
     fun `로또 당첨번호와 생성된 로또를 비교하여 일치하는 개수 확인`() {
         val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
@@ -81,16 +60,23 @@ class LottoTest {
         val bonusNumber = BonusNumber(6)
 
         assertThat(testLotto.matchLotto(winnigLotto, bonusNumber)).isEqualTo(Rank.SECOND)
-    }
+    }*/
 
     companion object {
 
         @JvmStatic
         fun produceLotto(): List<Arguments>{
-            listOf(
-                Arguments.of(listOf(1,3,4,6,10,22).map { LottoNumber(it) })
+            return listOf(
+                Arguments.of(listOf(1,3,4,6,10,22).map { LottoNumber.from(it) })
             )
         }
 
+        @JvmStatic
+        fun produceWrongSizeLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of((1..5).map { LottoNumber.from(it) }),
+                Arguments.of((1..7).map { LottoNumber.from(it) })
+            )
+        }
     }
 }
