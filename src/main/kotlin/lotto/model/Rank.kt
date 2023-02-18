@@ -13,14 +13,14 @@ enum class Rank(val countOfMatch: Int, val needBonus: Boolean, val winningMoney:
     MISS(0, false, Money(0));
 
     companion object {
-        private const val ERROR_DETERMINED_RANK_IS_EMPTY = "등수는 반드시 하나 판별되어야 합니다. 판별된 등수 개수 : %d"
+        private const val ERROR_DETERMINED_RANK_IS_EMPTY = "등수 판별에 실패하였습니다."
 
         fun determine(lotto: Lotto, winLotto: WinLotto): Rank {
             val determinedRank = Rank.values().filter {
                 lotto.determineRank(it, winLotto)
             }
-            check(determinedRank.size == 1) {
-                String.format(ERROR_DETERMINED_RANK_IS_EMPTY, determinedRank.size)
+            check(determinedRank.isNotEmpty()) {
+                String.format(ERROR_DETERMINED_RANK_IS_EMPTY)
             }
             return determinedRank[0]
         }
