@@ -1,11 +1,20 @@
 package lotto.entity
 
+import lotto.model.Rank
+
 class Lotto(val numbers: List<Int>) {
 
     init {
         require(numbers.size == LOTTO_COUNT) { ERROR_MESSAGE_LOTTO_NUMBER_IS_SIX }
         require(numbers.all { (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER).contains(it) }) { ERROR_MESSAGE_LOTTO_RANGE_1_TO_45 }
         require(numbers.intersect(numbers.toSet()).size == LOTTO_COUNT) { ERROR_MESSAGE_DUPLICATED_NUMBER }
+    }
+
+    fun determineLottoResult(lotto: Lotto, winLotto: WinLotto): Rank {
+        val countOfMatch = lotto.numbers.intersect(winLotto.winNumber.numbers.toSet()).size
+        val matchBonus = lotto.numbers.contains(winLotto.bonus.value)
+
+        return Rank.valueOf(countOfMatch, matchBonus)
     }
 
     companion object {

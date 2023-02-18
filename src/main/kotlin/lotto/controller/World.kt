@@ -11,7 +11,6 @@ import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
 import lotto.model.RandomLottoGenerator
-import lotto.model.Rank
 import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
@@ -68,12 +67,7 @@ class World(
     private fun makeWinStatistics(lottos: Lottos, winLotto: WinLotto): WinStatistics {
         return tryAndRerun {
             WinStatistics(
-                lottos.value.map {
-                    Rank.valueOf(
-                        it.numbers.intersect(winLotto.winNumber.numbers.toSet()).size,
-                        it.numbers.contains(winLotto.bonus.value)
-                    )
-                }
+                lottos.determineLottosResult(winLotto)
             )
         } as WinStatistics
     }
