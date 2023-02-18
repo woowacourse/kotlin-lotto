@@ -2,7 +2,7 @@ package lotto.entity
 
 import lotto.controller.World
 
-class PurchaseMoney(val value: Int) {
+class PurchaseMoney(value: Int) : Money(value) {
     init {
         require(value >= World.DEFAULT_LOTTO_PRICE) { String.format(ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO, value) }
     }

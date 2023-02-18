@@ -6,6 +6,7 @@ import lotto.entity.LottoNumber
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
+import lotto.entity.WinMoney
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
@@ -73,8 +74,8 @@ class World {
 
     private fun processProfitRate(winStatistics: WinStatistics, purchaseMoney: PurchaseMoney) {
         val profitRateCalculator = LottoProfitRateCalculator()
-        val winMoney = profitRateCalculator.calculateWinMoney(winStatistics)
-        val profitRate = makeProfitRate(LottoProfitRateCalculator(), purchaseMoney, winMoney)
+        val winMoney = WinMoney.from(winStatistics)
+        val profitRate = makeProfitRate(profitRateCalculator, purchaseMoney, winMoney)
         outputView.profitRateResult(profitRate)
     }
 
@@ -87,9 +88,9 @@ class World {
     private fun makeProfitRate(
         profitRateCalculator: LottoProfitRateCalculator,
         purchaseMoney: PurchaseMoney,
-        winMoney: Int
+        winMoney: WinMoney
     ): ProfitRate =
-        profitRateCalculator.calculate(purchaseMoney.value, winMoney)
+        profitRateCalculator.calculate(purchaseMoney, winMoney)
 
     companion object {
         const val DEFAULT_LOTTO_PRICE = 1000
