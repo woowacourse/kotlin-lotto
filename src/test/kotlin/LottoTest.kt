@@ -26,13 +26,11 @@ class LottoTest {
         }
     }
 
-    @MethodSource
+    @MethodSource("produceOverlatLotto")
     @ParameterizedTest
-    fun `중복된 번호가 존재하는 경우`() {
+    fun `중복된 번호가 존재하는 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
         assertThrows<IllegalArgumentException> {
-            Lotto(
-                listOf(1, 2, 3, 4, 5, 5),
-            )
+            Lotto(numbers)
         }
     }
 
@@ -78,5 +76,15 @@ class LottoTest {
                 Arguments.of((1..7).map { LottoNumber.from(it) })
             )
         }
+
+        @JvmStatic
+        fun produceOverlayLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(listOf(1,1,2,3,4,5).map { LottoNumber.from(it) }),
+                Arguments.of(listOf(1,10,10,20,25,33).map { LottoNumber.from(it) })
+            )
+        }
+
+
     }
 }

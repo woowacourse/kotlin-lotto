@@ -5,7 +5,6 @@ class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == 6) { INPUT_LOTTO_SIZE_ERROR_MESSAGE }
         require(numbers.toSet().size == 6) { INPUT_LOTTO_DUPLICATE_ERROR_MESSAGE }
-        //require(numbers.filter { number -> number in 1..45 }.size == 6) { INPUT_LOTTO_RANGE_ERROR_MESSAGE }
     }
 
     fun countMatchNumber(lotto: Lotto): Int {
