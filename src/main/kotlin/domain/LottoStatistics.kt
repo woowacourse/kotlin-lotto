@@ -21,7 +21,7 @@ class LottoStatistics(val winningLotto: WinningLotto) {
         return result
     }
 
-    fun calculateProfitToString(results: Map<Rank, Int>): String {
+    fun calculateProfit(results: Map<Rank, Int>): String {
         var sum = 0.0
         var totalCount = 0.0
         for (result in results) {
