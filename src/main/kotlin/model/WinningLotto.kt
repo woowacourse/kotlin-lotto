@@ -1,20 +1,13 @@
 package model
 
-class WinningLotto(private val lotto: Lotto, private val bonusNumber: LottoNumber) {
+class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
 
     init {
-        require(checkDuplicateNumber()) { DUPLICATE_BONUS_NUMBER }
+        require(!isBonusNumberDuplicate()) { DUPLICATE_BONUS_NUMBER }
     }
 
-    private fun checkDuplicateNumber(): Boolean {
-        lotto.lottoNumbers.forEach { lottoNumber ->
-            if (lottoNumber.number == bonusNumber.number) return false
-        }
-        return true
-    }
-
-    fun getBonusNumber(): Int {
-        return bonusNumber.number
+    private fun isBonusNumberDuplicate(): Boolean {
+        return lotto.lottoNumbers.contains(bonusNumber)
     }
 
     companion object {

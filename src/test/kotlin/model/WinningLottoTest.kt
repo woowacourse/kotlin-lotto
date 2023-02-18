@@ -6,7 +6,7 @@ import org.junit.jupiter.api.assertThrows
 class WinningLottoTest {
 
     @Test
-    fun `보너스번호는 당첨번호와 중복되면 안된다`() {
+    fun `보너스번호는 당첨번호와 중복되면 에러를 발생시킨다`() {
         // given
         val lotto = Lotto(
             listOf(
@@ -16,7 +16,7 @@ class WinningLottoTest {
                 LottoNumber.from(4),
                 LottoNumber.from(5),
                 LottoNumber.from(6),
-            )
+            ),
         )
         val bonusNumber = LottoNumber.from(3)
         // when
