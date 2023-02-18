@@ -14,7 +14,7 @@ class LottoController {
 
     fun run() {
         val amount = askAmount()
-        val lottos = buyLotto(amount)
+        val lottos = getLotto(amount)
         outputView.outputLottos(lottos)
         val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
         val result = LottoResult.of(lottos, winningLotto)
@@ -26,9 +26,9 @@ class LottoController {
         return inputView.inputAmount()
     }
 
-    private fun buyLotto(amount: Int): List<Lotto> {
+    private fun getLotto(amount: Int): List<Lotto> {
         val store = LottoStore()
-        return store.buyLotto(amount)
+        return store.sell(amount)
     }
 
     private fun askWinningNumbers(): Lotto {
