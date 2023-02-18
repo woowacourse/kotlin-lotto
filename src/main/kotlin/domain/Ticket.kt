@@ -1,3 +1,3 @@
 package domain
 
-class Ticket(val lottos: List<Lotto>)
+class Ticket(val lottos: List<Lotto>) : List<Lotto> by lottos

@@ -23,7 +23,7 @@ class LottoSellerTest {
         val actual = lottoSeller.sellLottos(2)
 
         // then
-        assertThat(actual.lottos.size).isEqualTo(2)
+        assertThat(actual.size).isEqualTo(2)
     }
 
     inner class NumberGenerator(private val numbers: List<Int>) : domain.NumberGenerator {
