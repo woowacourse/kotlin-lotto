@@ -17,8 +17,8 @@ data class LottoResult(private val result: Map<Rank, Int>) {
             val result = Rank.values().associateWith { 0 }.toMutableMap()
 
             lottos.forEach {
-                result[Rank.valueOf(winningLotto.getCountOfMatch(it), winningLotto.matchBonus(it))] =
-                    result[Rank.valueOf(winningLotto.getCountOfMatch(it), winningLotto.matchBonus(it))]!! + 1
+                val rank = Rank.valueOf(winningLotto.getCountOfMatch(it), winningLotto.matchBonus(it))
+                result[rank] = (result[rank] ?: 0) + 1
             }
 
             return LottoResult(result)
