@@ -1,5 +1,6 @@
 import domain.BonusNumber
 import domain.Lotto
+import domain.LottoNumber
 import domain.Lottos
 import domain.Money
 import domain.RandomLottoGenerator
@@ -8,13 +9,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottosTest {
-
-    private val testLottos = listOf(
-        Lotto(listOf(1, 2, 3, 4, 5, 6)),
-        Lotto(listOf(1, 2, 4, 6, 34, 45)),
-        Lotto(listOf(3, 5, 15, 23, 33, 43)),
-        Lotto(listOf(4, 6, 15, 18, 24, 35))
-    )
     @Test
     fun `로또 리스트가 4개 생성되었는지 확인`() {
         val lottos = Lottos(testLottos)
@@ -30,12 +24,51 @@ class LottosTest {
     @Test
     fun `전체 당첨 결과 확인`() {
         val testLottos = Lottos(testLottos)
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 6, 10))
+        val winningLotto = Lotto(
+            listOf(
+                LottoNumber.from(1), LottoNumber.from(2),
+                LottoNumber.from(3), LottoNumber.from(4),
+                LottoNumber.from(6), LottoNumber.from(10)
+            )
+        )
         val bonusNumber = BonusNumber(45)
         assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.FIRST]).isEqualTo(0)
         assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.SECOND]).isEqualTo(0)
         assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.THIRD]).isEqualTo(1)
         assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.FOURTH]).isEqualTo(1)
         assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.FIFTH]).isEqualTo(0)
+    }
+
+    companion object {
+        private val testLottos = listOf(
+            Lotto(
+                listOf(
+                    LottoNumber.from(1), LottoNumber.from(2),
+                    LottoNumber.from(3), LottoNumber.from(4),
+                    LottoNumber.from(5), LottoNumber.from(6)
+                )
+            ),
+            Lotto(
+                listOf(
+                    LottoNumber.from(1), LottoNumber.from(2),
+                    LottoNumber.from(4), LottoNumber.from(6),
+                    LottoNumber.from(34), LottoNumber.from(45)
+                )
+            ),
+            Lotto(
+                listOf(
+                    LottoNumber.from(3), LottoNumber.from(5),
+                    LottoNumber.from(15), LottoNumber.from(18),
+                    LottoNumber.from(24), LottoNumber.from(35)
+                )
+            ),
+            Lotto(
+                listOf(
+                    LottoNumber.from(4), LottoNumber.from(6),
+                    LottoNumber.from(15), LottoNumber.from(18),
+                    LottoNumber.from(24), LottoNumber.from(35)
+                )
+            )
+        )
     }
 }

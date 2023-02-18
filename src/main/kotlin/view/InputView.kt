@@ -2,6 +2,7 @@ package view
 
 import domain.BonusNumber
 import domain.Lotto
+import domain.LottoNumber
 import domain.Money
 
 class InputView {
@@ -10,11 +11,9 @@ class InputView {
     }
 
     private fun getInputMoney(input: String?): Money {
-        return run {
-            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-            Money(input.toInt())
-        }
+        require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
+        require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
+        return Money(input.toInt())
     }
 
     fun inputWinningLotto(): Lotto {
@@ -22,11 +21,10 @@ class InputView {
     }
 
     private fun getInputWinningLotto(input: String?): Lotto {
-        return run {
-            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-            Lotto(input.split(",").map { number -> number.toInt() })
-        }
+        require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
+        require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
+        var winningNumber = input.split(",").map { number -> LottoNumber.from(number.toInt()) }
+        return Lotto(winningNumber)
     }
 
     fun inputBonusNumber(): BonusNumber {
@@ -34,11 +32,9 @@ class InputView {
     }
 
     private fun getInputBonusNumber(input: String?): BonusNumber {
-        return run {
-            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-            BonusNumber(input.toInt())
-        }
+        require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
+        require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
+        return BonusNumber(input.toInt())
     }
 
     companion object {

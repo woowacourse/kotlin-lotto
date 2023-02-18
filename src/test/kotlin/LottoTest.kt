@@ -1,6 +1,7 @@
 
 import domain.BonusNumber
 import domain.Lotto
+import domain.LottoNumber
 import domain.RandomLottoGenerator
 import domain.Rank
 import org.assertj.core.api.Assertions.assertThat
@@ -8,13 +9,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class LottoTest {
-
-    private val lotto = Lotto(
-        listOf(1, 2, 3, 4, 5, 6)
-    )
     @Test
     fun `로또가 6개의 숫자로 잘 생성되었는지 확인`() {
-        assertThat(lotto.numbers).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+        assertThat(testLotto.numbers).isEqualTo(testLotto)
     }
 
     @Test
@@ -28,7 +25,10 @@ class LottoTest {
         assertThrows<IllegalArgumentException> {
             Lotto(
                 listOf(
-                    1, 2, 3, 4, 5, 6, 7
+                    LottoNumber.from(1), LottoNumber.from(2),
+                    LottoNumber.from(3), LottoNumber.from(4),
+                    LottoNumber.from(5), LottoNumber.from(6),
+                    LottoNumber.from(7)
                 )
             )
         }
@@ -38,7 +38,11 @@ class LottoTest {
     fun `중복된 번호가 존재하는 경우`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
-                listOf(1, 2, 3, 4, 5, 5)
+                listOf(
+                    LottoNumber.from(1), LottoNumber.from(2),
+                    LottoNumber.from(3), LottoNumber.from(4),
+                    LottoNumber.from(5), LottoNumber.from(5)
+                )
             )
         }
     }
@@ -46,21 +50,33 @@ class LottoTest {
     @Test
     fun `로또 번호가 1애서 45사이의 숫자가 아닌 경우`() {
         assertThrows<IllegalArgumentException> {
-            Lotto(listOf(1, 12, 55, 44, 23, 65))
+            Lotto(
+                listOf(
+                    LottoNumber.from(1), LottoNumber.from(12),
+                    LottoNumber.from(55), LottoNumber.from(44),
+                    LottoNumber.from(23), LottoNumber.from(65)
+                )
+            )
         }
     }
 
     @Test
     fun `로또 당첨번호와 생성된 로또를 비교하여 일치하는 개수 확인`() {
-        val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val winnigLotto = Lotto(listOf(1, 3, 5, 7, 10, 25))
+        val testLotto = testLotto
+        val winnigLotto = Lotto(
+            listOf(
+                LottoNumber.from(1), LottoNumber.from(3),
+                LottoNumber.from(5), LottoNumber.from(7),
+                LottoNumber.from(10), LottoNumber.from(25)
+            )
+        )
 
         assertThat(testLotto.countMatchNumber(winnigLotto)).isEqualTo(3)
     }
 
     @Test
     fun `생성된 로또에 보너스 번호가 존재하는지 확인`() {
-        val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val testLotto = testLotto
         val bonusNumber = BonusNumber(3)
 
         assertThat(testLotto.hasBonusNumber(bonusNumber)).isEqualTo(true)
@@ -68,10 +84,26 @@ class LottoTest {
 
     @Test
     fun `당첨된 로또가 5개 일치하고 보너스 번호도 일치할 때 2등인지 확인`() {
-        val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val winnigLotto = Lotto(listOf(1, 2, 3, 4, 5, 10))
+        val testLotto = testLotto
+        val winnigLotto = Lotto(
+            listOf(
+                LottoNumber.from(1), LottoNumber.from(2),
+                LottoNumber.from(3), LottoNumber.from(4),
+                LottoNumber.from(5), LottoNumber.from(10)
+            )
+        )
         val bonusNumber = BonusNumber(6)
 
         assertThat(testLotto.matchLotto(winnigLotto, bonusNumber)).isEqualTo(Rank.SECOND)
+    }
+
+    companion object {
+        val testLotto = Lotto(
+            listOf(
+                LottoNumber.from(1), LottoNumber.from(2),
+                LottoNumber.from(3), LottoNumber.from(4),
+                LottoNumber.from(5), LottoNumber.from(6)
+            )
+        )
     }
 }
