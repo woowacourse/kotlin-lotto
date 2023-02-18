@@ -14,7 +14,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     ;
 
     companion object {
-        fun getRank(lotto: Lotto, winningLotto: WinningLotto): Rank? {
+        fun getRank(lotto: Lotto, winningLotto: WinningLotto): Rank {
             val countOfMatch = getCountOfMatch(lotto, winningLotto.lotto)
             val matchBonus = isBonusMatch(lotto, winningLotto.bonusNumber)
             return Rank.valueOf(countOfMatch, matchBonus)
@@ -30,10 +30,10 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             return lotto.lottoNumbers.contains(bonusNumber)
         }
 
-        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank? {
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
             return values().find { rank ->
                 checkRankCondition(countOfMatch, matchBonus, rank)
-            }
+            } ?: throw IllegalArgumentException(RANK_ERROR_MESSAGE)
         }
 
         private fun checkRankCondition(countOfMatch: Int, matchBonus: Boolean, rank: Rank): Boolean {
@@ -41,5 +41,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             if (countOfMatch < FIFTH.countOfMatch) return rank == MISS
             return rank.countOfMatch == countOfMatch
         }
+
+        private const val RANK_ERROR_MESSAGE = "[ERROR] 등수를 계산할 수 없습니다!!"
     }
 }

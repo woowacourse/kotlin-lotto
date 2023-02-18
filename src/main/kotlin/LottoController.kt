@@ -29,7 +29,7 @@ class LottoController(
     private fun updateLottoResult(lotteries: List<Lotto>, winningLotto: WinningLotto) {
         lotteries.forEach { lotto ->
             val rank = Rank.getRank(lotto, winningLotto)
-            if (rank != null) lottoResult.updateLottoResult(rank)
+            lottoResult.updateLottoResult(rank)
         }
     }
 
