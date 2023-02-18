@@ -1,7 +1,7 @@
 package domain
 
 class RandomNumberGenerator : NumberGenerator {
-    override fun generateNumbers(): List<Int> =
+    override fun generate(): List<Int> =
         (MINIMUM_NUMBER..MAXIMUM_NUMBER).shuffled().take(6).sorted()
 
     companion object {
