@@ -8,6 +8,6 @@ class PurchaseMoney(val value: Int) {
     }
 
     companion object {
-        private const val ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO = "구입 금액이 로또 가격보다 적습니다. 입력된 구입 금액은 %d원 입니다."
+        const val ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO = "구입 금액이 로또 가격보다 적습니다. 입력된 구입 금액은 %d원 입니다."
     }
 }
