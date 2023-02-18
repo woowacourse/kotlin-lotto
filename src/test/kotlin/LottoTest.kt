@@ -1,20 +1,22 @@
-
-import domain.BonusNumber
-import domain.Lotto
-import domain.RandomLottoGenerator
-import domain.Rank
+import domain.*
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.internal.bytebuddy.asm.Advice.Argument
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.ValueSource
 
 class LottoTest {
 
-    private val lotto = Lotto(
-        listOf(1, 2, 3, 4, 5, 6)
-    )
-    @Test
-    fun `로또가 6개의 숫자로 잘 생성되었는지 확인`() {
-        assertThat(lotto.numbers).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+    @MethodSource("produceLotto")
+    @ParameterizedTest
+    fun `로또가 6개의 숫자로 잘 생성되었는지 확인`(numbers: List<LottoNumber>) {
+        assertDoesNotThrow {
+            Lotto(numbers)
+        }
     }
 
     @Test
@@ -28,8 +30,14 @@ class LottoTest {
         assertThrows<IllegalArgumentException> {
             Lotto(
                 listOf(
-                    1, 2, 3, 4, 5, 6, 7
-                )
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                ),
             )
         }
     }
@@ -38,7 +46,7 @@ class LottoTest {
     fun `중복된 번호가 존재하는 경우`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
-                listOf(1, 2, 3, 4, 5, 5)
+                listOf(1, 2, 3, 4, 5, 5),
             )
         }
     }
@@ -73,5 +81,16 @@ class LottoTest {
         val bonusNumber = BonusNumber(6)
 
         assertThat(testLotto.matchLotto(winnigLotto, bonusNumber)).isEqualTo(Rank.SECOND)
+    }
+
+    companion object {
+
+        @JvmStatic
+        fun produceLotto(): List<Arguments>{
+            listOf(
+                Arguments.of(listOf(1,3,4,6,10,22).map { LottoNumber(it) })
+            )
+        }
+
     }
 }

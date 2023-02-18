@@ -1,6 +1,6 @@
 package domain
 
-class Lotto(val numbers: List<Int>) {
+class Lotto(val numbers: List<LottoNumber>) {
 
     init {
         require(numbers.size == 6) { INPUT_LOTTO_SIZE_ERROR_MESSAGE }
