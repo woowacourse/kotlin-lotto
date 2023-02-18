@@ -1,5 +1,9 @@
 import domain.Lotto
 import domain.LottoNumber
+import domain.Rank
+import domain.WinningLotto
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -32,31 +36,62 @@ class LottoTest {
         }
     }
 
-    /*
-    @Test
-    fun `로또 당첨번호와 생성된 로또를 비교하여 일치하는 개수 확인`() {
-        val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val winnigLotto = Lotto(listOf(1, 3, 5, 7, 10, 25))
-
-        assertThat(testLotto.countMatchNumber(winnigLotto)).isEqualTo(3)
+    /**
+     * 생성된 로또 Lotto(1, 2, 3, 4, 5, 6)
+     * 당첨 로또 Lotto(1, 2, 3, 7, 8, 9)
+     */
+    @MethodSource("produceFifthLotto")
+    @ParameterizedTest
+    fun `생성된 로또가 당첨 로또와 3개 일치하면 5등인지 확인`(lotto: Lotto, winningLotto: WinningLotto) {
+        val actual = lotto.matchLotto(winningLotto)
+        assertThat(actual).isEqualTo(Rank.FIFTH)
     }
 
-    @Test
-    fun `생성된 로또에 보너스 번호가 존재하는지 확인`() {
-        val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = BonusNumber(3)
-
-        assertThat(testLotto.hasBonusNumber(bonusNumber)).isEqualTo(true)
+    /**
+     * 생성된 로또 Lotto(1, 2, 3, 4, 5, 6)
+     * 당첨 로또 Lotto(1, 2, 3, 4, 8, 9)
+     */
+    @MethodSource("produceFourthLotto")
+    @ParameterizedTest
+    fun `생성된 로또가 당첨 로또와 4개 일치하면 4등인지 확인`(lotto: Lotto, winningLotto: WinningLotto) {
+        val actual = lotto.matchLotto(winningLotto)
+        assertThat(actual).isEqualTo(Rank.FOURTH)
     }
 
-    @Test
-    fun `당첨된 로또가 5개 일치하고 보너스 번호도 일치할 때 2등인지 확인`() {
-        val testLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val winnigLotto = Lotto(listOf(1, 2, 3, 4, 5, 10))
-        val bonusNumber = BonusNumber(6)
+    /**
+     * 생성된 로또 Lotto(1, 2, 3, 4, 5, 6)
+     * 당첨 로또 Lotto(1, 2, 3, 4, 5, 9)
+     * 보너스 번호 20
+     */
+    @MethodSource("produceThirdLotto")
+    @ParameterizedTest
+    fun `생성된 로또가 당첨 로또와 5개 일치하고 보너스 번호가 포함되지 않으면, 3등인지 확인`(lotto: Lotto, winningLotto: WinningLotto) {
+        val actual = lotto.matchLotto(winningLotto)
+        assertThat(actual).isEqualTo(Rank.THIRD)
+    }
 
-        assertThat(testLotto.matchLotto(winnigLotto, bonusNumber)).isEqualTo(Rank.SECOND)
-    }*/
+    /**
+     * 생성된 로또 Lotto(1, 2, 3, 4, 5, 6)
+     * 당첨 로또 Lotto(1, 2, 3, 4, 5, 9)
+     * 보너스 번호 6
+     */
+    @MethodSource("produceSecondLotto")
+    @ParameterizedTest
+    fun `생성된 로또가 당첨 로또와 5개 일치하고 보너스 번호가 포함되면, 2등인지 확인`(lotto: Lotto, winningLotto: WinningLotto) {
+        val actual = lotto.matchLotto(winningLotto)
+        assertThat(actual).isEqualTo(Rank.SECOND)
+    }
+
+    /**
+     * 생성된 로또 Lotto(1, 2, 3, 4, 5, 6)
+     * 당첨 로또 Lotto(1, 2, 3, 4, 5, 6)
+     */
+    @MethodSource("produceFirstLotto")
+    @ParameterizedTest
+    fun `생성된 로또가 당첨 로또와 6개 일치하면, 1등인지 확인`(lotto: Lotto, winningLotto: WinningLotto) {
+        val actual = lotto.matchLotto(winningLotto)
+        assertThat(actual).isEqualTo(Rank.FIRST)
+    }
 
     companion object {
 
@@ -80,6 +115,60 @@ class LottoTest {
             return listOf(
                 Arguments.of(listOf(1, 1, 2, 3, 4, 5).map { LottoNumber.from(it) }),
                 Arguments.of(listOf(1, 10, 10, 20, 25, 33).map { LottoNumber.from(it) }),
+            )
+        }
+
+        @JvmStatic
+        fun produceFifthLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
+                    WinningLotto(listOf(1, 2, 3, 7, 8, 9).map { LottoNumber.from(it) }, LottoNumber.from(20))
+                )
+            )
+        }
+
+        @JvmStatic
+        fun produceFourthLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
+                    WinningLotto(listOf(1, 2, 3, 4, 8, 9).map { LottoNumber.from(it) }, LottoNumber.from(20))
+                )
+            )
+        }
+
+        @JvmStatic
+        fun produceThirdLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
+                    WinningLotto(listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) }, LottoNumber.from(20))
+                )
+            )
+        }
+
+        @JvmStatic
+        fun produceSecondLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
+                    WinningLotto(
+                        listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) }, LottoNumber.from(6)
+                    )
+                )
+            )
+        }
+
+        @JvmStatic
+        fun produceFirstLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
+                    WinningLotto(
+                        listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }, LottoNumber.from(10)
+                    )
+                )
             )
         }
     }
