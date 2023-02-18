@@ -3,10 +3,10 @@ package model
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class CountTest {
+class LottoCountTest {
 
     @Test
-    fun `갯수는 1 이상이다`() {
+    fun `로또의 갯수가 1이상이 아니면 에러를 발생한다`() {
         // given
         val count = 0
 
