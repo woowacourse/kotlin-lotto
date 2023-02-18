@@ -1,14 +1,11 @@
 package domain
 
-import common.MAXIMUM_LOTTO_RANGE
-import common.MINIMUM_LOTTO_RANGE
-
-class LottoSeller(private val numberGenerator: NumberGenerator = RandomNumberGenerator()) {
+class LottoSeller(private val lottoMachine: LottoMachine = RandomLottoMachine()) {
     fun sellLotto(): Lotto {
-        return Lotto(numberGenerator.generateSixNumber(MINIMUM_LOTTO_RANGE, MAXIMUM_LOTTO_RANGE))
+        return lottoMachine.create()
     }
 
     fun sellLottos(count: Int): Ticket {
-        return Ticket(List(count) { Lotto(numberGenerator.generateSixNumber(MINIMUM_LOTTO_RANGE, MAXIMUM_LOTTO_RANGE)) })
+        return Ticket(List(count) { lottoMachine.create() })
     }
 }
