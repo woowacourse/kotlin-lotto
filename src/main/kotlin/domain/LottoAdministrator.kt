@@ -1,6 +1,6 @@
 package domain
 
-import model.BonusNumber
+import model.WinningLotto
 import model.Lotto
 
 class LottoAdministrator {
@@ -9,9 +9,9 @@ class LottoAdministrator {
         return lottoNumbers.filter { winningNumber.getNumbers().contains(it) }.size
     }
 
-    fun isMatchBonus(lottoNumber: Lotto, bonusNumber: BonusNumber): Boolean {
+    fun isMatchBonus(lottoNumber: Lotto, winningLotto: WinningLotto): Boolean {
         val lottoNumbers = lottoNumber.getNumbers()
-        return lottoNumbers.contains(bonusNumber.getBonusNumber())
+        return lottoNumbers.contains(winningLotto.getBonusNumber())
     }
 
     fun getRank(countOfMatch: Int, matchBonus: Boolean): Rank? {

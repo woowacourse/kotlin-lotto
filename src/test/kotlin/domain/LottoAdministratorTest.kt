@@ -1,6 +1,6 @@
 package domain
 
-import model.BonusNumber
+import model.WinningLotto
 import model.Lotto
 import model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
@@ -33,10 +33,10 @@ class LottoAdministratorTest {
                 LottoNumber.from(6),
             )
         )
-        val bonusNumber = BonusNumber(lottoNumber, LottoNumber.from(3))
+        val winningLotto = WinningLotto(lottoNumber, LottoNumber.from(3))
 
         // when
-        val actual = LottoAdministrator().isMatchBonus(lottoNumber, bonusNumber)
+        val actual = LottoAdministrator().isMatchBonus(lottoNumber, winningLotto)
         // then
         assertThat(actual).isEqualTo(true)
     }
