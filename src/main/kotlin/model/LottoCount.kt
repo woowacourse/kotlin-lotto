@@ -1,9 +1,9 @@
 package model
 
-class Count(val number: Int) {
+class LottoCount(val count: Int) {
 
     init {
-        require(number >= MINIMUM_COUNT) { MINIMUM_COUNT_ERROR_MESSAGE }
+        require(count >= MINIMUM_COUNT) { MINIMUM_COUNT_ERROR_MESSAGE }
     }
 
     companion object {

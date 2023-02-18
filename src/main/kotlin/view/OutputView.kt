@@ -18,15 +18,15 @@ class OutputView {
         println(lottoNumbers)
     }
 
-    fun printLottoResult(lottoResult: HashMap<Rank, Int>) {
+    fun printLottoRankResult(lottoResult: HashMap<Rank, Int>) {
         println(STATISTICS + BAR)
-        println(
-            "3개 일치 (5,000원) - ${if (lottoResult[Rank.FIFTH] == null) 0 else lottoResult[Rank.FIFTH]}개\n" +
-                "4개 일치 (50,000원) - ${if (lottoResult[Rank.FOURTH] == null) 0 else lottoResult[Rank.FOURTH]}개\n" +
-                "5개 일치 (1,500,000원) - ${if (lottoResult[Rank.THIRD] == null) 0 else lottoResult[Rank.THIRD]}개\n" +
-                "5개 일치, 보너스 볼 일치 (30,000,000원) - ${if (lottoResult[Rank.SECOND] == null) 0 else lottoResult[Rank.SECOND]}개\n" +
-                "6개 일치 (2,000,000,000원) - ${if (lottoResult[Rank.FIRST] == null) 0 else lottoResult[Rank.FIRST]}개",
-        )
+        Rank.values().forEach { rank: Rank ->
+            printLottoRankCount(rank, lottoResult)
+        }
+    }
+
+    fun printLottoRankCount(rank: Rank, lottoResult: HashMap<Rank, Int>) {
+        if (rank != Rank.MISS) println("${rank.countOfMatch}개 일치 (${rank.winningMoney}원) - ${lottoResult[rank] ?: 0} 개)")
     }
 
     fun printLottoProfitRate(profitRate: Double) {

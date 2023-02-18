@@ -45,9 +45,9 @@ class LottoController(
     private fun getLottoCount(): Int {
         outputView.printInputMoney()
         val payment = Payment(inputView.inputMoney())
-        val count = Seller(payment).getLottoCount()
-        outputView.printLottoCount(count.number)
-        return count.number
+        val lottoCount = Seller(payment).getLottoCount()
+        outputView.printLottoCount(lottoCount.count)
+        return lottoCount.count
     }
 
     private fun getLotto(lottoCount: Int): List<Lotto> {
@@ -64,13 +64,13 @@ class LottoController(
     private fun getWinningNumber(): Lotto {
         outputView.printInputWinningNumbers()
         val winningNumber = inputView.inputWinningNumbers()
-            .map { LottoNumber(it.toInt()) }
+            .map { LottoNumber.from(it.toInt()) }
         return Lotto(winningNumber)
     }
 
     private fun getBonusNumber(winningNumber: Lotto): BonusNumber {
         outputView.printInputBonusNumber()
-        return BonusNumber(winningNumber, LottoNumber(inputView.inputBonusNumber()))
+        return BonusNumber(winningNumber, LottoNumber.from(inputView.inputBonusNumber()))
     }
 
     private fun compareLottoNumber(lotto: Lotto, winningNumber: Lotto): Int {
@@ -82,7 +82,7 @@ class LottoController(
     }
 
     private fun showLottoResult() {
-        outputView.printLottoResult(lottoResult.result)
+        outputView.printLottoRankResult(lottoResult.result)
         outputView.printLottoProfitRate(lottoResult.getProfitRate(lottoResult.result))
     }
 }
