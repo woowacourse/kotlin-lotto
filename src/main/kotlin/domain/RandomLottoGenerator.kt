@@ -9,7 +9,7 @@ class RandomLottoGenerator : LottoGenerator {
         return Lottos(lottos)
     }
 
-    fun generateLotto(): Lotto {
+    private fun generateLotto(): Lotto {
         val randomNumbers = (LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER).shuffled().subList(0, LOTTO_LIMIT_SIZE).sorted()
         val test = randomNumbers.map { LottoNumber.from(it) }
         return Lotto(test)
