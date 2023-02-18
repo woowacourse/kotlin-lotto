@@ -14,22 +14,30 @@ internal class LottoGeneratorTest {
         @BeforeAll
         @JvmStatic
         fun init() {
-            val lottoGame = LottoGame(
-                listOf(
-                    Lotto(listOf(1, 2, 3, 4, 5, 6)),
-                )
+            val lottos = listOf(
+                Lotto(listOf(1, 2, 3, 4, 5, 6)),
             )
-            lottoGenerator = SequentialLottoNumberGenerator(lottoGame)
+
+            lottoGenerator = SequentialLottoNumberGenerator(lottos)
         }
     }
 
     @Test
-    fun `생성된 로또는 1,2,3,4,5,6이다`() {
+    fun `로또를 하나 생성할때, 생성된 로또는 1,2,3,4,5,6이다`() {
+        // when
         val lotto = lottoGenerator.generate()
         val lottoNumbers = lotto.numbers.toList()
-
         val targetLottoNumbers =
-            listOf(LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6))
+            listOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6)
+            )
+
+        // then
         assertThat(lottoNumbers).isEqualTo(targetLottoNumbers)
     }
 }

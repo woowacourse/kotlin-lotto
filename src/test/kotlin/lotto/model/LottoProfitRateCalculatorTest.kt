@@ -1,14 +1,22 @@
 package lotto.model
 
-import lotto.entity.PurchaseMoney
-import lotto.entity.WinStatistics
+import lotto.entity.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoProfitRateCalculatorTest {
     @Test
     fun `구입금액이 14000원이고 당첨금이 5000원이면 수익률은 0_35이다`() {
-        val calculator = LottoProfitRateCalculator(PurchaseMoney(14000), WinStatistics((listOf(Rank.FIFTH))))
-        assertThat((calculator.calculate().value * 100).toInt() / 100f).isEqualTo(0.35f)
+        // given
+        val purchaseMoney = PurchaseMoney(14000)
+        val winMoney = WinMoney(5000)
+        val calculator = LottoProfitRateCalculator()
+
+        // when
+        val profitRate = calculator.calculate(purchaseMoney, winMoney).roundDown()
+        val except = ProfitRate(0.35f).roundDown()
+
+        // then
+        assertThat(profitRate).isEqualTo(except)
     }
 }
