@@ -11,7 +11,7 @@ class SellerTest {
     @ParameterizedTest
     fun `입력 받은 구입 금액을 갯수로 환산한다`(money: Int, count: Int) {
         // when
-        val actualResult = Seller(Payment(money)).getLottoCount()
+        val actualResult = Seller(Payment(money)).getLottoCount().count
         // then
         assertThat(actualResult).isEqualTo(count)
     }
