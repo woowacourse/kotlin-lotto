@@ -31,7 +31,7 @@ class LottosTest {
                 LottoNumber.from(6), LottoNumber.from(10)
             )
         )
-        val bonusNumber = BonusNumber(45)
+        val bonusNumber = BonusNumber(LottoNumber.from(45))
         assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.FIRST]).isEqualTo(0)
         assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.SECOND]).isEqualTo(0)
         assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.THIRD]).isEqualTo(1)

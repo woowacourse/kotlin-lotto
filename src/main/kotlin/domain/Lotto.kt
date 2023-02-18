@@ -12,7 +12,7 @@ class Lotto(val numbers: List<LottoNumber>) {
     }
 
     fun hasBonusNumber(bonusNumber: BonusNumber): Boolean {
-        return numbers.contains(LottoNumber.from(bonusNumber.number))
+        return numbers.contains(bonusNumber.number)
     }
 
     fun matchLotto(lotto: Lotto, bonusNumber: BonusNumber): Rank? =

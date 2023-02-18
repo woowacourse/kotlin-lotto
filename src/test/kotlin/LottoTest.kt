@@ -77,7 +77,7 @@ class LottoTest {
     @Test
     fun `생성된 로또에 보너스 번호가 존재하는지 확인`() {
         val testLotto = testLotto
-        val bonusNumber = BonusNumber(3)
+        val bonusNumber = BonusNumber(LottoNumber.from(3))
 
         assertThat(testLotto.hasBonusNumber(bonusNumber)).isEqualTo(true)
     }
@@ -92,7 +92,7 @@ class LottoTest {
                 LottoNumber.from(5), LottoNumber.from(10)
             )
         )
-        val bonusNumber = BonusNumber(6)
+        val bonusNumber = BonusNumber(LottoNumber.from(6))
 
         assertThat(testLotto.matchLotto(winnigLotto, bonusNumber)).isEqualTo(Rank.SECOND)
     }

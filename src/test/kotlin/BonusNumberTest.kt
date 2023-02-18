@@ -1,4 +1,5 @@
 import domain.BonusNumber
+import domain.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -9,7 +10,7 @@ class BonusNumberTest {
 
     @Test
     fun `보너스 번호가 생성되었는지 확인`() {
-        val bonusNumber = BonusNumber(3)
+        val bonusNumber = BonusNumber(LottoNumber.from(3))
         assertThat(bonusNumber.number).isEqualTo(3)
     }
 
@@ -17,7 +18,7 @@ class BonusNumberTest {
     @ParameterizedTest
     fun `보너스 번호가 1에서 45 사이의 값이 아닌 경우`(number: Int) {
         assertThrows<IllegalArgumentException> {
-            BonusNumber(number)
+            BonusNumber(LottoNumber.from(number))
         }
     }
 }

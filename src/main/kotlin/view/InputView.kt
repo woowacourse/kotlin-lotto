@@ -34,7 +34,7 @@ class InputView {
     private fun getInputBonusNumber(input: String?): BonusNumber {
         require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
         require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-        return BonusNumber(input.toInt())
+        return BonusNumber(LottoNumber.from(input.toInt()))
     }
 
     companion object {
