@@ -5,8 +5,8 @@ class WinLotto(val winNumber: Lotto, val bonus: LottoNumber) {
         require(!winNumber.numbers.contains(bonus)) {
             String.format(
                 ERROR_MESSAGE_DUPLICATED_BONUS_NUMBER,
-                winNumber.numbers.toString(),
-                bonus
+                winNumber.toString(),
+                bonus.value
             )
         }
     }
