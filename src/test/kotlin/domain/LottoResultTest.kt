@@ -4,9 +4,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
-class gLottoResultTest {
+class LottoResultTest {
     @Test
-    fun `로또 결과를 정상적으로 저장할 수 있다`() {
+    fun `로또들과 당첨 로또로 로또 결과를 생성할 수 있다`() {
         val lottos = listOf(
             Lotto.create(listOf(1, 2, 3, 4, 5, 6)), // 1등
             Lotto.create(listOf(2, 3, 4, 5, 6, 7)), // 2등
@@ -30,7 +30,7 @@ class gLottoResultTest {
     }
 
     @Test
-    fun `로또 수익률을 반환한다`() {
+    fun `당첨 결과에 대한 수익률을 계산할 수 있다`() {
         val lottoResult = LottoResult(
             mapOf(
                 Rank.FIRST to 1,
@@ -41,7 +41,8 @@ class gLottoResultTest {
                 Rank.MISS to 0,
             ),
         )
-        val expect = (Rank.FIRST.winningMoney.toDouble() + Rank.SECOND.winningMoney + Rank.FOURTH.winningMoney) / (3 * LottoStore.LOTTO_PRICE)
+        val expect =
+            (Rank.FIRST.winningMoney.toDouble() + Rank.SECOND.winningMoney + Rank.FOURTH.winningMoney) / (3 * LottoStore.LOTTO_PRICE)
         assertThat(lottoResult.getRateOfReturn()).isEqualTo(expect)
     }
 

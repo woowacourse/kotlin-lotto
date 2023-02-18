@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class LottoStoreTest {
     @ValueSource(ints = [1000, 100000])
     @ParameterizedTest
-    fun `구매금액이 1000원 이상 100001원 이하면 개수만큼 로또를 반환할 수 있다`(amount: Int) {
+    fun `구매금액이 1000원 이상 100000원 이하면 개수만큼 로또를 반환할 수 있다`(amount: Int) {
         val lottoStore = LottoStore()
         val lotto: List<Lotto> = lottoStore.buyLotto(amount)
         assertThat(lotto.size).isEqualTo(amount / 1000)
