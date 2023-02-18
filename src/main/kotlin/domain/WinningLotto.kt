@@ -1,8 +1,8 @@
 package domain
 
-class WinningLotto(val winngLotto: List<LottoNumber>, val bonusNumber: LottoNumber) {
+class WinningLotto(val winningLotto: List<LottoNumber>, val bonusNumber: LottoNumber) {
     init {
-        require(!winngLotto.contains(bonusNumber)) { BONUS_NUMBER_OVERLAY_ERROR_MESSAGE }
+        require(!winningLotto.contains(bonusNumber)) { BONUS_NUMBER_OVERLAY_ERROR_MESSAGE }
     }
 
     companion object {

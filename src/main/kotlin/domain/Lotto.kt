@@ -2,7 +2,7 @@ package domain
 
 class Lotto(val numbers: List<LottoNumber>) {
     fun matchLotto(winningLotto: WinningLotto): Rank {
-        return Rank.valueOf(countSameLottoNumber(winningLotto.winngLotto), hasBonusNumber(winningLotto.bonusNumber))
+        return Rank.valueOf(countSameLottoNumber(winningLotto.winningLotto), hasBonusNumber(winningLotto.bonusNumber))
     }
 
     private fun countSameLottoNumber(winningLotto: List<LottoNumber>): Int {
