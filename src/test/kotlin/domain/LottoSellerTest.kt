@@ -26,8 +26,8 @@ class LottoSellerTest {
         assertThat(actual.lottos.size).isEqualTo(2)
     }
 
-    inner class NumberGenerator(private val numbers: List<Int>) : RandomGenerator {
-        override fun generate(): Set<LottoNumber> {
+    inner class NumberGenerator(private val numbers: List<Int>) : domain.NumberGenerator {
+        override fun generateSixNumber(start: Int, end: Int): Set<LottoNumber> {
             return numbers.map { number -> LottoNumber(number) }.toSet()
         }
     }
