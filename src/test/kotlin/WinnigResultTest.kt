@@ -3,22 +3,27 @@ import domain.Rank
 import domain.WinningResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.ValueSource
 
 class WinnigResultTest {
 
     @Test
-    fun `1등 한번 4등 한번 당첨되었을 때 당첨금이 20억 5만원인지 확인`() {
-        val winningresult = WinningResult()
-        winningresult.setWinnigResult(Rank.FIRST)
-        winningresult.setWinnigResult(Rank.FOURTH)
-        assertThat(winningresult.getWinningMoney()).isEqualTo(2000050000)
+    fun `구입금액이 10000원일 때 4등, 5등 한번 씩 당첨됐을 경우 수익률 확인`() {
+        val winningResult = WinningResult(mapOf(Rank.FOURTH to 1, Rank.FIFTH to 1))
+        assertThat(winningResult.calculateYield(Money(10000))).isEqualTo(5.5)
     }
 
     @Test
-    fun `구입금액이 10000원일 때 4등, 5등 한번 씩 당첨됐을 경우 수익률 확인`() {
-        val winningResult = WinningResult()
-        winningResult.setWinnigResult(Rank.FOURTH)
-        winningResult.setWinnigResult(Rank.FIFTH)
-        assertThat(winningResult.calculateYield(Money(10000))).isEqualTo(5.5)
+    fun `구입금액이 100000원일 때 2등, 3등, 5등 한번 씩 당첨됐을 경우 수익률 확인`() {
+        val winningResult = WinningResult(mapOf(Rank.SECOND to 1, Rank.THIRD to 1, Rank.FIFTH to 1))
+        assertThat(winningResult.calculateYield(Money(100000))).isEqualTo(315.05)
+    }
+
+    @Test
+    fun `구입금액이 100000원일 때 1등 한 번 당첨됐을 경우 수익률 확인`() {
+        val winningResult = WinningResult(mapOf(Rank.FIRST to 1))
+        assertThat(winningResult.calculateYield(Money(100000))).isEqualTo(20000.0)
     }
 }
