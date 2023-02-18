@@ -1,6 +1,8 @@
 package domain
 
 class Lotto(val numbers: Set<LottoNumber>) {
+    constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber).toSet())
+
     init {
         require(numbers.size == LOTTO_SIZE) { ERROR_LOTTO_SIZE }
     }
