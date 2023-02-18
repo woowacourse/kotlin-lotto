@@ -25,15 +25,15 @@ class LottoAdministratorTest {
         // given
         val lottoNumber = Lotto(
             listOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(6),
-            ),
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6),
+            )
         )
-        val bonusNumber = BonusNumber(lottoNumber, LottoNumber(3))
+        val bonusNumber = BonusNumber(lottoNumber, LottoNumber.from(3))
 
         // when
         val actual = LottoAdministrator().isMatchBonus(lottoNumber, bonusNumber)

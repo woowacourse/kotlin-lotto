@@ -12,7 +12,7 @@ class CountTest {
 
         // then
         assertThrows<IllegalArgumentException> {
-            Count(count)
+            LottoCount(count)
         }
     }
 }
