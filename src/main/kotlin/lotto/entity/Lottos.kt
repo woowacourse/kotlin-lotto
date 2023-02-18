@@ -15,7 +15,7 @@ class Lottos(purchaseMoney: PurchaseMoney, lottoPrice: LottoPrice, lottoGenerato
 
     fun determineLottosResult(winLotto: WinLotto): List<Rank> {
         return value.map {
-            it.determineLottoResult(it, winLotto)
+            it.determineLottoResult(winLotto)
         }
     }
 }
