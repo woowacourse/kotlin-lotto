@@ -1,15 +1,15 @@
 package view
 
 object UI {
-    fun printRequestMoney(){
+    fun printRequestMoney() {
         println("구입금액을 입력해 주세요.")
     }
 
-    fun printRequestWinningNumbers(){
+    fun printRequestWinningNumbers() {
         println("지난 주 당첨 번호를 입력해 주세요.")
     }
 
-    fun printRequestBonusNumber(){
+    fun printRequestBonusNumber() {
         println("보너스 볼을 입력해 주세요.")
     }
 }

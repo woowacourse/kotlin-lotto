@@ -1,4 +1,13 @@
-import domain.*
+import domain.Bank
+import domain.Judgement
+import domain.Lotto
+import domain.LottoBundle
+import domain.LottoGenerator
+import domain.LottoNumber
+import domain.LottoVendingMachine
+import domain.Money
+import domain.RandomLottoGenerator
+import domain.WinningNumbers
 import view.InputView
 import view.OutputView
 import view.UI
@@ -25,7 +34,7 @@ class LottoController {
         OutputView.printEarningRate(winStatistics.getTotalIncome(), spendMoney)
     }
 
-    private fun getWinningNumbers(): WinningNumbers{
+    private fun getWinningNumbers(): WinningNumbers {
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
         return WinningNumbers(winningLotto, bonusNumber)
@@ -48,5 +57,4 @@ class LottoController {
         val bonusNumber = InputView.inputBonusNumber()
         return LottoNumber.create(bonusNumber)
     }
-
 }

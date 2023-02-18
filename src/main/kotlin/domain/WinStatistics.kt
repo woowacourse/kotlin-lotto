@@ -16,6 +16,4 @@ data class WinStatistics(private val _rankCount: MutableMap<Rank, Int>) {
 
         return Money.create(total)
     }
-
-
 }

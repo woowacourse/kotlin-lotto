@@ -3,7 +3,6 @@ package domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-
 class BankTest {
     @Test
     fun `당첨 통계를 계산한다`() {
@@ -37,11 +36,11 @@ class BankTest {
     @Test
     fun `수익률을 계산하여 반환한다`() {
         // given
-        val totalPrize : Money = Money.create(10000)
-        val spendMoney : Money = Money.create(1000)
+        val totalPrize: Money = Money.create(10000)
+        val spendMoney: Money = Money.create(1000)
 
         // when
-        val actual : Double = Bank.getEarningRate(totalPrize, spendMoney)
+        val actual: Double = Bank.getEarningRate(totalPrize, spendMoney)
 
         // then
         assertThat(actual).isEqualTo(10.0)

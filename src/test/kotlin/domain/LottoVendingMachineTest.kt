@@ -34,11 +34,9 @@ class LottoVendingMachineTest {
             )
         )
         // when
-        val lottoBundle = LottoVendingMachine.getLottoBundle(lottoCount) {lotto}
+        val lottoBundle = LottoVendingMachine.getLottoBundle(lottoCount) { lotto }
 
         // then
         assertThat(lottoBundle.lottos.size).isEqualTo(lottoCount)
     }
-
-
 }

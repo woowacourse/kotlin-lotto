@@ -8,10 +8,10 @@ object Bank {
         return winStatistics
     }
 
-    private fun setWinStatistics(winningResult: WinningResult, winStatistics: WinStatistics){
+    private fun setWinStatistics(winningResult: WinningResult, winStatistics: WinStatistics) {
         winningResult.comparingResults.forEach {
             val rank = Rank.valueOf(it.matchedCount, it.isBonusMatched)
-            winStatistics.plusValue(rank,1)
+            winStatistics.plusValue(rank, 1)
         }
     }
 
@@ -28,6 +28,4 @@ object Bank {
     fun getEarningRate(totalPrize: Money, spendMoney: Money): Double {
         return totalPrize.amount / spendMoney.amount.toDouble()
     }
-
-
 }
