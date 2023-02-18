@@ -41,7 +41,8 @@ class gLottoResultTest {
                 Rank.MISS to 0,
             ),
         )
-        assertThat(lottoResult.getRateOfReturn()).isEqualTo((Rank.FIRST.winningMoney.toDouble() + Rank.SECOND.winningMoney + Rank.FOURTH.winningMoney) / (lottoResult.values.sum() * LottoStore.LOTTO_PRICE))
+        val expect = (Rank.FIRST.winningMoney.toDouble() + Rank.SECOND.winningMoney + Rank.FOURTH.winningMoney) / (3 * LottoStore.LOTTO_PRICE)
+        assertThat(lottoResult.getRateOfReturn()).isEqualTo(expect)
     }
 
     @Test
