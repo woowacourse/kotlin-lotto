@@ -59,7 +59,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
     private fun confirmLottoWinning(lottoBunch: LottoBunch, winningLotto: WinningLotto, purchaseMoney: PurchaseMoney) {
         val ranks = lottoBunch.value.map { Bank.getRank(it, winningLotto) }
         val winningResult = WinningResult.from(ranks)
-        OutputView.printWinningResult(winningResult.toString())
+        OutputView.printWinningResult(winningResult)
         OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
     }
 
