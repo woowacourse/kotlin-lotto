@@ -4,7 +4,7 @@ import lotto.controller.World
 
 class PurchaseMoney(value: Int) : Money(value) {
     init {
-        require(value >= World.DEFAULT_LOTTO_PRICE) { String.format(ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO, value) }
+        require(value >= LOTTO_PRICE) { String.format(ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO, value) }
     }
 
     companion object {

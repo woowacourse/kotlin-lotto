@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.entity.Lotto
 import lotto.entity.LottoGame
 import lotto.entity.LottoNumber
+import lotto.entity.Money
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
@@ -51,7 +52,7 @@ class World {
 
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
-        val lottoGame = makeLottoGame(purchaseMoney.value / DEFAULT_LOTTO_PRICE)
+        val lottoGame = makeLottoGame(purchaseMoney.value / Money.LOTTO_PRICE)
 
         processLottoGame(lottoGame)
 
@@ -91,8 +92,4 @@ class World {
         winMoney: WinMoney
     ): ProfitRate =
         profitRateCalculator.calculate(purchaseMoney, winMoney)
-
-    companion object {
-        const val DEFAULT_LOTTO_PRICE = 1000
-    }
 }
