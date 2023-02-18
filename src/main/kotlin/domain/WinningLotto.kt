@@ -2,13 +2,13 @@ package domain
 
 class WinningLotto(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(!winningLotto.numbers.contains(bonusNumber)) { ERROR_CONTAIN_BONUS_NUMBER_IN_LOTTO }
+        require(!winningLotto.contains(bonusNumber)) { ERROR_CONTAIN_BONUS_NUMBER_IN_LOTTO }
     }
 
     fun match(lotto: Lotto): Int {
-        return lotto.numbers.filter { number ->
+        return lotto.numbers.count { number ->
             winningLotto.contains(number)
-        }.size
+        }
     }
 
     companion object {
