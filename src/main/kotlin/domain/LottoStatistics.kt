@@ -8,7 +8,7 @@ class LottoStatistics(val winningLotto: WinningLotto) {
         return winningLotto.match(lotto)
     }
 
-    private fun isBonusNumberMatch(lotto: Lotto): Boolean = lotto.numbers.contains(winningLotto.bonusNumber)
+    private fun isBonusNumberMatch(lotto: Lotto): Boolean = lotto.contains(winningLotto.bonusNumber)
 
     private fun getRank(lotto: Lotto): Rank = Rank.valueOf(getCountOfMatch(lotto), isBonusNumberMatch(lotto))
 
