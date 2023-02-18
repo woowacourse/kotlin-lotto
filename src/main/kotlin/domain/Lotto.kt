@@ -1,6 +1,6 @@
 package domain
 
-data class Lotto private constructor(private val numbers: List<LottoNumber>) {
+class Lotto private constructor(private val numbers: List<LottoNumber>) {
 
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
@@ -9,6 +9,14 @@ data class Lotto private constructor(private val numbers: List<LottoNumber>) {
     }
 
     private fun List<LottoNumber>.isNotDuplicated(): Boolean = this.distinct().size == this.size
+    fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
+    fun count(predicate: () -> Boolean): Int = numbers.count { predicate() }
+    fun toList(): List<LottoNumber> = numbers.toList()
+    override fun equals(other: Any?): Boolean = if (other is Lotto) other.toList() == this.toList() else false
+
+    override fun hashCode(): Int = this.toList().hashCode()
+
+    override fun toString(): String = this.toList().toString()
 
     companion object {
         private const val NUMBER_SIZE = 6
