@@ -1,6 +1,6 @@
 package domain
 
-data class Lotto(private val numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
+data class Lotto private constructor(private val numbers: List<LottoNumber>) {
 
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
@@ -15,6 +15,7 @@ data class Lotto(private val numbers: List<LottoNumber>) : List<LottoNumber> by 
         private const val ERROR_NUMBER_SIZE = "로또 번호의 개수는 ${NUMBER_SIZE}개여야 합니다. \n 잘못된 값 : %d"
         private const val ERROR_NUMBER_DUPLICATED = "로또 번호는 중복되어선 안된다. \n잘못된 값: %s"
         private const val ERROR_NUMBER_SEQUENCE = "로또 번호는 정렬되어야 합니다."
-        fun create(numbers: List<Int>): Lotto = Lotto(numbers.map { LottoNumber(it) })
+        private val NUMBERS = (0..45).toList()
+        fun create(numbers: List<Int>): Lotto = Lotto(numbers.map { LottoNumber(NUMBERS[it]) })
     }
 }
