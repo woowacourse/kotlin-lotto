@@ -21,7 +21,6 @@ class LottoGame {
         endGame()
     }
     private fun initGame() {
-        output.outputMoneyMessage()
         money = input.inputMoney()
         output.outputLottoSizeMessage(money)
         lottos = RandomLottoGenerator().generateLottos(money)
@@ -29,9 +28,7 @@ class LottoGame {
     }
 
     private fun startGame() {
-        output.outputWinningLottoMessage()
         val winningLotto = input.inputWinningLotto()
-        output.outputBonusNumberMessage()
         val bonusNumber = input.inputBonusNumber()
         winningResult = lottos.matchLottos(winningLotto, bonusNumber)
     }
