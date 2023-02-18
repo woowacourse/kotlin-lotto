@@ -6,18 +6,29 @@ import org.junit.jupiter.api.assertThrows
 
 class LottoTest {
     @Test
-    fun `개수가 6개면 로또 생성`() {
-        val lotto = Lotto(setOf(1, 2, 3, 4, 5, 6))
+    fun `번호의 개수가 6개면 로또 생성`() {
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { number -> LottoNumber(number) }.toSet())
         assertThat(lotto.numbers.size).isEqualTo(6)
     }
 
     @Test
-    fun `개수가 6개가 아니라면 exception 발생`() {
-        assertThrows<IllegalArgumentException> { Lotto(setOf(1, 2, 3, 4, 5)) }
+    fun `로또 번호는 1부터 45 사이의 번호로 구성된다`() {
+        assertThrows<IllegalArgumentException> {
+            Lotto(listOf(1, 2, 3, 4, 5).map { number -> LottoNumber(number) }.toSet())
+        }
     }
 
     @Test
-    fun `번호가 범위안에 들어오지 않으면 exception 발생`() {
-        assertThrows<IllegalArgumentException> { Lotto(setOf(1, 2, 3, 4, 5, 47)) }
+    fun `로또 번호는 45보다 큰 숫자로 생성할 수 없다`() {
+        assertThrows<IllegalArgumentException> {
+            Lotto(listOf(1, 2, 3, 4, 5, 46).map { number -> LottoNumber(number) }.toSet())
+        }
+    }
+
+    @Test
+    fun `로또 번호는 1보다 작은 숫자로 생성할 수 없다`() {
+        assertThrows<IllegalArgumentException> {
+            Lotto(listOf(1, 2, 3, 4, 5, 0).map { number -> LottoNumber(number) }.toSet())
+        }
     }
 }

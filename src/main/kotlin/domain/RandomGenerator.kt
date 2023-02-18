@@ -1,5 +1,5 @@
 package domain
 
 interface RandomGenerator {
-    fun generate(): Set<Int>
+    fun generate(): Set<LottoNumber>
 }

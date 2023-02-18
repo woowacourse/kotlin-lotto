@@ -3,6 +3,7 @@ package controller
 import common.MAXIMUM_LOTTO_RANGE
 import common.MINIMUM_LOTTO_RANGE
 import domain.Lotto
+import domain.LottoNumber
 import domain.LottoSeller
 import domain.LottoStatistics
 import domain.Ticket
@@ -37,14 +38,14 @@ class LottoController(
         while (true) {
             val winningNumbers = makeWinningLotto()
             val bonusNumber = makeBonusNumber()
-            runCatching { WinningLotto(winningNumbers, bonusNumber) }
+            runCatching { WinningLotto(winningNumbers, LottoNumber(bonusNumber)) }
                 .onSuccess { return it }
         }
     }
 
     private fun makeWinningLotto(): Lotto {
         while (true) {
-            runCatching { Lotto(inputView.getNumbers()) }
+            runCatching { Lotto(inputView.getNumbers().map { number -> LottoNumber(number) }.toSet()) }
                 .onSuccess { return it }
         }
     }
