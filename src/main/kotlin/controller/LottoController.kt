@@ -23,7 +23,7 @@ class LottoController(
 
         val lottoStatistics = LottoStatistics(winningLotto)
         val result = lottoStatistics.compareTicket(ticket)
-        val profit = lottoStatistics.yield(result)
+        val profit = lottoStatistics.calculateProfitToString(result)
         resultView.printResult(result, profit)
     }
 

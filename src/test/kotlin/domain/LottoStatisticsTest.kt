@@ -100,7 +100,7 @@ class LottoStatisticsTest {
         val bonusNumber = LottoNumber(13)
         val winningLotto = WinningLotto(Lotto(winningNumber), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val result = lottoStatistics.yield(winResult)
+        val result = lottoStatistics.calculateProfitToString(winResult)
         val expected = "0.35"
         assertThat(result).isEqualTo(expected)
     }
