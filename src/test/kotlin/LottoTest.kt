@@ -1,13 +1,10 @@
-import domain.*
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.internal.bytebuddy.asm.Advice.Argument
-import org.junit.jupiter.api.Test
+import domain.Lotto
+import domain.LottoNumber
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.params.provider.ValueSource
 
 class LottoTest {
 
@@ -18,6 +15,7 @@ class LottoTest {
             Lotto(numbers)
         }
     }
+
     @MethodSource("produceWrongSizeLotto")
     @ParameterizedTest
     fun `로또가 6개의 숫자로 이루어지지 않은 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
@@ -26,7 +24,7 @@ class LottoTest {
         }
     }
 
-    @MethodSource("produceOverlatLotto")
+    @MethodSource("produceOverlayLotto")
     @ParameterizedTest
     fun `중복된 번호가 존재하는 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
         assertThrows<IllegalArgumentException> {
@@ -63,9 +61,9 @@ class LottoTest {
     companion object {
 
         @JvmStatic
-        fun produceLotto(): List<Arguments>{
+        fun produceLotto(): List<Arguments> {
             return listOf(
-                Arguments.of(listOf(1,3,4,6,10,22).map { LottoNumber.from(it) })
+                Arguments.of(listOf(1, 3, 4, 6, 10, 22).map { LottoNumber.from(it) }),
             )
         }
 
@@ -73,18 +71,16 @@ class LottoTest {
         fun produceWrongSizeLotto(): List<Arguments> {
             return listOf(
                 Arguments.of((1..5).map { LottoNumber.from(it) }),
-                Arguments.of((1..7).map { LottoNumber.from(it) })
+                Arguments.of((1..7).map { LottoNumber.from(it) }),
             )
         }
 
         @JvmStatic
         fun produceOverlayLotto(): List<Arguments> {
             return listOf(
-                Arguments.of(listOf(1,1,2,3,4,5).map { LottoNumber.from(it) }),
-                Arguments.of(listOf(1,10,10,20,25,33).map { LottoNumber.from(it) })
+                Arguments.of(listOf(1, 1, 2, 3, 4, 5).map { LottoNumber.from(it) }),
+                Arguments.of(listOf(1, 10, 10, 20, 25, 33).map { LottoNumber.from(it) }),
             )
         }
-
-
     }
 }
