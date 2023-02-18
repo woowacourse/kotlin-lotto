@@ -29,6 +29,6 @@ class LottoStatistics(val winningLotto: WinningLotto) {
             totalCount += result.value
         }
 
-        return (floor((sum / (totalCount * 1000)) * 100) / 100).toString()
+        return ((floor((sum / (totalCount)) / 10)) / 100).toString()
     }
 }
