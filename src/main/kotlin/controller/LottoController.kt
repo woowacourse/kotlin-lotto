@@ -7,7 +7,7 @@ import domain.WinningResult
 import view.InputView
 import view.OutputView
 
-class LottoGame {
+class LottoController {
 
     private val input by lazy { InputView() }
     private val output by lazy { OutputView() }
@@ -20,6 +20,7 @@ class LottoGame {
         startGame()
         endGame()
     }
+
     fun initGame() {
         output.outputMoneyMessage()
         money = input.inputMoney()
@@ -33,7 +34,7 @@ class LottoGame {
         val winningLotto = input.inputWinningLotto()
         output.outputBonusNumberMessage()
         val bonusNumber = input.inputBonusNumber()
-        winningResult = lottos.matchLottos(winningLotto, bonusNumber)
+        //winningResult = lottos.matchLottos(winningLotto, bonusNumber)
     }
 
     fun endGame() {
