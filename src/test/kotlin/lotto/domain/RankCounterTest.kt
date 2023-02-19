@@ -2,20 +2,32 @@ package lotto.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.EnumSource
+
+private fun Lottery(vararg numbers: Int): Lottery {
+    return Lottery(numbers.map(::LotteryNumber))
+}
 
 class RankCounterTest {
-    @ParameterizedTest
-    @EnumSource(Rank::class)
-    fun `등수를 받아 카운트한다`(rank: Rank) {
-        println("${rank.name} 등수인 로또가 한 개 존재한다")
-
+    @Test
+    fun `로또를 받아 등수를 카운트한다`() {
         val counter = RankCounter()
+        val lotteries = listOf(
+            Lottery(1, 2, 3, 4, 5, 6),
+            Lottery(1, 3, 4, 5, 6, 7),
+            Lottery(1, 3, 4, 5, 6, 8),
+            Lottery(1, 2, 3, 7, 8, 9),
+            Lottery(1, 2, 3, 9, 10, 11)
+        )
+        val winningLottery = WinningLottery(Lottery(1, 2, 3, 4, 5, 6), LotteryNumber(7))
 
-        counter.increaseNumber(rank)
+        counter.count(lotteries, winningLottery)
 
-        assertThat(counter.numberOfEachRank[rank.name]).isEqualTo(1)
+        assertThat(counter.numberOfEachRank["FIRST"]).isEqualTo(1)
+        assertThat(counter.numberOfEachRank["SECOND"]).isEqualTo(1)
+        assertThat(counter.numberOfEachRank["THIRD"]).isEqualTo(1)
+        assertThat(counter.numberOfEachRank["FOURTH"]).isEqualTo(0)
+        assertThat(counter.numberOfEachRank["FIFTH"]).isEqualTo(2)
+        assertThat(counter.numberOfEachRank["MISS"]).isEqualTo(0)
     }
 
     @Test

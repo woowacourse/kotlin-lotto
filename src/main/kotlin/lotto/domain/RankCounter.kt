@@ -8,10 +8,14 @@ class RankCounter(
     val numberOfEachRank: Map<String, Int>
         get() = _numberOfEachRank.toMap()
 
-    fun increaseNumber(rank: Rank) {
-        val key = rank.name
-        if (_numberOfEachRank.containsKey(key)) {
-            _numberOfEachRank[key] = _numberOfEachRank.getOrDefault(key, NUMBER_DEFAULT_VALUE) + INCREASE_VALUE
+    fun count(lotteries: List<Lottery>, winningLottery: WinningLottery) {
+        lotteries.forEach {
+            val rank = Rank.valueOf(
+                it.countMatches(winningLottery.lottery),
+                it.containBonusNumber(winningLottery.bonusNumber)
+            )
+
+            _numberOfEachRank[rank.name] = _numberOfEachRank.getOrDefault(rank.name, NUMBER_DEFAULT_VALUE) + INCREASE_VALUE
         }
     }
 
