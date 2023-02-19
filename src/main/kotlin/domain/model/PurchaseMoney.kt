@@ -7,7 +7,7 @@ class PurchaseMoney(
         require(money > ZERO) {
             MONEY_RANGE_ERROR
         }
-        require(money.validateMoneyUnit()){
+        require(money.validateMoneyUnit()) {
             MONEY_UNIT_ERROR
         }
     }

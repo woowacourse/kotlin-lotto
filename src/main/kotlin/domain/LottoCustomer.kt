@@ -17,5 +17,4 @@ class LottoCustomer(
     companion object {
         private const val MANUAL_LOTTOS_COUNT_ERROR = "[ERROR] 구매하려는 로또의 개수보다 수동으로 발급받을 로또의 개수가 많을 수 없습니다."
     }
-
 }

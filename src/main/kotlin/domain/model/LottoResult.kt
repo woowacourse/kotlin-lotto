@@ -22,4 +22,3 @@ enum class LottoResult(val prizeMoney: Int, val matchCount: Int) {
         }
     }
 }
-

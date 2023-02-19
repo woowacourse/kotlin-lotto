@@ -25,7 +25,7 @@ object InputView {
     }
 
     fun requestManualLottoNumbers(numberOfPurchased: Int): List<String> {
-        if(numberOfPurchased == INITIAL_PURCHASING){
+        if (numberOfPurchased == INITIAL_PURCHASING) {
             println(MANUAL_LOTTO_NUMBERS_REQUEST_MESSAGE)
         }
 

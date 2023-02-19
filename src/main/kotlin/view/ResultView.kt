@@ -12,14 +12,8 @@ object ResultView {
     private const val PROFIT_RESULT = "총 수익률은 %s입니다."
     private const val PURCHASED_LOTTO_TYPE = "수동으로 %s장, 자동으로 %s개를 구매했습니다."
 
-    fun printPurchasedNumberOfLottos(numberOfLotto: Int) {
-        println(NUMBER_OF_PURCHASED_LOTTO.format(numberOfLotto))
-    }
-
     fun printPurchasedLottos(lottoCustomer: LottoCustomer, purchasedLottos: PurchasedLottos) {
-        println(PURCHASED_LOTTO_TYPE.format(
-            lottoCustomer.manualLottosCountToPurchase, lottoCustomer.getAutomaticLottosCountToPurchase())
-        )
+        println(PURCHASED_LOTTO_TYPE.format(lottoCustomer.manualLottosCountToPurchase, lottoCustomer.getAutomaticLottosCountToPurchase()))
 
         purchasedLottos.lottos.forEach { lotto ->
             val lottoNumbersValue = lotto.numbers.map { lottoNumber ->
