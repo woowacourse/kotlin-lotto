@@ -15,15 +15,15 @@ class RankCounter(
                 it.containBonusNumber(winningLottery.bonusNumber)
             )
 
-            _numberOfEachRank[rank.name] = _numberOfEachRank.getOrDefault(rank.name, NUMBER_DEFAULT_VALUE) + INCREASE_VALUE
+            _numberOfEachRank[rank.name] =
+                _numberOfEachRank.getOrDefault(rank.name, NUMBER_DEFAULT_VALUE) + INCREASE_VALUE
         }
     }
 
     fun calculateTotalPrize(): Long {
-        var prize = 0L
-        numberOfEachRank.forEach { (name, count) ->
-            prize += Rank.valueOf(name).calculatePrize(count)
-        }
+        val prize = numberOfEachRank.map { (name, count) ->
+            Rank.valueOf(name).calculatePrize(count)
+        }.sum()
         return prize
     }
 
