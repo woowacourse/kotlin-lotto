@@ -11,6 +11,7 @@ class InputView : InputViewInterface {
             val money = readln()
             runCatching { PurchaseLottoMoney(money.toInt()) }
                 .onSuccess { return it }
+                .onFailure { println(it.message) }
         }
     }
 
@@ -20,6 +21,7 @@ class InputView : InputViewInterface {
             val numbers = readln()
             runCatching { Lotto(numbers.split(",").map { LottoNumber.from(it.trim().toInt()) }.toSet()) }
                 .onSuccess { return it }
+                .onFailure { println(it.message) }
         }
     }
 
@@ -29,6 +31,7 @@ class InputView : InputViewInterface {
             val bonusNumber = readln()
             runCatching { LottoNumber.from(bonusNumber.toInt()) }
                 .onSuccess { return it }
+                .onFailure { println(it.message) }
         }
     }
 
