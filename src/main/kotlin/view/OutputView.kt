@@ -12,13 +12,15 @@ class OutputView {
     }
 
     fun outputLottos(lottos: Lottos) {
-        lottos.lottos.forEach { lotto -> outputLotto(lotto) }
+        val lottosResult = StringBuilder()
+        lottos.lottos.forEach { lotto -> lottosResult.append(outputLotto(lotto) + "\n") }
+        println(lottosResult)
         println()
     }
 
-    fun outputLotto(lotto: Lotto) {
+    fun outputLotto(lotto: Lotto): String {
         val lottoNumbers = lotto.numbers.map { it.getNumber() }
-        println(lottoNumbers.joinToString(prefix = PREFIX_MARK, separator = SEPARATOR_MARK, postfix = POSTFIX_MARK))
+        return lottoNumbers.joinToString(prefix = PREFIX_MARK, separator = SEPARATOR_MARK, postfix = POSTFIX_MARK)
     }
 
     fun outputWinningResult(winningResult: WinningResult) {
