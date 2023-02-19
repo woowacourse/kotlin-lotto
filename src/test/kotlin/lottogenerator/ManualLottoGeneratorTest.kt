@@ -1,6 +1,7 @@
+package lottogenerator
+
 import domain.ManualLottoGenerator
 import domain.model.lotto.Lotto
-import domain.model.lotto.LottoNumber
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
