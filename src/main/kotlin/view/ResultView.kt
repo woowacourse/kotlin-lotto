@@ -9,17 +9,24 @@ class ResultView : ResultViewInterface {
     }
 
     override fun printStatistics(statisticsResult: Map<Rank, Int>) {
-        println("당첨 통계")
-        println("---------")
+        println(MATCH_RESULT)
         for (rank in Rank.values().take(5).reversed()) {
             val rankCount = statisticsResult[rank]
-            println("${rank.countOfMatch}개 일치${printBonus(rank)}(${rank.winningMoney}원)- ${rankCount}개")
+            println(PER_MATCH_RESULT.format(rank.countOfMatch, printBonus(rank), rank.winningMoney, rankCount))
         }
     }
 
     override fun printProfit(profit: String) {
-        println("총 수익률은 ${profit}입니다.")
+        println(PROFIT_RESULT.format(profit))
     }
 
-    private fun printBonus(rank: Rank) = if (rank == Rank.SECOND) ", 보너스 볼 일치" else " "
+    private fun printBonus(rank: Rank) = if (rank == Rank.SECOND) BONUS_MATCH else NO_BONUS_MATCH
+
+    companion object {
+        private const val MATCH_RESULT = "당첨 통계\n" + "---------"
+        private const val PROFIT_RESULT = "총 수익률은 %s입니다."
+        private const val PER_MATCH_RESULT = "%d개 일치%s(%d원)- %d개"
+        private const val BONUS_MATCH = ", 보너스 볼 일치"
+        private const val NO_BONUS_MATCH = " "
+    }
 }
