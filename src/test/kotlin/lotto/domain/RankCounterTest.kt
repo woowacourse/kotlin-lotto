@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 private fun Lottery(vararg numbers: Int): Lottery {
-    return Lottery(numbers.map(::LotteryNumber))
+    return Lottery(numbers.map { LotteryNumber.from(it) })
 }
 
 class RankCounterTest {
@@ -18,7 +18,7 @@ class RankCounterTest {
             Lottery(1, 2, 3, 7, 8, 9),
             Lottery(1, 2, 3, 9, 10, 11)
         )
-        val winningLottery = WinningLottery(Lottery(1, 2, 3, 4, 5, 6), LotteryNumber(7))
+        val winningLottery = WinningLottery(Lottery(1, 2, 3, 4, 5, 6), LotteryNumber.from(7))
 
         counter.count(lotteries, winningLottery)
 

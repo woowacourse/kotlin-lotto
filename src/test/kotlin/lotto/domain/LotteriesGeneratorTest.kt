@@ -12,12 +12,12 @@ class LotteriesGeneratorTest {
         )
         val generator = LotteriesGenerator()
         val expectedLottery1 = listOf(
-            LotteryNumber(1), LotteryNumber(3), LotteryNumber(5),
-            LotteryNumber(7), LotteryNumber(9), LotteryNumber(11)
+            LotteryNumber.from(1), LotteryNumber.from(3), LotteryNumber.from(5),
+            LotteryNumber.from(7), LotteryNumber.from(9), LotteryNumber.from(11)
         )
         val expectedLottery2 = listOf(
-            LotteryNumber(5), LotteryNumber(10), LotteryNumber(15),
-            LotteryNumber(24), LotteryNumber(33), LotteryNumber(45)
+            LotteryNumber.from(5), LotteryNumber.from(10), LotteryNumber.from(15),
+            LotteryNumber.from(24), LotteryNumber.from(33), LotteryNumber.from(45)
         )
 
         val lotteries = generator.generate(2) {

@@ -9,7 +9,7 @@ class OutputView {
     fun printLotteries(lotteries: List<Lottery>) {
         println("${lotteries.size}$NUMBER_OF_LOTTERY_GUIDE")
         lotteries.forEach { lottery ->
-            println(lottery.numbers.sortedBy { it.number })
+            println(lottery.numbers.map { it.number }.sorted())
         }
     }
 

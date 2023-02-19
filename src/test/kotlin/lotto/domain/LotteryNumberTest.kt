@@ -12,7 +12,7 @@ class LotteryNumberTest {
     fun `번호를 하나 가진다`(number: Int) {
         println("로또 번호는 $number 이다")
 
-        val lotteryNumber = LotteryNumber(number)
+        val lotteryNumber = LotteryNumber.from(number)
         assertThat(lotteryNumber.number).isEqualTo(number)
     }
 
@@ -22,7 +22,7 @@ class LotteryNumberTest {
         println("로또 번호는 $number 일 수 없다")
 
         assertThrows<IllegalArgumentException> {
-            LotteryNumber(number)
+            LotteryNumber.from(number)
         }
     }
 
@@ -32,7 +32,7 @@ class LotteryNumberTest {
         println("로또 번호는 $number 일 수 있다")
 
         assertDoesNotThrow {
-            LotteryNumber(number)
+            LotteryNumber.from(number)
         }
     }
 }

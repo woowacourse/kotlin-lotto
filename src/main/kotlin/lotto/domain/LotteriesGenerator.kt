@@ -11,6 +11,6 @@ class LotteriesGenerator {
 
     private fun generateLottery(numbersGenerator: LotteryNumbersGenerator): Lottery {
         val numbers = numbersGenerator.generate()
-        return Lottery(numbers.map { LotteryNumber(it) })
+        return Lottery(numbers.map { LotteryNumber.from(it) })
     }
 }

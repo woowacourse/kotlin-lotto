@@ -39,8 +39,8 @@ class Controller(
     }
 
     private fun getWinningLottery(): WinningLottery {
-        val winningNumbers = Lottery(inputView.readWinningNumbers().map { LotteryNumber(it) })
-        val bonusNumber = LotteryNumber(inputView.readBonusNumber())
+        val winningNumbers = Lottery(inputView.readWinningNumbers().map { LotteryNumber.from(it) })
+        val bonusNumber = LotteryNumber.from(inputView.readBonusNumber())
         return WinningLottery(winningNumbers, bonusNumber)
     }
 

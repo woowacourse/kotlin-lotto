@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 private fun Lottery(vararg numbers: Int): Lottery {
-    return Lottery(numbers.map(::LotteryNumber))
+    return Lottery(numbers.map { LotteryNumber.from(it) })
 }
 
 class LotteryTest {
@@ -47,7 +47,7 @@ class LotteryTest {
     fun `보너스번호가 로또번호에 포함되어 있는지 확인한다`(bonusNumber: Int, expected: Boolean, testName: String) {
         println(testName)
 
-        val bonusNumber = LotteryNumber(bonusNumber)
+        val bonusNumber = LotteryNumber.from(bonusNumber)
         val lottery = Lottery(1, 2, 3, 4, 5, 6)
 
         assertThat(lottery.containBonusNumber(bonusNumber)).isEqualTo(expected)
