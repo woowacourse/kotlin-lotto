@@ -10,8 +10,10 @@ class InputView {
     fun inputBonusNumber(): Int {
         return readln().toInt()
     }
-
     fun inputCount(): Int {
         return readln().toInt()
+    }
+    fun inputManualLotto(): List<Int> {
+        return readln().replace("\\s".toRegex(), "").split(",").map { it.toInt() }
     }
 }
