@@ -26,7 +26,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             }
         }
 
-        fun divideBonusRank(matchBonus: Boolean): Rank {
+        private fun divideBonusRank(matchBonus: Boolean): Rank {
             return when (matchBonus) {
                 true -> SECOND
                 false -> THIRD
