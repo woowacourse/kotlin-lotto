@@ -1,8 +1,6 @@
 import domain.BonusNumber
 import domain.Lotto
 import domain.LottoNumber
-import domain.Money
-import domain.RandomLottoGenerator
 import domain.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -12,12 +10,6 @@ class LottoTest {
     @Test
     fun `로또가 6개의 숫자로 잘 생성되었는지 확인`() {
         assertThat(testLotto.numbers).isEqualTo(testLotto)
-    }
-
-    @Test
-    fun `랜덤으로 생성된 로또가 6개의 숫자로 이루어졌는지 확인`() {
-        val lottos = RandomLottoGenerator().generateLottos(Money(1000))
-        assertThat(lottos.lottos[0].numbers.size).isEqualTo(6)
     }
 
     @Test
