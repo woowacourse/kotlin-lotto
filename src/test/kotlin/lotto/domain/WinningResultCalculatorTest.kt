@@ -13,7 +13,7 @@ class WinningResultCalculatorTest {
 
         val result = WinningResultCalculator()
         val money = PurchaseAmount(amount)
-        val counter = NumberOfRank(numbers)
+        val counter = RankCounter(numbers)
 
         val actual = result.calculateProfit(money, counter.calculateTotalPrize())
 

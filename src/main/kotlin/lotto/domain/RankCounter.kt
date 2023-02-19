@@ -1,23 +1,23 @@
 package lotto.domain
 
-class NumberOfRank(
-    numbers: Map<String, Int> =
+class RankCounter(
+    numberOfEachRank: Map<String, Int> =
         Rank.values().associate { it.name to NUMBER_DEFAULT_VALUE }
 ) {
-    private val _numbers: MutableMap<String, Int> = numbers.toMutableMap()
-    val numbers: Map<String, Int>
-        get() = _numbers.toMap()
+    private val _numberOfEachRank: MutableMap<String, Int> = numberOfEachRank.toMutableMap()
+    val numberOfEachRank: Map<String, Int>
+        get() = _numberOfEachRank.toMap()
 
     fun increaseNumber(rank: Rank) {
         val key = rank.name
-        if (_numbers.containsKey(key)) {
-            _numbers[key] = _numbers.getOrDefault(key, NUMBER_DEFAULT_VALUE) + INCREASE_VALUE
+        if (_numberOfEachRank.containsKey(key)) {
+            _numberOfEachRank[key] = _numberOfEachRank.getOrDefault(key, NUMBER_DEFAULT_VALUE) + INCREASE_VALUE
         }
     }
 
     fun calculateTotalPrize(): Long {
         var prize = 0L
-        numbers.forEach { (name, count) ->
+        numberOfEachRank.forEach { (name, count) ->
             prize += Rank.calculatePrize(name, count)
         }
         return prize

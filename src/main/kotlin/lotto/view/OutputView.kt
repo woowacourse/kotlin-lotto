@@ -1,8 +1,8 @@
 package lotto.view
 
 import lotto.domain.Lottery
-import lotto.domain.NumberOfRank
 import lotto.domain.Rank
+import lotto.domain.RankCounter
 import lotto.domain.Revenue
 import java.lang.StringBuilder
 
@@ -14,11 +14,11 @@ class OutputView {
         }
     }
 
-    fun printWinningResult(numberOfRank: NumberOfRank, profit: Double) {
+    fun printWinningResult(counter: RankCounter, profit: Double) {
         println(WINNING_RESULT_GUIDE)
 
         var rankAnnouncement = StringBuilder()
-        numberOfRank.numbers.forEach { (name, count) ->
+        counter.numberOfEachRank.forEach { (name, count) ->
             rankAnnouncement.insert(0, getRankAnnouncement(name, count))
         }
         print(rankAnnouncement)

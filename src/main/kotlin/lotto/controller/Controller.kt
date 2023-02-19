@@ -4,9 +4,9 @@ import lotto.domain.LotteriesGenerator
 import lotto.domain.Lottery
 import lotto.domain.LotteryNumber
 import lotto.domain.LotteryNumberGenerator
-import lotto.domain.NumberOfRank
 import lotto.domain.PurchaseAmount
 import lotto.domain.Rank
+import lotto.domain.RankCounter
 import lotto.domain.WinningLottery
 import lotto.domain.WinningResultCalculator
 import lotto.view.InputView
@@ -46,8 +46,8 @@ class Controller(
         return WinningLottery(winningNumbers, bonusNumber)
     }
 
-    private fun getRankCounter(lotteries: List<Lottery>, winningLottery: WinningLottery): NumberOfRank {
-        val counter = NumberOfRank()
+    private fun getRankCounter(lotteries: List<Lottery>, winningLottery: WinningLottery): RankCounter {
+        val counter = RankCounter()
         lotteries.forEach {
             counter.increaseNumber(
                 Rank.valueOf(
