@@ -17,7 +17,8 @@ class LottoNumber(val number: Int) : Comparable<LottoNumber> {
     }
 
     companion object {
-        const val START_LOTTO_RANGE = 1
-        const val END_LOTTO_RANGE = 45
+        private const val START_LOTTO_RANGE = 1
+        private const val END_LOTTO_RANGE = 45
+        val RANGE_LOTTO_NUMBER = START_LOTTO_RANGE..END_LOTTO_RANGE
     }
 }
