@@ -4,6 +4,7 @@ import lotto.domain.Lottery
 import lotto.domain.NumberOfRank
 import lotto.domain.Rank
 import lotto.domain.Revenue
+import java.lang.StringBuilder
 
 class OutputView {
     fun printLotteries(lotteries: List<Lottery>) {
@@ -16,9 +17,9 @@ class OutputView {
     fun printWinningResult(numberOfRank: NumberOfRank, profit: Double) {
         println(WINNING_RESULT_GUIDE)
 
-        var rankAnnouncement = ""
+        var rankAnnouncement = StringBuilder()
         numberOfRank.numbers.forEach { (name, count) ->
-            rankAnnouncement = getRankAnnouncement(name, count) + rankAnnouncement
+            rankAnnouncement.insert(0, getRankAnnouncement(name, count))
         }
         print(rankAnnouncement)
 
