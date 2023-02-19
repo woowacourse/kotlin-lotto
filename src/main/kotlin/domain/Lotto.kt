@@ -23,7 +23,7 @@ class Lotto private constructor(private val numbers: List<LottoNumber>) {
         private const val ERROR_NUMBER_SIZE = "로또 번호의 개수는 ${NUMBER_SIZE}개여야 합니다. \n 잘못된 값 : %d"
         private const val ERROR_NUMBER_DUPLICATED = "로또 번호는 중복되어선 안된다. \n잘못된 값: %s"
         private const val ERROR_NUMBER_SEQUENCE = "로또 번호는 정렬되어야 합니다."
-        private val NUMBERS = (0..45).map { LottoNumber(it) }
-        fun create(numbers: List<Int>): Lotto = Lotto(numbers.map { NUMBERS[it] })
+        private val NUMBERS = (LottoNumber.MINIMUM_NUMBER..LottoNumber.MAXIMUM_NUMBER).associateWith { LottoNumber(it) }
+        fun create(numbers: List<Int>): Lotto = Lotto(numbers.map { NUMBERS[it] ?: LottoNumber(it) })
     }
 }
