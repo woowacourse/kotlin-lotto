@@ -21,7 +21,7 @@ class LottoNumberTest {
         assertThat(
             assertThrows<IllegalArgumentException> {
                 LottoNumber.from(input)
-            }.message!!
+            }.message!!,
         ).isEqualTo("로또 번호는 1에서 45사이의 숫자여야 합니다. ")
     }
 }

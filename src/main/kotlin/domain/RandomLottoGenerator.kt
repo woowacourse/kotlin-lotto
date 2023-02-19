@@ -5,7 +5,7 @@ class RandomLottoGenerator : LottoGenerator {
     override fun generateLotto(): Lotto {
         return Lotto(
             (LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER).shuffled().subList(0, LOTTO_LIMIT_SIZE).map { LottoNumber.from(it) }
-                .sortedBy { it.number }
+                .sortedBy { it.number },
         )
     }
 

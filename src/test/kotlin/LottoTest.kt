@@ -25,7 +25,7 @@ class LottoTest {
         assertThat(
             assertThrows<IllegalArgumentException> {
                 Lotto(numbers)
-            }.message!!
+            }.message!!,
         ).isEqualTo("당첨 번호가 6개가 아닙니다")
     }
 
@@ -35,7 +35,7 @@ class LottoTest {
         assertThat(
             assertThrows<IllegalArgumentException> {
                 Lotto(numbers)
-            }.message!!
+            }.message!!,
         ).isEqualTo("당첨 번호가 중복되었습니다.")
     }
 
@@ -126,8 +126,8 @@ class LottoTest {
             return listOf(
                 Arguments.of(
                     Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
-                    WinningLotto(listOf(1, 2, 3, 7, 8, 9).map { LottoNumber.from(it) }, LottoNumber.from(20))
-                )
+                    WinningLotto(listOf(1, 2, 3, 7, 8, 9).map { LottoNumber.from(it) }, LottoNumber.from(20)),
+                ),
             )
         }
 
@@ -136,8 +136,8 @@ class LottoTest {
             return listOf(
                 Arguments.of(
                     Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
-                    WinningLotto(listOf(1, 2, 3, 4, 8, 9).map { LottoNumber.from(it) }, LottoNumber.from(20))
-                )
+                    WinningLotto(listOf(1, 2, 3, 4, 8, 9).map { LottoNumber.from(it) }, LottoNumber.from(20)),
+                ),
             )
         }
 
@@ -146,8 +146,8 @@ class LottoTest {
             return listOf(
                 Arguments.of(
                     Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
-                    WinningLotto(listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) }, LottoNumber.from(20))
-                )
+                    WinningLotto(listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) }, LottoNumber.from(20)),
+                ),
             )
         }
 
@@ -157,23 +157,24 @@ class LottoTest {
                 Arguments.of(
                     Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
                     WinningLotto(
-                        listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) }, LottoNumber.from(6)
-                        )
-                    )
-                )
-            }
-
-            @JvmStatic
-            fun produceFirstLotto(): List<Arguments> {
-                return listOf(
-                    Arguments.of(
-                        Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
-                        WinningLotto(
-                            listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }, LottoNumber.from(10)
-                            )
-                        )
-                    )
-                }
-            }
+                        listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) },
+                        LottoNumber.from(6),
+                    ),
+                ),
+            )
         }
-        
+
+        @JvmStatic
+        fun produceFirstLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
+                    WinningLotto(
+                        listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) },
+                        LottoNumber.from(10),
+                    ),
+                ),
+            )
+        }
+    }
+}

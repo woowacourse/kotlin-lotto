@@ -5,7 +5,7 @@ import domain.LottoNumber
 class InputView {
     fun inputMoney(): Int {
         OutputView().outputMoneyMessage()
-        return getInputMoney(readLine())
+        return getInputMoney(readlnOrNull())
     }
 
     private fun getInputMoney(input: String?): Int {
@@ -19,7 +19,7 @@ class InputView {
 
     fun inputWinningLotto(): List<LottoNumber> {
         OutputView().outputWinningLottoMessage()
-        return getInputWinningLotto(readLine())
+        return getInputWinningLotto(readlnOrNull())
     }
 
     private fun getInputWinningLotto(input: String?): List<LottoNumber> {
@@ -33,7 +33,7 @@ class InputView {
 
     fun inputBonusNumber(): Int {
         OutputView().outputBonusNumberMessage()
-        return getInputBonusNumber(readLine())
+        return getInputBonusNumber(readlnOrNull())
     }
 
     private fun getInputBonusNumber(input: String?): Int {

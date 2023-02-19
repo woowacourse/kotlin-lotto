@@ -24,12 +24,14 @@ class OutputView {
         }
         return this.toString()
     }
+
     fun outputErrorMessage(message: String) {
         println(message)
     }
 
     private fun outputLotto(lotto: Lotto): String {
-        return lotto.numbers.map { it.number }.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK)
+        return lotto.numbers.map { it.number }
+            .joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK)
     }
 
     fun outputWinningLottoMessage() {
@@ -46,7 +48,13 @@ class OutputView {
 
         val rankResult = listOf(Rank.FIFTH, Rank.FOURTH, Rank.THIRD, Rank.SECOND, Rank.FIRST)
         rankResult.forEach {
-            println(OUTPUT_WINNING_RESULT.format(it.countOfMatch, it.winningMoney, if (winningResult.result.get(it) == null) 0 else winningResult.result.get(it)))
+            println(
+                OUTPUT_WINNING_RESULT.format(
+                    it.countOfMatch,
+                    it.winningMoney,
+                    if (winningResult.result.get(it) == null) 0 else winningResult.result.get(it),
+                ),
+            )
         }
     }
 

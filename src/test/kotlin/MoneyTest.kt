@@ -18,7 +18,7 @@ class MoneyTest {
         assertThat(
             assertThrows<IllegalArgumentException> {
                 Money(-9000)
-            }.message
+            }.message,
         ).isEqualTo("금액은 양수여야 합니다.")
     }
 
@@ -27,7 +27,7 @@ class MoneyTest {
         assertThat(
             assertThrows<IllegalArgumentException> {
                 Money(925)
-            }.message
+            }.message,
         ).isEqualTo("금액은 1000원으로 나누어떨어져야 합니다.")
     }
 
