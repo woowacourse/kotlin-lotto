@@ -7,14 +7,25 @@ class Lotto(private val numbers: Set<LottoNumber>) {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
     }
 
-    fun get(): Set<LottoNumber> = numbers
-
     fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
 
-    fun count(predict: (LottoNumber) -> Boolean): Int = numbers.count(predict)
+    fun countMatch(otherLotto: Lotto): Int = numbers.intersect(otherLotto.numbers).size
 
     fun toList() = numbers.toList()
-    override fun toString(): String = numbers.joinToString("")
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Lotto
+
+        if (numbers != other.numbers) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return numbers.hashCode()
+    }
 
     companion object {
         const val NUMBER_SIZE = 6
