@@ -9,7 +9,7 @@ class LotteriesGeneratorTest {
     @ParameterizedTest
     @MethodSource("generateLotteries")
     fun `구입 로또 개수만큼 로또를 발행한다`(
-        numbers: MutableList<Int>,
+        numbers: MutableList<List<Int>>,
         expectedLottery1: List<LotteryNumber>,
         expectedLottery2: List<LotteryNumber>,
         testName: String
@@ -34,8 +34,8 @@ class LotteriesGeneratorTest {
             return arrayOf(
                 Arguments.of(
                     mutableListOf(
-                        1, 3, 5, 7, 9, 11,
-                        45, 24, 33, 10, 5, 15
+                        listOf(1, 3, 5, 7, 9, 11),
+                        listOf(45, 24, 33, 10, 5, 15)
                     ),
                     listOf(
                         LotteryNumber(1), LotteryNumber(3), LotteryNumber(5),
@@ -45,22 +45,7 @@ class LotteriesGeneratorTest {
                         LotteryNumber(5), LotteryNumber(10), LotteryNumber(15),
                         LotteryNumber(24), LotteryNumber(33), LotteryNumber(45)
                     ),
-                    "로또 번호가 중복되지 않은 상황에서, 로또 번호가 중복되지 않는 로또 2개를 발행한다"
-                ),
-                Arguments.of(
-                    mutableListOf(
-                        1, 3, 5, 5, 7, 8, 12,
-                        42, 24, 33, 10, 5, 33, 20
-                    ),
-                    listOf(
-                        LotteryNumber(1), LotteryNumber(3), LotteryNumber(5),
-                        LotteryNumber(7), LotteryNumber(8), LotteryNumber(12)
-                    ),
-                    listOf(
-                        LotteryNumber(5), LotteryNumber(10), LotteryNumber(20),
-                        LotteryNumber(24), LotteryNumber(33), LotteryNumber(42)
-                    ),
-                    "로또 번호가 중복된 상황에서, 로또 번호가 중복되지 않는 로또 2개를 발행한다"
+                    "로또 2개를 발행한다"
                 )
             )
         }
