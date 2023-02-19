@@ -39,7 +39,7 @@ object OutputView {
         println("${rankCount.first.countOfMatch}개 일치 (${rankCount.first.winningMoney}원)- ${rankCount.second}개")
     }
 
-    fun printEarningRate(totalPrize: Money, spendMoney: Money) {
+    fun printEarningRate(totalPrize: Long, spendMoney: Money) {
         println("총 수익률은 ${Bank.getEarningRate(totalPrize, spendMoney)}입니다.")
     }
 }
