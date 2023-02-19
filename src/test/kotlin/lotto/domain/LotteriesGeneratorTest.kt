@@ -18,11 +18,9 @@ class LotteriesGeneratorTest {
 
         val generator = LotteriesGenerator()
 
-        val lotteries = generator.generate(
-            {
-                numbers.removeAt(0)
-            }, 2
-        )
+        val lotteries = generator.generate(2) {
+            numbers.removeAt(0)
+        }
 
         assertThat(lotteries[0].numbers).containsExactlyInAnyOrderElementsOf(expectedLottery1)
         assertThat(lotteries[1].numbers).containsExactlyInAnyOrderElementsOf(expectedLottery2)

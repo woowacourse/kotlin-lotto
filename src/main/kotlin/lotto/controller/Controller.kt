@@ -35,7 +35,7 @@ class Controller(
     }
 
     private fun publishLotteries(purchase: PurchaseAmount): List<Lottery> {
-        val lotteries = LotteriesGenerator().generate(generator, purchase.getPurchaseQuantity())
+        val lotteries = LotteriesGenerator().generate(purchase.getPurchaseQuantity(), generator)
         outputView.printLotteries(lotteries)
         return lotteries
     }

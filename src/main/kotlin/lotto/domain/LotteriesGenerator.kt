@@ -1,7 +1,7 @@
 package lotto.domain
 
 class LotteriesGenerator {
-    fun generate(numberGenerator: LotteryNumbersGenerator, numberOfLottery: Int): List<Lottery> {
+    fun generate(numberOfLottery: Int, numberGenerator: LotteryNumbersGenerator): List<Lottery> {
         val lotteries = mutableListOf<Lottery>()
         repeat(numberOfLottery) {
             lotteries.add(generateLottery(numberGenerator))
