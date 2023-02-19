@@ -1,6 +1,9 @@
-import domain.*
+import domain.Lotto
+import domain.LottoGame
+import domain.LottoNumber
+import domain.Rank
+import domain.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -19,8 +22,8 @@ class LottoGameTest {
      * - 결과
      * Map(Rank.FIRST to 1, Rank.FIFTH to 1)
      **/
-     /**
-      * 2번째 테스트
+    /**
+     * 2번째 테스트
      * - 생성된 로또 리스트 {
      * Lotto(1, 3, 5, 7, 9, 11),
      * Lotto(3, 5, 7, 9, 15, 25),
@@ -44,7 +47,6 @@ class LottoGameTest {
         val actual = lottoGame.matchGame()
         assertThat(actual).isEqualTo(result)
     }
-
 
     companion object {
 

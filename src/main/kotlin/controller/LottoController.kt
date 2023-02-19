@@ -1,6 +1,13 @@
 package controller
 
-import domain.*
+import domain.Lotto
+import domain.LottoGame
+import domain.LottoMachine
+import domain.LottoNumber
+import domain.Money
+import domain.RandomLottoGenerator
+import domain.WinningLotto
+import domain.WinningResult
 import view.InputView
 import view.OutputView
 
@@ -13,6 +20,7 @@ class LottoController(val inputView: InputView, val outputView: OutputView) {
         outputView.outputLottoSizeMessage(money)
         startGame(money)
     }
+
     private fun startGame(money: Money) {
         val lottos = LottoMachine(RandomLottoGenerator()).generateLottos(money)
         outputView.outputLottos(lottos)
@@ -27,7 +35,4 @@ class LottoController(val inputView: InputView, val outputView: OutputView) {
         outputView.outputWinningResult(winningResult)
         outputView.outputYield(winningResult.calculateYield(money))
     }
-
-
-
 }

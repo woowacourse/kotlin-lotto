@@ -1,6 +1,9 @@
 package view
 
-import domain.*
+import domain.Lotto
+import domain.Money
+import domain.Rank
+import domain.WinningResult
 
 class OutputView {
     fun outputMoneyMessage() {
@@ -15,7 +18,7 @@ class OutputView {
         println(StringBuilder().getLottos(lottos))
     }
 
-    private fun StringBuilder.getLottos(lottos: List<Lotto>) : String{
+    private fun StringBuilder.getLottos(lottos: List<Lotto>): String {
         lottos.forEach {
             this.append(outputLotto(it) + "\n")
         }
@@ -25,8 +28,8 @@ class OutputView {
         println(message)
     }
 
-    private fun outputLotto(lotto: Lotto): String{
-        return lotto.numbers.map{ it.number }.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK)
+    private fun outputLotto(lotto: Lotto): String {
+        return lotto.numbers.map { it.number }.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK)
     }
 
     fun outputWinningLottoMessage() {
@@ -43,7 +46,7 @@ class OutputView {
 
         val rankResult = listOf(Rank.FIFTH, Rank.FOURTH, Rank.THIRD, Rank.SECOND, Rank.FIRST)
         rankResult.forEach {
-            println(OUTPUT_WINNING_RESULT.format(it.countOfMatch, it.winningMoney, if(winningResult.result.get(it) == null) 0 else winningResult.result.get(it)))
+            println(OUTPUT_WINNING_RESULT.format(it.countOfMatch, it.winningMoney, if (winningResult.result.get(it) == null) 0 else winningResult.result.get(it)))
         }
     }
 

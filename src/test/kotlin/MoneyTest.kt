@@ -15,16 +15,20 @@ class MoneyTest {
 
     @Test
     fun `입력된 금액이 음수인 경우`() {
-        assertThat(assertThrows<IllegalArgumentException> {
-            Money(-9000)
-        }.message).isEqualTo("금액은 양수여야 합니다.")
+        assertThat(
+            assertThrows<IllegalArgumentException> {
+                Money(-9000)
+            }.message
+        ).isEqualTo("금액은 양수여야 합니다.")
     }
 
     @Test
     fun `입력된 금액이 1000으로 안나눠지는 경우`() {
-        assertThat(assertThrows<IllegalArgumentException> {
-            Money(925)
-        }.message).isEqualTo("금액은 1000원으로 나누어떨어져야 합니다.")
+        assertThat(
+            assertThrows<IllegalArgumentException> {
+                Money(925)
+            }.message
+        ).isEqualTo("금액은 1000원으로 나누어떨어져야 합니다.")
     }
 
     @ParameterizedTest

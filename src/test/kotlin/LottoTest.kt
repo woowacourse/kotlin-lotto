@@ -3,7 +3,6 @@ import domain.LottoNumber
 import domain.Rank
 import domain.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -23,17 +22,21 @@ class LottoTest {
     @MethodSource("produceWrongSizeLotto")
     @ParameterizedTest
     fun `로또가 6개의 숫자로 이루어지지 않은 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
-        assertThat(assertThrows<IllegalArgumentException> {
-            Lotto(numbers)
-        }.message!!).isEqualTo("당첨 번호가 6개가 아닙니다")
+        assertThat(
+            assertThrows<IllegalArgumentException> {
+                Lotto(numbers)
+            }.message!!
+        ).isEqualTo("당첨 번호가 6개가 아닙니다")
     }
 
     @MethodSource("produceOverlayLotto")
     @ParameterizedTest
     fun `중복된 번호가 존재하는 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
-        assertThat(assertThrows<IllegalArgumentException> {
-            Lotto(numbers)
-        }.message!!).isEqualTo("당첨 번호가 중복되었습니다.")
+        assertThat(
+            assertThrows<IllegalArgumentException> {
+                Lotto(numbers)
+            }.message!!
+        ).isEqualTo("당첨 번호가 중복되었습니다.")
     }
 
     /**
@@ -155,21 +158,22 @@ class LottoTest {
                     Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
                     WinningLotto(
                         listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) }, LottoNumber.from(6)
+                        )
                     )
                 )
-            )
-        }
+            }
 
-        @JvmStatic
-        fun produceFirstLotto(): List<Arguments> {
-            return listOf(
-                Arguments.of(
-                    Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
-                    WinningLotto(
-                        listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }, LottoNumber.from(10)
+            @JvmStatic
+            fun produceFirstLotto(): List<Arguments> {
+                return listOf(
+                    Arguments.of(
+                        Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
+                        WinningLotto(
+                            listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }, LottoNumber.from(10)
+                            )
+                        )
                     )
-                )
-            )
+                }
+            }
         }
-    }
-}
+        

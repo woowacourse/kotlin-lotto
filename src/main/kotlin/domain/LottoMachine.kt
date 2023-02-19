@@ -8,7 +8,7 @@ class LottoMachine(val lottoGenerator: LottoGenerator) {
     }
 
     private fun MutableList<Lotto>.getLottos(count: Int): List<Lotto> {
-        repeat(count) {this.add(lottoGenerator.generateLotto())}
+        repeat(count) { this.add(lottoGenerator.generateLotto()) }
         return this
     }
 }

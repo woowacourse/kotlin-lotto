@@ -1,11 +1,9 @@
 package view
 
-import domain.Lotto
 import domain.LottoNumber
-import domain.Money
 
 class InputView {
-    fun inputMoney(): Int{
+    fun inputMoney(): Int {
         OutputView().outputMoneyMessage()
         return getInputMoney(readLine())
     }

@@ -1,7 +1,5 @@
-import domain.Lotto
 import domain.LottoNumber
 import domain.WinningLotto
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -20,8 +18,8 @@ class WinningLottoTest {
         @JvmStatic
         fun produceOverlayBonusNumber(): List<Arguments> {
             return listOf(
-                Arguments.of((1..6).map { LottoNumber.from(it) }, LottoNumber.from(6) ),
-                Arguments.of(listOf(1, 5, 10, 15, 20, 30).map { LottoNumber.from(it)}, LottoNumber.from(15))
+                Arguments.of((1..6).map { LottoNumber.from(it) }, LottoNumber.from(6)),
+                Arguments.of(listOf(1, 5, 10, 15, 20, 30).map { LottoNumber.from(it) }, LottoNumber.from(15))
             )
         }
     }
