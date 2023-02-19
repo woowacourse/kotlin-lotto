@@ -26,7 +26,7 @@ class OutputView {
     }
 
     private fun outputLotto(lotto: Lotto): String{
-        return lotto.numbers.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK)
+        return lotto.numbers.map{ it.number }.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK)
     }
 
     fun outputWinningLottoMessage() {
@@ -38,12 +38,12 @@ class OutputView {
     }
 
     fun outputWinningResult(winningResult: WinningResult) {
-        println(OUTPUT_WINNING_RESULT_MESSAGE)
+        println("\n" + OUTPUT_WINNING_RESULT_MESSAGE)
         println(SEPERATE_MESSAGE)
 
         val rankResult = listOf(Rank.FIFTH, Rank.FOURTH, Rank.THIRD, Rank.SECOND, Rank.FIRST)
         rankResult.forEach {
-            println(it.toString() + winningResult.result[it] + "개")
+            println(OUTPUT_WINNING_RESULT.format(it.countOfMatch, it.winningMoney, if(winningResult.result.get(it) == null) 0 else winningResult.result.get(it)))
         }
     }
 
@@ -62,5 +62,6 @@ class OutputView {
         const val OUTPUT_WINNING_RESULT_MESSAGE = "당첨 통계"
         const val SEPERATE_MESSAGE = "---------"
         const val YIELD_MESSAGE = "총 수익률은 %.2f입니다."
+        const val OUTPUT_WINNING_RESULT = "%d개 일치 (%d원)- %d개 "
     }
 }
