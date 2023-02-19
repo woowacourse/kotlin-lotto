@@ -3,17 +3,15 @@ package lotto.domain
 class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == LOTTO_SIZE) { LOTTO_SIZE_ERROR }
-        require(numbers.map { lottoNumber -> lottoNumber.number }.distinct().size == LOTTO_SIZE) { LOTTO_DUPLICATE_ERROR }
+        require(numbers.distinct().size == LOTTO_SIZE) { LOTTO_DUPLICATE_ERROR }
     }
 
     fun countMatchingNumbers(winningLotto: Lotto): Int {
-        val numbers = numbers.map { lottoNumber -> lottoNumber.number }
-        val winningNumbers = winningLotto.numbers.map { lottoNumber -> lottoNumber.number }
-        return numbers.count { lottoNumber -> winningNumbers.contains(lottoNumber) }
+        return numbers.count { lottoNumber -> winningLotto.numbers.contains(lottoNumber) }
     }
 
     fun checkMatchingBonusNumber(bonusNumber: LottoNumber): Boolean {
-        return numbers.any { lottoNumber -> lottoNumber.number == bonusNumber.number }
+        return numbers.any { lottoNumber -> lottoNumber == bonusNumber }
     }
 
     companion object {
