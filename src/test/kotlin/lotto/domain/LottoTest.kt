@@ -14,8 +14,8 @@ class LottoTest {
             Lotto(
                 TestNumberGenerator(
                     listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3),
-                        LottoNumber(4), LottoNumber(5)
+                        LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(3),
+                        LottoNumber.from(4), LottoNumber.from(5)
                     )
                 ).generate()
             )
@@ -28,8 +28,8 @@ class LottoTest {
             Lotto(
                 TestNumberGenerator(
                     listOf(
-                        LottoNumber(4), LottoNumber(3), LottoNumber(1), LottoNumber(2), LottoNumber(2),
-                        LottoNumber(
+                        LottoNumber.from(4), LottoNumber.from(3), LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(2),
+                        LottoNumber.from(
                             2
                         )
                     )
@@ -44,8 +44,8 @@ class LottoTest {
         val lotto = Lotto(numbers)
         val winningLotto = Lotto(
             listOf(
-                LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
-                LottoNumber(
+                LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(3), LottoNumber.from(4), LottoNumber.from(5),
+                LottoNumber.from(
                     6
                 )
             )
@@ -68,19 +68,19 @@ class LottoTest {
             return listOf(
                 Arguments.of(
                     listOf(
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(7),
-                        LottoNumber(8),
-                        LottoNumber(9)
+                        LottoNumber.from(1),
+                        LottoNumber.from(2),
+                        LottoNumber.from(3),
+                        LottoNumber.from(7),
+                        LottoNumber.from(8),
+                        LottoNumber.from(9)
                     ),
                     3
                 ),
                 Arguments.of(
                     listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
-                        LottoNumber(
+                        LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(3), LottoNumber.from(4), LottoNumber.from(5),
+                        LottoNumber.from(
                             6
                         )
                     ),
@@ -94,23 +94,23 @@ class LottoTest {
             return listOf(
                 Arguments.of(
                     listOf(
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(4),
-                        LottoNumber(5),
-                        LottoNumber(6)
+                        LottoNumber.from(1),
+                        LottoNumber.from(2),
+                        LottoNumber.from(3),
+                        LottoNumber.from(4),
+                        LottoNumber.from(5),
+                        LottoNumber.from(6)
                     ),
-                    LottoNumber(3), true
+                    LottoNumber.from(3), true
                 ),
                 Arguments.of(
                     listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
-                        LottoNumber(
+                        LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(3), LottoNumber.from(4), LottoNumber.from(5),
+                        LottoNumber.from(
                             6
                         )
                     ),
-                    LottoNumber(7), false
+                    LottoNumber.from(7), false
                 )
             )
         }

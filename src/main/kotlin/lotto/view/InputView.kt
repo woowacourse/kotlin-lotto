@@ -13,12 +13,12 @@ object InputView {
 
     fun readInputWinningLotto(): Lotto {
         val input = readln()
-        return Lotto(input.split(",").map { LottoNumber(it.toInt()) })
+        return Lotto(input.split(",").map { LottoNumber.from(it.toInt()) })
     }
 
     fun readInputBonusNumber(): LottoNumber {
         val input = readln()
         Validator.checkInputBonusNumber(input)
-        return LottoNumber(input.toInt())
+        return LottoNumber.from(input.toInt())
     }
 }

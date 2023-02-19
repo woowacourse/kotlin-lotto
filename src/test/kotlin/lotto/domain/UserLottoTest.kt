@@ -9,22 +9,22 @@ class UserLottoTest {
         val lotto = listOf(
             Lotto(
                 listOf(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(9),
-                    LottoNumber(10),
-                    LottoNumber(11)
+                    LottoNumber.from(1),
+                    LottoNumber.from(2),
+                    LottoNumber.from(3),
+                    LottoNumber.from(9),
+                    LottoNumber.from(10),
+                    LottoNumber.from(11)
                 )
             ),
             Lotto(
                 listOf(
-                    LottoNumber(7),
-                    LottoNumber(8),
-                    LottoNumber(9),
-                    LottoNumber(10),
-                    LottoNumber(11),
-                    LottoNumber(12)
+                    LottoNumber.from(7),
+                    LottoNumber.from(8),
+                    LottoNumber.from(9),
+                    LottoNumber.from(10),
+                    LottoNumber.from(11),
+                    LottoNumber.from(12)
                 )
             )
         )
@@ -34,15 +34,15 @@ class UserLottoTest {
                 WinningNumbers(
                     Lotto(
                         listOf(
-                            LottoNumber(1),
-                            LottoNumber(2),
-                            LottoNumber(3),
-                            LottoNumber(4),
-                            LottoNumber(5),
-                            LottoNumber(6)
+                            LottoNumber.from(1),
+                            LottoNumber.from(2),
+                            LottoNumber.from(3),
+                            LottoNumber.from(4),
+                            LottoNumber.from(5),
+                            LottoNumber.from(6)
                         )
                     ),
-                    LottoNumber(7)
+                    LottoNumber.from(7)
                 )
             )
         ).isEqualTo(
