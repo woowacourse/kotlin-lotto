@@ -1,44 +1,48 @@
 package view
 
-import domain.BonusNumber
 import domain.Lotto
+import domain.LottoNumber
 import domain.Money
 
 class InputView {
-    fun inputMoney(): Money {
+    fun inputMoney(): Int{
+        OutputView().outputMoneyMessage()
         return getInputMoney(readLine())
     }
 
-    private fun getInputMoney(input: String?): Money {
-        return run {
+    private fun getInputMoney(input: String?): Int {
+        return runCatching {
             require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
             require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-            Money(input.toInt())
-        }
+            input.toInt()
+        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+            .getOrThrow()
     }
 
-    fun inputWinningLotto(): Lotto {
+    fun inputWinningLotto(): List<LottoNumber> {
+        OutputView().outputWinningLottoMessage()
         return getInputWinningLotto(readLine())
     }
 
-    private fun getInputWinningLotto(input: String?): Lotto {
-        return run {
+    private fun getInputWinningLotto(input: String?): List<LottoNumber> {
+        return runCatching {
             require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
             require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-            Lotto(input.split(",").map { number -> number.toInt() })
-        }
+            input.split(",").map { LottoNumber.from(it.trim().toInt()) }.sortedBy { it.number }
+        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+            .getOrThrow()
     }
 
-    fun inputBonusNumber(): BonusNumber {
+    fun inputBonusNumber(): Int {
+        OutputView().outputBonusNumberMessage()
         return getInputBonusNumber(readLine())
     }
 
-    private fun getInputBonusNumber(input: String?): BonusNumber {
-        return run {
-            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-            BonusNumber(input.toInt())
-        }
+    private fun getInputBonusNumber(input: String?): Int {
+        return runCatching {
+            input!!.toInt()
+        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+            .getOrThrow()
     }
 
     companion object {
