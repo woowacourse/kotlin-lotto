@@ -1,15 +1,17 @@
 package lotto.view
 
 class InputView {
-    fun getNumber(): Int {
+    fun getNumber(printGuideMessage: () -> Unit): Int {
+        printGuideMessage()
         val input = getNotNullValue()
-        return if (input.isNumber()) input.toInt() else getNumber()
+        return if (input.isNumber()) input.toInt() else getNumber { printGuideMessage() }
     }
 
-    fun getNumberList(): List<Int> {
+    fun getNumberList(printGuideMessage: () -> Unit): List<Int> {
+        printGuideMessage()
         val input = getNotNullValue()
         val values = input.split(",")
-        return if (values.isNumbers()) return values.map { it.trim().toInt() } else getNumberList()
+        return if (values.isNumbers()) return values.map { it.trim().toInt() } else getNumberList { printGuideMessage() }
     }
 
     private fun getNotNullValue(): String {

@@ -40,8 +40,7 @@ class LottoController(
     }
 
     private fun getMoney(): Int {
-        outputView.printInsertMoneyMessage()
-        return inputView.getNumber()
+        return inputView.getNumber { outputView.printInsertMoneyMessage() }
     }
 
     private fun getWinningLotto(lotto: Lotto): WinningLotto {
@@ -51,18 +50,15 @@ class LottoController(
     }
 
     private fun getBonusNumber(): LottoNumber {
-        outputView.printInsertBonusNumber()
-
         return validateInput {
-            LottoNumber.create(inputView.getNumber())
+            LottoNumber.create(inputView.getNumber { outputView.printInsertBonusNumber() })
         } ?: getBonusNumber()
     }
 
     private fun getWinningNumber(): Lotto {
-        outputView.printInsertWinningNumber()
 
         return validateInput {
-            Lotto.create(inputView.getNumberList())
+            Lotto.create(inputView.getNumberList { outputView.printInsertWinningNumber() })
         } ?: getWinningNumber()
     }
 
