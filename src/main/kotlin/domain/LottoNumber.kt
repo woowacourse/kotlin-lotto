@@ -2,6 +2,9 @@ package domain
 
 class LottoNumber private constructor(number: Int) {
 
+    val number: Int = number
+        get() = field
+
     companion object {
         const val MINIMUM_NUMBER = 1
         const val MAXIMUM_NUMBER = 45
