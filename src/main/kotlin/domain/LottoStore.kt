@@ -7,6 +7,11 @@ class LottoStore {
         return lottoFactory.create(getCount(amount))
     }
 
+    fun buyLotto(amount: Amount, manualCount: Count): List<Lotto> {
+        val lottoFactory = LottoFactory(RandomNumberGenerator())
+        return lottoFactory.create(getCount(amount) - manualCount.toInt())
+    }
+
     private fun getCount(amount: Amount): Int = (amount / LOTTO_PRICE).toInt()
 
     companion object {

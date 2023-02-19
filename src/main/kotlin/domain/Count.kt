@@ -4,7 +4,7 @@ import domain.LottoStore.Companion.LOTTO_PRICE
 
 data class Count private constructor(private val number: Int) {
     constructor(number: Int, amount: Amount) : this(number) {
-        require(number > 0) { ERROR_MINUS.format(number) }
+        require(number >= 0) { ERROR_MINUS.format(number) }
         require((amount / LOTTO_PRICE).toInt() >= number) { ERROR_NUMBER_RANGE.format(number) }
     }
 
