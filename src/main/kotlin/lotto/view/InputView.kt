@@ -1,59 +1,46 @@
 package lotto.view
 
-import java.lang.IllegalArgumentException
+import kotlin.IllegalArgumentException
 
 class InputView {
     fun readPurchaseAmount(): Int {
-        var correctInput = false
-        var input = ""
-        while (!correctInput) {
+        return try {
             println(PURCHASE_AMOUNT_GUIDE)
-            input = readLine()
-            correctInput = isInteger(input, PURCHASE_AMOUNT_TYPE_ERROR)
+            val amount = readLine().toIntOrNull()
+            requireNotNull(amount) { PURCHASE_AMOUNT_TYPE_ERROR }
+            amount
+        } catch (e: IllegalArgumentException) {
+            printError(e.message ?: "")
+            readPurchaseAmount()
         }
-        return input.toInt()
     }
 
     fun readWinningNumbers(): List<Int> {
-        var correctInput = false
-        var inputs = listOf<String>()
-        while (!correctInput) {
+        return try {
             println(WINNING_NUMBERS_GUIDE)
-            val input = readLine()
-            inputs = input.split(", ")
-            correctInput = isIntegerList(inputs, WINNING_NUMBERS_TYPE_ERROR)
+            val numbers = readLine().split(", ").mapNotNull { it.toIntOrNull() }
+            require(numbers.size == 6) { WINNING_NUMBERS_TYPE_ERROR }
+            numbers
+        } catch (e: IllegalArgumentException) {
+            printError(e.message ?: "")
+            readWinningNumbers()
         }
-        return inputs.map { it.toInt() }
     }
 
     fun readBonusNumber(): Int {
-        var correctInput = false
-        var input = ""
-        while (!correctInput) {
+        return try {
             println(BONUS_NUMBERS_GUIDE)
-            input = readLine()
-            correctInput = isInteger(input, BONUS_NUMBERS_TYPE_ERROR)
+            val number = readLine().toIntOrNull()
+            requireNotNull(number) { BONUS_NUMBERS_TYPE_ERROR }
+            number
+        } catch (e: IllegalArgumentException) {
+            printError(e.message ?: "")
+            readBonusNumber()
         }
-        return input.toInt()
     }
 
     private fun readLine(): String {
         return readln()
-    }
-
-    private fun isInteger(input: String, message: String): Boolean {
-        return try {
-            requireNotNull(input.toIntOrNull()) { message }
-            true
-        } catch (e: IllegalArgumentException) {
-            printError(e.message ?: "")
-            false
-        }
-    }
-
-    private fun isIntegerList(inputs: List<String>, message: String): Boolean {
-        val correctCount = inputs.map { isInteger(it, message) }.count { it }
-        return correctCount == inputs.size
     }
 
     private fun printError(message: String) {
