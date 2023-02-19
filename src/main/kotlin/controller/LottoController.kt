@@ -20,7 +20,7 @@ class LottoController(
         resultView.printResult(result, profit)
     }
 
-    private fun initializeTicket(): Ticket = lottoSeller.sellLottos(inputView.getMoney().purchaseCount)
+    private fun initializeTicket(): Ticket = lottoSeller.sellLottos(inputView.getMoney())
 
     private fun initializeWinningLotto(): WinningLotto {
         while (true) {

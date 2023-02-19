@@ -17,9 +17,10 @@ class LottoSellerTest {
     @ParameterizedTest(name = "{0}개의 로또를 발급한다.")
     @ValueSource(ints = [2, 3, 4])
     fun `입력받은 개수만큼 로또를 발급한다`(count: Int) {
+        val money = PurchaseLottoMoney(count*1000)
         val generator = TestNumberGenerator()
         val lottoSeller = LottoSeller(generator)
-        val ticket = lottoSeller.sellLottos(count)
+        val ticket = lottoSeller.sellLottos(money)
         assertThat(ticket.lottos.map { lotto -> lotto.numbers }).isEqualTo(
             generator.pattern.map { it.convertToLottoNumberSet() }.take(count)
         )

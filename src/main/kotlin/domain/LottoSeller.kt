@@ -5,7 +5,7 @@ class LottoSeller(private val numberGenerator: RandomGenerator = NumberRandomGen
         return Lotto(numberGenerator.generate().map { LottoNumber.from(it) }.toSet())
     }
 
-    fun sellLottos(count: Int): Ticket {
-        return Ticket(List(count) { sellLotto() })
+    fun sellLottos(money: PurchaseLottoMoney): Ticket {
+        return Ticket(List(money.purchaseCount) { sellLotto() })
     }
 }
