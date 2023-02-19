@@ -9,64 +9,35 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
+private fun Lottery(vararg numbers: Int): Lottery {
+    return Lottery(numbers.map(::LotteryNumber))
+}
+
 class LotteryTest {
     @Test
     fun `6개의 로또번호를 가진다`() {
-        val lotteryNumbers = listOf(
-            LotteryNumber(1),
-            LotteryNumber(10),
-            LotteryNumber(20),
-            LotteryNumber(30),
-            LotteryNumber(40),
-            LotteryNumber(45)
-        )
-        val lottery = Lottery(lotteryNumbers)
+        val lottery = Lottery(1, 10, 20, 30, 40, 45)
 
         assertThat(lottery.numbers.size).isEqualTo(6)
     }
 
     @ParameterizedTest
     @MethodSource("lotteryNumbersErrorCase")
-    fun `로또번호가 6개가 아니면 에러가 발생한다`(numbers: List<LotteryNumber>, testName: String) {
+    fun `로또번호가 6개가 아니면 에러가 발생한다`(numbers: IntArray, testName: String) {
         println(testName)
 
-        assertThrows<IllegalArgumentException> { Lottery(numbers) }
+        assertThrows<IllegalArgumentException> { Lottery(*numbers) }
     }
 
     @Test
     fun `6개의 로또번호에 중복이 있으면 에러가 발생한다`() {
-        val lotteryNumbers = listOf(
-            LotteryNumber(10),
-            LotteryNumber(20),
-            LotteryNumber(30),
-            LotteryNumber(40),
-            LotteryNumber(10),
-            LotteryNumber(5)
-        )
-
-        assertThrows<IllegalArgumentException> { Lottery(lotteryNumbers) }
+        assertThrows<IllegalArgumentException> { Lottery(10, 20, 30, 40, 10, 5) }
     }
 
     @Test
     fun `당첨 번호와 매치하는 로또번호가 몇 개인지 확인한다`() {
-        val lotteryNumbers = listOf(
-            LotteryNumber(1),
-            LotteryNumber(10),
-            LotteryNumber(20),
-            LotteryNumber(30),
-            LotteryNumber(40),
-            LotteryNumber(45)
-        )
-        val winningNumbers = listOf(
-            LotteryNumber(1),
-            LotteryNumber(15),
-            LotteryNumber(20),
-            LotteryNumber(35),
-            LotteryNumber(40),
-            LotteryNumber(44)
-        )
-        val lottery = Lottery(lotteryNumbers)
-        val winningLottery = Lottery(winningNumbers)
+        val lottery = Lottery(1, 10, 20, 30, 40, 45)
+        val winningLottery = Lottery(1, 15, 20, 35, 40, 44)
 
         assertThat(lottery.countMatches(winningLottery)).isEqualTo(3)
     }
@@ -77,16 +48,7 @@ class LotteryTest {
         println(testName)
 
         val bonusNumber = LotteryNumber(bonusNumber)
-        val lottery = Lottery(
-            listOf(
-                LotteryNumber(1),
-                LotteryNumber(2),
-                LotteryNumber(3),
-                LotteryNumber(4),
-                LotteryNumber(5),
-                LotteryNumber(6)
-            )
-        )
+        val lottery = Lottery(1, 2, 3, 4, 5, 6)
 
         assertThat(lottery.containBonusNumber(bonusNumber)).isEqualTo(expected)
     }
@@ -96,25 +58,11 @@ class LotteryTest {
         fun lotteryNumbersErrorCase(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    listOf(
-                        LotteryNumber(1),
-                        LotteryNumber(10),
-                        LotteryNumber(20),
-                        LotteryNumber(30),
-                        LotteryNumber(40)
-                    ),
+                    intArrayOf(1, 20, 30, 40, 50),
                     "로또 번호는 5개일 수 없다"
                 ),
                 Arguments.of(
-                    listOf(
-                        LotteryNumber(1),
-                        LotteryNumber(2),
-                        LotteryNumber(10),
-                        LotteryNumber(20),
-                        LotteryNumber(30),
-                        LotteryNumber(40),
-                        LotteryNumber(45)
-                    ),
+                    intArrayOf(1, 2, 10, 20, 30, 40, 45),
                     "로또 번호는 7개일 수 없다"
                 )
             )
