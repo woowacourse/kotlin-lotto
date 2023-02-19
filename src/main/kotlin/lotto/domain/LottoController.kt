@@ -5,7 +5,6 @@ import lotto.model.LottoNumber
 import lotto.model.UserLotto
 import lotto.model.WinningLotto
 import lotto.model.generator.LottoGenerator
-import lotto.view.ERROR_NOT_DIVIDED
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -42,12 +41,7 @@ class LottoController(
 
     private fun getMoney(): Int {
         outputView.printInsertMoneyMessage()
-        val money = inputView.getNumber()
-        val result = runCatching {
-            require(isDivided(money)) { println(ERROR_NOT_DIVIDED) }
-        }.isSuccess
-
-        return if (result) money else getMoney()
+        return inputView.getNumber()
     }
 
     private fun getWinningLotto(lotto: Lotto): WinningLotto {

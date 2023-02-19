@@ -1,6 +1,5 @@
 package lotto.view
 
-
 class InputView {
     fun getNumber(): Int {
         val input = getNotNullValue()
