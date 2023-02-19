@@ -32,17 +32,24 @@ class OutputView {
 
     private fun getRankAnnouncement(name: String, count: Int): String {
         if (name == "MISS") return ""
-        if (Rank.values().map { it.name }.contains(name)) {
-            val rank = Rank.valueOf(name)
-            return "${rank.description} (${rank.winningMoney}원) - ${count}개\n"
+
+        val rank = Rank.valueOf(name)
+        val announcement = StringBuilder()
+        announcement.append(COUNT_OF_MATCH_DESCRIPTION.format(rank.countOfMatch))
+        if (rank == Rank.SECOND) {
+            announcement.append(BONUS_MATCH_DESCRIPTION)
         }
-        return ""
+        announcement.append(PRIZE_AND_COUNT_RESULT_DESCRIPTION.format(rank.winningMoney, count))
+        return announcement.toString()
     }
 
     companion object {
+        private const val BONUS_MATCH_DESCRIPTION = ", 보너스 볼 일치"
+        private const val COUNT_OF_MATCH_DESCRIPTION = "%d개 일치"
         private const val NUMBER_OF_LOTTERY_GUIDE = "개를 구매했습니다."
+        private const val PRIZE_AND_COUNT_RESULT_DESCRIPTION = " (%d원) - %d개\n"
+        private const val TOTAL_PROFIT_GUIDE = "총 수익률은 %.2f입니다."
         private const val WINNING_RESULT_GUIDE = "당첨 통계\n" +
             "---------"
-        private const val TOTAL_PROFIT_GUIDE = "총 수익률은 %.2f입니다."
     }
 }
