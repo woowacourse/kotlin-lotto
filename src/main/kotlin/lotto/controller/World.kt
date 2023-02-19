@@ -19,7 +19,7 @@ class World(
     private val inputView: InputView,
     private val outputView: OutputView
 ) {
-    private val lottoPrice = LottoPrice(DEFAULT_LOTTO_PRICE)
+    private val lottoPrice = LottoPrice(LottoPrice.DEFAULT_LOTTO_PRICE)
 
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
@@ -75,9 +75,5 @@ class World(
     private fun makeProfitRate(purchaseMoney: PurchaseMoney, winStatistics: WinStatistics): ProfitRate {
         val profitRateCalculator = LottoProfitRateCalculator(purchaseMoney, winStatistics)
         return profitRateCalculator.calculate()
-    }
-
-    companion object {
-        private const val DEFAULT_LOTTO_PRICE = 1000
     }
 }
