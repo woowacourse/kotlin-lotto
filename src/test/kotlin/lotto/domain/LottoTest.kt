@@ -4,121 +4,39 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.CsvSource
 
 class LottoTest {
     @Test
-    fun `로또는 번호 여섯 개를 가져야 한다`() {
+    fun `로또 번호는 여섯개이다`() {
         assertThrows<IllegalArgumentException> {
-            Lotto(
-                TestNumberGenerator(
-                    listOf(
-                        LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(3),
-                        LottoNumber.from(4), LottoNumber.from(5)
-                    )
-                ).generate()
-            )
+            makeLotto(listOf(1, 2, 3, 4, 5))
         }
     }
 
     @Test
-    fun `로또는 중복 되지 않는 숫자를 가져야 한다`() {
+    fun `로또 번호는 중복되지 않는다`() {
         assertThrows<IllegalArgumentException> {
-            Lotto(
-                TestNumberGenerator(
-                    listOf(
-                        LottoNumber.from(4), LottoNumber.from(3), LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(2),
-                        LottoNumber.from(
-                            2
-                        )
-                    )
-                ).generate()
-            )
+            makeLotto(listOf(4, 3, 1, 2, 2, 2))
         }
     }
 
-    @MethodSource("matchingCountNumbers")
     @ParameterizedTest
-    fun `당첨 번호와 몇개 일치 하는지 판단 한다`(numbers: List<LottoNumber>, matchCount: Int) {
-        val lotto = Lotto(numbers)
-        val winningLotto = Lotto(
-            listOf(
-                LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(3), LottoNumber.from(4), LottoNumber.from(5),
-                LottoNumber.from(
-                    6
-                )
-            )
-        )
-
+    @CsvSource(value = ["1,2,3,7,8,9:3", "1,2,3,4,5,6:6"], delimiter = ':')
+    fun `로또 번호가 당첨 번호와 몇개 일치 하는지 판단 한다`(numbers: String, matchCount: Int) {
+        val lotto = makeLotto(numbers.split(",").map { it.toInt() })
+        val winningLotto = makeLotto(listOf(1, 2, 3, 4, 5, 6))
         assertThat(lotto.countMatchingNumbers(winningLotto)).isEqualTo(matchCount)
     }
 
-    @MethodSource("matchingBonusNumber")
     @ParameterizedTest
-    fun `보너스 번호와 일치하는지 판단한다`(numbers: List<LottoNumber>, bonusNumber: LottoNumber, isCorrect: Boolean) {
-        val lotto = Lotto(numbers)
-        assertThat(lotto.checkMatchingBonusNumber(bonusNumber)).isEqualTo(isCorrect)
+    @CsvSource(value = ["1,2,3,4,5,6:3:true", "1,2,3,4,5,6:7:false"], delimiter = ':')
+    fun `로또 번호 중 보너스 번호와 일치하는 번호가 있는지 판단한다`(numbers: String, bonusNumber: Int, isCorrect: Boolean) {
+        val lotto = makeLotto(numbers.split(",").map { it.toInt() })
+        assertThat(lotto.checkMatchingBonusNumber(LottoNumber.from(bonusNumber))).isEqualTo(isCorrect)
     }
 
-    companion object {
-
-        @JvmStatic
-        fun matchingCountNumbers(): List<Arguments> {
-            return listOf(
-                Arguments.of(
-                    listOf(
-                        LottoNumber.from(1),
-                        LottoNumber.from(2),
-                        LottoNumber.from(3),
-                        LottoNumber.from(7),
-                        LottoNumber.from(8),
-                        LottoNumber.from(9)
-                    ),
-                    3
-                ),
-                Arguments.of(
-                    listOf(
-                        LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(3), LottoNumber.from(4), LottoNumber.from(5),
-                        LottoNumber.from(
-                            6
-                        )
-                    ),
-                    6
-                )
-            )
-        }
-
-        @JvmStatic
-        fun matchingBonusNumber(): List<Arguments> {
-            return listOf(
-                Arguments.of(
-                    listOf(
-                        LottoNumber.from(1),
-                        LottoNumber.from(2),
-                        LottoNumber.from(3),
-                        LottoNumber.from(4),
-                        LottoNumber.from(5),
-                        LottoNumber.from(6)
-                    ),
-                    LottoNumber.from(3), true
-                ),
-                Arguments.of(
-                    listOf(
-                        LottoNumber.from(1), LottoNumber.from(2), LottoNumber.from(3), LottoNumber.from(4), LottoNumber.from(5),
-                        LottoNumber.from(
-                            6
-                        )
-                    ),
-                    LottoNumber.from(7), false
-                )
-            )
-        }
-    }
-
-    class TestNumberGenerator(private val numbers: List<LottoNumber>) : LottoNumberGenerator {
-        override fun generate(): List<LottoNumber> {
-            return numbers
-        }
+    private fun makeLotto(numbers: List<Int>): Lotto {
+        return Lotto(numbers.map { LottoNumber.from(it) })
     }
 }
