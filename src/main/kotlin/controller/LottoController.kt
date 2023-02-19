@@ -38,6 +38,6 @@ class LottoController {
 
     private fun askBonusNumber(): LottoNumber {
         outputView.outputGetBonusNumber()
-        return LottoNumber(inputView.inputBonusNumber())
+        return LottoNumber.valueOf(inputView.inputBonusNumber())
     }
 }
