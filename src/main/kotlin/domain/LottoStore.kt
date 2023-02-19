@@ -4,9 +4,9 @@ class LottoStore(
     private val lottoGenerator: LottoGenerator,
 ) {
 
-    fun buyLotto(amount: Int): List<Lotto> = LottoFactory(lottoGenerator).create(getCount(Amount.from(amount)))
+    fun buyLotto(money: Money): List<Lotto> = LottoFactory(lottoGenerator).create(getCount(money))
 
-    private fun getCount(amount: Amount): Int = amount.value / LOTTO_PRICE
+    private fun getCount(money: Money): Int = money.value / LOTTO_PRICE
 
     companion object {
         const val LOTTO_PRICE = 1000

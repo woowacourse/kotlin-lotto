@@ -3,6 +3,7 @@ package controller
 import domain.Lotto
 import domain.LottoNumber
 import domain.LottoStore
+import domain.Money
 import domain.RandomLottoGenerator
 import domain.WinningLotto
 import view.InputView
@@ -13,22 +14,22 @@ class LottoController {
     private val outputView by lazy { OutputView() }
 
     fun run() {
-        val amount = askAmount()
-        val lottos = buyLotto(amount)
+        val money = askPurchaseMoney()
+        val lottos = buyLotto(money)
         outputView.outputLottos(lottos)
         val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
         val result = winningLotto.match(lottos)
         outputView.outputResult(result)
     }
 
-    private fun askAmount(): Int {
+    private fun askPurchaseMoney(): Money {
         outputView.outputGetAmount()
-        return inputView.inputAmount()
+        return Money.from(inputView.inputAmount())
     }
 
-    private fun buyLotto(amount: Int): List<Lotto> {
+    private fun buyLotto(money: Money): List<Lotto> {
         val store = LottoStore(RandomLottoGenerator)
-        return store.buyLotto(amount)
+        return store.buyLotto(money)
     }
 
     private fun askWinningNumbers(): Lotto {
