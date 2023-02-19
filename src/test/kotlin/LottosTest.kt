@@ -23,6 +23,10 @@ class LottosTest {
 
     @Test
     fun `전체 당첨 결과 확인`() {
+        // given
+        // Lottos = 1,2,3,4,5,6 / 1,2,4,6,34,45 / 3,5,15,18,24,35 / 4,6,15,18,24,35
+        // Lottos = 1,2,3,4,6,10
+        // bonusNumber = 45
         val testLottos = Lottos(testLottos)
         val winningLotto = Lotto(
             listOf(
@@ -32,11 +36,16 @@ class LottosTest {
             )
         )
         val bonusNumber = BonusNumber(LottoNumber.from(45))
-        assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.FIRST]).isEqualTo(0)
-        assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.SECOND]).isEqualTo(0)
-        assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.THIRD]).isEqualTo(1)
-        assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.FOURTH]).isEqualTo(1)
-        assertThat(testLottos.matchLottos(winningLotto, bonusNumber).result[Rank.FIFTH]).isEqualTo(0)
+
+        // When
+        val result = testLottos.matchLottos(winningLotto, bonusNumber).result
+
+        // Then
+        assertThat(result[Rank.FIRST]).isEqualTo(0) // 1등 당첨 0개
+        assertThat(result[Rank.SECOND]).isEqualTo(0) // 2등 당첨 0개
+        assertThat(result[Rank.THIRD]).isEqualTo(1) // 3등 당첨 1개
+        assertThat(result[Rank.FOURTH]).isEqualTo(1) // 4등 당첨 1개
+        assertThat(result[Rank.FIFTH]).isEqualTo(0) // 5등 당첨 0개
     }
 
     class TestLottoGenerator() : LottoGenerator {
