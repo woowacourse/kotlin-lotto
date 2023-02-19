@@ -1,26 +1,10 @@
-package domain
+package domain.lotto
 
-import domain.lotto.Lotto
-import domain.lotto.LottoNumber
 import domain.lotto.generator.LottoVendingMachine
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 class LottoVendingMachineTest {
-    @ValueSource(ints = [1000, 5000, 10000])
-    @ParameterizedTest
-    fun `구입금액에 해당하는 로또 개수 계산`(amount: Int) {
-        // given
-        val money = Money(amount)
-
-        // when
-        val lottoCount: Int = LottoVendingMachine.getLottoCount(money)
-
-        // then
-        assertThat(lottoCount).isEqualTo(amount / LottoVendingMachine.LOTTO_PRICE)
-    }
 
     @Test
     fun `로또 개수만큼 발행`() {
