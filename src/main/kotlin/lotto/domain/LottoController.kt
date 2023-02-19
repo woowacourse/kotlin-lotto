@@ -34,7 +34,7 @@ class LottoController(
     fun getUserLotto(number: Int): UserLotto {
         val lotto = mutableListOf<Lotto>()
         repeat(number) {
-            lotto.add(Lotto(*generator.generate().toIntArray()))
+            lotto.add(Lotto.create(generator.generate()))
         }
 
         return UserLotto(lotto)
@@ -68,7 +68,7 @@ class LottoController(
         outputView.printInsertWinningNumber()
 
         return validateInput {
-            Lotto(inputView.getNumberList())
+            Lotto.create(inputView.getNumberList())
         } ?: getWinningNumber()
     }
 

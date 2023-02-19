@@ -3,14 +3,12 @@ package lotto.model
 import lotto.view.ERROR_DUPLICATE_NUMBER
 import lotto.view.ERROR_SIZE_OF_LOTTO
 
-class Lotto(val lotto: List<LottoNumber>) {
+class Lotto private constructor(val lotto: List<LottoNumber>) {
 
     init {
         require(lotto.size == LOTTO_SIZE) { ERROR_SIZE_OF_LOTTO }
         require(hasNoDuplicateNumber()) { ERROR_DUPLICATE_NUMBER }
     }
-
-    constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber))
 
     fun getCountOfMatch(winningLotto: WinningLotto): Rank {
         val count = lotto.count { winningLotto.winningNumbers.isContained(it) }
@@ -33,5 +31,7 @@ class Lotto(val lotto: List<LottoNumber>) {
 
     companion object {
         private const val LOTTO_SIZE = 6
+
+        fun create(lotto: List<Int>) = Lotto(lotto.map(::LottoNumber))
     }
 }

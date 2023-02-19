@@ -1,6 +1,5 @@
 package lotto.view
 
-import lotto.model.LottoNumber
 
 class InputView {
     fun getNumber(): Int {
@@ -8,10 +7,10 @@ class InputView {
         return if (input.isNumber()) input.toInt() else getNumber()
     }
 
-    fun getNumberList(): List<LottoNumber> {
+    fun getNumberList(): List<Int> {
         val input = getNotNullValue()
         val values = input.split(",")
-        return if (values.isNumbers()) return values.map { LottoNumber(it.trim().toInt()) } else getNumberList()
+        return if (values.isNumbers()) return values.map { it.trim().toInt() } else getNumberList()
     }
 
     private fun getNotNullValue(): String {

@@ -8,7 +8,7 @@ class WinningLotto(val winningNumbers: Lotto, val bonusNumber: LottoNumber) {
         require(hasNoDuplicateNumber()) { ERROR_DUPLICATE_NUMBER }
     }
 
-    constructor(winningLotto: IntArray, bonusNumber: Int) : this(Lotto(*winningLotto), LottoNumber(bonusNumber))
+    constructor(winningLotto: List<Int>, bonusNumber: Int) : this(Lotto.create(winningLotto), LottoNumber(bonusNumber))
 
     private fun hasNoDuplicateNumber(): Boolean {
         return !winningNumbers.isContained(bonusNumber)
