@@ -2,13 +2,15 @@ package domain
 
 import domain.LottoStore.Companion.LOTTO_PRICE
 
-data class Count private constructor(private val number: Int) {
-    constructor(number: Int, amount: Amount) : this(number) {
-        require(number >= 0) { ERROR_MINUS.format(number) }
-        require((amount / LOTTO_PRICE).toInt() >= number) { ERROR_NUMBER_RANGE.format(number) }
+data class Count private constructor(private val count: Int) {
+    constructor(count: Int, amount: Amount) : this(count) {
+        require(count >= 0) { ERROR_MINUS.format(count) }
+        require((amount / LOTTO_PRICE).toInt() >= count) { ERROR_NUMBER_RANGE.format(count) }
     }
 
-    fun toInt() = number
+    fun toInt() = count
+
+    operator fun times(number: Int): Int = number * count
 
     companion object {
         private const val ERROR_MINUS = "0 이상의 숫자를 입력해야 합니다.\n잘못된 값 : %d"
