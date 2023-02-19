@@ -32,10 +32,9 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     abstract fun match(countOfMatch: Int, matchBonus: Boolean): Boolean
 
     companion object {
-        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
-            return values().find { it.match(countOfMatch, matchBonus) }
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank =
+            values().find { it.match(countOfMatch, matchBonus) }
                 ?: throw IllegalArgumentException(ERROR_IMPOSSIBLE_CASE.format(countOfMatch, matchBonus))
-        }
 
         private const val ERROR_IMPOSSIBLE_CASE = "등수가 나올 수 없는 경우입니다.\n잘못된 값: {매치 카운트=%d, 매치 보너스=%s}"
     }
