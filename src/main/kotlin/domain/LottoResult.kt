@@ -6,8 +6,6 @@ data class LottoResult(private val result: Map<Rank, Int>) {
     }
     operator fun get(rank: Rank): Int = result[rank] ?: 0
 
-    fun sum(): Int = result.values.sum()
-
     fun getRateOfReturn(): Double = getRevenue() / getInvestment()
 
     private fun getInvestment(): Double = result.values.sum().toDouble() * LottoStore.LOTTO_PRICE
