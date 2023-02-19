@@ -45,7 +45,8 @@ class LottoStatisticsTest {
         val bonusNumber = LottoNumber.from(13)
         val winningLotto = WinningLotto(Lotto(winningNumber.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val result = lottoStatistics.yield(winResult)
+        val purchaseLottoMoney = PurchaseLottoMoney(14000)
+        val result = lottoStatistics.yield(winResult, purchaseLottoMoney)
         val expected = "0.35"
         assertThat(result).isEqualTo(expected)
     }

@@ -11,16 +11,15 @@ class LottoController(
     private val lottoSeller: LottoSeller by lazy { LottoSeller() }
 
     fun run() {
-        val ticket = initializeTicket()
+        val purchaseLottoMoney = inputView.getMoney()
+        val ticket = lottoSeller.sellLottos(purchaseLottoMoney)
         val winningLotto = initializeWinningLotto()
 
         val lottoStatistics = LottoStatistics(winningLotto)
         val result = lottoStatistics.matchTicket(ticket)
-        val profit = lottoStatistics.yield(result)
+        val profit = lottoStatistics.yield(result, purchaseLottoMoney)
         resultView.printResult(result, profit)
     }
-
-    private fun initializeTicket(): Ticket = lottoSeller.sellLottos(inputView.getMoney())
 
     private fun initializeWinningLotto(): WinningLotto {
         while (true) {
