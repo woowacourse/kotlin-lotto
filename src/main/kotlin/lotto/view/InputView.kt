@@ -4,27 +4,19 @@ import lotto.model.LottoNumber
 
 class InputView {
     fun getNumber(): Int {
-        val input = readlnOrNull()?.trim()
-        val result = validateInput {
-            require(!input.isNullOrBlank())
-            require(input.isNumber()) { println(ERROR_NOT_POSITIVE_NUMBER) }
-        }
-        return if (result) input!!.toInt() else getNumber()
+        val input = getNotNullValue()
+        return if (input.isNumber()) input.toInt() else getNumber()
     }
 
     fun getNumberList(): List<LottoNumber> {
-        val input = readlnOrNull()?.trim()
-        val result = validateInput {
-            require(!input.isNullOrBlank())
-            require(input.split(",").isNumbers()) { println(ERROR_NOT_POSITIVE_NUMBER) }
-        }
-        return if (result) input!!.split(",").map { LottoNumber(it.trim().toInt()) } else getNumberList()
+        val input = getNotNullValue()
+        val values = input.split(",")
+        return if (values.isNumbers()) return values.map { LottoNumber(it.trim().toInt()) } else getNumberList()
     }
 
-    private fun validateInput(validate: () -> Unit): Boolean {
-        return runCatching {
-            validate()
-        }.isSuccess
+    private fun getNotNullValue(): String {
+        val input = readlnOrNull()?.trim()
+        return if (!input.isNullOrBlank()) input else getNotNullValue()
     }
 
     private fun String.isNumber() = this.chars().allMatch { Character.isDigit(it) }
