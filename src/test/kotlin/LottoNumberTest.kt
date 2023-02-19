@@ -9,7 +9,7 @@ class LottoNumberTest {
     @ParameterizedTest
     @ValueSource(ints = [1, 45])
     fun `로또 번호가 1 이상 45 이하인 경우`(value: Int) {
-        assertThrows<IllegalArgumentException> {
+        assertDoesNotThrow {
             LottoNumber.from(value)
         }
     }
@@ -17,7 +17,7 @@ class LottoNumberTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 46])
     fun `로또 번호는 1 이상 45 이하가 아닌 경우 예외가 발생한다`(value: Int) {
-        assertDoesNotThrow {
+        assertThrows<IllegalArgumentException> {
             LottoNumber.from(value)
         }
     }

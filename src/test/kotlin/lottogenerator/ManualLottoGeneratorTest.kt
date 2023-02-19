@@ -17,7 +17,7 @@ class ManualLottoGeneratorTest {
 
     @Test
     fun `수동으로 로또를 생성하기`() {
-        val lotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5))
+        val lotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5, 6))
 
         assertThat(lotto).isInstanceOf(Lotto::class.java)
     }
