@@ -6,7 +6,7 @@ import domain.Rank
 import kotlin.math.floor
 
 class OutputView {
-    fun outputGetAmount() {
+    fun outputGetMoney() {
         println("구입금액을 입력해 주세요.")
     }
 

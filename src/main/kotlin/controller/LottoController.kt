@@ -24,8 +24,8 @@ class LottoController {
 
     private fun askPurchaseMoney(): Money {
         while (true) {
-            outputView.outputGetAmount()
-            return Money.from(inputView.inputAmount() ?: continue)
+            outputView.outputGetMoney()
+            return Money.from(inputView.inputMoney() ?: continue)
         }
     }
 

@@ -1,7 +1,7 @@
 package view
 
 class InputView {
-    fun inputAmount(): Int? {
+    fun inputMoney(): Int? {
         return readln().toIntOrNull()
     }
     fun inputWinningNumbers(): IntArray? {
