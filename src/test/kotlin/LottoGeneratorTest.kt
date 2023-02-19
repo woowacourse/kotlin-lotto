@@ -32,4 +32,15 @@ class LottoGeneratorTest {
         //then
         assertThat(generatedLotto).isInstanceOf(Lotto::class.java)
     }
+
+    @Test
+    fun `로또를 자동으로 생성하기`() {
+        //given, when
+        val generatedLottos = lottoGenerator.generateLottosAutomatically(1)
+
+        //then
+        generatedLottos.forEach{ lotto ->
+            assertThat(lotto).isInstanceOf(Lotto::class.java)
+        }
+    }
 }

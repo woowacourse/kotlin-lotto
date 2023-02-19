@@ -10,6 +10,9 @@ class LottoGenerator(
     }
 ) {
 
+    fun generateLottosAutomatically(count: Int): List<Lotto> =
+        List(count) { Lotto(numberGenerator()) }
+
     fun generateLottosManually(lottoNumbers: Set<LottoNumber>): Lotto =
         Lotto(lottoNumbers)
 
