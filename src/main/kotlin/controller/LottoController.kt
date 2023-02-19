@@ -1,44 +1,33 @@
 package controller
 
-import domain.Lottos
-import domain.Money
-import domain.RandomLottoGenerator
-import domain.WinningResult
+import domain.*
 import view.InputView
 import view.OutputView
 
-class LottoController {
-
-    private val input by lazy { InputView() }
-    private val output by lazy { OutputView() }
-    lateinit var money: Money
-    lateinit var lottos: Lottos
-    lateinit var winningResult: WinningResult
+class LottoController(val inputView: InputView, val outputView: OutputView) {
 
     fun run() {
-        initGame()
-        startGame()
-        endGame()
+        val money = runCatching {
+            Money(inputView.inputMoney())
+        }.onFailure { outputView.outputErrorMessage(it.message!!) }.getOrThrow()
+        outputView.outputLottoSizeMessage(money)
+        startGame(money)
+    }
+    private fun startGame(money: Money) {
+        val lottos = RandomLottoGenerator().generateLottos(money)
+        outputView.outputLottos(lottos)
+        val winningLotto = runCatching {
+            WinningLotto(inputView.inputWinningLotto(), LottoNumber.from(inputView.inputBonusNumber()))
+        }.onFailure { outputView.outputErrorMessage(it.message!!) }.getOrThrow()
+        endGame(lottos, winningLotto, money)
     }
 
-    fun initGame() {
-        output.outputMoneyMessage()
-        money = input.inputMoney()
-        output.outputLottoSizeMessage(money)
-        lottos = RandomLottoGenerator().generateLottos(money)
-        output.outputLottos(lottos)
+    private fun endGame(lottos: List<Lotto>, winningLotto: WinningLotto, money: Money) {
+        val winningResult = WinningResult(LottoGame(lottos, winningLotto).matchGame())
+        outputView.outputWinningResult(winningResult)
+        outputView.outputYield(winningResult.calculateYield(money))
     }
 
-    fun startGame() {
-        output.outputWinningLottoMessage()
-        val winningLotto = input.inputWinningLotto()
-        output.outputBonusNumberMessage()
-        val bonusNumber = input.inputBonusNumber()
-        //winningResult = lottos.matchLottos(winningLotto, bonusNumber)
-    }
 
-    fun endGame() {
-        output.outputWinningResult(winningResult)
-        output.outputYield(winningResult.calculateYield(money))
-    }
+
 }

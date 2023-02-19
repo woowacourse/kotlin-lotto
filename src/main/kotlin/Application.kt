@@ -1,5 +1,7 @@
 import controller.LottoController
+import view.InputView
+import view.OutputView
 
 fun main() {
-    LottoController().run()
+    LottoController(InputView(), OutputView()).run()
 }
