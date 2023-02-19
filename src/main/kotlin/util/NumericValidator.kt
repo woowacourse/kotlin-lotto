@@ -1,8 +1,9 @@
-package domain.validator
-
-import domain.validator.NumericValidator.Companion.NUMERIC_ERROR
+package util
 
 object NumericValidator {
+
+    private const val NUMERIC_ERROR = "[ERROR] 숫자가 아닌 입력은 허용하지 않습니다."
+
     fun validate(input: String): Int {
         require(input.isNumeric()) {
             NUMERIC_ERROR
@@ -15,8 +16,4 @@ object NumericValidator {
         this.chars().allMatch { char ->
             Character.isDigit(char)
         }
-
-    companion object {
-        private const val NUMERIC_ERROR = "[ERROR] 숫자가 아닌 입력은 허용하지 않습니다."
-    }
 }
