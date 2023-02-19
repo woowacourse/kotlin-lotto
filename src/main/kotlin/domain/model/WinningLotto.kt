@@ -3,13 +3,13 @@ package domain.model
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
 
-class WinningNumbers(
-    val winningLotto: Lotto,
+class WinningLotto(
+    val catchLotto: Lotto,
     val bonusNumber: LottoNumber,
 ) {
 
     init {
-        require(!winningLotto.numbers.contains(bonusNumber)) {
+        require(!catchLotto.numbers.contains(bonusNumber)) {
             OVERLAPPED_ERROR
         }
     }
