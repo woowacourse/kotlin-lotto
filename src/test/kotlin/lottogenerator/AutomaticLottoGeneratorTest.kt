@@ -16,7 +16,7 @@ class AutomaticLottoGeneratorTest {
     }
 
     @Test
-    fun `자동으로 로또 번호를 생성하기`(){
+    fun `자동 로또를 생성하기`(){
         val lotto = automaticLottoGenerator.generate()
 
         assertThat(lotto).isInstanceOf(Lotto::class.java)

@@ -1,5 +1,6 @@
 package domain.lottogenerator
 
+import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
 
 class AutomaticLottoGenerator {
@@ -8,8 +9,8 @@ class AutomaticLottoGenerator {
         numberGenerator: () -> Set<LottoNumber> = {
             (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLottoNumbers()
         }
-    ): Set<LottoNumber> {
-        return numberGenerator()
+    ): Lotto {
+        return Lotto(numberGenerator())
     }
 
     companion object {
