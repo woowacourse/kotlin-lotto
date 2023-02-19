@@ -23,20 +23,20 @@ class LottoTest {
         fun provideWrongAmountLottoNumbers() = listOf(
             Arguments.of(
                 listOf(
-                    LottoNumber(4),
-                    LottoNumber(3),
-                    LottoNumber(12),
+                    LottoNumber.from(4),
+                    LottoNumber.from(3),
+                    LottoNumber.from(12),
                 ),
             ),
             Arguments.of(
                 listOf(
-                    LottoNumber(4),
-                    LottoNumber(3),
-                    LottoNumber(12),
-                    LottoNumber(17),
-                    LottoNumber(21),
-                    LottoNumber(35),
-                    LottoNumber(41),
+                    LottoNumber.from(4),
+                    LottoNumber.from(3),
+                    LottoNumber.from(12),
+                    LottoNumber.from(17),
+                    LottoNumber.from(21),
+                    LottoNumber.from(35),
+                    LottoNumber.from(41),
                 ),
             ),
             Arguments.of(listOf<LottoNumber>()),
@@ -46,22 +46,22 @@ class LottoTest {
         fun provideDuplicateLottoNumbers() = listOf(
             Arguments.of(
                 listOf(
-                    LottoNumber(4),
-                    LottoNumber(3),
-                    LottoNumber(12),
-                    LottoNumber(11),
-                    LottoNumber(11),
-                    LottoNumber(12),
+                    LottoNumber.from(4),
+                    LottoNumber.from(3),
+                    LottoNumber.from(12),
+                    LottoNumber.from(11),
+                    LottoNumber.from(11),
+                    LottoNumber.from(12),
                 ),
             ),
             Arguments.of(
                 listOf(
-                    LottoNumber(4),
-                    LottoNumber(3),
-                    LottoNumber(12),
-                    LottoNumber(12),
-                    LottoNumber(35),
-                    LottoNumber(35),
+                    LottoNumber.from(4),
+                    LottoNumber.from(3),
+                    LottoNumber.from(12),
+                    LottoNumber.from(12),
+                    LottoNumber.from(35),
+                    LottoNumber.from(35),
                 ),
             ),
         )

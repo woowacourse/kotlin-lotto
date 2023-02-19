@@ -13,11 +13,11 @@ class WinningLottoTest {
         assertThrows<IllegalArgumentException> {
             WinningLotto(
                 listOf<LottoNumber>(
-                    LottoNumber(3),
-                    LottoNumber(45),
-                    LottoNumber(34),
+                    LottoNumber.from(3),
+                    LottoNumber.from(45),
+                    LottoNumber.from(34),
                 ),
-                LottoNumber(36),
+                LottoNumber.from(36),
             )
         }
     }
@@ -27,14 +27,14 @@ class WinningLottoTest {
         assertThat(
             WinningLotto(
                 listOf<LottoNumber>(
-                    LottoNumber(3),
-                    LottoNumber(45),
-                    LottoNumber(34),
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(4),
+                    LottoNumber.from(3),
+                    LottoNumber.from(45),
+                    LottoNumber.from(34),
+                    LottoNumber.from(1),
+                    LottoNumber.from(2),
+                    LottoNumber.from(4),
                 ),
-                LottoNumber(10),
+                LottoNumber.from(10),
             )
                 .bonusLottoNumber.value,
         ).isEqualTo(10)
@@ -53,25 +53,25 @@ class WinningLottoTest {
         fun provideDuplicateNumbers() = listOf(
             Arguments.of(
                 listOf<LottoNumber>(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5),
-                    LottoNumber(5),
+                    LottoNumber.from(1),
+                    LottoNumber.from(2),
+                    LottoNumber.from(3),
+                    LottoNumber.from(4),
+                    LottoNumber.from(5),
+                    LottoNumber.from(5),
                 ),
-                LottoNumber(6),
+                LottoNumber.from(6),
             ),
             Arguments.of(
                 listOf<LottoNumber>(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5),
-                    LottoNumber(6),
+                    LottoNumber.from(1),
+                    LottoNumber.from(2),
+                    LottoNumber.from(3),
+                    LottoNumber.from(4),
+                    LottoNumber.from(5),
+                    LottoNumber.from(6),
                 ),
-                LottoNumber(6),
+                LottoNumber.from(6),
             ),
         )
     }

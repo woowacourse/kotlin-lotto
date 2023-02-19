@@ -34,7 +34,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
 
     private fun getMainLottoNumber(): List<LottoNumber> {
         return runCatching {
-            InputView.getMainLottoNumber().map { number -> LottoNumber(number) }
+            InputView.getMainLottoNumber().map { number -> LottoNumber.from(number) }
         }.getOrElse { error ->
             inputErrorHandler(error, ::getMainLottoNumber) as List<LottoNumber>
         }
@@ -42,7 +42,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
 
     private fun getBonusLottoNumber(): LottoNumber {
         return runCatching {
-            LottoNumber(InputView.getBonusLottoNumber())
+            LottoNumber.from(InputView.getBonusLottoNumber())
         }.getOrElse { error ->
             inputErrorHandler(error, ::getBonusLottoNumber) as LottoNumber
         }
