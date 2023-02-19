@@ -1,4 +1,5 @@
 import domain.LottoNumber
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -17,8 +18,9 @@ class LottoNumberTest {
     @ValueSource(ints = [0, 46])
     @ParameterizedTest
     fun `로또 번호가 1에서 45사이의 숫자가 아니면 에러를 발생한다`(input: Int) {
-        assertThrows<IllegalArgumentException> {
+        assertThat(assertThrows<IllegalArgumentException> {
             LottoNumber.from(input)
-        }
+        }.message!!).isEqualTo("로또 번호는 1에서 45사이의 숫자여야 합니다. ")
     }
+
 }

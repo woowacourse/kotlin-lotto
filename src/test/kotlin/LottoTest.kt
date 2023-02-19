@@ -23,17 +23,17 @@ class LottoTest {
     @MethodSource("produceWrongSizeLotto")
     @ParameterizedTest
     fun `로또가 6개의 숫자로 이루어지지 않은 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
-        assertThrows<IllegalArgumentException> {
+        assertThat(assertThrows<IllegalArgumentException> {
             Lotto(numbers)
-        }
+        }.message!!).isEqualTo("당첨 번호가 6개가 아닙니다")
     }
 
     @MethodSource("produceOverlayLotto")
     @ParameterizedTest
     fun `중복된 번호가 존재하는 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
-        assertThrows<IllegalArgumentException> {
+        assertThat(assertThrows<IllegalArgumentException> {
             Lotto(numbers)
-        }
+        }.message!!).isEqualTo("당첨 번호가 중복되었습니다.")
     }
 
     /**
