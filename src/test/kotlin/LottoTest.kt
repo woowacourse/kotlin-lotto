@@ -21,7 +21,7 @@ class LottoTest {
     }
 
     @Test
-    fun `길이가 6이 아닌 경우`() {
+    fun `길이가 6이 아닌 경우 예외처리 확인`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
                 listOf(
@@ -35,7 +35,7 @@ class LottoTest {
     }
 
     @Test
-    fun `중복된 번호가 존재하는 경우`() {
+    fun `중복된 번호가 존재하는 경우 예외처리 확인`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
                 listOf(
@@ -48,7 +48,7 @@ class LottoTest {
     }
 
     @Test
-    fun `로또 번호가 1애서 45사이의 숫자가 아닌 경우`() {
+    fun `로또 번호가 1애서 45사이의 숫자가 아닌 경우 예외 처리 확인`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
                 listOf(
@@ -93,6 +93,21 @@ class LottoTest {
         val bonusNumber = BonusNumber(LottoNumber.from(6))
 
         assertThat(testLotto.matchLotto(winnigLotto, bonusNumber)).isEqualTo(Rank.SECOND)
+    }
+
+    @Test
+    fun `당첨된 로또가 5개 일치하고 보너스 번호도 일치하지 않을 때 3등인지 확인`() {
+        val testLotto = testLotto
+        val winnigLotto = Lotto(
+            listOf(
+                LottoNumber.from(1), LottoNumber.from(2),
+                LottoNumber.from(3), LottoNumber.from(4),
+                LottoNumber.from(5), LottoNumber.from(10)
+            )
+        )
+        val bonusNumber = BonusNumber(LottoNumber.from(22))
+
+        assertThat(testLotto.matchLotto(winnigLotto, bonusNumber)).isEqualTo(Rank.THIRD)
     }
 
     companion object {

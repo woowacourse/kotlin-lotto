@@ -4,7 +4,7 @@ import org.junit.jupiter.api.assertThrows
 
 class LottoNumberTest {
     @Test
-    fun `로또 숫자의 범위를 벗어나는 경우`() {
+    fun `로또 숫자의 범위를 벗어나는 경우 예외 처리 확인`() {
         assertThrows<IllegalArgumentException> { LottoNumber.from(46) }
     }
 }

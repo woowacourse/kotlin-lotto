@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 class LottosTest {
     @Test
-    fun `로또 리스트가 4개 생성되었는지 확인`() {
+    fun `사용자가 원하는 개수 만큼 로또가 생성되는지 확인`() {
         val lottos = Lottos(testLottos)
         assertThat(lottos.lottos.size).isEqualTo(4)
     }
