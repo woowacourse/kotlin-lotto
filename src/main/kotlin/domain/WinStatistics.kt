@@ -1,11 +1,14 @@
 package domain
 
-class WinStatistics(comparingResults: List<ComparingResultDto>) {
+import domain.lotto.LottoBundle
+
+class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle) {
     val rankCount: Map<Rank, Int>
 
     init {
-        rankCount = comparingResults
-            .groupingBy { Rank.valueOf(it.matchedCount, it.isBonusMatched) }
+        rankCount = purchasedLottoBundle
+            .compareWithWinningNumbers(winningNumbers)
+            .groupingBy { it }
             .eachCount()
     }
 
