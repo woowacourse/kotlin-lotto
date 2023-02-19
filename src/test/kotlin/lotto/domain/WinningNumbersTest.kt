@@ -8,18 +8,13 @@ class WinningNumbersTest {
     fun `입력받은 당첨번호와 보너스 번호가 중복되지 않는다`() {
         assertThrows<IllegalArgumentException> {
             WinningNumbers(
-                Lotto(
-                    listOf(
-                        LottoNumber.from(1),
-                        LottoNumber.from(2),
-                        LottoNumber.from(3),
-                        LottoNumber.from(4),
-                        LottoNumber.from(5),
-                        LottoNumber.from(6)
-                    )
-                ),
+                makeLotto(listOf(1, 2, 3, 4, 5, 6)),
                 LottoNumber.from(5)
             )
         }
+    }
+
+    private fun makeLotto(numbers: List<Int>): Lotto {
+        return Lotto(numbers.map { LottoNumber.from(it) })
     }
 }
