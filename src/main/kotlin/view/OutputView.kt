@@ -17,7 +17,8 @@ class OutputView {
     }
 
     fun outputLotto(lotto: Lotto) {
-        println(lotto.numbers.joinToString(prefix = PREFIX_MARK, separator = SEPARATOR_MARK, postfix = POSTFIX_MARK))
+        val lottoNumbers = lotto.numbers.map { it.getNumber() }
+        println(lottoNumbers.joinToString(prefix = PREFIX_MARK, separator = SEPARATOR_MARK, postfix = POSTFIX_MARK))
     }
 
     fun outputWinningResult(winningResult: WinningResult) {
