@@ -10,4 +10,8 @@ class InputView {
     fun inputBonusNumber(): Int {
         return readln().toInt()
     }
+
+    fun inputCount(): Int {
+        return readln().toInt()
+    }
 }
