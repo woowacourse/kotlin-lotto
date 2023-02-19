@@ -6,11 +6,8 @@ class Lotto constructor(val numbers: Set<LottoNumber>) {
         require(numbers.size == LOTTO_SIZE) { ERROR_LOTTO_SIZE }
     }
 
-    fun matchResult(winningNumber: WinningLotto): Rank {
-        val matchOfCount = matchNumbers(winningNumber.lotto)
-        val bonusMatch = matchBonusNumber(winningNumber.bonusNumber)
-        return Rank.valueOf(matchNumbers(winningNumber.lotto), matchBonusNumber(winningNumber.bonusNumber))
-    }
+    fun matchResult(winningNumber: WinningLotto): Rank =
+        Rank.valueOf(matchNumbers(winningNumber.lotto), matchBonusNumber(winningNumber.bonusNumber))
 
     private fun matchNumbers(winningNumbers: Lotto): Int = winningNumbers.numbers.count { numbers.contains(it) }
 
