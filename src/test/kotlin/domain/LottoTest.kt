@@ -16,9 +16,9 @@ class LottoTest {
 
     @Test
     fun `로또를 생성할 때 숫자가 6개가 아니면 에러가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
-            Lotto.create(listOf(1, 24, 34, 35, 37, 45, 22))
-        }
+        assertThatIllegalArgumentException()
+            .isThrownBy { Lotto.create(listOf(1, 24, 34, 35, 37, 45, 22)) }
+            .withMessage("로또 번호의 개수는 ${Lotto.NUMBER_SIZE}개여야 합니다. \n입력된 로또 번호 개수: 7")
     }
 
     @Test
@@ -27,7 +27,7 @@ class LottoTest {
 
         assertThatIllegalArgumentException()
             .isThrownBy { Lotto.create(numbers) }
-            .withMessage("로또 번호는 중복되어선 안된다. \n잘못된 값: $numbers")
+            .withMessage("로또 번호는 중복되어선 안됩니다. \n입력된 로또 번호: $numbers")
     }
 
     @Test
