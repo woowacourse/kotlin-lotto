@@ -1,6 +1,5 @@
 package lotto.domain
 
-import lotto.constants.Rank
 import lotto.controller.Controller
 import kotlin.math.floor
 

@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.constants.Rank
+import lotto.domain.Rank
 import lotto.domain.Lotto
 
 object OutputView {
