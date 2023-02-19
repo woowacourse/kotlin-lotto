@@ -20,6 +20,7 @@ class Controller(
     fun run() {
         val purchase = getPurchase()
         val lotteries = publishLotteries(purchase)
+        outputView.printLotteries(lotteries)
         outputView.printInterval()
 
         val winningLottery = getWinningLottery()
@@ -35,9 +36,7 @@ class Controller(
     }
 
     private fun publishLotteries(purchase: PurchaseAmount): List<Lottery> {
-        val lotteries = LotteriesGenerator().generate(purchase.getPurchaseQuantity(), generator)
-        outputView.printLotteries(lotteries)
-        return lotteries
+        return LotteriesGenerator().generate(purchase.getPurchaseQuantity(), generator)
     }
 
     private fun getWinningLottery(): WinningLottery {
