@@ -9,15 +9,17 @@ import org.junit.jupiter.params.provider.ValueSource
 class LottoSellerTest {
     @Test
     fun `로또를 한 장 발급한다`() {
+        val money = PurchaseLottoMoney(1 * 1000)
         val lottoSeller = LottoSeller(TestNumberGenerator())
-        val lotto = lottoSeller.sellLotto()
-        assertThat(lotto.numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet())
+        val lotto = lottoSeller.sellLottos(money)
+        assertThat(lotto.lottos.size).isEqualTo(1)
+        assertThat(lotto.lottos[0].numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet())
     }
 
     @ParameterizedTest(name = "{0}개의 로또를 발급한다.")
     @ValueSource(ints = [2, 3, 4])
     fun `입력받은 개수만큼 로또를 발급한다`(count: Int) {
-        val money = PurchaseLottoMoney(count*1000)
+        val money = PurchaseLottoMoney(count * 1000)
         val generator = TestNumberGenerator()
         val lottoSeller = LottoSeller(generator)
         val ticket = lottoSeller.sellLottos(money)
