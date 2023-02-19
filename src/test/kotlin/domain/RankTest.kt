@@ -24,7 +24,7 @@ class RankTest {
     @ValueSource(ints = [-1, 7])
     fun `숫자가 매치된 개수가 0 이상 6 이하가 아니면 에러가 발생한다`(countOfMatch: Int) {
         assertThatIllegalArgumentException().isThrownBy { Rank.valueOf(countOfMatch, true) }
-            .withMessage("등수가 나올 수 없는 경우입니다.\n잘못된 값: {매치 카운트=${countOfMatch}, 매치 보너스=true}")
+            .withMessage("등수가 나올 수 없는 경우입니다.\n잘못된 값: {매치 카운트=$countOfMatch, 매치 보너스=true}")
     }
 
     @Test
@@ -32,7 +32,7 @@ class RankTest {
         val countOfMatch = 6
 
         assertThatIllegalArgumentException().isThrownBy { Rank.valueOf(countOfMatch, true) }
-            .withMessage("등수가 나올 수 없는 경우입니다.\n잘못된 값: {매치 카운트=${countOfMatch}, 매치 보너스=true}")
+            .withMessage("등수가 나올 수 없는 경우입니다.\n잘못된 값: {매치 카운트=$countOfMatch, 매치 보너스=true}")
     }
 
     private fun getCountOfMatchAndMatchBonus() = listOf(
