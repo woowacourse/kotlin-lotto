@@ -1,19 +1,18 @@
 package lottogenerator
 
 import domain.LottoSeller
-import domain.model.PurchaseMoney
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
+import org.assertj.core.api.Java6Assertions.assertThat
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class LottoSellerTest {
 
-    private lateinit var lottoSeller: LottoSeller
-
-    @BeforeEach
-    fun setUp() {
-        lottoSeller = LottoSeller()
+    @ParameterizedTest
+    @ValueSource(ints = [1,2,3,4,5,6])
+    fun `자동 로또를 여러개 판매하기`(autoMaticLottosCount:Int){
+        assertThat(
+            LottoSeller().sellAutoMaticLottos(autoMaticLottosCount).size
+        ).isEqualTo(autoMaticLottosCount)
     }
 
 }
