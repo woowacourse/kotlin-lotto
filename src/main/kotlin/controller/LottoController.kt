@@ -14,7 +14,7 @@ class LottoController(val inputView: InputView, val outputView: OutputView) {
         startGame(money)
     }
     private fun startGame(money: Money) {
-        val lottos = RandomLottoGenerator().generateLottos(money)
+        val lottos = LottoMachine(RandomLottoGenerator()).generateLottos(money)
         outputView.outputLottos(lottos)
         val winningLotto = runCatching {
             WinningLotto(inputView.inputWinningLotto(), LottoNumber.from(inputView.inputBonusNumber()))
