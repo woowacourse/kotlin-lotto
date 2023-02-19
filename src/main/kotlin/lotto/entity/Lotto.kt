@@ -9,11 +9,16 @@ class Lotto(val numbers: Set<LottoNumber>) {
         require(numbers.intersect(numbers).size == LOTTO_COUNT) { ERROR_MESSAGE_DUPLICATED_NUMBER }
     }
 
-    fun determineLottoResult(winLotto: WinLotto): Rank {
-        val countOfMatch = numbers.intersect(winLotto.winNumber.numbers).size
-        val matchBonus = numbers.contains(winLotto.bonus)
-
+    fun determineRank(countOfMatch: Int, matchBonus: Boolean): Rank {
         return Rank.valueOf(countOfMatch, matchBonus)
+    }
+
+    fun determineCountOfMatch(winLotto: Lotto): Int {
+        return numbers.intersect(winLotto.numbers).size
+    }
+
+    fun determineMatchBonus(bonus: LottoNumber): Boolean {
+        return numbers.contains(bonus)
     }
 
     companion object {
