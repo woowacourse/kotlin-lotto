@@ -13,12 +13,14 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             if (matchBonus and (countOfMatch == 5)) {
                 return SECOND
             }
-            if (countOfMatch in 1..2) {
+            if (countOfMatch in 0..2) {
                 return MISS
             }
             return values().findLast { rank ->
                 rank.countOfMatch == countOfMatch
-            }!!
+            } ?: throw IllegalArgumentException(MATCH_COUNT_ERROR)
         }
+
+        private const val MATCH_COUNT_ERROR = "일치하는 번호의 개수는 0과 6 사이 여야 합니다."
     }
 }
