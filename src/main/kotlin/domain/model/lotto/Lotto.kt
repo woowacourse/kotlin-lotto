@@ -1,7 +1,7 @@
 package domain.model.lotto
 
 import domain.model.LottoResult
-import domain.model.WinningNumbers
+import domain.model.WinningLotto
 
 class Lotto(val numbers: Set<LottoNumber>) {
 
@@ -11,15 +11,15 @@ class Lotto(val numbers: Set<LottoNumber>) {
         }
     }
 
-    fun getLottoResult(winningNumbers: WinningNumbers): LottoResult {
-        val matchCount = numbers.getMatchCount(winningNumbers)
-        val hasBonusNumber = numbers.contains(winningNumbers.bonusNumber)
+    fun getLottoResult(winningLotto: WinningLotto): LottoResult {
+        val matchCount = numbers.getMatchCount(winningLotto)
+        val hasBonusNumber = numbers.contains(winningLotto.bonusNumber)
 
         return LottoResult.valueOf(matchCount, hasBonusNumber)
     }
 
-    private fun Set<LottoNumber>.getMatchCount(winningNumbers: WinningNumbers): Int = this.count { lottoNumber ->
-        winningNumbers.winningLotto.numbers.contains(lottoNumber)
+    private fun Set<LottoNumber>.getMatchCount(winningLotto: WinningLotto): Int = this.count { lottoNumber ->
+        winningLotto.catchLotto.numbers.contains(lottoNumber)
     }
 
     companion object {

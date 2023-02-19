@@ -1,5 +1,3 @@
-package lottogenerator
-
 import domain.LottoSeller
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,5 +12,4 @@ class LottoSellerTest {
             LottoSeller().sellAutoMaticLottos(autoMaticLottosCount).size
         ).isEqualTo(autoMaticLottosCount)
     }
-
 }

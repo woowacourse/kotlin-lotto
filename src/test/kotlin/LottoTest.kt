@@ -1,5 +1,5 @@
 import domain.model.LottoResult
-import domain.model.WinningNumbers
+import domain.model.WinningLotto
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
 import org.assertj.core.api.Java6Assertions.assertThat
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class LottoTest {
-
 
     @Test
     fun `로또의 번호가 6개인 경우`() {
@@ -54,11 +53,11 @@ class LottoTest {
             LottoNumber.from(5),
             LottoNumber.from(6),
         )
-        val lotto = Lotto(numbers)
+        val catchLotto = Lotto(numbers)
 
         //when
-        val actual = lotto.getLottoResult(
-            WinningNumbers(lotto, LottoNumber.from(7))
+        val actual = catchLotto.getLottoResult(
+            WinningLotto(catchLotto, LottoNumber.from(7))
         )
 
         //then
@@ -79,7 +78,7 @@ class LottoTest {
             )
         )
 
-        val winningLotto = Lotto(
+        val catchLotto = Lotto(
             setOf(
                 LottoNumber.from(1),
                 LottoNumber.from(2),
@@ -91,10 +90,10 @@ class LottoTest {
         )
         val bonusNumber = LottoNumber.from(6)
 
-        val winningNumbers = WinningNumbers(winningLotto, bonusNumber)
+        val winningLotto = WinningLotto(catchLotto, bonusNumber)
 
         //when
-        val actual = lotto.getLottoResult(winningNumbers)
+        val actual = lotto.getLottoResult(winningLotto)
 
         //then
         assertThat(actual).isEqualTo(LottoResult.SECOND)
@@ -114,7 +113,7 @@ class LottoTest {
             )
         )
 
-        val winningLotto = Lotto(
+        val catchLotto = Lotto(
             setOf(
                 LottoNumber.from(1),
                 LottoNumber.from(2),
@@ -126,10 +125,10 @@ class LottoTest {
         )
         val bonusNumber = LottoNumber.from(8)
 
-        val winningNumbers = WinningNumbers(winningLotto, bonusNumber)
+        val winningLotto = WinningLotto(catchLotto, bonusNumber)
 
         //when
-        val actual = lotto.getLottoResult(winningNumbers)
+        val actual = lotto.getLottoResult(winningLotto)
 
         //then
         assertThat(actual).isEqualTo(LottoResult.THIRD)
@@ -149,7 +148,7 @@ class LottoTest {
             )
         )
 
-        val winningLotto = Lotto(
+        val catchLotto = Lotto(
             setOf(
                 LottoNumber.from(1),
                 LottoNumber.from(2),
@@ -161,10 +160,10 @@ class LottoTest {
         )
         val bonusNumber = LottoNumber.from(8)
 
-        val winningNumbers = WinningNumbers(winningLotto, bonusNumber)
+        val winningLotto = WinningLotto(catchLotto, bonusNumber)
 
         //when
-        val actual = lotto.getLottoResult(winningNumbers)
+        val actual = lotto.getLottoResult(winningLotto)
 
         //then
         assertThat(actual).isEqualTo(LottoResult.FIFTH)
