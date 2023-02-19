@@ -4,10 +4,10 @@ import lotto.domain.LotteriesGenerator
 import lotto.domain.Lottery
 import lotto.domain.LotteryNumber
 import lotto.domain.LotteryNumbersGenerator
+import lotto.domain.ProfitCalculator
 import lotto.domain.PurchaseAmount
 import lotto.domain.RankCounter
 import lotto.domain.WinningLottery
-import lotto.domain.WinningResultCalculator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -51,7 +51,7 @@ class Controller(
     }
 
     private fun getProfit(purchase: PurchaseAmount, prize: Long): Double {
-        val calculator = WinningResultCalculator()
-        return calculator.calculateProfit(purchase, prize)
+        val calculator = ProfitCalculator()
+        return calculator.calculate(purchase, prize)
     }
 }

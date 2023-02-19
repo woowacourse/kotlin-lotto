@@ -5,17 +5,17 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class WinningResultCalculatorTest {
+class ProfitCalculatorTest {
     @ParameterizedTest
     @MethodSource("calculateProfit")
     fun `수익률을 계산한다`(amount: Int, numbers: Map<String, Int>, expected: Double, testName: String) {
         println(testName)
 
-        val result = WinningResultCalculator()
+        val result = ProfitCalculator()
         val money = PurchaseAmount(amount)
         val counter = RankCounter(numbers)
 
-        val actual = result.calculateProfit(money, counter.calculateTotalPrize())
+        val actual = result.calculate(money, counter.calculateTotalPrize())
 
         assertThat(actual).isEqualTo(expected)
     }
