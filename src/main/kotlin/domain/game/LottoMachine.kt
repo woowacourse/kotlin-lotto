@@ -16,8 +16,13 @@ class LottoMachine {
     }
 
     private fun purchaseLotto(): PurchasedLotto =
-        PurchasedLotto((LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER)
-            .generateDistinctRandomNumbers(Lotto.LOTTO_SIZE)
-            .map { LottoNumber(it) }
+        PurchasedLotto(
+            (
+                LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER
+                )
+                .generateDistinctRandomNumbers(Lotto.LOTTO_SIZE)
+                .map {
+                    LottoNumber(it)
+                }
         )
 }

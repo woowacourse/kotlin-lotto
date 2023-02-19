@@ -3,6 +3,7 @@ package domain.lotto.game
 import domain.game.LottoGame
 import domain.game.LottoMachine
 import domain.lotto.PurchasedLotto
+import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
 import domain.rank.Rank
 import org.junit.jupiter.api.Assertions
@@ -15,7 +16,6 @@ class LottoGameTest {
     @BeforeEach
     fun setUp() {
         lottoGame = LottoGame(LottoMachine())
-        lottoGame.initWinningLottoNumbers((1..6).toList(), 7)
     }
 
     @Test
@@ -28,7 +28,10 @@ class LottoGameTest {
 
     @Test
     fun `1등 로또가 1개 주어졌을 때, matchLottos 호출시, Rank의 FIRST를 하나 반환한다 `() {
-        val actual = lottoGame.matchLottos(listOf(PurchasedLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })))
+        val actual = lottoGame.matchLottos(
+            listOf(PurchasedLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })),
+            WinningLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }, LottoNumber(7)), LottoNumber(7)
+        )
         val expected = mutableMapOf<Rank, Int>()
         expected.put(Rank.FIRST, 1)
         Assertions.assertEquals(expected, actual)

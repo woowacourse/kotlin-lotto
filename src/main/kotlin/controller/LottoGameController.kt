@@ -3,6 +3,8 @@ package controller
 import domain.game.LottoGame
 import domain.game.LottoMachine
 import domain.lotto.PurchasedLotto
+import domain.lotto.WinningLotto
+import domain.lotto.number.LottoNumber
 import util.validator.InputValidator
 import view.InputView
 import view.ResultView
@@ -16,18 +18,14 @@ class LottoGameController {
         val purchasedMoney = inputView.inputPurchasingMoney()
         val purchasedLottos = lottoGame.purchaseLottos(purchasedMoney)
         resultView.printPurchasedLottos(purchasedLottos)
-        initLottoGame()
         matchLottos(purchasedLottos, purchasedMoney)
     }
 
-    private fun initLottoGame() {
+    private fun matchLottos(purchasedLottos: List<PurchasedLotto>, purchasedMoney: Int) {
         val winningNumbers = inputView.inputLastWeekWinningNumbers()
         val bonusNumber = inputView.inputBonusBallNumber()
-        lottoGame.initWinningLottoNumbers(winningNumbers, bonusNumber)
-    }
-
-    private fun matchLottos(purchasedLottos: List<PurchasedLotto>, purchasedMoney: Int) {
-        val matchResult = lottoGame.matchLottos(purchasedLottos)
+        val winningLotto = WinningLotto(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))
+        val matchResult = lottoGame.matchLottos(purchasedLottos, winningLotto, LottoNumber(bonusNumber))
         resultView.printWinningRate(matchResult, lottoGame.calculateIncomeRate(matchResult, purchasedMoney))
     }
 }
