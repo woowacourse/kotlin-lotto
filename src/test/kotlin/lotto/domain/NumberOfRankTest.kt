@@ -9,6 +9,8 @@ class NumberOfRankTest {
     @ParameterizedTest
     @EnumSource(Rank::class)
     fun `등수를 받아 카운트한다`(rank: Rank) {
+        println("${rank.name} 등수인 로또가 한 개 존재한다")
+
         val counter = NumberOfRank()
 
         counter.increaseNumber(rank)

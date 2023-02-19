@@ -11,8 +11,11 @@ class LotteriesGeneratorTest {
     fun `구입 로또 개수만큼 로또를 발행한다`(
         numbers: MutableList<Int>,
         expectedLottery1: List<LotteryNumber>,
-        expectedLottery2: List<LotteryNumber>
+        expectedLottery2: List<LotteryNumber>,
+        testName: String
     ) {
+        println(testName)
+
         val generator = LotteriesGenerator()
 
         val lotteries = generator.generate(
@@ -41,7 +44,8 @@ class LotteriesGeneratorTest {
                     listOf(
                         LotteryNumber(5), LotteryNumber(10), LotteryNumber(15),
                         LotteryNumber(24), LotteryNumber(33), LotteryNumber(45)
-                    )
+                    ),
+                    "로또 번호가 중복되지 않은 상황에서, 로또 번호가 중복되지 않는 로또 2개를 발행한다"
                 ),
                 Arguments.of(
                     mutableListOf(
@@ -55,7 +59,8 @@ class LotteriesGeneratorTest {
                     listOf(
                         LotteryNumber(5), LotteryNumber(10), LotteryNumber(20),
                         LotteryNumber(24), LotteryNumber(33), LotteryNumber(42)
-                    )
+                    ),
+                    "로또 번호가 중복된 상황에서, 로또 번호가 중복되지 않는 로또 2개를 발행한다"
                 )
             )
         }
