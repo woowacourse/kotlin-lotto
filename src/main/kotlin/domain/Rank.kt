@@ -18,15 +18,21 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
 
     companion object {
         fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank? {
-            var rank = values().find {
-                it.countOfMatch == countOfMatch
+            val rank = values().find { it.countOfMatch == countOfMatch }
+            return when (rank) {
+                SECOND, THIRD -> divideBonusRank(matchBonus)
+                FIRST, FOURTH, FIFTH, MISS -> rank
+                null -> rank
             }
-
-            if (rank in listOf(SECOND, THIRD)) {
-                rank = if (matchBonus) SECOND else THIRD
-            }
-            return rank
         }
+
+        fun divideBonusRank(matchBonus: Boolean): Rank {
+            return when (matchBonus) {
+                true -> SECOND
+                false -> THIRD
+            }
+        }
+
         const val RANK_MESSAGE = "%d개 일치 (%d원)- "
         const val RANK_BONUS_MESSAGE = "%d개 일치, 보너스 볼 일치(%d원)- "
     }
