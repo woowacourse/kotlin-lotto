@@ -1,46 +1,35 @@
 import domain.LottoGenerator
-import domain.model.PurchaseMoney
-import org.assertj.core.api.Assertions.assertThat
+import domain.model.lotto.Lotto
+import domain.model.lotto.LottoNumber
+import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 
 class LottoGeneratorTest {
 
-    private lateinit var lottoGenerator: LottoGenerator
+    lateinit var lottoGenerator: LottoGenerator
 
     @BeforeEach
-    fun setUpLottoGenerator() {
+    fun setUp() {
         lottoGenerator = LottoGenerator()
     }
 
     @Test
-    fun `구입 금액이 1000원 단위가 아닌 경우`() {
-        val purchaseMoney = PurchaseMoney(3500)
+    fun `로또를 수동으로 생성하기`() {
+        //given
+        val lottoNumbers = setOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6)
+            )
 
-        assertThrows<IllegalArgumentException> {
-            lottoGenerator.generateLottos(purchaseMoney)
-        }
+        //when
+        val generatedLotto = lottoGenerator.generateLottosManually(lottoNumbers)
+
+        //then
+        assertThat(generatedLotto).isInstanceOf(Lotto::class.java)
     }
-
-    @Test
-    fun `구입 금액이 1000원 단위인 경우`() {
-        val purchaseMoney = PurchaseMoney(3000)
-
-        assertDoesNotThrow {
-            lottoGenerator.generateLottos(purchaseMoney)
-        }
-    }
-
-    @Test
-    fun `구입 금액만큼 로또를 발행한다`() {
-        assertThat(
-            lottoGenerator.generateLottos(
-                PurchaseMoney(5000)
-            ).size
-        ).isEqualTo(5)
-    }
-
-
 }

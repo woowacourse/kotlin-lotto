@@ -10,21 +10,8 @@ class LottoGenerator(
     }
 ) {
 
-    fun generateLottos(purchaseMoney: PurchaseMoney): List<Lotto> {
-        purchaseMoney.validateMoneyUnit()
-
-        return
-    }
-
-    private fun generateLottosAutomatically(count: Int): List<Lotto> =
-        List(count) { Lotto(numberGenerator()) }
-
-    private fun generateLottosManually(lottoNumbers: Set<LottoNumber>, count: Int): List<Lotto> =
-        List(count) { Lotto(lottoNumbers) }
-
-    fun PurchaseMoney.validateMoneyUnit() = require(this.money % LOTTO_PRICE == ZERO) {
-        NUMBER_UNIT_ERROR
-    }
+    fun generateLottosManually(lottoNumbers: Set<LottoNumber>): Lotto =
+        Lotto(lottoNumbers)
 
     private fun PurchaseMoney.getNumberOfLottos(): Int = this.money / LOTTO_PRICE
 
