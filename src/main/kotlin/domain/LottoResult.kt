@@ -4,8 +4,6 @@ data class LottoResult(private val result: Map<Rank, Int>) {
     init {
         require(getInvestment() > 0) { ERROR_COUNT_OF_LOTTO_AT_LEAST_ONE }
     }
-    fun get(): Map<Rank, Int> = result
-
     operator fun get(rank: Rank): Int = result[rank] ?: 0
 
     fun sum(): Int = result.values.sum()
