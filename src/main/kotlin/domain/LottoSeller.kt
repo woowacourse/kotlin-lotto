@@ -1,7 +1,8 @@
 package domain
 
+import domain.lottogenerator.AutomaticLottoGenerator
+import domain.lottogenerator.ManualLottoGenerator
 import domain.model.PurchaseMoney
-import domain.model.lotto.Lotto
 
 class LottoSeller(
     private val automaticLottoGenerator: AutomaticLottoGenerator = AutomaticLottoGenerator(),

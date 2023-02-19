@@ -1,4 +1,4 @@
-package domain
+package domain.lottogenerator
 
 import domain.model.lotto.LottoNumber
 
