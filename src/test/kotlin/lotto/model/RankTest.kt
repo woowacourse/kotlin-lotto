@@ -12,7 +12,7 @@ internal class RankTest {
     @Test
     fun `번호가 5개 일치하고, 보너스 번호가 일치하면 2등이다`() {
         val lotto = Lotto(
-            listOf(
+            setOf(
                 LottoNumber(1),
                 LottoNumber(2),
                 LottoNumber(3),
@@ -30,7 +30,7 @@ internal class RankTest {
     @Test
     fun `번호가 4개 일치하면 4등이다`() {
         val lotto = Lotto(
-            listOf(
+            setOf(
                 LottoNumber(1),
                 LottoNumber(2),
                 LottoNumber(3),
@@ -53,7 +53,7 @@ internal class RankTest {
         fun init() {
             winLotto = WinLotto(
                 Lotto(
-                    listOf(
+                    setOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),

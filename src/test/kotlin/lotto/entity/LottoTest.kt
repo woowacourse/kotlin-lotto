@@ -11,7 +11,7 @@ class LottoTest {
     fun `생성된 로또의 번호 중 1에서 45 사이 숫자가 있다면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
-                listOf(
+                setOf(
                     LottoNumber(0),
                     LottoNumber(1),
                     LottoNumber(2),
@@ -28,7 +28,7 @@ class LottoTest {
     fun `로또 번호가 6개가 아니면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             Lotto(
-                listOf(
+                setOf(
                     LottoNumber(1),
                     LottoNumber(2),
                     LottoNumber(3),
@@ -41,7 +41,7 @@ class LottoTest {
 
     @MethodSource("provideDuplicateLotto")
     @ParameterizedTest
-    fun `로또 번호가 중복되면 예외가 발생한다`(lotto: List<LottoNumber>) {
+    fun `로또 번호가 중복되면 예외가 발생한다`(lotto: Set<LottoNumber>) {
         assertThrows<IllegalArgumentException> { Lotto(lotto) }
     }
 
@@ -50,7 +50,7 @@ class LottoTest {
         fun provideDuplicateLotto(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    listOf(
+                    setOf(
                         LottoNumber(1),
                         LottoNumber(1),
                         LottoNumber(2),
@@ -60,7 +60,7 @@ class LottoTest {
                     )
                 ),
                 Arguments.of(
-                    listOf(
+                    setOf(
                         LottoNumber(41),
                         LottoNumber(41),
                         LottoNumber(42),
@@ -76,7 +76,7 @@ class LottoTest {
         fun provideLottoCountNotSix(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    listOf(
+                    setOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),
@@ -85,7 +85,7 @@ class LottoTest {
                     )
                 ),
                 Arguments.of(
-                    listOf(
+                    setOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),

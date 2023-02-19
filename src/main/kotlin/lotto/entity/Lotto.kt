@@ -2,15 +2,15 @@ package lotto.entity
 
 import lotto.model.Rank
 
-class Lotto(val numbers: List<LottoNumber>) {
+class Lotto(val numbers: Set<LottoNumber>) {
 
     init {
         require(numbers.size == LOTTO_COUNT) { ERROR_MESSAGE_LOTTO_NUMBER_IS_SIX }
-        require(numbers.intersect(numbers.toSet()).size == LOTTO_COUNT) { ERROR_MESSAGE_DUPLICATED_NUMBER }
+        require(numbers.intersect(numbers).size == LOTTO_COUNT) { ERROR_MESSAGE_DUPLICATED_NUMBER }
     }
 
     fun determineLottoResult(winLotto: WinLotto): Rank {
-        val countOfMatch = numbers.intersect(winLotto.winNumber.numbers.toSet()).size
+        val countOfMatch = numbers.intersect(winLotto.winNumber.numbers).size
         val matchBonus = numbers.contains(winLotto.bonus)
 
         return Rank.valueOf(countOfMatch, matchBonus)

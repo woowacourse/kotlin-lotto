@@ -21,7 +21,7 @@ internal class LottoGeneratorTest {
         fun init() {
             val lottos = listOf(
                 Lotto(
-                    listOf(
+                    setOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),
