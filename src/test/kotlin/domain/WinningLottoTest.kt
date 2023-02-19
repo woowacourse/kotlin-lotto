@@ -1,11 +1,8 @@
 package domain
 
-import domain.Rank.FIFTH
 import domain.Rank.FIRST
 import domain.Rank.FOURTH
-import domain.Rank.MISS
 import domain.Rank.SECOND
-import domain.Rank.THIRD
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -45,10 +42,7 @@ class WinningLottoTest {
             mapOf(
                 FIRST to 1,
                 SECOND to 1,
-                THIRD to 0,
                 FOURTH to 1,
-                FIFTH to 0,
-                MISS to 0,
             ),
         )
         assertThat(result).isEqualTo(expect)

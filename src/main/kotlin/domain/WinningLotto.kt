@@ -11,7 +11,7 @@ class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
         LottoResult(
             Rank.values().associateWith { rank ->
                 lottos.count { rank == Rank.valueOf(getCountOfMatch(it), matchBonus(it)) }
-            },
+            }.filterValues { it > 0 },
         )
 
     private fun getCountOfMatch(anyLotto: Lotto): Int = anyLotto.countMatch(lotto)
