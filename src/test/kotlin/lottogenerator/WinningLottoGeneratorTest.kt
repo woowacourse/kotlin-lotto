@@ -1,0 +1,4 @@
+package lottogenerator
+
+class WinningLottoGeneratorTest {
+}
