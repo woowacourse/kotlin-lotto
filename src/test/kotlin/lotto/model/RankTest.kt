@@ -1,7 +1,7 @@
 package lotto.model
 
-import lotto.entity.Bonus
 import lotto.entity.Lotto
+import lotto.entity.LottoNumber
 import lotto.entity.WinLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeAll
@@ -11,18 +11,36 @@ internal class RankTest {
 
     @Test
     fun `번호가 5개 일치하고, 보너스 번호가 일치하면 2등이다`() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val lotto = Lotto(
+            listOf(
+                LottoNumber(1),
+                LottoNumber(2),
+                LottoNumber(3),
+                LottoNumber(4),
+                LottoNumber(5),
+                LottoNumber(6)
+            )
+        )
         val countOfMatch = lotto.numbers.intersect(winLotto.winNumber.numbers.toSet()).size
-        val matchBonus = lotto.numbers.contains(winLotto.bonus.value)
+        val matchBonus = lotto.numbers.contains(winLotto.bonus)
 
         assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(Rank.SECOND)
     }
 
     @Test
     fun `번호가 4개 일치하면 4등이다`() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 6, 8))
+        val lotto = Lotto(
+            listOf(
+                LottoNumber(1),
+                LottoNumber(2),
+                LottoNumber(3),
+                LottoNumber(4),
+                LottoNumber(6),
+                LottoNumber(8)
+            )
+        )
         val countOfMatch = lotto.numbers.intersect(winLotto.winNumber.numbers.toSet()).size
-        val matchBonus = lotto.numbers.contains(winLotto.bonus.value)
+        val matchBonus = lotto.numbers.contains(winLotto.bonus)
 
         assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(Rank.FOURTH)
     }
@@ -33,7 +51,19 @@ internal class RankTest {
         @BeforeAll
         @JvmStatic
         fun init() {
-            winLotto = WinLotto(Lotto(listOf(1, 2, 3, 4, 5, 7)), Bonus(6))
+            winLotto = WinLotto(
+                Lotto(
+                    listOf(
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5),
+                        LottoNumber(7)
+                    )
+                ),
+                LottoNumber(6)
+            )
         }
     }
 }

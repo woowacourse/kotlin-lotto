@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.entity.Bonus
 import lotto.entity.Lotto
+import lotto.entity.LottoNumber
 import lotto.entity.LottoPrice
 import lotto.entity.PurchaseMoney
 
@@ -20,13 +20,13 @@ class InputView {
         require(input.contains(",")) { ERROR_MESSAGE_SPLIT_BY_COMMA }
         val splittedInput = input.split(",").map { it.trim() }
         require(splittedInput.all { it.toIntOrNull() != null }) { ERROR_MESSAGE_SPLIT_ONLY_NUMBER }
-        return Lotto(splittedInput.map { it.toInt() })
+        return Lotto(splittedInput.map { LottoNumber(it.toInt()) })
     }
 
-    fun readBonus(): Bonus {
+    fun readBonus(): LottoNumber {
         val input = readln()
         require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
-        return Bonus(input.toInt())
+        return LottoNumber(input.toInt())
     }
 
     companion object {

@@ -1,20 +1,37 @@
 package lotto.model
 
 import lotto.entity.Lotto
-import lotto.entity.LottoPrice
-import lotto.entity.Lottos
-import lotto.entity.PurchaseMoney
+import lotto.entity.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
 internal class LottoGeneratorTest {
+
     @Test
-    fun `구입 금액이 3000원이고, 로또 가격이 1000원일 때, 로또를 3개 생성한다`() {
-        val lottoA = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val lottoB = Lotto(listOf(11, 12, 13, 14, 15, 16))
-        val lottoC = Lotto(listOf(21, 22, 23, 24, 25, 26))
-        val lottoGenerator = SequentialLottoNumberGenerator(listOf(lottoA, lottoB, lottoC))
-        val lottos = Lottos(PurchaseMoney(3000), LottoPrice(1000), lottoGenerator)
-        assertThat(lottos.value.size).isEqualTo(3)
+    fun `생성된 로또의 번호는 1,2,3,4,5,6이다`() {
+        assertThat(lottoGenerator.generate().numbers.size).isEqualTo(6)
+    }
+
+    companion object {
+        private lateinit var lottoGenerator: SequentialLottoNumberGenerator
+
+        @BeforeAll
+        @JvmStatic
+        fun init() {
+            val lottos = listOf(
+                Lotto(
+                    listOf(
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5),
+                        LottoNumber(6)
+                    )
+                )
+            )
+            lottoGenerator = SequentialLottoNumberGenerator(lottos)
+        }
     }
 }

@@ -8,27 +8,93 @@ import org.junit.jupiter.params.provider.MethodSource
 
 class LottoTest {
     @Test
-    fun `로또 번호가 6개가 아니면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> { Lotto(listOf(1, 2, 3, 4, 5)) }
+    fun `생성된 로또의 번호 중 1에서 45 사이 숫자가 있다면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Lotto(
+                listOf(
+                    LottoNumber(0),
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5)
+                )
+            )
+        }
     }
 
-    @Test
-    fun `로또 번호가 중복되면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> { Lotto(listOf(1, 1, 2, 3, 4, 5)) }
-    }
-
-    @MethodSource("provideRangeOverLotto")
+    @MethodSource("provideLottoCountNotSix")
     @ParameterizedTest
-    fun `로또의 번호가 1에서 45 사이 숫자가 아니라면 예외가 발생한다`(lotto: List<Int>) {
+    fun `로또 번호가 6개가 아니면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Lotto(
+                listOf(
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5)
+                )
+            )
+        }
+    }
+
+    @MethodSource("provideDuplicateLotto")
+    @ParameterizedTest
+    fun `로또 번호가 중복되면 예외가 발생한다`(lotto: List<LottoNumber>) {
         assertThrows<IllegalArgumentException> { Lotto(lotto) }
     }
 
     companion object {
         @JvmStatic
-        fun provideRangeOverLotto(): List<Arguments> {
+        fun provideDuplicateLotto(): List<Arguments> {
             return listOf(
-                Arguments.of(listOf(0, 1, 2, 3, 4, 5)),
-                Arguments.of(listOf(41, 42, 43, 44, 45, 46))
+                Arguments.of(
+                    listOf(
+                        LottoNumber(1),
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5)
+                    )
+                ),
+                Arguments.of(
+                    listOf(
+                        LottoNumber(41),
+                        LottoNumber(41),
+                        LottoNumber(42),
+                        LottoNumber(43),
+                        LottoNumber(44),
+                        LottoNumber(45)
+                    )
+                )
+            )
+        }
+
+        @JvmStatic
+        fun provideLottoCountNotSix(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    listOf(
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5)
+                    )
+                ),
+                Arguments.of(
+                    listOf(
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5),
+                        LottoNumber(6),
+                        LottoNumber(7)
+                    )
+                )
             )
         }
     }

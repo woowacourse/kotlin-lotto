@@ -1,7 +1,7 @@
 package lotto.controller
 
-import lotto.entity.Bonus
 import lotto.entity.Lotto
+import lotto.entity.LottoNumber
 import lotto.entity.LottoPrice
 import lotto.entity.Lottos
 import lotto.entity.ProfitRate
@@ -55,13 +55,13 @@ class World(
         } as Lotto
     }
 
-    private fun initBonus(winNumber: Lotto): Bonus {
+    private fun initBonus(winNumber: Lotto): LottoNumber {
         return tryAndRerun {
             outputView.printMessage(OutputView.MESSAGE_BONUS)
             val bonus = inputView.readBonus()
             WinLotto(winNumber, bonus)
             bonus
-        } as Bonus
+        } as LottoNumber
     }
 
     private fun makeWinStatistics(lottos: Lottos, winLotto: WinLotto): WinStatistics {
