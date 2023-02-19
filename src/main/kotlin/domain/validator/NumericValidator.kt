@@ -1,6 +1,8 @@
 package domain.validator
 
-class NumericValidator {
+import domain.validator.NumericValidator.Companion.NUMERIC_ERROR
+
+object NumericValidator {
     fun validate(input: String): Int {
         require(input.isNumeric()) {
             NUMERIC_ERROR
