@@ -1,36 +1,26 @@
 import domain.Money
+import domain.Purchaser
 import domain.WinStatistics
 import domain.WinningNumbers
 import domain.lotto.Lotto
-import domain.lotto.LottoBundleDto
 import domain.lotto.LottoNumber
-import domain.lotto.generator.LottoGenerator
-import domain.lotto.generator.LottoVendingMachine
-import domain.lotto.generator.RandomLottoGenerator
 import view.InputView
 import view.OutputView
 import view.UI
 
 class LottoController {
 
-    private val lottoGenerator: LottoGenerator = RandomLottoGenerator()
-
-    fun startLottoGame() {
-        val spendMoney = getMoney()
-        val lottoCount = LottoVendingMachine.getLottoCount(spendMoney)
-        OutputView.printPurchasedLottoCount(lottoCount)
-        val lottoBundle = LottoVendingMachine.getLottoBundle(lottoCount = lottoCount, lottoGenerator = lottoGenerator)
-        OutputView.printPurchasedLotto(lottoBundle)
-
-        produceResult(lottoBundle, spendMoney)
+    fun runLottoGame() {
+        val purchaser = Purchaser(getMoney())
+        val winStatistics = WinStatistics(getWinningNumbers(), purchaser.purchasedLottoBundle)
+        printOutputView(purchaser, winStatistics)
     }
 
-    private fun produceResult(lottoBundleDto: LottoBundleDto, spendMoney: Money) {
-        val winningResult = getWinningNumbers().compareLottoBundle(lottoBundleDto)
-        val winStatistics = WinStatistics(winningResult)
-
+    private fun printOutputView(purchaser: Purchaser, winStatistics: WinStatistics) {
+        OutputView.printPurchasedLottoCount(purchaser.numberOfPurchasedLotto)
+        OutputView.printPurchasedLotto(purchaser.purchasedLottoBundle)
         OutputView.printWinStatistics(winStatistics)
-        OutputView.printEarningRate(winStatistics.calculateEarningRate(spendMoney))
+        OutputView.printEarningRate(winStatistics.calculateEarningRate(purchaser.purchasedMoney))
     }
 
     private fun getWinningNumbers(): WinningNumbers {
