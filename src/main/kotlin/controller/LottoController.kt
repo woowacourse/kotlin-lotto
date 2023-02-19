@@ -23,8 +23,10 @@ class LottoController {
     }
 
     private fun askPurchaseMoney(): Money {
-        outputView.outputGetAmount()
-        return Money.from(inputView.inputAmount())
+        while (true) {
+            outputView.outputGetAmount()
+            return Money.from(inputView.inputAmount() ?: continue)
+        }
     }
 
     private fun buyLotto(money: Money): List<Lotto> {
@@ -33,12 +35,17 @@ class LottoController {
     }
 
     private fun askWinningNumbers(): Lotto {
-        outputView.outputGetWinningNumbers()
-        return Lotto(*inputView.inputWinningNumbers())
+        while (true) {
+            outputView.outputGetWinningNumbers()
+            val numbers = inputView.inputWinningNumbers() ?: continue
+            return Lotto(*numbers)
+        }
     }
 
     private fun askBonusNumber(): LottoNumber {
-        outputView.outputGetBonusNumber()
-        return LottoNumber.from(inputView.inputBonusNumber())
+        while (true) {
+            outputView.outputGetBonusNumber()
+            return LottoNumber.from(inputView.inputBonusNumber() ?: continue)
+        }
     }
 }
