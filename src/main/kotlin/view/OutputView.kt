@@ -1,10 +1,6 @@
 package view
 
-import domain.Lotto
-import domain.Lottos
-import domain.Money
-import domain.Rank
-import domain.WinningResult
+import domain.*
 
 class OutputView {
     fun outputMoneyMessage() {
@@ -12,16 +8,25 @@ class OutputView {
     }
 
     fun outputLottoSizeMessage(money: Money) {
-        println((money.price / LOTTO_PRICE).toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
+        println((money.getLottoCount()).toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
     }
 
-    fun outputLottos(lottos: Lottos) {
-        lottos.lottos.forEach { lotto -> outputLotto(lotto) }
-        println()
+    fun outputLottos(lottos: List<Lotto>) {
+        println(StringBuilder().getLottos(lottos))
     }
 
-    fun outputLotto(lotto: Lotto) {
-        println(lotto.numbers.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK))
+    private fun StringBuilder.getLottos(lottos: List<Lotto>) : String{
+        lottos.forEach {
+            this.append(outputLotto(it) + "\n")
+        }
+        return this.toString()
+    }
+    fun outputErrorMessage(message: String) {
+        println(message)
+    }
+
+    private fun outputLotto(lotto: Lotto): String{
+        return lotto.numbers.joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK)
     }
 
     fun outputWinningLottoMessage() {
@@ -57,6 +62,5 @@ class OutputView {
         const val OUTPUT_WINNING_RESULT_MESSAGE = "당첨 통계"
         const val SEPERATE_MESSAGE = "---------"
         const val YIELD_MESSAGE = "총 수익률은 %.2f입니다."
-        const val LOTTO_PRICE = 1000
     }
 }
