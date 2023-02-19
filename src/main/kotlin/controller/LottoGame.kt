@@ -11,29 +11,32 @@ class LottoGame {
 
     private val input by lazy { InputView() }
     private val output by lazy { OutputView() }
-    lateinit var money: Money
-    lateinit var lottos: Lottos
-    lateinit var winningResult: WinningResult
 
     fun run() {
-        initGame()
-        startGame()
-        endGame()
+        val money = depositGame()
+        val lottos = initGame(money)
+        val winningResult = startGame(lottos)
+        endGame(winningResult, money)
     }
-    private fun initGame() {
-        money = input.inputMoney()
+    private fun depositGame(): Money {
+        val money = input.inputMoney()
         output.outputLottoSizeMessage(money)
-        lottos = RandomLottoGenerator().generateLottos(money)
-        output.outputLottos(lottos)
+        return money
     }
 
-    private fun startGame() {
+    private fun initGame(money: Money): Lottos {
+        val lottos = RandomLottoGenerator().generateLottos(money)
+        output.outputLottos(lottos)
+        return lottos
+    }
+
+    private fun startGame(lottos: Lottos): WinningResult {
         val winningLotto = input.inputWinningLotto()
         val bonusNumber = input.inputBonusNumber()
-        winningResult = lottos.matchLottos(winningLotto, bonusNumber)
+        return lottos.matchLottos(winningLotto, bonusNumber)
     }
 
-    private fun endGame() {
+    private fun endGame(winningResult: WinningResult, money: Money) {
         output.outputWinningResult(winningResult)
         output.outputYield(winningResult.calculateYield(money))
     }
