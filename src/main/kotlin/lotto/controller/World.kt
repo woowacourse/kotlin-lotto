@@ -65,11 +65,7 @@ class World(
     }
 
     private fun makeWinStatistics(lottos: Lottos, winLotto: WinLotto): WinStatistics {
-        return tryAndRerun {
-            WinStatistics(
-                lottos.determineLottosResult(winLotto)
-            )
-        } as WinStatistics
+        return lottos.determineLottosResult(winLotto)
     }
 
     private fun makeProfitRate(purchaseMoney: PurchaseMoney, winStatistics: WinStatistics): ProfitRate {

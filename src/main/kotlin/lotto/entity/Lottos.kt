@@ -1,7 +1,6 @@
 package lotto.entity
 
 import lotto.model.LottoGenerator
-import lotto.model.Rank
 
 class Lottos(purchaseMoney: PurchaseMoney, lottoPrice: LottoPrice, lottoGenerator: LottoGenerator) {
     val value: List<Lotto>
@@ -13,9 +12,11 @@ class Lottos(purchaseMoney: PurchaseMoney, lottoPrice: LottoPrice, lottoGenerato
         }
     }
 
-    fun determineLottosResult(winLotto: WinLotto): List<Rank> {
-        return value.map {
-            it.determineRank(it.determineCountOfMatch(winLotto.winNumber), it.determineMatchBonus(winLotto.bonus))
-        }
+    fun determineLottosResult(winLotto: WinLotto): WinStatistics {
+        return WinStatistics(
+            value.map {
+                it.determineRank(it.determineCountOfMatch(winLotto.winNumber), it.determineMatchBonus(winLotto.bonus))
+            }
+        )
     }
 }
