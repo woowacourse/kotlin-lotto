@@ -8,17 +8,14 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int, val description: S
     FIFTH(3, 5_000, "3개 일치"),
     MISS(0, 0, "일치 없음");
 
+    fun calculatePrize(count: Int): Long {
+        return winningMoney.toLong() * count
+    }
+
     companion object {
         fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
             if (countOfMatch == 5) return decideSecondOrThird(matchBonus)
             return values().find { it.countOfMatch == countOfMatch } ?: MISS
-        }
-
-        fun calculatePrize(name: String, count: Int): Long {
-            if (values().map { it.name }.contains(name)) {
-                return Rank.valueOf(name).winningMoney.toLong() * count
-            }
-            return 0
         }
 
         private fun decideSecondOrThird(matchBonus: Boolean): Rank {

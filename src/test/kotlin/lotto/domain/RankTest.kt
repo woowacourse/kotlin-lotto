@@ -28,6 +28,6 @@ class RankTest {
 
     @Test
     fun `해당 등수 당첨자의 총 상금을 계산한다`() {
-        assertThat(Rank.calculatePrize("FIRST", 2)).isEqualTo(4000000000)
+        assertThat(Rank.valueOf("FIRST").calculatePrize(2)).isEqualTo(4000000000)
     }
 }

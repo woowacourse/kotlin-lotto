@@ -18,7 +18,7 @@ class RankCounter(
     fun calculateTotalPrize(): Long {
         var prize = 0L
         numberOfEachRank.forEach { (name, count) ->
-            prize += Rank.calculatePrize(name, count)
+            prize += Rank.valueOf(name).calculatePrize(count)
         }
         return prize
     }
