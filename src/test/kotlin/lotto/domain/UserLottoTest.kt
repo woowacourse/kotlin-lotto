@@ -6,49 +6,24 @@ import org.junit.jupiter.api.Test
 class UserLottoTest {
     @Test
     fun `현재 사용자가 가지고 있는 로또가 몇등인지 판단한다`() {
-        val lotto = listOf(
-            Lotto(
-                listOf(
-                    LottoNumber.from(1),
-                    LottoNumber.from(2),
-                    LottoNumber.from(3),
-                    LottoNumber.from(9),
-                    LottoNumber.from(10),
-                    LottoNumber.from(11)
-                )
-            ),
-            Lotto(
-                listOf(
-                    LottoNumber.from(7),
-                    LottoNumber.from(8),
-                    LottoNumber.from(9),
-                    LottoNumber.from(10),
-                    LottoNumber.from(11),
-                    LottoNumber.from(12)
-                )
-            )
-        )
-        val userLotto = UserLotto(lotto)
         assertThat(
-            userLotto.calculateTotalRank(
+            UserLotto(
+                listOf(
+                    makeLotto(listOf(1, 2, 3, 9, 10, 11)),
+                    makeLotto(listOf(7, 8, 9, 10, 11, 12))
+                )
+            ).calculateTotalRank(
                 WinningNumbers(
-                    Lotto(
-                        listOf(
-                            LottoNumber.from(1),
-                            LottoNumber.from(2),
-                            LottoNumber.from(3),
-                            LottoNumber.from(4),
-                            LottoNumber.from(5),
-                            LottoNumber.from(6)
-                        )
-                    ),
+                    makeLotto(listOf(1, 2, 3, 4, 5, 6)),
                     LottoNumber.from(7)
                 )
             )
         ).isEqualTo(
-            listOf(
-                Rank.FIFTH, Rank.MISS
-            )
+            listOf(Rank.FIFTH, Rank.MISS)
         )
+    }
+
+    private fun makeLotto(numbers: List<Int>): Lotto {
+        return Lotto(numbers.map { LottoNumber.from(it) })
     }
 }
