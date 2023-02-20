@@ -29,7 +29,7 @@ class LottoController {
 
     private fun buyLotto(money: Money): List<Lotto> {
         val store = LottoStore(RandomLottoGenerator)
-        return store.buyLotto(money)
+        return store.buyAutoLotto(money)
     }
 
     private fun makeWinningLotto(): WinningLotto {
