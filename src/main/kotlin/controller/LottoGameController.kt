@@ -29,6 +29,7 @@ class LottoGameController(
     private fun purchaseLotto(): Pair<Money, List<PurchasedLotto>> {
         val money = inputPurchasingMoney()
         val manualLottoSize = inputPurchasingManualLottoSize()
+        val manualLottoNumbers = inputManualLottoNumbers(manualLottoSize)
         val purchasedLottos = purchaseLottos(money)
         printPurchasedLotto(purchasedLottos)
         return Pair(money, purchasedLottos)
@@ -36,8 +37,9 @@ class LottoGameController(
 
     private fun inputPurchasingMoney(): Money = inputView.inputPurchasingMoney()
 
-    private fun inputPurchasingManualLottoSize(): LottoSize =
-        inputView.inputPurchasingManualLottoSize()
+    private fun inputPurchasingManualLottoSize(): LottoSize = inputView.inputPurchasingManualLottoSize()
+
+    private fun inputManualLottoNumbers(size: LottoSize): List<List<String>> = inputView.inputManualLottoNumbers(size)
 
     private fun inputWinnings(): Pair<LottoNumber, WinningLotto> {
         val winningLottoNumbers = inputLastWeekWinningNumbers()
