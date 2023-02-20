@@ -18,9 +18,9 @@ object InputView {
     }
 
     fun readManualLottoNumbers(count: Int): List<Lotto> {
-        val input = readln()
         val lotto = mutableListOf<Lotto>()
         for (i in 0 until count) {
+            val input = readln()
             lotto.add(Lotto(input.split(",").map { LottoNumber(it.toInt()) }))
         }
         return lotto

@@ -17,11 +17,22 @@ class Controller {
     }
 
     private fun initializeLotto(): List<Lotto> {
-        val count = readInputMoney() / Lotto.MONEY_UNIT
-        OutputView.printLottoCountMessage(count)
-        val lottoNumbers = LottoGenerator.generate(count)
-        OutputView.printLottoNumbers(lottoNumbers)
-        return lottoNumbers
+        val lottoCount = readInputMoney() / Lotto.MONEY_UNIT
+        val manualLotto = initializeManualLotto(lottoCount)
+        val autoMaticLotto = initializeAutoMaticLotto(lottoCount - manualLotto.size)
+        OutputView.printLottoCountMessage(manualLotto.size, autoMaticLotto.size)
+        OutputView.printLottoNumbers(manualLotto + autoMaticLotto)
+        return manualLotto + autoMaticLotto
+    }
+
+    private fun initializeManualLotto(lottoCount: Int): List<Lotto> {
+        OutputView.printInputManualLottoCountPrompt()
+        val manualLottoCount = InputView.readInputManualLottoCount(lottoCount)
+        return InputView.readManualLottoNumbers(manualLottoCount)
+    }
+
+    private fun initializeAutoMaticLotto(count: Int): List<Lotto> {
+        return LottoGenerator.generate(count)
     }
 
     private fun readInputMoney(): Int {
