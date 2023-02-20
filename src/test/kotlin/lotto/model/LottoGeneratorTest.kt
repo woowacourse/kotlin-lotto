@@ -21,7 +21,7 @@ internal class LottoGeneratorTest {
             )
         )
 
-        assertThat(lottoGenerator.generate()).isEqualTo(expect)
+        assertThat(lottoGenerator.generate() == expect).isTrue
     }
 
     companion object {

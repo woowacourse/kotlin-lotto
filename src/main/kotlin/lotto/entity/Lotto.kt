@@ -2,7 +2,7 @@ package lotto.entity
 
 import lotto.model.Rank
 
-data class Lotto(private val numbers: Set<LottoNumber>) {
+class Lotto private constructor(private val numbers: Set<LottoNumber>) {
 
     init {
         require(numbers.size == LOTTO_COUNT) { String.format(ERROR_MESSAGE_LOTTO_NUMBER_IS_SIX, numbers) }
@@ -22,6 +22,18 @@ data class Lotto(private val numbers: Set<LottoNumber>) {
 
     override fun toString(): String {
         return numbers.toString()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other === numbers) return true
+
+        if (javaClass != other?.javaClass) return false
+
+        other as Lotto
+
+        if (numbers != other.numbers) return false
+
+        return true
     }
 
     companion object {

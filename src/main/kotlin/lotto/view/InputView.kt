@@ -23,7 +23,7 @@ class InputView {
             require(input.contains(",")) { ERROR_MESSAGE_SPLIT_BY_COMMA }
             val splittedInput = input.split(",").map { it.trim() }
             require(splittedInput.all { it.toIntOrNull() != null }) { ERROR_MESSAGE_SPLIT_ONLY_NUMBER }
-            Lotto(splittedInput.map { LottoNumber(it.toInt()) }.toSet())
+            Lotto.from(splittedInput.map { LottoNumber(it.toInt()) }.toSet())
         } as Lotto
     }
 
