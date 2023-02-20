@@ -1,11 +1,11 @@
 package domain
 
 data class Lotto(private val numbers: Set<LottoNumber>) {
-    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) }.toSet())
-
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
     }
+
+    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) }.toSet())
 
     fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
 

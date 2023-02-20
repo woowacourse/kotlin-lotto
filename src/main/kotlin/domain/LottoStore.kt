@@ -5,6 +5,7 @@ class LottoStore(
 ) {
     val lottoPrice: Int
         get() = LOTTO_PRICE
+
     fun buyManualLotto(money: Money, vararg lottos: Lotto): List<Lotto> {
         require(money.value >= LOTTO_PRICE * lottos.size) { ERROR_INVALID_COUNT.format(money.value) }
         return lottos.toList()

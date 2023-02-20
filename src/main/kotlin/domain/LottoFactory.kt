@@ -1,7 +1,6 @@
 package domain
 
 class LottoFactory(private val lottoGenerator: LottoGenerator) {
-
     fun createLottos(count: Int): List<Lotto> {
         require(count in MINIMUM_COUNT..MAXIMUM_COUNT) { ERROR_CREATE_COUNT.format(count) }
 
