@@ -1,10 +1,10 @@
 package view
 
-import domain.Bank
 import domain.LottoBundle
 import domain.LottoNumber
-import domain.Money
+import domain.Payment
 import domain.Rank
+import domain.TotalPrize
 import domain.WinStatistics
 
 object OutputView {
@@ -39,7 +39,7 @@ object OutputView {
         println("${rankCount.first.countOfMatch}개 일치 (${rankCount.first.winningMoney}원)- ${rankCount.second}개")
     }
 
-    fun printEarningRate(totalPrize: Long, spendMoney: Money) {
-        println("총 수익률은 ${Bank.getEarningRate(totalPrize, spendMoney)}입니다.")
+    fun printEarningRate(totalPrize: TotalPrize, spendPayment: Payment) {
+        println("총 수익률은 ${totalPrize.getEarningRate(spendPayment)}입니다.")
     }
 }
