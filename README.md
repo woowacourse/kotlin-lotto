@@ -46,7 +46,7 @@
 - [ ] Money 클래스로 원시값을 포장하고, 1000으로 나누는 기능 구현한다.
 - [ ] validateNumeric(), validateWinningNumbersIsNumeric()를 InputView에서 domain 모델에서 처리하도록 수정한다.
 - [x] judgeEitherSecondOrThird() 특정 등수에 구애받지 않도록 변경한다.
-- [ ] LottoController에서 멤버 변수를 사용하지 않는 구조로 변경한다.
+- [x] LottoController에서 멤버 변수를 사용하지 않는 구조로 변경한다.
 - [x] LottoGame 변수명 앞에 언더바 제거한다.
 - [x] initWinningLottoNumbers()를 호출되지 않은 상태에서 matchLottos()를 호출할 수 있도록 변경한다.
 - [x] enum의 values()를 활용하여, when을 사용하지 않고 코드를 개선한다.

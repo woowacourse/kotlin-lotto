@@ -1,18 +1,17 @@
 package controller
 
 import domain.game.LottoGame
-import domain.game.LottoMachine
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
-import util.validator.InputValidator
 import view.InputView
 import view.ResultView
 
-class LottoGameController {
-    private val inputView = InputView(InputValidator())
-    private val resultView = ResultView()
-    private val lottoGame = LottoGame(LottoMachine())
+class LottoGameController(
+    private val inputView: InputView,
+    private val resultView: ResultView,
+    private val lottoGame: LottoGame
+) {
 
     fun startLottoGame() {
         val purchasedMoney = inputView.inputPurchasingMoney()
