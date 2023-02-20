@@ -6,6 +6,6 @@ import lotto.entity.LottoNumber
 class RandomLottoGenerator : LottoGenerator {
     override fun generate(): Lotto {
         val shuffledNumbers = LottoNumber.lottoNumberCache.shuffled()
-        return Lotto(shuffledNumbers.take(Lotto.LOTTO_COUNT).sortedBy { it.value }.toSet())
+        return Lotto(shuffledNumbers.take(Lotto.LOTTO_NUMBER_COUNT).sortedBy { it.value }.toSet())
     }
 }
