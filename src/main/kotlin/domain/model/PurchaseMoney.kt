@@ -3,6 +3,7 @@ package domain.model
 class PurchaseMoney(
     val money: Int,
 ) {
+
     init {
         require(money > ZERO) {
             MONEY_RANGE_ERROR

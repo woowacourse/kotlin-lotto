@@ -6,6 +6,7 @@ class LottoCustomer(
     val purchaseMoney: PurchaseMoney,
     val manualLottosCountToPurchase: Int,
 ) {
+
     init {
         require(purchaseMoney.getLottosCountToPurchase() >= manualLottosCountToPurchase) {
             MANUAL_LOTTOS_COUNT_ERROR

@@ -6,7 +6,6 @@ import domain.model.lotto.PurchasedLottos
 
 object ResultView {
 
-    private const val NUMBER_OF_PURCHASED_LOTTO = "%s개를 구매했습니다."
     private const val LOTTO_RESULT_TITLE = "당첨 통계\n---------"
     private const val MATCH_RESULT = "%s개 일치 (%s원) - %s개"
     private const val PROFIT_RESULT = "총 수익률은 %s입니다."

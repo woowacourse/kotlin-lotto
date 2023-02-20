@@ -46,7 +46,7 @@ class LottoTest {
 
     @Test
     fun `로또의 번호가 6개가 일치하는 경우 (1등)`() {
-        //given
+        // given
         val numbers = setOf(
             LottoNumber.from(1),
             LottoNumber.from(2),
@@ -57,18 +57,18 @@ class LottoTest {
         )
         val catchLotto = Lotto(numbers)
 
-        //when
+        // when
         val actual = catchLotto.getLottoResult(
             WinningLotto(catchLotto, LottoNumber.from(7))
         )
 
-        //then
+        // then
         assertThat(actual).isEqualTo(LottoResult.FIRST)
     }
 
     @Test
     fun `로또의 번호가 5개가 일치하고 보너스 번호가 일치하는 경우 (2등)`() {
-        //given
+        // given
         val lotto = Lotto(
             setOf(
                 LottoNumber.from(1),
@@ -94,16 +94,16 @@ class LottoTest {
 
         val winningLotto = WinningLotto(catchLotto, bonusNumber)
 
-        //when
+        // when
         val actual = lotto.getLottoResult(winningLotto)
 
-        //then
+        // then
         assertThat(actual).isEqualTo(LottoResult.SECOND)
     }
 
     @Test
     fun `로또의 번호가 5개가 일치하고 보너스 번호가 일치하지 않는 경우 (3등)`() {
-        //given
+        // given
         val lotto = Lotto(
             setOf(
                 LottoNumber.from(1),
@@ -129,16 +129,51 @@ class LottoTest {
 
         val winningLotto = WinningLotto(catchLotto, bonusNumber)
 
-        //when
+        // when
         val actual = lotto.getLottoResult(winningLotto)
 
-        //then
+        // then
         assertThat(actual).isEqualTo(LottoResult.THIRD)
     }
 
     @Test
+    fun `로또의 번호가 4개가 일치하는 경우 (4등)`() {
+        // given
+        val lotto = Lotto(
+            setOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6)
+            )
+        )
+
+        val catchLotto = Lotto(
+            setOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(9),
+                LottoNumber.from(7)
+            )
+        )
+        val bonusNumber = LottoNumber.from(8)
+
+        val winningLotto = WinningLotto(catchLotto, bonusNumber)
+
+        // when
+        val actual = lotto.getLottoResult(winningLotto)
+
+        // then
+        assertThat(actual).isEqualTo(LottoResult.FORTH)
+    }
+
+    @Test
     fun `로또의 번호가 3개가 일치하는 경우 (5등)`() {
-        //given
+        // given
         val lotto = Lotto(
             setOf(
                 LottoNumber.from(1),
@@ -164,10 +199,10 @@ class LottoTest {
 
         val winningLotto = WinningLotto(catchLotto, bonusNumber)
 
-        //when
+        // when
         val actual = lotto.getLottoResult(winningLotto)
 
-        //then
+        // then
         assertThat(actual).isEqualTo(LottoResult.FIFTH)
     }
 }
