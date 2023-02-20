@@ -22,7 +22,7 @@ value class LottoNumber(val value: Int) {
         private val NUMBERS: Map<Int, LottoNumber> = (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).associateWith(::LottoNumber)
 
         fun from(number: String): LottoNumber {
-            val lottoNumber = requireNotNull(number.toIntOrNull()) { ERROR_MESSAGE_NOT_NUMERIC_LOTTO_NUMBER }
+            val lottoNumber = requireNotNull(number.trim().toIntOrNull()) { ERROR_MESSAGE_NOT_NUMERIC_LOTTO_NUMBER }
             return requireNotNull(NUMBERS[lottoNumber]) { ERROR_MESSAGE_LOTTO_NUMBER_OUT_OF_RANGE }
         }
     }
