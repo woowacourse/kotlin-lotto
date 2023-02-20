@@ -45,7 +45,7 @@ class LottoController {
 
     private fun getWinningLotto(): Lotto {
         UI.printRequestWinningNumbers()
-        val winningNumbers : List<String> = InputView.inputWinningNumbers()
+        val winningNumbers: List<String> = InputView.inputWinningNumbers()
         return Lotto(winningNumbers)
     }
 
