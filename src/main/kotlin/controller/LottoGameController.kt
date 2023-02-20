@@ -33,13 +33,13 @@ class LottoGameController(
         return Triple(manualLottos, autoLottos, money)
     }
 
+    private fun purchaseAutoLottos(money: Money): List<AutoLotto> = LottoMachine().purchaseAutoLottos(money)
+
     private fun purchaseManualLottos(money: Money): Pair<Money, List<ManualLotto>> {
         val manualLottoSize = inputPurchasingManualLottoSize()
         val manualLottoNumbers = inputManualLottoNumbers(manualLottoSize)
         return lottoMachine.purchaseManualLottos(money, manualLottoSize, manualLottoNumbers)
     }
-
-    private fun purchaseAutoLottos(money: Money): List<AutoLotto> = purchaseLottos(money)
 
     private fun inputPurchasingMoney(): Money = inputView.inputPurchasingMoney()
 
@@ -54,9 +54,6 @@ class LottoGameController(
         val winningLotto = WinningLotto(winningLottoNumbers, bonusNumber)
         return Pair(bonusNumber, winningLotto)
     }
-
-    private fun purchaseLottos(purchasedMoney: Money): List<AutoLotto> =
-        LottoMachine().purchaseAutoLottos(purchasedMoney)
 
     private fun inputLastWeekWinningNumbers(): List<LottoNumber> =
         inputView.inputLastWeekWinningNumbers().map { LottoNumber.from(it) }
