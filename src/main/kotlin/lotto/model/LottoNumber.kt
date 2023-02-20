@@ -13,7 +13,18 @@ class LottoNumber(val number: Int) : Comparable<LottoNumber> {
     }
 
     override fun equals(other: Any?): Boolean {
-        return number == (other as LottoNumber).number
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as LottoNumber
+
+        if (number != other.number) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return number
     }
 
     companion object {
