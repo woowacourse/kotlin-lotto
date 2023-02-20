@@ -1,7 +1,12 @@
 package lotto.domain
 
-import lotto.model.*
+import lotto.model.Lotto
+import lotto.model.LottoNumber
+import lotto.model.Money
+import lotto.model.UserLotto
+import lotto.model.WinningLotto
 import lotto.model.generator.LottoGenerator
+import lotto.view.ERROR_OUT_OF_LOTTO_NUMBER
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -13,11 +18,23 @@ class LottoController(
     fun start() {
         val money = getMoney()
         val numberOfLotto = money.getNumberOfLotto()
+        val manualNumberOfLotto = getNumberOfManualLotto(numberOfLotto)
+
         outputView.printPurchase(numberOfLotto)
         val myLotto = getUserLotto(numberOfLotto)
         outputView.printUserLotto(myLotto)
 
         wrapUpResult(myLotto, money)
+    }
+
+    private fun getNumberOfManualLotto(numberOfLotto: Int): Int {
+        outputView.printInsertManualNumber()
+        val number = inputView.getNumber()
+        val result = runCatching {
+            require(numberOfLotto >= number) { ERROR_OUT_OF_LOTTO_NUMBER }
+        }.onFailure { println(it.message) }.isSuccess
+
+        return if (result) number else getNumberOfManualLotto(numberOfLotto)
     }
 
     private fun wrapUpResult(myLotto: UserLotto, money: Money) {
