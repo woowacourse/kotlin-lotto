@@ -8,7 +8,7 @@ value class Money private constructor(val amount: Long) {
     }
 
     companion object {
-        const val PREFIX = "[Error]"
+        private const val PREFIX = "[Error]"
         fun create(amount: Long) = Money(amount)
         fun create(amount: Int) = Money(amount.toLong())
     }

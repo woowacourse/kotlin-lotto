@@ -28,6 +28,6 @@ class MoneyTest {
         // then
         assertThatIllegalArgumentException()
             .isThrownBy { Money.create(receivedMoney) }
-            .withMessageContaining("${Money.PREFIX} $receivedMoney 받은 돈이 1000원 단위여야합니다.")
+            .withMessageContaining("[Error] $receivedMoney 받은 돈이 1000원 단위여야합니다.")
     }
 }

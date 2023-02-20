@@ -20,10 +20,17 @@ class LottoController {
         val spendMoney = getMoney()
         val lottoCount = LottoVendingMachine.getLottoCount(spendMoney)
         OutputView.printPurchasedLottoCount(lottoCount)
-        val lottoBundle = LottoVendingMachine.getLottoBundle(lottoCount = lottoCount, lottoGenerator = lottoGenerator)
+        val lottoBundle =
+            LottoVendingMachine.generateLottoBundle(lottoCount = lottoCount, lottoGenerator = lottoGenerator)
         OutputView.printPurchasedLotto(lottoBundle)
 
         produceResult(lottoBundle, spendMoney)
+    }
+
+    private fun getMoney(): Money {
+        UI.printRequestMoney()
+        val money = InputView.inputMoney()
+        return Money.create(money)
     }
 
     private fun produceResult(lottoBundle: LottoBundle, spendMoney: Money) {
@@ -38,12 +45,6 @@ class LottoController {
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
         return WinningNumbers(winningLotto, bonusNumber)
-    }
-
-    private fun getMoney(): Money {
-        UI.printRequestMoney()
-        val money = InputView.inputMoney()
-        return Money.create(money)
     }
 
     private fun getWinningLotto(): Lotto {

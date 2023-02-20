@@ -6,6 +6,6 @@ class WinningNumbers(val lotto: Lotto, val bonusNumber: LottoNumber) {
     }
 
     companion object {
-        const val PREFIX = "[Error]"
+        private const val PREFIX = "[Error]"
     }
 }

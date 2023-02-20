@@ -16,7 +16,7 @@ class LottoVendingMachineTest {
         val lottoCount: Int = LottoVendingMachine.getLottoCount(money)
 
         // then
-        assertThat(lottoCount).isEqualTo(amount / LottoVendingMachine.LOTTO_PRICE)
+        assertThat(lottoCount).isEqualTo(amount / LOTTO_PRICE)
     }
 
     @Test
@@ -34,9 +34,13 @@ class LottoVendingMachineTest {
             )
         )
         // when
-        val lottoBundle = LottoVendingMachine.getLottoBundle(lottoCount) { lotto }
+        val lottoBundle = LottoVendingMachine.generateLottoBundle(lottoCount) { lotto }
 
         // then
         assertThat(lottoBundle.lottos.size).isEqualTo(lottoCount)
+    }
+
+    companion object {
+        private const val LOTTO_PRICE = 1000
     }
 }

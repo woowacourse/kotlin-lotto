@@ -20,7 +20,7 @@ class LottoTest {
 
         // then
         assertThatIllegalArgumentException().isThrownBy { Lotto(lottoNumbers) }
-            .withMessageContaining("${Lotto.PREFIX} 로또번호는 6개여야합니다.")
+            .withMessageContaining("[Error] 로또번호는 6개여야합니다.")
     }
 
     @Test

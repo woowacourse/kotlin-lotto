@@ -1,7 +1,7 @@
 package domain
 
 object LottoVendingMachine {
-    const val LOTTO_PRICE = 1000
+    private const val LOTTO_PRICE = 1000
 
     fun getLottoCount(money: Money): Int {
         return (money.amount / LOTTO_PRICE).toInt()

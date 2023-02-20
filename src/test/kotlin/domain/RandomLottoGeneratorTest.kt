@@ -8,7 +8,7 @@ class RandomLottoGeneratorTest {
     private val randomLottoGenerator = RandomLottoGenerator()
 
     @Test
-    fun `gererate는 로또번호 6개를 생성해준다`() {
+    fun `generate는 로또번호 6개를 생성해준다`() {
         // given
         val expected = 6
 
