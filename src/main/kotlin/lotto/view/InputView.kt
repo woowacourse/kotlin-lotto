@@ -11,6 +11,21 @@ object InputView {
         return input.toInt()
     }
 
+    fun readInputManualLottoCount(count: Int): Int {
+        val input = readln()
+        Validator.checkInputManualLottoCount(input, count)
+        return input.toInt()
+    }
+
+    fun readManualLottoNumbers(count: Int): List<Lotto> {
+        val input = readln()
+        val lotto = mutableListOf<Lotto>()
+        for (i in 0 until count) {
+            lotto.add(Lotto(input.split(",").map { LottoNumber(it.toInt()) }))
+        }
+        return lotto
+    }
+
     fun readInputWinningLotto(): Lotto {
         val input = readln()
         return Lotto(input.split(",").map { LottoNumber(it.toInt()) })
