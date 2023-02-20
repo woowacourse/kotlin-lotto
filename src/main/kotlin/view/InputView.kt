@@ -10,9 +10,8 @@ class InputView {
 
     private fun getInputMoney(input: String?): Int {
         return runCatching {
-            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-            input.toInt()
+            require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
+            input!!.toInt()
         }.onFailure { OutputView().outputErrorMessage(it.message!!) }
             .getOrThrow()
     }
@@ -24,9 +23,8 @@ class InputView {
 
     private fun getInputWinningLotto(input: String?): List<LottoNumber> {
         return runCatching {
-            require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-            require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-            input.split(",").map { LottoNumber.from(it.trim().toInt()) }.sortedBy { it.number }
+            require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
+            input!!.split(",").map { LottoNumber.from(it.trim().toInt()) }.sortedBy { it.number }
         }.onFailure { OutputView().outputErrorMessage(it.message!!) }
             .getOrThrow()
     }
@@ -38,6 +36,7 @@ class InputView {
 
     private fun getInputBonusNumber(input: String?): Int {
         return runCatching {
+            require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
             input!!.toInt()
         }.onFailure { OutputView().outputErrorMessage(it.message!!) }
             .getOrThrow()
