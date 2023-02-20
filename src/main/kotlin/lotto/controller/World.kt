@@ -3,11 +3,8 @@ package lotto.controller
 import lotto.entity.Lotto
 import lotto.entity.LottoGame
 import lotto.entity.LottoNumber
-import lotto.entity.Money
-import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
-import lotto.entity.WinMoney
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
@@ -52,12 +49,12 @@ class World {
 
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
-        val lottoGame = makeLottoGame(purchaseMoney.value / Money.LOTTO_PRICE)
+        val lottoGame = LottoGame.from(purchaseMoney, RandomLottoGenerator())
 
         processLottoGame(lottoGame)
 
         val winLotto = initWinLotto()
-        val winStatistics = makeWinStatistics(lottoGame, winLotto)
+        val winStatistics = lottoGame.makeWinStatistics(winLotto)
         val winStatisticsFormatter = LottoWinStatisticsFormatter()
 
         processWinStatistics(winStatistics, winStatisticsFormatter)
@@ -75,21 +72,8 @@ class World {
 
     private fun processProfitRate(winStatistics: WinStatistics, purchaseMoney: PurchaseMoney) {
         val profitRateCalculator = LottoProfitRateCalculator()
-        val winMoney = WinMoney.from(winStatistics)
-        val profitRate = makeProfitRate(profitRateCalculator, purchaseMoney, winMoney)
+        val winMoney = winStatistics.calculateWinMoney()
+        val profitRate = profitRateCalculator.calculate(purchaseMoney, winMoney)
         outputView.profitRateResult(profitRate)
     }
-
-    private fun makeLottoGame(lottoCount: Int): LottoGame =
-        LottoGame.from(lottoCount, RandomLottoGenerator())
-
-    private fun makeWinStatistics(lottoGame: LottoGame, winLotto: WinLotto): WinStatistics =
-        WinStatistics.from(lottoGame, winLotto)
-
-    private fun makeProfitRate(
-        profitRateCalculator: LottoProfitRateCalculator,
-        purchaseMoney: PurchaseMoney,
-        winMoney: WinMoney
-    ): ProfitRate =
-        profitRateCalculator.calculate(purchaseMoney, winMoney)
 }
