@@ -16,24 +16,36 @@ class LottoController(
     fun start() {
         val money = getMoney()
         val numberOfLotto = getNumberOfLotto(money)
-    //    outputView.printPurchase(numberOfLotto)
-        val myLotto = getUserLotto(2, numberOfLotto)
+        val numberOfPassiveLotto = 2
+        val myLotto = getUserLotto(numberOfPassiveLotto, numberOfLotto)
         outputView.printUserLotto(myLotto)
-
         wrapUp(myLotto, money)
     }
 
     private fun wrapUp(myLotto: UserLotto, money: Int) {
-        val winningLotto = getWinningLotto(getWinningNumber())
+        val winningLotto = getWinningLotto(getLottoNumber { outputView.printInsertWinningNumber() })
         val ranks = myLotto.getWinningStatistics(winningLotto)
         val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
         outputView.printResult(ranks, rates)
     }
 
     fun getUserLotto(passiveNumber: Int, number: Int): UserLotto {
+        val autoNumber = number - passiveNumber
+        outputView.printPurchase(passiveNumber, autoNumber)
+
         val lotto = mutableListOf<Lotto>()
-        getAutoLotto(number-passiveNumber, lotto)
+        getPassiveLotto(passiveNumber, lotto)
+        getAutoLotto(autoNumber, lotto)
+
         return UserLotto(lotto)
+    }
+
+    private fun getPassiveLotto(number: Int, lotto: MutableList<Lotto>) {
+        outputView.printInsertPassiveLotto()
+
+        repeat(number) {
+            lotto.add(getLottoNumber { })
+        }
     }
 
     private fun getAutoLotto(number: Int, lotto: MutableList<Lotto>) {
@@ -58,10 +70,10 @@ class LottoController(
         } ?: getBonusNumber()
     }
 
-    private fun getWinningNumber(): Lotto {
+    private fun getLottoNumber(guideMessage: () -> Unit): Lotto {
         return validateInput {
-            Lotto.create(inputView.getNumberList { outputView.printInsertWinningNumber() })
-        } ?: getWinningNumber()
+            Lotto.create(inputView.getNumberList { guideMessage() })
+        } ?: getLottoNumber { guideMessage() }
     }
 
     private fun <T> validateInput(create: () -> T): T? {
