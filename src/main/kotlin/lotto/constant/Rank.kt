@@ -19,10 +19,5 @@ enum class Rank(val matchCount: Int, val prizeMoney: Int) {
             return Rank.values().find { it.matchCount == matchCount }
                 ?: NOTHING
         }
-
-        fun convertToPrizeMoney(rank: Rank): Int =
-            Rank.values().find { it == rank }?.prizeMoney ?: throw IllegalStateException(WRONG_RANK_ERROR)
-
-        private const val WRONG_RANK_ERROR = "주어진 Rank 값이 올바르지 않습니다."
     }
 }

@@ -7,9 +7,7 @@ import lotto.constant.Rank.SECOND
 import lotto.constant.Rank.THIRD
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 
 class RankTest {
     @Test
@@ -30,12 +28,6 @@ class RankTest {
     @Test
     fun `당첨 로또 번호 개수가 4개면 보너스 번호에 상관없이 4등이다`() {
         assertThat(Rank.convertToRank(4, true)).isEqualTo(FOURTH)
-    }
-
-    @MethodSource("provideRanks")
-    @ParameterizedTest
-    fun `등수를 당첨금액으로 번환할 수 있다`(rank: Rank) {
-        assertThat(Rank.convertToPrizeMoney(rank)).isEqualTo(rank.prizeMoney)
     }
 
     companion object {

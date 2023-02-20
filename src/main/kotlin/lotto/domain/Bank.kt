@@ -16,7 +16,7 @@ object Bank {
     }
 
     private fun getPrizeMoney(lotto: Lotto, winningLotto: WinningLotto): Int =
-        Rank.convertToPrizeMoney(getRank(lotto, winningLotto))
+        getRank(lotto, winningLotto).prizeMoney
 
     fun getYieldRate(purchaseMoney: PurchaseMoney, totalPrizeMoney: Int): Double =
         totalPrizeMoney / purchaseMoney.value.toDouble()
