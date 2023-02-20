@@ -19,6 +19,15 @@ class LottoController(private val lottoFactory: LottoFactory) {
         confirmLottoWinning(purchaseMoney = purchaseMoney, lottoBunch = lottoBunch, winningLotto = winningLotto)
     }
 
+    private fun getPurchaseMoney(): PurchaseMoney {
+        return runCatching {
+            PurchaseMoney(InputView.getPurchaseMoney())
+        }.getOrElse {
+            println(ERROR_NOT_NUMBER)
+            getPurchaseMoney()
+        }
+    }
+
     private fun getLottoBunch(purchaseCount: Int): LottoBunch {
         val lottoes = mutableListOf<Lotto>()
         repeat(purchaseCount) {
@@ -30,12 +39,12 @@ class LottoController(private val lottoFactory: LottoFactory) {
         return lottoBunch
     }
 
-    private fun getPurchaseMoney(): PurchaseMoney {
+    private fun getWinningLotto(): WinningLotto {
         return runCatching {
-            PurchaseMoney(InputView.getPurchaseMoney())
-        }.getOrElse {
-            println(ERROR_NOT_NUMBER)
-            getPurchaseMoney()
+            WinningLotto(getMainLottoNumber(), getBonusLottoNumber())
+        }.getOrElse { error ->
+            println(error.message)
+            getWinningLotto()
         }
     }
 
@@ -54,15 +63,6 @@ class LottoController(private val lottoFactory: LottoFactory) {
         }.getOrElse {
             println(ERROR_NOT_NUMBER)
             getBonusLottoNumber()
-        }
-    }
-
-    private fun getWinningLotto(): WinningLotto {
-        return runCatching {
-            WinningLotto(getMainLottoNumber(), getBonusLottoNumber())
-        }.getOrElse { error ->
-            println(error.message)
-            getWinningLotto()
         }
     }
 
