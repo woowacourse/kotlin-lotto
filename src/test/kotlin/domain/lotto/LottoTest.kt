@@ -1,44 +1,31 @@
 package domain.lotto
 
-import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import util.PREFIX
 
 class LottoTest {
     @Test
-    fun `로또 번호가 6개가 아니라면 에러 발생`() {
+    fun `로또 번호가 6개가 아니라면 에러 발생 (5개일때)`() {
         // given
-        val lottoNumbers = setOf(
-            LottoNumber.of(1),
-            LottoNumber.of(2),
-            LottoNumber.of(3),
-            LottoNumber.of(4),
-            LottoNumber.of(5),
-        )
 
         // when
+        val exception = runCatching { Lotto(1, 2, 3, 4, 5) }.exceptionOrNull()
 
         // then
-        assertThatIllegalArgumentException().isThrownBy { Lotto(lottoNumbers) }
-            .withMessageContaining("$PREFIX 로또번호는 6개여야합니다.")
+        assertThat(exception).isInstanceOf(IllegalArgumentException::class.java)
+        assertThat(exception).hasMessageContaining("$PREFIX 로또번호는 6개여야합니다.")
     }
 
     @Test
-    fun `로또 번호는 6개를 가지고 있어야한다`() {
+    fun `로또 번호가 6개가 아니라면 에러 발생 (7개일때)`() {
         // given
-        val lottoNumbers = setOf(
-            LottoNumber.of(1),
-            LottoNumber.of(2),
-            LottoNumber.of(3),
-            LottoNumber.of(4),
-            LottoNumber.of(5),
-            LottoNumber.of(6),
-        )
 
         // when
+        val exception = runCatching { Lotto(1, 2, 3, 4, 5, 6, 7) }.exceptionOrNull()
 
         // then
-        assertDoesNotThrow { Lotto(lottoNumbers) }
+        assertThat(exception).isInstanceOf(IllegalArgumentException::class.java)
+        assertThat(exception).hasMessageContaining("$PREFIX 로또번호는 6개여야합니다.")
     }
 }
