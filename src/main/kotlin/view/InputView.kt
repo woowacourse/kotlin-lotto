@@ -19,13 +19,13 @@ class InputView {
         }
     }
 
-    fun askManualLottoNumbers(count: Int): List<Lotto> {
-        val lottos = mutableListOf<Lotto>()
+    fun askManualLottoNumbers(count: Int): Array<IntArray> {
+        val lottos = mutableListOf<IntArray>()
         println("\n수동으로 구매할 번호를 입력해 주세요.")
         while (lottos.size < count) {
-            lottos.add(Lotto(*inputLotteryNumbers() ?: continue))
+            lottos.add(inputLotteryNumbers() ?: continue)
         }
-        return lottos
+        return lottos.toTypedArray()
     }
 
     private fun inputLotteryNumbers(): IntArray? {

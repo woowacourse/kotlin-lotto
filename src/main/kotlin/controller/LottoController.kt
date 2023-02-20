@@ -33,7 +33,7 @@ class LottoController {
     private fun buyManualLotto(money: Money): List<Lotto> =
         runCatching {
             val lottos = inputView.askManualLottoNumbers(inputView.askManualLottoCount())
-            return lottoStore.buyManualLotto(money, *lottos.toTypedArray())
+            return lottoStore.buyManualLotto(money, *lottos)
         }
             .onFailure { outputView.outputError(it) }
             .getOrDefault(buyManualLotto(money))
