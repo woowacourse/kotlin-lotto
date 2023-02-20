@@ -37,13 +37,7 @@ class OutputView {
         for (value in Rank.values().reversed()) {
             if (value == Rank.MISS) continue
             if (value.mustHaveBonus) {
-                println(
-                    "%d개 일치, 보너스 볼 일치 (%s)원 - %d개".format(
-                        value.countOfMatch,
-                        value.winningMoney,
-                        lottoResult[value],
-                    ),
-                )
+                println("%d개 일치, 보너스 볼 일치 (%s)원 - %d개".format(value.countOfMatch, value.winningMoney, lottoResult[value]))
                 continue
             }
             println("%d개 일치 (%s)원 - %d개".format(value.countOfMatch, value.winningMoney, lottoResult[value]))
