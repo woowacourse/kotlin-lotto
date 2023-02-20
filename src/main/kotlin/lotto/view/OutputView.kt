@@ -1,8 +1,8 @@
 package lotto.view
 
 import lotto.entity.Lotto
-import lotto.entity.LottoGame
 import lotto.entity.ProfitRate
+import lotto.entity.PurchasedLottos
 import lotto.entity.WinStatistics
 
 class OutputView {
@@ -21,8 +21,8 @@ class OutputView {
         printMessage(MESSAGE_PROFIT_RATE, p)
     }
 
-    fun gameResult(lottoGame: LottoGame) {
-        lottoGame.value.forEach {
+    fun gameResult(purchasedLottos: PurchasedLottos) {
+        purchasedLottos.value.forEach {
             println(formatLotto(it))
         }
     }

@@ -1,9 +1,9 @@
 package lotto.controller
 
 import lotto.entity.Lotto
-import lotto.entity.LottoGame
 import lotto.entity.LottoNumber
 import lotto.entity.PurchaseMoney
+import lotto.entity.PurchasedLottos
 import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
@@ -49,21 +49,21 @@ class World {
 
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
-        val lottoGame = LottoGame.from(purchaseMoney, RandomLottoGenerator())
+        val purchasedLottos = PurchasedLottos.from(purchaseMoney, RandomLottoGenerator())
 
-        processLottoGame(lottoGame)
+        processLottoGame(purchasedLottos)
 
         val winLotto = initWinLotto()
-        val winStatistics = lottoGame.makeWinStatistics(winLotto)
+        val winStatistics = purchasedLottos.makeWinStatistics(winLotto)
         val winStatisticsFormatter = LottoWinStatisticsFormatter()
 
         processWinStatistics(winStatistics, winStatisticsFormatter)
         processProfitRate(winStatistics, purchaseMoney)
     }
 
-    private fun processLottoGame(lottoGame: LottoGame) {
-        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottoGame.value.size)
-        outputView.gameResult(lottoGame)
+    private fun processLottoGame(purchasedLottos: PurchasedLottos) {
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, purchasedLottos.value.size)
+        outputView.gameResult(purchasedLottos)
     }
 
     private fun processWinStatistics(winStatistics: WinStatistics, winStatisticsFormatter: WinStatisticsFormatter) {
