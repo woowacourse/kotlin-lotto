@@ -12,7 +12,7 @@ class LottoFactoryTest {
     fun `1개 이상 100개 이하의 개수만큼 로또를 생성할 수 있다`(count: Int) {
         val lottoFactory = LottoFactory(RandomLottoGenerator)
 
-        val result = lottoFactory.create(count)
+        val result = lottoFactory.createLottos(count)
 
         assertThat(result.size).isEqualTo(count)
     }
@@ -23,7 +23,7 @@ class LottoFactoryTest {
         val lottoFactory = LottoFactory(RandomLottoGenerator)
 
         assertThatIllegalArgumentException()
-            .isThrownBy { lottoFactory.create(count) }
+            .isThrownBy { lottoFactory.createLottos(count) }
             .withMessage("한 번에 생성할 수 있는 로또 개수는 1개 이상 100개 이하입니다.\n잘못된 값: $count")
     }
 }

@@ -12,7 +12,7 @@ class LottoStore(
 
     fun buyAutoLotto(money: Money): List<Lotto> {
         require(money.value >= LOTTO_PRICE) { ERROR_INVALID_MONEY.format(money.value) }
-        return LottoFactory(lottoGenerator).create(getCount(money))
+        return LottoFactory(lottoGenerator).createLottos(getCount(money))
     }
 
     private fun getCount(money: Money): Int = money.value / LOTTO_PRICE
