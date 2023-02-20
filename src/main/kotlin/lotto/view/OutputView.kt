@@ -16,8 +16,8 @@ class OutputView {
         println(INSERT_MANUAL_LOTTO)
     }
 
-    fun printPurchase(number: Int) {
-        println("$number$PURCHASE")
+    fun printPurchase(numberOfManual: Int, numberOfAuto: Int) {
+        println(PURCHASE.format(numberOfManual, numberOfAuto))
     }
 
     fun printUserLotto(userLotto: UserLotto) {
@@ -69,7 +69,7 @@ class OutputView {
         private const val INSERT_WINNING_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
         private const val INSERT_BONUS_BALL = "보너스 볼을 입력해 주세요."
 
-        private const val PURCHASE = "개를 구매했습니다."
+        private const val PURCHASE = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val WINNING_STATISTICS = "당첨 통계"
         private const val DIVIDER = "---------"
         private const val MATCH_STANDARD = "%d개 일치"

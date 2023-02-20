@@ -24,7 +24,7 @@ class LottoController(
 
         val autoNumberOfLotto = numberOfLotto - manualNumberOfLotto
 
-        outputView.printPurchase(numberOfLotto)
+        outputView.printPurchase(manualNumberOfLotto, autoNumberOfLotto)
         val myLotto = getUserLotto(numberOfLotto)
         outputView.printUserLotto(myLotto)
 
