@@ -1,6 +1,8 @@
 package lotto.entity
 
-class WinLotto(val winNumber: Lotto, val bonus: LottoNumber) {
+import lotto.model.Rank
+
+class WinLotto(private val winNumber: Lotto, private val bonus: LottoNumber) {
     init {
         require(!winNumber.numbers.contains(bonus)) {
             String.format(
@@ -9,6 +11,15 @@ class WinLotto(val winNumber: Lotto, val bonus: LottoNumber) {
                 bonus.value
             )
         }
+    }
+
+    fun determineLottoRank(condition: Rank, lotto: Lotto): Boolean {
+        val countOfMatch = lotto.matchLottoNumberCount(winNumber)
+        if (condition == Rank.MISS && countOfMatch in 0..2)
+            return true
+        if (condition.needBonus && !lotto.isMatchBonus(bonus))
+            return false
+        return countOfMatch == condition.countOfMatch
     }
 
     companion object {

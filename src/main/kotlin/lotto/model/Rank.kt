@@ -17,7 +17,7 @@ enum class Rank(val countOfMatch: Int, val needBonus: Boolean, val winningMoney:
 
         fun determine(lotto: Lotto, winLotto: WinLotto): Rank {
             val determinedRank = Rank.values().filter {
-                lotto.determineRank(it, winLotto)
+                winLotto.determineLottoRank(it, lotto)
             }
             check(determinedRank.isNotEmpty()) {
                 String.format(ERROR_DETERMINED_RANK_IS_EMPTY)
