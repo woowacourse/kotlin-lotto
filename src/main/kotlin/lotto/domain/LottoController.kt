@@ -84,6 +84,10 @@ class LottoController(
         }.getOrNull()
     }
 
+    fun isMoneyEnough(numberOfPassiveLotto: Int, numberOfLotto: Int): Boolean {
+        return numberOfPassiveLotto <= numberOfLotto
+    }
+
     fun getNumberOfLotto(money: Int): Int {
         return money / LOTTO_PRICE
     }
