@@ -22,13 +22,13 @@ class LottoController {
     private fun buyLotto(): List<Lotto> {
         val money = inputView.askPurchaseMoney()
         val manualLottos = buyManualLotto(money)
-        val autoLottos = buyAutoLotto(getChargeMoney(money, manualLottos))
+        val autoLottos = buyAutoLotto(getChargeMoney(money, manualLottos.size))
         outputView.outputLottos(manualLottos, autoLottos)
         return manualLottos + autoLottos
     }
 
-    private fun getChargeMoney(money: Money, manualLottos: List<Lotto>): Money =
-        Money.from(money.value - lottoStore.lottoPrice * manualLottos.size)
+    private fun getChargeMoney(money: Money, countLotto: Int): Money =
+        Money.from(money.value - lottoStore.lottoPrice * countLotto)
 
     private fun buyManualLotto(money: Money): List<Lotto> =
         runCatching {
