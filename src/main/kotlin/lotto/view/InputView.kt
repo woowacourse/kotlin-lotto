@@ -14,7 +14,7 @@ class InputView {
         val input = readlnOrNull()?.trim()
         val result = getInput(input!!.split(",").isNumbers(), input)
 
-        return if (result) input.split(",").map { LottoNumber(it.trim().toInt()) } else getNumberList()
+        return if (result) input.split(",").map { LottoNumber.from(it.trim().toInt()) } else getNumberList()
     }
 
     private fun getInput(checkIsNumber: Boolean, input: String): Boolean {

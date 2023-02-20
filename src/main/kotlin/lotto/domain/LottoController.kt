@@ -60,7 +60,7 @@ class LottoController(
         outputView.printInsertBonusNumber()
 
         return validateInput {
-            LottoNumber(inputView.getNumber())
+            LottoNumber.from(inputView.getNumber())
         } ?: getBonusNumber()
     }
 
