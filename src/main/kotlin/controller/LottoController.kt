@@ -16,12 +16,7 @@ class LottoController(
     private val profitCalculator: ProfitCalculator = ProfitCalculator()
 ) {
 
-    private val purchaseMoney: PurchaseMoney by lazy {
-        val input = InputView.requestPurchaseMoney()
-        val money = numericValidator.validate(input)
-
-        PurchaseMoney(money)
-    }
+    private val purchaseMoney: PurchaseMoney by lazy { initializePurchaseMoney() }
 
     private val winningNumbers: WinningNumbers by lazy {
         WinningNumbers(
@@ -34,6 +29,17 @@ class LottoController(
         val purchasedLottos = purchaseLottos()
 
         checkPurchasedLottosResult(purchasedLottos)
+    }
+
+    private fun initializePurchaseMoney(): PurchaseMoney {
+        return runCatching {
+            val input = InputView.requestPurchaseMoney()
+            val money = numericValidator.validate(input)
+            PurchaseMoney(money)
+        }.getOrElse { error ->
+            println(error.message.toString())
+            initializePurchaseMoney()
+        }
     }
 
     private fun initializeCatchNumber(): Set<LottoNumber> {
