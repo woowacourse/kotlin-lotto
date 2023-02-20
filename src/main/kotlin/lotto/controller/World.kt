@@ -33,6 +33,7 @@ class World(
     }
 
     private fun initPurchaseMoney(): PurchaseMoney {
+        outputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
         return inputView.readPurchaseMoney(lottoPrice)
     }
 
