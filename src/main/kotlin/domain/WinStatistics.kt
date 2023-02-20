@@ -4,13 +4,15 @@ import domain.lotto.LottoBundle
 
 class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle, spentMoney: Money) {
     val rankCount: Map<Rank, Int>
-    val earningRate: Double = calculateEarningRate(spentMoney)
+    val earningRate: Double
 
     init {
         rankCount = purchasedLottoBundle
             .compareWithWinningNumbers(winningNumbers)
             .groupingBy { it }
             .eachCount()
+
+        earningRate = calculateEarningRate(spentMoney)
     }
 
     private fun getTotalIncome(): Money {

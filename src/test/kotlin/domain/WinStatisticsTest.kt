@@ -28,7 +28,7 @@ class WinStatisticsTest {
         )
 
         // when
-        val winStatistics = WinStatistics(winningNumbers, lottoBundle)
+        val winStatistics = WinStatistics(winningNumbers, lottoBundle, Money(5000))
 
         // then
         assertThat(winStatistics.rankCount).isEqualTo(expected)
@@ -37,14 +37,13 @@ class WinStatisticsTest {
     @Test
     fun `당첨 통계와 사용한 돈에 따라 수익률을 계산한다`() {
         // given
-        val winStatistics: WinStatistics = WinStatistics(winningNumbers, lottoBundle) // 당첨 상금: 4033000000
         val spentMoney: Money = Money(5000)
         val expected: Double = 806600.0
 
         // when
-        val actual = winStatistics.calculateEarningRate(spentMoney)
+        val winStatistics: WinStatistics = WinStatistics(winningNumbers, lottoBundle, spentMoney) // 당첨 상금: 4033000000
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(winStatistics.earningRate).isEqualTo(expected)
     }
 }
