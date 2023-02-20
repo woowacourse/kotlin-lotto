@@ -8,18 +8,18 @@ class Lottery(
         checkNumbersDuplicate()
     }
 
-    fun countMatches(winningLottery: Lottery): Int = winningLottery.numbers.count { numbers.contains(it) }
-
-    fun containBonusNumber(number: LotteryNumber): Boolean {
-        return numbers.contains(number)
-    }
-
     private fun checkLotteryNumbersSize() {
         require(numbers.size == LOTTERY_NUMBER_SIZE) { LOTTERY_NUMBER_SIZE_ERROR }
     }
 
     private fun checkNumbersDuplicate() {
         require(numbers.size == numbers.distinct().size) { LOTTERY_NUMBERS_DUPLICATE_ERROR }
+    }
+
+    fun countMatches(winningLottery: Lottery): Int = winningLottery.numbers.count { numbers.contains(it) }
+
+    fun containBonusNumber(number: LotteryNumber): Boolean {
+        return numbers.contains(number)
     }
 
     companion object {

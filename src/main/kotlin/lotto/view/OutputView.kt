@@ -25,6 +25,19 @@ class OutputView {
         println("${TOTAL_PROFIT_GUIDE.format(profit)}${Revenue.valueOf(profit).description}")
     }
 
+    private fun getRankAnnouncement(name: String, count: Int): String {
+        if (name == "MISS") return ""
+
+        val rank = Rank.valueOf(name)
+        val announcement = StringBuilder()
+        announcement.append(COUNT_OF_MATCH_DESCRIPTION.format(rank.countOfMatch))
+        if (rank == Rank.SECOND) {
+            announcement.append(BONUS_MATCH_DESCRIPTION)
+        }
+        announcement.append(PRIZE_AND_COUNT_RESULT_DESCRIPTION.format(rank.winningMoney, count))
+        return announcement.toString()
+    }
+
     enum class Revenue(val description: String) {
         LOSS("(기준이 1이기 때문에 결과적으로 손해라는 의미임)"),
         NOTHING("(기준이 1이기 때문에 결과적으로 손해도 이득도 아니라는 의미임)"),
@@ -43,19 +56,6 @@ class OutputView {
 
     fun printInterval() {
         println()
-    }
-
-    private fun getRankAnnouncement(name: String, count: Int): String {
-        if (name == "MISS") return ""
-
-        val rank = Rank.valueOf(name)
-        val announcement = StringBuilder()
-        announcement.append(COUNT_OF_MATCH_DESCRIPTION.format(rank.countOfMatch))
-        if (rank == Rank.SECOND) {
-            announcement.append(BONUS_MATCH_DESCRIPTION)
-        }
-        announcement.append(PRIZE_AND_COUNT_RESULT_DESCRIPTION.format(rank.winningMoney, count))
-        return announcement.toString()
     }
 
     companion object {
