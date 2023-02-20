@@ -2,7 +2,7 @@ package lotto.entity
 
 import lotto.model.LottoGenerator
 
-class PurchasedLottos private constructor(val value: List<Lotto>) {
+class PurchasedLottos(val value: List<Lotto>) {
     fun makeWinStatistics(winLotto: WinLotto): WinStatistics = WinStatistics(value.map { winLotto.determineRank(it) })
 
     companion object {
