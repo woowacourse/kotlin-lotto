@@ -1,12 +1,9 @@
-import domain.Judgement
 import domain.Lotto
 import domain.LottoBundle
 import domain.LottoGenerator
 import domain.LottoNumber
-import domain.LottoVendingMachine
-import domain.Money
+import domain.Payment
 import domain.RandomLottoGenerator
-import domain.WinStatistics
 import domain.WinningNumbers
 import view.InputView
 import view.OutputView
@@ -18,27 +15,26 @@ class LottoController {
 
     fun startLottoGame() {
         val spendMoney = getMoney()
-        val lottoCount = LottoVendingMachine.getLottoCount(spendMoney)
+        val lottoCount = spendMoney.calculateLottoCount()
         OutputView.printPurchasedLottoCount(lottoCount)
-        val lottoBundle =
-            LottoVendingMachine.generateLottoBundle(lottoCount = lottoCount, lottoGenerator = lottoGenerator)
+
+        val lottoBundle = LottoBundle(lottoCount, lottoGenerator)
         OutputView.printPurchasedLotto(lottoBundle)
 
         produceResult(lottoBundle, spendMoney)
     }
 
-    private fun getMoney(): Money {
+    private fun getMoney(): Payment {
         UI.printRequestMoney()
         val money = InputView.inputMoney()
-        return Money(money)
+        return Payment(money)
     }
 
-    private fun produceResult(lottoBundle: LottoBundle, spendMoney: Money) {
-        val winningResult = Judgement.compareLottoBundle(getWinningNumbers(), lottoBundle)
-        val winStatistics = WinStatistics(winningResult)
+    private fun produceResult(lottoBundle: LottoBundle, spendPayment: Payment) {
+        val winStatistics = getWinningNumbers().compareLottoBundle(lottoBundle)
 
         OutputView.printWinStatistics(winStatistics)
-        OutputView.printEarningRate(winStatistics.getTotalIncome(), spendMoney)
+        OutputView.printEarningRate(winStatistics.calculateTotalIncome(), spendPayment)
     }
 
     private fun getWinningNumbers(): WinningNumbers {
@@ -49,7 +45,7 @@ class LottoController {
 
     private fun getWinningLotto(): Lotto {
         UI.printRequestWinningNumbers()
-        val winningNumbers = InputView.inputWinningNumbers()
+        val winningNumbers : List<String> = InputView.inputWinningNumbers()
         return Lotto(winningNumbers)
     }
 
