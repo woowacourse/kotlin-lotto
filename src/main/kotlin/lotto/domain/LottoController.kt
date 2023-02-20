@@ -16,8 +16,8 @@ class LottoController(
     fun start() {
         val money = getMoney()
         val numberOfLotto = getNumberOfLotto(money)
-        outputView.printPurchase(numberOfLotto)
-        val myLotto = getUserLotto(numberOfLotto)
+    //    outputView.printPurchase(numberOfLotto)
+        val myLotto = getUserLotto(2, numberOfLotto)
         outputView.printUserLotto(myLotto)
 
         wrapUp(myLotto, money)
@@ -30,13 +30,16 @@ class LottoController(
         outputView.printResult(ranks, rates)
     }
 
-    fun getUserLotto(number: Int): UserLotto {
+    fun getUserLotto(passiveNumber: Int, number: Int): UserLotto {
         val lotto = mutableListOf<Lotto>()
+        getAutoLotto(number-passiveNumber, lotto)
+        return UserLotto(lotto)
+    }
+
+    private fun getAutoLotto(number: Int, lotto: MutableList<Lotto>) {
         repeat(number) {
             lotto.add(Lotto.create(generator.generate()))
         }
-
-        return UserLotto(lotto)
     }
 
     private fun getMoney(): Int {
@@ -56,7 +59,6 @@ class LottoController(
     }
 
     private fun getWinningNumber(): Lotto {
-
         return validateInput {
             Lotto.create(inputView.getNumberList { outputView.printInsertWinningNumber() })
         } ?: getWinningNumber()
