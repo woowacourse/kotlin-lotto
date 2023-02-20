@@ -34,7 +34,7 @@ class World(
 
     private fun initPurchaseMoney(): PurchaseMoney {
         outputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
-        return inputView.readPurchaseMoney(lottoPrice)
+        return inputView.readPurchaseMoney()
     }
 
     private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
