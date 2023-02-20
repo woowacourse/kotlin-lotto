@@ -21,7 +21,7 @@ internal class LottoBundleTest {
     )
 
     @Test
-    fun compareWithWinningNumbers() {
+    fun `로또 번들을 당첨 번호와 비교하여 알맞는 Rank 리스트가 나오는지 테스트`() {
         // given
         val winningNumbers = WinningNumbers(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.of(7))
         val lottoBundle = LottoBundle(lottos)
