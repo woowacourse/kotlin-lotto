@@ -6,6 +6,7 @@ data class Amount(private val amount: Int) {
         require(amount in MINIMUM_AMOUNT..MAXIMUM_AMOUNT) { ERROR_CREATE_COUNT.format(amount) }
     }
     operator fun div(number: Int): Number = amount / number
+
     operator fun minus(number: Int): Int = amount - number
 
     companion object {
