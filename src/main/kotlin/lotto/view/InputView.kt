@@ -4,29 +4,39 @@ import lotto.entity.Lotto
 import lotto.entity.LottoNumber
 import lotto.entity.LottoPrice
 import lotto.entity.PurchaseMoney
+import lotto.entity.WinLotto
+import lotto.misc.tryAndRerun
 
 class InputView {
 
     fun readPurchaseMoney(lottoPrice: LottoPrice): PurchaseMoney {
-        val input = readln()
-        require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
-        val purchaseMoney = PurchaseMoney(input.toInt())
-        require(lottoPrice.value <= purchaseMoney.value) { ERROR_MESSAGE_GREATER_THAN_LOTTO_PRICE }
-        return purchaseMoney
+        return tryAndRerun {
+            val input = readln()
+            require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
+            val purchaseMoney = PurchaseMoney(input.toInt())
+            require(lottoPrice.value <= purchaseMoney.value) { ERROR_MESSAGE_GREATER_THAN_LOTTO_PRICE }
+            purchaseMoney
+        } as PurchaseMoney
     }
 
     fun readWinNumber(): Lotto {
-        val input = readln()
-        require(input.contains(",")) { ERROR_MESSAGE_SPLIT_BY_COMMA }
-        val splittedInput = input.split(",").map { it.trim() }
-        require(splittedInput.all { it.toIntOrNull() != null }) { ERROR_MESSAGE_SPLIT_ONLY_NUMBER }
-        return Lotto(splittedInput.map { LottoNumber(it.toInt()) }.toSet())
+        return tryAndRerun {
+            val input = readln()
+            require(input.contains(",")) { ERROR_MESSAGE_SPLIT_BY_COMMA }
+            val splittedInput = input.split(",").map { it.trim() }
+            require(splittedInput.all { it.toIntOrNull() != null }) { ERROR_MESSAGE_SPLIT_ONLY_NUMBER }
+            Lotto(splittedInput.map { LottoNumber(it.toInt()) }.toSet())
+        } as Lotto
     }
 
-    fun readBonus(): LottoNumber {
-        val input = readln()
-        require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
-        return LottoNumber(input.toInt())
+    fun readBonus(winNumber: Lotto): LottoNumber {
+        return tryAndRerun {
+            val input = readln()
+            require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
+            val bonus = LottoNumber(input.toInt())
+            WinLotto(winNumber, bonus)
+            bonus
+        } as LottoNumber
     }
 
     companion object {

@@ -8,7 +8,6 @@ import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
-import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
 import lotto.model.RandomLottoGenerator
 import lotto.view.InputView
@@ -34,10 +33,7 @@ class World(
     }
 
     private fun initPurchaseMoney(): PurchaseMoney {
-        return tryAndRerun {
-            outputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
-            inputView.readPurchaseMoney(lottoPrice)
-        } as PurchaseMoney
+        return inputView.readPurchaseMoney(lottoPrice)
     }
 
     private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
@@ -49,19 +45,13 @@ class World(
     }
 
     private fun initWinNumber(): Lotto {
-        return tryAndRerun {
-            outputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
-            inputView.readWinNumber()
-        } as Lotto
+        outputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
+        return inputView.readWinNumber()
     }
 
     private fun initBonus(winNumber: Lotto): LottoNumber {
-        return tryAndRerun {
-            outputView.printMessage(OutputView.MESSAGE_BONUS)
-            val bonus = inputView.readBonus()
-            WinLotto(winNumber, bonus)
-            bonus
-        } as LottoNumber
+        outputView.printMessage(OutputView.MESSAGE_BONUS)
+        return inputView.readBonus(winNumber)
     }
 
     private fun makeWinStatistics(lottos: Lottos, winLotto: WinLotto): WinStatistics {
