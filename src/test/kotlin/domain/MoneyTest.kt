@@ -15,7 +15,7 @@ class MoneyTest {
         // when
 
         // then
-        assertDoesNotThrow { Money.create(receivedMoney) }
+        assertDoesNotThrow { Money(receivedMoney) }
     }
 
     @ValueSource(ints = [14400, 1, 555, 0])
@@ -27,7 +27,7 @@ class MoneyTest {
 
         // then
         assertThatIllegalArgumentException()
-            .isThrownBy { Money.create(receivedMoney) }
+            .isThrownBy { Money(receivedMoney) }
             .withMessageContaining("[Error] $receivedMoney 받은 돈이 1000원 단위여야합니다.")
     }
 }

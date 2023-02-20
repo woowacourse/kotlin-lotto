@@ -9,11 +9,11 @@ class LottoTest {
     fun `로또 번호가 6개가 아니라면 에러 발생`() {
         // given
         val lottoNumbers = setOf(
-            LottoNumber.create(1),
-            LottoNumber.create(2),
-            LottoNumber.create(3),
-            LottoNumber.create(4),
-            LottoNumber.create(5)
+            LottoNumber.of(1),
+            LottoNumber.of(2),
+            LottoNumber.of(3),
+            LottoNumber.of(4),
+            LottoNumber.of(5)
         )
 
         // when
@@ -27,12 +27,12 @@ class LottoTest {
     fun `로또 번호는 6개를 가지고 있어야한다`() {
         // given
         val lottoNumbers = setOf(
-            LottoNumber.create(1),
-            LottoNumber.create(2),
-            LottoNumber.create(3),
-            LottoNumber.create(4),
-            LottoNumber.create(5),
-            LottoNumber.create(6)
+            LottoNumber.of(1),
+            LottoNumber.of(2),
+            LottoNumber.of(3),
+            LottoNumber.of(4),
+            LottoNumber.of(5),
+            LottoNumber.of(6)
         )
 
         // when

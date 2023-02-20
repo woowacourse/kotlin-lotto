@@ -30,7 +30,7 @@ class LottoController {
     private fun getMoney(): Money {
         UI.printRequestMoney()
         val money = InputView.inputMoney()
-        return Money.create(money)
+        return Money(money)
     }
 
     private fun produceResult(lottoBundle: LottoBundle, spendMoney: Money) {
@@ -56,6 +56,6 @@ class LottoController {
     private fun getBonusNumber(): LottoNumber {
         UI.printRequestBonusNumber()
         val bonusNumber = InputView.inputBonusNumber()
-        return LottoNumber.create(bonusNumber)
+        return LottoNumber.of(bonusNumber)
     }
 }

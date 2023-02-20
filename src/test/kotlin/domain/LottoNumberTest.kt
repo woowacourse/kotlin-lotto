@@ -13,7 +13,7 @@ class LottoNumberTest {
         // given
 
         // when
-        val lottoNumber = LottoNumber.create(input)
+        val lottoNumber = LottoNumber.of(input)
 
         // then
         assertThat(lottoNumber.number).isEqualTo(input)
@@ -28,7 +28,7 @@ class LottoNumberTest {
 
         // then
         assertThatIllegalArgumentException()
-            .isThrownBy { LottoNumber.create(number) }
+            .isThrownBy { LottoNumber.of(number) }
             .withMessageContaining("$PREFIX 로또 넘버는 1~45여야합니다.")
     }
 
