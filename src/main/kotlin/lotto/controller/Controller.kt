@@ -19,7 +19,7 @@ class Controller {
     }
 
     private fun initializeLotto(): List<Lotto> {
-        val count = readInputMoney().amount / MONEY_UNIT
+        val count = readInputMoney().amount / LottoMoney.MONEY_UNIT
         OutputView.printLottoCountMessage(count)
         val lottoNumbers = LottoGenerator.generate(count)
         OutputView.printLottoNumbers(lottoNumbers)
@@ -62,9 +62,5 @@ class Controller {
             println("[ERROR] ${it.message}")
             readBonusNumber(winningLotto)
         }
-    }
-
-    companion object {
-        const val MONEY_UNIT = 1000
     }
 }
