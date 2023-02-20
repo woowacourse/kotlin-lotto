@@ -9,6 +9,10 @@ class Lotto(val numbers: List<LottoNumber>) {
         return numbers.size != numbers.toSet().size
     }
 
+    fun getCountOfMatch(winningLotto: Lotto): Int {
+        return numbers.count { winningLotto.numbers.contains(it) }
+    }
+
     companion object {
         const val LOTTO_NUMBERS_COUNT = 6
         const val LOTTO_NUMBERS_COUNT_ERROR = "[ERROR] 로또의 번호가 6개가 아닙니다."

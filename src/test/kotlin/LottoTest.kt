@@ -37,4 +37,37 @@ class LottoTest {
         }
         assertEquals(Lotto.LOTTO_NUMBER_DUPLICATED_ERROR, exception.message)
     }
+
+    @Test
+    fun `(1,2,3,4,5,6)인 로또와 (1,2,3,4,5,7)인 당첨번호를 비교하여 일치하는 개수인 5를 반환한다`() {
+        // given
+        val lotto = Lotto(
+            listOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6),
+            ),
+        )
+
+        val winningLotto = Lotto(
+            listOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(7),
+            ),
+        )
+
+        // when
+        val actual = lotto.getCountOfMatch(winningLotto)
+        val expected = 5
+
+        // then
+        assertEquals(expected, actual)
+    }
 }
