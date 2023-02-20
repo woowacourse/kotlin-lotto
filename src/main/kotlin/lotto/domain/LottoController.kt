@@ -18,8 +18,11 @@ class LottoController(
     fun start() {
         val money = getMoney()
         val numberOfLotto = money.getNumberOfLotto()
+
         val manualNumberOfLotto = getNumberOfManualLotto(numberOfLotto)
         val manualLotto = getManualLotto(manualNumberOfLotto)
+
+        val autoNumberOfLotto = numberOfLotto - manualNumberOfLotto
 
         outputView.printPurchase(numberOfLotto)
         val myLotto = getUserLotto(numberOfLotto)
