@@ -1,3 +1,5 @@
+package domaintest.modeltest
+
 import domain.model.LottoResult
 import domain.model.WinningLotto
 import domain.model.lotto.Lotto

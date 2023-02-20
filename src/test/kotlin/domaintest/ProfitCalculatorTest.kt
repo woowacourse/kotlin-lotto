@@ -1,3 +1,5 @@
+package domaintest
+
 import domain.ProfitCalculator
 import domain.model.LottoResult
 import domain.model.PurchaseMoney

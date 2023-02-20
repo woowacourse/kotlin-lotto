@@ -1,3 +1,5 @@
+package domaintest
+
 import domain.LottoCustomer
 import domain.model.PurchaseMoney
 import org.assertj.core.api.Java6Assertions.assertThat

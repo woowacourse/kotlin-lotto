@@ -1,4 +1,4 @@
-package lottogenerator
+package domaintest.lottogeneratortest
 
 import domain.lottogenerator.ManualLottoGenerator
 import domain.model.lotto.Lotto

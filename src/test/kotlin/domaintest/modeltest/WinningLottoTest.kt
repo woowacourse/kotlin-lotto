@@ -1,3 +1,5 @@
+package domaintest.modeltest
+
 import domain.model.WinningLotto
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
@@ -44,5 +46,4 @@ class WinningLottoTest {
             WinningLotto(catchLotto, bonusNumber)
         }
     }
-
 }

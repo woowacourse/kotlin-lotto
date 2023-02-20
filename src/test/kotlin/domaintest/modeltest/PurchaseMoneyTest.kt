@@ -1,3 +1,5 @@
+package domaintest.modeltest
+
 import domain.model.PurchaseMoney
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -6,8 +8,8 @@ import org.junit.jupiter.api.assertThrows
 class PurchaseMoneyTest {
 
     @Test
-    fun `1000원 단위의 돈인 경우`(){
-        assertDoesNotThrow{
+    fun `1000원 단위의 돈인 경우`() {
+        assertDoesNotThrow {
             PurchaseMoney(15000)
         }
     }

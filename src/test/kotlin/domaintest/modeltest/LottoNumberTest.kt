@@ -1,3 +1,5 @@
+package domaintest.modeltest
+
 import domain.model.lotto.LottoNumber
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
