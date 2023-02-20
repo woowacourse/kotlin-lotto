@@ -49,7 +49,7 @@ class LottoGameController(
     }
 
     private fun purchaseLottos(purchasedMoney: Money): List<PurchasedLotto> =
-        LottoMachine().purchaseLottos(purchasedMoney)
+        LottoMachine().purchaseAutoLottos(purchasedMoney)
 
     private fun inputLastWeekWinningNumbers(): List<LottoNumber> =
         inputView.inputLastWeekWinningNumbers().map { LottoNumber.from(it) }

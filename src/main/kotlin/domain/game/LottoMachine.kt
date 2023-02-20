@@ -8,7 +8,7 @@ import util.common.constant.ERROR_PREFIX
 import util.common.generateDistinctRandomNumbers
 
 class LottoMachine {
-    fun purchaseLottos(money: Money): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
+    fun purchaseAutoLottos(money: Money): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
         val lottoCount = money.divideByThousand()
 
         repeat(lottoCount) {
