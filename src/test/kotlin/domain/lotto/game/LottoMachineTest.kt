@@ -49,6 +49,18 @@ class LottoMachineTest {
         }
     }
 
+    @ParameterizedTest
+    @MethodSource("provideInsufficientMoneyAndLottoSizeAndLottoNumbers")
+    fun `구매 금액이 로또 가격의 총 합보다 작을 때, purchaseManualLottos 호출시, IllegalArgumentException이 발생한다`(
+        money: Money,
+        lottoSize: LottoSize,
+        lottoNumbers: List<List<LottoNumber>>,
+    ) {
+        assertThrows<IllegalArgumentException> {
+            lottoMachine.purchaseManualLottos(money, lottoSize, lottoNumbers)
+        }
+    }
+
     companion object {
         @JvmStatic
         fun provideMoneyAndDividedByThousandValue(): List<Arguments> = listOf(
@@ -85,6 +97,19 @@ class LottoMachineTest {
             Arguments.of(
                 Money(10000),
                 LottoSize.from("4"),
+                listOf(
+                    listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) },
+                    listOf(1, 5, 10, 20, 40, 44).map { LottoNumber(it) },
+                    listOf(45, 44, 43, 42, 41, 40).map { LottoNumber(it) }
+                )
+            )
+        )
+
+        @JvmStatic
+        fun provideInsufficientMoneyAndLottoSizeAndLottoNumbers(): List<Arguments> = listOf(
+            Arguments.of(
+                Money(1000),
+                LottoSize.from("3"),
                 listOf(
                     listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) },
                     listOf(1, 5, 10, 20, 40, 44).map { LottoNumber(it) },
