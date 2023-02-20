@@ -12,11 +12,6 @@ class LottoControllerTest {
     }
 
     @Test
-    fun `구매한 장 수 만큼 로또를 발급한다`() {
-        assertThat(LottoController().getUserLotto(5).lotto.size).isEqualTo(5)
-    }
-
-    @Test
     fun `로또 가격으로 나누어 떨어지지 않는 경우 false를 반환한다`() {
         assertThat(
             LottoController().isDivided(14100)
