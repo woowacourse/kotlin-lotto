@@ -11,8 +11,9 @@ class PurchasedLottosTest {
         // given
         val lottos = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6)))
         val purchaseMoney = PurchaseMoney(1000)
+        val lottoCount = purchaseMoney.calculateLottoCount()
         val lottoNumberGenerator = SequentialLottoNumberGenerator(lottos)
-        val purchasedLottos = PurchasedLottos.from(purchaseMoney, lottoNumberGenerator)
+        val purchasedLottos = PurchasedLottos.from(lottoCount, lottoNumberGenerator)
         val winLotto = WinLotto(lottos[0], LottoNumber.from(7))
 
         // when
