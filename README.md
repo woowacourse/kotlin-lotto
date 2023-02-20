@@ -42,9 +42,7 @@
   - [x] 0미만일 경우 IllegalArgumentException이 발생한다.
 
 ### 리팩터링
-- [ ] divideByThousand() Exception 메시지 일반화한다.
-- [ ] Money 클래스로 원시값을 포장하고, 1000으로 나누는 기능 구현한다.
-- [ ] validateNumeric(), validateWinningNumbersIsNumeric()를 InputView에서 domain 모델에서 처리하도록 수정한다.
+- [x] Money 클래스로 원시값을 포장하고, 1000으로 나누는 기능 구현한다.
 - [x] judgeEitherSecondOrThird() 특정 등수에 구애받지 않도록 변경한다.
 - [x] LottoController에서 멤버 변수를 사용하지 않는 구조로 변경한다.
 - [x] LottoGame 변수명 앞에 언더바 제거한다.

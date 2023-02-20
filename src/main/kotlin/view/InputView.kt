@@ -1,13 +1,14 @@
 package view
 
+import domain.money.Money
 import util.validator.InputValidator
 
 class InputView(
     private val inputValidator: InputValidator
 ) {
-    fun inputPurchasingMoney(): Int {
+    fun inputPurchasingMoney(): Money {
         println(PURCHASING_MONEY_INPUT_MESSAGE)
-        return inputValidator.validateNumeric(readln().trim())
+        return Money(inputValidator.validateNumeric(readln().trim()))
     }
 
     fun inputLastWeekWinningNumbers(): List<Int> {

@@ -5,6 +5,7 @@ import domain.game.LottoMachine
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
+import domain.money.Money
 import domain.rank.Rank
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -21,7 +22,7 @@ class LottoGameTest {
     @Test
     fun `매치 결과와 투자 금액이 주어졌을 때, calculateIncomeRate 호출시, 수익률을 반환한다`() {
         val actual = lottoGame.calculateIncomeRate(
-            mapOf(Rank.FIFTH to 1), 14000
+            mapOf(Rank.FIFTH to 1), Money(14000)
         )
         Assertions.assertEquals(0.35, actual)
     }

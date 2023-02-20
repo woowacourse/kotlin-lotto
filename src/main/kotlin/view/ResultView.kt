@@ -17,11 +17,41 @@ class ResultView {
         println(WINNING_RATE_TITLE)
         println(DIVIDER)
 
-        println(RANK_PRINT_FORMAT.format(Rank.FIFTH.countOfMatch, Rank.FIFTH.winningMoney, resultRank[Rank.FIFTH] ?: DEFAULT_MATCHED_SIZE))
-        println(RANK_PRINT_FORMAT.format(Rank.FOURTH.countOfMatch, Rank.FOURTH.winningMoney, resultRank[Rank.FOURTH] ?: DEFAULT_MATCHED_SIZE))
-        println(RANK_PRINT_FORMAT.format(Rank.THIRD.countOfMatch, Rank.THIRD.winningMoney, resultRank[Rank.THIRD] ?: DEFAULT_MATCHED_SIZE))
-        println(RANK_PRINT_FORMAT.format(Rank.SECOND.countOfMatch, Rank.SECOND.winningMoney, resultRank[Rank.SECOND] ?: DEFAULT_MATCHED_SIZE))
-        println(RANK_PRINT_FORMAT.format(Rank.FIRST.countOfMatch, Rank.FIRST.winningMoney, resultRank[Rank.FIRST] ?: DEFAULT_MATCHED_SIZE))
+        println(
+            RANK_PRINT_FORMAT.format(
+                Rank.FIFTH.countOfMatch,
+                Rank.FIFTH.winningMoney,
+                resultRank[Rank.FIFTH] ?: DEFAULT_MATCHED_SIZE
+            )
+        )
+        println(
+            RANK_PRINT_FORMAT.format(
+                Rank.FOURTH.countOfMatch,
+                Rank.FOURTH.winningMoney,
+                resultRank[Rank.FOURTH] ?: DEFAULT_MATCHED_SIZE
+            )
+        )
+        println(
+            RANK_PRINT_FORMAT.format(
+                Rank.THIRD.countOfMatch,
+                Rank.THIRD.winningMoney,
+                resultRank[Rank.THIRD] ?: DEFAULT_MATCHED_SIZE
+            )
+        )
+        println(
+            RANK_PRINT_FORMAT.format(
+                Rank.SECOND.countOfMatch,
+                Rank.SECOND.winningMoney,
+                resultRank[Rank.SECOND] ?: DEFAULT_MATCHED_SIZE
+            )
+        )
+        println(
+            RANK_PRINT_FORMAT.format(
+                Rank.FIRST.countOfMatch,
+                Rank.FIRST.winningMoney,
+                resultRank[Rank.FIRST] ?: DEFAULT_MATCHED_SIZE
+            )
+        )
         print(TOTAL_INCOME_RATE_FORMAT.format(incomeRate))
         if (incomeRate < 0.0) println(LOSS_MESSAGE)
     }

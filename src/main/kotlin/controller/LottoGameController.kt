@@ -4,6 +4,7 @@ import domain.game.LottoGame
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
+import domain.money.Money
 import view.InputView
 import view.ResultView
 
@@ -20,7 +21,7 @@ class LottoGameController(
         matchLottos(purchasedLottos, purchasedMoney)
     }
 
-    private fun matchLottos(purchasedLottos: List<PurchasedLotto>, purchasedMoney: Int) {
+    private fun matchLottos(purchasedLottos: List<PurchasedLotto>, purchasedMoney: Money) {
         val winningNumbers = inputView.inputLastWeekWinningNumbers()
         val bonusNumber = inputView.inputBonusBallNumber()
         val winningLotto = WinningLotto(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))

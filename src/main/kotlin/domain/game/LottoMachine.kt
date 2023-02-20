@@ -3,11 +3,11 @@ package domain.game
 import domain.lotto.Lotto
 import domain.lotto.PurchasedLotto
 import domain.lotto.number.LottoNumber
-import util.common.divideByThousand
+import domain.money.Money
 import util.common.generateDistinctRandomNumbers
 
 class LottoMachine {
-    fun purchaseLottos(money: Int): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
+    fun purchaseLottos(money: Money): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
         val lottoCount = money.divideByThousand()
 
         repeat(lottoCount) {
