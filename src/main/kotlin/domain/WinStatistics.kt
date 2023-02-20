@@ -2,8 +2,9 @@ package domain
 
 import domain.lotto.LottoBundle
 
-class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle) {
+class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle, spentMoney: Money) {
     val rankCount: Map<Rank, Int>
+    val earningRate: Double = calculateEarningRate(spentMoney)
 
     init {
         rankCount = purchasedLottoBundle
@@ -20,7 +21,7 @@ class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoB
         )
     }
 
-    fun calculateEarningRate(spentMoney: Money): Double {
+    private fun calculateEarningRate(spentMoney: Money): Double {
         return getTotalIncome() / spentMoney
     }
 

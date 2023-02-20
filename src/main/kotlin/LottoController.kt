@@ -4,23 +4,16 @@ import domain.WinStatistics
 import domain.WinningNumbers
 import domain.lotto.Lotto
 import domain.lotto.LottoNumber
+import view.InputRequestView
 import view.InputView
-import view.OutputView
-import view.UI
+import view.ResultOutputView
 
 class LottoController {
 
     fun runLottoGame() {
         val purchaser = Purchaser(getMoney())
-        val winStatistics = WinStatistics(getWinningNumbers(), purchaser.purchasedLottoBundle)
-        printOutputView(purchaser, winStatistics)
-    }
-
-    private fun printOutputView(purchaser: Purchaser, winStatistics: WinStatistics) {
-        OutputView.printPurchasedLottoCount(purchaser.numberOfPurchasedLotto)
-        OutputView.printPurchasedLotto(purchaser.purchasedLottoBundle)
-        OutputView.printWinStatistics(winStatistics)
-        OutputView.printEarningRate(winStatistics.calculateEarningRate(purchaser.purchasedMoney))
+        val winStatistics = WinStatistics(getWinningNumbers(), purchaser.purchasedLottoBundle, purchaser.spentMoney)
+        ResultOutputView.printResult(purchaser, winStatistics)
     }
 
     private fun getWinningNumbers(): WinningNumbers {
@@ -30,19 +23,19 @@ class LottoController {
     }
 
     private fun getMoney(): Money {
-        UI.printRequestMoney()
+        InputRequestView.printRequestMoney()
         val money = InputView.inputMoney()
         return Money(money)
     }
 
     private fun getWinningLotto(): Lotto {
-        UI.printRequestWinningNumbers()
+        InputRequestView.printRequestWinningNumbers()
         val winningNumbers = InputView.inputWinningNumbers()
         return Lotto(winningNumbers)
     }
 
     private fun getBonusNumber(): LottoNumber {
-        UI.printRequestBonusNumber()
+        InputRequestView.printRequestBonusNumber()
         val bonusNumber = InputView.inputBonusNumber()
         return LottoNumber.of(bonusNumber)
     }
