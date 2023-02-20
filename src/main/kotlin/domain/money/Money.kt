@@ -7,7 +7,9 @@ class Money(val amount: Int) {
         require(amount >= MIN_AMOUNT) { ERROR_MESSAGE_NEGATIVE_AMOUNT }
     }
 
-    fun divideByThousand() = amount.div(THOUSAND)
+    fun divideBy(divisor: Money) = amount.div(divisor.amount)
+
+    fun isGreaterThan(other: Money): Boolean = (this.amount >= other.amount)
 
     companion object {
         private const val MIN_AMOUNT = 0
