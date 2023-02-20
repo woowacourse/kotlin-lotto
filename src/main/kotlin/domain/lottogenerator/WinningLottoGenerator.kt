@@ -3,8 +3,10 @@ package domain.lottogenerator
 import domain.model.WinningLotto
 import domain.model.lotto.LottoNumber
 
-class WinningLottoGenerator : ManualLottoGenerator() {
+class WinningLottoGenerator(
+    private val manualLottoGenerator: ManualLottoGenerator = ManualLottoGenerator()
+) {
 
     fun generateWinningLotto(InputNumbers: List<Int>, bonusNumber: Int): WinningLotto =
-        WinningLotto(generate(InputNumbers), LottoNumber.from(bonusNumber))
+        WinningLotto(manualLottoGenerator.generate(InputNumbers), LottoNumber.from(bonusNumber))
 }
