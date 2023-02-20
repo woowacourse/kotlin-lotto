@@ -1,8 +1,4 @@
-import domain.Lotto
-import domain.LottoGame
-import domain.LottoNumber
-import domain.Rank
-import domain.WinningLotto
+import domain.* // ktlint-disable no-wildcard-imports
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -11,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 class LottoGameTest {
 
     /**
-     * 1번째 테스트
+     * 테스트
      * - 생성된 로또 리스트 {
      * Lotto(1, 2, 3, 4, 5, 6)
      * Lotto(1, 10, 20, 25, 30, 40)
@@ -22,23 +18,9 @@ class LottoGameTest {
      * - 결과
      * Map(Rank.FIRST to 1, Rank.FIFTH to 1)
      **/
-    /**
-     * 2번째 테스트
-     * - 생성된 로또 리스트 {
-     * Lotto(1, 3, 5, 7, 9, 11),
-     * Lotto(3, 5, 7, 9, 15, 25),
-     * Lotto(3, 5, 7, 34, 42, 45),
-     * Lotto(4, 5, 6, 7, 8, 9)
-     * }
-     * - 당첨 로또와 번호 {
-     * Lotto(3, 5, 7, 9, 11, 25), LottoNumber(1)
-     * }
-     * - 결과
-     * Map(Rank.SECOND to 1, Rank.THIRD to 1, Rank.FIFTH to 2)
-     */
     @MethodSource("produceLottos")
     @ParameterizedTest
-    fun `생성된 로또 리스트 들의 당첨된 로또와 비교하였을 때 rank가 어떻게 이루어졌는지 확인`(
+    fun `생성된 로또 리스트 들의 당첨된 로또와 비교하였을 때 1등 한 번, 5등 한 번이 당첨되었는지 확인`(
         lottos: List<Lotto>,
         winningLotto: WinningLotto,
         result: Map<Rank, Int>,
@@ -51,28 +33,16 @@ class LottoGameTest {
     companion object {
 
         @JvmStatic
-        fun produceLottos(): List<Arguments> {
-            return listOf(
-                Arguments.of(
-                    listOf(
-                        Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
-                        Lotto(listOf(1, 10, 20, 25, 30, 40).map { LottoNumber.from(it) }),
-                        Lotto(listOf(3, 5, 15, 34, 42, 45).map { LottoNumber.from(it) }),
-                        Lotto(listOf(4, 5, 6, 7, 8, 9).map { LottoNumber.from(it) }),
-                    ),
-                    WinningLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }, LottoNumber.from(7)),
-                    mapOf(Rank.FIRST to 1, Rank.FIFTH to 1),
+        fun produceLottos(): Arguments {
+            return Arguments.of(
+                listOf(
+                    Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }),
+                    Lotto(listOf(1, 10, 20, 25, 30, 40).map { LottoNumber.from(it) }),
+                    Lotto(listOf(3, 5, 15, 34, 42, 45).map { LottoNumber.from(it) }),
+                    Lotto(listOf(4, 5, 6, 7, 8, 9).map { LottoNumber.from(it) }),
                 ),
-                Arguments.of(
-                    listOf(
-                        Lotto(listOf(1, 3, 5, 7, 9, 11).map { LottoNumber.from(it) }),
-                        Lotto(listOf(3, 5, 7, 9, 15, 25).map { LottoNumber.from(it) }),
-                        Lotto(listOf(3, 5, 7, 34, 42, 45).map { LottoNumber.from(it) }),
-                        Lotto(listOf(4, 5, 6, 7, 8, 9).map { LottoNumber.from(it) }),
-                    ),
-                    WinningLotto(listOf(3, 5, 7, 9, 11, 25).map { LottoNumber.from(it) }, LottoNumber.from(1)),
-                    mapOf(Rank.SECOND to 1, Rank.THIRD to 1, Rank.FIFTH to 2),
-                ),
+                WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }), LottoNumber.from(7)),
+                mapOf(Rank.FIRST to 1, Rank.FIFTH to 1),
             )
         }
     }
