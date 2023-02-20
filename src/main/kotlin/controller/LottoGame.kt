@@ -25,7 +25,7 @@ class LottoGame {
     }
 
     private fun initGame(money: Money): Lottos {
-        val lottos = RandomLottoGenerator().generateLottos(money.lottoCount(money.price))
+        val lottos = RandomLottoGenerator().generateLottos(money.lottoCount())
         output.outputLottos(lottos)
         return lottos
     }

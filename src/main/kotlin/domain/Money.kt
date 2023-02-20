@@ -7,7 +7,7 @@ class Money(val price: Int) {
         require(price % LOTTO_PRICE == MIN_PRICE) { INPUT_MONEY_NOT_DIVIDE_ERROR_MESSAGE }
     }
 
-    fun lottoCount(price: Int): Int {
+    fun lottoCount(): Int {
         return price / LOTTO_PRICE
     }
 
