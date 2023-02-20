@@ -9,9 +9,10 @@ class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
 
     fun match(lottos: List<Lotto>): LottoResult =
         LottoResult(
-            Rank.values().associateWith { rank ->
-                lottos.count { rank == Rank.valueOf(it.countMatch(lotto), it.contains(bonusNumber)) }
-            }.filterValues { it > 0 },
+            lottos
+                .map { Rank.valueOf(it.countMatch(lotto), it.contains(bonusNumber)) }
+                .groupBy { it }
+                .mapValues { it.value.size },
         )
 
     override fun toString(): String = lotto.toString() + bonusNumber.toString()
