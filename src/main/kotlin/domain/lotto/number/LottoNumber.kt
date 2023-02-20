@@ -1,6 +1,6 @@
 package domain.lotto.number
 
-class LottoNumber(val value: Int) {
+data class LottoNumber(val value: Int) {
     init {
         validateLottoNumberRange()
     }
