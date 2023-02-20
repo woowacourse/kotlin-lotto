@@ -14,14 +14,18 @@ import view.OutputView
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
 
     fun run() {
-        val amount = askAmount()
-        val count = askManualCount(amount)
-        val manualLottos = buyManualLotto(count)
-        val autoLottos = buyAutoLotto(Amount(amount - count * LOTTO_PRICE))
-        outputView.outputLottos(manualLottos, autoLottos)
-        val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
-        val result = LottoResult.of(manualLottos + autoLottos, winningLotto)
-        outputView.outputResult(result)
+        runCatching {
+            val amount = askAmount()
+            val count = askManualCount(amount)
+            val manualLottos = buyManualLotto(count)
+            val autoLottos = buyAutoLotto(Amount(amount - count * LOTTO_PRICE))
+            outputView.outputLottos(manualLottos, autoLottos)
+            val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
+            val result = LottoResult.of(manualLottos + autoLottos, winningLotto)
+            outputView.outputResult(result)
+        }.onFailure {
+            outputView.outputError(it.message)
+        }
     }
 
     private fun askAmount(): Amount {

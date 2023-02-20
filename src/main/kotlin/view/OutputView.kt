@@ -44,4 +44,8 @@ class OutputView {
         }
         println("총 수익률은 ${lottoResult.getRateOfReturn()}입니다.")
     }
+
+    fun outputError(e: String?) {
+        println(e ?: "알 수 없는 에러입니다.")
+    }
 }
