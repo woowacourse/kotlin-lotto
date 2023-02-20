@@ -15,6 +15,10 @@ object WinningCalculator {
     }
 
     fun getEarningRate(purchase: Int, winning: Int): String {
+        if (purchase == 0) {
+            return "0"
+        }
+
         val decimalFormat = DecimalFormat("#.##")
         return decimalFormat.format(winning.toDouble() / purchase)
     }
