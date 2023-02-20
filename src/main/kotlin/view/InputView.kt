@@ -7,10 +7,8 @@ object InputView {
         return readLine()?.toLongOrNull() ?: throw IllegalArgumentException("[Error] 1000원 단위의 금액으로 입력해야합니다.")
     }
 
-    fun inputWinningNumbers(): List<Int> {
-        return (readLine() ?: throw IllegalArgumentException("[Error] null값이 입력되었습니다."))
-            .split(SEPARATOR)
-            .map { it.toIntOrNull() ?: throw IllegalArgumentException("[Error] 숫자를 입력해야합니다.") }
+    fun inputWinningNumbers(): List<String> {
+        return (readLine() ?: throw IllegalArgumentException("[Error] null값이 입력되었습니다.")).split(SEPARATOR)
     }
 
     fun inputBonusNumber(): Int {

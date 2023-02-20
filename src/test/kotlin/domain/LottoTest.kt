@@ -1,10 +1,52 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 
 class LottoTest {
+    @Test
+    fun `랜덤 생성시 로또 번호를 6개 가진 로또 객체가 생성된다`() {
+        // given
+        val lottoNumbers = setOf(
+            LottoNumber.of(1),
+            LottoNumber.of(2),
+            LottoNumber.of(3),
+            LottoNumber.of(4),
+            LottoNumber.of(5),
+            LottoNumber.of(6)
+        )
+
+        // when
+        val lotto = Lotto(lottoNumbers)
+
+        // then
+        assertThat(lotto.lottoNumbers).isEqualTo(lottoNumbers)
+    }
+
+    @Test
+    fun `부생성자로 생성시 로또 번호를 6개 가진 로또 객체가 생성된다`() {
+        // given
+        val lottoNumbers = listOf("1", "2", "3", "4", "5", "6")
+
+        // when
+        val lotto = Lotto(lottoNumbers)
+
+        // then
+        assertThat(lotto.lottoNumbers).isEqualTo(
+            setOf(
+                LottoNumber.of(1),
+                LottoNumber.of(2),
+                LottoNumber.of(3),
+                LottoNumber.of(4),
+                LottoNumber.of(5),
+                LottoNumber.of(6),
+            )
+        )
+    }
+
+
     @Test
     fun `로또 번호가 6개가 아니라면 에러 발생`() {
         // given
@@ -24,20 +66,26 @@ class LottoTest {
     }
 
     @Test
-    fun `로또 번호는 6개를 가지고 있어야한다`() {
+    fun `로또 번호가 중복된다면 에러 발생`() {
         // given
-        val lottoNumbers = setOf(
-            LottoNumber.of(1),
-            LottoNumber.of(2),
-            LottoNumber.of(3),
-            LottoNumber.of(4),
-            LottoNumber.of(5),
-            LottoNumber.of(6)
-        )
+        val lottoNumbers = listOf<String>("1", "2", "3", "4", "5", "5", "6")
 
         // when
 
         // then
-        assertDoesNotThrow { Lotto(lottoNumbers) }
+        assertThatIllegalArgumentException()
+            .isThrownBy { Lotto(lottoNumbers) }
+            .withMessageContaining("[Error] 중복된 수가 있습니다.")
+    }
+
+    @Test
+    fun `로또에 숫자가 아닌 것이 들어오면 에러 발생`() {
+        // given
+        val lottoNumbers = listOf<String>("a", "2", "3", "4", "5", "6")
+
+        // when
+
+        // then
+        assertThrows<NumberFormatException> { Lotto(lottoNumbers) }
     }
 }
