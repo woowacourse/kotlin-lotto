@@ -13,7 +13,7 @@ class PurchaseMoney(
         }
     }
 
-    private fun Int.validateMoneyUnit() = this % LOTTO_PRICE == 0
+    private fun Int.validateMoneyUnit() = this % LOTTO_PRICE == ZERO
 
     fun getLottosCountToPurchase(): Int = money / LOTTO_PRICE
 
