@@ -2,7 +2,7 @@ package lotto.view
 
 import lotto.model.LottoNumber
 
-class InputView {
+object InputView {
     fun getNumber(): Int {
         val input = readlnOrNull()?.trim()
         val result = getInput(input!!.isNumber(), input)
