@@ -5,6 +5,7 @@ import domain.game.LottoMachine
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
+import domain.lotto.size.LottoSize
 import domain.money.Money
 import view.InputView
 import view.ResultView
@@ -27,12 +28,16 @@ class LottoGameController(
 
     private fun purchaseLotto(): Pair<Money, List<PurchasedLotto>> {
         val money = inputPurchasingMoney()
+        val manualLottoSize = inputPurchasingManualLottoSize()
         val purchasedLottos = purchaseLottos(money)
         printPurchasedLotto(purchasedLottos)
         return Pair(money, purchasedLottos)
     }
 
     private fun inputPurchasingMoney(): Money = inputView.inputPurchasingMoney()
+
+    private fun inputPurchasingManualLottoSize(): LottoSize =
+        inputView.inputPurchasingManualLottoSize()
 
     private fun inputWinnings(): Pair<LottoNumber, WinningLotto> {
         val winningLottoNumbers = inputLastWeekWinningNumbers()

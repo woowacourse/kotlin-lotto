@@ -21,4 +21,12 @@ internal class LottoSizeTest {
             LottoSize.from(size)
         }
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["ㄱ", "ㄴ", "부나", "테스트"])
+    fun `문자열이 숫자가 아닐 때, LottoSize_from() 호출시, IllegalArgumentException이 발생한다`(size: String) {
+        assertThrows<IllegalArgumentException> {
+            LottoSize.from(size)
+        }
+    }
 }
