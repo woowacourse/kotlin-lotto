@@ -6,6 +6,7 @@ import domain.Lotto
 import domain.LottoNumber
 import domain.LottoResult
 import domain.LottoStore
+import domain.LottoStore.Companion.LOTTO_PRICE
 import domain.WinningLotto
 import view.InputView
 import view.OutputView
@@ -15,8 +16,8 @@ class LottoController(private val inputView: InputView, private val outputView: 
     fun run() {
         val amount = askAmount()
         val count = askManualCount(amount)
-        val manualLottos = askManualLotto(count)
-        val autoLottos = buyAutoLotto(amount, count)
+        val manualLottos = buyManualLotto(count)
+        val autoLottos = buyAutoLotto(Amount(amount - count * LOTTO_PRICE))
         outputView.outputLottos(manualLottos, autoLottos)
         val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
         val result = LottoResult.of(manualLottos + autoLottos, winningLotto)
@@ -33,16 +34,16 @@ class LottoController(private val inputView: InputView, private val outputView: 
         return Count(inputView.inputCount(), amount)
     }
 
-    private fun askManualLotto(count: Count): List<Lotto> {
+    private fun buyManualLotto(count: Count): List<Lotto> {
         outputView.outputGetManualLottos()
         return (1..count.toInt()).map {
             Lotto.create(inputView.inputManualLotto())
         }
     }
 
-    private fun buyAutoLotto(amount: Amount, manualCount: Count): List<Lotto> {
+    private fun buyAutoLotto(amount: Amount): List<Lotto> {
         val store = LottoStore()
-        return store.buyLotto(amount, manualCount)
+        return store.buyAutoLotto(amount)
     }
 
     private fun askWinningNumbers(): Lotto {
