@@ -7,7 +7,7 @@ value class Money(val amount: Long) {
     constructor(amount: Int) : this(amount.toLong())
 
     init {
-        require((amount % 1000L == 0L) and (amount != 0L)) { "$PREFIX 받은 돈이 1000원 단위여야합니다." }
+        require((amount % 1000L == 0L) and (amount != 0L)) { "$PREFIX 받은 돈이 1000원 단위여야합니다. 들어온 돈은 ${amount}입니다" }
     }
 
     operator fun plus(otherMoney: Money): Money {
