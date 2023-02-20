@@ -48,9 +48,9 @@ class LottoController(private val lottoFactory: LottoFactory) {
         }
     }
 
-    private fun getMainLottoNumber(): List<LottoNumber> {
+    private fun getMainLottoNumber(): Lotto {
         return kotlin.runCatching {
-            InputView.getMainLottoNumbers().map { LottoNumber(it) }
+            Lotto(InputView.getMainLottoNumbers().map { LottoNumber(it) }.toSet())
         }.getOrElse {
             println(ERROR_NOT_NUMBER)
             getMainLottoNumber()

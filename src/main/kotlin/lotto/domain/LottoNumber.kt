@@ -5,6 +5,21 @@ class LottoNumber(val value: Int) {
         require(value in LOTTO_MINIMUM_NUMBER..LOTTO_MAXIMUM_NUMBER) { LOTTO_NUMBER_RANGE_ERROR }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as LottoNumber
+
+        if (value != other.value) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return value
+    }
+
     companion object {
         const val LOTTO_MINIMUM_NUMBER = 1
         const val LOTTO_MAXIMUM_NUMBER = 45
