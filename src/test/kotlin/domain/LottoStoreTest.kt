@@ -10,33 +10,23 @@ class LottoStoreTest {
     private val lottoStore = LottoStore(RandomLottoGenerator)
 
     @Test
-    fun `수동 로또를 구매한다`() {
-        val money = Money.from(1000)
-        val lotto: List<Lotto> = lottoStore.buyManualLotto(money, Lotto(1, 2, 3, 4, 5, 6))
-        assertThat(lotto.size).isEqualTo(1)
+    fun `원하는 번호들의 수동 로또들을 구매한다`() {
+        val money = Money.from(2000)
+        val lottos: List<Lotto> = lottoStore.buyManualLotto(money, Lotto(1, 2, 3, 4, 5, 6), Lotto(1, 11, 22, 33, 44, 45))
+        assertThat(lottos.size).isEqualTo(2)
+        assertThat(lottos[0].toList().map { it.number }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+        assertThat(lottos[1].toList().map { it.number }).isEqualTo(listOf(1, 11, 22, 33, 44, 45))
     }
 
     @Test
-    fun `자동 로또를 구매한다`() {
-        val money = Money.from(10000)
-        val lotto: List<Lotto> = lottoStore.buyAutoLotto(money)
-        assertThat(lotto.size).isEqualTo(10)
-    }
-
-    @Test
-    fun `구입 금액보다 많은 수동 로또를 구매하려고 한다`() {
-        val money = Money.from(1000)
-        Assertions.assertThatIllegalArgumentException()
-            .isThrownBy { lottoStore.buyManualLotto(money, Lotto(1, 2, 3, 4, 5, 6), Lotto(1, 2, 3, 4, 5, 6)) }
-            .withMessage("구입 금액보다 많은 로또를 구매할 수 없습니다.\n잘못된 값: 1000")
-    }
-
-    @Test
-    fun `구입 금액보다 적은 자동 로또를 구매하려고 한다`() {
-        val money = Money.from(999)
-        Assertions.assertThatIllegalArgumentException()
-            .isThrownBy { lottoStore.buyAutoLotto(money) }
-            .withMessage("최소 금액보다 적은 돈으로 로또를 구매할 수 없습니다.\n잘못된 값: 999")
+    fun `자동 로또들을 구매한다`() {
+        val money = Money.from(100000)
+        val lottos: List<Lotto> = lottoStore.buyAutoLotto(money)
+        assertThat(lottos.size).isEqualTo(100)
+        lottos.forEach { lotto ->
+            assertThat(lotto.toList()).hasSize(6)
+            lotto.toList().forEach { assertThat(it.number).isBetween(1, 45) }
+        }
     }
 
     @ParameterizedTest
@@ -47,6 +37,22 @@ class LottoStoreTest {
         val result = lottoStore.createLottos(count)
 
         assertThat(result.size).isEqualTo(count)
+    }
+
+    @Test
+    fun `구입 금액보다 많은 수동 로또를 구매하려 하면 에러가 발생한다`() {
+        val money = Money.from(1000)
+        Assertions.assertThatIllegalArgumentException()
+            .isThrownBy { lottoStore.buyManualLotto(money, Lotto(1, 2, 3, 4, 5, 6), Lotto(1, 2, 3, 4, 5, 6)) }
+            .withMessage("구입 금액보다 많은 로또를 구매할 수 없습니다.\n잘못된 값: 1000")
+    }
+
+    @Test
+    fun `구입 금액보다 적은 자동 로또를 구매하려 하면 에러가 발생한다`() {
+        val money = Money.from(999)
+        Assertions.assertThatIllegalArgumentException()
+            .isThrownBy { lottoStore.buyAutoLotto(money) }
+            .withMessage("최소 금액보다 적은 돈으로 로또를 구매할 수 없습니다.\n잘못된 값: 999")
     }
 
     @ParameterizedTest
