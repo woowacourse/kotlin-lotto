@@ -13,6 +13,10 @@ class Lotto(val numbers: List<LottoNumber>) {
         return numbers.count { winningLotto.numbers.contains(it) }
     }
 
+    fun isContainBonusNumber(bonusNumber: LottoNumber): Boolean {
+        return numbers.contains(bonusNumber)
+    }
+
     companion object {
         const val LOTTO_NUMBERS_COUNT = 6
         const val LOTTO_NUMBERS_COUNT_ERROR = "[ERROR] 로또의 번호가 6개가 아닙니다."
