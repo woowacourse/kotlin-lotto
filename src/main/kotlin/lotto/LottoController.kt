@@ -19,7 +19,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         val purchaseMoney = getPurchaseMoney()
         val lottoBunch = getLottoBunch(purchaseMoney.getPurchaseCount())
         val winningLotto = getWinningLotto()
-        confirmLottoWinning(lottoBunch, winningLotto, purchaseMoney)
+        confirmLottoWinning(purchaseMoney = purchaseMoney, lottoBunch = lottoBunch, winningLotto = winningLotto)
     }
 
     fun getLottoBunch(purchaseCount: Int): LottoBunch {
