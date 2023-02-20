@@ -5,6 +5,7 @@ import lotto.model.LottoNumber
 import lotto.model.UserLotto
 import lotto.model.WinningLotto
 import lotto.model.generator.LottoGenerator
+import lotto.view.ERROR_NOT_ENOUGH_MONEY
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -16,7 +17,7 @@ class LottoController(
     fun start() {
         val money = getMoney()
         val numberOfLotto = getNumberOfLotto(money)
-        val numberOfPassiveLotto = 2
+        val numberOfPassiveLotto = getNumberOfPassiveLotto(numberOfLotto)
         val myLotto = getUserLotto(numberOfPassiveLotto, numberOfLotto)
         outputView.printUserLotto(myLotto)
         wrapUp(myLotto, money)
@@ -40,6 +41,21 @@ class LottoController(
         return UserLotto(lotto)
     }
 
+    private fun getMoney(): Int {
+        return inputView.getNumber { outputView.printInsertMoneyMessage() }
+    }
+
+    private fun getNumberOfPassiveLotto(numberOfLotto: Int): Int {
+        val number = inputView.getNumber { outputView.printInsertPassiveLottoNumber() }
+        return if (
+            runCatching {
+                require(isMoneyEnough(number, numberOfLotto)) { ERROR_NOT_ENOUGH_MONEY }
+            }.onFailure {
+                println(it.message)
+            }.isSuccess
+        ) number else getNumberOfPassiveLotto(numberOfLotto)
+    }
+
     private fun getPassiveLotto(number: Int, lotto: MutableList<Lotto>) {
         outputView.printInsertPassiveLotto()
 
@@ -52,10 +68,6 @@ class LottoController(
         repeat(number) {
             lotto.add(Lotto.create(generator.generate()))
         }
-    }
-
-    private fun getMoney(): Int {
-        return inputView.getNumber { outputView.printInsertMoneyMessage() }
     }
 
     private fun getWinningLotto(lotto: Lotto): WinningLotto {
