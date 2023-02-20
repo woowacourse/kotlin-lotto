@@ -1,6 +1,6 @@
 package domain
 
-class Lotto(private val numbers: Set<LottoNumber>) {
+data class Lotto(private val numbers: Set<LottoNumber>) {
     constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) }.toSet())
 
     init {
@@ -12,20 +12,6 @@ class Lotto(private val numbers: Set<LottoNumber>) {
     fun countMatch(otherLotto: Lotto): Int = numbers.intersect(otherLotto.numbers).size
 
     fun toList() = numbers.toList()
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Lotto
-
-        if (numbers != other.numbers) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return numbers.hashCode()
-    }
 
     companion object {
         const val NUMBER_SIZE = 6
