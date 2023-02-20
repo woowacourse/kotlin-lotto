@@ -22,7 +22,7 @@ object Bank {
         totalPrizeMoney / purchaseMoney.value.toDouble()
 
     fun getRank(lotto: Lotto, winningLotto: WinningLotto): Rank =
-        Rank.convertToGrade(
+        Rank.convertToRank(
             countMatchedMainLottoNumber(lotto, winningLotto),
             checkMatchedBonusLottoNumber(lotto, winningLotto),
         )

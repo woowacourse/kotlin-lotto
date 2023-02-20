@@ -14,22 +14,22 @@ import org.junit.jupiter.params.provider.MethodSource
 class RankTest {
     @Test
     fun `당첨 로또 번호 개수가 5개이고 보너스 번호가 매치되면 2등이다`() {
-        assertThat(Rank.convertToGrade(5, true)).isEqualTo(SECOND)
+        assertThat(Rank.convertToRank(5, true)).isEqualTo(SECOND)
     }
 
     @Test
     fun `당첨 로또 번호 개수가 5개이고 보너스 번호가 매치되지 않으면 3등이다`() {
-        assertThat(Rank.convertToGrade(5, false)).isEqualTo(THIRD)
+        assertThat(Rank.convertToRank(5, false)).isEqualTo(THIRD)
     }
 
     @Test
     fun `당첨 로또 번호 개수가 6개면 보너스 번호에 상관없이 1등이다`() {
-        assertThat(Rank.convertToGrade(6, false)).isEqualTo(FIRST)
+        assertThat(Rank.convertToRank(6, false)).isEqualTo(FIRST)
     }
 
     @Test
     fun `당첨 로또 번호 개수가 4개면 보너스 번호에 상관없이 4등이다`() {
-        assertThat(Rank.convertToGrade(4, true)).isEqualTo(FOURTH)
+        assertThat(Rank.convertToRank(4, true)).isEqualTo(FOURTH)
     }
 
     @MethodSource("provideRanks")

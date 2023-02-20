@@ -10,7 +10,7 @@ enum class Rank(val matchCount: Int, val prizeMoney: Int) {
     ;
 
     companion object {
-        fun convertToGrade(matchCount: Int, bonusMatch: Boolean): Rank {
+        fun convertToRank(matchCount: Int, bonusMatch: Boolean): Rank {
             if (matchCount == 5) {
                 if (bonusMatch) return SECOND
                 return THIRD
