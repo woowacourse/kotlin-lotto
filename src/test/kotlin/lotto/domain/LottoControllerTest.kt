@@ -10,11 +10,4 @@ class LottoControllerTest {
         val money = 14000
         assertThat(LottoController().getNumberOfLotto(money)).isEqualTo(14)
     }
-
-    @Test
-    fun `로또 가격으로 나누어 떨어지지 않는 경우 false를 반환한다`() {
-        assertThat(
-            LottoController().isDivided(14100)
-        ).isFalse
-    }
 }

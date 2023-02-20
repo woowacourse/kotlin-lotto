@@ -98,10 +98,6 @@ class LottoController(
         }.getOrNull()
     }
 
-    fun isDivided(money: Int): Boolean {
-        return money % LOTTO_PRICE == 0
-    }
-
     companion object {
         private const val LOTTO_PRICE = 1000
     }
