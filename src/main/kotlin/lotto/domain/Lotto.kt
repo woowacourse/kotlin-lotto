@@ -16,6 +16,7 @@ class Lotto(val numbers: List<LottoNumber>) {
 
     companion object {
         const val LOTTO_SIZE = 6
+        const val MONEY_UNIT = 1000
         private const val LOTTO_SIZE_ERROR = "로또 번호는 여섯 개여야 합니다."
         private const val LOTTO_DUPLICATE_ERROR = "로또 번호는 중복되면 안됩니다."
     }
