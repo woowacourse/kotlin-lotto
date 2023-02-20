@@ -35,7 +35,7 @@ class BankTest {
     }
 
     @Test
-    fun `보너스 번호가 당첨되었다`() {
+    fun `보너스 번호가 당첨되었을 경우 True를 반환한다`() {
         assertThat(
             Bank.checkMatchedBonusLottoNumber(
                 Lotto(
