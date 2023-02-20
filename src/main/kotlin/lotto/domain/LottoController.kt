@@ -22,18 +22,23 @@ class LottoController(
         wrapUp(myLotto, money)
     }
 
+    private fun getMoney(): Int {
+        return inputView.getNumber { outputView.printInsertMoneyMessage() }
+    }
+
+    fun getNumberOfLotto(money: Int): Int {
+        return money / LOTTO_PRICE
+    }
+
     private fun getUserLottoCount(numberOfLotto: Int): UserLottoCount {
-        val numberOfPassiveLotto = getNumberOfPassiveLotto(numberOfLotto)
+        val numberOfPassiveLotto = getNumberOfPassiveLotto()
         return validateInput {
             UserLottoCount.create(numberOfLotto, numberOfPassiveLotto)
         } ?: getUserLottoCount(numberOfLotto)
     }
 
-    private fun wrapUp(myLotto: UserLotto, money: Int) {
-        val winningLotto = getWinningLotto(getLottoNumber { outputView.printInsertWinningNumber() })
-        val ranks = myLotto.getWinningStatistics(winningLotto)
-        val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
-        outputView.printResult(ranks, rates)
+    private fun getNumberOfPassiveLotto(): Int {
+        return inputView.getNumber { outputView.printInsertPassiveLottoNumber() }
     }
 
     private fun getUserLotto(lottoCount: UserLottoCount): UserLotto {
@@ -44,14 +49,6 @@ class LottoController(
         getAutoLotto(lottoCount.auto, lotto)
 
         return UserLotto(lotto)
-    }
-
-    private fun getMoney(): Int {
-        return inputView.getNumber { outputView.printInsertMoneyMessage() }
-    }
-
-    private fun getNumberOfPassiveLotto(numberOfLotto: Int): Int {
-        return inputView.getNumber { outputView.printInsertPassiveLottoNumber() }
     }
 
     private fun getPassiveLotto(number: Int, lotto: MutableList<Lotto>) {
@@ -68,16 +65,17 @@ class LottoController(
         }
     }
 
+    private fun wrapUp(myLotto: UserLotto, money: Int) {
+        val winningLotto = getWinningLotto(getLottoNumber { outputView.printInsertWinningNumber() })
+        val ranks = myLotto.getWinningStatistics(winningLotto)
+        val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
+        outputView.printResult(ranks, rates)
+    }
+
     private fun getWinningLotto(lotto: Lotto): WinningLotto {
         return validateInput {
             WinningLotto(lotto, getBonusNumber())
         } ?: getWinningLotto(lotto)
-    }
-
-    private fun getBonusNumber(): LottoNumber {
-        return validateInput {
-            LottoNumber.create(inputView.getNumber { outputView.printInsertBonusNumber() })
-        } ?: getBonusNumber()
     }
 
     private fun getLottoNumber(guideMessage: () -> Unit): Lotto {
@@ -86,16 +84,18 @@ class LottoController(
         } ?: getLottoNumber { guideMessage() }
     }
 
+    private fun getBonusNumber(): LottoNumber {
+        return validateInput {
+            LottoNumber.create(inputView.getNumber { outputView.printInsertBonusNumber() })
+        } ?: getBonusNumber()
+    }
+
     private fun <T> validateInput(create: () -> T): T? {
         return runCatching {
             create()
         }.onFailure {
             println(it.message)
         }.getOrNull()
-    }
-
-    fun getNumberOfLotto(money: Int): Int {
-        return money / LOTTO_PRICE
     }
 
     fun isDivided(money: Int): Boolean {
