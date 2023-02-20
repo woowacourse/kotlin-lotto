@@ -5,7 +5,6 @@ import lotto.domain.Lotto
 import lotto.domain.LottoBunch
 import lotto.domain.LottoNumber
 import lotto.domain.PurchaseMoney
-import lotto.domain.Validator.ERROR_INPUT_HANDLER
 import lotto.domain.WinningLotto
 import lotto.domain.WinningResult
 import lotto.domain.factory.LottoFactory
@@ -34,24 +33,27 @@ class LottoController(private val lottoFactory: LottoFactory) {
     private fun getPurchaseMoney(): PurchaseMoney {
         return runCatching {
             PurchaseMoney(InputView.getPurchaseMoney())
-        }.getOrElse { error ->
-            inputErrorHandler(error, ::getPurchaseMoney) as PurchaseMoney
+        }.getOrElse {
+            println(ERROR_NOT_NUMBER)
+            getPurchaseMoney()
         }
     }
 
     private fun getMainLottoNumber(): List<LottoNumber> {
         return kotlin.runCatching {
             InputView.getMainLottoNumbers().map { LottoNumber(it) }
-        }.getOrElse { error ->
-            inputErrorHandler(error, ::getMainLottoNumber) as List<LottoNumber>
+        }.getOrElse {
+            println(ERROR_NOT_NUMBER)
+            getMainLottoNumber()
         }
     }
 
     private fun getBonusLottoNumber(): LottoNumber {
         return runCatching {
             LottoNumber(InputView.getBonusLottoNumber())
-        }.getOrElse { error ->
-            inputErrorHandler(error, ::getBonusLottoNumber) as LottoNumber
+        }.getOrElse {
+            println(ERROR_NOT_NUMBER)
+            getBonusLottoNumber()
         }
     }
 
@@ -59,26 +61,9 @@ class LottoController(private val lottoFactory: LottoFactory) {
         return runCatching {
             WinningLotto(getMainLottoNumber(), getBonusLottoNumber())
         }.getOrElse { error ->
-            inputErrorHandler(error, ::getWinningLotto) as WinningLotto
+            println(error.message)
+            getWinningLotto()
         }
-    }
-
-    private fun inputErrorHandler(
-        error: Throwable,
-        repeatFunction: () -> Any,
-    ): Any {
-        return when (error) {
-            is IllegalArgumentException -> inputIllegalArgumentExceptionHandler(error, repeatFunction)
-            else -> throw IllegalStateException(ERROR_INPUT_HANDLER)
-        }
-    }
-
-    private fun inputIllegalArgumentExceptionHandler(
-        error: Throwable,
-        repeatFunction: () -> Any,
-    ): Any {
-        println(error.message)
-        return repeatFunction()
     }
 
     private fun confirmLottoWinning(lottoBunch: LottoBunch, winningLotto: WinningLotto, purchaseMoney: PurchaseMoney) {
@@ -88,5 +73,9 @@ class LottoController(private val lottoFactory: LottoFactory) {
         OutputView.printWinningResult(winningResult.toString())
 
         OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
+    }
+
+    companion object {
+        private const val ERROR_NOT_NUMBER = "숫자 이외의 입력이 들어갔거나 올바르지 않은 입력입니다."
     }
 }
