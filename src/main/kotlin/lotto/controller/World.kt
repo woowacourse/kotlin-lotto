@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.entity.Lotto
 import lotto.entity.LottoNumber
-import lotto.entity.LottoPrice
 import lotto.entity.Lottos
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
@@ -18,7 +17,6 @@ class World(
     private val inputView: InputView,
     private val outputView: OutputView
 ) {
-    private val lottoPrice = LottoPrice(LottoPrice.DEFAULT_LOTTO_PRICE)
 
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
