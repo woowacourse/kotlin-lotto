@@ -51,7 +51,6 @@ class Controller(
     }
 
     private fun getProfit(purchase: PurchaseAmount, prize: Long): Double {
-        val calculator = ProfitCalculator()
-        return calculator.calculate(purchase, prize)
+        return ProfitCalculator.calculate(purchase, prize)
     }
 }

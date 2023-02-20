@@ -11,11 +11,10 @@ class ProfitCalculatorTest {
     fun `수익률을 계산한다`(amount: Int, numbers: Map<String, Int>, expected: Double, testName: String) {
         println(testName)
 
-        val result = ProfitCalculator()
         val money = PurchaseAmount(amount)
         val counter = RankCounter(numbers)
 
-        val actual = result.calculate(money, counter.calculateTotalPrize())
+        val actual = ProfitCalculator.calculate(money, counter.calculateTotalPrize())
 
         assertThat(actual).isEqualTo(expected)
     }
