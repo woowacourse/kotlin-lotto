@@ -8,5 +8,6 @@ fun main() {
         world.processLotto()
     }.onFailure {
         println("[ERROR]: " + it.message)
+        println(it.stackTraceToString())
     }
 }
