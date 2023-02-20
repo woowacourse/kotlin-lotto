@@ -2,8 +2,7 @@ package domain.lotto.size
 
 import util.common.constant.ERROR_PREFIX
 
-@JvmInline
-value class LottoSize private constructor(val value: Int) {
+data class LottoSize private constructor(val value: Int) {
     init {
         require(value > MIN_LOTTO_SIZE) { ERROR_MESSAGE_NOT_POSITIVE_LOTTO_SIZE }
     }

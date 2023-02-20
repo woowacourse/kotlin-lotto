@@ -2,7 +2,7 @@ package domain.money
 
 import util.common.constant.ERROR_PREFIX
 
-class Money(val amount: Int) {
+data class Money(val amount: Int) {
     init {
         require(amount >= MIN_AMOUNT) { ERROR_MESSAGE_NEGATIVE_AMOUNT }
     }
