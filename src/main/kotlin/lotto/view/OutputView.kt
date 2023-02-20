@@ -12,6 +12,10 @@ class OutputView {
         println(INSERT_MANUAL_LOTTO_NUMBER)
     }
 
+    fun printInsertManualLotto() {
+        println(INSERT_MANUAL_LOTTO)
+    }
+
     fun printPurchase(number: Int) {
         println("$number$PURCHASE")
     }
@@ -61,6 +65,7 @@ class OutputView {
     companion object {
         private const val INSERT_MONEY = "구입금액을 입력해 주세요."
         private const val INSERT_MANUAL_LOTTO_NUMBER = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val INSERT_MANUAL_LOTTO = "수동으로 구매할 번호를 입력해 주세요."
         private const val INSERT_WINNING_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
         private const val INSERT_BONUS_BALL = "보너스 볼을 입력해 주세요."
 
