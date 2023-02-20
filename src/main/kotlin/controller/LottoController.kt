@@ -46,13 +46,26 @@ class LottoController(
     private fun purchaseAutomaticLottos(): List<Lotto> =
         lottoSeller.sellAutoMaticLottos(lottoCustomer.getAutomaticLottosCountToPurchase())
 
+    private fun purchaseLottos(): PurchasedLottos {
+        val purchaseLottos = PurchasedLottos(purchaseManualLottos() + purchaseAutomaticLottos())
+
+        ResultView.printPurchasedLottos(lottoCustomer, purchaseLottos)
+
+        return purchaseLottos
+    }
+
+    private fun getPurchasedLottosResult(purchasedLottos: PurchasedLottos) {
+        val lottoResults = purchasedLottos.getTotalLottoResults(winningLotto)
+        val profit = profitCalculator.getProfit(lottoCustomer.purchaseMoney, lottoResults)
+
+        ResultView.printLottoResults(lottoResults, profit)
+    }
+
     fun run() {
         runCatching {
-            val purchasedLottos = PurchasedLottos(purchaseManualLottos() + purchaseAutomaticLottos())
-            ResultView.printPurchasedLottos(lottoCustomer, purchasedLottos)
-            val lottosResult = purchasedLottos.getTotalLottoResults(winningLotto)
-            val profit = profitCalculator.getProfit(lottoCustomer.purchaseMoney, lottosResult)
-            ResultView.printLottoResults(lottosResult, profit)
+            val purchasedLottos = purchaseLottos()
+
+            getPurchasedLottosResult(purchasedLottos)
         }.onFailure { exception ->
             ResultView.printExceptionMessage(exception)
         }
