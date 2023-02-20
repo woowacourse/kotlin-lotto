@@ -1,7 +1,7 @@
 import domain.Money
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -15,20 +15,16 @@ class MoneyTest {
 
     @Test
     fun `입력된 금액이 음수인 경우`() {
-        assertThat(
-            assertThrows<IllegalArgumentException> {
-                Money(-9000)
-            }.message,
-        ).isEqualTo("금액은 양수여야 합니다.")
+        assertThatIllegalArgumentException()
+            .isThrownBy { Money(-9000) }
+            .withMessageContaining("금액은 양수여야 합니다.")
     }
 
     @Test
     fun `입력된 금액이 1000으로 안나눠지는 경우`() {
-        assertThat(
-            assertThrows<IllegalArgumentException> {
-                Money(925)
-            }.message,
-        ).isEqualTo("금액은 1000원으로 나누어떨어져야 합니다.")
+        assertThatIllegalArgumentException()
+            .isThrownBy { Money(925) }
+            .withMessageContaining("금액은 1000원으로 나누어떨어져야 합니다.")
     }
 
     @ParameterizedTest
