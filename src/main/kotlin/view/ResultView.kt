@@ -13,7 +13,12 @@ object ResultView {
     private const val PURCHASED_LOTTO_TYPE = "수동으로 %s장, 자동으로 %s개를 구매했습니다."
 
     fun printPurchasedLottos(lottoCustomer: LottoCustomer, purchasedLottos: PurchasedLottos) {
-        println(PURCHASED_LOTTO_TYPE.format(lottoCustomer.manualLottosCountToPurchase, lottoCustomer.getAutomaticLottosCountToPurchase()))
+        println(
+            PURCHASED_LOTTO_TYPE.format(
+                lottoCustomer.manualLottosCountToPurchase,
+                lottoCustomer.getAutomaticLottosCountToPurchase()
+            )
+        )
 
         purchasedLottos.lottos.forEach { lotto ->
             val lottoNumbersValue = lotto.numbers.map { lottoNumber ->
@@ -32,6 +37,8 @@ object ResultView {
 
         println(PROFIT_RESULT.format(profit))
     }
+
+    fun printExceptionMessage(exception: Throwable) = println(exception.message)
 
     private fun LottoResult.formatMatchResult(lottoResults: List<LottoResult>): String =
         MATCH_RESULT.format(
