@@ -8,8 +8,8 @@ class OutputView {
         println(INSERT_MONEY)
     }
 
-    fun printPurchase(number: Int) {
-        println("$number$PURCHASE")
+    fun printPurchase(passive: Int, active: Int) {
+        println(PURCHASE.format(passive, active))
     }
 
     fun printUserLotto(userLotto: UserLotto) {
@@ -24,6 +24,14 @@ class OutputView {
 
     fun printInsertBonusNumber() {
         println(INSERT_BONUS_BALL)
+    }
+
+    fun printInsertPassiveLottoNumber() {
+        println(INSERT_PASSIVE_LOTTO_NUMBER)
+    }
+
+    fun printInsertPassiveLotto() {
+        println(INSERT_PASSIVE_LOTTO)
     }
 
     fun printResult(ranks: List<Int>, rates: String) {
@@ -58,8 +66,10 @@ class OutputView {
         private const val INSERT_MONEY = "구입금액을 입력해 주세요."
         private const val INSERT_WINNING_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
         private const val INSERT_BONUS_BALL = "보너스 볼을 입력해 주세요."
+        private const val INSERT_PASSIVE_LOTTO_NUMBER = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val INSERT_PASSIVE_LOTTO = "수동으로 구매할 번호를 입력해 주세요."
 
-        private const val PURCHASE = "개를 구매했습니다."
+        private const val PURCHASE = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val WINNING_STATISTICS = "당첨 통계"
         private const val DIVIDER = "---------"
         private const val MATCH_STANDARD = "%d개 일치"
