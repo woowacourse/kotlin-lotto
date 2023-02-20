@@ -14,9 +14,6 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int, val description: S
             return values().find { it.countOfMatch == countOfMatch } ?: MISS
         }
 
-        private fun decideSecondOrThird(matchBonus: Boolean): Rank {
-            if (matchBonus) return SECOND
-            return THIRD
-        }
+        private fun decideSecondOrThird(matchBonus: Boolean): Rank = if (matchBonus) SECOND else THIRD
     }
 }
