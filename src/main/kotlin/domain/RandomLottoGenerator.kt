@@ -6,7 +6,7 @@ class RandomLottoGenerator : LottoGenerator {
     }
 
     private fun generateLotto(): Lotto {
-        val randomNumbers = (LottoNumber.MINIMUM_NUMBER..LottoNumber.MAXIMUM_NUMBER).shuffled().subList(LOTTO_MIN_SIZE, LOTTO_LIMIT_SIZE).sorted()
+        val randomNumbers = (LottoNumber.getMinNumber()..LottoNumber.getMaxNumber()).shuffled().subList(LOTTO_MIN_SIZE, LOTTO_LIMIT_SIZE).sorted()
         val lotto = randomNumbers.map { LottoNumber.from(it) }
         return Lotto(lotto)
     }
