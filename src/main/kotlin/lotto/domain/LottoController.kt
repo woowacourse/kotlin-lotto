@@ -1,11 +1,7 @@
 package lotto.domain
 
-import lotto.model.Lotto
-import lotto.model.LottoNumber
-import lotto.model.UserLotto
-import lotto.model.WinningLotto
+import lotto.model.*
 import lotto.model.generator.LottoGenerator
-import lotto.view.ERROR_NOT_DIVIDED
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -16,7 +12,7 @@ class LottoController(
 ) {
     fun start() {
         val money = getMoney()
-        val numberOfLotto = getNumberOfLotto(money)
+        val numberOfLotto = money.getNumberOfLotto()
         outputView.printPurchase(numberOfLotto)
         val myLotto = getUserLotto(numberOfLotto)
         outputView.printUserLotto(myLotto)
@@ -24,7 +20,7 @@ class LottoController(
         wrapUpResult(myLotto, money)
     }
 
-    private fun wrapUpResult(myLotto: UserLotto, money: Int) {
+    private fun wrapUpResult(myLotto: UserLotto, money: Money) {
         val winningLotto = getWinningLotto(getWinningNumber())
         val ranks = myLotto.getWinningStatistics(winningLotto)
         val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
@@ -40,14 +36,11 @@ class LottoController(
         return UserLotto(lotto)
     }
 
-    private fun getMoney(): Int {
+    private fun getMoney(): Money {
         outputView.printInsertMoneyMessage()
-        val money = inputView.getNumber()
-        val result = runCatching {
-            require(isDivided(money)) { println(ERROR_NOT_DIVIDED) }
-        }.isSuccess
-
-        return if (result) money else getMoney()
+        return validateInput {
+            Money(inputView.getNumber())
+        } ?: getMoney()
     }
 
     private fun getWinningLotto(lotto: Lotto): WinningLotto {
@@ -78,17 +71,5 @@ class LottoController(
         }.onFailure {
             println(it.message)
         }.getOrNull()
-    }
-
-    fun getNumberOfLotto(money: Int): Int {
-        return money / LOTTO_PRICE
-    }
-
-    fun isDivided(money: Int): Boolean {
-        return money % LOTTO_PRICE == 0
-    }
-
-    companion object {
-        private const val LOTTO_PRICE = 1000
     }
 }
