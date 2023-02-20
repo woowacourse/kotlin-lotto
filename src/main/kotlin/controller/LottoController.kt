@@ -15,8 +15,6 @@ class LottoController(
     private val profitCalculator: ProfitCalculator = ProfitCalculator()
 ) {
 
-    private val purchaseMoney: PurchaseMoney by lazy { initializePurchaseMoney() }
-
     private val winningNumbers: WinningNumbers by lazy {
         WinningNumbers(
             initializeCatchNumber(),
@@ -25,9 +23,10 @@ class LottoController(
     }
 
     fun run() {
-        val purchasedLottos = purchaseLottos()
+        val purchaseMoney = initializePurchaseMoney()
+        val purchasedLottos = purchaseLottos(purchaseMoney)
         purchasedLottos.printPurchasedLottos()
-        checkPurchasedLottosResult(purchasedLottos)
+        checkPurchasedLottosResult(purchaseMoney, purchasedLottos)
     }
 
     private fun initializePurchaseMoney(): PurchaseMoney {
@@ -55,10 +54,29 @@ class LottoController(
         return LottoNumber.from(numericValidator.validate(input))
     }
 
-    private fun purchaseLottos(): PurchasedLottos {
+    private fun purchaseLottos(purchaseMoney: PurchaseMoney): PurchasedLottos {
+        val numberOfTotalLottos = purchaseMoney.money / LOTTO_PRICE
+        val numberOfManualLottos = getNumberOfManualLottos(numberOfTotalLottos)
+
         val lottoGenerator = LottoGenerator(numberOfLottos = purchaseMoney.money / LOTTO_PRICE)
 
         return PurchasedLottos(lottoGenerator.generateLottos())
+    }
+
+    private fun getNumberOfManualLottos(maximumQuantity: Int): Int {
+        return runCatching {
+            val numberOfManualLottos =
+                numericValidator.validate(InputView.requestNumberOfManualLottos())
+
+            require(numberOfManualLottos <= maximumQuantity) {
+                NUMBER_OF_MANUAL_LOTTOS_ERROR
+            }
+
+            numberOfManualLottos
+        }.getOrElse { error ->
+            println(error.message.toString())
+            getNumberOfManualLottos(maximumQuantity)
+        }
     }
 
     private fun PurchasedLottos.printPurchasedLottos() {
@@ -66,7 +84,7 @@ class LottoController(
         ResultView.printPurchasedLottos(this)
     }
 
-    private fun checkPurchasedLottosResult(purchasedLottos: PurchasedLottos) {
+    private fun checkPurchasedLottosResult(purchaseMoney: PurchaseMoney, purchasedLottos: PurchasedLottos) {
         val lottoResults = purchasedLottos.getTotalLottoResults(winningNumbers)
         val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
 
@@ -75,5 +93,7 @@ class LottoController(
 
     companion object {
         private const val LOTTO_PRICE = 1000
+        private const val NUMBER_OF_MANUAL_LOTTOS_ERROR = "[ERROR] 구입한 로또 개수를 초과했습니다."
+        private const val NEGATIVE_NUMBER_ERROR = "[ERROR] "
     }
 }
