@@ -1,6 +1,5 @@
 package view
 
-import domain.lotto.Lotto
 import domain.lotto.number.LottoNumber
 import domain.lotto.size.LottoSize
 import domain.money.Money
@@ -17,11 +16,14 @@ class InputView {
         return LottoSize.from(readln().trim())
     }
 
-    fun inputManualLottoNumbers(size: LottoSize): List<List<String>> {
+    fun inputManualLottoNumbers(size: LottoSize): List<List<LottoNumber>> {
         println()
         println(MANUAL_LOTTO_NUMBERS_INPUT_MESSAGE)
-        return List(size.value) { readln().split(WINNING_NUMBER_DELIMITER) }
+        return List(size.value) { inputManualLottoNumber() }
     }
+
+    private fun inputManualLottoNumber(): List<LottoNumber> =
+        readln().split(WINNING_NUMBER_DELIMITER).map { LottoNumber.from(it) }
 
     fun inputLastWeekWinningNumbers(): List<String> {
         println(LAST_WEEK_WINNING_NUMBERS_INPUT_MESSAGE)
