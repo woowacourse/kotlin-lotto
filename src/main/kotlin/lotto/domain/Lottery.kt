@@ -10,8 +10,8 @@ class Lottery(
 
     fun countMatches(winningLottery: Lottery): Int = winningLottery.numbers.count { numbers.contains(it) }
 
-    fun containBonusNumber(bonusNumber: LotteryNumber): Boolean {
-        return numbers.contains(bonusNumber)
+    fun containBonusNumber(number: LotteryNumber): Boolean {
+        return numbers.contains(number)
     }
 
     private fun checkLotteryNumbersSize() {
