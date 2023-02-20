@@ -21,10 +21,10 @@ class LottoController(
         val myLotto = getUserLotto(numberOfLotto)
         outputView.printUserLotto(myLotto)
 
-        wrapUp(myLotto, money)
+        wrapUpResult(myLotto, money)
     }
 
-    private fun wrapUp(myLotto: UserLotto, money: Int) {
+    private fun wrapUpResult(myLotto: UserLotto, money: Int) {
         val winningLotto = getWinningLotto(getWinningNumber())
         val ranks = myLotto.getWinningStatistics(winningLotto)
         val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
