@@ -8,10 +8,19 @@ import domain.lotto.LottoNumber
 
 object ResultOutputView {
 
-    fun printResult(purchaser: Purchaser, winStatistics: WinStatistics) {
+    fun printPurchasingResult(purchaser: Purchaser) {
         printPurchasedLottoCount(purchaser.purchasedLottoCount)
         printPurchasedLotto(purchaser.purchasedLottoBundle)
-        printWinStatistics(winStatistics)
+    }
+
+    fun printWinStatistics(winStatistics: WinStatistics) {
+        println()
+        println("당첨 통계")
+        println("---------")
+        winStatistics.rankCount.toList().asReversed().forEach {
+            printRankCount(it)
+        }
+        printEarningRate(winStatistics.earningRate)
     }
 
     private fun printPurchasedLottoCount(lottoCount: Int) {
@@ -23,16 +32,6 @@ object ResultOutputView {
             println(it.lottoNumbers.map { lottoNumber: LottoNumber -> lottoNumber.number })
         }
         println()
-    }
-
-    private fun printWinStatistics(winStatistics: WinStatistics) {
-        println()
-        println("당첨 통계")
-        println("---------")
-        winStatistics.rankCount.toList().asReversed().forEach {
-            printRankCount(it)
-        }
-        printEarningRate(winStatistics.earningRate)
     }
 
     private fun printRankCount(rankCount: Pair<Rank, Int>) {

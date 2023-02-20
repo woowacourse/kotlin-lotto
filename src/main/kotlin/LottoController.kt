@@ -12,8 +12,9 @@ class LottoController {
 
     fun runLottoGame() {
         val purchaser = Purchaser(getMoney())
+        ResultOutputView.printPurchasingResult(purchaser)
         val winStatistics = WinStatistics(getWinningNumbers(), purchaser.purchasedLottoBundle, purchaser.spentMoney)
-        ResultOutputView.printResult(purchaser, winStatistics)
+        ResultOutputView.printWinStatistics(winStatistics)
     }
 
     private fun getWinningNumbers(): WinningNumbers {
