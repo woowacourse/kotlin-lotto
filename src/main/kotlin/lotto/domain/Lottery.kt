@@ -8,7 +8,7 @@ class Lottery(
         checkNumbersDuplicate()
     }
 
-    fun countMatches(winningLottery: WinningLottery): Int = winningLottery.lottery.numbers.count { numbers.contains(it) }
+    fun countMatches(lottery: Lottery): Int = lottery.numbers.count { numbers.contains(it) }
 
     fun containBonusNumber(bonusNumber: LotteryNumber): Boolean {
         return numbers.contains(bonusNumber)

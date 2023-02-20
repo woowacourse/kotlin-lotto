@@ -8,6 +8,18 @@ class WinningLottery(
         checkBonusNumberDuplicate()
     }
 
+    fun calculateResult(lotteries: List<Lottery>): WinningResult {
+        val winningResult = WinningResult()
+
+        repeat(lotteries.size) {
+            val countOfMatch = lotteries[it].countMatches(lottery)
+            val matchBonus = lotteries[it].containBonusNumber(bonusNumber)
+            winningResult.countRank(Rank.valueOf(countOfMatch, matchBonus))
+        }
+
+        return winningResult
+    }
+
     private fun checkBonusNumberDuplicate() {
         require(!lottery.numbers.contains(bonusNumber)) { BONUS_NUMBER_DUPLICATE_ERROR }
     }

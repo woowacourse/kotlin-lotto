@@ -65,4 +65,41 @@ class WinningLotteryTest {
 
         assertThrows<IllegalArgumentException> { WinningLottery(lottery, bonusNumber) }
     }
+
+    @Test
+    fun `로또들을 받아 당첨 결과를 반환한다`() {
+        val winningLottery = WinningLottery(
+            Lottery(
+                listOf(
+                    LotteryNumber(1),
+                    LotteryNumber(10),
+                    LotteryNumber(20),
+                    LotteryNumber(30),
+                    LotteryNumber(40),
+                    LotteryNumber(45)
+                )
+            ),
+            LotteryNumber(9)
+        )
+
+        val lotteries =
+            listOf(
+                Lottery(
+                    listOf(
+                        LotteryNumber(1),
+                        LotteryNumber(10),
+                        LotteryNumber(20),
+                        LotteryNumber(30),
+                        LotteryNumber(40),
+                        LotteryNumber(45)
+                    )
+                )
+            )
+
+        val expectedWinningResult = WinningResult()
+        expectedWinningResult.countRank(Rank.FIRST)
+
+        assertThat(winningLottery.calculateResult(lotteries)[Rank.FIRST])
+            .isEqualTo(expectedWinningResult[Rank.FIRST])
+    }
 }

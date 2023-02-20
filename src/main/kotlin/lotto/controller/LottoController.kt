@@ -3,9 +3,7 @@ package lotto.controller
 import lotto.domain.Lottery
 import lotto.domain.LotteryGenerator
 import lotto.domain.PurchaseAmount
-import lotto.domain.Rank
 import lotto.domain.WinningLottery
-import lotto.domain.WinningResult
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -18,7 +16,7 @@ class LottoController(
         val purchaseAmount = inputView.readPurchaseAmount()
         val lotteries = createLotteries(purchaseAmount)
         val winningLottery = WinningLottery(inputView.readLottery(), inputView.readBonusNumber())
-        val winningResult = calculateResult(lotteries, winningLottery)
+        val winningResult = winningLottery.calculateResult(lotteries)
 
         outputView.printWinningStats(purchaseAmount, winningResult)
         if (!winningResult.isGain(winningResult.calculateYield(purchaseAmount.amount))) {
@@ -30,21 +28,8 @@ class LottoController(
         val lotteries = lotteryGenerator.generateLotteries(purchaseAmount.getPurchaseQuantity())
 
         repeat(lotteries.size) { outputView.printMessage(lotteries[it].numbers.toString()) }
-        outputView.printMessage("")
 
         return lotteries
-    }
-
-    private fun calculateResult(lotteries: List<Lottery>, winningLottery: WinningLottery): WinningResult {
-        val winningResult = WinningResult()
-
-        repeat(lotteries.size) {
-            val countOfMatch = lotteries[it].countMatches(winningLottery)
-            val matchBonus = lotteries[it].containBonusNumber(winningLottery.bonusNumber)
-            winningResult.countRank(Rank.valueOf(countOfMatch, matchBonus))
-        }
-
-        return winningResult
     }
 
     companion object {

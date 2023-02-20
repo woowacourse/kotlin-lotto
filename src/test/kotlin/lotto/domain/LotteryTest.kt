@@ -66,7 +66,7 @@ class LotteryTest {
         val lottery = Lottery(lotteryNumbers)
         val winningLottery = WinningLottery(Lottery(winningNumbers), LotteryNumber(5))
 
-        assertThat(lottery.countMatches(winningLottery)).isEqualTo(3)
+        assertThat(lottery.countMatches(winningLottery.lottery)).isEqualTo(3)
     }
 
     @ParameterizedTest

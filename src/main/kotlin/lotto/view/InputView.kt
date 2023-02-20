@@ -13,6 +13,7 @@ class InputView {
     }
 
     fun readLottery(): Lottery {
+        println()
         println(REQUIRE_MESSAGE_WINNING_LOTTERY)
         val input = readln()
         val lotteryNumbers = input.split(", ").map { LotteryNumber(it.toInt()) }
