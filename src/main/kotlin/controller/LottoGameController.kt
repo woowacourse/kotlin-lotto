@@ -2,6 +2,8 @@ package controller
 
 import domain.game.LottoGame
 import domain.game.LottoMachine
+import domain.lotto.AutoLotto
+import domain.lotto.ManualLotto
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
@@ -16,13 +18,13 @@ class LottoGameController(
     private val lottoMachine: LottoMachine = LottoMachine(),
 ) {
     fun startLottoGame() {
-        val (autoLottos, manualLottos, money) = initLottoGame()
+        val (autoLottos, manualLottos, money) = inputLottos()
         val (bonusNumber, winningLotto) = inputWinnings()
         val lottoGame = LottoGame(winningLotto, bonusNumber)
         matchLottos(lottoGame, autoLottos + manualLottos, money)
     }
 
-    private fun initLottoGame(): Triple<List<PurchasedLotto>, List<PurchasedLotto>, Money> {
+    private fun inputLottos(): Triple<List<PurchasedLotto>, List<PurchasedLotto>, Money> {
         val money = inputPurchasingMoney()
         val (change, manualLottos) = purchaseManualLottos(money)
         val autoLottos = purchaseAutoLottos(change)
@@ -31,16 +33,13 @@ class LottoGameController(
         return Triple(manualLottos, autoLottos, money)
     }
 
-    private fun purchaseManualLottos(money: Money): Pair<Money, List<PurchasedLotto>> {
+    private fun purchaseManualLottos(money: Money): Pair<Money, List<ManualLotto>> {
         val manualLottoSize = inputPurchasingManualLottoSize()
         val manualLottoNumbers = inputManualLottoNumbers(manualLottoSize)
         return lottoMachine.purchaseManualLottos(money, manualLottoSize, manualLottoNumbers)
     }
 
-    private fun purchaseAutoLottos(money: Money): List<PurchasedLotto> {
-        // printPurchasedLotto(purchasedLottos)
-        return purchaseLottos(money)
-    }
+    private fun purchaseAutoLottos(money: Money): List<AutoLotto> = purchaseLottos(money)
 
     private fun inputPurchasingMoney(): Money = inputView.inputPurchasingMoney()
 
@@ -56,7 +55,7 @@ class LottoGameController(
         return Pair(bonusNumber, winningLotto)
     }
 
-    private fun purchaseLottos(purchasedMoney: Money): List<PurchasedLotto> =
+    private fun purchaseLottos(purchasedMoney: Money): List<AutoLotto> =
         LottoMachine().purchaseAutoLottos(purchasedMoney)
 
     private fun inputLastWeekWinningNumbers(): List<LottoNumber> =
@@ -64,7 +63,7 @@ class LottoGameController(
 
     private fun inputBonusNumber(): LottoNumber = inputView.inputBonusBallNumber()
 
-    private fun printPurchasedLotto(manualLottos: List<PurchasedLotto>, autoLottos: List<PurchasedLotto>) {
+    private fun printPurchasedLotto(manualLottos: List<ManualLotto>, autoLottos: List<AutoLotto>) {
         resultView.printPurchasedLottos(manualLottos, autoLottos)
     }
 

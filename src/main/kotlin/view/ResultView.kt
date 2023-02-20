@@ -1,10 +1,11 @@
 package view
 
-import domain.lotto.PurchasedLotto
+import domain.lotto.AutoLotto
+import domain.lotto.ManualLotto
 import domain.rank.Rank
 
 class ResultView {
-    fun printPurchasedLottos(manualLottos: List<PurchasedLotto>, autoLottos: List<PurchasedLotto>) {
+    fun printPurchasedLottos(manualLottos: List<ManualLotto>, autoLottos: List<AutoLotto>) {
         println()
         println(PURCHASED_LOTTO_SIZE_FORMAT.format(manualLottos.size, autoLottos.size))
         (manualLottos + autoLottos).map { it.getSortedLotto() }.forEach { sortedNumber ->
