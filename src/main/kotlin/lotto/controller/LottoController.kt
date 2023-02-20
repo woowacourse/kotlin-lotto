@@ -19,9 +19,6 @@ class LottoController(
         val winningResult = winningLottery.calculateResult(lotteries)
 
         outputView.printWinningStats(purchaseAmount, winningResult)
-        if (!winningResult.isGain(winningResult.calculateYield(purchaseAmount.amount))) {
-            outputView.printMessage(NOTICE_MESSAGE_NOT_GAIN)
-        }
     }
 
     private fun createLotteries(purchaseAmount: PurchaseAmount): List<Lottery> {
@@ -30,9 +27,5 @@ class LottoController(
         repeat(lotteries.size) { outputView.printMessage(lotteries[it].numbers.toString()) }
 
         return lotteries
-    }
-
-    companion object {
-        private const val NOTICE_MESSAGE_NOT_GAIN = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
     }
 }
