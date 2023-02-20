@@ -12,7 +12,6 @@ import view.ResultView
 
 class LottoController(
     private val numericValidator: NumericValidator = NumericValidator(),
-    private val lottoGenerator: LottoGenerator = LottoGenerator(),
     private val profitCalculator: ProfitCalculator = ProfitCalculator()
 ) {
 
@@ -57,7 +56,8 @@ class LottoController(
     }
 
     private fun purchaseLottos(): PurchasedLottos {
-        val purchasedLottos = PurchasedLottos(lottoGenerator.generateLottos(purchaseMoney))
+        val lottoGenerator = LottoGenerator(numberOfLottos = purchaseMoney.money / LOTTO_PRICE)
+        val purchasedLottos = PurchasedLottos(lottoGenerator.generateLottos())
 
         ResultView.printPurchasedNumberOfLottos(purchasedLottos.lottos.size)
         ResultView.printPurchasedLottos(purchasedLottos)
@@ -70,5 +70,9 @@ class LottoController(
         val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
 
         ResultView.printLottoResults(lottoResults, profit)
+    }
+
+    companion object {
+        private const val LOTTO_PRICE = 1000
     }
 }
