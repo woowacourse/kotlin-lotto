@@ -14,18 +14,18 @@ class LottoGame {
     private val output by lazy { OutputView() }
 
     fun run() {
-        val money = depositGame()
-        val lottos = initGame(money)
+        val money = getMoney()
+        val lottos = makeLottos(money)
         val winningResult = startGame(lottos)
         endGame(winningResult, money)
     }
-    private fun depositGame(): Money {
+    private fun getMoney(): Money {
         val money = input.inputMoney()
         output.outputLottoSizeMessage(money)
         return money
     }
 
-    private fun initGame(money: Money): Lottos {
+    private fun makeLottos(money: Money): Lottos {
         val lottos = RandomLottoGenerator().generateLottos(money.lottoCount())
         output.outputLottos(lottos)
         return lottos
