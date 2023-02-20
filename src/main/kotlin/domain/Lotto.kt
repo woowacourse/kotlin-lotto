@@ -1,25 +1,17 @@
 package domain
 
 class Lotto(val numbers: List<LottoNumber>) {
-    fun matchLotto(winningLotto: WinningLotto): Rank {
-        return Rank.valueOf(countSameLottoNumber(winningLotto.winningLotto), hasBonusNumber(winningLotto.bonusNumber))
-    }
-
-    private fun countSameLottoNumber(winningLotto: List<LottoNumber>): Int {
-        return winningLotto.count { numbers.contains(it) }
-    }
-
-    private fun hasBonusNumber(bonusNumber: LottoNumber): Boolean {
-        return numbers.contains(bonusNumber)
-    }
-
     init {
-        require(numbers.size == 6) { INPUT_LOTTO_SIZE_ERROR_MESSAGE }
-        require(numbers.toSet().size == 6) { INPUT_LOTTO_DUPLICATE_ERROR_MESSAGE }
+        require(numbers.size == LOTTO_SIZE) { INPUT_LOTTO_SIZE_ERROR_MESSAGE }
+        require(numbers.toSet().size == LOTTO_SIZE) { INPUT_LOTTO_DUPLICATE_ERROR_MESSAGE }
+    }
+    fun matchLotto(winningLotto: WinningLotto): Rank {
+        return Rank.valueOf(winningLotto.countSameLottoNumber(numbers), winningLotto.hasBonusNumber(numbers))
     }
 
     companion object {
-        const val INPUT_LOTTO_SIZE_ERROR_MESSAGE = "당첨 번호가 6개가 아닙니다"
+        const val LOTTO_SIZE = 6
+        const val INPUT_LOTTO_SIZE_ERROR_MESSAGE = "당첨 번호가 ${LOTTO_SIZE}개가 아닙니다"
         const val INPUT_LOTTO_DUPLICATE_ERROR_MESSAGE = "당첨 번호가 중복되었습니다."
     }
 }

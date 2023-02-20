@@ -25,7 +25,7 @@ class LottoController(val inputView: InputView, val outputView: OutputView) {
         val lottos = LottoMachine(RandomLottoGenerator()).generateLottos(money)
         outputView.outputLottos(lottos)
         val winningLotto = runCatching {
-            WinningLotto(inputView.inputWinningLotto(), LottoNumber.from(inputView.inputBonusNumber()))
+            WinningLotto(Lotto(inputView.inputWinningLotto()), LottoNumber.from(inputView.inputBonusNumber()))
         }.onFailure { outputView.outputErrorMessage(it.message!!) }.getOrThrow()
         endGame(lottos, winningLotto, money)
     }
