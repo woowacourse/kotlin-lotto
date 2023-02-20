@@ -23,7 +23,7 @@ class OutputView {
 
     fun lottosResult(lottos: Lottos) {
         lottos.value.forEach {
-            println(it.numbers.toString())
+            println(it)
         }
     }
 

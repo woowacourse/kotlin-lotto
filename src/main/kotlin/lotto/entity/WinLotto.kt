@@ -2,7 +2,7 @@ package lotto.entity
 
 class WinLotto(val winNumber: Lotto, val bonus: LottoNumber) {
     init {
-        require(!winNumber.numbers.contains(bonus)) { ERROR_MESSAGE_DUPLICATED_BONUS_NUMBER }
+        require(!winNumber.determineMatchBonus(bonus)) { ERROR_MESSAGE_DUPLICATED_BONUS_NUMBER }
     }
 
     companion object {

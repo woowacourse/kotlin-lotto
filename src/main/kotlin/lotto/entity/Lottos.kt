@@ -2,15 +2,7 @@ package lotto.entity
 
 import lotto.model.LottoGenerator
 
-class Lottos(purchaseMoney: PurchaseMoney, lottoPrice: LottoPrice, lottoGenerator: LottoGenerator) {
-    val value: List<Lotto>
-
-    init {
-        val count = purchaseMoney.value / lottoPrice.value
-        value = (0 until count).map {
-            lottoGenerator.generate()
-        }
-    }
+class Lottos private constructor(val value: List<Lotto>) {
 
     fun determineLottosResult(winLotto: WinLotto): WinStatistics {
         return WinStatistics(
@@ -18,5 +10,15 @@ class Lottos(purchaseMoney: PurchaseMoney, lottoPrice: LottoPrice, lottoGenerato
                 it.determineRank(it.determineCountOfMatch(winLotto.winNumber), it.determineMatchBonus(winLotto.bonus))
             }
         )
+    }
+
+    companion object {
+        fun from(lottoCount: Int, lottoGenerator: LottoGenerator): Lottos {
+            return Lottos(
+                (0 until lottoCount).map {
+                    lottoGenerator.generate()
+                }
+            )
+        }
     }
 }

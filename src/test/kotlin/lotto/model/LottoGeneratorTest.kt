@@ -10,7 +10,7 @@ internal class LottoGeneratorTest {
 
     @Test
     fun `생성된 로또의 번호는 1,2,3,4,5,6이다`() {
-        val expect = Lotto(
+        val expect = Lotto.from(
             setOf(
                 LottoNumber(1),
                 LottoNumber(2),
@@ -21,7 +21,7 @@ internal class LottoGeneratorTest {
             )
         )
 
-        assertThat(lottoGenerator.generate().numbers).isEqualTo(expect.numbers)
+        assertThat(lottoGenerator.generate()).isEqualTo(expect)
     }
 
     companion object {
@@ -31,7 +31,7 @@ internal class LottoGeneratorTest {
         @JvmStatic
         fun init() {
             val lottos = listOf(
-                Lotto(
+                Lotto.from(
                     setOf(
                         LottoNumber(1),
                         LottoNumber(2),

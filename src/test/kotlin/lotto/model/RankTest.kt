@@ -11,7 +11,7 @@ internal class RankTest {
 
     @Test
     fun `번호가 5개 일치하고, 보너스 번호가 일치하면 2등이다`() {
-        val lotto = Lotto(
+        val lotto = Lotto.from(
             setOf(
                 LottoNumber(1),
                 LottoNumber(2),
@@ -21,15 +21,15 @@ internal class RankTest {
                 LottoNumber(6)
             )
         )
-        val countOfMatch = lotto.numbers.intersect(winLotto.winNumber.numbers.toSet()).size
-        val matchBonus = lotto.numbers.contains(winLotto.bonus)
+        val countOfMatch = lotto.determineCountOfMatch(winLotto.winNumber)
+        val matchBonus = lotto.determineMatchBonus(winLotto.bonus)
 
         assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(Rank.SECOND)
     }
 
     @Test
     fun `번호가 4개 일치하면 4등이다`() {
-        val lotto = Lotto(
+        val lotto = Lotto.from(
             setOf(
                 LottoNumber(1),
                 LottoNumber(2),
@@ -39,8 +39,8 @@ internal class RankTest {
                 LottoNumber(8)
             )
         )
-        val countOfMatch = lotto.numbers.intersect(winLotto.winNumber.numbers.toSet()).size
-        val matchBonus = lotto.numbers.contains(winLotto.bonus)
+        val countOfMatch = lotto.determineCountOfMatch(winLotto.winNumber)
+        val matchBonus = lotto.determineMatchBonus(winLotto.bonus)
 
         assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(Rank.FOURTH)
     }
@@ -52,7 +52,7 @@ internal class RankTest {
         @JvmStatic
         fun init() {
             winLotto = WinLotto(
-                Lotto(
+                Lotto.from(
                     setOf(
                         LottoNumber(1),
                         LottoNumber(2),
