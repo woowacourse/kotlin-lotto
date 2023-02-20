@@ -52,42 +52,6 @@ class LottoTest {
     }
 
     @Test
-    fun `로또 당첨번호와 생성된 로또를 비교하여 일치하는 개수 확인`() {
-        // Given
-        // Lotto1 : 1,2,3,4,5,6
-        // Lotto2 : 1,3,5,7,10,25
-        val testLotto = testLotto
-        val winnigLotto = Lotto(
-            listOf(
-                LottoNumber.from(1), LottoNumber.from(3),
-                LottoNumber.from(5), LottoNumber.from(7),
-                LottoNumber.from(10), LottoNumber.from(25)
-            )
-        )
-
-        // When
-        val matchNumber = testLotto.countMatchNumber(winnigLotto)
-
-        // Then
-        assertThat(matchNumber).isEqualTo(3) // 3개 일치
-    }
-
-    @Test
-    fun `생성된 로또에 보너스 번호가 존재하는지 확인`() {
-        // given
-        // Lotto = 1,2,3,4,5,6
-        // BonusNumber = 3
-        val testLotto = testLotto
-        val bonusNumber = LottoNumber.from(3)
-
-        // when
-        val hasNumber = testLotto.hasBonusNumber(bonusNumber)
-
-        // then
-        assertThat(hasNumber).isEqualTo(true) // 당첨 로또 번호에 이미 보너스 번호 존재
-    }
-
-    @Test
     fun `당첨된 로또가 5개 일치하고 보너스 번호도 일치할 때 2등인지 확인`() {
         // given
         // Lotto 1 = 1,2,3,4,5,6

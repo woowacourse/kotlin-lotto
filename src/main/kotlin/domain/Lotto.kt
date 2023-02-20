@@ -7,11 +7,11 @@ class Lotto(val numbers: List<LottoNumber>) {
         require(numbers.toSet().size == 6) { LOTTO_DUPLICATE_ERROR_MESSAGE }
     }
 
-    fun countMatchNumber(lotto: Lotto): Int {
+    private fun countMatchNumber(lotto: Lotto): Int {
         return numbers.count { lotto.numbers.contains(it) }
     }
 
-    fun hasBonusNumber(bonusNumber: LottoNumber): Boolean {
+    private fun hasBonusNumber(bonusNumber: LottoNumber): Boolean {
         return numbers.contains(bonusNumber)
     }
 
