@@ -2,9 +2,7 @@ package domain
 
 class RandomLottoGenerator : LottoGenerator {
     override fun generateLottos(count: Int): Lottos {
-        val lottos = mutableListOf<Lotto>()
-        repeat(count) { lottos.add(generateLotto()) }
-        return Lottos(lottos)
+        return Lottos(List(count) { generateLotto() })
     }
 
     private fun generateLotto(): Lotto {
