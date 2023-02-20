@@ -11,11 +11,11 @@ class Lotto(val numbers: List<LottoNumber>) {
         return numbers.filter { lotto.numbers.contains(it) }.size
     }
 
-    fun hasBonusNumber(bonusNumber: BonusNumber): Boolean {
-        return numbers.contains(bonusNumber.number)
+    fun hasBonusNumber(bonusNumber: LottoNumber): Boolean {
+        return numbers.contains(bonusNumber)
     }
 
-    fun matchLotto(lotto: Lotto, bonusNumber: BonusNumber): Rank? =
+    fun matchLotto(lotto: Lotto, bonusNumber: LottoNumber): Rank? =
         Rank.valueOf(countMatchNumber(lotto), hasBonusNumber(bonusNumber))
 
     companion object {

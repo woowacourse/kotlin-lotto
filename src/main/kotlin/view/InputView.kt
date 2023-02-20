@@ -1,6 +1,5 @@
 package view
 
-import domain.BonusNumber
 import domain.Lotto
 import domain.LottoNumber
 import domain.Money
@@ -27,15 +26,14 @@ class InputView {
         return Lotto(winningNumber)
     }
 
-    fun inputBonusNumber(): BonusNumber {
+    fun inputBonusNumber(): LottoNumber {
         println(INPUT_BONUS_NUMBER_MESSAGE)
         return getInputBonusNumber(readLine())
     }
 
-    private fun getInputBonusNumber(input: String?): BonusNumber {
-        require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-        require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
-        return BonusNumber(LottoNumber.from(input.toInt()))
+    private fun getInputBonusNumber(input: String?): LottoNumber {
+        require(!input.isNullOrEmpty()) { INPUT_VALUE_ERROR_MESSAGE }
+        return LottoNumber.from(input.toInt())
     }
 
     companion object {

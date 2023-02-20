@@ -8,7 +8,7 @@ import domain.WinningResult
 
 class OutputView {
     fun outputLottoSizeMessage(money: Money) {
-        println((money.lottoCount(money.price)).toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
+        println((money.lottoCount()).toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
     }
 
     fun outputLottos(lottos: Lottos) {

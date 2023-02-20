@@ -3,6 +3,7 @@ package controller
 import domain.Lottos
 import domain.Money
 import domain.RandomLottoGenerator
+import domain.WinningNumber
 import domain.WinningResult
 import view.InputView
 import view.OutputView
@@ -31,9 +32,8 @@ class LottoGame {
     }
 
     private fun startGame(lottos: Lottos): WinningResult {
-        val winningLotto = input.inputWinningLotto()
-        val bonusNumber = input.inputBonusNumber()
-        return lottos.matchLottos(winningLotto, bonusNumber)
+        val winningNumber = WinningNumber(input.inputWinningLotto(), input.inputBonusNumber())
+        return lottos.matchLottos(winningNumber)
     }
 
     private fun endGame(winningResult: WinningResult, money: Money) {

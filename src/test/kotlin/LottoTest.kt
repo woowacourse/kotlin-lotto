@@ -1,4 +1,3 @@
-import domain.BonusNumber
 import domain.Lotto
 import domain.LottoNumber
 import domain.Rank
@@ -79,7 +78,7 @@ class LottoTest {
         // Lotto = 1,2,3,4,5,6
         // BonusNumber = 3
         val testLotto = testLotto
-        val bonusNumber = BonusNumber(LottoNumber.from(3))
+        val bonusNumber = LottoNumber.from(3)
 
         // when
         val hasNumber = testLotto.hasBonusNumber(bonusNumber)
@@ -102,7 +101,7 @@ class LottoTest {
                 LottoNumber.from(5), LottoNumber.from(10)
             )
         )
-        val bonusNumber = BonusNumber(LottoNumber.from(6))
+        val bonusNumber = LottoNumber.from(6)
 
         // when
         val result = testLotto.matchLotto(winnigLotto, bonusNumber)
@@ -125,7 +124,7 @@ class LottoTest {
                 LottoNumber.from(5), LottoNumber.from(10)
             )
         )
-        val bonusNumber = BonusNumber(LottoNumber.from(22))
+        val bonusNumber = LottoNumber.from(22)
 
         // when
         val result = testLotto.matchLotto(winnigLotto, bonusNumber)

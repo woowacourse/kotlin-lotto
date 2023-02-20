@@ -1,10 +1,9 @@
-import domain.BonusNumber
 import domain.Lotto
 import domain.LottoGenerator
 import domain.LottoNumber
 import domain.Lottos
-import domain.Money
 import domain.Rank
+import domain.WinningNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -17,7 +16,7 @@ class LottosTest {
 
     @Test
     fun `금액 4000원을 입력하면 4개의 로또가 생성되는지 확인`() {
-        val lottos = TestLottoGenerator().generateLottos(Money(4000))
+        val lottos = TestLottoGenerator().generateLottos(4)
         assertThat(lottos.lottos.size).isEqualTo(4)
     }
 
@@ -35,10 +34,11 @@ class LottosTest {
                 LottoNumber.from(6), LottoNumber.from(10)
             )
         )
-        val bonusNumber = BonusNumber(LottoNumber.from(45))
+        val bonusNumber = LottoNumber.from(45)
+        val winningNumber = WinningNumber(winningLotto, bonusNumber)
 
         // When
-        val result = testLottos.matchLottos(winningLotto, bonusNumber).result
+        val result = testLottos.matchLottos(winningNumber).result
 
         // Then
         assertThat(result[Rank.FIRST]).isEqualTo(0) // 1등 당첨 0개
@@ -49,7 +49,7 @@ class LottosTest {
     }
 
     class TestLottoGenerator() : LottoGenerator {
-        override fun generateLottos(money: Money): Lottos {
+        override fun generateLottos(count: Int): Lottos {
             return Lottos(testLottos)
         }
     }
