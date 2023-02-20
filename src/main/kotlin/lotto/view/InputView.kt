@@ -32,10 +32,5 @@ class InputView {
     }
 
     private fun String.isNumber() = this.chars().allMatch { Character.isDigit(it) }
-    private fun List<String>.isNumbers(): Boolean {
-        this.forEach {
-            if (!it.trim().isNumber() || it.trim().isBlank()) return false
-        }
-        return true
-    }
+    private fun List<String>.isNumbers() = !this.any { !it.trim().isNumber() || it.trim().isBlank() }
 }
