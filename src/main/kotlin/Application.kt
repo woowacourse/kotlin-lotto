@@ -3,6 +3,10 @@ import view.InputView
 import view.OutputView
 
 fun main() {
-    val lottoController = LottoController(InputView(), OutputView())
-    lottoController.run()
+    runCatching {
+        val lottoController = LottoController(InputView(), OutputView())
+        lottoController.run()
+    }.onFailure {
+        println(it.message)
+    }
 }
