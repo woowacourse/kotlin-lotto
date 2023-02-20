@@ -4,10 +4,10 @@ import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
 
 class LottoGenerator(
+    private val numberOfLottos: Int,
     private val numberGenerator: () -> List<Int> = {
         (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLotteryNumbers()
-    },
-    private val numberOfLottos: Int
+    }
 ) {
 
     fun generateLottos(): List<Lotto> {
