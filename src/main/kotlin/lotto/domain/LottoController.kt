@@ -25,7 +25,7 @@ class LottoController(
         val autoNumberOfLotto = numberOfLotto - manualNumberOfLotto
 
         outputView.printPurchase(manualNumberOfLotto, autoNumberOfLotto)
-        val myLotto = getUserLotto(numberOfLotto)
+        val myLotto = getUserLotto(manualLotto, autoNumberOfLotto)
         outputView.printUserLotto(myLotto)
 
         wrapUpResult(myLotto, money)
@@ -58,8 +58,9 @@ class LottoController(
         outputView.printResult(ranks, rates)
     }
 
-    fun getUserLotto(number: Int): UserLotto {
+    fun getUserLotto(manualLotto: List<Lotto>, number: Int): UserLotto {
         val lotto = mutableListOf<Lotto>()
+        lotto += manualLotto
         repeat(number) {
             lotto.add(Lotto(*generator.generate().toIntArray()))
         }
@@ -92,7 +93,7 @@ class LottoController(
 //        outputView.printInsertWinningNumber()
 
         return validateInput {
-            Lotto(inputView.getNumberList())
+            Lotto(inputView.getNumberList().sortedBy { it.number })
         } ?: getLottoNumber()
     }
 
