@@ -27,7 +27,7 @@ class OutputView {
 
     fun outputLottos(manual: List<Lotto>, auto: List<Lotto>) {
         println("수동으로 ${manual.size}장, 자동으로 ${auto.size}개를 구매했습니다.")
-        (manual + auto).forEach { println(it.toList().sortedBy { it.number }) }
+        (manual + auto).forEach { println(it.toList()) }
         println()
     }
 
