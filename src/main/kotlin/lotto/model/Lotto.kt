@@ -14,18 +14,14 @@ class Lotto(val lotto: List<LottoNumber>) {
 
     fun getCountOfMatch(winningLotto: WinningLotto): Rank {
         val count = lotto.count { winningLotto.winningNumbers.isContained(it) }
-        if (count == Rank.SECOND.countOfMatch) {
-            return getRankByBonusNumber(winningLotto)
-        }
+        val isContainBonusNumber = isContained(winningLotto.bonusNumber)
+
         return Rank.values().find {
-            it.countOfMatch == count
+            it.countOfMatch == count && it.isContainBonus == isContainBonusNumber
         } ?: Rank.MISS
     }
 
     fun isContained(findNumber: LottoNumber): Boolean = lotto.contains(findNumber)
-
-    private fun getRankByBonusNumber(winningLotto: WinningLotto) =
-        if (isContained(winningLotto.bonusNumber)) Rank.SECOND else Rank.THIRD
 
     private fun hasNoDuplicateNumber(): Boolean = lotto.size == lotto.map { it.number }.toSet().size
 
