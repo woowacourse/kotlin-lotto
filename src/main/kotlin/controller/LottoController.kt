@@ -11,25 +11,36 @@ import view.OutputView
 class LottoController {
     private val inputView by lazy { InputView() }
     private val outputView by lazy { OutputView() }
+    private val lottoStore by lazy { LottoStore(RandomLottoGenerator) }
 
     fun run() {
-        val lottos = runBuyLotto()
+        val lottos = buyLotto()
+        outputView.outputLottos(lottos)
         val winningLotto = makeWinningLotto()
         calculateResult(winningLotto, lottos)
     }
 
-    private fun runBuyLotto(): List<Lotto> {
+    private fun buyLotto(): List<Lotto> {
+        val money = inputView.askPurchaseMoney()
+        val manualLottos = buyManualLotto(money)
+        val chargeMoney = Money.from(money.value - lottoStore.lottoPrice * manualLottos.size)
+        val autoLottos = buyAutoLotto(chargeMoney)
+        return manualLottos + autoLottos
+    }
+    private fun buyManualLotto(money: Money): List<Lotto> {
         runCatching {
-            val lottos = buyLotto(inputView.askPurchaseMoney())
-            outputView.outputLottos(lottos)
-            return lottos
+            val lottos = inputView.askManualLottoNumbers(inputView.askManualLottoCount())
+            return lottoStore.buyManualLotto(money, *lottos.toTypedArray())
         }.onFailure { outputView.outputError(it) }
-        return runBuyLotto()
+        return buyManualLotto(money)
     }
 
-    private fun buyLotto(money: Money): List<Lotto> {
-        val store = LottoStore(RandomLottoGenerator)
-        return store.buyAutoLotto(money)
+    private fun buyAutoLotto(money: Money): List<Lotto> {
+        runCatching {
+            val lottos = lottoStore.buyAutoLotto(money)
+            return lottos
+        }.onFailure { outputView.outputError(it) }
+        return buyAutoLotto(money)
     }
 
     private fun makeWinningLotto(): WinningLotto {
