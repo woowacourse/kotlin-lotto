@@ -9,7 +9,8 @@ import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
-import lotto.model.PurchasedLottosMaker
+import lotto.model.RandomLottoGenerator
+import lotto.model.SequentialLottoNumberGenerator
 import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
@@ -72,11 +73,17 @@ class World {
         val purchaseMoney = initPurchaseMoney()
         val lottoManualCount = initLottoManualCount(purchaseMoney)
         val lottoAutoCount = purchaseMoney.calculateLottoCount(lottoManualCount)
-        val purchasedLottosMaker = PurchasedLottosMaker()
         val manualLottos = initManualLottos(lottoManualCount)
-        val purchasedLottos = purchasedLottosMaker.makePurchasedLotto(manualLottos, lottoAutoCount)
+        val purchasedLottos = makePurchasedLotto(manualLottos, lottoAutoCount)
         processLottoGame(purchasedLottos, lottoManualCount, lottoAutoCount)
         processResult(purchasedLottos, purchaseMoney)
+    }
+
+    private fun makePurchasedLotto(manualLottos: List<Lotto>, lottoAutoCount: LottoCount): PurchasedLottos {
+        val manualPurchasedLottos =
+            PurchasedLottos.from(LottoCount(manualLottos.size), SequentialLottoNumberGenerator(manualLottos))
+        val autoPurchasedLottos = PurchasedLottos.from(lottoAutoCount, RandomLottoGenerator())
+        return manualPurchasedLottos.merge(autoPurchasedLottos)
     }
 
     private fun processResult(purchasedLottos: PurchasedLottos, purchaseMoney: PurchaseMoney) {
