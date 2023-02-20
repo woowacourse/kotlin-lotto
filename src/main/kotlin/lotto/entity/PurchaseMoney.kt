@@ -2,7 +2,7 @@ package lotto.entity
 
 class PurchaseMoney(value: Int) : Money(value) {
     init {
-        require(value >= LOTTO_PRICE) { String.format(ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO, value) }
+        require(value >= LOTTO_PRICE) { ERROR_MESSAGE_PURCHASE_LESS_THAN_LOTTO.format(value) }
     }
 
     fun calculateLottoCount(): Int = value / LOTTO_PRICE

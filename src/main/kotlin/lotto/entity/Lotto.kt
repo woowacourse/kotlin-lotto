@@ -2,7 +2,7 @@ package lotto.entity
 
 class Lotto(val numbers: Set<LottoNumber>) {
     init {
-        require(numbers.size == LOTTO_COUNT) { String.format(ERROR_MESSAGE_WIN_NUMBER_IS_SIX, numbers.size) }
+        require(numbers.size == LOTTO_COUNT) { ERROR_MESSAGE_WIN_NUMBER_IS_SIX.format(numbers.size) }
     }
 
     constructor(numbers: List<Int>) : this(numbers.map { LottoNumber.from(it) }.toSet())

@@ -4,11 +4,7 @@ import lotto.model.Rank
 
 class WinLotto(private val winNumber: Lotto, private val bonus: LottoNumber) {
     init {
-        require(!winNumber.numbers.contains(bonus)) {
-            String.format(
-                ERROR_MESSAGE_DUPLICATED_BONUS_NUMBER, winNumber.toString(), bonus.value
-            )
-        }
+        require(!winNumber.numbers.contains(bonus)) { ERROR_MESSAGE_DUPLICATED_BONUS_NUMBER.format(winNumber.toString(), bonus.value) }
     }
 
     fun determineRank(lotto: Lotto): Rank {

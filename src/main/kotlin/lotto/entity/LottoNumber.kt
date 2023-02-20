@@ -6,9 +6,7 @@ data class LottoNumber private constructor(val value: Int) {
         val lottoNumberCache = Lotto.LOTTO_RANGE.map { LottoNumber(it) }
 
         fun from(value: Int): LottoNumber {
-            require(value in Lotto.LOTTO_RANGE) {
-                String.format(ERROR_MESSAGE_RANGE_1_TO_45, value)
-            }
+            require(value in Lotto.LOTTO_RANGE) { ERROR_MESSAGE_RANGE_1_TO_45.format(value) }
             return lottoNumberCache[value - 1]
         }
     }
