@@ -9,10 +9,9 @@ enum class LottoResult(val prizeMoney: Int, val matchCount: Int) {
     FIRST(2_000_000_000, 6);
 
     companion object {
-        private const val FIVE_MATCH_COUNT = 5
 
         fun valueOf(countOfMatch: Int, matchBonus: Boolean): LottoResult {
-            if (countOfMatch == FIVE_MATCH_COUNT && matchBonus) {
+            if (countOfMatch == SECOND.matchCount && matchBonus) {
                 return SECOND
             }
 
