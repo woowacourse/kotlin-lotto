@@ -12,7 +12,7 @@ class LottoNumberTest {
     @ParameterizedTest
     fun `로또 번호가 1에서 45 사이의 범위에 있지 않으면 예외가 발생한다`(value: Int) {
         val thrown = assertThrows<IllegalArgumentException> { LottoNumber.from(value) }
-        val except = String.format(LottoNumber.ERROR_MESSAGE_RANGE_1_TO_45, value)
+        val except = "당첨 번호는 1에서 45 사이의 숫자여야 합니다. 입력된 당첨 번호는 %d 입니다.".format(value)
         assertThat(thrown.message).isEqualTo(except)
     }
 
