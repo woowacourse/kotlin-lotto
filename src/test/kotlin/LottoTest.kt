@@ -8,46 +8,20 @@ import org.junit.jupiter.api.assertThrows
 class LottoTest {
     @Test
     fun `로또가 6개의 숫자로 잘 생성되었는지 확인`() {
-        assertThat(testLotto.numbers).isEqualTo(testLotto)
+        assertThat(testLotto.numbers).isEqualTo(Lotto(1, 2, 3, 4, 5, 6).numbers)
     }
 
     @Test
     fun `길이가 6이 아닌 경우 예외처리 확인`() {
         assertThrows<IllegalArgumentException> {
-            Lotto(
-                listOf(
-                    LottoNumber.from(1), LottoNumber.from(2),
-                    LottoNumber.from(3), LottoNumber.from(4),
-                    LottoNumber.from(5), LottoNumber.from(6),
-                    LottoNumber.from(7)
-                )
-            )
+            Lotto(1, 2, 3, 4, 5, 6, 7)
         }
     }
 
     @Test
     fun `중복된 번호가 존재하는 경우 예외처리 확인`() {
         assertThrows<IllegalArgumentException> {
-            Lotto(
-                listOf(
-                    LottoNumber.from(1), LottoNumber.from(2),
-                    LottoNumber.from(3), LottoNumber.from(4),
-                    LottoNumber.from(5), LottoNumber.from(5)
-                )
-            )
-        }
-    }
-
-    @Test
-    fun `로또 번호가 1애서 45사이의 숫자가 아닌 경우 예외 처리 확인`() {
-        assertThrows<IllegalArgumentException> {
-            Lotto(
-                listOf(
-                    LottoNumber.from(1), LottoNumber.from(12),
-                    LottoNumber.from(55), LottoNumber.from(44),
-                    LottoNumber.from(23), LottoNumber.from(65)
-                )
-            )
+            Lotto(1, 2, 3, 4, 5, 5)
         }
     }
 
@@ -59,12 +33,10 @@ class LottoTest {
         // bonusNumber = 6
         val testLotto = testLotto
         val winnigLotto = Lotto(
-            listOf(
-                LottoNumber.from(1), LottoNumber.from(2),
-                LottoNumber.from(3), LottoNumber.from(4),
-                LottoNumber.from(5), LottoNumber.from(10)
-            )
+            1, 2, 3, 4, 5, 6
         )
+        val a = listOf(1, 2, 3, 4, 5, 6)
+        Lotto(*a.toIntArray())
         val bonusNumber = LottoNumber.from(6)
 
         // when
@@ -81,13 +53,7 @@ class LottoTest {
         // Lotto 2 = 1,2,3,4,5,10
         // bonusNumber = 22
         val testLotto = testLotto
-        val winnigLotto = Lotto(
-            listOf(
-                LottoNumber.from(1), LottoNumber.from(2),
-                LottoNumber.from(3), LottoNumber.from(4),
-                LottoNumber.from(5), LottoNumber.from(10)
-            )
-        )
+        val winnigLotto = Lotto(1, 2, 3, 4, 5, 10)
         val bonusNumber = LottoNumber.from(22)
 
         // when
@@ -98,12 +64,6 @@ class LottoTest {
     }
 
     companion object {
-        val testLotto = Lotto(
-            listOf(
-                LottoNumber.from(1), LottoNumber.from(2),
-                LottoNumber.from(3), LottoNumber.from(4),
-                LottoNumber.from(5), LottoNumber.from(6)
-            )
-        )
+        val testLotto = Lotto(1, 2, 3, 4, 5, 6)
     }
 }

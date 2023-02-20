@@ -1,11 +1,11 @@
 package domain
 
 class Lotto(val numbers: List<LottoNumber>) {
-
     init {
         require(numbers.size == 6) { LOTTO_SIZE_ERROR_MESSAGE }
         require(numbers.toSet().size == 6) { LOTTO_DUPLICATE_ERROR_MESSAGE }
     }
+    constructor(vararg ints: Int) : this(ints.map { LottoNumber.from(it) })
 
     private fun countMatchNumber(lotto: Lotto): Int {
         return numbers.count { lotto.numbers.contains(it) }

@@ -27,13 +27,7 @@ class LottosTest {
         // Lottos = 1,2,3,4,6,10
         // bonusNumber = 45
         val testLottos = Lottos(testLottos)
-        val winningLotto = Lotto(
-            listOf(
-                LottoNumber.from(1), LottoNumber.from(2),
-                LottoNumber.from(3), LottoNumber.from(4),
-                LottoNumber.from(6), LottoNumber.from(10)
-            )
-        )
+        val winningLotto = Lotto(1, 2, 3, 4, 6, 10)
         val bonusNumber = LottoNumber.from(45)
         val winningNumber = WinningNumber(winningLotto, bonusNumber)
 
@@ -56,34 +50,10 @@ class LottosTest {
 
     companion object {
         private val testLottos = listOf(
-            Lotto(
-                listOf(
-                    LottoNumber.from(1), LottoNumber.from(2),
-                    LottoNumber.from(3), LottoNumber.from(4),
-                    LottoNumber.from(5), LottoNumber.from(6)
-                )
-            ),
-            Lotto(
-                listOf(
-                    LottoNumber.from(1), LottoNumber.from(2),
-                    LottoNumber.from(4), LottoNumber.from(6),
-                    LottoNumber.from(34), LottoNumber.from(45)
-                )
-            ),
-            Lotto(
-                listOf(
-                    LottoNumber.from(3), LottoNumber.from(5),
-                    LottoNumber.from(15), LottoNumber.from(18),
-                    LottoNumber.from(24), LottoNumber.from(35)
-                )
-            ),
-            Lotto(
-                listOf(
-                    LottoNumber.from(4), LottoNumber.from(6),
-                    LottoNumber.from(15), LottoNumber.from(18),
-                    LottoNumber.from(24), LottoNumber.from(35)
-                )
-            )
+            Lotto(1, 2, 3, 4, 5, 6),
+            Lotto(1, 2, 4, 6, 34, 45),
+            Lotto(3, 5, 15, 18, 24, 35),
+            Lotto(4, 6, 15, 18, 24, 35)
         )
     }
 }
