@@ -23,7 +23,7 @@ class LottoResultTest {
                 MISS to 0,
             ),
         )
-        val result = lottoResult.getRateOfReturn()
+        val result = lottoResult.rateOfReturn
 
         assertThat(result).isEqualTo(676683.3333333334)
     }
