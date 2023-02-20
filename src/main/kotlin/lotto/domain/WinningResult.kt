@@ -3,8 +3,12 @@ package lotto.domain
 import kotlin.math.floor
 
 class WinningResult(
-    val countMatchRanks: MutableList<Int> = MutableList(6) { 0 }
+    private val countMatchRanks: MutableMap<Rank, Int> =
+        Rank.values().associateWith { 0 }.toMutableMap()
 ) {
+
+    operator fun get(rank: Rank): Int = countMatchRanks[rank] ?: 0
+
     fun calculateYield(amount: Int): Double {
         val prize = calculateTotalPrize()
         val yield = (prize.toDouble() / amount) * 100
@@ -12,27 +16,28 @@ class WinningResult(
     }
 
     fun countRank(rank: Rank) {
-        when (rank) {
-            Rank.FIRST -> countMatchRanks[0]++
-            Rank.SECOND -> countMatchRanks[1]++
-            Rank.THIRD -> countMatchRanks[2]++
-            Rank.FOURTH -> countMatchRanks[3]++
-            Rank.FIFTH -> countMatchRanks[4]++
-            else -> countMatchRanks[5]++
-        }
+        countMatchRanks[rank] = countMatchRanks[rank]!!.plus(1)
     }
 
     fun isGain(yield: Double): Boolean = yield >= 1
 
+    fun getResult(): List<String> {
+        val texts = mutableListOf<String>()
+        Rank.values().associateWith {
+            if (it != Rank.MISS)
+                texts.add("${it.description} (${it.winningMoney})- ${countMatchRanks[it]}")
+        }
+
+        return texts
+    }
+
     private fun calculateTotalPrize(): Long {
-        var totalPrize: Long = 0
+        var sum: Long = 0
 
-        totalPrize += Rank.FOURTH.winningMoney * countMatchRanks[0]
-        totalPrize += Rank.SECOND.winningMoney * countMatchRanks[1]
-        totalPrize += Rank.THIRD.winningMoney * countMatchRanks[2]
-        totalPrize += Rank.FOURTH.winningMoney * countMatchRanks[3]
-        totalPrize += Rank.FIFTH.winningMoney * countMatchRanks[4]
+        countMatchRanks.forEach {
+            sum += it.key.winningMoney * it.value
+        }
 
-        return totalPrize
+        return sum
     }
 }

@@ -19,9 +19,8 @@ class LottoController(
         val lotteries = createLotteries(purchaseAmount)
         val winningLottery = WinningLottery(inputView.readLottery(), inputView.readBonusNumber())
         val winningResult = calculateResult(lotteries, winningLottery)
-        println()
-        outputView.printWinningStats(purchaseAmount, winningResult)
 
+        outputView.printWinningStats(purchaseAmount, winningResult)
         if (!winningResult.isGain(winningResult.calculateYield(purchaseAmount.amount))) {
             outputView.printMessage(NOTICE_MESSAGE_NOT_GAIN)
         }
