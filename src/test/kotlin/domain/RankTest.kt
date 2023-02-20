@@ -48,12 +48,63 @@ class RankTest {
 
     @ValueSource(booleans = [true, false])
     @ParameterizedTest
+    fun `4개의 번호를 맞추면 보너스 번호 일치여부와 관계없이 4등이다`(isBonusMatch: Boolean) {
+        // given
+        val countOfMatch: Int = 4
+
+        // when
+        val actual = Rank.valueOf(countOfMatch, isBonusMatch)
+
+        // then
+        assertThat(actual).isEqualTo(Rank.FOURTH)
+    }
+
+    @ValueSource(booleans = [true, false])
+    @ParameterizedTest
+    fun `3개의 번호를 맞추면 보너스 번호 일치여부와 관계없이 5등이다`(isBonusMatch: Boolean) {
+        // given
+        val countOfMatch: Int = 3
+
+        // when
+        val actual = Rank.valueOf(countOfMatch, isBonusMatch)
+
+        // then
+        assertThat(actual).isEqualTo(Rank.FIFTH)
+    }
+
+    @ValueSource(booleans = [true, false])
+    @ParameterizedTest
     fun `2개의 번호를 맞추면 보너스 번호 일치여부와 상관 없이 MISS 이다`(isBonusMatch: Boolean) {
         // given
         val countOfMatch: Int = 2
 
         // when
         val actual = Rank.valueOf(countOfMatch, isBonusMatch)
+
+        // then
+        assertThat(actual).isEqualTo(Rank.MISS)
+    }
+
+    @ValueSource(booleans = [true, false])
+    @ParameterizedTest
+    fun `1개의 번호를 맞추면 보너스 번호 일치여부와 관계없이 MISS이다`(isBonusMatch: Boolean) {
+        // given
+        val countOfMatch: Int = 1
+
+        // when
+        val actual = Rank.valueOf(countOfMatch, isBonusMatch)
+
+        // then
+        assertThat(actual).isEqualTo(Rank.MISS)
+    }
+
+    @Test
+    fun `0개의 번호를 맞추면 보너스 번호 일치여부와 관계없이 MISS이다`() {
+        // given
+        val countOfMatch: Int = 0
+
+        // when
+        val actual = Rank.valueOf(countOfMatch, false)
 
         // then
         assertThat(actual).isEqualTo(Rank.MISS)
