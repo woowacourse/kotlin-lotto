@@ -4,18 +4,21 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import java.util.stream.Stream
-
+import org.junit.jupiter.params.provider.CsvSource
 class LottoTest {
     @ParameterizedTest
-    @MethodSource("matchLottoNumbers")
-    fun `일치하는 번호 개수에 따라 Rank를 구한다`(numbers: List<Int>, result: Rank) {
+    @CsvSource(
+        "1 2 3 4 5 6, FIRST",
+        "1 2 3 4 5 7, SECOND",
+        "1 2 3 4 5 9, THIRD",
+        "1 2 3 9 10 11, FIFTH"
+    )
+    fun `일치하는 번호 개수에 따라 Rank를 구한다`(numbers: String, result: String) {
         val winning = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
+        val lotto = numbers.split(" ").map { it.toInt() }
         assertThat(
-            Lotto.create(numbers).getCountOfMatch(winning)
-        ).isEqualTo(result)
+            Lotto.create(lotto).getCountOfMatch(winning)
+        ).isEqualTo(Rank.valueOf(result))
     }
 
     @Test
@@ -34,25 +37,5 @@ class LottoTest {
     fun `로또 번호 내에 범위를 벗어난 번호가 있는 경우 생성 시 오류가 발생한다`() {
         val list = listOf(1, 2, 3, 4, 5, 66)
         assertThrows<IllegalArgumentException> { Lotto.create(list) }
-    }
-
-    companion object {
-        @JvmStatic
-        private fun matchLottoNumbers(): Stream<Arguments> {
-            return Stream.of(
-                Arguments.of(
-                    listOf(1, 2, 3, 9, 10, 11), Rank.FIFTH
-                ),
-                Arguments.of(
-                    listOf(1, 2, 3, 4, 5, 6), Rank.FIRST
-                ),
-                Arguments.of(
-                    listOf(1, 2, 3, 4, 5, 9), Rank.THIRD
-                ),
-                Arguments.of(
-                    listOf(1, 2, 3, 4, 5, 7), Rank.SECOND
-                )
-            )
-        }
     }
 }
