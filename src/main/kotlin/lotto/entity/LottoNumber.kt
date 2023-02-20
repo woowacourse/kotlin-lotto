@@ -9,7 +9,7 @@ data class LottoNumber private constructor(val value: Int) {
             require(value in Lotto.LOTTO_RANGE) {
                 String.format(ERROR_MESSAGE_RANGE_1_TO_45, value)
             }
-            return lottoNumberCache[value]
+            return lottoNumberCache[value - 1]
         }
     }
 }
