@@ -22,6 +22,8 @@
   - [x] 생성시 인자로 오직 숫자만을 전달한다.
   - [x] 이 외에는 IllegalArgumentException 예외가 발생한다.
 - [ ] 로또를 수동으로 발행한다.
+  - [x] 구입할 로또 개수와 입력한 로또 번호 리스트의 크기가 다르면 IllegalArgumentException 예외가 발생한다.
+  - [ ] 구입할 로또 개수보다 구매금액이 부족하면 IllegalArgumentException 예외가 발생한다.
   - [x] 로또 번호는 중복이 없다.
   - [x] 로또 번호는 6개여야 한다.
   - [x] 로또 번호의 범위는 1~45 여야 한다.
