@@ -16,10 +16,10 @@ class MoneyTest {
 
     @ValueSource(ints = [-1, 100001])
     @ParameterizedTest
-    fun `돈은 1000원 미만이거나 100001원 이상이면 에러가 발생한다`(int: Int) {
+    fun `돈은 0원 미만이거나 100001원 이상이면 에러가 발생한다`(int: Int) {
         Assertions.assertThatIllegalArgumentException()
             .isThrownBy { Money.from(int) }
-            .withMessage("구매 할 수 있는 금액은 1000원 이상 100000원 이하입니다.\n잘못된 값: $int")
+            .withMessage("돈은 0원 이상 100000원 이하로 보유할 수 있습니다.\n잘못된 값: $int")
     }
 
     @Test
