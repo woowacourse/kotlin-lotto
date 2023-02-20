@@ -16,7 +16,11 @@ object ResultView {
 
     fun printPurchasedLottos(purchasedLottos: PurchasedLottos) {
         purchasedLottos.lottos.forEach { lotto ->
-            println(lotto.numbers)
+            println(
+                lotto.numbers.map { lottoNumber ->
+                    lottoNumber.value
+                }
+            )
         }
     }
 
