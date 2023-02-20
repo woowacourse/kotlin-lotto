@@ -2,8 +2,8 @@ package lotto.controller
 
 import lotto.domain.LotteriesGenerator
 import lotto.domain.Lottery
+import lotto.domain.LotteryGenerator
 import lotto.domain.LotteryNumber
-import lotto.domain.LotteryNumbersGenerator
 import lotto.domain.ProfitCalculator
 import lotto.domain.PurchaseAmount
 import lotto.domain.RankCounter
@@ -12,7 +12,7 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 class Controller(
-    private val generator: LotteryNumbersGenerator,
+    private val generator: LotteryGenerator,
     private val inputView: InputView,
     private val outputView: OutputView
 ) {

@@ -1,10 +1,10 @@
 package lotto.domain
 
-class RandomLotteryNumbersGenerator : LotteryNumbersGenerator {
+class RandomLotteryGenerator : LotteryGenerator {
     private val numbers = (LOWER_BOUND..UPPER_BOUND).toList()
 
-    override fun generate(): List<Int> {
-        return numbers.shuffled().subList(FROM_INDEX, TO_INDEX)
+    override fun generate(): Lottery {
+        return Lottery(numbers.shuffled().subList(FROM_INDEX, TO_INDEX).map { LotteryNumber.from(it) })
     }
 
     companion object {

@@ -1,12 +1,11 @@
 package lotto.domain
 
 class LotteriesGenerator {
-    fun generate(numberOfLottery: Int, numberGenerator: LotteryNumbersGenerator): List<Lottery> {
-        return List(numberOfLottery) { generateLottery(numberGenerator) }
+    fun generate(numberOfLottery: Int, lotteryGenerator: LotteryGenerator): List<Lottery> {
+        return List(numberOfLottery) { generateLottery(lotteryGenerator) }
     }
 
-    private fun generateLottery(numbersGenerator: LotteryNumbersGenerator): Lottery {
-        val numbers = numbersGenerator.generate()
-        return Lottery(numbers.map { LotteryNumber.from(it) })
+    private fun generateLottery(lotteryGenerator: LotteryGenerator): Lottery {
+        return lotteryGenerator.generate()
     }
 }
