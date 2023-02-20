@@ -27,11 +27,11 @@ class Controller {
     }
 
     private fun readInputMoney(): LottoMoney {
-        return try {
+        return kotlin.runCatching {
             OutputView.printInputMoneyPrompt()
             InputView.readInputMoney()
-        } catch (e: IllegalArgumentException) {
-            println("[ERROR] ${e.message}")
+        }.getOrElse {
+            println("[ERROR] ${it.message}")
             readInputMoney()
         }
     }
@@ -43,23 +43,23 @@ class Controller {
     }
 
     private fun readWinningLotto(): Lotto {
-        return try {
+        return kotlin.runCatching {
             OutputView.printInputWinningNumbersPrompt()
             InputView.readInputWinningLotto()
-        } catch (e: IllegalArgumentException) {
-            println("[ERROR] ${e.message}")
+        }.getOrElse {
+            println("[ERROR] ${it.message}")
             readWinningLotto()
         }
     }
 
     private fun readBonusNumber(winningLotto: Lotto): LottoNumber {
-        return try {
+        return kotlin.runCatching {
             OutputView.printInputBonusNumberPrompt()
             val bonusNumber = InputView.readInputBonusNumber()
             WinningNumbers(winningLotto, bonusNumber)
             bonusNumber
-        } catch (e: IllegalArgumentException) {
-            println("[ERROR] ${e.message}")
+        }.getOrElse {
+            println("[ERROR] ${it.message}")
             readBonusNumber(winningLotto)
         }
     }
