@@ -1,5 +1,4 @@
 import domain.Lotto
-import domain.LottoGenerator
 import domain.LottoNumber
 import domain.Lottos
 import domain.Rank
@@ -40,12 +39,6 @@ class LottosTest {
         assertThat(result[Rank.THIRD]).isEqualTo(1) // 3등 당첨 1개
         assertThat(result[Rank.FOURTH]).isEqualTo(1) // 4등 당첨 1개
         assertThat(result[Rank.FIFTH]).isEqualTo(0) // 5등 당첨 0개
-    }
-
-    class TestLottoGenerator() : LottoGenerator {
-        override fun generateLottos(count: Int): Lottos {
-            return Lottos(testLottos)
-        }
     }
 
     companion object {
