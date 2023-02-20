@@ -40,8 +40,4 @@
 
 
 - LotteryNumberGenerator
-- [x] 로또 번호를 하나를 생성한다.
-
-
-- LotteryGenerator
 - [x] 로또를 발행한다.

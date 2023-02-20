@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.domain.Lottery
 import lotto.domain.LotteryGenerator
-import lotto.domain.PurchaseAmount
 import lotto.domain.Rank
 import lotto.domain.WinningLottery
 import lotto.domain.WinningResult
@@ -11,11 +10,12 @@ import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView = InputView(),
-    private val outputView: OutputView = OutputView()
+    private val outputView: OutputView = OutputView(),
+    private val lotteryGenerator: LotteryGenerator = LotteryGenerator()
 ) {
     fun run() {
         val purchaseAmount = inputView.readPurchaseAmount()
-        val lotteries = createLotteries(purchaseAmount)
+        val lotteries = lotteryGenerator.generateLotteries(purchaseAmount.amount)
         val winningLottery = WinningLottery(inputView.readLottery(), inputView.readBonusNumber())
         val winningResult = calculateResult(lotteries, winningLottery)
         println()
@@ -36,22 +36,6 @@ class LottoController(
         }
 
         return winningResult
-    }
-
-    private fun createLotteries(purchaseAmount: PurchaseAmount): List<Lottery> {
-        val generator = LotteryGenerator()
-        val lotteries = mutableListOf<Lottery>()
-
-        repeat(purchaseAmount.getPurchaseQuantity()) {
-            lotteries.add(generator.generateLottery())
-        }
-
-        repeat(lotteries.size) {
-            val numbers = lotteries[it].numbers.sortedBy { it.number }
-            outputView.printMessage(numbers.toString())
-        }
-        println()
-        return lotteries
     }
 
     companion object {

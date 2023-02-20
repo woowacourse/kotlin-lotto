@@ -33,7 +33,7 @@ class LotteryNumber(
     }
 
     companion object {
-        private const val LOTTERY_NUMBER_LOWER_BOUNDARY = 1
-        private const val LOTTERY_NUMBER_UPPER_BOUNDARY = 45
+        const val LOTTERY_NUMBER_LOWER_BOUNDARY = 1
+        const val LOTTERY_NUMBER_UPPER_BOUNDARY = 45
     }
 }

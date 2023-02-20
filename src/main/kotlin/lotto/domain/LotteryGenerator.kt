@@ -1,24 +1,29 @@
 package lotto.domain
 
+import lotto.domain.LotteryNumber.Companion.LOTTERY_NUMBER_UPPER_BOUNDARY
+
 class LotteryGenerator {
 
-    fun generateLottery(): Lottery {
-        val lotteryNumbers: MutableList<LotteryNumber> = mutableListOf()
-        repeat(6) {
-            lotteryNumbers.add(generateUniqueLotteryNumber(lotteryNumbers))
+    fun generateLotteries(count: Int): List<Lottery> {
+        val randomLotteries = mutableListOf<Lottery>()
+
+        repeat(count) {
+            randomLotteries.add(generateLottery())
         }
 
-        return Lottery(lotteryNumbers)
+        return randomLotteries
     }
 
-    private fun generateUniqueLotteryNumber(lotteryNumbers: List<LotteryNumber>): LotteryNumber {
-        val lotteryNumberGenerator = LotteryNumberGenerator()
+    private fun generateLottery(): Lottery {
+        val randomLotteryNumberCandidates: MutableList<LotteryNumber> =
+            MutableList(LOTTERY_NUMBER_UPPER_BOUNDARY) { i -> LotteryNumber(i + 1) }
+        val randomLotteryNumbers = mutableListOf<LotteryNumber>()
 
-        while (true) {
-            val randomLotteryNumber = lotteryNumberGenerator.generateLotteryNumber()
-
-            if (lotteryNumbers.contains(randomLotteryNumber)) continue
-            return randomLotteryNumber
+        repeat(Lottery.LOTTERY_NUMBER_SIZE) {
+            randomLotteryNumbers.add(randomLotteryNumberCandidates[0])
+            randomLotteryNumberCandidates.removeAt(0)
         }
+
+        return Lottery(randomLotteryNumbers)
     }
 }
