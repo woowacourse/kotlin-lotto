@@ -12,8 +12,7 @@ class InputView {
     }
 
     private fun getInputMoney(input: String?): Money {
-        require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-        require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
+        require(!input.isNullOrEmpty()) { INPUT_VALUE_ERROR_MESSAGE }
         return Money(input.toInt())
     }
 
@@ -23,8 +22,7 @@ class InputView {
     }
 
     private fun getInputWinningLotto(input: String?): Lotto {
-        require(input != null) { INPUT_VALUE_ERROR_MESSAGE }
-        require(input != "") { INPUT_VALUE_ERROR_MESSAGE }
+        require(!input.isNullOrEmpty()) { INPUT_VALUE_ERROR_MESSAGE }
         val winningNumber = input.split(",").map { number -> LottoNumber.from(number.toInt()) }
         return Lotto(winningNumber)
     }
