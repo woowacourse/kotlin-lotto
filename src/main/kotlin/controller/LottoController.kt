@@ -15,7 +15,6 @@ class LottoController {
 
     fun run() {
         val lottos = buyLotto()
-        outputView.outputLottos(lottos)
         val winningLotto = makeWinningLotto()
         calculateResult(winningLotto, lottos)
     }
@@ -23,36 +22,34 @@ class LottoController {
     private fun buyLotto(): List<Lotto> {
         val money = inputView.askPurchaseMoney()
         val manualLottos = buyManualLotto(money)
-        val chargeMoney = Money.from(money.value - lottoStore.lottoPrice * manualLottos.size)
-        val autoLottos = buyAutoLotto(chargeMoney)
+        val autoLottos = buyAutoLotto(getChargeMoney(money, manualLottos))
+        outputView.outputLottos(manualLottos, autoLottos)
         return manualLottos + autoLottos
     }
-    private fun buyManualLotto(money: Money): List<Lotto> {
+
+    private fun getChargeMoney(money: Money, manualLottos: List<Lotto>): Money =
+        Money.from(money.value - lottoStore.lottoPrice * manualLottos.size)
+
+    private fun buyManualLotto(money: Money): List<Lotto> =
         runCatching {
             val lottos = inputView.askManualLottoNumbers(inputView.askManualLottoCount())
             return lottoStore.buyManualLotto(money, *lottos.toTypedArray())
-        }.onFailure { outputView.outputError(it) }
-        return buyManualLotto(money)
-    }
+        }
+            .onFailure { outputView.outputError(it) }
+            .getOrDefault(buyManualLotto(money))
 
-    private fun buyAutoLotto(money: Money): List<Lotto> {
-        runCatching {
-            val lottos = lottoStore.buyAutoLotto(money)
-            return lottos
-        }.onFailure { outputView.outputError(it) }
-        return buyAutoLotto(money)
-    }
+    private fun buyAutoLotto(money: Money): List<Lotto> =
+        runCatching { lottoStore.buyAutoLotto(money) }
+            .onFailure { outputView.outputError(it) }
+            .getOrDefault(emptyList())
 
-    private fun makeWinningLotto(): WinningLotto {
-        runCatching {
-            return WinningLotto(inputView.askWinningNumbers(), inputView.askBonusNumber())
-        }.onFailure { outputView.outputError(it) }
-        return makeWinningLotto()
-    }
+    private fun makeWinningLotto(): WinningLotto =
+        runCatching { return WinningLotto(inputView.askWinningNumbers(), inputView.askBonusNumber()) }
+            .onFailure { outputView.outputError(it) }
+            .getOrDefault(makeWinningLotto())
 
     private fun calculateResult(winningLotto: WinningLotto, lottos: List<Lotto>) {
-        runCatching {
-            outputView.outputResult(winningLotto.match(lottos))
-        }.onFailure { outputView.outputError(it) }
+        runCatching { outputView.outputResult(winningLotto.match(lottos)) }
+            .onFailure { outputView.outputError(it) }
     }
 }

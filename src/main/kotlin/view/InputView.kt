@@ -14,14 +14,14 @@ class InputView {
 
     fun askManualLottoCount(): Int {
         while (true) {
-            println("수동으로 구매할 로또 수를 입력해 주세요.")
+            println("\n수동으로 구매할 로또 수를 입력해 주세요.")
             return inputMoney() ?: continue
         }
     }
 
     fun askManualLottoNumbers(count: Int): List<Lotto> {
         val lottos = mutableListOf<Lotto>()
-        println("수동으로 구매할 번호를 입력해 주세요.")
+        println("\n수동으로 구매할 번호를 입력해 주세요.")
         while (lottos.size < count) {
             lottos.add(Lotto(*inputLotteryNumbers() ?: continue))
         }
