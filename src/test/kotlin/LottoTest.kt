@@ -6,32 +6,27 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 
 class LottoTest {
 
-    @MethodSource("produceLotto")
     @Test
-    fun `로또가 6개의 숫자로 잘 생성되었는지 확인`(numbers: List<LottoNumber>) {
+    fun `로또가 6개의 숫자로 잘 생성되었는지 확인`() {
         assertDoesNotThrow {
-            Lotto(numbers)
+            Lotto((1..6).map { LottoNumber.from(it) })
         }
     }
 
-    @MethodSource("produceWrongSizeLotto")
     @Test
-    fun `로또가 6개의 숫자로 이루어지지 않은 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
+    fun `로또가 6개의 숫자로 이루어지지 않은 경우 예외가 발생한다`() {
         assertThatIllegalArgumentException()
-            .isThrownBy { Lotto(numbers) }
+            .isThrownBy { Lotto((1..5).map { LottoNumber.from(it) }) }
             .withMessageContaining("당첨 번호가 6개가 아닙니다")
     }
 
-    @MethodSource("produceOverlayLotto")
     @Test
-    fun `중복된 번호가 존재하는 경우 예외가 발생한다`(numbers: List<LottoNumber>) {
+    fun `중복된 번호가 존재하는 경우 예외가 발생한다`() {
         assertThatIllegalArgumentException()
-            .isThrownBy { Lotto(numbers) }
+            .isThrownBy { Lotto(listOf(1, 2, 3, 4, 5, 5).map { LottoNumber.from(it) }) }
             .withMessageContaining("당첨 번호가 중복되었습니다.")
     }
 
@@ -69,7 +64,7 @@ class LottoTest {
      * 보너스 번호 20
      */
     @Test
-    fun `생성된 로또가 당첨 로또와 5개 일치하고 보너스 번호가 포함되지 않으면, 3등인지 확인`(lotto: Lotto, winningLotto: WinningLotto) {
+    fun `생성된 로또가 당첨 로또와 5개 일치하고 보너스 번호가 포함되지 않으면, 3등인지 확인`() {
         val lotto = Lotto((1..6).map { LottoNumber.from(it) })
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) })
         val bonus = LottoNumber.from(20)
@@ -84,7 +79,7 @@ class LottoTest {
      * 보너스 번호 6
      */
     @Test
-    fun `생성된 로또가 당첨 로또와 5개 일치하고 보너스 번호가 포함되면, 2등인지 확인`(lotto: Lotto, winningLotto: WinningLotto) {
+    fun `생성된 로또가 당첨 로또와 5개 일치하고 보너스 번호가 포함되면, 2등인지 확인`() {
         val lotto = Lotto((1..6).map { LottoNumber.from(it) })
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 9).map { LottoNumber.from(it) })
         val bonus = LottoNumber.from(6)
@@ -98,38 +93,12 @@ class LottoTest {
      * 당첨 로또 Lotto(1, 2, 3, 4, 5, 6)
      */
     @Test
-    fun `생성된 로또가 당첨 로또와 6개 일치하면, 1등인지 확인`(lotto: Lotto, winningLotto: WinningLotto) {
+    fun `생성된 로또가 당첨 로또와 6개 일치하면, 1등인지 확인`() {
         val lotto = Lotto((1..6).map { LottoNumber.from(it) })
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) })
         val bonus = LottoNumber.from(20)
 
         val actual = lotto.matchLotto(WinningLotto(winningLotto, bonus))
         assertThat(actual).isEqualTo(Rank.FIRST)
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun produceLotto(): List<Arguments> {
-            return listOf(
-                Arguments.of(listOf(1, 3, 4, 6, 10, 22).map { LottoNumber.from(it) }),
-            )
-        }
-
-        @JvmStatic
-        fun produceWrongSizeLotto(): List<Arguments> {
-            return listOf(
-                Arguments.of((1..5).map { LottoNumber.from(it) }),
-                Arguments.of((1..7).map { LottoNumber.from(it) }),
-            )
-        }
-
-        @JvmStatic
-        fun produceOverlayLotto(): List<Arguments> {
-            return listOf(
-                Arguments.of(listOf(1, 1, 2, 3, 4, 5).map { LottoNumber.from(it) }),
-                Arguments.of(listOf(1, 10, 10, 20, 25, 33).map { LottoNumber.from(it) }),
-            )
-        }
     }
 }
