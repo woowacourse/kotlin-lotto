@@ -3,9 +3,9 @@ package lotto.domain
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.UserLotto
+import lotto.model.UserLottoCount
 import lotto.model.WinningLotto
 import lotto.model.generator.LottoGenerator
-import lotto.view.ERROR_NOT_ENOUGH_MONEY
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -16,11 +16,17 @@ class LottoController(
 ) {
     fun start() {
         val money = getMoney()
-        val numberOfLotto = getNumberOfLotto(money)
-        val numberOfPassiveLotto = getNumberOfPassiveLotto(numberOfLotto)
-        val myLotto = getUserLotto(numberOfPassiveLotto, numberOfLotto)
+        val myLottoCount = getUserLottoCount(getNumberOfLotto(money))
+        val myLotto = getUserLotto(myLottoCount)
         outputView.printUserLotto(myLotto)
         wrapUp(myLotto, money)
+    }
+
+    private fun getUserLottoCount(numberOfLotto: Int): UserLottoCount {
+        val numberOfPassiveLotto = getNumberOfPassiveLotto(numberOfLotto)
+        return validateInput {
+            UserLottoCount.create(numberOfLotto, numberOfPassiveLotto)
+        } ?: getUserLottoCount(numberOfLotto)
     }
 
     private fun wrapUp(myLotto: UserLotto, money: Int) {
@@ -30,13 +36,12 @@ class LottoController(
         outputView.printResult(ranks, rates)
     }
 
-    fun getUserLotto(passiveNumber: Int, number: Int): UserLotto {
-        val autoNumber = number - passiveNumber
-        outputView.printPurchase(passiveNumber, autoNumber)
+    private fun getUserLotto(lottoCount: UserLottoCount): UserLotto {
+        outputView.printPurchase(lottoCount.passive, lottoCount.auto)
 
         val lotto = mutableListOf<Lotto>()
-        getPassiveLotto(passiveNumber, lotto)
-        getAutoLotto(autoNumber, lotto)
+        getPassiveLotto(lottoCount.passive, lotto)
+        getAutoLotto(lottoCount.auto, lotto)
 
         return UserLotto(lotto)
     }
@@ -46,14 +51,7 @@ class LottoController(
     }
 
     private fun getNumberOfPassiveLotto(numberOfLotto: Int): Int {
-        val number = inputView.getNumber { outputView.printInsertPassiveLottoNumber() }
-        return if (
-            runCatching {
-                require(isMoneyEnough(number, numberOfLotto)) { ERROR_NOT_ENOUGH_MONEY }
-            }.onFailure {
-                println(it.message)
-            }.isSuccess
-        ) number else getNumberOfPassiveLotto(numberOfLotto)
+        return inputView.getNumber { outputView.printInsertPassiveLottoNumber() }
     }
 
     private fun getPassiveLotto(number: Int, lotto: MutableList<Lotto>) {
@@ -94,10 +92,6 @@ class LottoController(
         }.onFailure {
             println(it.message)
         }.getOrNull()
-    }
-
-    fun isMoneyEnough(numberOfPassiveLotto: Int, numberOfLotto: Int): Boolean {
-        return numberOfPassiveLotto <= numberOfLotto
     }
 
     fun getNumberOfLotto(money: Int): Int {

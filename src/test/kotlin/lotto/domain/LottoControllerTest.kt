@@ -17,11 +17,4 @@ class LottoControllerTest {
             LottoController().isDivided(14100)
         ).isFalse
     }
-
-    @Test
-    fun `구입할 수 있는 로또 장 수보다 수동으로 구매하려는 로또 장 수가 더 큰 경우 false를 반환한다`() {
-        assertThat(
-            LottoController().isMoneyEnough(4, 2)
-        ).isFalse
-    }
 }
