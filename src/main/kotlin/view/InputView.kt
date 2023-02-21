@@ -1,10 +1,11 @@
 package view
 
 import domain.Lotto
+import domain.Money
 
 class InputView {
-    fun inputAmount(): Int {
-        return readln().toInt()
+    fun inputAmount(): Money {
+        return Money(readln().toInt())
     }
 
     fun inputNumberOfLottosToBuyManually(): Int {

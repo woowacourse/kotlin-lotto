@@ -1,23 +1,16 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.api.Test
 
 class LottoStoreTest {
-    @ValueSource(ints = [1000, 100000])
-    @ParameterizedTest
-    fun `구매금액이 1000원 이상 100000원 이하면 개수만큼 로또를 반환할 수 있다`(amount: Int) {
-        val lotto: List<Lotto> = LottoStore.sell(amount)
-        assertThat(lotto.size).isEqualTo(amount / LottoStore.LOTTO_PRICE)
-    }
 
-    @ValueSource(ints = [-1, 100001])
-    @ParameterizedTest
-    fun `구매금액이 1000원 미만이거나 100001원 이상이면 에러가 발생한다`(amount: Int) {
-        assertThatIllegalArgumentException()
-            .isThrownBy { LottoStore.sell(amount) }
-            .withMessage("구매 할 수 있는 금액은 1000원 이상 100000원 이하입니다.\n잘못된 값: $amount")
+    @Test
+    fun `로또 상점은 로또 금액을 받으면 금액에서 로또 가격을 나눈 값만큼의 개수의 로또들을 반환한다`() {
+        val money = Money(10000)
+
+        val result = LottoStore.sell(money).size
+
+        assertThat(result).isEqualTo(money / Money(LottoStore.LOTTO_PRICE))
     }
 }
