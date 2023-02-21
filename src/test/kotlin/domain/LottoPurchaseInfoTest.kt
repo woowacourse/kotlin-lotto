@@ -1,5 +1,6 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -25,5 +26,12 @@ class LottoPurchaseInfoTest() {
         assertDoesNotThrow { LottoPurchaseInfo(PurchaseLottoMoney(14000), 14) }
         assertDoesNotThrow { LottoPurchaseInfo(PurchaseLottoMoney(14000), 0) }
         assertDoesNotThrow { LottoPurchaseInfo(PurchaseLottoMoney(14000), 10) }
+    }
+
+    @Test
+    fun `입력받은 수동구매개수와 총 구매개수로부터 자동구매개수가 제대로 정해지는지 검사`() {
+        val purchaseInfo = LottoPurchaseInfo(PurchaseLottoMoney(14000), 10)
+        val expected = 4
+        assertThat(purchaseInfo.autoCount).isEqualTo(expected)
     }
 }
