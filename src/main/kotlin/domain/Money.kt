@@ -2,9 +2,14 @@ package domain
 
 @JvmInline
 value class Money(val value: Int) {
+    val count: Int
+        get() = value / LottoStore.LOTTO_PRICE
+
     init {
         require(value in 0..MAXIMUM_AMOUNT) { ERROR_CREATE_COUNT.format(value) }
     }
+
+    fun calculateCharge(countLotto: Int): Money = Money(value - LottoStore.LOTTO_PRICE * countLotto)
 
     companion object {
         private const val MAXIMUM_AMOUNT = 100000

@@ -3,8 +3,6 @@ package domain
 class LottoStore(
     private val lottoGenerator: LottoGenerator,
 ) {
-    val lottoPrice: Int
-        get() = LOTTO_PRICE
 
     fun buyManualLotto(money: Money, vararg lottos: IntArray): LottoTickets {
         require(money.value >= LOTTO_PRICE * lottos.size) { ERROR_INVALID_COUNT.format(money.value) }
@@ -13,7 +11,7 @@ class LottoStore(
 
     fun buyAutoLotto(money: Money): LottoTickets {
         require(money.value >= LOTTO_PRICE) { ERROR_INVALID_MONEY.format(money.value) }
-        return createLottos(getCount(money))
+        return createLottos(money.count)
     }
 
     fun createLottos(count: Int): LottoTickets {
@@ -22,8 +20,6 @@ class LottoStore(
     }
 
     private fun createLotto(): Lotto = lottoGenerator.generateLotto()
-
-    private fun getCount(money: Money): Int = money.value / LOTTO_PRICE
 
     companion object {
         const val LOTTO_PRICE = 1000

@@ -21,8 +21,8 @@ class LottoTickets(private val lottoTickets: List<Lotto> = emptyList()) {
     operator fun get(index: Int): Lotto = lottoTickets[index]
 
     companion object {
-        private const val MINIMUM_COUNT = 1
+        private const val MINIMUM_COUNT = 0
         private const val MAXIMUM_COUNT = 100
-        private const val ERROR_INVALID_COUNT = "로또 티켓은 1장 이상 100장 이하이어야 합니다.\n잘못된 값: %d"
+        private const val ERROR_INVALID_COUNT = "로또 티켓은 0장 이상 100장 이하이어야 합니다.\n잘못된 값: %d"
     }
 }
