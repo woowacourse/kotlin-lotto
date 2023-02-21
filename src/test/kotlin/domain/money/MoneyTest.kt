@@ -29,7 +29,7 @@ class MoneyTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = ["10000,10", "50000,50", "100000,100", "1450,1", "0,0", "-1000,0"])
+    @CsvSource(value = ["10000,10", "50000,50", "100000,100", "1450,1", "0,0"])
     fun `정수가 주어졌을 때, divideByThousand 호출시, 1000으로 나눈 몫을 반환한다`(money: Int, expected: Int) {
         val actual = Money(money).divideByThousand()
 

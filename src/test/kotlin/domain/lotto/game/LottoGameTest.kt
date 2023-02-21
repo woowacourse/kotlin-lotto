@@ -31,7 +31,11 @@ class LottoGameTest {
     fun `1등 로또가 1개 주어졌을 때, matchLottos 호출시, Rank의 FIRST를 하나 반환한다 `() {
         val actual = lottoGame.matchLottos(
             listOf(PurchasedLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })),
-            WinningLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }, LottoNumber(7)), LottoNumber(7)
+            WinningLotto(
+                listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) },
+                LottoNumber(7)
+            ),
+            LottoNumber(7)
         )
         val expected = mutableMapOf<Rank, Int>()
         expected.put(Rank.FIRST, 1)
