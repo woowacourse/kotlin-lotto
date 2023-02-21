@@ -14,6 +14,8 @@ class LottoTickets(private val lottoTickets: List<Lotto> = emptyList()) {
 
     fun forEach(transform: (Lotto) -> Unit) = lottoTickets.forEach(transform)
 
+    fun asSequence(): Sequence<Lotto> = lottoTickets.asSequence()
+
     operator fun plus(lotto: LottoTickets): LottoTickets = LottoTickets(lottoTickets + lotto.lottoTickets)
 
     operator fun get(index: Int): Lotto = lottoTickets[index]

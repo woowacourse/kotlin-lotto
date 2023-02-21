@@ -8,12 +8,11 @@ class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
     constructor(numbers: IntArray, bonusNumber: Int) : this(Lotto(*numbers), LottoNumber.from(bonusNumber))
 
     fun match(lottos: LottoTickets): LottoResult =
-        LottoResult(
-            lottos
-                .map { Rank.valueOf(it.countMatch(lotto), it.contains(bonusNumber)) }
-                .groupBy { it }
-                .mapValues { it.value.size },
-        )
+        lottos.asSequence()
+            .map { Rank.valueOf(it.countMatch(lotto), it.contains(bonusNumber)) }
+            .groupingBy { it }
+            .eachCount()
+            .let { LottoResult(it) }
 
     override fun toString(): String = lotto.toString() + bonusNumber.toString()
 
