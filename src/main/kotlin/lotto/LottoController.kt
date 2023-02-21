@@ -7,6 +7,7 @@ import lotto.domain.PurchaseMoney
 import lotto.domain.WinningLotto
 import lotto.domain.WinningResult
 import lotto.domain.factory.LottoFactory
+import lotto.utils.inputErrorHandler
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -28,7 +29,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         return runCatching {
             PurchaseMoney(InputView.getPurchaseMoney())
         }.getOrElse { error ->
-            inputErrorHandler(error, ::getPurchaseMoney) as PurchaseMoney
+            inputErrorHandler(error, ::getPurchaseMoney)
         }
     }
 
@@ -36,7 +37,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         return runCatching {
             InputView.getMainLottoNumber().map { number -> LottoNumber.from(number) }
         }.getOrElse { error ->
-            inputErrorHandler(error, ::getMainLottoNumber) as List<LottoNumber>
+            inputErrorHandler(error, ::getMainLottoNumber)
         }
     }
 
@@ -44,7 +45,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         return runCatching {
             LottoNumber.from(InputView.getBonusLottoNumber())
         }.getOrElse { error ->
-            inputErrorHandler(error, ::getBonusLottoNumber) as LottoNumber
+            inputErrorHandler(error, ::getBonusLottoNumber)
         }
     }
 
@@ -52,7 +53,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         return runCatching {
             WinningLotto(getMainLottoNumber(), getBonusLottoNumber())
         }.getOrElse { error ->
-            inputErrorHandler(error, ::getWinningLotto) as WinningLotto
+            inputErrorHandler(error, ::getWinningLotto)
         }
     }
 
@@ -61,27 +62,5 @@ class LottoController(private val lottoFactory: LottoFactory) {
         val winningResult = WinningResult.from(ranks)
         OutputView.printWinningResult(winningResult)
         OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
-    }
-
-    private fun inputErrorHandler(
-        error: Throwable,
-        repeatFunction: () -> Any,
-    ): Any {
-        return when (error) {
-            is IllegalArgumentException -> inputIllegalArgumentExceptionHandler(error, repeatFunction)
-            else -> throw IllegalStateException(ERROR_INPUT_HANDLER)
-        }
-    }
-
-    private fun inputIllegalArgumentExceptionHandler(
-        error: Throwable,
-        repeatFunction: () -> Any,
-    ): Any {
-        println(error.message)
-        return repeatFunction()
-    }
-
-    companion object {
-        private const val ERROR_INPUT_HANDLER = "값 전달 과정에 상태 오류가 발생했습니다."
     }
 }
