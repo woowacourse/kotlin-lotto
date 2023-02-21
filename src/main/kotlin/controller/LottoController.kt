@@ -3,6 +3,7 @@ package controller
 import domain.LottoPurchaseInfo
 import domain.LottoSeller
 import domain.LottoStatistics
+import domain.PurchaseLottoMoney
 import domain.Ticket
 import domain.WinningLotto
 import view.InputViewInterface
@@ -20,17 +21,17 @@ class LottoController(
         val ticket = getManualAndAutoTicket(purchaseInfo)
         resultView.printTicket(purchaseInfo, ticket)
         val winningLotto = initializeWinningLotto()
-        val lottoStatistics = LottoStatistics(winningLotto)
-        val result = lottoStatistics.matchTicket(ticket)
-        val profit = lottoStatistics.yield(result, purchaseLottoMoney)
-        resultView.printResult(result, profit)
+        printResult(winningLotto, ticket, purchaseLottoMoney)
     }
 
     private fun getManualAndAutoTicket(purchaseInfo: LottoPurchaseInfo): Ticket {
         while (true) {
             val manuals = inputView.getManualNumbers(purchaseInfo)
             kotlin.runCatching { lottoSeller.sellManualAndAuto(purchaseInfo, manuals) }
-                .onSuccess { return it }
+                .onSuccess {
+                    println()
+                    return it
+                }
                 .onFailure { println(it.message) }
         }
     }
@@ -40,8 +41,18 @@ class LottoController(
             val winningNumbers = inputView.getWinningNumbers()
             val bonusNumber = inputView.getBonusNumber()
             runCatching { WinningLotto(winningNumbers, bonusNumber) }
-                .onSuccess { return it }
+                .onSuccess {
+                    println()
+                    return it
+                }
                 .onFailure { println(it.message) }
         }
+    }
+
+    private fun printResult(winningLotto: WinningLotto, ticket: Ticket, purchaseLottoMoney: PurchaseLottoMoney) {
+        val lottoStatistics = LottoStatistics(winningLotto)
+        val result = lottoStatistics.matchTicket(ticket)
+        val profit = lottoStatistics.yield(result, purchaseLottoMoney)
+        resultView.printResult(result, profit)
     }
 }
