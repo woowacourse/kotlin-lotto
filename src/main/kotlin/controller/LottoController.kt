@@ -2,7 +2,6 @@ package controller
 
 import domain.LottoCustomer
 import domain.LottoSeller
-import domain.ProfitCalculator
 import domain.lottogenerator.WinningLottoGenerator
 import domain.model.PurchaseMoney
 import domain.model.WinningLotto
@@ -15,7 +14,6 @@ import view.ResultView
 class LottoController(
     private val lottoSeller: LottoSeller = LottoSeller(),
     private val winningNumbersGenerator: WinningLottoGenerator = WinningLottoGenerator(),
-    private val profitCalculator: ProfitCalculator = ProfitCalculator(),
 ) {
 
     private val lottoCustomer: LottoCustomer by lazy {
@@ -56,9 +54,9 @@ class LottoController(
 
     private fun getPurchasedLottosResult(purchasedLottos: PurchasedLottos) {
         val lottoResults = purchasedLottos.getTotalLottoResults(winningLotto)
-        val profit = profitCalculator.getProfit(lottoCustomer.purchaseMoney, lottoResults)
+        val profitRate = lottoCustomer.getMyProfitRate(lottoResults)
 
-        ResultView.printLottoResults(lottoResults, profit)
+        ResultView.printLottoResults(lottoResults, profitRate)
     }
 
     fun run() {

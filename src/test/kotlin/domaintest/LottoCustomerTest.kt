@@ -1,6 +1,7 @@
 package domaintest
 
 import domain.LottoCustomer
+import domain.model.LottoResult
 import domain.model.PurchaseMoney
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -28,5 +29,16 @@ class LottoCustomerTest {
         assertThat(
             LottoCustomer(PurchaseMoney(10000), 3).getAutomaticLottosCountToPurchase()
         ).isEqualTo(7)
+    }
+
+    @Test
+    fun `수익률을 계산한다`() {
+        val lottoCustomer = LottoCustomer(PurchaseMoney(14000), 3)
+
+        assertThat(
+            lottoCustomer.getMyProfitRate(
+                listOf(LottoResult.FIFTH)
+            )
+        ).isEqualTo(0.35)
     }
 }
