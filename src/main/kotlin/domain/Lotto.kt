@@ -18,6 +18,7 @@ data class Lotto(private val numbers: List<LottoNumber>) {
         private const val ERROR_NUMBER_SIZE = "로또 번호의 개수는 ${NUMBER_SIZE}개여야 합니다. \n입력된 로또 번호 개수: %d"
         private const val ERROR_NUMBER_DUPLICATED = "로또 번호는 중복되어선 안됩니다. \n입력된 로또 번호: %s"
         private const val ERROR_NUMBER_SEQUENCE = "로또 번호는 정렬되어야 합니다."
-        fun create(numbers: List<Int>): Lotto = Lotto(numbers.map { LottoNumber.valueOf(it) })
+        fun create(numbers: List<Int>) = Lotto(numbers.map { LottoNumber.valueOf(it) })
+        fun create(vararg numbers: Int) = Lotto(numbers.map { LottoNumber.valueOf(it) })
     }
 }

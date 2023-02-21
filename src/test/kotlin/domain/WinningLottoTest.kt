@@ -8,7 +8,7 @@ class WinningLottoTest {
     @Test
     fun `로또 번호, 로또 번호와 중복되지 않는 보너스 번호로 이루어진 당첨 번호를 생성할 수 있다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 10)
-        assertThat(winningLotto.lotto).isEqualTo(Lotto.create(listOf(1, 2, 3, 4, 5, 6)))
+        assertThat(winningLotto.lotto).isEqualTo(Lotto.create(1, 2, 3, 4, 5, 6))
         assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber.valueOf(10))
     }
 
@@ -30,7 +30,7 @@ class WinningLottoTest {
     @Test
     fun `당첨 번호는 로또에 대해 맞는 개수를 반환할 수 있다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 6))
+        val lotto = Lotto.create(1, 2, 3, 4, 5, 6)
 
         val result = winningLotto.getCountOfMatch(lotto)
 
@@ -40,7 +40,7 @@ class WinningLottoTest {
     @Test
     fun `당첨 번호는 로또에 대해 보너스 번호 매치 여부를 반환할 수 있다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 7))
+        val lotto = Lotto.create(1, 2, 3, 4, 5, 7)
 
         val result = winningLotto.matchBonus(lotto)
 
