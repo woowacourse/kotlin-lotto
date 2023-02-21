@@ -23,6 +23,6 @@ class Lotto constructor(val numbers: Set<LottoNumber>) {
 
     companion object {
         private const val LOTTO_SIZE = 6
-        private const val ERROR_LOTTO_SIZE = "[ERROR] 현재의 로또 번호는 %d, 로또 번호는 ${LOTTO_SIZE}개여야 합니다."
+        private const val ERROR_LOTTO_SIZE = "[ERROR] 현재의 로또 번호 개수는 %d개, 로또 번호는 ${LOTTO_SIZE}개여야 합니다."
     }
 }
