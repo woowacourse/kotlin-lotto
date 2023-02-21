@@ -16,7 +16,7 @@ class LottoController(
 ) {
     fun start() {
         val money = getMoney()
-        val myLottoCount = getUserLottoCount(getNumberOfLotto(money))
+        val myLottoCount = getUserLottoCount(money)
         val myLotto = getUserLotto(myLottoCount)
         outputView.printUserLotto(myLotto)
         wrapUp(myLotto, money)
@@ -26,15 +26,11 @@ class LottoController(
         return inputView.getNumber { outputView.printInsertMoneyMessage() }
     }
 
-    fun getNumberOfLotto(money: Int): Int {
-        return money / LOTTO_PRICE
-    }
-
-    private fun getUserLottoCount(numberOfLotto: Int): UserLottoCount {
+    private fun getUserLottoCount(money: Int): UserLottoCount {
         val numberOfPassiveLotto = getNumberOfPassiveLotto()
         return validateInput {
-            UserLottoCount.create(numberOfLotto, numberOfPassiveLotto)
-        } ?: getUserLottoCount(numberOfLotto)
+            UserLottoCount.create(money, numberOfPassiveLotto)
+        } ?: getUserLottoCount(money)
     }
 
     private fun getNumberOfPassiveLotto(): Int {
@@ -96,9 +92,5 @@ class LottoController(
         }.onFailure {
             println(it.message)
         }.getOrNull()
-    }
-
-    companion object {
-        private const val LOTTO_PRICE: Int = 1000
     }
 }

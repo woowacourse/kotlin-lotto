@@ -10,7 +10,10 @@ class UserLottoCount private constructor(
         get() = all - passive
 
     companion object {
-        fun create(number: Int, numberOfPassive: Int): UserLottoCount {
+        private const val LOTTO_PRICE: Int = 1000
+
+        fun create(money: Int, numberOfPassive: Int): UserLottoCount {
+            val number = money / LOTTO_PRICE
             if (number < numberOfPassive) {
                 throw IllegalArgumentException(ERROR_NOT_ENOUGH_MONEY)
             }
