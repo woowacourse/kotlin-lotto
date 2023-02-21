@@ -9,8 +9,7 @@ object LottoStore {
 
     fun sell(amount: Int): List<Lotto> {
         require(amount in MINIMUM_AMOUNT..MAXIMUM_AMOUNT) { ERROR_CREATE_COUNT.format(amount) }
-        val lottoFactory = LottoFactory(RandomNumberGenerator())
-        return lottoFactory.create(getCount(amount))
+        return LottoFactory.create(getCount(amount))
     }
 
     private fun getCount(amount: Int) = amount / LOTTO_PRICE
