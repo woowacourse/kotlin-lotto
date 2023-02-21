@@ -17,26 +17,23 @@ class LottoController(
 ) {
 
     private val lottoCustomer: LottoCustomer by lazy {
-        val purchaseMoney = PurchaseMoney(NumericValidator.validate(InputView.requestPurchaseMoney()))
-        val manualLottosCount = NumericValidator.validate(InputView.requestManualLottoCount())
+        val purchaseMoney = PurchaseMoney(InputView.requestPurchaseMoney())
+        val manualLottosCount = InputView.requestManualLottoCount()
 
         LottoCustomer(purchaseMoney, manualLottosCount)
     }
 
     private val winningLotto: WinningLotto by lazy {
-        val catchLotto = InputView.requestCatchNumbers().map { catchNumber ->
-            NumericValidator.validate(catchNumber)
-        }
-        val bonusNumber = NumericValidator.validate(InputView.requestBonusNumber())
+        val catchLotto = InputView.requestCatchNumbers()
+
+        val bonusNumber = InputView.requestBonusNumber()
 
         winningNumbersGenerator.generateWinningLotto(catchLotto, bonusNumber)
     }
 
     private fun purchaseManualLottos(): List<Lotto> =
         List(lottoCustomer.manualLottosCountToPurchase) { numberOfPurchase ->
-            val manualNumbers = InputView.requestManualLottoNumbers(numberOfPurchase).map { manualLottoNumber ->
-                NumericValidator.validate(manualLottoNumber)
-            }
+            val manualNumbers = InputView.requestManualLottoNumbers(numberOfPurchase)
 
             lottoSeller.sellManualLotto(manualNumbers)
         }

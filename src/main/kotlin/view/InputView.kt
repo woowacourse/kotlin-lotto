@@ -8,39 +8,62 @@ object InputView {
     private const val CATCH_NUMBER_REQUEST_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
     private const val BONUS_NUMBER_REQUEST_MESSAGE = "보너스 볼을 입력해 주세요."
     private const val TOKENIZER = ","
+    private const val NUMERIC_ERROR = "[숫자가 아닌 입력은 허용하지 않습니다.]\n다시 입력해주세요."
+
     private const val INITIAL_PURCHASING = 0
 
-    private fun requestNumbers(): List<String> = readln().split(TOKENIZER).map(String::trim)
+    private fun requestNumericInput(): Int {
+        while (true) {
+            readln().toIntOrNull()?.let { number -> return number }
+            println(NUMERIC_ERROR)
+        }
+    }
 
-    fun requestPurchaseMoney(): String {
+    private fun isNumericInputs(inputs: List<String>): List<Int>? {
+        val numbers = inputs.mapNotNull(String::toIntOrNull)
+
+        if (numbers.size != inputs.size) {
+            return null
+        }
+        return numbers
+    }
+
+    private fun requestNumericInputs(): List<Int> {
+        while (true) {
+            isNumericInputs(readln().split(TOKENIZER))?.let { manualLottoNumbers -> return manualLottoNumbers }
+            println(NUMERIC_ERROR)
+        }
+    }
+
+    fun requestPurchaseMoney(): Int {
         println(PURCHASE_MONEY_REQUEST_MESSAGE)
 
-        return readln()
+        return requestNumericInput()
     }
 
-    fun requestManualLottoCount(): String {
+    fun requestManualLottoCount(): Int {
         println(MANUAL_LOTTO_COUNT_REQUEST_MESSAGE)
 
-        return readln()
+        return requestNumericInput()
     }
 
-    fun requestManualLottoNumbers(numberOfPurchased: Int): List<String> {
+    fun requestManualLottoNumbers(numberOfPurchased: Int): List<Int> {
         if (numberOfPurchased == INITIAL_PURCHASING) {
             println(MANUAL_LOTTO_NUMBERS_REQUEST_MESSAGE)
         }
 
-        return requestNumbers()
+        return requestNumericInputs()
     }
 
-    fun requestCatchNumbers(): List<String> {
+    fun requestCatchNumbers(): List<Int> {
         println(CATCH_NUMBER_REQUEST_MESSAGE)
 
-        return requestNumbers()
+        return requestNumericInputs()
     }
 
-    fun requestBonusNumber(): String {
+    fun requestBonusNumber(): Int {
         println(BONUS_NUMBER_REQUEST_MESSAGE)
 
-        return readln()
+        return requestNumericInput()
     }
 }
