@@ -15,7 +15,7 @@ class Lotto constructor(val numbers: Set<LottoNumber>) {
 
     override fun toString(): String {
         val sb = StringBuilder("[")
-        numbers.forEach { lottoNumber -> sb.append("$lottoNumber, ") }
+        numbers.forEach { lottoNumber -> sb.append("${lottoNumber.number}, ") }
         sb.delete(sb.length - 2, sb.length)
         sb.append("]")
         return sb.toString()
