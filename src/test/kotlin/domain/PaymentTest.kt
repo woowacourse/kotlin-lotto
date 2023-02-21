@@ -1,28 +1,28 @@
 package domain
 
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class PaymentTest {
 
-    @ValueSource(ints = [1000, 2000, 5000, 100000])
+    @ValueSource(longs = [1000, 2000, 5000, 100000])
     @ParameterizedTest
-    fun `금액은 1000원 단위로 받는다`(receivedMoney: Int) {
+    fun `금액은 1000원 단위로 받는다`(receivedMoney: Long) {
         // given
 
         // when
 
         // then
-        assertDoesNotThrow { Payment(receivedMoney) }
+        assertThat(Payment(receivedMoney).amount).isEqualTo(receivedMoney)
     }
 
-    @ValueSource(ints = [14400, 1, 555, 0])
+    @ValueSource(longs = [14400, 1, 555, 0])
     @ParameterizedTest
-    fun `금액은 1000원 단위가 아니면 에러를 발생시킨다`(receivedMoney: Int) {
+    fun `금액은 1000원 단위가 아니면 에러를 발생시킨다`(receivedMoney: Long) {
         // given
 
         // when
