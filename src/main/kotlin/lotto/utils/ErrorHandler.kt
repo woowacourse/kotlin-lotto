@@ -1,16 +1,6 @@
 package lotto.utils
 
-fun <T> inputErrorHandler(
-    error: Throwable,
-    repeatFunction: () -> T,
-): T {
-    return when (error) {
-        is IllegalArgumentException -> inputIllegalArgumentExceptionHandler(error, repeatFunction)
-        else -> throw IllegalStateException(ERROR_INPUT_HANDLER)
-    }
-}
-
-private fun <T> inputIllegalArgumentExceptionHandler(
+fun <T> illegalArgumentExceptionHandler(
     error: Throwable,
     repeatFunction: () -> T,
 ): T {
@@ -18,4 +8,10 @@ private fun <T> inputIllegalArgumentExceptionHandler(
     return repeatFunction()
 }
 
-const val ERROR_INPUT_HANDLER = "값 전달 과정에 상태 오류가 발생했습니다."
+fun <T> inputNullHandler(
+    message: String,
+    repeatFunction: T,
+): T {
+    println(message)
+    return repeatFunction
+}
