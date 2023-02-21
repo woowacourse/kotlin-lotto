@@ -30,19 +30,19 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     private fun askAmount(): Amount {
         outputView.outputGetAmount()
-        return Amount(inputView.inputAmount())
+        return Amount(inputView.inputInt())
     }
 
     private fun askManualCount(amount: Amount): Count {
         outputView.outputGetCount()
-        return Count(inputView.inputCount(), amount)
+        return Count(inputView.inputInt(), amount)
     }
 
     private fun buyManualLotto(count: Count): List<Lotto> {
         outputView.outputGetManualLottos()
         val store = LottoStore()
         val lottos = (1..count.toInt()).map {
-            inputView.inputManualLotto()
+            inputView.inputString()
         }
         return store.buyManualLotto(lottos)
     }
@@ -54,11 +54,11 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     private fun askWinningNumbers(): Lotto {
         outputView.outputGetWinningNumbers()
-        return Lotto.create(inputView.inputWinningNumbers())
+        return Lotto.create(inputView.inputString().split(",").map { it.toInt() })
     }
 
     private fun askBonusNumber(): LottoNumber {
         outputView.outputGetBonusNumber()
-        return LottoNumber(inputView.inputBonusNumber())
+        return LottoNumber(inputView.inputInt())
     }
 }
