@@ -14,6 +14,10 @@ class OutputView {
         println("\n수동으로 구매할 로또 수를 입력해 주세요.")
     }
 
+    fun outputGetLottosToBuyManually() {
+        println("\n수동으로 구매할 번호를 입력해 주세요.")
+    }
+
     fun outputGetWinningNumbers() {
         println("지난 주 당첨 번호를 입력해 주세요.")
     }

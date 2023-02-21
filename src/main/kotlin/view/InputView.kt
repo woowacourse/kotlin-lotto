@@ -1,5 +1,7 @@
 package view
 
+import domain.Lotto
+
 class InputView {
     fun inputAmount(): Int {
         return readln().toInt()
@@ -8,6 +10,11 @@ class InputView {
     fun inputNumberOfLottosToBuyManually(): Int {
         return readln().toInt()
     }
+
+    fun inputLottosToBuyManually(count: Int): List<Lotto> =
+        mutableListOf<Lotto>().apply {
+            List(count) { Lotto.create(readln().split(",").map { it.trim().toInt() }) }
+        }
 
     fun inputWinningNumbers(): List<Int> {
         return readln().replace("\\s".toRegex(), "").split(",").map { it.toInt() }
