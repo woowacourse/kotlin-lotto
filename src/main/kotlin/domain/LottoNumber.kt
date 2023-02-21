@@ -1,6 +1,7 @@
 package domain
 
-data class LottoNumber private constructor(val number: Int) {
+@JvmInline
+value class LottoNumber private constructor(val number: Int) {
     init {
         require(number in MINIMUM_NUMBER..MAXIMUM_NUMBER) { ERROR_NUMBER_IN_RANGE.format(number) }
     }

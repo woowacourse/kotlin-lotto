@@ -23,8 +23,7 @@ class LottoNumberTest {
     }
 
     @Test
-    fun `동일성 비교`() {
+    fun `동등성 비교`() {
         assertThat(LottoNumber.from(1)).isEqualTo(LottoNumber.from(1))
-        assertThat(LottoNumber.from(1)).isSameAs(LottoNumber.from(1))
     }
 }
