@@ -11,4 +11,11 @@ class LottoPurchaseInfoTest() {
             LottoPurchaseInfo(PurchaseLottoMoney(14000), 15)
         }
     }
+
+    @Test
+    fun `수동 발급 개수가 음수면 에러 발생`() {
+        assertThrows<IllegalArgumentException> {
+            LottoPurchaseInfo(PurchaseLottoMoney(14000), -1)
+        }
+    }
 }
