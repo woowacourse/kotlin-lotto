@@ -2,7 +2,7 @@ package lotto.domain
 
 import lotto.constant.Rank
 
-class WinningResult(val value: Map<Rank, Int>) {
+class WinningResult private constructor(val value: Map<Rank, Int>) {
 
     companion object {
         fun from(ranks: List<Rank>): WinningResult {
