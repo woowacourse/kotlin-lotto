@@ -4,24 +4,7 @@ import lotto.constant.Rank
 
 class WinningResult(val value: Map<Rank, Int>) {
 
-    override fun toString(): String {
-        return value.keys.reversed().drop(1).joinToString(
-            separator = WINNING_RESULT_TO_STRING_SEPARATOR,
-        ) { findRankFormat(it) }
-    }
-
-    private fun findRankFormat(rank: Rank): String {
-        if (rank == Rank.SECOND) {
-            return SECOND_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, value[rank])
-        }
-        return EACH_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, value[rank])
-    }
-
     companion object {
-        private const val SECOND_RANK_SCRIPT = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
-        private const val EACH_RANK_SCRIPT = "%d개 일치 (%d원)- %d개"
-        private const val WINNING_RESULT_TO_STRING_SEPARATOR = "\n"
-
         fun from(ranks: List<Rank>): WinningResult {
             val value = Rank.values().map { rank -> Pair(rank, ranks.count { it == rank }) }
 

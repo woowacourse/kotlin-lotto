@@ -70,7 +70,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         OutputView.printWinningStatsScript()
         val ranks = lottoBunch.getRanks(winningLotto)
         val winningResult = WinningResult.from(ranks)
-        OutputView.printWinningResult(winningResult.toString())
+        OutputView.printWinningResult(winningResult)
 
         OutputView.printYieldRate(
             YieldRateCalculator.getYieldRate(
