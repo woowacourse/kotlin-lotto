@@ -3,7 +3,7 @@
 # domain
 ## LottoNumber
 - [X] 로또 숫자의 원시 값을 포장
-- [ ] value class로 선언
+- [X] value class로 선언
 
 ## PurchaseLottoMoney
 - [X] 구입 금액의 원시값을 포장

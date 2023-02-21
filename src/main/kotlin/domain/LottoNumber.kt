@@ -1,6 +1,7 @@
 package domain
 
-class LottoNumber private constructor(val number: Int) {
+@JvmInline
+value class LottoNumber private constructor(val number: Int) {
 
     companion object {
         private const val MINIMUM_LOTTO_RANGE = 1
