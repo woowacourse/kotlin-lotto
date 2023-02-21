@@ -1,5 +1,4 @@
 class Lotto(val numbers: List<LottoNumber>) {
-
     init {
         require(numbers.size == LOTTO_NUMBERS_COUNT) { LOTTO_NUMBERS_COUNT_ERROR }
         require(!isContainDuplicatedNumber()) { LOTTO_NUMBER_DUPLICATED_ERROR }

@@ -10,13 +10,13 @@ class LottoTest {
         val exception = assertThrows<IllegalArgumentException> {
             Lotto(
                 listOf(
-                    LottoNumber.from(1),
-                    LottoNumber.from(2),
-                    LottoNumber.from(3),
-                    LottoNumber.from(4),
-                    LottoNumber.from(5),
-                    LottoNumber.from(6),
-                    LottoNumber.from(7),
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(6),
+                    LottoNumber(7),
                 ),
             )
         }
@@ -28,12 +28,12 @@ class LottoTest {
         val exception = assertThrows<IllegalArgumentException> {
             Lotto(
                 listOf(
-                    LottoNumber.from(1),
-                    LottoNumber.from(1),
-                    LottoNumber.from(3),
-                    LottoNumber.from(4),
-                    LottoNumber.from(5),
-                    LottoNumber.from(6),
+                    LottoNumber(1),
+                    LottoNumber(1),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(6),
                 ),
             )
         }
@@ -45,23 +45,23 @@ class LottoTest {
         // given
         val lotto = Lotto(
             listOf(
-                LottoNumber.from(1),
-                LottoNumber.from(2),
-                LottoNumber.from(3),
-                LottoNumber.from(4),
-                LottoNumber.from(5),
-                LottoNumber.from(6),
+                LottoNumber(1),
+                LottoNumber(2),
+                LottoNumber(3),
+                LottoNumber(4),
+                LottoNumber(5),
+                LottoNumber(6),
             ),
         )
 
         val winningLotto = Lotto(
             listOf(
-                LottoNumber.from(1),
-                LottoNumber.from(2),
-                LottoNumber.from(3),
-                LottoNumber.from(4),
-                LottoNumber.from(5),
-                LottoNumber.from(7),
+                LottoNumber(1),
+                LottoNumber(2),
+                LottoNumber(3),
+                LottoNumber(4),
+                LottoNumber(5),
+                LottoNumber(7),
             ),
         )
 
@@ -79,16 +79,16 @@ class LottoTest {
         // given
         val lotto = Lotto(
             listOf(
-                LottoNumber.from(1),
-                LottoNumber.from(2),
-                LottoNumber.from(3),
-                LottoNumber.from(4),
-                LottoNumber.from(5),
-                LottoNumber.from(6),
+                LottoNumber(1),
+                LottoNumber(2),
+                LottoNumber(3),
+                LottoNumber(4),
+                LottoNumber(5),
+                LottoNumber(6),
             ),
         )
 
-        val bonusNumber = LottoNumber.from(number)
+        val bonusNumber = LottoNumber(number)
 
         // when
         val actual = lotto.isContainBonusNumber(bonusNumber)
