@@ -30,7 +30,7 @@ class Lotto private constructor(val lotto: List<LottoNumber>) {
     override fun toString(): String = lotto.map { it.toInt() }.joinToString(", ")
 
     companion object {
-        private const val LOTTO_SIZE = 6
+        private const val LOTTO_SIZE: Int = 6
 
         fun create(lotto: List<Int>) = Lotto(lotto.map { LottoNumber.create(it) })
     }

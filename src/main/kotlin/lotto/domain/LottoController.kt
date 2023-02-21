@@ -99,6 +99,6 @@ class LottoController(
     }
 
     companion object {
-        private const val LOTTO_PRICE = 1000
+        private const val LOTTO_PRICE: Int = 1000
     }
 }
