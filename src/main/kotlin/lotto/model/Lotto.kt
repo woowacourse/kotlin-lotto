@@ -27,7 +27,7 @@ class Lotto private constructor(val lotto: List<LottoNumber>) {
 
     private fun hasNoDuplicateNumber(): Boolean = lotto.size == lotto.map { it }.toSet().size
 
-    override fun toString(): String = lotto.map { it.number }.joinToString(", ")
+    override fun toString(): String = lotto.map { it.toInt() }.joinToString(", ")
 
     companion object {
         private const val LOTTO_SIZE = 6

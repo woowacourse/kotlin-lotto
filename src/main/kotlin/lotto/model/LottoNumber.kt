@@ -3,7 +3,9 @@ package lotto.model
 import lotto.view.ERROR_OUT_OF_RANGE
 
 @JvmInline
-value class LottoNumber private constructor(val number: Int) {
+value class LottoNumber private constructor(private val number: Int) {
+
+    fun toInt(): Int = number
 
     companion object {
         private const val START_LOTTO_RANGE = 1
