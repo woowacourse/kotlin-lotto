@@ -7,7 +7,6 @@ import domain.RandomLottoGenerator
 import domain.WinningNumbers
 import view.InputView
 import view.OutputView
-import view.UI
 
 class LottoController {
 
@@ -25,7 +24,7 @@ class LottoController {
     }
 
     private fun getMoney(): Payment {
-        UI.printRequestMoney()
+        OutputView.printRequestMoney()
         val money = InputView.inputMoney()
         return Payment(money)
     }
@@ -44,13 +43,13 @@ class LottoController {
     }
 
     private fun getWinningLotto(): Lotto {
-        UI.printRequestWinningNumbers()
+        OutputView.printRequestWinningNumbers()
         val winningNumbers: List<String> = InputView.inputWinningNumbers()
         return Lotto(winningNumbers)
     }
 
     private fun getBonusNumber(): LottoNumber {
-        UI.printRequestBonusNumber()
+        OutputView.printRequestBonusNumber()
         val bonusNumber = InputView.inputBonusNumber()
         return LottoNumber.of(bonusNumber)
     }
