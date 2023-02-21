@@ -23,7 +23,7 @@ class LottoGameTest {
     @Test
     fun `매치 결과와 투자 금액이 주어졌을 때, calculateIncomeRate 호출시, 수익률을 반환한다`() {
         val actual = lottoGame.calculateIncomeRate(
-            mapOf(Rank.FIFTH to 1),
+            mapOf(Rank.FIFTH_WITH_BONUS to 1),
             Money(14000)
         )
         Assertions.assertEquals(0.35, actual)
@@ -33,7 +33,7 @@ class LottoGameTest {
     fun `1등 로또가 1개 주어졌을 때, matchLottos 호출시, Rank의 FIRST를 하나 반환한다 `() {
         val actual = lottoGame.matchLottos(listOf(PurchasedLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })))
         val expected = mutableMapOf<Rank, Int>()
-        expected.put(Rank.FIRST, 1)
+        expected.put(Rank.FIRST_WITH_BONUS, 1)
         Assertions.assertEquals(expected, actual)
     }
 }
