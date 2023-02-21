@@ -12,7 +12,9 @@ object InputView {
 
     private const val INITIAL_PURCHASING = 0
 
-    private fun requestNumericInput(): Int {
+    private fun requestNumericInput(message: String): Int {
+        println(message)
+
         while (true) {
             readln().toIntOrNull()?.let { number -> return number }
             println(NUMERIC_ERROR)
@@ -35,17 +37,9 @@ object InputView {
         }
     }
 
-    fun requestPurchaseMoney(): Int {
-        println(PURCHASE_MONEY_REQUEST_MESSAGE)
+    fun requestPurchaseMoney(): Int = requestNumericInput(PURCHASE_MONEY_REQUEST_MESSAGE)
 
-        return requestNumericInput()
-    }
-
-    fun requestManualLottoCount(): Int {
-        println(MANUAL_LOTTO_COUNT_REQUEST_MESSAGE)
-
-        return requestNumericInput()
-    }
+    fun requestManualLottoCount(): Int = requestNumericInput(MANUAL_LOTTO_COUNT_REQUEST_MESSAGE)
 
     fun requestManualLottoNumbers(numberOfPurchased: Int): List<Int> {
         if (numberOfPurchased == INITIAL_PURCHASING) {
@@ -61,9 +55,5 @@ object InputView {
         return requestNumericInputs()
     }
 
-    fun requestBonusNumber(): Int {
-        println(BONUS_NUMBER_REQUEST_MESSAGE)
-
-        return requestNumericInput()
-    }
+    fun requestBonusNumber(): Int = requestNumericInput(BONUS_NUMBER_REQUEST_MESSAGE)
 }
