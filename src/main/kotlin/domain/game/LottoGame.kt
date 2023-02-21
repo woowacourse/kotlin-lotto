@@ -22,7 +22,7 @@ class LottoGame(
             val rank = it.matchLotto(winningLotto, bonusNumber)
             val originCount = matchResult.getOrDefault(rank, 0)
 
-            matchResult[rank] = originCount + 1
+            matchResult[rank] = originCount + MATCHING_POINT
         }
 
         return matchResult
@@ -40,5 +40,9 @@ class LottoGame(
             income += (rank.winningMoney * count)
         }
         return income
+    }
+
+    companion object {
+        private const val MATCHING_POINT = 1
     }
 }
