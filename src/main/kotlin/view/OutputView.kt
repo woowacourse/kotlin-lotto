@@ -19,17 +19,16 @@ class OutputView {
     }
 
     fun outputGetWinningNumbers() {
-        println("지난 주 당첨 번호를 입력해 주세요.")
+        println("\n지난 주 당첨 번호를 입력해 주세요.")
     }
 
     fun outputGetBonusNumber() {
         println("보너스 볼을 입력해 주세요.")
     }
 
-    fun outputLottos(lottos: List<Lotto>) {
-        println("${lottos.size}개를 구매했습니다.")
+    fun outputLottos(lottosToBuyManually: Int, lottos: List<Lotto>) {
+        println("\n수동으로 ${lottosToBuyManually}장, 자동으로 ${lottos.size - lottosToBuyManually}개를 구매했습니다.")
         lottos.forEach { println(it) }
-        println()
     }
 
     fun outputResult(lottoResult: LottoResult) {

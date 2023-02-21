@@ -12,9 +12,7 @@ class InputView {
     }
 
     fun inputLottosToBuyManually(count: Int): List<Lotto> =
-        mutableListOf<Lotto>().apply {
-            List(count) { Lotto.create(readln().split(",").map { it.trim().toInt() }) }
-        }
+        List(count) { Lotto.create(readln().split(",").map { it.trim().toInt() }) }
 
     fun inputWinningNumbers(): List<Int> {
         return readln().replace("\\s".toRegex(), "").split(",").map { it.toInt() }
