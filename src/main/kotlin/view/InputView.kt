@@ -20,6 +20,10 @@ object InputView {
         return readln()
     }
 
+    fun requestManualLottoNumbers(): List<String> {
+        return readln().split(TOKENIZER).map { it.trim() }
+    }
+
     fun requestCatchNumbers(): List<String> {
         println(CATCH_NUMBER_REQUEST_MESSAGE)
 

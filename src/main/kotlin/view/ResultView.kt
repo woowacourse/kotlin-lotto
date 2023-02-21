@@ -9,6 +9,7 @@ object ResultView {
     private const val LOTTO_RESULT_TITLE = "당첨 통계\n---------"
     private const val MATCH_RESULT = "%s개 일치 (%s원) - %s개"
     private const val PROFIT_RESULT = "총 수익률은 %s입니다."
+    private const val MANUAL_LOTTO_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
 
     fun printPurchasedNumberOfLottos(numberOfLotto: Int) {
         println(NUMBER_OF_PURCHASED_LOTTO.format(numberOfLotto))
@@ -32,6 +33,10 @@ object ResultView {
         }
 
         println(PROFIT_RESULT.format(profit))
+    }
+
+    fun printManualLottoRequest() {
+        println(MANUAL_LOTTO_MESSAGE)
     }
 
     private fun LottoResult.formatMatchResult(lottoResults: List<LottoResult>): String =
