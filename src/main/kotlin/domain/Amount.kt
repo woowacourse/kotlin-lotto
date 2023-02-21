@@ -1,13 +1,10 @@
 package domain
 
-data class Amount(private val amount: Int) {
+data class Amount(val amount: Int) {
 
     init {
         require(amount in MINIMUM_AMOUNT..MAXIMUM_AMOUNT) { ERROR_CREATE_COUNT.format(amount) }
     }
-
-    operator fun div(number: Int): Number = amount / number
-    operator fun minus(number: Int): Number = amount - number
 
     companion object {
         private const val MINIMUM_AMOUNT = 1000

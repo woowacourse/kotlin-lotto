@@ -18,7 +18,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
             val amount = askAmount()
             val count = askManualCount(amount)
             val manualLottos = buyManualLotto(count)
-            val autoLottos = buyAutoLotto(Amount((amount - (count * LOTTO_PRICE).toInt()).toInt()))
+            val autoLottos = buyAutoLotto(Amount((amount.amount - (count.count * LOTTO_PRICE))))
             outputView.outputLottos(manualLottos, autoLottos)
             val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
             val result = LottoResult.of(manualLottos + autoLottos, winningLotto)

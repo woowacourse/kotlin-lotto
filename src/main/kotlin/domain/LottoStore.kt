@@ -12,7 +12,7 @@ class LottoStore {
         }
     }
 
-    private fun getCount(amount: Amount): Int = (amount / LOTTO_PRICE).toInt()
+    private fun getCount(amount: Amount): Int = (amount.amount / LOTTO_PRICE).toInt()
 
     companion object {
         const val LOTTO_PRICE = 1000
