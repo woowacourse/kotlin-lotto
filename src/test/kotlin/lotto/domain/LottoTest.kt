@@ -19,25 +19,16 @@ class LottoTest {
     }
 
     companion object {
+        private fun lottoNumberSetOf(vararg numbers: Int): Set<LottoNumber> =
+            numbers.map { LottoNumber(it) }.toSet()
+
         @JvmStatic
         fun provideWrongAmountLottoNumbers() = listOf(
             Arguments.of(
-                setOf(
-                    LottoNumber(4),
-                    LottoNumber(3),
-                    LottoNumber(12),
-                ),
+                lottoNumberSetOf(4, 3, 12),
             ),
             Arguments.of(
-                setOf(
-                    LottoNumber(4),
-                    LottoNumber(3),
-                    LottoNumber(12),
-                    LottoNumber(17),
-                    LottoNumber(21),
-                    LottoNumber(35),
-                    LottoNumber(41),
-                ),
+                lottoNumberSetOf(4, 3, 12, 17, 21, 35, 41),
             ),
             Arguments.of(setOf<LottoNumber>()),
         )
@@ -45,24 +36,10 @@ class LottoTest {
         @JvmStatic
         fun provideDuplicateLottoNumbers() = listOf(
             Arguments.of(
-                setOf(
-                    LottoNumber(4),
-                    LottoNumber(3),
-                    LottoNumber(12),
-                    LottoNumber(11),
-                    LottoNumber(11),
-                    LottoNumber(12),
-                ),
+                lottoNumberSetOf(4, 3, 12, 11, 11, 12),
             ),
             Arguments.of(
-                setOf(
-                    LottoNumber(4),
-                    LottoNumber(3),
-                    LottoNumber(12),
-                    LottoNumber(12),
-                    LottoNumber(35),
-                    LottoNumber(35),
-                ),
+                lottoNumberSetOf(4, 3, 12, 12, 35, 35),
             ),
         )
     }

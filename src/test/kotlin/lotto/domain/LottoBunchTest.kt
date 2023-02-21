@@ -5,54 +5,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoBunchTest {
-    val lottoBunch = LottoBunch(
-        listOf(
-            Lotto(
-                setOf(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5),
-                    LottoNumber(6),
-                ),
-            ),
-            Lotto(
-                setOf(
-                    LottoNumber(7),
-                    LottoNumber(8),
-                    LottoNumber(9),
-                    LottoNumber(10),
-                    LottoNumber(11),
-                    LottoNumber(12),
-                ),
-            ),
-            Lotto(
-                setOf(
-                    LottoNumber(13),
-                    LottoNumber(14),
-                    LottoNumber(15),
-                    LottoNumber(16),
-                    LottoNumber(17),
-                    LottoNumber(18),
-                ),
-            ),
-        ),
-    )
+    val lottoBunch =
+        lottoBunchOf(lottoOf(1, 2, 3, 4, 5, 6), lottoOf(7, 8, 9, 10, 11, 12), lottoOf(13, 14, 15, 16, 17, 18))
 
-    val winningLotto: WinningLotto = WinningLotto(
-        Lotto(
-            setOf(
-                LottoNumber(1),
-                LottoNumber(10),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(6),
-            ),
-        ),
-        LottoNumber(2),
-    )
+    val winningLotto: WinningLotto =
+        winningLottoOf(mainLottoNumbers = intArrayOf(1, 10, 3, 4, 5, 6), bonusLottoNumber = 2)
 
     @Test
     fun `2등에 1번 당첨되었다`() {
@@ -66,5 +23,15 @@ class LottoBunchTest {
         assertThat(lottoBunch.sumTotalPrizeMoney(WinningResult.from(lottoBunch.getRanks(winningLotto)))).isEqualTo(
             30000000,
         )
+    }
+
+    companion object {
+        private fun lottoBunchOf(vararg lotto: Lotto) = LottoBunch(lotto.toList())
+
+        private fun lottoOf(vararg numbers: Int): Lotto =
+            Lotto(numbers.map { LottoNumber(it) }.toSet())
+
+        private fun winningLottoOf(vararg mainLottoNumbers: Int, bonusLottoNumber: Int): WinningLotto =
+            WinningLotto(Lotto(mainLottoNumbers.map { LottoNumber(it) }.toSet()), LottoNumber(bonusLottoNumber))
     }
 }
