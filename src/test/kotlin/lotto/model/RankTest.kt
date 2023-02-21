@@ -23,8 +23,8 @@ internal class RankTest {
         )
         val countOfMatch = lotto.determineCountOfMatch(winLotto.winNumber)
         val matchBonus = lotto.determineMatchBonus(winLotto.bonus)
-
-        assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(Rank.SECOND)
+        val actual = Rank.valueOf(countOfMatch, matchBonus)
+        assertThat(actual).isEqualTo(Rank.SECOND)
     }
 
     @Test
@@ -41,8 +41,9 @@ internal class RankTest {
         )
         val countOfMatch = lotto.determineCountOfMatch(winLotto.winNumber)
         val matchBonus = lotto.determineMatchBonus(winLotto.bonus)
+        val actual = Rank.valueOf(countOfMatch, matchBonus)
 
-        assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(Rank.FOURTH)
+        assertThat(actual).isEqualTo(Rank.FOURTH)
     }
 
     companion object {

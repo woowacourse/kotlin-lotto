@@ -9,6 +9,7 @@ class LottoProfitRateCalculatorTest {
     @Test
     fun `구입금액이 14000원이고 당첨금이 5000원이면 수익률은 0_35이다`() {
         val calculator = LottoProfitRateCalculator(PurchaseMoney(14000), WinStatistics((listOf(Rank.FIFTH))))
-        assertThat((calculator.calculate().value * 100).toInt() / 100f).isEqualTo(0.35f)
+        val actual = (calculator.calculate().value * 100).toInt() / 100f
+        assertThat(actual).isEqualTo(0.35f)
     }
 }
