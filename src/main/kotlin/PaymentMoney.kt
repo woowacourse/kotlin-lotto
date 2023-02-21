@@ -1,4 +1,4 @@
-class PaymentMoney(val value: Int) {
+open class PaymentMoney(val value: Int) {
 
     init {
         require(value > ONE_LOTTO_PRICE) { PAYMENT_MONEY_MINIMUM_ERROR_MESSAGE }

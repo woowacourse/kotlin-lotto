@@ -18,7 +18,7 @@ class RankStatistics(val moeny: Int) : PaymentMoney(moeny) {
         return profit / moeny
     }
 
-    companion object{
+    companion object {
         const val INITIALIZE_TO_ZERO = 0
         const val INITIALIZE_TO_DOUBLE_ZERO = 0.00
         const val PLUS_ONE = 1

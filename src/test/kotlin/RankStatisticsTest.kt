@@ -8,12 +8,12 @@ class RankStatisticsTest {
         val rank = Rank.FIFTH
         val rankStatistics = RankStatistics(3000)
 
-        //when
+        // when
         rankStatistics.updateRankCount(rank)
         rankStatistics.updateRankCount(rank)
         rankStatistics.updateRankCount(rank)
 
-        //then
+        // then
         assertThat(rankStatistics.getRankCount(rank)).isEqualTo(3)
     }
 
@@ -23,11 +23,11 @@ class RankStatisticsTest {
         val rank = Rank.FIFTH
         val rankStatistics = RankStatistics(3000)
 
-        //when
+        // when
         rankStatistics.updateRankCount(rank)
         val actual = rankStatistics.getRankCount(rank)
 
-        //then
+        // then
         assertThat(actual).isEqualTo(1)
     }
 
@@ -37,12 +37,12 @@ class RankStatisticsTest {
         val rank = Rank.FIFTH
         val rankStatistics = RankStatistics(3000)
 
-        //when
+        // when
         rankStatistics.updateRankCount(rank)
         rankStatistics.updateRankCount(rank)
         rankStatistics.updateRankCount(rank)
 
-        //then
+        // then
         assertThat(rankStatistics.getProfitRate()).isEqualTo(5.0)
     }
 }
