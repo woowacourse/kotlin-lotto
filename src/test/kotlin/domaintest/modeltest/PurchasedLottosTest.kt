@@ -37,7 +37,7 @@ class PurchasedLottosTest {
             listOf(
                 LottoResult.FIRST,
                 LottoResult.SECOND,
-                LottoResult.FORTH
+                LottoResult.FOURTH
             )
         )
     }
