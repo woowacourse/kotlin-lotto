@@ -6,19 +6,19 @@ import domain.money.Money
 
 class InputView {
     fun inputPurchasingMoney(): Money {
-        println(PURCHASING_MONEY_INPUT_MESSAGE)
+        printMessage(PURCHASING_MONEY_INPUT_MESSAGE)
         return Money.from(readln().trim())
     }
 
     fun inputPurchasingManualLottoSize(): LottoSize {
-        println()
+        printEnter()
         println(PURCHASE_MANUAL_LOTTO_COUNT_INPUT_MESSAGE)
         return LottoSize.from(readln().trim())
     }
 
     fun inputManualLottoNumbers(size: LottoSize): List<List<LottoNumber>> {
-        println()
-        println(MANUAL_LOTTO_NUMBERS_INPUT_MESSAGE)
+        printEnter()
+        printMessage(MANUAL_LOTTO_NUMBERS_INPUT_MESSAGE)
         return List(size.value) { inputManualLottoNumber() }
     }
 
@@ -26,14 +26,18 @@ class InputView {
         readln().split(WINNING_NUMBER_DELIMITER).map { LottoNumber.from(it) }
 
     fun inputLastWeekWinningNumbers(): List<String> {
-        println(LAST_WEEK_WINNING_NUMBERS_INPUT_MESSAGE)
+        printMessage(LAST_WEEK_WINNING_NUMBERS_INPUT_MESSAGE)
         return readln().split(WINNING_NUMBER_DELIMITER)
     }
 
     fun inputBonusBallNumber(): LottoNumber {
-        println(BONUS_BALL_NUMBERS_INPUT_MESSAGE)
+        printMessage(BONUS_BALL_NUMBERS_INPUT_MESSAGE)
         return LottoNumber.from(readln().trim())
     }
+
+    private fun printMessage(message: String = ""): Unit = println(message)
+
+    private fun printEnter(): Unit = printMessage()
 
     companion object {
         private const val PURCHASING_MONEY_INPUT_MESSAGE = "구입금액을 입력해 주세요."
