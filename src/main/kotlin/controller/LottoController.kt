@@ -1,7 +1,5 @@
 package controller
 
-import common.MAXIMUM_LOTTO_RANGE
-import common.MINIMUM_LOTTO_RANGE
 import domain.Lotto
 import domain.LottoNumber
 import domain.LottoSeller
@@ -28,37 +26,38 @@ class LottoController(
     }
 
     private fun initializeTicket(): Ticket {
-        while (true) {
-            runCatching { inputView.getMoney() }
-                .onSuccess { return lottoSeller.sellLottos(it) }
+        return runCatching {
+            val count = inputView.getMoney()
+            lottoSeller.sellLottos(count)
+        }.getOrElse { error ->
+            println(error.message)
+            initializeTicket()
         }
     }
 
     private fun initializeWinningLotto(): WinningLotto {
-        while (true) {
+        return runCatching {
             val winningNumbers = makeWinningLotto()
             val bonusNumber = makeBonusNumber()
-            runCatching { WinningLotto(winningNumbers, LottoNumber(bonusNumber)) }
-                .onSuccess { return it }
+            WinningLotto(winningNumbers, LottoNumber(bonusNumber))
+        }.getOrElse {
+            initializeWinningLotto()
         }
     }
 
     private fun makeWinningLotto(): Lotto {
-        while (true) {
-            runCatching { Lotto(inputView.getNumbers().map { number -> LottoNumber(number) }.toSet()) }
-                .onSuccess { return it }
+        return runCatching {
+            Lotto(inputView.getNumbers().map { number -> LottoNumber(number) }.toSet())
+        }.getOrElse {
+            makeWinningLotto()
         }
     }
 
     private fun makeBonusNumber(): Int {
-        while (true) {
-            val bonusNumber = inputView.getBonusNumber()
-            runCatching { validate(bonusNumber) }
-                .onSuccess { return bonusNumber }
+        return runCatching {
+            inputView.getBonusNumber()
+        }.getOrElse {
+            makeBonusNumber()
         }
-    }
-
-    private fun validate(bonus: Int) {
-        require(bonus in MINIMUM_LOTTO_RANGE..MAXIMUM_LOTTO_RANGE)
     }
 }
