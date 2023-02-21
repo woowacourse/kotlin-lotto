@@ -1,6 +1,6 @@
 package lotto.model
 
-import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,12 +13,13 @@ class LottoTest {
         "1 2 3 4 5 9, THIRD",
         "1 2 3 9 10 11, FIFTH"
     )
-    fun `일치하는 번호 개수에 따라 Rank를 구한다`(numbers: String, result: String) {
+    fun `일치하는 번호 개수에 따라 Rank를 구한다`(numbers: String, result: Rank) {
         val winning = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = numbers.split(" ").map { it.toInt() }
-        assertThat(
-            Lotto.create(lotto).getCountOfMatch(winning)
-        ).isEqualTo(Rank.valueOf(result))
+        val number = numbers.split(" ").map { it.toInt() }
+
+        val actual = Lotto.create(number).getRank(winning)
+
+        assertEquals(result, actual)
     }
 
     @Test
