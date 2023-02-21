@@ -31,13 +31,13 @@ class LottoController {
     private fun buyManualLotto(money: Money): LottoTickets =
         runCatching {
             val lottos = inputView.askManualLottoNumbers(inputView.askManualLottoCount())
-            return lottoStore.buyManualLotto(money, *lottos)
+            return lottoStore.buyManualLotto(money.count, *lottos)
         }
             .onFailure { outputView.outputError(it) }
             .getOrDefault(buyManualLotto(money))
 
     private fun buyAutoLotto(money: Money): LottoTickets =
-        runCatching { lottoStore.buyAutoLotto(money) }
+        runCatching { lottoStore.buyAutoLotto(money.count) }
             .onFailure { outputView.outputError(it) }
             .getOrDefault(LottoTickets())
 
