@@ -11,7 +11,7 @@ internal class LottoGeneratorTest {
     @Test
     fun `생성된 로또의 번호는 1,2,3,4,5,6이다`() {
         val expect = Lotto.from(
-            setOf(
+            listOf(
                 LottoNumber(1),
                 LottoNumber(2),
                 LottoNumber(3),
@@ -32,7 +32,7 @@ internal class LottoGeneratorTest {
         fun init() {
             val lottos = listOf(
                 Lotto.from(
-                    setOf(
+                    listOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),

@@ -11,7 +11,7 @@ class LottoTest {
     @Test
     fun `갖고 있는 로또와 당첨 번호 6개가 모두 같으면 6을 반환한다`() {
         val lotto = Lotto.from(
-            setOf(
+            listOf(
                 LottoNumber(1),
                 LottoNumber(2),
                 LottoNumber(3),
@@ -23,7 +23,7 @@ class LottoTest {
 
         val winLotto = WinLotto(
             Lotto.from(
-                setOf(
+                listOf(
                     LottoNumber(1),
                     LottoNumber(2),
                     LottoNumber(3),
@@ -40,7 +40,7 @@ class LottoTest {
     @Test
     fun `갖고 있는 로또와 당첨 보너스 번호가 같으면 true를 반환한다`() {
         val lotto = Lotto.from(
-            setOf(
+            listOf(
                 LottoNumber(1),
                 LottoNumber(2),
                 LottoNumber(3),
@@ -51,7 +51,7 @@ class LottoTest {
         )
         val winLotto = WinLotto(
             Lotto.from(
-                setOf(
+                listOf(
                     LottoNumber(11),
                     LottoNumber(12),
                     LottoNumber(13),
@@ -70,7 +70,7 @@ class LottoTest {
     fun `로또 번호가 6개가 아니면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             Lotto.from(
-                setOf(
+                listOf(
                     LottoNumber(1),
                     LottoNumber(2),
                     LottoNumber(3),
@@ -83,7 +83,7 @@ class LottoTest {
 
     @MethodSource("provideDuplicateLotto")
     @ParameterizedTest
-    fun `로또 번호가 중복되면 예외가 발생한다`(lotto: Set<LottoNumber>) {
+    fun `로또 번호가 중복되면 예외가 발생한다`(lotto: List<LottoNumber>) {
         assertThrows<IllegalArgumentException> { Lotto.from(lotto) }
     }
 
@@ -92,7 +92,7 @@ class LottoTest {
         fun provideDuplicateLotto(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    setOf(
+                    listOf(
                         LottoNumber(1),
                         LottoNumber(1),
                         LottoNumber(2),
@@ -102,7 +102,7 @@ class LottoTest {
                     )
                 ),
                 Arguments.of(
-                    setOf(
+                    listOf(
                         LottoNumber(41),
                         LottoNumber(41),
                         LottoNumber(42),
@@ -118,7 +118,7 @@ class LottoTest {
         fun provideLottoCountNotSix(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    setOf(
+                    listOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),
@@ -127,7 +127,7 @@ class LottoTest {
                     )
                 ),
                 Arguments.of(
-                    setOf(
+                    listOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),
