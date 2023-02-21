@@ -7,8 +7,8 @@ object InputView {
     private const val PURCHASE_MONEY_REQUEST_MESSAGE = "구입금액을 입력해 주세요."
     private const val CATCH_NUMBER_REQUEST_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
     private const val BONUS_NUMBER_REQUEST_MESSAGE = "보너스 볼을 입력해 주세요."
-    private const val TOKENIZER = ","
     private const val NUMERIC_ERROR = "[숫자가 아닌 입력은 허용하지 않습니다.]\n다시 입력해주세요."
+    private const val TOKENIZER = ","
 
     private const val INITIAL_PURCHASING = 0
 

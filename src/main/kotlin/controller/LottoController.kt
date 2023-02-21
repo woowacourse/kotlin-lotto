@@ -7,7 +7,6 @@ import domain.model.PurchaseMoney
 import domain.model.WinningLotto
 import domain.model.lotto.Lotto
 import domain.model.lotto.PurchasedLottos
-import util.NumericValidator
 import view.InputView
 import view.ResultView
 
