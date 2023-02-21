@@ -24,11 +24,4 @@ class LottoBunch(val value: List<Lotto>) {
 
     private fun getPrizeMoney(rank: Rank, winningResult: WinningResult): Int =
         rank.prizeMoney * (winningResult.value[rank] ?: throw IllegalStateException())
-
-    override fun toString(): String =
-        value.joinToString(separator = LOTTO_BUNCH_TO_STRING_SEPARATOR) { lotto -> lotto.toString() }
-
-    companion object {
-        private const val LOTTO_BUNCH_TO_STRING_SEPARATOR = "\n"
-    }
 }

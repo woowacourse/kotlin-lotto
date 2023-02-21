@@ -35,7 +35,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         }
 
         val lottoBunch = LottoBunch(lottoes)
-        OutputView.printPurchaseResult(lottoBunch.toString(), purchaseCount)
+        OutputView.printPurchaseResult(lottoBunch, purchaseCount)
         return lottoBunch
     }
 
