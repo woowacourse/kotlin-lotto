@@ -2,19 +2,19 @@ package lotto.domain
 
 import lotto.constant.Rank
 
-class WinningResult(private val map: Map<Rank, Int>) {
+class WinningResult(val value: Map<Rank, Int>) {
 
     override fun toString(): String {
-        return map.keys.reversed().drop(1).joinToString(
+        return value.keys.reversed().drop(1).joinToString(
             separator = WINNING_RESULT_TO_STRING_SEPARATOR,
         ) { findRankFormat(it) }
     }
 
     private fun findRankFormat(rank: Rank): String {
         if (rank == Rank.SECOND) {
-            return SECOND_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, map[rank])
+            return SECOND_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, value[rank])
         }
-        return EACH_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, map[rank])
+        return EACH_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, value[rank])
     }
 
     companion object {

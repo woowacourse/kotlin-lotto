@@ -8,13 +8,13 @@ import org.junit.jupiter.params.provider.MethodSource
 class LottoTest {
     @MethodSource("provideWrongAmountLottoNumbers")
     @ParameterizedTest
-    fun `로또는 LottoNumber 6개로 이루어진 리스트를 가지고있다`(lottoNumbers: List<LottoNumber>) {
+    fun `로또는 LottoNumber 6개로 이루어진 리스트를 가지고있다`(lottoNumbers: Set<LottoNumber>) {
         assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
     }
 
     @MethodSource("provideDuplicateLottoNumbers")
     @ParameterizedTest
-    fun `로또 숫자는 중복되면 안된다`(lottoNumbers: List<LottoNumber>) {
+    fun `로또 숫자는 중복되면 안된다`(lottoNumbers: Set<LottoNumber>) {
         assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
     }
 
@@ -22,14 +22,14 @@ class LottoTest {
         @JvmStatic
         fun provideWrongAmountLottoNumbers() = listOf(
             Arguments.of(
-                listOf(
+                setOf(
                     LottoNumber(4),
                     LottoNumber(3),
                     LottoNumber(12),
                 ),
             ),
             Arguments.of(
-                listOf(
+                setOf(
                     LottoNumber(4),
                     LottoNumber(3),
                     LottoNumber(12),
@@ -39,13 +39,13 @@ class LottoTest {
                     LottoNumber(41),
                 ),
             ),
-            Arguments.of(listOf<LottoNumber>()),
+            Arguments.of(setOf<LottoNumber>()),
         )
 
         @JvmStatic
         fun provideDuplicateLottoNumbers() = listOf(
             Arguments.of(
-                listOf(
+                setOf(
                     LottoNumber(4),
                     LottoNumber(3),
                     LottoNumber(12),
@@ -55,7 +55,7 @@ class LottoTest {
                 ),
             ),
             Arguments.of(
-                listOf(
+                setOf(
                     LottoNumber(4),
                     LottoNumber(3),
                     LottoNumber(12),

@@ -1,12 +1,12 @@
 package lotto
 
-import lotto.domain.Bank
 import lotto.domain.Lotto
 import lotto.domain.LottoBunch
 import lotto.domain.LottoNumber
 import lotto.domain.PurchaseMoney
 import lotto.domain.WinningLotto
 import lotto.domain.WinningResult
+import lotto.domain.YieldRateCalculator
 import lotto.domain.factory.LottoFactory
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -68,11 +68,16 @@ class LottoController(private val lottoFactory: LottoFactory) {
 
     private fun confirmLottoWinning(lottoBunch: LottoBunch, winningLotto: WinningLotto, purchaseMoney: PurchaseMoney) {
         OutputView.printWinningStatsScript()
-        val ranks = lottoBunch.value.map { Bank.getRank(it, winningLotto) }
+        val ranks = lottoBunch.getRanks(winningLotto)
         val winningResult = WinningResult.from(ranks)
         OutputView.printWinningResult(winningResult.toString())
 
-        OutputView.printYieldRate(Bank.getYieldRate(purchaseMoney, Bank.sumTotalPrizeMoney(lottoBunch, winningLotto)))
+        OutputView.printYieldRate(
+            YieldRateCalculator.getYieldRate(
+                purchaseMoney,
+                lottoBunch.sumTotalPrizeMoney(winningResult),
+            ),
+        )
     }
 
     companion object {
