@@ -7,7 +7,7 @@ class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
 
     constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto.create(numbers), LottoNumber.valueOf(bonusNumber))
 
-    fun getCountOfMatch(anyLotto: Lotto): Int = anyLotto.count { it in lotto }
+    fun getCountOfMatch(anyLotto: Lotto): Int = lotto.getCountContainingNumbers(anyLotto)
 
     fun matchBonus(anyLotto: Lotto): Boolean = bonusNumber in anyLotto
 

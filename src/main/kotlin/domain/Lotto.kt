@@ -10,7 +10,8 @@ data class Lotto(private val numbers: List<LottoNumber>) {
 
     private fun List<LottoNumber>.isNotDuplicated(): Boolean = this.distinct().size == this.size
     operator fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
-    fun count(predicate: (LottoNumber) -> Boolean): Int = numbers.count { predicate(it) }
+    fun getCountContainingNumbers(anyLotto: Lotto): Int = numbers.count { it in anyLotto }
+    override fun toString(): String = numbers.toString()
 
     companion object {
         const val NUMBER_SIZE = 6
