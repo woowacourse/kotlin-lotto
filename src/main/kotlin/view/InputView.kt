@@ -13,7 +13,7 @@ class InputView {
     fun inputCount(): Int {
         return readln().toInt()
     }
-    fun inputManualLotto(): List<Int> {
-        return readln().replace("\\s".toRegex(), "").split(",").map { it.toInt() }
+    fun inputManualLotto(): String {
+        return readln().replace("\\s".toRegex(), "")
     }
 }

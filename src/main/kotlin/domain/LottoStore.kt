@@ -6,6 +6,12 @@ class LottoStore {
         return lottoFactory.create(getCount(amount))
     }
 
+    fun buyManualLotto(lottos: List<String>): List<Lotto> {
+        return lottos.map {
+            Lotto.create(it.split(",").map { it.toInt() })
+        }
+    }
+
     private fun getCount(amount: Amount): Int = (amount / LOTTO_PRICE).toInt()
 
     companion object {
