@@ -10,7 +10,6 @@ import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoMachine
-import lotto.model.LottoProfitRateCalculator
 import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
@@ -72,9 +71,11 @@ class World {
     fun processLotto() {
         val lottoMachine = makeLottoMachine()
         purchasedResult(lottoMachine)
+
         val winStatistics = makeWinStatistics(lottoMachine)
         winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
-        val profitRate = makeProfitRate(winStatistics, lottoMachine.purchaseMoney)
+
+        val profitRate = lottoMachine.makeProfitRate(winStatistics)
         profitRateResult(profitRate)
     }
 
@@ -88,12 +89,6 @@ class World {
     private fun makeWinStatistics(lottoMachine: LottoMachine): WinStatistics {
         val winLotto = initWinLotto()
         return lottoMachine.purchasedLottos.makeWinStatistics(winLotto)
-    }
-
-    private fun makeProfitRate(winStatistics: WinStatistics, purchaseMoney: PurchaseMoney): ProfitRate {
-        val profitRateCalculator = LottoProfitRateCalculator()
-        val winMoney = winStatistics.calculateWinMoney()
-        return profitRateCalculator.calculate(purchaseMoney, winMoney)
     }
 
     private fun purchasedResult(lottoMachine: LottoMachine) {
