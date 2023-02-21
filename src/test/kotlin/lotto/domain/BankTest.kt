@@ -1,7 +1,6 @@
 package lotto.domain
 
 import lotto.constant.BonusResult.BONUS_MATCH
-import lotto.domain.factory.LottoFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -69,41 +68,38 @@ class BankTest {
     fun `로또 3개 중 2등과 3등이 하나씩 당첨되었다면 당첨 금액의 합계는 삼천백오십만원 이다`() {
         Bank.sumTotalPrizeMoney(
             LottoBunch(
-                TestLottoFactory(
-                    listOf(
-                        Lotto(
-                            listOf(
-                                LottoNumber.from(1),
-                                LottoNumber.from(2),
-                                LottoNumber.from(3),
-                                LottoNumber.from(4),
-                                LottoNumber.from(5),
-                                LottoNumber.from(7),
-                            ),
+                listOf(
+                    Lotto(
+                        listOf(
+                            LottoNumber.from(1),
+                            LottoNumber.from(2),
+                            LottoNumber.from(3),
+                            LottoNumber.from(4),
+                            LottoNumber.from(5),
+                            LottoNumber.from(7),
                         ),
-                        Lotto(
-                            listOf(
-                                LottoNumber.from(1),
-                                LottoNumber.from(2),
-                                LottoNumber.from(3),
-                                LottoNumber.from(4),
-                                LottoNumber.from(5),
-                                LottoNumber.from(8),
-                            ),
+                    ),
+                    Lotto(
+                        listOf(
+                            LottoNumber.from(1),
+                            LottoNumber.from(2),
+                            LottoNumber.from(3),
+                            LottoNumber.from(4),
+                            LottoNumber.from(5),
+                            LottoNumber.from(8),
                         ),
-                        Lotto(
-                            listOf(
-                                LottoNumber.from(11),
-                                LottoNumber.from(12),
-                                LottoNumber.from(13),
-                                LottoNumber.from(14),
-                                LottoNumber.from(17),
-                                LottoNumber.from(16),
-                            ),
+                    ),
+                    Lotto(
+                        listOf(
+                            LottoNumber.from(11),
+                            LottoNumber.from(12),
+                            LottoNumber.from(13),
+                            LottoNumber.from(14),
+                            LottoNumber.from(17),
+                            LottoNumber.from(16),
                         ),
                     ),
                 ),
-                3,
             ),
             WinningLotto(
                 listOf(
@@ -122,12 +118,5 @@ class BankTest {
     @Test
     fun `14000원으로 5000원을 번다면 수익률은 35%이다`() {
         assertThat(Bank.getYieldRate(PurchaseMoney(14000), 5000)).isEqualTo(0.35714285714285715)
-    }
-
-    class TestLottoFactory(_lottes: List<Lotto>) : LottoFactory {
-        private val lottoes = _lottes.toMutableList()
-        override fun createLotto(): Lotto {
-            return lottoes.removeFirst()
-        }
     }
 }
