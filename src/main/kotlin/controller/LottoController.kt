@@ -17,8 +17,8 @@ class LottoController(
     private val lottoSeller: LottoSeller by lazy { LottoSeller() }
 
     fun run() {
-        val money = inputView.getMoney()
-        val ticket = initializeTicket(money / EACH_LOTTO_PRICE)
+        val money = initializeMoney()
+        val ticket = initializeTicket(money)
         val winningLotto = initializeWinningLotto()
 
         val lottoStatistics = LottoStatistics(winningLotto)
@@ -32,12 +32,18 @@ class LottoController(
         return floor((profit / totalMoney).toDouble()).toString()
     }
 
-    private fun initializeTicket(count: Int): Ticket {
+    private fun initializeMoney(): Int {
+        val money = inputView.getMoney()
+        resultView.printCount(money / EACH_LOTTO_PRICE)
+        return money
+    }
+
+    private fun initializeTicket(money: Int): Ticket {
         return runCatching {
-            lottoSeller.sellLottos(count)
+            lottoSeller.sellLottos(money / EACH_LOTTO_PRICE)
         }.getOrElse { error ->
             println(error.message)
-            initializeTicket(count)
+            initializeTicket(money)
         }
     }
 

@@ -20,6 +20,10 @@ class ResultView : ResultViewInterface {
         println("총 수익률은 ${profit}입니다.")
     }
 
+    override fun printCount(count: Int) {
+        println("${count}개를 구매했습니다.")
+    }
+
     private fun isMatch(rank: Rank) = if (rank == Rank.SECOND) ", 보너스 볼 일치" else " "
 
     private fun printWinningCount(rank: Rank, winningCount: Int) {
