@@ -11,7 +11,10 @@ class InputView : InputViewInterface {
             println(INPUT_MESSAGE_FOR_PURCHASE_MONEY)
             val money = validateMoney(readln().toIntOrNull()) ?: continue
             runCatching { PurchaseLottoMoney(money) }
-                .onSuccess { return it }
+                .onSuccess {
+                    println()
+                    return it
+                }
                 .onFailure { println(it.message) }
         }
     }
@@ -29,7 +32,10 @@ class InputView : InputViewInterface {
         while (true) {
             val manualCount = validateManualCount(readln().toIntOrNull()) ?: continue
             runCatching { LottoPurchaseInfo(purchaseLottoMoney, manualCount) }
-                .onSuccess { return it }
+                .onSuccess {
+                    println()
+                    return it
+                }
                 .onFailure { println(it.message) }
         }
     }
@@ -46,6 +52,7 @@ class InputView : InputViewInterface {
         println(INPUT_MESSAGE_MANUAL_LOTTO_NUMBERS)
         val lottos = mutableListOf<Lotto>()
         repeat(purchaseInfo.manualCount) { lottos.add(getManualNumber()) }
+        println()
         return lottos
     }
 
@@ -71,7 +78,10 @@ class InputView : InputViewInterface {
         while (true) {
             val numbers = validateWinningNumbers(readln().split(",").map { it.trim().toIntOrNull() }) ?: continue
             runCatching { Lotto(numbers.map { LottoNumber.from(it) }.toSet()) }
-                .onSuccess { return it }
+                .onSuccess {
+                    println()
+                    return it
+                }
                 .onFailure { println(it.message) }
         }
     }
@@ -89,7 +99,10 @@ class InputView : InputViewInterface {
         while (true) {
             val bonusNumber = validateBonusNumber(readln().toIntOrNull()) ?: continue
             runCatching { LottoNumber.from(bonusNumber) }
-                .onSuccess { return it }
+                .onSuccess {
+                    println()
+                    return it
+                }
                 .onFailure { println(it.message) }
         }
     }
