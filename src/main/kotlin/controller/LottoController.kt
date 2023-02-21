@@ -1,7 +1,7 @@
 package controller
 
-import domain.Lotto
 import domain.LottoStore
+import domain.LottoTickets
 import domain.Money
 import domain.RandomLottoGenerator
 import domain.WinningLotto
@@ -19,7 +19,7 @@ class LottoController {
         calculateResult(winningLotto, lottos)
     }
 
-    private fun buyLotto(): List<Lotto> {
+    private fun buyLotto(): LottoTickets {
         val money = inputView.askPurchaseMoney()
         val manualLottos = buyManualLotto(money)
         val autoLottos = buyAutoLotto(getChargeMoney(money, manualLottos.size))
@@ -30,7 +30,7 @@ class LottoController {
     private fun getChargeMoney(money: Money, countLotto: Int): Money =
         Money(money.value - lottoStore.lottoPrice * countLotto)
 
-    private fun buyManualLotto(money: Money): List<Lotto> =
+    private fun buyManualLotto(money: Money): LottoTickets =
         runCatching {
             val lottos = inputView.askManualLottoNumbers(inputView.askManualLottoCount())
             return lottoStore.buyManualLotto(money, *lottos)
@@ -38,17 +38,17 @@ class LottoController {
             .onFailure { outputView.outputError(it) }
             .getOrDefault(buyManualLotto(money))
 
-    private fun buyAutoLotto(money: Money): List<Lotto> =
+    private fun buyAutoLotto(money: Money): LottoTickets =
         runCatching { lottoStore.buyAutoLotto(money) }
             .onFailure { outputView.outputError(it) }
-            .getOrDefault(emptyList())
+            .getOrDefault(LottoTickets())
 
     private fun makeWinningLotto(): WinningLotto =
         runCatching { return WinningLotto(inputView.askWinningNumbers(), inputView.askBonusNumber()) }
             .onFailure { outputView.outputError(it) }
             .getOrDefault(makeWinningLotto())
 
-    private fun calculateResult(winningLotto: WinningLotto, lottos: List<Lotto>) {
+    private fun calculateResult(winningLotto: WinningLotto, lottos: LottoTickets) {
         runCatching { outputView.outputResult(winningLotto.match(lottos)) }
             .onFailure { outputView.outputError(it) }
     }

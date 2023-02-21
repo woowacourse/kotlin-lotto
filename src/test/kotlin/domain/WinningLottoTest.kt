@@ -31,13 +31,13 @@ class WinningLottoTest {
 
     @Test
     fun `로또 결과를 정상적으로 저장할 수 있다`() {
-        val lottos = listOf(
+        val lottoTickets = LottoTickets(
             Lotto(1, 2, 3, 4, 5, 6), // 1등
             Lotto(2, 3, 4, 5, 6, 7), // 2등
             Lotto(3, 4, 5, 6, 7, 8), // 4등
         )
         val winningLotto = WinningLotto(intArrayOf(1, 2, 3, 4, 5, 6), 7)
-        val result = winningLotto.match(lottos)
+        val result = winningLotto.match(lottoTickets)
         val expect = LottoResult(
             mapOf(
                 FIRST to 1,

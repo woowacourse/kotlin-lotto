@@ -7,7 +7,7 @@ class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
 
     constructor(numbers: IntArray, bonusNumber: Int) : this(Lotto(*numbers), LottoNumber.from(bonusNumber))
 
-    fun match(lottos: List<Lotto>): LottoResult =
+    fun match(lottos: LottoTickets): LottoResult =
         LottoResult(
             lottos
                 .map { Rank.valueOf(it.countMatch(lotto), it.contains(bonusNumber)) }

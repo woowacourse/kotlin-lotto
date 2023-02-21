@@ -1,12 +1,12 @@
 package view
 
-import domain.Lotto
 import domain.LottoResult
+import domain.LottoTickets
 import domain.Rank
 import kotlin.math.floor
 
 class OutputView {
-    fun outputLottos(manualLottos: List<Lotto>, autoLottos: List<Lotto>) {
+    fun outputLottos(manualLottos: LottoTickets, autoLottos: LottoTickets) {
         println("\n수동으로 ${manualLottos.size}장, 자동으로 ${autoLottos.size}개를 구매했습니다.")
         manualLottos.forEach { println(it.toList()) }
         autoLottos.forEach { println(it.toList()) }

@@ -6,19 +6,19 @@ class LottoStore(
     val lottoPrice: Int
         get() = LOTTO_PRICE
 
-    fun buyManualLotto(money: Money, vararg lottos: IntArray): List<Lotto> {
+    fun buyManualLotto(money: Money, vararg lottos: IntArray): LottoTickets {
         require(money.value >= LOTTO_PRICE * lottos.size) { ERROR_INVALID_COUNT.format(money.value) }
-        return lottos.map(::Lotto)
+        return LottoTickets(lottos.map(::Lotto))
     }
 
-    fun buyAutoLotto(money: Money): List<Lotto> {
+    fun buyAutoLotto(money: Money): LottoTickets {
         require(money.value >= LOTTO_PRICE) { ERROR_INVALID_MONEY.format(money.value) }
         return createLottos(getCount(money))
     }
 
-    fun createLottos(count: Int): List<Lotto> {
+    fun createLottos(count: Int): LottoTickets {
         require(count in MINIMUM_COUNT..MAXIMUM_COUNT) { ERROR_CREATE_COUNT.format(count) }
-        return List(count) { createLotto() }
+        return LottoTickets(List(count) { createLotto() })
     }
 
     private fun createLotto(): Lotto = lottoGenerator.generateLotto()

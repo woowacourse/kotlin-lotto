@@ -12,18 +12,18 @@ class LottoStoreTest {
     @Test
     fun `원하는 번호들의 수동 로또들을 구매한다`() {
         val money = Money(2000)
-        val lottos: List<Lotto> = lottoStore.buyManualLotto(money, intArrayOf(1, 2, 3, 4, 5, 6), intArrayOf(1, 11, 22, 33, 44, 45))
-        assertThat(lottos.size).isEqualTo(2)
-        assertThat(lottos[0].toList().map { it.number }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
-        assertThat(lottos[1].toList().map { it.number }).isEqualTo(listOf(1, 11, 22, 33, 44, 45))
+        val lottoTickets: LottoTickets = lottoStore.buyManualLotto(money, intArrayOf(1, 2, 3, 4, 5, 6), intArrayOf(1, 11, 22, 33, 44, 45))
+        assertThat(lottoTickets.size).isEqualTo(2)
+        assertThat(lottoTickets[0].toList().map { it.number }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+        assertThat(lottoTickets[1].toList().map { it.number }).isEqualTo(listOf(1, 11, 22, 33, 44, 45))
     }
 
     @Test
     fun `자동 로또들을 구매한다`() {
         val money = Money(100000)
-        val lottos: List<Lotto> = lottoStore.buyAutoLotto(money)
-        assertThat(lottos.size).isEqualTo(100)
-        lottos.forEach { lotto ->
+        val lottoTickets: LottoTickets = lottoStore.buyAutoLotto(money)
+        assertThat(lottoTickets.size).isEqualTo(100)
+        lottoTickets.forEach { lotto ->
             assertThat(lotto.toList()).hasSize(6)
             lotto.toList().forEach { assertThat(it.number).isBetween(1, 45) }
         }
