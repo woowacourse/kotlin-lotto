@@ -1,6 +1,10 @@
 package controller
 
-import domain.*
+import domain.LottoPurchaseInfo
+import domain.LottoSeller
+import domain.LottoStatistics
+import domain.Ticket
+import domain.WinningLotto
 import view.InputViewInterface
 import view.ResultViewInterface
 
@@ -12,13 +16,23 @@ class LottoController(
 
     fun run() {
         val purchaseLottoMoney = inputView.getMoney()
-        val ticket = lottoSeller.sellLottos(purchaseLottoMoney)
+        val purchaseInfo = inputView.getManualCount(purchaseLottoMoney)
+        val ticket = getManualAndAutoTicket(purchaseInfo)
+        resultView.printTicket(purchaseInfo, ticket)
         val winningLotto = initializeWinningLotto()
-
         val lottoStatistics = LottoStatistics(winningLotto)
         val result = lottoStatistics.matchTicket(ticket)
         val profit = lottoStatistics.yield(result, purchaseLottoMoney)
         resultView.printResult(result, profit)
+    }
+
+    private fun getManualAndAutoTicket(purchaseInfo: LottoPurchaseInfo): Ticket {
+        while (true) {
+            val manuals = inputView.getManualNumbers(purchaseInfo)
+            kotlin.runCatching { lottoSeller.sellManualAndAuto(purchaseInfo, manuals) }
+                .onSuccess { return it }
+                .onFailure { println(it.message) }
+        }
     }
 
     private fun initializeWinningLotto(): WinningLotto {

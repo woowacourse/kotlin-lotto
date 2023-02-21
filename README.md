@@ -74,16 +74,16 @@
 # Controller
 ## Controller
 - [X] 전체 로직을 담당한다.
-  - [ ] 구입 금액을 입력받아 PurchaseLottoMoney를 얻음
-  - [ ] 수동 구매 개수를 입력받아서 LottoPurchaseInfo를 얻음
-  - [ ] 수동 구매 개수의 크기를 가지는 List<Lotto>를 얻음
-  - [ ] 이렇게 해서 얻은 LottoPurchaseInfo와 List<Lotto>로 수동 및 자동발급을 수행해서 Ticket 생성
-    - [ ] 만약 수동 발급 개수와 List<Lotto>의 크기가 다르다면 에러 캐치하고 다시 입력 받기로 돌아감. 
+  - [X] 구입 금액을 입력받아 PurchaseLottoMoney를 얻음
+  - [X] 수동 구매 개수를 입력받아서 LottoPurchaseInfo를 얻음
+  - [X] 수동 구매 개수의 크기를 가지는 List<Lotto>를 얻음
+  - [X] 이렇게 해서 얻은 LottoPurchaseInfo와 List<Lotto>로 수동 및 자동발급을 수행해서 Ticket 생성
+    - [X] 만약 수동 발급 개수와 List<Lotto>의 크기가 다르다면 에러 캐치하고 다시 입력 받기로 돌아감. 
       - 근데 내가 작성하는 코드에서는 이런 에러 발생할 일이 있을 수 없음(애초에 인풋뷰에서 그만큼만 만들거니까). 그냥 안전처리 해주기
-  - [ ] Ticket의 목록을 출력
-  - [ ] 당첨 번호와 보너스 볼을 입력받아 WinningLotto 생성
-  - [ ] LottoStatistics를 통해 당첨 통계 계산
-  - [ ] resultView에 결과를 전달하여 출력
+  - [X] Ticket의 목록을 출력
+  - [X] 당첨 번호와 보너스 볼을 입력받아 WinningLotto 생성
+  - [X] LottoStatistics를 통해 당첨 통계 계산
+  - [X] resultView에 결과를 전달하여 출력
 
 
 
