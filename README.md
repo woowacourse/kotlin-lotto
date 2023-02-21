@@ -55,7 +55,6 @@
   - [x] 0미만일 경우 IllegalArgumentException이 발생한다.
 
 ### 리팩터링
-- [x] divideByThousand() Exception 메시지 일반화한다.
 - [x] Money 클래스로 원시값을 포장한다.
   - [x] 금액을 1000원으로 나눈 몫을 반환하는 기능 구현한다.
 - [x] judgeEitherSecondOrThird() 특정 등수에 구애받지 않도록 변경한다.

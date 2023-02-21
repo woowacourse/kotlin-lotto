@@ -11,8 +11,7 @@ import util.common.generateDistinctRandomNumbers
 
 class LottoMachine {
     fun purchaseAutoLottos(money: Money): List<AutoLotto> = mutableListOf<AutoLotto>().apply {
-        val lottoCount = money.divideBy(Money(LOTTO_PRICE))
-
+        val lottoCount = money / Money(LOTTO_PRICE)
         repeat(lottoCount) { add(generateRandomLotto()) }
     }
 

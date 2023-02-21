@@ -7,9 +7,9 @@ data class Money(val amount: Int) {
         require(amount >= MIN_AMOUNT) { ERROR_MESSAGE_NEGATIVE_AMOUNT }
     }
 
-    fun divideBy(divisor: Money) = amount.div(divisor.amount)
-
     fun isGreaterThan(other: Money): Boolean = (this.amount >= other.amount)
+
+    operator fun div(divisor: Money) = amount.div(divisor.amount)
 
     operator fun minus(other: Money): Money = Money(this.amount - other.amount)
 
