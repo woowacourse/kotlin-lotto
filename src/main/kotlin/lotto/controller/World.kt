@@ -38,7 +38,7 @@ class World(
     private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
         val lottoGenerator = RandomLottoGenerator()
         val lottoCount = purchaseMoney.getPurchaseLottoCount()
-        val lottos = Lottos.from(lottoCount, lottoGenerator)
+        val lottos = Lottos(lottoGenerator.generateLotto(lottoCount))
         outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottoCount)
         outputView.lottosResult(lottos)
         return lottos

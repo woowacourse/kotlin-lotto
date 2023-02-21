@@ -9,4 +9,10 @@ class RandomLottoGenerator : LottoGenerator {
         val shuffledNumbers = numbers.shuffled()
         return Lotto.from(shuffledNumbers.take(Lotto.LOTTO_COUNT).sorted().map { LottoNumber(it) })
     }
+
+    fun generateLotto(lottoCount: Int): List<Lotto> {
+        return buildList(lottoCount) {
+            add(generate())
+        }
+    }
 }
