@@ -1,12 +1,10 @@
 package domain
 
-class LottoNumber private constructor(val number: Int) {
+@JvmInline
+value class LottoNumber private constructor(val number: Int) {
     init {
         require(number in MINIMUM_NUMBER..MAXIMUM_NUMBER) { ERROR_NUMBER_IN_RANGE.format(number) }
     }
-
-    override fun equals(other: Any?): Boolean = if (other is LottoNumber) this.number == other.number else false
-    override fun hashCode(): Int = this.number.hashCode()
 
     override fun toString() = number.toString()
 
