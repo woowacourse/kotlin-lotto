@@ -1,6 +1,5 @@
-package domaintest.modeltest
+package domain.model
 
-import domain.model.LottoResult
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

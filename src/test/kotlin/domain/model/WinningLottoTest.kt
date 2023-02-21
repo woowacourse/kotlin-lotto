@@ -1,6 +1,5 @@
-package domaintest.modeltest
+package domain.model
 
-import domain.model.WinningLotto
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
 import org.junit.jupiter.api.Test

@@ -1,6 +1,5 @@
-package domaintest.modeltest
+package domain.model
 
-import domain.model.PurchaseMoney
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

@@ -1,8 +1,7 @@
-package domaintest.modeltest
+package domain.model
 
 import domain.lottogenerator.ManualLottoGenerator
 import domain.lottogenerator.WinningLottoGenerator
-import domain.model.LottoResult
 import domain.model.lotto.PurchasedLottos
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
