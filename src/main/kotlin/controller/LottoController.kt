@@ -27,8 +27,7 @@ class LottoController {
     }
 
     private fun getLotto(amount: Int): List<Lotto> {
-        val store = LottoStore()
-        return store.sell(amount)
+        return LottoStore.sell(amount)
     }
 
     private fun askWinningNumbers(): Lotto {
