@@ -24,11 +24,29 @@ class LottoSellerTest {
         val money = PurchaseLottoMoney(4 * 1000)
         val purchaseInfo = LottoPurchaseInfo(money, 3)
         val lottoSeller = LottoSeller(TestNumberGenerator())
-        val requestManualNumbers = listOf<Lotto>(
+        val requestManualNumbers = listOf(
             setOf(11, 12, 13, 14, 15, 16).convertToLotto(),
             setOf(21, 22, 23, 24, 25, 26).convertToLotto()
         )
         assertThrows<IllegalArgumentException> { lottoSeller.sellManualAndAuto(purchaseInfo, requestManualNumbers) }
+    }
+
+    @Test
+    fun `주어진 구매 개수 정보와 요청한 수동 발급 로또의 번호를 토대로 로또를 수동 및 자동 발급 해준다`() {
+        val money = PurchaseLottoMoney(2 * 1000)
+        val purchaseInfo = LottoPurchaseInfo(money, 2)
+        val generator = TestNumberGenerator()
+        val lottoSeller = LottoSeller(generator)
+        val requestManualNumbers = listOf(
+            setOf(11, 12, 13, 14, 15, 16).convertToLotto(),
+            setOf(21, 22, 23, 24, 25, 26).convertToLotto()
+        )
+        val result: Ticket = lottoSeller.sellManualAndAuto(purchaseInfo, requestManualNumbers)
+        assertThat(result.lottos.size).isEqualTo(2)
+        assertThat(result.lottos[0].numbers).containsAll(setOf(11, 12, 13, 14, 15, 16).convertToLottoNumberSet())
+        assertThat(result.lottos[1].numbers).containsAll(setOf(21, 22, 23, 24, 25, 26).convertToLottoNumberSet())
+        assertThat(result.lottos[2].numbers).containsAll(generator.pattern[0].map { LottoNumber.from(it) })
+        assertThat(result.lottos[3].numbers).containsAll(generator.pattern[1].map { LottoNumber.from(it) })
     }
 
     @ParameterizedTest(name = "{0}개의 로또를 발급한다.")

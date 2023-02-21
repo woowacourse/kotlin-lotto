@@ -25,7 +25,6 @@
 
 ## Ticket
 - [X] 로또들의 정보를 저장
-- [ ] 입력받은 두 개의 Ticket을 합쳐서 하나의 Ticket으로 변환해주는 기능
 
 ## WinningLotto
 - [X] 일급 컬렉션으로 사용
@@ -37,8 +36,8 @@
 ## LottoSeller
 - [X] 로또를 한 장 발급한다.
 - [X] 파라미터(PurchaseLottoMoney)로 살 수 있는 만큼 로또를 자동 발급한다.
-- [ ] 파라미터(LottoPurchaseInfo와 List<Lotto>)를 받아서 로또를 수동 및 자동발급해준다.
-  - [ ] LottoPurchaseInfo의 프로퍼티 값에 따라서 로또를 자동 및 수동 발급해준다.
+- [X] 파라미터(LottoPurchaseInfo와 List<Lotto>)를 받아서 로또를 수동 및 자동발급해준다.
+  - [X] LottoPurchaseInfo의 프로퍼티 값에 따라서 로또를 자동 및 수동 발급해준다.
   - [X] 만약 LottoPurchaseInfo의 수동 발급 개수와 제출한 List<Lotto>의 크기가 다르다면 error를 발생시킨다.
 
 ## LottoStatistics
