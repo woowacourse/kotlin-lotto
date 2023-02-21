@@ -5,6 +5,10 @@ class InputView {
         return readln().toInt()
     }
 
+    fun inputNumberOfLottosToBuyManually(): Int {
+        return readln().toInt()
+    }
+
     fun inputWinningNumbers(): List<Int> {
         return readln().replace("\\s".toRegex(), "").split(",").map { it.toInt() }
     }
