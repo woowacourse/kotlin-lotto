@@ -10,7 +10,7 @@ object InputView {
     private const val TOKENIZER = ","
     private const val INITIAL_PURCHASING = 0
 
-    private fun requestNumbers(): List<String> = readln().split(TOKENIZER).map { it.trim() }
+    private fun requestNumbers(): List<String> = readln().split(TOKENIZER).map(String::trim)
 
     fun requestPurchaseMoney(): String {
         println(PURCHASE_MONEY_REQUEST_MESSAGE)
