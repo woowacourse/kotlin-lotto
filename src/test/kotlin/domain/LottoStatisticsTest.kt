@@ -32,17 +32,16 @@ class LottoStatisticsTest {
     fun `총 수익률을 계산한다`() {
         // given
         val winResult = mutableMapOf(
-            Pair(Rank.FIRST, 0),
-            Pair(Rank.SECOND, 0),
-            Pair(Rank.THIRD, 0),
-            Pair(Rank.FOURTH, 0),
-            Pair(Rank.FIFTH, 1),
-            Pair(Rank.MISS, 13)
+            Rank.FIRST to 0,
+            Rank.SECOND to 0,
+            Rank.THIRD to 0,
+            Rank.FOURTH to 0,
+            Rank.FIFTH to 1,
         )
         val bonusNumber = LottoNumber(13)
         val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val expected = "0.35"
+        val expected = 5000
 
         // when
         val result = lottoStatistics.calculateProfit(winResult)

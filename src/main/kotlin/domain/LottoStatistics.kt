@@ -1,7 +1,5 @@
 package domain
 
-import kotlin.math.floor
-
 class LottoStatistics(val winningLotto: WinningLotto) {
 
     private fun getCountOfMatch(lotto: Lotto): Int {
@@ -21,14 +19,11 @@ class LottoStatistics(val winningLotto: WinningLotto) {
         return result
     }
 
-    fun calculateProfit(results: Map<Rank, Int>): String {
-        var sum = 0.0
-        var totalCount = 0.0
+    fun calculateProfit(results: Map<Rank, Int>): Int {
+        var sum = 0
         for (result in results) {
             sum += Rank.values()[result.key.ordinal].winningMoney * result.value
-            totalCount += result.value
         }
-
-        return ((floor((sum / (totalCount)) / 10)) / 100).toString()
+        return sum
     }
 }
