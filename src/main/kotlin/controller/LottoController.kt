@@ -28,7 +28,7 @@ class LottoController {
     }
 
     private fun getChargeMoney(money: Money, countLotto: Int): Money =
-        Money.from(money.value - lottoStore.lottoPrice * countLotto)
+        Money(money.value - lottoStore.lottoPrice * countLotto)
 
     private fun buyManualLotto(money: Money): List<Lotto> =
         runCatching {
