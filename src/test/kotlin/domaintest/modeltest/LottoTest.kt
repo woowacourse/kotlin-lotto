@@ -2,7 +2,7 @@ package domaintest.modeltest
 
 import domain.lottogenerator.ManualLottoGenerator
 import domain.lottogenerator.WinningLottoGenerator
-import domain.model.LottoResult
+import domain.model.lotto.LottoNumber
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,57 +35,26 @@ class LottoTest {
     }
 
     @Test
-    fun `로또의 번호가 6개가 일치하는 경우 (1등)`() {
-        val catchLotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5, 6))
+    fun `특정 로또가 다른 로또와 같은 숫자의 개수를 구하기`() {
+        val lotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5, 6))
+        val otherLotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5, 6))
 
-        val actual = catchLotto.getLottoResult(
-            winningLottoGenerator.generateWinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
-        )
-
-        assertThat(actual).isEqualTo(LottoResult.FIRST)
+        assertThat(lotto.getMatchCount(otherLotto)).isEqualTo(6)
     }
 
     @Test
-    fun `로또의 번호가 5개가 일치하고 보너스 번호가 일치하는 경우 (2등)`() {
+    fun `특정 로또안에 다른 로또 숫자가 포함되어 있는 경우를 확인`() {
         val lotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5, 6))
+        val lottoNumber = LottoNumber.from(6)
 
-        val actual = lotto.getLottoResult(
-            winningLottoGenerator.generateWinningLotto(listOf(1, 2, 3, 4, 5, 8), 6)
-        )
-
-        assertThat(actual).isEqualTo(LottoResult.SECOND)
+        assertThat(lotto.contains(lottoNumber)).isTrue
     }
 
     @Test
-    fun `로또의 번호가 5개가 일치하고 보너스 번호가 일치하지 않는 경우 (3등)`() {
+    fun `특정 로또안에 다른 로또 숫자가 포함되어 있지 않는 경우를 확인`() {
         val lotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5, 6))
+        val lottoNumber = LottoNumber.from(7)
 
-        val actual = lotto.getLottoResult(
-            winningLottoGenerator.generateWinningLotto(listOf(1, 2, 3, 4, 5, 8), 7)
-        )
-
-        assertThat(actual).isEqualTo(LottoResult.THIRD)
-    }
-
-    @Test
-    fun `로또의 번호가 4개가 일치하는 경우 (4등)`() {
-        val lotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5, 6))
-
-        val actual = lotto.getLottoResult(
-            winningLottoGenerator.generateWinningLotto(listOf(1, 2, 3, 4, 41, 42), 43)
-        )
-
-        assertThat(actual).isEqualTo(LottoResult.FORTH)
-    }
-
-    @Test
-    fun `로또의 번호가 3개가 일치하는 경우 (5등)`() {
-        val lotto = manualLottoGenerator.generate(listOf(1, 2, 3, 4, 5, 6))
-
-        val actual = lotto.getLottoResult(
-            winningLottoGenerator.generateWinningLotto(listOf(1, 2, 3, 35, 41, 42), 43)
-        )
-
-        assertThat(actual).isEqualTo(LottoResult.FIFTH)
+        assertThat(lotto.contains(lottoNumber)).isFalse
     }
 }
