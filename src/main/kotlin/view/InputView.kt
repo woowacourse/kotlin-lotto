@@ -8,16 +8,16 @@ object InputView {
     private const val NUMBER_OF_MANUAL_LOTTOS_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
     private const val TOKENIZER = ","
 
-    fun requestPurchaseMoney(): String {
+    fun requestPurchaseMoney(): Int {
         println(PURCHASE_MONEY_REQUEST_MESSAGE)
-
-        return readln()
+        
+        return readln().toIntOrNull() ?: requestPurchaseMoney()
     }
 
-    fun requestNumberOfManualLottos(): String {
+    fun requestNumberOfManualLottos(): Int {
         println(NUMBER_OF_MANUAL_LOTTOS_MESSAGE)
 
-        return readln()
+        return readln().toIntOrNull() ?: requestNumberOfManualLottos()
     }
 
     fun requestManualLottoNumbers(): List<String> {
@@ -30,9 +30,9 @@ object InputView {
         return readln().split(TOKENIZER).map { it.trim() }
     }
 
-    fun requestBonusNumber(): String {
+    fun requestBonusNumber(): Int {
         println(BONUS_NUMBER_REQUEST_MESSAGE)
 
-        return readln()
+        return readln().toIntOrNull() ?: requestBonusNumber()
     }
 }

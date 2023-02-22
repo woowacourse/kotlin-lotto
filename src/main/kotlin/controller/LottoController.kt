@@ -24,8 +24,8 @@ class LottoController(
     }
 
     private fun initializePurchaseMoney(): PurchaseMoney {
-        val input = InputView.requestPurchaseMoney()
-        val money = numericValidator.validate(input)
+        val money = InputView.requestPurchaseMoney()
+
         return PurchaseMoney(money)
     }
 
@@ -44,12 +44,10 @@ class LottoController(
     }
 
     private fun getNumberOfManualLottos(maximumQuantity: Int): Int {
-        val numberOfManualLottos =
-            numericValidator.validate(InputView.requestNumberOfManualLottos())
+        val numberOfManualLottos = InputView.requestNumberOfManualLottos()
 
-        require(numberOfManualLottos <= maximumQuantity) {
-            NUMBER_OF_MANUAL_LOTTOS_ERROR
-        }
+        require(numberOfManualLottos <= maximumQuantity) { NUMBER_OF_MANUAL_LOTTOS_ERROR }
+        require(numberOfManualLottos >= 0) { NEGATIVE_NUMBER_ERROR }
 
         return numberOfManualLottos
     }
@@ -68,7 +66,12 @@ class LottoController(
     }
 
     private fun checkPurchasedLottosResult(purchaseMoney: PurchaseMoney, purchasedLottos: PurchasedLottos) {
-        val winningNumbers = WinningNumbers(initializeCatchNumber(), initializeBonusNumber())
+        val winningNumbers = repeatWithRunCatching {
+            WinningNumbers(
+                initializeCatchNumber(),
+                initializeBonusNumber()
+            )
+        }
         val lottoResults = purchasedLottos.getTotalLottoResults(winningNumbers)
         val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
 
@@ -85,8 +88,8 @@ class LottoController(
     }
 
     private fun initializeBonusNumber(): LottoNumber {
-        val input = InputView.requestBonusNumber()
-        return LottoNumber.from(numericValidator.validate(input))
+        val bonusNumber = InputView.requestBonusNumber()
+        return LottoNumber.from(bonusNumber)
     }
 
     private fun <T> repeatWithRunCatching(action: () -> T): T {
@@ -99,5 +102,6 @@ class LottoController(
     companion object {
         private const val LOTTO_PRICE = 1000
         private const val NUMBER_OF_MANUAL_LOTTOS_ERROR = "[ERROR] 구입한 로또 개수를 초과했습니다."
+        private const val NEGATIVE_NUMBER_ERROR = "[ERROR] 음수일 수 없습니다."
     }
 }
