@@ -26,13 +26,13 @@ class LottoGameController(
         val (change, manualLottos) = purchaseManualLottos(money)
         val autoLottos = purchaseAutoLottos(change)
 
-        printPurchasedLotto(manualLottos, autoLottos)
+        printPurchasedLotto(manualLottos = manualLottos, autoLottos = autoLottos)
         return Triple(manualLottos, autoLottos, money)
     }
 
-    private fun purchaseAutoLottos(money: Money): List<AutoLotto> = LottoMachine().purchaseAutoLottos(money)
+    private fun purchaseAutoLottos(money: Money): List<PurchasedLotto> = LottoMachine().purchaseAutoLottos(money)
 
-    private fun purchaseManualLottos(money: Money): Pair<Money, List<ManualLotto>> {
+    private fun purchaseManualLottos(money: Money): Pair<Money, List<PurchasedLotto>> {
         val manualLottoSize = inputPurchasingManualLottoSize()
         val manualLottoNumbers = inputManualLottoNumbers(manualLottoSize)
         return lottoMachine.purchaseManualLottos(money, manualLottoSize, manualLottoNumbers)
@@ -56,7 +56,7 @@ class LottoGameController(
 
     private fun inputBonusNumber(): LottoNumber = inputView.inputBonusBallNumber()
 
-    private fun printPurchasedLotto(manualLottos: List<ManualLotto>, autoLottos: List<AutoLotto>) {
+    private fun printPurchasedLotto(manualLottos: List<PurchasedLotto>, autoLottos: List<PurchasedLotto>) {
         resultView.printPurchasedLottos(manualLottos, autoLottos)
     }
 

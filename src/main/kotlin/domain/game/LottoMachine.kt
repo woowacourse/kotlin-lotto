@@ -1,8 +1,7 @@
 package domain.game
 
-import domain.lotto.AutoLotto
 import domain.lotto.Lotto
-import domain.lotto.ManualLotto
+import domain.lotto.PurchasedLotto
 import domain.lotto.number.LottoNumber
 import domain.lotto.size.LottoSize
 import domain.money.Money
@@ -10,13 +9,13 @@ import util.common.constant.ERROR_PREFIX
 import util.common.generateDistinctRandomNumbers
 
 class LottoMachine {
-    fun purchaseAutoLottos(money: Money): List<AutoLotto> = mutableListOf<AutoLotto>().apply {
+    fun purchaseAutoLottos(money: Money): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
         val lottoCount = money / Money(LOTTO_PRICE)
         repeat(lottoCount) { add(generateRandomLotto()) }
     }
 
-    private fun generateRandomLotto(): AutoLotto =
-        AutoLotto(
+    private fun generateRandomLotto(): PurchasedLotto =
+        PurchasedLotto(
             (LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER).generateDistinctRandomNumbers(Lotto.LOTTO_SIZE)
                 .map { LottoNumber(it) }.toSet()
         )
@@ -25,7 +24,7 @@ class LottoMachine {
         money: Money,
         lottoSize: LottoSize,
         lottoNumbers: List<Set<LottoNumber>>,
-    ): Pair<Money, List<ManualLotto>> {
+    ): Pair<Money, List<PurchasedLotto>> {
         require(lottoSize.value == lottoNumbers.size) { ERROR_MESSAGE_INVALID_PURCHASING_LOTTO_SIZE }
         require(money.isGreaterThan(Money(LOTTO_PRICE * lottoSize.value))) { ERROR_MESSAGE_INSUFFICIENT_AMOUNT }
         return Pair(
@@ -34,7 +33,7 @@ class LottoMachine {
         )
     }
 
-    private fun generateManualLotto(lottoNumbers: Set<LottoNumber>): ManualLotto = ManualLotto(lottoNumbers)
+    private fun generateManualLotto(lottoNumbers: Set<LottoNumber>): PurchasedLotto = PurchasedLotto(lottoNumbers)
 
     companion object {
         const val LOTTO_PRICE = 1_000
