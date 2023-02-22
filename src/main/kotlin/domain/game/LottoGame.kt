@@ -10,7 +10,7 @@ import kotlin.math.floor
 class LottoGame(
     private val lottoMachine: LottoMachine
 ) {
-    fun purchaseLottos(money: Money): List<PurchasedLotto> = lottoMachine.purchaseLottos(money)
+    fun purchaseLottos(money: Money): List<PurchasedLotto> = lottoMachine.purchaseAutoLottos(money)
 
     fun matchLottos(
         purchasedLottos: List<PurchasedLotto>,
