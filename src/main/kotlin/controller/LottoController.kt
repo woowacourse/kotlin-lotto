@@ -18,15 +18,37 @@ class LottoController(
 
     fun run() {
         val money = initializeMoney()
-        val ticket = initializeTicket(money)
-        resultView.printTicket(ticket)
+        val ticket = makeTicket(money)
 
-        val winningLotto = initializeWinningLotto()
+        val winningLotto = makeWinningLotto()
         val lottoStatistics = LottoStatistics(winningLotto)
         val result = lottoStatistics.compareTicket(ticket)
         val profit = lottoStatistics.calculateProfit(result)
         val profitRatio = calculateProfitRatio(profit, money)
+
         resultView.printResult(result, profitRatio)
+    }
+
+    private fun makeManualTicket(): Ticket {
+        val count = inputView.getManualLottoCount()
+        val numbers = inputView.getManualLottos(count)
+        return lottoSeller.sellManualLottos(numbers)
+    }
+
+    private fun makeAutoTicket(count: Int): Ticket {
+        return runCatching {
+            lottoSeller.sellRandomLottos(count)
+        }.getOrElse { error ->
+            println(error.message)
+            makeAutoTicket(count)
+        }
+    }
+
+    private fun makeTicket(money: Int): Ticket {
+        val manualTicket = makeManualTicket()
+        val autoTicket = makeAutoTicket((money / EACH_LOTTO_PRICE) - manualTicket.size)
+        resultView.printTicket(manualTicket, autoTicket)
+        return manualTicket.concatenateTicket(autoTicket)
     }
 
     private fun calculateProfitRatio(profit: Int, totalMoney: Int): String {
@@ -39,32 +61,23 @@ class LottoController(
         return money
     }
 
-    private fun initializeTicket(money: Int): Ticket {
+    private fun makeWinningLotto(): WinningLotto {
         return runCatching {
-            lottoSeller.sellLottos(money / EACH_LOTTO_PRICE)
-        }.getOrElse { error ->
-            println(error.message)
-            initializeTicket(money)
-        }
-    }
-
-    private fun initializeWinningLotto(): WinningLotto {
-        return runCatching {
-            val winningNumbers = makeWinningLotto()
+            val winningNumbers = initializeWinningLotto()
             val bonusNumber = inputView.getBonusNumber()
             WinningLotto(winningNumbers, LottoNumber(bonusNumber))
         }.getOrElse { error ->
             println(error)
-            initializeWinningLotto()
+            makeWinningLotto()
         }
     }
 
-    private fun makeWinningLotto(): Lotto {
+    private fun initializeWinningLotto(): Lotto {
         return runCatching {
-            Lotto(inputView.getNumbers().map { number -> LottoNumber(number) }.toSet())
+            Lotto(inputView.getWinningLotto().map { number -> LottoNumber(number) }.toSet())
         }.getOrElse { error ->
             println(error)
-            makeWinningLotto()
+            initializeWinningLotto()
         }
     }
 

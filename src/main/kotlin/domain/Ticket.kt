@@ -1,3 +1,7 @@
 package domain
 
-class Ticket(val lottos: List<Lotto>) : List<Lotto> by lottos
+class Ticket(private val lottos: List<Lotto>) : List<Lotto> by lottos {
+    fun concatenateTicket(ticket: Ticket): Ticket {
+        return Ticket(lottos.toMutableList() + ticket.lottos)
+    }
+}

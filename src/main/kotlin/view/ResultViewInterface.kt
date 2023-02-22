@@ -10,5 +10,5 @@ interface ResultViewInterface {
     fun printProfit(profit: String)
     fun printCount(count: Int)
     fun printLotto(lotto: Lotto)
-    fun printTicket(ticket: Ticket)
+    fun printTicket(manualTicket: Ticket, autoTicket: Ticket)
 }

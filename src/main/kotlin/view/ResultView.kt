@@ -30,8 +30,12 @@ class ResultView : ResultViewInterface {
         println(lotto.toList())
     }
 
-    override fun printTicket(ticket: Ticket) {
-        ticket.forEach { lotto ->
+    override fun printTicket(manualTicket: Ticket, autoTicket: Ticket) {
+        println("수동으로 ${manualTicket.size}장, 자동으로 ${autoTicket.size}장을 구매했습니다.")
+        manualTicket.forEach { lotto ->
+            printLotto(lotto)
+        }
+        autoTicket.forEach { lotto ->
             printLotto(lotto)
         }
     }
