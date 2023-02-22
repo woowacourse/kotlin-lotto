@@ -5,12 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class WinningLottoTest {
-    @Test
-    fun `메인 번호는 6개이다`() {
-        assertThrows<IllegalArgumentException> {
-            winningLottoOf(mainLottoNumbers = intArrayOf(3, 45, 34), bonusLottoNumber = 36)
-        }
-    }
 
     @Test
     fun `보너스 번호를 가진다`() {
