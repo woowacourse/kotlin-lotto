@@ -21,7 +21,7 @@ class ResultView : ResultViewInterface {
 
     private fun printLottoNumbers(lotto: Lotto) {
         val sb = StringBuilder("[")
-        lotto.numbers.forEach { lottoNumber -> sb.append("${lottoNumber.number}, ") }
+        lotto.numbers.forEach { lottoNumber -> sb.append("${lottoNumber.toInt()}, ") }
         sb.delete(sb.length - 2, sb.length)
         sb.append("]")
         println(sb.toString())

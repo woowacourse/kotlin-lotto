@@ -2,7 +2,7 @@ package domain
 
 class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(!lotto.numbers.contains(bonusNumber)) { ERROR_CONTAIN_BONUS_NUMBER_IN_LOTTO.format(bonusNumber.number) }
+        require(!lotto.numbers.contains(bonusNumber)) { ERROR_CONTAIN_BONUS_NUMBER_IN_LOTTO.format(bonusNumber.toInt()) }
     }
 
     companion object {
