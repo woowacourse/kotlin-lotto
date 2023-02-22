@@ -12,7 +12,7 @@ class Lotto private constructor(val numbers: Set<LottoNumber>) {
 
     fun getLottoResult(winningNumbers: WinningNumbers): LottoResult {
         val matchCount = winningNumbers.getMatchCount(numbers)
-        val hasBonusNumber = numbers.contains(winningNumbers.bonusNumber)
+        val hasBonusNumber = winningNumbers.checkMatchBonus(numbers)
 
         return LottoResult.valueOf(matchCount, hasBonusNumber)
     }

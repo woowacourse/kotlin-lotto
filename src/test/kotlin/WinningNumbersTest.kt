@@ -96,4 +96,38 @@ class WinningNumbersTest {
             )
         ).isEqualTo(3)
     }
+
+    @Test
+    fun `로또 번호가 보너스 번호를 포함하는 경우`() {
+        val winningNumber = WinningNumbers(
+            setOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6)
+            ),
+            LottoNumber.from(7)
+        )
+        val lotto = Lotto.create(listOf(1, 2, 3, 7, 8, 9))
+        assertThat(winningNumber.checkMatchBonus(lotto.numbers)).isEqualTo(true)
+    }
+
+    @Test
+    fun `로또 번호가 보너스 번호를 포함하지 않는 경우`() {
+        val winningNumber = WinningNumbers(
+            setOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6)
+            ),
+            LottoNumber.from(10)
+        )
+        val lotto = Lotto.create(listOf(1, 2, 3, 7, 8, 9))
+        assertThat(winningNumber.checkMatchBonus(lotto.numbers)).isEqualTo(false)
+    }
 }
