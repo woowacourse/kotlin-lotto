@@ -60,7 +60,7 @@ class MoneyTest {
     }
 
     @Test
-    fun `2개의 Money 객체가 주어졌을 때, subtract 호출시 금액이 0보다 작으면, IllegalArgumentException가 발생한다`(given: Money, other: Money) {
+    fun `2개의 Money 객체가 주어졌을 때, subtract 호출시 금액이 0보다 작으면, IllegalArgumentException가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             Money(3000) - Money(5000)
         }
