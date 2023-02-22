@@ -53,7 +53,7 @@ class LottoMachineTest() {
         }
     }
 
-    class TestLottoNumbersGenerator() : LottoGenerator {
+    class TestLottoNumbersGenerator() : LottoGeneratorInterface {
         override fun generateLotto(): Lotto {
             return Lotto(
                 listOf(
