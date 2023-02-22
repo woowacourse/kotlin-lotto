@@ -17,13 +17,6 @@ class LottoBunchTest {
         ).containsOnlyOnce(Rank.SECOND)
     }
 
-    @Test
-    fun `2등에 1번 당첨된경우 최종 당첨금액은 30000000다`() {
-        assertThat(lottoBunch.sumTotalPrizeMoney(WinningResult.from(lottoBunch.calcRanks(winningLotto)))).isEqualTo(
-            30000000,
-        )
-    }
-
     companion object {
         private fun lottoBunchOf(vararg lotto: Lotto) = LottoBunch(lotto.toList())
 

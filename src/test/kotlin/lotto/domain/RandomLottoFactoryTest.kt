@@ -1,6 +1,6 @@
 package lotto.domain
 
-import lotto.constant.LOTTO_SIZE
+import lotto.domain.Lotto.Companion.LOTTO_SIZE
 import lotto.domain.factory.RandomLottoFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
