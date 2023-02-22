@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoGenerator
+import lotto.domain.LottoNumber
 import lotto.domain.Money
 import lotto.domain.UserLotto
 import lotto.domain.WinningNumbers
@@ -11,29 +12,14 @@ import lotto.view.OutputView
 
 class Controller {
     fun start() {
-        val lottoNumbers = initializeLotto()
-        val userLotto = UserLotto(lottoNumbers)
+        val count = initializeLottoCount()
+        val userLotto = initializeUserLotto(count)
         val ranks = userLotto.calculateTotalRank(readWinningNumbers())
-        OutputView.printResult(ranks, YieldCalculator.calculateYield(userLotto.calculateCount(), ranks))
+        OutputView.printResult(ranks, YieldCalculator.calculateYield(count, ranks))
     }
 
-    private fun initializeLotto(): List<Lotto> {
-        val lottoCount = (readInputMoney().value?.div(Money.MONEY_UNIT))!!
-        val manualLotto = initializeManualLotto(lottoCount)
-        val autoMaticLotto = initializeAutoMaticLotto(lottoCount - manualLotto.size)
-        OutputView.printLottoCountMessage(manualLotto.size, autoMaticLotto.size)
-        OutputView.printLottoNumbers(manualLotto + autoMaticLotto)
-        return manualLotto + autoMaticLotto
-    }
-
-    private fun initializeManualLotto(lottoCount: Int): List<Lotto> {
-        OutputView.printInputManualLottoCountPrompt()
-        val manualLottoCount = InputView.readInputManualLottoCount(lottoCount)
-        return InputView.readManualLottoNumbers(manualLottoCount)
-    }
-
-    private fun initializeAutoMaticLotto(count: Int): List<Lotto> {
-        return LottoGenerator.generate(count)
+    private fun initializeLottoCount(): Int {
+        return (readInputMoney().value?.div(Money.MONEY_UNIT))!!
     }
 
     private fun readInputMoney(): Money {
@@ -41,11 +27,36 @@ class Controller {
         return Money(InputView.readInputMoney())
     }
 
+    private fun initializeUserLotto(count: Int): UserLotto {
+        val userLotto = UserLotto(count)
+        val manualLotto = makeManualLotto(userLotto)
+        val autoMaticLotto = makeAutoMaticLotto(count - manualLotto.size)
+        OutputView.printLottoCountMessage(manualLotto.size, autoMaticLotto.size)
+        OutputView.printLottoNumbers(manualLotto + autoMaticLotto)
+        return UserLotto(count, manualLotto + autoMaticLotto)
+    }
+
+    private fun makeManualLotto(userLotto: UserLotto): List<Lotto> {
+        OutputView.printInputManualLottoCountPrompt()
+        val manualLottoCount = InputView.readInputManualLottoCount()
+        userLotto.checkInputManualLottoCount(manualLottoCount)
+        OutputView.printInputManualLottoNumbersPrompt()
+        val lotto = mutableListOf<Lotto>()
+        for (i in 0 until manualLottoCount!!) {
+            lotto.add(Lotto(InputView.readManualLottoNumbers().map { LottoNumber(it.toInt()) }))
+        }
+        return lotto
+    }
+
+    private fun makeAutoMaticLotto(count: Int): List<Lotto> {
+        return LottoGenerator.generate(count)
+    }
+
     private fun readWinningNumbers(): WinningNumbers {
         OutputView.printInputWinningNumbersPrompt()
-        val winningLotto = InputView.readInputWinningLotto()
+        val winningLotto = Lotto(InputView.readInputWinningLotto().map { LottoNumber(it.toInt()) })
         OutputView.printInputBonusNumberPrompt()
-        val bonusNumber = InputView.readInputBonusNumber()
+        val bonusNumber = LottoNumber(InputView.readInputBonusNumber())
         return WinningNumbers(winningLotto, bonusNumber)
     }
 }
