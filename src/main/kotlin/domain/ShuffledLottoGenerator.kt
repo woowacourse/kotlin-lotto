@@ -1,3 +1,5 @@
+package domain
+
 class ShuffledLottoGenerator() : LottoGenerator {
     override fun generateLotto(): Lotto {
         val possibleLottoNumbers = (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER).toList()

@@ -1,3 +1,5 @@
+package domain
+
 class RankStatistics(val moeny: Int) : PaymentMoney(moeny) {
     private val rankCount = HashMap<Rank, Int>()
 

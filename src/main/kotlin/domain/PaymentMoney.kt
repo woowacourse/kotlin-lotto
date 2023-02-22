@@ -1,3 +1,5 @@
+package domain
+
 open class PaymentMoney(val value: Int) {
 
     init {

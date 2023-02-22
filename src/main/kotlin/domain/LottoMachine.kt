@@ -1,3 +1,5 @@
+package domain
+
 class LottoMachine(val count: Count, val lottoGenerator: LottoGenerator) {
 
     fun generateLotto(): Lotto {

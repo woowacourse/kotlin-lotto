@@ -1,3 +1,5 @@
+package domain
+
 class LottoCount(val manualCount: Count, val totalCount: Count) {
 
     val automaticCount: Count = runCatching { Count(totalCount.value - manualCount.value) }.getOrElse {

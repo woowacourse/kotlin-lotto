@@ -1,3 +1,5 @@
+package domain
+
 open class Lotto(val numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
     init {
         require(numbers.size == LOTTO_NUMBERS_COUNT) { LOTTO_NUMBERS_COUNT_ERROR }
