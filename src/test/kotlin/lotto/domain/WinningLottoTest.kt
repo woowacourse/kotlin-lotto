@@ -12,7 +12,7 @@ class WinningLottoTest {
     fun `메인 번호는 6개이다`() {
         assertThrows<IllegalArgumentException> {
             WinningLotto(
-                listOf<LottoNumber>(
+                setOf<LottoNumber>(
                     LottoNumber.from(3),
                     LottoNumber.from(45),
                     LottoNumber.from(34),
@@ -26,7 +26,7 @@ class WinningLottoTest {
     fun `보너스 번호를 가진다`() {
         assertThat(
             WinningLotto(
-                listOf<LottoNumber>(
+                setOf<LottoNumber>(
                     LottoNumber.from(3),
                     LottoNumber.from(45),
                     LottoNumber.from(34),
@@ -42,7 +42,7 @@ class WinningLottoTest {
 
     @MethodSource("provideDuplicateNumbers")
     @ParameterizedTest
-    fun `메인과 보너스 번호를 포함한 모든 번호는 서로 중복되지 않는다`(mainLottoNumbers: List<LottoNumber>, bonusLottoNumber: LottoNumber) {
+    fun `메인과 보너스 번호를 포함한 모든 번호는 서로 중복되지 않는다`(mainLottoNumbers: Set<LottoNumber>, bonusLottoNumber: LottoNumber) {
         assertThrows<IllegalArgumentException> {
             WinningLotto(mainLottoNumbers, bonusLottoNumber)
         }
@@ -52,7 +52,7 @@ class WinningLottoTest {
         @JvmStatic
         fun provideDuplicateNumbers() = listOf(
             Arguments.of(
-                listOf<LottoNumber>(
+                setOf<LottoNumber>(
                     LottoNumber.from(1),
                     LottoNumber.from(2),
                     LottoNumber.from(3),
@@ -63,7 +63,7 @@ class WinningLottoTest {
                 LottoNumber.from(6),
             ),
             Arguments.of(
-                listOf<LottoNumber>(
+                setOf<LottoNumber>(
                     LottoNumber.from(1),
                     LottoNumber.from(2),
                     LottoNumber.from(3),

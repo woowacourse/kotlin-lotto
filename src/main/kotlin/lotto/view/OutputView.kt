@@ -33,13 +33,13 @@ object OutputView {
 
     fun printWinningResult(winningResult: WinningResult) {
         println(WINNING_STATS_SCRIPT)
-        val rankResult = winningResult.map.keys.drop(1)
+        val rankResult = winningResult.value.keys.drop(1)
         printRankResult(winningResult, rankResult)
     }
 
     private fun printRankResult(winningResult: WinningResult, rankResult: List<Rank>) {
         rankResult.forEach { rank ->
-            winningResult.map[rank]?.let {
+            winningResult.value[rank]?.let {
                 println(formatRankResult(rank, it))
             }
         }
