@@ -21,12 +21,10 @@ class Controller {
     private fun initializeLotto(): List<Lotto> {
         val totalCount = readInputMoney().amount / LottoMoney.MONEY_UNIT
         val manualCount = readManualLottoCount(totalCount)
-        val lotto = mutableListOf<Lotto>()
-        readManualLotto(manualCount).map { lotto.add(it) }
+        val totalLotto = readManualLotto(manualCount) + LottoGenerator.generate(totalCount - manualCount)
         OutputView.printLottoCountMessage(manualCount, totalCount - manualCount)
-        LottoGenerator.generate(totalCount - manualCount).map { lotto.add(it) }
-        OutputView.printLottoNumbers(lotto)
-        return lotto
+        OutputView.printLottoNumbers(totalLotto)
+        return totalLotto
     }
 
     private fun readManualLottoCount(totalCount: Int): Int {
