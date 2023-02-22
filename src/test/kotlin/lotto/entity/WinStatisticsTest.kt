@@ -16,4 +16,18 @@ class WinStatisticsTest {
         // then
         assertThat(winMoney.value).isEqualTo(10000)
     }
+
+    @Test
+    fun `구입금액이 14000원이고 당첨금이 5000원이면 수익률은 0_35이다`() {
+        // given
+        val purchaseMoney = PurchaseMoney(14000)
+        val winStatistics = WinStatistics(listOf(Rank.FIFTH))
+
+        // when
+        val profitRate = winStatistics.calculateProfitRate(purchaseMoney).roundDown()
+        val except = ProfitRate(0.35f).roundDown()
+
+        // then
+        assertThat(profitRate).isEqualTo(except)
+    }
 }

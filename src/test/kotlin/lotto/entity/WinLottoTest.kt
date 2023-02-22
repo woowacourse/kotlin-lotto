@@ -4,6 +4,10 @@ import lotto.model.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 class WinLottoTest {
     @Test
@@ -23,18 +27,31 @@ class WinLottoTest {
         assertThat(thrown.message).isEqualTo(except)
     }
 
-    @Test
-    fun `당첨 번호 ((1,2,3,4,5,6), 7)과 로또 번호 (1,2,3,4,5,7) 을 비교하면 2등이다`() {
+    @MethodSource("makeWinStatisticsSource")
+    @ParameterizedTest(name = "당첨 번호 : {0}, 결과 : {1}")
+    fun `로또 번호를 비교하여 등수를 검사`(winLotto: WinLotto, exceptRank: Rank) {
         // given
-        val winNumber = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val bonus = LottoNumber.from(7)
-        val winLotto = WinLotto(winNumber, bonus)
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 7))
+        val lottos = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6)))
+        val purchasedLottos = PurchasedLottos(lottos)
 
         // when
-        val rank = winLotto.determineRank(lotto)
+        val rank = winLotto.makeWinStatistics(purchasedLottos).value[0]
 
         // then
-        assertThat(rank).isEqualTo(Rank.SECOND)
+        assertThat(rank).isEqualTo(exceptRank)
+    }
+
+    companion object {
+        @JvmStatic
+        fun makeWinStatisticsSource(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.arguments(WinLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoNumber.from(45)), Rank.FIRST),
+                Arguments.arguments(WinLotto(Lotto(listOf(1, 2, 3, 4, 5, 7)), LottoNumber.from(6)), Rank.SECOND),
+                Arguments.arguments(WinLotto(Lotto(listOf(1, 2, 3, 4, 5, 7)), LottoNumber.from(45)), Rank.THIRD),
+                Arguments.arguments(WinLotto(Lotto(listOf(1, 2, 3, 4, 7, 8)), LottoNumber.from(45)), Rank.FOURTH),
+                Arguments.arguments(WinLotto(Lotto(listOf(1, 2, 3, 7, 8, 9)), LottoNumber.from(45)), Rank.FIFTH),
+                Arguments.arguments(WinLotto(Lotto(listOf(1, 2, 7, 8, 9, 10)), LottoNumber.from(45)), Rank.MISS)
+            )
+        }
     }
 }
