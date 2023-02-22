@@ -1,5 +1,6 @@
 package domain
 
 interface LottoMachine {
-    fun create(): Lotto
+    fun createRandomLotto(): Lotto
+    fun createManualLotto(lottoNumbers: Set<Int>): Lotto
 }

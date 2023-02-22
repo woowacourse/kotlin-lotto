@@ -18,5 +18,9 @@ data class LottoNumber(private val number: Int) {
             (MINIMUM_LOTTO_RANGE..MAXIMUM_LOTTO_RANGE).associateWith(::LottoNumber)
 
         fun all(): List<LottoNumber> = NUMBERS.values.toList()
+
+        fun from(value: Int): LottoNumber {
+            return NUMBERS[value] ?: throw IllegalArgumentException()
+        }
     }
 }
