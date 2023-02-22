@@ -3,15 +3,8 @@ package view
 import domain.Lotto
 
 class InputView {
-    fun inputAmount(): Int =
-        readln().toIntOrNull().let {
-            var amount = it
-            while (amount == null) {
-                println("int 타입으로 입력 바랍니다.")
-                amount = readln().toIntOrNull()
-            }
-            amount
-        }
+    fun inputAmount(): Int? =
+        readln().toIntOrNull()
 
     fun inputNumberOfLottosToBuyManually(): Int? =
         readln().toIntOrNull()

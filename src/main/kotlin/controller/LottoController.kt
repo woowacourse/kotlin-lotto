@@ -25,11 +25,21 @@ class LottoController {
 
         while (true) {
             kotlin.runCatching {
-                return Money(inputView.inputAmount())
+                return Money(getAmount())
             }
                 .onFailure { outputView.printErrorMessage(it) }
         }
     }
+
+    private fun getAmount(): Int =
+        inputView.inputAmount().let {
+            var amount = it
+            while (amount == null) {
+                println(ERROR_INPUT_NOT_INT_TYPE)
+                amount = inputView.inputAmount()
+            }
+            amount
+        }
 
     private fun askNumberOfLottosToBuyManually(limitedAmount: Money): Int {
         outputView.outputGetNumberOfLottosToBuyManually()
