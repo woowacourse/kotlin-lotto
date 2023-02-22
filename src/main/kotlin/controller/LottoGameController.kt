@@ -16,7 +16,9 @@ class LottoGameController(
 
     fun startLottoGame() {
         val purchasedMoney = inputView.inputPurchasingMoney()
-        val purchasedLottos = lottoGame.purchaseLottos(purchasedMoney)
+        val manualLottoCount = inputView.inputManualLottoCount()
+        val manualLottos = inputView.inputManualLottos(manualLottoCount)
+        val purchasedLottos = lottoGame.purchaseLottos(purchasedMoney, manualLottos)
         resultView.printPurchasedLottos(purchasedLottos)
         matchLottos(purchasedLottos, purchasedMoney)
     }
