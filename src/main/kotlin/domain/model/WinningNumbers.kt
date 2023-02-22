@@ -3,8 +3,8 @@ package domain.model
 import domain.model.lotto.LottoNumber
 
 class WinningNumbers(
-    val catchNumbers: Set<LottoNumber>,
-    val bonusNumber: LottoNumber
+    private val catchNumbers: Set<LottoNumber>,
+    private val bonusNumber: LottoNumber
 ) {
     init {
         validateCatchNumbers()
