@@ -12,14 +12,33 @@ class InputView : InputViewInterface {
         }
     }
 
-    override fun getNumbers(): Set<Int> {
+    override fun getLottoNumbers(): Set<Int> {
         return runCatching {
-            println("지난 주 당첨 번호를 입력해 주세요.")
             val numbers = readln().trim()
             numbers.split(",").map { it.trim().toInt() }.toSet()
         }.getOrElse { error ->
             println(error)
-            getNumbers()
+            getLottoNumbers()
+        }
+    }
+
+    override fun getManualLottoCount(): Int {
+        return runCatching {
+            println("수동으로 구매할 로또 수를 입력해 주세요.")
+            val count = readln()
+            count.toInt()
+        }.getOrElse { error ->
+            println(error)
+            getManualLottoCount()
+        }
+    }
+
+    override fun getWinningLotto(): Set<Int> {
+        return runCatching {
+            println("지난 주 당첨 번호를 입력해 주세요.")
+            getLottoNumbers()
+        }.getOrElse {
+            getWinningLotto()
         }
     }
 
@@ -32,5 +51,22 @@ class InputView : InputViewInterface {
             println(error)
             getBonusNumber()
         }
+    }
+
+    override fun getManualLotto(): Set<Int> {
+        return runCatching {
+            println("수동으로 구매할 번호를 입력해 주세요.")
+            getLottoNumbers()
+        }.getOrElse {
+            getManualLotto()
+        }
+    }
+
+    override fun getManualLottos(count: Int): List<Set<Int>> {
+        val result = MutableList<Set<Int>>(count) { emptySet() }
+        repeat(count) {
+            result[it] = getManualLotto()
+        }
+        return result
     }
 }
