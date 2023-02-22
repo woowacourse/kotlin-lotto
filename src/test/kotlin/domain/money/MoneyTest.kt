@@ -35,4 +35,20 @@ class MoneyTest {
 
         org.junit.jupiter.api.Assertions.assertEquals(actual, expected)
     }
+
+    @Test
+    fun `1000원 짜리 수동 로또의 개수가 주어졌을 때, getRemainingMoneyAfterManualLottoPurchase() 호출시, 남은 금액을 반환한다`() {
+        val money = Money(5000)
+        val actual = money.getRemainingMoneyAfterManualLottoPurchase(3)
+
+        org.junit.jupiter.api.Assertions.assertEquals(2000, actual.value)
+    }
+
+    @Test
+    fun `구매금액보다 사려는 수동로또 금액이 더 많을 때 , getRemainingMoneyAfterManualLottoPurchase() 호출시, IllegalStateException이 발생한다`() {
+        assertThrows<IllegalStateException> {
+            val money = Money(5000)
+            money.getRemainingMoneyAfterManualLottoPurchase(6)
+        }
+    }
 }
