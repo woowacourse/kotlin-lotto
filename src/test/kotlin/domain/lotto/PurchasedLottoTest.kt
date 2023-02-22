@@ -2,8 +2,7 @@ package domain.lotto
 
 import domain.lotto.number.LottoNumber
 import domain.rank.Rank
-import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -15,19 +14,17 @@ class PurchasedLottoTest {
 
     @BeforeEach
     fun setUp() {
-        purchasedLotto = PurchasedLotto((1..6).map { LottoNumber(it) })
+        purchasedLotto = PurchasedLotto((1..6).map { LottoNumber(it) }.toSet())
     }
 
     @ParameterizedTest
     @MethodSource("providePurchasedLotto")
     fun `구매한 로또가 주어졌을 때, getSortedLotto 호출시, 정렬된 Lotto를 반환한다`(
         purchasedLotto: PurchasedLotto,
-        expectedLotto: PurchasedLotto,
+        actual: PurchasedLotto,
     ) {
         val sortedPurchasedLotto = purchasedLotto.getSortedLotto()
-        for (i in sortedPurchasedLotto.indices) {
-            assertEquals(sortedPurchasedLotto[i].value, expectedLotto[i].value)
-        }
+        assertThat(sortedPurchasedLotto).isEqualTo(actual)
     }
 
     @ParameterizedTest
@@ -38,7 +35,7 @@ class PurchasedLottoTest {
         expected: Rank,
     ) {
         val actual = purchasedLotto.matchLotto(winningLotto, bonusNumber)
-        Assertions.assertThat(expected).isEqualTo(actual)
+        assertThat(expected).isEqualTo(actual)
     }
 
     companion object {
@@ -46,16 +43,16 @@ class PurchasedLottoTest {
         fun providePurchasedLotto(): List<Arguments> =
             listOf(
                 Arguments.of(
-                    PurchasedLotto((1..6).map { number -> LottoNumber(number) }),
-                    PurchasedLotto((1..6).map { number -> LottoNumber(number) })
+                    PurchasedLotto((1..6).map { number -> LottoNumber(number) }.toSet()),
+                    PurchasedLotto((1..6).map { number -> LottoNumber(number) }.toSet())
                 ),
                 Arguments.of(
-                    PurchasedLotto(listOf(1, 3, 5, 14, 13, 11).map { number -> LottoNumber(number) }),
-                    PurchasedLotto(listOf(1, 3, 5, 11, 13, 14).map { number -> LottoNumber(number) })
+                    PurchasedLotto(listOf(1, 3, 5, 14, 13, 11).map { number -> LottoNumber(number) }.toSet()),
+                    PurchasedLotto(listOf(1, 3, 5, 11, 13, 14).map { number -> LottoNumber(number) }.toSet())
                 ),
                 Arguments.of(
-                    PurchasedLotto(listOf(45, 44, 43, 42, 41, 40).map { number -> LottoNumber(number) }),
-                    PurchasedLotto(listOf(40, 41, 42, 43, 44, 45).map { number -> LottoNumber(number) })
+                    PurchasedLotto(listOf(45, 44, 43, 42, 41, 40).map { number -> LottoNumber(number) }.toSet()),
+                    PurchasedLotto(listOf(40, 41, 42, 43, 44, 45).map { number -> LottoNumber(number) }.toSet())
                 )
             )
 
@@ -64,7 +61,7 @@ class PurchasedLottoTest {
             listOf(
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(1, 2, 3, 43, 44, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(1, 2, 3, 43, 44, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(42)
                     ),
                     LottoNumber(42),
@@ -72,7 +69,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(3, 4, 5, 43, 44, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(3, 4, 5, 43, 44, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(6)
                     ),
                     LottoNumber(6),
@@ -80,7 +77,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(4, 3, 2, 43, 44, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(4, 3, 2, 43, 44, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(42)
                     ),
                     LottoNumber(42),
@@ -88,7 +85,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(1, 2, 3, 4, 44, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(1, 2, 3, 4, 44, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(42)
                     ),
                     LottoNumber(42),
@@ -96,7 +93,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(3, 4, 5, 6, 44, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(3, 4, 5, 6, 44, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(1)
                     ),
                     LottoNumber(1),
@@ -104,7 +101,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(4, 3, 2, 1, 44, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(4, 3, 2, 1, 44, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(43)
                     ),
                     LottoNumber(43),
@@ -112,7 +109,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(42)
                     ),
                     LottoNumber(42),
@@ -120,7 +117,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(3, 4, 5, 1, 2, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(3, 4, 5, 1, 2, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(42)
                     ),
                     LottoNumber(42),
@@ -128,7 +125,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(4, 3, 2, 1, 5, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(4, 3, 2, 1, 5, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(42)
                     ),
                     LottoNumber(42),
@@ -136,7 +133,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(6)
                     ),
                     LottoNumber(6),
@@ -144,7 +141,7 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(3, 4, 5, 1, 2, 37).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(3, 4, 5, 1, 2, 37).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(6)
                     ),
                     LottoNumber(6),
@@ -152,19 +149,25 @@ class PurchasedLottoTest {
                 ),
                 Arguments.of(
                     WinningLotto(
-                        Lotto(listOf(4, 3, 2, 1, 5, 43).map { number -> LottoNumber(number) }),
+                        Lotto(listOf(4, 3, 2, 1, 5, 43).map { number -> LottoNumber(number) }.toSet()),
                         LottoNumber(6)
                     ),
                     LottoNumber(6),
                     Rank.SECOND
                 ),
                 Arguments.of(
-                    WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6).map { number -> LottoNumber(number) }), LottoNumber(7)),
+                    WinningLotto(
+                        Lotto(listOf(1, 2, 3, 4, 5, 6).map { number -> LottoNumber(number) }.toSet()),
+                        LottoNumber(7)
+                    ),
                     LottoNumber(7),
                     Rank.FIRST_WITH_BONUS
                 ),
                 Arguments.of(
-                    WinningLotto(Lotto(listOf(6, 5, 4, 3, 2, 1).map { number -> LottoNumber(number) }), LottoNumber(7)),
+                    WinningLotto(
+                        Lotto(listOf(6, 5, 4, 3, 2, 1).map { number -> LottoNumber(number) }.toSet()),
+                        LottoNumber(7)
+                    ),
                     LottoNumber(7),
                     Rank.FIRST_WITH_BONUS
                 )
