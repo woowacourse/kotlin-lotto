@@ -1,9 +1,10 @@
 package lotto.view
 
 import lotto.entity.Lotto
+import lotto.entity.LottoCount
 import lotto.entity.ProfitRate
+import lotto.entity.PurchasedLottos
 import lotto.entity.WinStatistics
-import lotto.model.LottoMachine
 
 class OutputView {
     fun printMessage(message: String, vararg args: Any?) {
@@ -21,9 +22,9 @@ class OutputView {
         printMessage(MESSAGE_PROFIT_RATE, p)
     }
 
-    fun gameResult(lottoMachine: LottoMachine) {
-        printMessage(MESSAGE_PURCHASE_COUNT, lottoMachine.lottoManualCount.value, lottoMachine.lottoAutoCount.value)
-        lottoMachine.purchasedLottos.value.forEach {
+    fun gameResult(purchasedLottos: PurchasedLottos, lottoManualCount: LottoCount, lottoAutoCount: LottoCount) {
+        printMessage(MESSAGE_PURCHASE_COUNT, lottoManualCount.value, lottoAutoCount.value)
+        purchasedLottos.value.forEach {
             println(formatLotto(it))
         }
     }
