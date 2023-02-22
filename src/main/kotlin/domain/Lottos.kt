@@ -1,6 +1,6 @@
 package domain
 
-class Lottos(val lottos: List<Lotto>) {
+class Lottos(val lottos: List<Lotto>) : List<Lotto> by lottos {
     fun matchLottos(winningNumber: WinningNumber): WinningResult {
         val winningResult =
             mutableListOf(Rank.FIRST, Rank.SECOND, Rank.THIRD, Rank.FOURTH, Rank.FIFTH, Rank.MISS).associateWith { 0 }

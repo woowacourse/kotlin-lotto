@@ -2,13 +2,12 @@ package view
 
 import domain.Lotto
 import domain.Lottos
-import domain.Money
 import domain.Rank
 import domain.WinningResult
 
 class OutputView {
-    fun outputLottoSizeMessage(money: Money) {
-        println((money.lottoCount()).toString() + OUTPUT_LOTTO_SIZE_MESSAGE)
+    fun outputLottoSizeMessage(manualCount: Int, autoCount: Int) {
+        println(OUTPUT_LOTTO_SIZE_MESSAGE.format(manualCount, autoCount))
     }
 
     fun outputLottos(lottos: Lottos) {
@@ -50,7 +49,7 @@ class OutputView {
     }
 
     companion object {
-        const val OUTPUT_LOTTO_SIZE_MESSAGE = "개를 구매했습니다."
+        const val OUTPUT_LOTTO_SIZE_MESSAGE = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         const val PREFIX_MARK = "["
         const val SEPARATOR_MARK = ", "
         const val POSTFIX_MARK = "]"

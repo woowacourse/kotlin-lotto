@@ -16,10 +16,10 @@ class InputView {
         }
     }
 
-    fun getManualLottoCount(): String {
+    fun InputManualLottoCount(): Int {
         while (true) {
             println(INPUT_MANUAL_LOTTO_COUNT_MESSAGE)
-            return readlnOrNull() ?: continue
+            return readln().toIntOrNull() ?: continue
         }
     }
 
