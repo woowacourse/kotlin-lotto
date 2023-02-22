@@ -1,26 +1,15 @@
 package view
 
-import domain.Lotto
 import domain.LottoResult
+import domain.LottoTickets
 import domain.Rank
 import kotlin.math.floor
 
 class OutputView {
-    fun outputGetAmount() {
-        println("구입금액을 입력해 주세요.")
-    }
-
-    fun outputGetWinningNumbers() {
-        println("지난 주 당첨 번호를 입력해 주세요.")
-    }
-
-    fun outputGetBonusNumber() {
-        println("보너스 볼을 입력해 주세요.")
-    }
-
-    fun outputLottos(lottos: List<Lotto>) {
-        println("${lottos.size}개를 구매했습니다.")
-        lottos.forEach { println(it.toList()) }
+    fun outputLottos(manualLottos: LottoTickets, autoLottos: LottoTickets) {
+        println("\n수동으로 ${manualLottos.size}장, 자동으로 ${autoLottos.size}개를 구매했습니다.")
+        manualLottos.forEach { println(it.toList()) }
+        autoLottos.forEach { println(it.toList()) }
         println()
     }
 
@@ -33,6 +22,10 @@ class OutputView {
         println("5개 일치 (${Rank.THIRD.winningMoney})원 - ${lottoResult[Rank.THIRD]}개")
         println("5개 일치, 보너스 볼 일치(${Rank.SECOND.winningMoney}원) - ${lottoResult[Rank.SECOND]}개")
         println("6개 일치 (${Rank.FIRST.winningMoney})원 - ${lottoResult[Rank.FIRST]}개")
-        println("총 수익률은 ${floor(lottoResult.getRateOfReturn() * 100) / 100}입니다.")
+        println("총 수익률은 ${floor(lottoResult.rateOfReturn * 100) / 100}입니다.")
+    }
+
+    fun outputError(error: Throwable) {
+        println(error.message)
     }
 }

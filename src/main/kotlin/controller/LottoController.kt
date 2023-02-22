@@ -1,8 +1,8 @@
 package controller
 
-import domain.Lotto
-import domain.LottoNumber
 import domain.LottoStore
+import domain.LottoTickets
+import domain.Money
 import domain.RandomLottoGenerator
 import domain.WinningLotto
 import view.InputView
@@ -11,33 +11,43 @@ import view.OutputView
 class LottoController {
     private val inputView by lazy { InputView() }
     private val outputView by lazy { OutputView() }
+    private val lottoStore by lazy { LottoStore(RandomLottoGenerator) }
 
     fun run() {
-        val amount = askAmount()
-        val lottos = buyLotto(amount)
-        outputView.outputLottos(lottos)
-        val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
-        val result = winningLotto.match(lottos)
-        outputView.outputResult(result)
+        val lottos = buyLotto()
+        val winningLotto = makeWinningLotto()
+        calculateResult(winningLotto, lottos)
     }
 
-    private fun askAmount(): Int {
-        outputView.outputGetAmount()
-        return inputView.inputAmount()
+    private fun buyLotto(): LottoTickets {
+        val money = inputView.askPurchaseMoney()
+        val manualLottos = buyManualLotto(money)
+        val chargeMoney = money.calculateCharge(manualLottos.size)
+        val autoLottos = buyAutoLotto(chargeMoney)
+        outputView.outputLottos(manualLottos, autoLottos)
+        return manualLottos + autoLottos
     }
 
-    private fun buyLotto(amount: Int): List<Lotto> {
-        val store = LottoStore(RandomLottoGenerator)
-        return store.buyLotto(amount)
-    }
+    private fun buyManualLotto(money: Money): LottoTickets =
+        runCatching {
+            val lottos = inputView.askManualLottoNumbers(inputView.askManualLottoCount())
+            return lottoStore.buyManualLotto(money.count, *lottos)
+        }
+            .onFailure { outputView.outputError(it) }
+            .getOrDefault(buyManualLotto(money))
 
-    private fun askWinningNumbers(): Lotto {
-        outputView.outputGetWinningNumbers()
-        return Lotto(*inputView.inputWinningNumbers())
-    }
+    private fun buyAutoLotto(money: Money): LottoTickets =
+        runCatching { lottoStore.buyAutoLotto(money.count) }
+            .onFailure { outputView.outputError(it) }
+            .getOrDefault(LottoTickets())
 
-    private fun askBonusNumber(): LottoNumber {
-        outputView.outputGetBonusNumber()
-        return LottoNumber.from(inputView.inputBonusNumber())
+    private fun makeWinningLotto(): WinningLotto =
+        runCatching { return WinningLotto(inputView.askWinningNumbers(), inputView.askBonusNumber()) }
+            .onFailure { outputView.outputError(it) }
+            .getOrDefault(makeWinningLotto())
+
+    private fun calculateResult(winningLotto: WinningLotto, lottos: LottoTickets) {
+        runCatching { outputView.outputResult(winningLotto.match(lottos)) }
+            .onFailure { outputView.outputError(it) }
     }
 }

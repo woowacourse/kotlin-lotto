@@ -23,10 +23,9 @@ class LottoResultTest {
                 MISS to 0,
             ),
         )
-        val result = lottoResult.getRateOfReturn()
-        val expect = (FIRST.winningMoney.toDouble() + SECOND.winningMoney + FOURTH.winningMoney) / (lottoResult.sum() * LottoStore.LOTTO_PRICE)
+        val result = lottoResult.rateOfReturn
 
-        assertThat(result).isEqualTo(expect)
+        assertThat(result).isEqualTo(676683.3333333334)
     }
 
     @Test

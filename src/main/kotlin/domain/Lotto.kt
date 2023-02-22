@@ -1,20 +1,17 @@
 package domain
 
-class Lotto(private val numbers: Set<LottoNumber>) {
-    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) }.toSet())
-
+data class Lotto(private val numbers: Set<LottoNumber>) {
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
     }
 
-    fun get(): Set<LottoNumber> = numbers
+    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) }.toSet())
 
     fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
 
-    fun count(predict: (LottoNumber) -> Boolean): Int = numbers.count(predict)
+    fun countMatch(otherLotto: Lotto): Int = numbers.intersect(otherLotto.numbers).size
 
     fun toList() = numbers.toList()
-    override fun toString(): String = numbers.joinToString("")
 
     companion object {
         const val NUMBER_SIZE = 6
