@@ -1,8 +1,5 @@
 package lotto.exception
 
-import lotto.domain.Lotto
-import lotto.domain.LottoNumber
-
 object Validator {
     private const val MONEY_NOT_NUMBER_ERROR = "금액은 숫자여야 합니다."
     private const val BONUS_NOT_NUMBER_ERROR = "보너스 볼은 숫자여야 합니다."
@@ -27,10 +24,8 @@ object Validator {
 
     fun checkInputManualLottoNumbers(input: String) {
         val trimInput = input.split(",").map { it.trim() }
-        val lottoNumbers = trimInput.map {
+        trimInput.map {
             require(it.toIntOrNull() != null) { LOTTO_NOT_NUMBER_ERROR }
-            LottoNumber.from(it.toInt())
         }
-        Lotto(lottoNumbers)
     }
 }

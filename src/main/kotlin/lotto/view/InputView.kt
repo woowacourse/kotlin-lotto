@@ -34,12 +34,9 @@ object InputView {
         repeat(count) {
             val input = readln()
             Validator.checkInputManualLottoNumbers(input)
-            manualLotto.add(makeInputToLotto(input))
+            val lottoNumbers = input.split(",").map { LottoNumber.from(it.trim().toInt()) }
+            manualLotto.add(Lotto(lottoNumbers))
         }
         return manualLotto
-    }
-
-    private fun makeInputToLotto(input: String): Lotto {
-        return Lotto(input.split(",").map { LottoNumber.from(it.trim().toInt()) })
     }
 }
