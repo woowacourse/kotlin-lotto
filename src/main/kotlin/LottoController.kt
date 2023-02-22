@@ -51,14 +51,9 @@ class LottoController(
     }
 
     private fun getLotto(lottoCount: Int): List<Lotto> {
-        val lotteries = mutableListOf<Lotto>()
+        val lotto = lottoMachine.generateLotto()
 
-        repeat(lottoCount) {
-            val lotto = lottoMachine.generateLotto()
-            lotteries.add(lotto)
-        }
-
-        return lotteries
+        return List(lottoCount) { lotto }
     }
 
     private fun getWinningNumber(): Lotto {
