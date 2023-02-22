@@ -20,7 +20,7 @@ object OutputView {
 
     fun printWinningResult(winningResult: WinningResult) {
         println(
-            winningResult.value.keys.reversed().drop(1).joinToString(
+            winningResult.rankTable.keys.reversed().drop(1).joinToString(
                 separator = WINNING_RESULT_TO_STRING_SEPARATOR,
             ) { findRankFormat(winningResult, it) },
         )
@@ -28,9 +28,9 @@ object OutputView {
 
     private fun findRankFormat(winningResult: WinningResult, rank: Rank): String {
         if (rank == Rank.SECOND) {
-            return SECOND_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, winningResult.value[rank])
+            return SECOND_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, winningResult.rankTable[rank])
         }
-        return EACH_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, winningResult.value[rank])
+        return EACH_RANK_SCRIPT.format(rank.matchCount, rank.prizeMoney, winningResult.rankTable[rank])
     }
 
     fun printPurchaseResult(lottoBunch: LottoBunch, purchaseCount: Int) {

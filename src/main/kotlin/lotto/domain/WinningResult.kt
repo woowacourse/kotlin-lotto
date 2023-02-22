@@ -1,6 +1,6 @@
 package lotto.domain
 
-class WinningResult private constructor(val value: Map<Rank, Int>) {
+class WinningResult private constructor(val rankTable: Map<Rank, Int>) {
 
     companion object {
         fun from(ranks: List<Rank>): WinningResult {

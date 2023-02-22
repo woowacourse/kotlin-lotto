@@ -18,8 +18,8 @@ class LottoBunch(val value: List<Lotto>) {
         winningLotto.bonusLottoNumber.value in lotto.lottoNumbers.map { lottoNumber -> lottoNumber.value }
 
     fun sumTotalPrizeMoney(winningResult: WinningResult): Int =
-        winningResult.value.keys.fold(0) { acc, rank -> acc + getPrizeMoney(rank, winningResult) }
+        winningResult.rankTable.keys.fold(0) { acc, rank -> acc + getPrizeMoney(rank, winningResult) }
 
     private fun getPrizeMoney(rank: Rank, winningResult: WinningResult): Int =
-        rank.prizeMoney * (winningResult.value[rank] ?: throw IllegalStateException())
+        rank.prizeMoney * (winningResult.rankTable[rank] ?: throw IllegalStateException())
 }
