@@ -27,6 +27,5 @@ class RandomLottoGeneratorTest {
 
         // then
         assertThat(actual).isEqualTo(6)
-
     }
 }

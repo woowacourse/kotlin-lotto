@@ -24,9 +24,14 @@ class LottoController {
     }
 
     private fun getMoney(): Payment {
-        OutputView.printRequestMoney()
-        val money = InputView.inputMoney()
-        return Payment(money)
+        while (true) {
+            OutputView.printRequestMoney()
+            val money = InputView.inputMoney()
+            var payment: Payment? = null
+            val result = kotlin.runCatching { payment = Payment(money) }
+            if (result.isSuccess) return payment!!
+            println(result.exceptionOrNull()?.message)
+        }
     }
 
     private fun produceResult(lottoBundle: LottoBundle, spendPayment: Payment) {
@@ -37,20 +42,35 @@ class LottoController {
     }
 
     private fun getWinningNumbers(): WinningNumbers {
-        val winningLotto = getWinningLotto()
-        val bonusNumber = getBonusNumber()
-        return WinningNumbers(winningLotto, bonusNumber)
+        while (true) {
+            val winningLotto = getWinningLotto()
+            val bonusNumber = getBonusNumber()
+            var winningNumbers: WinningNumbers? = null
+            val result = kotlin.runCatching { winningNumbers = WinningNumbers(winningLotto, bonusNumber) }
+            if (result.isSuccess) return winningNumbers!!
+            println(result.exceptionOrNull()?.message)
+        }
     }
 
     private fun getWinningLotto(): Lotto {
-        OutputView.printRequestWinningNumbers()
-        val winningNumbers: List<String> = InputView.inputWinningNumbers()
-        return Lotto(winningNumbers)
+        while (true) {
+            OutputView.printRequestWinningNumbers()
+            val winningNumbers: List<String> = InputView.inputWinningNumbers()
+            var lotto: Lotto? = null
+            val result = kotlin.runCatching { lotto = Lotto(winningNumbers) }
+            if (result.isSuccess) return lotto!!
+            println(result.exceptionOrNull()?.message)
+        }
     }
 
     private fun getBonusNumber(): LottoNumber {
-        OutputView.printRequestBonusNumber()
-        val bonusNumber = InputView.inputBonusNumber()
-        return LottoNumber.of(bonusNumber)
+        while (true) {
+            OutputView.printRequestBonusNumber()
+            val bonusNumber: String = InputView.inputBonusNumber()
+            var lottoNumber: LottoNumber? = null
+            val result = kotlin.runCatching { lottoNumber = LottoNumber.of(bonusNumber) }
+            if (result.isSuccess) return lottoNumber!!
+            println(result.exceptionOrNull()?.message)
+        }
     }
 }

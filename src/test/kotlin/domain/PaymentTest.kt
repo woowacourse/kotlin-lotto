@@ -1,6 +1,5 @@
 package domain
 
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -33,6 +32,19 @@ class PaymentTest {
             .withMessageContaining("[Error] $receivedMoney 받은 돈이 1000원 단위여야합니다.")
     }
 
+    @ValueSource(strings = ["", "a", " "])
+    @ParameterizedTest
+    fun `숫자가 아닌 값이 들어오면 에러를 발생시킨다`(receivedMoney: String) {
+        // given
+
+        // when
+
+        // then
+        assertThatIllegalArgumentException()
+            .isThrownBy { Payment(receivedMoney) }
+            .withMessageContaining("[Error] 1000 단위의 숫자로 값을 입력해주세요.")
+    }
+
     @Test
     fun `구입금액에 해당하는 로또 개수 계산`() {
         // given
@@ -42,6 +54,6 @@ class PaymentTest {
         val lottoCount: Int = payment.calculateLottoCount()
 
         // then
-        Assertions.assertThat(lottoCount).isEqualTo(10)
+        assertThat(lottoCount).isEqualTo(10)
     }
 }

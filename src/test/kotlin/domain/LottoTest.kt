@@ -46,7 +46,6 @@ class LottoTest {
         )
     }
 
-
     @Test
     fun `로또 번호가 6개가 아니라면 에러 발생`() {
         // given
@@ -84,8 +83,9 @@ class LottoTest {
         val lottoNumbers = listOf<String>("a", "2", "3", "4", "5", "6")
 
         // when
+        val exception = assertThrows<NumberFormatException> { Lotto(lottoNumbers) }
 
         // then
-        assertThrows<NumberFormatException> { Lotto(lottoNumbers) }
+        assertThat(exception.message).isEqualTo("[Error] 숫자로만 입력해주세요.")
     }
 }

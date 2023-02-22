@@ -2,6 +2,7 @@ package domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -29,10 +30,18 @@ class LottoNumberTest {
         // then
         assertThatIllegalArgumentException()
             .isThrownBy { LottoNumber.of(number) }
-            .withMessageContaining("$PREFIX 로또 넘버는 1~45여야합니다.")
+            .withMessageContaining("[Error] 로또 넘버는 1~45여야합니다.")
     }
 
-    companion object {
-        private const val PREFIX = "[Error]"
+    @ValueSource(strings = ["", "a", " "])
+    @ParameterizedTest
+    fun `숫자가 아닌 값이 들어올 때`(number: String) {
+        // given
+
+        // when
+        val exception = assertThrows<NumberFormatException> { LottoNumber.of(number) }
+
+        // then
+        assertThat(exception.message).isEqualTo("[Error] 숫자로 입력해주세요.")
     }
 }
