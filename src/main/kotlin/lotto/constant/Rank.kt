@@ -11,7 +11,7 @@ enum class Rank(val matchCount: Int, val prizeMoney: Int) {
 
     companion object {
         fun convertToRank(matchCount: Int, bonusMatch: Boolean): Rank {
-            if (matchCount == 5) {
+            if (matchCount == SECOND.matchCount) {
                 if (bonusMatch) return SECOND
                 return THIRD
             }
