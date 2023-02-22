@@ -22,8 +22,8 @@ class LottoStoreTest {
         val lottoTickets: LottoTickets = lottoStore.buyManualLotto(money.count, intArrayOf(1, 2, 3, 4, 5, 6), intArrayOf(1, 11, 22, 33, 44, 45))
         assertAll({
             assertThat(lottoTickets.size).isEqualTo(2)
-            assertThat(lottoTickets[0].toList().map { it.number }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
-            assertThat(lottoTickets[1].toList().map { it.number }).isEqualTo(listOf(1, 11, 22, 33, 44, 45))
+            assertThat(lottoTickets[0].toList().map { it.toInt() }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+            assertThat(lottoTickets[1].toList().map { it.toInt() }).isEqualTo(listOf(1, 11, 22, 33, 44, 45))
         })
     }
 
@@ -34,8 +34,8 @@ class LottoStoreTest {
         val lottoTickets: LottoTickets = lottoStore.buyAutoLotto(money.count)
         assertAll({
             assertThat(lottoTickets.size).isEqualTo(2)
-            assertThat(lottoTickets[0].toList().map { it.number }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
-            assertThat(lottoTickets[1].toList().map { it.number }).isEqualTo(listOf(2, 3, 4, 5, 6, 7))
+            assertThat(lottoTickets[0].toList().map { it.toInt() }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+            assertThat(lottoTickets[1].toList().map { it.toInt() }).isEqualTo(listOf(2, 3, 4, 5, 6, 7))
         })
     }
 
