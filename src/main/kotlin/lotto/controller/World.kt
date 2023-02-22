@@ -5,7 +5,6 @@ import lotto.entity.LottoCount
 import lotto.entity.LottoNumber
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
-import lotto.entity.PurchasedLottos
 import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
@@ -53,13 +52,6 @@ class World {
         } as Lotto
     }
 
-    private fun initManualLottos(lottoCount: LottoCount): List<Lotto> {
-        outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
-        return (0 until lottoCount.value).map {
-            initSingleLotto()
-        }
-    }
-
     private fun initWinLotto(): WinLotto {
         return tryAndRerun {
             val winNumber = initWinNumber()
@@ -82,8 +74,8 @@ class World {
     private fun makeLottoMachine(): LottoMachine {
         val purchaseMoney = initPurchaseMoney()
         val lottoManualCount = initLottoManualCount(purchaseMoney)
-        val manualLottos = PurchasedLottos(initManualLottos(lottoManualCount))
-        return LottoMachine(purchaseMoney, lottoManualCount, manualLottos)
+        outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
+        return LottoMachine(purchaseMoney, lottoManualCount) { initSingleLotto() }
     }
 
     private fun makeWinStatistics(lottoMachine: LottoMachine): WinStatistics {

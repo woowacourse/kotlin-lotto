@@ -1,5 +1,6 @@
 package lotto.model
 
+import lotto.entity.Lotto
 import lotto.entity.LottoCount
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
@@ -9,18 +10,16 @@ import lotto.entity.WinStatistics
 class LottoMachine(
     private val purchaseMoney: PurchaseMoney,
     val lottoManualCount: LottoCount,
-    manualLottos: PurchasedLottos
+    manualLottos: () -> Lotto
 ) {
     val lottoAutoCount: LottoCount = purchaseMoney.calculateLottoCount(lottoManualCount)
-    val purchasedLottos: PurchasedLottos = makePurchasedLotto(manualLottos, lottoAutoCount)
+    val purchasedLottos: PurchasedLottos = makeManualPurchasedLottos(manualLottos) + makeAutoPurchasedLottos()
 
-    private fun makePurchasedLotto(manualLottos: PurchasedLottos, lottoAutoCount: LottoCount): PurchasedLottos {
-        val manualPurchasedLottos = PurchasedLottos.from(
-            LottoCount(manualLottos.value.size), SequentialLottoNumberGenerator(manualLottos.value)
-        )
-        val autoPurchasedLottos = PurchasedLottos.from(lottoAutoCount, RandomLottoGenerator())
-        return manualPurchasedLottos.merge(autoPurchasedLottos)
-    }
+    private fun makeAutoPurchasedLottos(): PurchasedLottos =
+        PurchasedLottos.from(lottoAutoCount, RandomLottoGenerator())
+
+    private fun makeManualPurchasedLottos(manualLottos: () -> Lotto): PurchasedLottos =
+        PurchasedLottos((0 until lottoManualCount.value).map { manualLottos() })
 
     fun makeProfitRate(winStatistics: WinStatistics): ProfitRate {
         val profitRateCalculator = LottoProfitRateCalculator()
