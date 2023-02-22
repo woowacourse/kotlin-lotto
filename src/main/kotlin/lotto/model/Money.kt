@@ -4,7 +4,7 @@ import lotto.view.ERROR_NOT_DIVIDED
 
 class Money(val money: Int) {
     init {
-        require(money % LOTTO_PRICE == 0 && money > 0) { println(ERROR_NOT_DIVIDED) }
+        require(money % LOTTO_PRICE == 0 && money > 0) { ERROR_NOT_DIVIDED }
     }
 
     fun getNumberOfLotto(): Int {

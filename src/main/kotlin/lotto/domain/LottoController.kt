@@ -6,6 +6,7 @@ import lotto.model.Money
 import lotto.model.UserLotto
 import lotto.model.WinningLotto
 import lotto.model.generator.LottoGenerator
+import lotto.view.ERROR_INSERT_AGAIN
 import lotto.view.ERROR_OUT_OF_LOTTO_NUMBER
 import lotto.view.InputView
 import lotto.view.OutputView.printInsertBonusNumber
@@ -18,7 +19,7 @@ import lotto.view.OutputView.printResult
 import lotto.view.OutputView.printUserLotto
 
 class LottoController(
-    private val generator: LottoGenerator = LottoGenerator()
+    private val generator: LottoGenerator = LottoGenerator(),
 ) {
     fun start() {
         val money = getMoney()
@@ -34,13 +35,13 @@ class LottoController(
     private fun getMoney(): Money {
         printInsertMoneyMessage()
         return validateInput {
-            Money(InputView.getNumber())
+            InputView.getNumber()?.let { Money(it) }
         } ?: getMoney()
     }
 
     private fun getNumberOfManualLotto(numberOfLotto: Int): Int {
         printInsertManualNumber()
-        val number = InputView.getNumber()
+        val number = InputView.getNumber() ?: getNumberOfManualLotto(numberOfLotto)
         val result = runCatching {
             require(numberOfLotto >= number) { ERROR_OUT_OF_LOTTO_NUMBER }
         }.onFailure { println(it.message) }.isSuccess
@@ -84,19 +85,22 @@ class LottoController(
     private fun getBonusNumber(): LottoNumber {
         printInsertBonusNumber()
         return validateInput {
-            LottoNumber.from(InputView.getNumber())
+            InputView.getNumber()?.let { LottoNumber.from(it) }
         } ?: getBonusNumber()
     }
 
     private fun getLottoNumber(): Lotto {
         return validateInput {
-            Lotto(InputView.getNumberList().sortedBy { it.number })
+            InputView.getNumberList()?.sortedBy { it }?.let { number -> Lotto(number.map { LottoNumber.from(it) }) }
         } ?: getLottoNumber()
     }
 
     private fun <T> validateInput(create: () -> T): T? {
         return runCatching {
             create()
+        }.onSuccess {
+            if (it == null)
+                println(ERROR_INSERT_AGAIN)
         }.onFailure {
             println(it.message)
         }.getOrNull()
