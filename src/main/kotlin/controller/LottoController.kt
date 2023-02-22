@@ -19,7 +19,7 @@ class LottoController(
     fun run() {
         val purchaseMoney = repeatWithRunCatching { initializePurchaseMoney() }
         val purchasedLottos = purchaseLottos(purchaseMoney)
-        purchasedLottos.printPurchasedLottos()
+        ResultView.printPurchasedLottos(purchasedLottos)
         checkPurchasedLottosResult(purchaseMoney, purchasedLottos)
     }
 
@@ -37,6 +37,8 @@ class LottoController(
 
         val autoLottoGenerator = LottoGenerator(numberOfLottos = numberOfTotalLottos - numberOfManualLottos)
         val autoLottos = autoLottoGenerator.generateLottos()
+
+        ResultView.printPurchasedNumberOfLottos(numberOfManualLottos, numberOfTotalLottos - numberOfManualLottos)
 
         return PurchasedLottos(manualLottos + autoLottos)
     }
@@ -63,11 +65,6 @@ class LottoController(
     private fun readManualNumbers(): List<Int> {
         val input = InputView.requestManualLottoNumbers()
         return input.map { numericValidator.validate(it) }
-    }
-
-    private fun PurchasedLottos.printPurchasedLottos() {
-        ResultView.printPurchasedNumberOfLottos(this.lottos.size)
-        ResultView.printPurchasedLottos(this)
     }
 
     private fun checkPurchasedLottosResult(purchaseMoney: PurchaseMoney, purchasedLottos: PurchasedLottos) {
