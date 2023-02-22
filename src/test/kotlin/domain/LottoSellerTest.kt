@@ -4,10 +4,8 @@ import common.convertToLotto
 import common.convertToLottoNumberSet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import java.lang.IllegalArgumentException
 
 class LottoSellerTest {
     @Test
@@ -20,7 +18,7 @@ class LottoSellerTest {
     }
 
     @Test
-    fun `주어진 수동발급요청로또의 개수와 실제 구매 정보가 다르다면 에러를 발생시킨다`() {
+    fun `주어진 수동발급요청로또의 개수와 실제 구매 정보가 다르다면 null을 리턴한다`() {
         val money = PurchaseLottoMoney(4 * 1000)
         val purchaseInfo = LottoPurchaseInfo(money, 3)
         val lottoSeller = LottoSeller(TestNumberGenerator())
@@ -28,7 +26,7 @@ class LottoSellerTest {
             setOf(11, 12, 13, 14, 15, 16).convertToLotto(),
             setOf(21, 22, 23, 24, 25, 26).convertToLotto()
         )
-        assertThrows<IllegalArgumentException> { lottoSeller.sellManualAndAuto(purchaseInfo, requestManualNumbers) }
+        assertThat(true).isEqualTo(lottoSeller.sellManualAndAuto(purchaseInfo, requestManualNumbers) == null)
     }
 
     @Test
@@ -41,7 +39,7 @@ class LottoSellerTest {
             setOf(11, 12, 13, 14, 15, 16).convertToLotto(),
             setOf(21, 22, 23, 24, 25, 26).convertToLotto()
         )
-        val result: Ticket = lottoSeller.sellManualAndAuto(purchaseInfo, requestManualNumbers)
+        val result: Ticket = lottoSeller.sellManualAndAuto(purchaseInfo, requestManualNumbers)!!
         assertThat(result.lottos.size).isEqualTo(4)
         assertThat(result.lottos[0].numbers).containsAll(setOf(11, 12, 13, 14, 15, 16).convertToLottoNumberSet())
         assertThat(result.lottos[1].numbers).containsAll(setOf(21, 22, 23, 24, 25, 26).convertToLottoNumberSet())

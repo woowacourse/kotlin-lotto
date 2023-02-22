@@ -38,7 +38,7 @@
 - [X] 파라미터(PurchaseLottoMoney)로 살 수 있는 만큼 로또를 자동 발급한다.
 - [X] 파라미터(LottoPurchaseInfo와 List<Lotto>)를 받아서 로또를 수동 및 자동발급해준다.
   - [X] LottoPurchaseInfo의 프로퍼티 값에 따라서 로또를 자동 및 수동 발급해준다.
-  - [X] 만약 LottoPurchaseInfo의 수동 발급 개수와 제출한 List<Lotto>의 크기가 다르다면 error를 발생시킨다.
+  - [X] 만약 LottoPurchaseInfo의 수동 발급 개수와 제출한 List<Lotto>의 크기가 다르다면 null을 반환한다.
 
 ## LottoStatistics
 - [X] 당첨 통계를 낸다.

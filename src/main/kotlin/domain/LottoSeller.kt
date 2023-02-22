@@ -11,9 +11,10 @@ class LottoSeller(private val numberGenerator: RandomGenerator = NumberRandomGen
         return Ticket(List(money.purchaseCount) { sellLotto() })
     }
 
-    fun sellManualAndAuto(purchaseInfo: LottoPurchaseInfo, requestManualNumbers: List<Lotto>): Ticket {
-        require(purchaseInfo.manualCount == requestManualNumbers.size) {
-            ERROR_MANUAL_COUNT_NOT_EQUAL.format(purchaseInfo.manualCount, requestManualNumbers.size)
+    fun sellManualAndAuto(purchaseInfo: LottoPurchaseInfo, requestManualNumbers: List<Lotto>): Ticket? {
+        if (purchaseInfo.manualCount != requestManualNumbers.size) {
+            println(ERROR_MANUAL_COUNT_NOT_EQUAL.format(purchaseInfo.manualCount, requestManualNumbers.size))
+            return null
         }
         val manual = sellManualLottos(requestManualNumbers)
         val auto = sellAutoLottos(purchaseInfo.autoCount)

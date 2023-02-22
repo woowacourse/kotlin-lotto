@@ -27,12 +27,9 @@ class LottoController(
     private fun getManualAndAutoTicket(purchaseInfo: LottoPurchaseInfo): Ticket {
         while (true) {
             val manuals = inputView.getManualNumbers(purchaseInfo)
-            kotlin.runCatching { lottoSeller.sellManualAndAuto(purchaseInfo, manuals) }
-                .onSuccess {
-                    println()
-                    return it
-                }
-                .onFailure { println(it.message) }
+            val ticket = lottoSeller.sellManualAndAuto(purchaseInfo, manuals) ?: continue
+            println()
+            return ticket
         }
     }
 
