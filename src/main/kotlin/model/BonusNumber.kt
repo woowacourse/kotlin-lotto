@@ -6,12 +6,7 @@ class BonusNumber(private val lotto: Lotto, private val bonusNumber: LottoNumber
         require(checkDuplicateNumber()) { DUPLICATE_BONUS_NUMBER }
     }
 
-    private fun checkDuplicateNumber(): Boolean {
-        lotto.lottoNumbers.forEach { lottoNumber ->
-            if (lottoNumber.number == bonusNumber.number) return false
-        }
-        return true
-    }
+    private fun checkDuplicateNumber() = !lotto.lottoNumbers.contains(bonusNumber)
 
     fun getBonusNumber(): Int {
         return bonusNumber.number
