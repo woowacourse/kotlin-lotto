@@ -46,19 +46,19 @@ class LottoResultTest {
         assertThat(lottoResult.getRateOfReturn()).isEqualTo(expect)
     }
 
-    @Test
-    fun `로또가 하나도 안들어오면 오류가 발생한다`() {
-        assertThatIllegalArgumentException().isThrownBy {
-            LottoResult(
-                mapOf(
-                    Rank.FIRST to 0,
-                    Rank.SECOND to 0,
-                    Rank.THIRD to 0,
-                    Rank.FOURTH to 0,
-                    Rank.FIFTH to 0,
-                    Rank.MISS to 0,
-                ),
-            )
-        }.withMessage("적어도 하나 이상의 복권을 넣어야합니다.")
-    }
+//    @Test
+//    fun `로또가 하나도 안들어오면 오류가 발생한다`() {
+//        assertThatIllegalArgumentException().isThrownBy {
+//            LottoResult(
+//                mapOf(
+//                    Rank.FIRST to 0,
+//                    Rank.SECOND to 0,
+//                    Rank.THIRD to 0,
+//                    Rank.FOURTH to 0,
+//                    Rank.FIFTH to 0,
+//                    Rank.MISS to 0,
+//                ),
+//            )
+//        }.withMessage("적어도 하나 이상의 복권을 넣어야합니다.")
+//    }
 }

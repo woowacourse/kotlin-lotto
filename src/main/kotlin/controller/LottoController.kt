@@ -64,6 +64,7 @@ class LottoController {
         }
 
     private fun askLottosToBuyManually(count: Int): List<Lotto> {
+        if (count == 0) return listOf()
         outputView.outputGetLottosToBuyManually()
         return inputView.inputLottosToBuyManually(count)
     }
