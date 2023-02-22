@@ -1,4 +1,4 @@
-package lotto.domain
+package lotto.domain.model
 
 class WinningNumbers(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     init {

@@ -1,4 +1,4 @@
-package lotto.domain
+package lotto.domain.model
 
 class LottoNumber private constructor(val number: Int) {
 

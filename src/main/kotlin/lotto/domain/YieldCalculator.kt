@@ -1,5 +1,7 @@
 package lotto.domain
 
+import lotto.domain.model.LottoMoney
+import lotto.domain.model.Rank
 import kotlin.math.floor
 
 object YieldCalculator {

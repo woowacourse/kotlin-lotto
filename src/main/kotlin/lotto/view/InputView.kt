@@ -1,8 +1,8 @@
 package lotto.view
 
-import lotto.domain.Lotto
-import lotto.domain.LottoMoney
-import lotto.domain.LottoNumber
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoMoney
+import lotto.domain.model.LottoNumber
 
 object InputView {
     fun readInputMoney(): LottoMoney? {

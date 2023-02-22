@@ -1,5 +1,7 @@
 package lotto.domain
 
+import lotto.domain.model.Lotto
+
 object LottoGenerator {
     private val randomNumberGenerator = RandomNumberGenerator()
 

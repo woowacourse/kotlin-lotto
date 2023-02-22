@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.domain.Lotto
-import lotto.domain.Rank
+import lotto.domain.model.Lotto
+import lotto.domain.model.Rank
 
 object OutputView {
     private const val INPUT_MONEY_PROMPT = "구입금액을 입력해 주세요."

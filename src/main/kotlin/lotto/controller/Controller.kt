@@ -1,13 +1,13 @@
 package lotto.controller
 
-import lotto.domain.Lotto
 import lotto.domain.LottoGenerator
-import lotto.domain.LottoMoney
-import lotto.domain.LottoNumber
 import lotto.domain.ManualLottoCountValidator
-import lotto.domain.UserLotto
-import lotto.domain.WinningNumbers
 import lotto.domain.YieldCalculator
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoMoney
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.UserLotto
+import lotto.domain.model.WinningNumbers
 import lotto.view.InputView
 import lotto.view.OutputView
 
