@@ -5,7 +5,7 @@ import lotto.model.LottoNumber
 import lotto.model.Money
 import lotto.model.UserLotto
 import lotto.model.WinningLotto
-import lotto.model.generator.LottoGenerator
+import lotto.model.generator.AutoLottoGenerator
 import lotto.view.ERROR_INSERT_AGAIN
 import lotto.view.ERROR_OUT_OF_LOTTO_NUMBER
 import lotto.view.InputView
@@ -14,7 +14,7 @@ import lotto.view.OutputView.printResult
 import lotto.view.OutputView.printUserLotto
 
 class LottoController(
-    private val generator: LottoGenerator = LottoGenerator(),
+    private val generator: AutoLottoGenerator = AutoLottoGenerator(),
 ) {
     fun start() {
         val money = getMoney()
@@ -57,7 +57,7 @@ class LottoController(
         val lotto = mutableListOf<Lotto>()
         lotto += manualLotto
         repeat(number) {
-            lotto.add(Lotto(*generator.generate().toIntArray()))
+            lotto.add(generator.generate())
         }
 
         return UserLotto(lotto)
