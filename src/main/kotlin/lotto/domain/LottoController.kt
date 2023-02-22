@@ -9,12 +9,7 @@ import lotto.model.generator.LottoGenerator
 import lotto.view.ERROR_INSERT_AGAIN
 import lotto.view.ERROR_OUT_OF_LOTTO_NUMBER
 import lotto.view.InputView
-import lotto.view.OutputView.printInsertBonusNumber
-import lotto.view.OutputView.printInsertManualLotto
-import lotto.view.OutputView.printInsertManualNumber
-import lotto.view.OutputView.printInsertMoneyMessage
-import lotto.view.OutputView.printInsertWinningNumber
-import lotto.view.OutputView.printPurchase
+import lotto.view.OutputView.printMessage
 import lotto.view.OutputView.printResult
 import lotto.view.OutputView.printUserLotto
 
@@ -26,21 +21,21 @@ class LottoController(
         val numberOfLotto = money.getNumberOfLotto()
         val manualNumberOfLotto = getNumberOfManualLotto(numberOfLotto)
         val autoNumberOfLotto = numberOfLotto - manualNumberOfLotto
-        printPurchase(manualNumberOfLotto, autoNumberOfLotto)
+        printMessage(PURCHASE.format(manualNumberOfLotto, autoNumberOfLotto))
         val myLotto = getUserLotto(getManualLotto(manualNumberOfLotto), autoNumberOfLotto)
         printUserLotto(myLotto)
         wrapUpResult(myLotto, money)
     }
 
     private fun getMoney(): Money {
-        printInsertMoneyMessage()
+        printMessage(INSERT_MONEY)
         return validateInput {
             InputView.getNumber()?.let { Money(it) }
         } ?: getMoney()
     }
 
     private fun getNumberOfManualLotto(numberOfLotto: Int): Int {
-        printInsertManualNumber()
+        printMessage(INSERT_MANUAL_LOTTO_NUMBER)
         val number = InputView.getNumber() ?: getNumberOfManualLotto(numberOfLotto)
         val result = runCatching {
             require(numberOfLotto >= number) { ERROR_OUT_OF_LOTTO_NUMBER }
@@ -51,7 +46,7 @@ class LottoController(
 
     private fun getManualLotto(numberOfLotto: Int): List<Lotto> {
         val manualLotto = mutableListOf<Lotto>()
-        printInsertManualLotto()
+        printMessage(INSERT_MANUAL_LOTTO)
         repeat(numberOfLotto) {
             manualLotto.add(getLottoNumber())
         }
@@ -69,7 +64,7 @@ class LottoController(
     }
 
     private fun wrapUpResult(myLotto: UserLotto, money: Money) {
-        printInsertWinningNumber()
+        printMessage(INSERT_WINNING_NUMBER)
         val winningLotto = getWinningLotto(getLottoNumber())
         val ranks = myLotto.getWinningStatistics(winningLotto)
         val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
@@ -83,7 +78,7 @@ class LottoController(
     }
 
     private fun getBonusNumber(): LottoNumber {
-        printInsertBonusNumber()
+        printMessage(INSERT_BONUS_BALL)
         return validateInput {
             InputView.getNumber()?.let { LottoNumber.from(it) }
         } ?: getBonusNumber()
@@ -104,5 +99,14 @@ class LottoController(
         }.onFailure {
             println(it.message)
         }.getOrNull()
+    }
+
+    companion object {
+        private const val INSERT_MONEY = "구입금액을 입력해 주세요."
+        private const val INSERT_MANUAL_LOTTO_NUMBER = "\n수동으로 구매할 로또 수를 입력해 주세요."
+        private const val INSERT_MANUAL_LOTTO = "\n수동으로 구매할 번호를 입력해 주세요."
+        private const val INSERT_WINNING_NUMBER = "\n지난 주 당첨 번호를 입력해 주세요."
+        private const val INSERT_BONUS_BALL = "보너스 볼을 입력해 주세요."
+        private const val PURCHASE = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
     }
 }
