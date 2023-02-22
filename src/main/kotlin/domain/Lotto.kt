@@ -19,7 +19,7 @@ class Lotto(val numbers: List<LottoNumber>) {
     }
 
     companion object {
-        const val LOTTO_SIZE_ERROR_MESSAGE = "당첨 번호가 6개가 아닙니다"
-        const val LOTTO_DUPLICATE_ERROR_MESSAGE = "당첨 번호가 중복되었습니다."
+        private const val LOTTO_SIZE_ERROR_MESSAGE = "당첨 번호가 6개가 아닙니다"
+        private const val LOTTO_DUPLICATE_ERROR_MESSAGE = "당첨 번호가 중복되었습니다."
     }
 }
