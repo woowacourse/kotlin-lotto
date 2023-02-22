@@ -8,21 +8,17 @@ import lotto.domain.WinningResult
 
 object OutputView {
     private const val WINNING_STATS_SCRIPT = "당첨 통계\n---------"
-    private const val PURCHASE_COUNT_SCRIPT = "%d개를 구매했습니다."
+    private const val PURCHASE_COUNT_SCRIPT = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
     private const val YIELD_RATE_SCRIPT = "총 수익률은 %.2f입니다.(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
     private const val RANK_SCRIPT_WITH_BONUS = "%d개 일치, 보너스 볼 일치(%d원)"
     private const val RANK_SCRIPT = "%d개 일치 (%d원)"
     private const val RANK_COUNT_SCRIPT = "- %d개"
-    fun printPurchaseResult(lottoBunch: LottoBunch, purchaseCount: Int) {
-        printPurchaseCount(purchaseCount)
-        printLottoBunch(lottoBunch)
+
+    fun printPurchaseCount(purchaseManualCount: Int, purchaseAutoCount: Int) {
+        println(PURCHASE_COUNT_SCRIPT.format(purchaseManualCount, purchaseAutoCount))
     }
 
-    private fun printPurchaseCount(purchaseCount: Int) {
-        println(PURCHASE_COUNT_SCRIPT.format(purchaseCount))
-    }
-
-    private fun printLottoBunch(lottoBunch: LottoBunch) {
+    fun printLottoBunch(lottoBunch: LottoBunch) {
         lottoBunch.value.forEach { lotto -> printLotto(lotto) }
         println()
     }
