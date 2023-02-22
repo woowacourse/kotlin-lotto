@@ -7,15 +7,9 @@ class LottoBunch(val value: List<Lotto>) {
 
     private fun getRank(lotto: Lotto, winningLotto: WinningLotto): Rank =
         Rank.convertToRank(
-            countMatchedMainLottoNumber(lotto, winningLotto),
-            checkMatchedBonusLottoNumber(lotto, winningLotto),
+            lotto.countMatchedMainLottoNumber(winningLotto),
+            lotto.checkMatchedBonusLottoNumber(winningLotto),
         )
-
-    private fun countMatchedMainLottoNumber(lotto: Lotto, winningLotto: WinningLotto): Int =
-        lotto.lottoNumbers.count { lottoNumber -> lottoNumber.value in winningLotto.mainLottoNumbers.lottoNumbers.map { it.value } }
-
-    private fun checkMatchedBonusLottoNumber(lotto: Lotto, winningLotto: WinningLotto): Boolean =
-        winningLotto.bonusLottoNumber.value in lotto.lottoNumbers.map { lottoNumber -> lottoNumber.value }
 
     fun sumTotalPrizeMoney(winningResult: WinningResult): Int =
         winningResult.rankTable.keys.fold(0) { acc, rank -> acc + getPrizeMoney(rank, winningResult) }
