@@ -9,7 +9,7 @@ class WinningLotto(
 ) {
 
     init {
-        require(!catchLotto.numbers.contains(bonusNumber)) {
+        require(!catchLotto.contains(bonusNumber)) {
             OVERLAPPED_ERROR
         }
     }

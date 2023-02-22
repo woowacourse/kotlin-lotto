@@ -1,6 +1,6 @@
 package domain.model.lotto
 
-class Lotto(val numbers: Set<LottoNumber>) {
+class Lotto(private val numbers: Set<LottoNumber>) {
 
     init {
         require(numbers.size == NUMBER_COUNT) {
@@ -25,6 +25,10 @@ class Lotto(val numbers: Set<LottoNumber>) {
 
     override fun hashCode(): Int {
         return numbers.hashCode()
+    }
+
+    override fun toString(): String {
+        return numbers.map(LottoNumber::value).toString()
     }
 
     companion object {

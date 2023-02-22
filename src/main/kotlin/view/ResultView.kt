@@ -21,10 +21,7 @@ object ResultView {
     fun printPurchasedLottos(lottoCustomer: LottoCustomer, purchasedLottos: PurchasedLottos) {
         println(purchasedLottosType(lottoCustomer))
         purchasedLottos.lottos.forEach { lotto ->
-            val lottoNumbersValue = lotto.numbers.map { lottoNumber ->
-                lottoNumber.value
-            }
-            println(lottoNumbersValue)
+            println(lotto)
         }
     }
 
