@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class WinningLotteryTest {
+
     @Test
     fun `당첨 로또를 가진다`() {
         val lottery = Lottery(
@@ -96,10 +97,9 @@ class WinningLotteryTest {
                 )
             )
 
-        val expectedWinningResult = WinningResult()
-        expectedWinningResult.countRank(Rank.FIRST)
+        val expectedWinningResult = winningLottery.createResult(lotteries)
 
-        assertThat(winningLottery.calculateResult(lotteries)[Rank.FIRST])
+        assertThat(winningLottery.createResult(lotteries)[Rank.FIRST])
             .isEqualTo(expectedWinningResult[Rank.FIRST])
     }
 }

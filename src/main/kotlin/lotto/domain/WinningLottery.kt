@@ -8,16 +8,18 @@ class WinningLottery(
         checkBonusNumberDuplicate()
     }
 
-    fun calculateResult(lotteries: List<Lottery>): WinningResult {
-        val winningResult = WinningResult()
+    fun createResult(lotteries: List<Lottery>): WinningResult {
+        val winningResult: MutableMap<Rank, Int> =
+            Rank.values().associateWith { 0 }.toMutableMap()
 
         repeat(lotteries.size) {
             val countOfMatch = lotteries[it].countMatches(lottery)
             val matchBonus = lotteries[it].containBonusNumber(bonusNumber)
-            winningResult.countRank(Rank.valueOf(countOfMatch, matchBonus))
+            val rank = Rank.valueOf(countOfMatch, matchBonus)
+            winningResult[rank] = winningResult[rank]!!.plus(1)
         }
 
-        return winningResult
+        return WinningResult(winningResult)
     }
 
     private fun checkBonusNumberDuplicate() {

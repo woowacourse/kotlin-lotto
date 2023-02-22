@@ -3,8 +3,7 @@ package lotto.domain
 import kotlin.math.floor
 
 class WinningResult(
-    private val countMatchRanks: MutableMap<Rank, Int> =
-        Rank.values().associateWith { 0 }.toMutableMap()
+    private val countMatchRanks: Map<Rank, Int>
 ) {
 
     operator fun get(rank: Rank): Int = countMatchRanks[rank] ?: 0
@@ -13,10 +12,6 @@ class WinningResult(
         val prize = calculateTotalPrize()
         val yield = (prize.toDouble() / amount) * 100
         return floor(yield) / 100
-    }
-
-    fun countRank(rank: Rank) {
-        countMatchRanks[rank] = countMatchRanks[rank]!!.plus(1)
     }
 
     fun isGain(yield: Double): Boolean = yield >= 1
