@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoGenerator
+import lotto.domain.Money
 import lotto.domain.UserLotto
 import lotto.domain.WinningNumbers
 import lotto.domain.YieldCalculator
@@ -17,7 +18,7 @@ class Controller {
     }
 
     private fun initializeLotto(): List<Lotto> {
-        val lottoCount = readInputMoney() / Lotto.MONEY_UNIT
+        val lottoCount = (readInputMoney().value?.div(Money.MONEY_UNIT))!!
         val manualLotto = initializeManualLotto(lottoCount)
         val autoMaticLotto = initializeAutoMaticLotto(lottoCount - manualLotto.size)
         OutputView.printLottoCountMessage(manualLotto.size, autoMaticLotto.size)
@@ -35,9 +36,9 @@ class Controller {
         return LottoGenerator.generate(count)
     }
 
-    private fun readInputMoney(): Int {
+    private fun readInputMoney(): Money {
         OutputView.printInputMoneyPrompt()
-        return InputView.readInputMoney()
+        return Money(InputView.readInputMoney())
     }
 
     private fun readWinningNumbers(): WinningNumbers {

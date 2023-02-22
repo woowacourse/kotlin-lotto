@@ -5,10 +5,9 @@ import lotto.domain.LottoNumber
 import lotto.exception.Validator
 
 object InputView {
-    fun readInputMoney(): Int {
+    fun readInputMoney(): Int? {
         val input = readln()
-        Validator.checkInputMoney(input)
-        return input.toInt()
+        return input.toIntOrNull()
     }
 
     fun readInputManualLottoCount(count: Int): Int {
