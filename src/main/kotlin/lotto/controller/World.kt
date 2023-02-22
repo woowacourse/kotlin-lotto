@@ -15,7 +15,6 @@ import lotto.model.RandomLottoGenerator
 import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
-import lotto.view.WinStatisticsFormatter
 
 class World {
     private val inputView = InputView()
@@ -66,23 +65,24 @@ class World {
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
         val lottoManualCount = initLottoManualCount()
+        val lottoAutoCount = purchaseMoney.calculateAutoLottoCount(lottoManualCount)
 
-        val purchasedLottos = makePurchasedLottos(purchaseMoney, lottoManualCount)
-        purchasedResult(purchasedLottos, lottoManualCount, purchaseMoney.calculateAutoLottoCount(lottoManualCount))
+        val purchasedLottos = makePurchasedLottos(lottoManualCount, lottoAutoCount)
+        purchasedResult(purchasedLottos, lottoManualCount, lottoAutoCount)
 
         val winStatistics = makeWinStatistics(purchasedLottos)
-        winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
+        winStatisticsResult(winStatistics)
 
         val profitRate = winStatistics.calculateProfitRate(purchaseMoney)
         profitRateResult(profitRate)
     }
 
-    private fun makePurchasedLottos(purchaseMoney: PurchaseMoney, lottoManualCount: LottoCount): PurchasedLottos {
+    private fun makePurchasedLottos(lottoManualCount: LottoCount, lottoAutoCount: LottoCount): PurchasedLottos {
         val manualLottoGenerator = InputLottoGenerator { initSingleLotto() }
         val autoLottoGenerator = RandomLottoGenerator()
         outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
         return LottoMachine(manualLottoGenerator, autoLottoGenerator).makePurchasedLottos(
-            purchaseMoney, lottoManualCount
+            lottoManualCount, lottoAutoCount
         )
     }
 
@@ -99,8 +99,8 @@ class World {
         outputView.gameResult(purchasedLottos, lottoManualCount, lottoAutoCount)
     }
 
-    private fun winStatisticsResult(winStatistics: WinStatistics, winStatisticsFormatter: WinStatisticsFormatter) {
-        outputView.winStatisticsResult(winStatistics, winStatisticsFormatter)
+    private fun winStatisticsResult(winStatistics: WinStatistics) {
+        outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
     }
 
     private fun profitRateResult(profitRate: ProfitRate) {
