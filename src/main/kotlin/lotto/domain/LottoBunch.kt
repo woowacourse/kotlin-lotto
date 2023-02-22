@@ -1,7 +1,5 @@
 package lotto.domain
 
-import lotto.constant.Rank
-
 class LottoBunch(val value: List<Lotto>) {
 
     fun getRanks(winningLotto: WinningLotto): List<Rank> =

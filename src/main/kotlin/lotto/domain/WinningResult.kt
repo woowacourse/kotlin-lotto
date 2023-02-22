@@ -1,7 +1,5 @@
 package lotto.domain
 
-import lotto.constant.Rank
-
 class WinningResult private constructor(val value: Map<Rank, Int>) {
 
     companion object {

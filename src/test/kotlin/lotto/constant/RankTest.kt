@@ -1,10 +1,11 @@
 package lotto.constant
 
-import lotto.constant.Rank.FIRST
-import lotto.constant.Rank.FOURTH
-import lotto.constant.Rank.NOTHING
-import lotto.constant.Rank.SECOND
-import lotto.constant.Rank.THIRD
+import lotto.domain.Rank
+import lotto.domain.Rank.FIRST
+import lotto.domain.Rank.FOURTH
+import lotto.domain.Rank.NOTHING
+import lotto.domain.Rank.SECOND
+import lotto.domain.Rank.THIRD
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.provider.Arguments

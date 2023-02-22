@@ -1,8 +1,8 @@
 package lotto.view
 
-import lotto.constant.Rank
 import lotto.domain.Lotto
 import lotto.domain.LottoBunch
+import lotto.domain.Rank
 import lotto.domain.WinningResult
 
 object OutputView {
