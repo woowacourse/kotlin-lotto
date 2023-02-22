@@ -23,8 +23,16 @@ class InputView {
         }
     }
 
-    fun getManualLottoNumber() {
+    fun inputManualLottoNumber(count: Int): List<List<Int>> {
         println(INPUT_MANUAL_LOTTO_NUMBER_MESSAGE)
+        return List(count) { getManualLottoNumber() }
+    }
+
+    private fun getManualLottoNumber(): List<Int> {
+        while (true) {
+            val lotto = readlnOrNull()?.split(",") ?: continue
+            lotto.map { it.toInt() }
+        }
     }
 
     fun inputWinningLotto(): Lotto {
