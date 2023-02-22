@@ -4,6 +4,7 @@ import lotto.domain.Lotto
 import lotto.domain.LottoGenerator
 import lotto.domain.LottoMoney
 import lotto.domain.LottoNumber
+import lotto.domain.ManualLottoCountValidator
 import lotto.domain.UserLotto
 import lotto.domain.WinningNumbers
 import lotto.domain.YieldCalculator
@@ -19,17 +20,17 @@ class Controller {
     }
 
     private fun initializeLotto(): List<Lotto> {
-        val totalCount = readInputMoney().amount / LottoMoney.MONEY_UNIT
-        val manualCount = readManualLottoCount()
-        val totalLotto = readManualLotto(manualCount) + LottoGenerator.generate(totalCount - manualCount)
-        OutputView.printLottoCountMessage(manualCount, totalCount - manualCount)
+        val totalLottoCount = readInputMoney().amount / LottoMoney.MONEY_UNIT
+        val manualLottoCount = readManualLottoCount()
+        ManualLottoCountValidator.checkAvailable(manualLottoCount, totalLottoCount)
+        val totalLotto = readManualLotto(manualLottoCount) + LottoGenerator.generate(totalLottoCount - manualLottoCount)
+        OutputView.printLottoCountMessage(manualLottoCount, totalLottoCount - manualLottoCount)
         OutputView.printLottoNumbers(totalLotto)
         return totalLotto
     }
 
     private fun readManualLottoCount(): Int {
         OutputView.printInputManualCountPrompt()
-        // 수동 로또 구매 개수가 구매 가능 개수보다 많은 것은 논리적인 오류이다. 따라서 LottoGenerator에서 검사해주자~
         return InputView.readInputManualLottoCount() ?: readManualLottoCount()
     }
 
