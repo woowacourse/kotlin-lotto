@@ -5,6 +5,7 @@ import domain.lotto.PurchasedLotto
 import domain.lotto.number.LottoNumber
 import domain.lotto.size.LottoSize
 import domain.money.Money
+import domain.result.LottoPurchaseResult
 import util.common.constant.ERROR_PREFIX
 import util.common.generateDistinctRandomNumbers
 
@@ -24,10 +25,10 @@ class LottoMachine {
         money: Money,
         lottoSize: LottoSize,
         lottoNumbers: List<Set<LottoNumber>>,
-    ): Pair<Money, List<PurchasedLotto>> {
+    ): LottoPurchaseResult {
         require(lottoSize.value == lottoNumbers.size) { ERROR_MESSAGE_INVALID_PURCHASING_LOTTO_SIZE }
         require(money.isGreaterThan(Money(LOTTO_PRICE * lottoSize.value))) { ERROR_MESSAGE_INSUFFICIENT_AMOUNT }
-        return Pair(
+        return LottoPurchaseResult(
             money - (Money(LOTTO_PRICE * lottoSize.value)),
             List(lottoSize.value) { generateManualLotto(lottoNumbers[it].toSet()) }
         )
