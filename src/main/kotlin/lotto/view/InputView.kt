@@ -18,8 +18,9 @@ object InputView {
     }
 
     fun getManualNumberLines(): List<List<Int>> {
+        val lottoCount = getManualLottoCount()
         println(GET_MANUAL_LOTTO_NUMBER_LINES_SCRIPT)
-        return List(getManualLottoCount()) { getLottoNumbers() }
+        return List(lottoCount) { getLottoNumbers() }
     }
 
     fun getMainLottoNumbers(): List<Int> {
