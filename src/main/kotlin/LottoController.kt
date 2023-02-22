@@ -38,7 +38,8 @@ class LottoController(
             val matchOfCount = compareLottoNumber(lotto, winningNumber)
             val isMatchBonus = checkBonusNumber(lotto, bonusNumber)
             val rank = lottoAdministrator.getRank(matchOfCount, isMatchBonus)
-            lottoResult.plusRankCount(rank!!, lottoResult.result)
+            println("으아ㅏㅏㅏㅏㅏㅏㅏㅏ $rank")
+            lottoResult.plusRankCount(rank, lottoResult.result)
         }
         showLottoResult()
     }
@@ -51,10 +52,8 @@ class LottoController(
         return count
     }
 
-    private fun getLotto(lottoCount: Count): List<Lotto> {
-        val lotto = lottoMachine.generateLotto()
-
-        return List(lottoCount.number) { lotto }
+    private fun getLotto(lottoCount: Count) = List(lottoCount.number) {
+        lottoMachine.generateLotto()
     }
 
     private fun getWinningNumber(): Lotto {
