@@ -11,10 +11,8 @@ class LottoAdministrator {
 
     fun isMatchBonus(lottoNumber: Lotto, bonusNumber: BonusNumber): Boolean {
         val lottoNumbers = lottoNumber.getNumbers()
-        return lottoNumbers.contains(bonusNumber.getBonusNumber())
+        return lottoNumbers.contains(bonusNumber.bonusNumber.number)
     }
 
-    fun getRank(countOfMatch: Int, matchBonus: Boolean): Rank {
-        return Rank.valueOf(countOfMatch, matchBonus)
-    }
+    fun getRank(countOfMatch: Int, matchBonus: Boolean) = Rank.valueOf(countOfMatch, matchBonus)
 }
