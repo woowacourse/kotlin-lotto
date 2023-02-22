@@ -1,9 +1,14 @@
 package domain.lotto.game
 
 import domain.game.LottoMachine
+import domain.lotto.Lotto
+import domain.lotto.PurchasedLotto
+import domain.lotto.number.LottoNumber
 import domain.money.Money
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -15,6 +20,13 @@ class LottoMachineTest {
     @BeforeEach
     fun setUp() {
         lottoMachine = LottoMachine()
+    }
+
+    @Test
+    fun `Lotto list가 주어졌을 때, purchaseManualLottos 호출시, PurchasedLotto list가 반환된다`() {
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
+        val purchasedLotto = lottoMachine.purchaseManualLottos(listOf(lotto))
+        assertTrue(purchasedLotto is List<PurchasedLotto>)
     }
 
     @ParameterizedTest
