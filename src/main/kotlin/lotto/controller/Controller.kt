@@ -12,13 +12,12 @@ import lotto.view.OutputView
 
 class Controller {
     fun start() {
-        val count = initializeLottoCount()
-        val userLotto = initializeUserLotto(count)
+        val userLotto = initializeUserLotto(readLottoCount())
         val ranks = userLotto.calculateTotalRank(readWinningNumbers())
-        OutputView.printResult(ranks, YieldCalculator.calculateYield(count, ranks))
+        OutputView.printResult(ranks, YieldCalculator.calculateYield(userLotto.count, ranks))
     }
 
-    private fun initializeLottoCount(): Int {
+    private fun readLottoCount(): Int {
         return (readInputMoney().value?.div(Money.MONEY_UNIT))!!
     }
 
@@ -43,7 +42,7 @@ class Controller {
         OutputView.printInputManualLottoNumbersPrompt()
         val lotto = mutableListOf<Lotto>()
         for (i in 0 until manualLottoCount!!) {
-            lotto.add(Lotto(InputView.readManualLottoNumbers().map { LottoNumber(it.toInt()) }))
+            lotto.add(Lotto(InputView.readManualLottoNumbers().map { LottoNumber(it) }))
         }
         return lotto
     }
@@ -54,7 +53,7 @@ class Controller {
 
     private fun readWinningNumbers(): WinningNumbers {
         OutputView.printInputWinningNumbersPrompt()
-        val winningLotto = Lotto(InputView.readInputWinningLotto().map { LottoNumber(it.toInt()) })
+        val winningLotto = Lotto(InputView.readInputWinningLotto().map { LottoNumber(it) })
         OutputView.printInputBonusNumberPrompt()
         val bonusNumber = LottoNumber(InputView.readInputBonusNumber())
         return WinningNumbers(winningLotto, bonusNumber)

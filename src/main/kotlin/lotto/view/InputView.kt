@@ -16,8 +16,8 @@ object InputView {
 
     fun readInputWinningLotto() = readStringList()
 
-    private fun readStringList(): List<String> {
+    private fun readStringList(): List<Int?> {
         val input = readln()
-        return input.split(",")
+        return input.split(",").map { it.toIntOrNull() }
     }
 }

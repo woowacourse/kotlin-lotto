@@ -1,7 +1,7 @@
 package lotto.domain
 
 class UserLotto {
-    private val count: Int
+    val count: Int
     private val lottoNumbers: List<Lotto>
 
     constructor(count: Int) {
