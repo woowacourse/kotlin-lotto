@@ -41,7 +41,7 @@ object InputView {
 
     fun requestManualLottoCount(): Int = requestNumericInput(MANUAL_LOTTO_COUNT_REQUEST_MESSAGE)
 
-    fun requestManualLottoNumbers(numberOfPurchased: Int): List<Int> {
+    fun requestManualLottoNumbers(numberOfPurchased: Int = INITIAL_PURCHASING): List<Int> {
         if (numberOfPurchased == INITIAL_PURCHASING) {
             println(MANUAL_LOTTO_NUMBERS_REQUEST_MESSAGE)
         }
