@@ -16,13 +16,6 @@ class LottoController(
     private val profitCalculator: ProfitCalculator = ProfitCalculator()
 ) {
 
-    private val winningNumbers: WinningNumbers by lazy {
-        WinningNumbers(
-            initializeCatchNumber(),
-            initializeBonusNumber()
-        )
-    }
-
     fun run() {
         val purchaseMoney = initializePurchaseMoney()
         val purchasedLottos = purchaseLottos(purchaseMoney)
@@ -112,6 +105,7 @@ class LottoController(
     }
 
     private fun checkPurchasedLottosResult(purchaseMoney: PurchaseMoney, purchasedLottos: PurchasedLottos) {
+        val winningNumbers = WinningNumbers(initializeCatchNumber(), initializeBonusNumber())
         val lottoResults = purchasedLottos.getTotalLottoResults(winningNumbers)
         val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
 
