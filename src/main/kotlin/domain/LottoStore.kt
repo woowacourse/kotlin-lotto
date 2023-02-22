@@ -11,11 +11,8 @@ class LottoStore(
 
     fun buyAutoLotto(count: Int): LottoTickets {
         require(count in MINIMUM_COUNT..MAXIMUM_COUNT) { ERROR_CREATE_COUNT.format(count) }
-        return createLottoTickets(count)
+        return LottoTickets(List(count) { lottoGenerator.generateLotto() })
     }
-
-    private fun createLottoTickets(count: Int): LottoTickets =
-        LottoTickets(List(count) { lottoGenerator.generateLotto() })
 
     companion object {
         const val LOTTO_PRICE = 1000
