@@ -13,9 +13,8 @@ class InputView {
             amount
         }
 
-    fun inputNumberOfLottosToBuyManually(): Int {
-        return readln().toInt()
-    }
+    fun inputNumberOfLottosToBuyManually(): Int? =
+        readln().toIntOrNull()
 
     fun inputLottosToBuyManually(count: Int): List<Lotto> =
         List(count) { Lotto.create(readln().split(",").map { it.trim().toInt() }) }
@@ -26,5 +25,9 @@ class InputView {
 
     fun inputBonusNumber(): Int {
         return readln().toInt()
+    }
+
+    companion object {
+
     }
 }

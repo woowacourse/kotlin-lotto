@@ -10,7 +10,7 @@ class LottoController {
 
     fun run() {
         val amount = askAmount()
-        val numberOfLottosToBuyManually = askNumberOfLottosToBuyManually()
+        val numberOfLottosToBuyManually = askNumberOfLottosToBuyManually(amount)
         val lottosToBuyManually = askLottosToBuyManually(numberOfLottosToBuyManually)
         val lottos =
             lottosToBuyManually + getLotto(amount - Money(LottoStore.LOTTO_PRICE) * numberOfLottosToBuyManually)
@@ -23,21 +23,35 @@ class LottoController {
     private fun askAmount(): Money {
         outputView.outputGetAmount()
 
-        var amount = 0
         while (true) {
             kotlin.runCatching {
-                amount = inputView.inputAmount()
-                Money(amount)
+                return Money(inputView.inputAmount())
             }
-                .onSuccess { return Money(amount) }
                 .onFailure { outputView.printErrorMessage(it) }
         }
     }
 
-    private fun askNumberOfLottosToBuyManually(): Int {
+    private fun askNumberOfLottosToBuyManually(limitedAmount: Money): Int {
         outputView.outputGetNumberOfLottosToBuyManually()
-        return inputView.inputNumberOfLottosToBuyManually()
+        var numberOfLottosToBuyManually = getNumberOfLottosToBuyManually()
+
+        while (limitedAmount < Money(LottoStore.LOTTO_PRICE) * numberOfLottosToBuyManually) {
+            println(ERROR_OVER_LIMIT_AMOUNT)
+            numberOfLottosToBuyManually = getNumberOfLottosToBuyManually()
+        }
+
+        return numberOfLottosToBuyManually
     }
+
+    private fun getNumberOfLottosToBuyManually(): Int =
+        inputView.inputNumberOfLottosToBuyManually().let {
+            var count = it
+            while (count == null) {
+                outputView.printMessage(ERROR_INPUT_NOT_INT_TYPE)
+                count = inputView.inputNumberOfLottosToBuyManually()
+            }
+            count
+        }
 
     private fun askLottosToBuyManually(count: Int): List<Lotto> {
         outputView.outputGetLottosToBuyManually()
@@ -56,5 +70,10 @@ class LottoController {
     private fun askBonusNumber(): LottoNumber {
         outputView.outputGetBonusNumber()
         return LottoNumber.valueOf(inputView.inputBonusNumber())
+    }
+
+    companion object {
+        private const val ERROR_INPUT_NOT_INT_TYPE = "int 타입으로 입력 바랍니다."
+        private const val ERROR_OVER_LIMIT_AMOUNT = "구매하려는 로또 가격이 입력된 구입 금액을 초과합니다."
     }
 }

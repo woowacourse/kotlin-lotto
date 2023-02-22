@@ -1,6 +1,6 @@
 package domain
 
-data class Money(val amount: Int) {
+data class Money(val amount: Int) : Comparable<Money> {
 
     init {
         require(amount in MINIMUM_AMOUNT..MAXIMUM_AMOUNT) { ERROR_MONEY_AMOUNT }
@@ -9,6 +9,7 @@ data class Money(val amount: Int) {
     operator fun div(money: Money): Int = this.amount / money.amount
     operator fun times(number: Int) = Money(this.amount * number)
     operator fun minus(money: Money) = Money(this.amount - money.amount)
+    override fun compareTo(other: Money): Int = this.amount - other.amount
 
     companion object {
         private const val MINIMUM_AMOUNT = 0

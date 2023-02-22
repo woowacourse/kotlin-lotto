@@ -48,4 +48,12 @@ class MoneyTest {
 
         assertThat(result).isEqualTo(Money(9000))
     }
+
+    @Test
+    fun `돈을 비교할 때 금액에 따라 비교한다`() {
+        val money1 = Money(10000)
+        val money2 = Money(9999)
+
+        assertThat(money1 > money2).isTrue
+    }
 }
