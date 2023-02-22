@@ -1,5 +1,6 @@
 package lotto.domain
 
+import lotto.constant.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -46,6 +47,34 @@ class WinningLottoTest {
         assertThrows<IllegalArgumentException> {
             WinningLotto(mainLottoNumbers, bonusLottoNumber)
         }
+    }
+
+    @Test
+    fun `메인 번호가 5개 맞고 보너스 번호가 맞으면 2등이다`() {
+        val winningLotto = WinningLotto(
+            setOf<LottoNumber>(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6),
+            ),
+            LottoNumber.from(7),
+        )
+
+        val lotto = Lotto(
+            setOf<LottoNumber>(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(7),
+            ),
+        )
+
+        assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.SECOND)
     }
 
     companion object {
