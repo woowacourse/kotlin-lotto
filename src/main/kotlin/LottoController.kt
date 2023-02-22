@@ -2,6 +2,7 @@ import domain.LottoAdministrator
 import domain.LottoMachine
 import domain.Seller
 import model.BonusNumber
+import model.Count
 import model.Lotto
 import model.LottoNumber
 import model.LottoResult
@@ -42,18 +43,18 @@ class LottoController(
         showLottoResult()
     }
 
-    private fun getLottoCount(): Int {
+    private fun getLottoCount(): Count {
         outputView.printInputMoney()
         val payment = Payment(inputView.inputMoney())
         val count = Seller(payment).getLottoCount()
         outputView.printLottoCount(count.number)
-        return count.number
+        return count
     }
 
-    private fun getLotto(lottoCount: Int): List<Lotto> {
+    private fun getLotto(lottoCount: Count): List<Lotto> {
         val lotto = lottoMachine.generateLotto()
 
-        return List(lottoCount) { lotto }
+        return List(lottoCount.number) { lotto }
     }
 
     private fun getWinningNumber(): Lotto {
