@@ -42,7 +42,7 @@ class LottoGameController(
 
     private fun inputPurchasingManualLottoSize(): LottoSize = inputView.inputPurchasingManualLottoSize()
 
-    private fun inputManualLottoNumbers(size: LottoSize): List<List<LottoNumber>> =
+    private fun inputManualLottoNumbers(size: LottoSize): List<Set<LottoNumber>> =
         inputView.inputManualLottoNumbers(size)
 
     private fun inputWinnings(): Pair<LottoNumber, WinningLotto> {
@@ -52,7 +52,7 @@ class LottoGameController(
         return Pair(bonusNumber, winningLotto)
     }
 
-    private fun inputLastWeekWinningNumbers(): List<LottoNumber> = inputView.inputLastWeekWinningNumbers()
+    private fun inputLastWeekWinningNumbers(): Set<LottoNumber> = inputView.inputLastWeekWinningNumbers()
 
     private fun inputBonusNumber(): LottoNumber = inputView.inputBonusBallNumber()
 

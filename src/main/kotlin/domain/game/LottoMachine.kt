@@ -18,13 +18,13 @@ class LottoMachine {
     private fun generateRandomLotto(): AutoLotto =
         AutoLotto(
             (LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER).generateDistinctRandomNumbers(Lotto.LOTTO_SIZE)
-                .map { LottoNumber(it) }
+                .map { LottoNumber(it) }.toSet()
         )
 
     fun purchaseManualLottos(
         money: Money,
         lottoSize: LottoSize,
-        lottoNumbers: List<List<LottoNumber>>,
+        lottoNumbers: List<Set<LottoNumber>>,
     ): Pair<Money, List<ManualLotto>> {
         require(lottoSize.value == lottoNumbers.size) { ERROR_MESSAGE_INVALID_PURCHASING_LOTTO_SIZE }
         require(money.isGreaterThan(Money(LOTTO_PRICE * lottoSize.value))) { ERROR_MESSAGE_INSUFFICIENT_AMOUNT }
@@ -34,7 +34,7 @@ class LottoMachine {
         )
     }
 
-    private fun generateManualLotto(lottoNumbers: List<LottoNumber>): ManualLotto = ManualLotto(lottoNumbers)
+    private fun generateManualLotto(lottoNumbers: Set<LottoNumber>): ManualLotto = ManualLotto(lottoNumbers)
 
     companion object {
         const val LOTTO_PRICE = 1_000

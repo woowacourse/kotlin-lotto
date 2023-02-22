@@ -3,7 +3,7 @@ package domain.lotto.number
 import util.common.constant.ERROR_PREFIX
 
 @JvmInline
-value class LottoNumber(val value: Int) {
+value class LottoNumber(val value: Int) : Comparable<LottoNumber> {
     init {
         validateLottoNumberRange()
     }
@@ -25,4 +25,6 @@ value class LottoNumber(val value: Int) {
             return requireNotNull(NUMBERS[number]) { ERROR_MESSAGE_LOTTO_NUMBER_OUT_OF_RANGE }
         }
     }
+
+    override fun compareTo(other: LottoNumber): Int = this.value - other.value
 }

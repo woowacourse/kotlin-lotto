@@ -3,7 +3,7 @@ package domain.lotto
 import domain.lotto.number.LottoNumber
 import util.common.constant.ERROR_PREFIX
 
-open class Lotto(numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
+open class Lotto(numbers: Set<LottoNumber>) : Set<LottoNumber> by numbers {
     init {
         validateLottoNumbers()
     }

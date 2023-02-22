@@ -3,7 +3,7 @@ package domain.lotto
 import domain.lotto.number.LottoNumber
 import util.common.constant.ERROR_PREFIX
 
-class WinningLotto(private val lotto: Lotto, bonusNumber: LottoNumber) : List<LottoNumber> by lotto {
+class WinningLotto(private val lotto: Lotto, bonusNumber: LottoNumber) : Set<LottoNumber> by lotto {
     init {
         check(!this.contains(bonusNumber)) { ERROR_MESSAGE_CONTAINED_BONUS_NUMBER }
     }

@@ -17,19 +17,19 @@ class InputView {
         return LottoSize(inputNumber())
     }
 
-    fun inputManualLottoNumbers(size: LottoSize): List<List<LottoNumber>> {
+    fun inputManualLottoNumbers(size: LottoSize): List<Set<LottoNumber>> {
         printEnter()
         printMessage(MANUAL_LOTTO_NUMBERS_INPUT_MESSAGE)
         return List(size.value) { inputLottoNumbers() }
     }
 
-    fun inputLastWeekWinningNumbers(): List<LottoNumber> {
+    fun inputLastWeekWinningNumbers(): Set<LottoNumber> {
         printMessage(LAST_WEEK_WINNING_NUMBERS_INPUT_MESSAGE)
         return inputLottoNumbers()
     }
 
-    private fun inputLottoNumbers(): List<LottoNumber> =
-        inputNumbersBy(LOTTO_NUMBERS_DELIMITER).map { LottoNumber.of(it) }
+    private fun inputLottoNumbers(): Set<LottoNumber> =
+        inputNumbersBy(LOTTO_NUMBERS_DELIMITER).map { LottoNumber.of(it) }.toSet()
 
     fun inputBonusBallNumber(): LottoNumber {
         printMessage(BONUS_BALL_NUMBERS_INPUT_MESSAGE)
