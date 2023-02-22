@@ -2,7 +2,9 @@ package controller
 
 import domain.game.LottoGame
 import domain.game.LottoMachine
-import domain.lotto.* // ktlint-disable no-wildcard-imports
+import domain.lotto.Lotto
+import domain.lotto.PurchasedLotto
+import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
 import domain.lotto.size.LottoSize
 import domain.money.Money
@@ -15,19 +17,16 @@ class LottoGameController(
     private val lottoMachine: LottoMachine = LottoMachine(),
 ) {
     fun startLottoGame() {
-        val (autoLottos, manualLottos, money) = inputLottos()
-        val (bonusNumber, winningLotto) = inputWinnings()
-        val lottoGame = LottoGame(winningLotto, bonusNumber)
-        matchLottos(lottoGame, autoLottos + manualLottos, money)
-    }
-
-    private fun inputLottos(): Triple<List<PurchasedLotto>, List<PurchasedLotto>, Money> {
         val money = inputPurchasingMoney()
         val (change, manualLottos) = purchaseManualLottos(money)
         val autoLottos = purchaseAutoLottos(change)
-
         printPurchasedLotto(manualLottos = manualLottos, autoLottos = autoLottos)
-        return Triple(manualLottos, autoLottos, money)
+
+        val winningLottoNumbers = inputLastWeekWinningNumbers()
+        val bonusNumber = inputBonusNumber()
+        val winningLotto = WinningLotto(Lotto(winningLottoNumbers), bonusNumber)
+        val lottoGame = LottoGame(winningLotto, bonusNumber)
+        matchLottos(lottoGame, autoLottos + manualLottos, money)
     }
 
     private fun purchaseAutoLottos(money: Money): List<PurchasedLotto> = LottoMachine().purchaseAutoLottos(money)
@@ -44,13 +43,6 @@ class LottoGameController(
 
     private fun inputManualLottoNumbers(size: LottoSize): List<Set<LottoNumber>> =
         inputView.inputManualLottoNumbers(size)
-
-    private fun inputWinnings(): Pair<LottoNumber, WinningLotto> {
-        val winningLottoNumbers = inputLastWeekWinningNumbers()
-        val bonusNumber = inputBonusNumber()
-        val winningLotto = WinningLotto(Lotto(winningLottoNumbers), bonusNumber)
-        return Pair(bonusNumber, winningLotto)
-    }
 
     private fun inputLastWeekWinningNumbers(): Set<LottoNumber> = inputView.inputLastWeekWinningNumbers()
 
