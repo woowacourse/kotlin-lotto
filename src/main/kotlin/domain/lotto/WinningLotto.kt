@@ -1,6 +1,7 @@
 package domain.lotto
 
 import domain.lotto.number.LottoNumber
+import domain.result.LottoMatchResult
 import util.common.constant.ERROR_PREFIX
 
 class WinningLotto(private val lotto: Lotto, bonusNumber: LottoNumber) : Set<LottoNumber> by lotto {
@@ -8,11 +9,10 @@ class WinningLotto(private val lotto: Lotto, bonusNumber: LottoNumber) : Set<Lot
         check(!this.contains(bonusNumber)) { ERROR_MESSAGE_CONTAINED_BONUS_NUMBER }
     }
 
-    fun matchLotto(purchasedLotto: PurchasedLotto, bonusNumber: LottoNumber): Pair<Int, Boolean> {
+    fun matchLotto(purchasedLotto: PurchasedLotto, bonusNumber: LottoNumber): LottoMatchResult {
         val countOfMatch = matchPurchasedLotto(purchasedLotto)
         val matchBonus = matchBonusNumber(purchasedLotto, bonusNumber)
-
-        return Pair(countOfMatch, matchBonus)
+        return LottoMatchResult(countOfMatch, matchBonus)
     }
 
     private fun matchPurchasedLotto(purchasedLotto: PurchasedLotto): Int =

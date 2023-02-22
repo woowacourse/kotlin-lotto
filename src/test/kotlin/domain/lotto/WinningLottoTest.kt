@@ -1,6 +1,7 @@
 package domain.lotto
 
 import domain.lotto.number.LottoNumber
+import domain.result.LottoMatchResult
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -15,7 +16,7 @@ class WinningLottoTest {
         winningLotto: WinningLotto,
         bonusNumber: LottoNumber,
         purchasedLotto: PurchasedLotto,
-        matchedResult: Pair<Int, Boolean>,
+        matchedResult: LottoMatchResult,
     ) {
         val expected = winningLotto.matchLotto(purchasedLotto, bonusNumber)
         Assertions.assertThat(expected).isEqualTo(matchedResult)
@@ -51,7 +52,7 @@ class WinningLottoTest {
                     WinningLotto(Lotto((1..6).map { number -> LottoNumber(number) }.toSet()), LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto((1..6).map { number -> LottoNumber(number) }.toSet()),
-                    Pair(6, false)
+                    LottoMatchResult(6, false)
                 ),
                 Arguments.of(
                     WinningLotto(
@@ -60,7 +61,7 @@ class WinningLottoTest {
                     ),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 8, 10, 12).map { number -> LottoNumber(number) }.toSet()),
-                    Pair(5, true)
+                    LottoMatchResult(5, true)
                 ),
                 Arguments.of(
                     WinningLotto(
@@ -69,7 +70,7 @@ class WinningLottoTest {
                     ),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 8, 12, 45).map { number -> LottoNumber(number) }.toSet()),
-                    Pair(5, false)
+                    LottoMatchResult(5, false)
                 ),
                 Arguments.of(
                     WinningLotto(
@@ -78,7 +79,7 @@ class WinningLottoTest {
                     ),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 8, 44, 45).map { number -> LottoNumber(number) }.toSet()),
-                    Pair(4, false)
+                    LottoMatchResult(4, false)
                 ),
                 Arguments.of(
                     WinningLotto(
@@ -87,7 +88,7 @@ class WinningLottoTest {
                     ),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 43, 44, 45).map { number -> LottoNumber(number) }.toSet()),
-                    Pair(3, false)
+                    LottoMatchResult(3, false)
                 ),
                 Arguments.of(
                     WinningLotto(
@@ -96,7 +97,7 @@ class WinningLottoTest {
                     ),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 42, 43, 44, 45).map { number -> LottoNumber(number) }.toSet()),
-                    Pair(2, false)
+                    LottoMatchResult(2, false)
                 ),
                 Arguments.of(
                     WinningLotto(
@@ -105,7 +106,7 @@ class WinningLottoTest {
                     ),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 41, 42, 43, 44, 45).map { number -> LottoNumber(number) }.toSet()),
-                    Pair(1, false)
+                    LottoMatchResult(1, false)
                 ),
                 Arguments.of(
                     WinningLotto(
@@ -114,7 +115,7 @@ class WinningLottoTest {
                     ),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 10, 44, 45).map { number -> LottoNumber(number) }.toSet()),
-                    Pair(3, true)
+                    LottoMatchResult(3, true)
                 )
             )
 
