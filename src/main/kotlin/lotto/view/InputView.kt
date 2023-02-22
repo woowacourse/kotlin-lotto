@@ -5,20 +5,36 @@ object InputView {
     private const val GET_PURCHASE_MONEY_SCRIPT = "구입금액을 입력해 주세요."
     private const val GET_MAIN_LOTTO_NUMBERS_SCRIPT = "지난 주 당첨 번호를 입력해 주세요."
     private const val GET_BONUS_LOTTO_NUMBER_SCRIPT = "보너스 볼을 입력해 주세요."
+    private const val ERROR_NOT_NUMBER = "숫자 이외의 입력이 들어갔거나 올바르지 않은 입력입니다."
 
     fun getPurchaseMoney(): Int {
-        println(GET_PURCHASE_MONEY_SCRIPT)
-        return readlnOrNull()?.trim()?.toInt() ?: throw IllegalStateException(ERROR_WRONG_INPUT)
+        return runCatching {
+            println(GET_PURCHASE_MONEY_SCRIPT)
+            readlnOrNull()?.trim()?.toInt() ?: throw IllegalStateException(ERROR_WRONG_INPUT)
+        }.getOrElse {
+            println(ERROR_NOT_NUMBER)
+            getPurchaseMoney()
+        }
     }
 
     fun getMainLottoNumbers(): List<Int> {
-        println(GET_MAIN_LOTTO_NUMBERS_SCRIPT)
-        return readlnOrNull()?.trim()?.split(",")?.map { number -> number.trim().toInt() }
-            ?: throw IllegalStateException(ERROR_WRONG_INPUT)
+        return runCatching {
+            println(GET_MAIN_LOTTO_NUMBERS_SCRIPT)
+            readlnOrNull()?.trim()?.split(",")?.map { number -> number.trim().toInt() }
+                ?: throw IllegalStateException(ERROR_WRONG_INPUT)
+        }.getOrElse {
+            println(ERROR_NOT_NUMBER)
+            getMainLottoNumbers()
+        }
     }
 
     fun getBonusLottoNumber(): Int {
-        println(GET_BONUS_LOTTO_NUMBER_SCRIPT)
-        return readlnOrNull()?.trim()?.toInt() ?: throw IllegalStateException(ERROR_WRONG_INPUT)
+        return runCatching {
+            println(GET_BONUS_LOTTO_NUMBER_SCRIPT)
+            readlnOrNull()?.trim()?.toInt() ?: throw IllegalStateException(ERROR_WRONG_INPUT)
+        }.getOrElse {
+            println(ERROR_NOT_NUMBER)
+            getBonusLottoNumber()
+        }
     }
 }

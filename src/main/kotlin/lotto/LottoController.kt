@@ -19,14 +19,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         confirmLottoWinning(purchaseMoney = purchaseMoney, lottoBunch = lottoBunch, winningLotto = winningLotto)
     }
 
-    private fun getPurchaseMoney(): PurchaseMoney {
-        return runCatching {
-            PurchaseMoney(InputView.getPurchaseMoney())
-        }.getOrElse {
-            println(ERROR_NOT_NUMBER)
-            getPurchaseMoney()
-        }
-    }
+    private fun getPurchaseMoney(): PurchaseMoney = PurchaseMoney(InputView.getPurchaseMoney())
 
     private fun getLottoBunch(purchaseCount: Int): LottoBunch {
         val lottoes = mutableListOf<Lotto>()
@@ -48,23 +41,10 @@ class LottoController(private val lottoFactory: LottoFactory) {
         }
     }
 
-    private fun getMainLottoNumber(): Lotto {
-        return kotlin.runCatching {
-            Lotto(InputView.getMainLottoNumbers().map { LottoNumber(it) }.toSet())
-        }.getOrElse {
-            println(ERROR_NOT_NUMBER)
-            getMainLottoNumber()
-        }
-    }
+    private fun getMainLottoNumber(): Lotto = Lotto(InputView.getMainLottoNumbers().map { LottoNumber(it) }.toSet())
 
-    private fun getBonusLottoNumber(): LottoNumber {
-        return runCatching {
-            LottoNumber(InputView.getBonusLottoNumber())
-        }.getOrElse {
-            println(ERROR_NOT_NUMBER)
-            getBonusLottoNumber()
-        }
-    }
+    private fun getBonusLottoNumber(): LottoNumber =
+        LottoNumber(InputView.getBonusLottoNumber())
 
     private fun confirmLottoWinning(lottoBunch: LottoBunch, winningLotto: WinningLotto, purchaseMoney: PurchaseMoney) {
         OutputView.printWinningStatsScript()
@@ -78,9 +58,5 @@ class LottoController(private val lottoFactory: LottoFactory) {
                 winningResult.sumTotalPrizeMoney(),
             ),
         )
-    }
-
-    companion object {
-        private const val ERROR_NOT_NUMBER = "숫자 이외의 입력이 들어갔거나 올바르지 않은 입력입니다."
     }
 }
