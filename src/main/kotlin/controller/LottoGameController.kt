@@ -55,8 +55,7 @@ class LottoGameController(
         return Pair(bonusNumber, winningLotto)
     }
 
-    private fun inputLastWeekWinningNumbers(): List<LottoNumber> =
-        inputView.inputLastWeekWinningNumbers().map { LottoNumber.from(it) }
+    private fun inputLastWeekWinningNumbers(): List<LottoNumber> = inputView.inputLastWeekWinningNumbers()
 
     private fun inputBonusNumber(): LottoNumber = inputView.inputBonusBallNumber()
 

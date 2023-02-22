@@ -74,7 +74,7 @@ class LottoMachineTest {
         fun provideMoneyAndLottoSizeAndLottoNumbers(): List<Arguments> = listOf(
             Arguments.of(
                 Money(10000),
-                LottoSize.from("3"),
+                LottoSize(3),
                 listOf(
                     listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) },
                     listOf(1, 5, 10, 20, 40, 44).map { LottoNumber(it) },
@@ -87,7 +87,7 @@ class LottoMachineTest {
         fun provideMoneyAndLottoSizeAndInvalidSizeOfLottoNumbers(): List<Arguments> = listOf(
             Arguments.of(
                 Money(10000),
-                LottoSize.from("2"),
+                LottoSize(2),
                 listOf(
                     listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) },
                     listOf(1, 5, 10, 20, 40, 44).map { LottoNumber(it) },
@@ -96,7 +96,7 @@ class LottoMachineTest {
             ),
             Arguments.of(
                 Money(10000),
-                LottoSize.from("4"),
+                LottoSize(4),
                 listOf(
                     listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) },
                     listOf(1, 5, 10, 20, 40, 44).map { LottoNumber(it) },
@@ -109,7 +109,7 @@ class LottoMachineTest {
         fun provideInsufficientMoneyAndLottoSizeAndLottoNumbers(): List<Arguments> = listOf(
             Arguments.of(
                 Money(1000),
-                LottoSize.from("3"),
+                LottoSize(3),
                 listOf(
                     listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) },
                     listOf(1, 5, 10, 20, 40, 44).map { LottoNumber(it) },
