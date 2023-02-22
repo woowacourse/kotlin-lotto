@@ -14,7 +14,7 @@ class LottoAdministrator {
         return lottoNumbers.contains(bonusNumber.getBonusNumber())
     }
 
-    fun getRank(countOfMatch: Int, matchBonus: Boolean): Rank? {
+    fun getRank(countOfMatch: Int, matchBonus: Boolean): Rank {
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 }
