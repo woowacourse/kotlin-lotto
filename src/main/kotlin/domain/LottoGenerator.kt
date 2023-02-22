@@ -1,7 +1,6 @@
 package domain
 
 import domain.model.lotto.Lotto
-import domain.model.lotto.LottoNumber
 
 class LottoGenerator(
     private val numberOfLottos: Int,
@@ -13,11 +12,7 @@ class LottoGenerator(
     fun generateLottos(): List<Lotto> {
         return List(numberOfLottos) {
             val numbers = numberGenerator()
-            Lotto(
-                numbers.map { number ->
-                    LottoNumber.from(number)
-                }.toSet()
-            )
+            Lotto.create(numbers)
         }
     }
 
