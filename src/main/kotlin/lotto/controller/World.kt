@@ -39,10 +39,10 @@ class World {
         } as LottoNumber
     }
 
-    private fun initLottoManualCount(purchaseMoney: PurchaseMoney): LottoCount {
+    private fun initLottoManualCount(): LottoCount {
         return tryAndRerun {
             outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL_COUNT)
-            LottoCount.from(inputView.readInt(), purchaseMoney)
+            LottoCount(inputView.readInt())
         } as LottoCount
     }
 
@@ -73,14 +73,14 @@ class World {
 
     private fun makeLottoMachine(): LottoMachine {
         val purchaseMoney = initPurchaseMoney()
-        val lottoManualCount = initLottoManualCount(purchaseMoney)
+        val lottoManualCount = initLottoManualCount()
         outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
         return LottoMachine(purchaseMoney, lottoManualCount) { initSingleLotto() }
     }
 
     private fun makeWinStatistics(lottoMachine: LottoMachine): WinStatistics {
         val winLotto = initWinLotto()
-        return lottoMachine.purchasedLottos.makeWinStatistics(winLotto)
+        return winLotto.makeWinStatistics(lottoMachine.purchasedLottos)
     }
 
     private fun purchasedResult(lottoMachine: LottoMachine) {

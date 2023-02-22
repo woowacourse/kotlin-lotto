@@ -12,7 +12,7 @@ class LottoMachine(
     val lottoManualCount: LottoCount,
     manualLottos: () -> Lotto
 ) {
-    val lottoAutoCount: LottoCount = purchaseMoney.calculateLottoCount(lottoManualCount)
+    val lottoAutoCount: LottoCount = purchaseMoney.calculateAutoLottoCount(lottoManualCount)
     val purchasedLottos: PurchasedLottos = makeManualPurchasedLottos(manualLottos) + makeAutoPurchasedLottos()
 
     private fun makeAutoPurchasedLottos(): PurchasedLottos =
