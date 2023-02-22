@@ -1,5 +1,7 @@
 import domain.model.WinningNumbers
+import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -72,5 +74,26 @@ class WinningNumbersTest {
                 LottoNumber.from(7)
             )
         }
+    }
+
+    @Test
+    fun `당첨 번호와 일치하는 번호의 개수를 구한다`() {
+        val winningNumber = WinningNumbers(
+            setOf(
+                LottoNumber.from(1),
+                LottoNumber.from(2),
+                LottoNumber.from(3),
+                LottoNumber.from(4),
+                LottoNumber.from(5),
+                LottoNumber.from(6)
+            ),
+            LottoNumber.from(7)
+        )
+        val lotto = Lotto.create(listOf(1, 2, 3, 7, 8, 9))
+        assertThat(
+            winningNumber.getMatchCount(
+                lotto.numbers
+            )
+        ).isEqualTo(3)
     }
 }

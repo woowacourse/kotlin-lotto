@@ -23,6 +23,11 @@ class WinningNumbers(
         }
     }
 
+    fun getMatchCount(numbers: Set<LottoNumber>) =
+        numbers.count { number ->
+            catchNumbers.contains(number)
+        }
+
     companion object {
         private const val CATCH_NUMBERS_COUNT = 6
         private const val CATCH_NUMBER_COUNT_ERROR = "[ERROR] 당첨 번호는 6개의 숫자로 이루어져야 합니다."

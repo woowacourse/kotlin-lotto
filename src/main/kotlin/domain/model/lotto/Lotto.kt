@@ -11,16 +11,11 @@ class Lotto private constructor(val numbers: Set<LottoNumber>) {
     }
 
     fun getLottoResult(winningNumbers: WinningNumbers): LottoResult {
-        val matchCount = numbers.getMatchCount(winningNumbers)
+        val matchCount = winningNumbers.getMatchCount(numbers)
         val hasBonusNumber = numbers.contains(winningNumbers.bonusNumber)
 
         return LottoResult.valueOf(matchCount, hasBonusNumber)
     }
-
-    private fun Set<LottoNumber>.getMatchCount(winningNumbers: WinningNumbers) =
-        this.count { number ->
-            winningNumbers.catchNumbers.contains(number)
-        }
 
     companion object {
         private const val NUMBER_COUNT = 6
