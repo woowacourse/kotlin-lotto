@@ -24,7 +24,7 @@ class LottoCustomerTest {
     }
 
     @Test
-    fun `사용자가 구매하려고하는 자동로또의 개수를 구하기`() {
+    fun `사용자가 10개의 로또를 구매하려고 할 때 수동 로또가 3개이면 자동 로또는 7개이다`() {
         assertThat(
             LottoCustomer(PurchaseMoney(10000), 3).getAutomaticLottosCountToPurchase()
         ).isEqualTo(7)

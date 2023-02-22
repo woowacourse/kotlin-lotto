@@ -15,7 +15,7 @@ class LottoGameController(
     private val lottoSeller: LottoSeller = LottoSeller(),
 ) {
 
-    fun run(){
+    fun run() {
         val lottoCustomer = initCustomer()
         val purchasedLottos = purchaseLottos(lottoCustomer)
 
@@ -43,14 +43,15 @@ class LottoGameController(
         InputView.requestManualLottoNumbers(numberOfPurchased)
     )
 
-    private fun initWinningLotto(): WinningLotto =
+    private fun initWinningLotto(): WinningLotto = retryLottoStep {
         winningLottoGenerator.generateWinningLotto(
             InputView.requestCatchNumbers(),
             InputView.requestBonusNumber()
         )
+    }
 
     private fun checkLottoResults(lottoCustomer: LottoCustomer, purchasedLottos: PurchasedLottos) {
-        val winningLotto = retryLottoStep { initWinningLotto() }
+        val winningLotto = initWinningLotto()
         val lottoResults = purchasedLottos.getTotalLottoResults(winningLotto)
         val profitRate = lottoCustomer.getMyProfitRate(lottoResults)
 
