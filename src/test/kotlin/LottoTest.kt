@@ -75,7 +75,7 @@ class LottoTest {
 
     @ParameterizedTest
     @CsvSource("1,true", "10,false")
-    fun `보너스 번호를 로또가 가지고 있다면 true, 아니라면 false를 반환한다`(number: Int, expected: Boolean) {
+    fun `로또 번호를 로또가 가지고 있다면 true, 아니라면 false를 반환한다`(number: Int, expected: Boolean) {
         // given
         val lotto = Lotto(
             listOf(
@@ -88,10 +88,10 @@ class LottoTest {
             ),
         )
 
-        val bonusNumber = LottoNumber(number)
+        val lottoNumber = LottoNumber(number)
 
         // when
-        val actual = lotto.isContainBonusNumber(bonusNumber)
+        val actual = lotto.isContainLottoNumber(lottoNumber)
 
         // then
         assertEquals(expected, actual)

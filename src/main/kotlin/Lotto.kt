@@ -8,12 +8,18 @@ open class Lotto(val numbers: List<LottoNumber>) : List<LottoNumber> by numbers 
         return numbers.size != numbers.toSet().size
     }
 
-    fun getCountOfMatch(winningLotto: Lotto): Int {
-        return numbers.count { winningLotto.numbers.contains(it) }
+    fun getCountOfMatch(lotto: Lotto): Int {
+        return numbers.count { lotto.numbers.contains(it) }
     }
 
-    fun isContainBonusNumber(bonusNumber: LottoNumber): Boolean {
-        return numbers.contains(bonusNumber)
+    fun isContainLottoNumber(lottoNumber: LottoNumber): Boolean {
+        return numbers.contains(lottoNumber)
+    }
+
+    fun getRank(winningNumber: WinningNumber): Rank {
+        val countOfMatch = getCountOfMatch(winningNumber)
+        val matchBonus = isContainLottoNumber(winningNumber.bonusNumber)
+        return Rank.valueOf(countOfMatch, matchBonus)
     }
 
     companion object {
