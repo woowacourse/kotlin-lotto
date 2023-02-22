@@ -2,10 +2,7 @@ package controller
 
 import domain.game.LottoGame
 import domain.game.LottoMachine
-import domain.lotto.AutoLotto
-import domain.lotto.ManualLotto
-import domain.lotto.PurchasedLotto
-import domain.lotto.WinningLotto
+import domain.lotto.* // ktlint-disable no-wildcard-imports
 import domain.lotto.number.LottoNumber
 import domain.lotto.size.LottoSize
 import domain.money.Money
@@ -51,7 +48,7 @@ class LottoGameController(
     private fun inputWinnings(): Pair<LottoNumber, WinningLotto> {
         val winningLottoNumbers = inputLastWeekWinningNumbers()
         val bonusNumber = inputBonusNumber()
-        val winningLotto = WinningLotto(winningLottoNumbers, bonusNumber)
+        val winningLotto = WinningLotto(Lotto(winningLottoNumbers), bonusNumber)
         return Pair(bonusNumber, winningLotto)
     }
 

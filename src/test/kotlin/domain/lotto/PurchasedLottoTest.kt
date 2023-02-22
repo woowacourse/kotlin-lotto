@@ -63,72 +63,108 @@ class PurchasedLottoTest {
         fun provideWinningLottoAndBonusNumberAndResultRank(): List<Arguments> =
             listOf(
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 43, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    WinningLotto(
+                        Lotto(listOf(1, 2, 3, 43, 44, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(42)
+                    ),
                     LottoNumber(42),
                     Rank.FIFTH_WITH_BONUS
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(3, 4, 5, 43, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(6)),
+                    WinningLotto(
+                        Lotto(listOf(3, 4, 5, 43, 44, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(6)
+                    ),
                     LottoNumber(6),
                     Rank.FIFTH_WITH_BONUS
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(4, 3, 2, 43, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    WinningLotto(
+                        Lotto(listOf(4, 3, 2, 43, 44, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(42)
+                    ),
                     LottoNumber(42),
                     Rank.FIFTH_WITH_BONUS
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 4, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    WinningLotto(
+                        Lotto(listOf(1, 2, 3, 4, 44, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(42)
+                    ),
                     LottoNumber(42),
                     Rank.FOURTH_WITH_BONUS
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(3, 4, 5, 6, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(1)),
+                    WinningLotto(
+                        Lotto(listOf(3, 4, 5, 6, 44, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(1)
+                    ),
                     LottoNumber(1),
                     Rank.FOURTH_WITH_BONUS
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(4, 3, 2, 1, 44, 45).map { number -> LottoNumber(number) }, LottoNumber(43)),
+                    WinningLotto(
+                        Lotto(listOf(4, 3, 2, 1, 44, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(43)
+                    ),
                     LottoNumber(43),
                     Rank.FOURTH_WITH_BONUS
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    WinningLotto(
+                        Lotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(42)
+                    ),
                     LottoNumber(42),
                     Rank.THIRD
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(3, 4, 5, 1, 2, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    WinningLotto(
+                        Lotto(listOf(3, 4, 5, 1, 2, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(42)
+                    ),
                     LottoNumber(42),
                     Rank.THIRD
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(4, 3, 2, 1, 5, 45).map { number -> LottoNumber(number) }, LottoNumber(42)),
+                    WinningLotto(
+                        Lotto(listOf(4, 3, 2, 1, 5, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(42)
+                    ),
                     LottoNumber(42),
                     Rank.THIRD
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }, LottoNumber(6)),
+                    WinningLotto(
+                        Lotto(listOf(1, 2, 3, 4, 5, 45).map { number -> LottoNumber(number) }),
+                        LottoNumber(6)
+                    ),
                     LottoNumber(6),
                     Rank.SECOND
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(3, 4, 5, 1, 2, 37).map { number -> LottoNumber(number) }, LottoNumber(6)),
+                    WinningLotto(
+                        Lotto(listOf(3, 4, 5, 1, 2, 37).map { number -> LottoNumber(number) }),
+                        LottoNumber(6)
+                    ),
                     LottoNumber(6),
                     Rank.SECOND
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(4, 3, 2, 1, 5, 43).map { number -> LottoNumber(number) }, LottoNumber(6)),
+                    WinningLotto(
+                        Lotto(listOf(4, 3, 2, 1, 5, 43).map { number -> LottoNumber(number) }),
+                        LottoNumber(6)
+                    ),
                     LottoNumber(6),
                     Rank.SECOND
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(1, 2, 3, 4, 5, 6).map { number -> LottoNumber(number) }, LottoNumber(7)),
+                    WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6).map { number -> LottoNumber(number) }), LottoNumber(7)),
                     LottoNumber(7),
                     Rank.FIRST_WITH_BONUS
                 ),
                 Arguments.of(
-                    WinningLotto(listOf(6, 5, 4, 3, 2, 1).map { number -> LottoNumber(number) }, LottoNumber(7)),
+                    WinningLotto(Lotto(listOf(6, 5, 4, 3, 2, 1).map { number -> LottoNumber(number) }), LottoNumber(7)),
                     LottoNumber(7),
                     Rank.FIRST_WITH_BONUS
                 )

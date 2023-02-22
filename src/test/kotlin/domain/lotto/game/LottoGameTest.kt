@@ -1,6 +1,7 @@
 package domain.lotto.game
 
 import domain.game.LottoGame
+import domain.lotto.Lotto
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
@@ -16,7 +17,10 @@ class LottoGameTest {
     @BeforeEach
     fun setUp() {
         val bonusNumber = LottoNumber(7)
-        val winningLotto = WinningLotto((1..6).map { LottoNumber(it) }, bonusNumber)
+        val winningLotto = WinningLotto(
+            Lotto((1..6).map { LottoNumber(it) }),
+            bonusNumber
+        )
         lottoGame = LottoGame(winningLotto, bonusNumber)
     }
 
