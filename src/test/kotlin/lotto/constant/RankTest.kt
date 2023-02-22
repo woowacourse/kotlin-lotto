@@ -3,12 +3,10 @@ package lotto.constant
 import lotto.domain.Rank
 import lotto.domain.Rank.FIRST
 import lotto.domain.Rank.FOURTH
-import lotto.domain.Rank.NOTHING
 import lotto.domain.Rank.SECOND
 import lotto.domain.Rank.THIRD
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.provider.Arguments
 
 class RankTest {
     @Test
@@ -29,14 +27,5 @@ class RankTest {
     @Test
     fun `당첨 로또 번호 개수가 4개면 보너스 번호에 상관없이 4등이다`() {
         assertThat(Rank.convertToRank(4, true)).isEqualTo(FOURTH)
-    }
-
-    companion object {
-        @JvmStatic
-        fun provideRanks() = listOf(
-            Arguments.of(FIRST),
-            Arguments.of(FOURTH),
-            Arguments.of(NOTHING),
-        )
     }
 }
