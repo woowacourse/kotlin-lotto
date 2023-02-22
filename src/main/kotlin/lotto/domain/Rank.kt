@@ -2,21 +2,29 @@ package lotto.domain
 
 enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     FIRST(6, 2_000_000_000),
-    SECOND(5, 30_000_000),
+    SECOND(5, 30_000_000) {
+        override fun isSame(countOfMatch: Int, matchBonus: Boolean): Boolean {
+            return super.isSame(countOfMatch, matchBonus) and matchBonus
+        }
+    },
     THIRD(5, 1_500_000),
     FOURTH(4, 50_000),
     FIFTH(3, 5_000),
-    MISS(0, 0);
+    MISS(0, 0) {
+        override fun isSame(countOfMatch: Int, matchBonus: Boolean): Boolean {
+            return (countOfMatch < 3) or (countOfMatch > 6)
+        }
+    };
+
+    open fun isSame(countOfMatch: Int, matchBonus: Boolean): Boolean {
+        return this.countOfMatch == countOfMatch
+    }
 
     companion object {
-        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank? {
-            if (matchBonus and (countOfMatch == 5)) {
-                return SECOND
-            }
-            if (countOfMatch in 1..2) {
-                return MISS
-            }
-            return values().findLast { rank -> rank.countOfMatch == countOfMatch }
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
+            return values().find {
+                it.isSame(countOfMatch, matchBonus)
+            } ?: MISS
         }
     }
 }

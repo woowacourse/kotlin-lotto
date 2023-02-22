@@ -16,12 +16,12 @@ class UserLotto {
     fun calculateTotalRank(winningNumbers: WinningNumbers): List<Rank> {
         val ranks = mutableListOf<Rank>()
         lottoNumbers.forEach { lotto ->
-            Rank.valueOf(
-                lotto.countMatchingNumbers(winningNumbers.winningLotto),
-                lotto.checkMatchingBonusNumber(winningNumbers.bonusNumber)
-            )?.let {
-                ranks.add(it)
-            }
+            ranks.add(
+                Rank.valueOf(
+                    lotto.countMatchingNumbers(winningNumbers.winningLotto),
+                    lotto.checkMatchingBonusNumber(winningNumbers.bonusNumber)
+                )
+            )
         }
         return ranks
     }
