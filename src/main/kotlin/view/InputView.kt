@@ -16,6 +16,17 @@ class InputView {
         }
     }
 
+    fun getManualLottoCount(): String {
+        while (true) {
+            println(INPUT_MANUAL_LOTTO_COUNT_MESSAGE)
+            return readlnOrNull() ?: continue
+        }
+    }
+
+    fun getManualLottoNumber() {
+        println(INPUT_MANUAL_LOTTO_NUMBER_MESSAGE)
+    }
+
     fun inputWinningLotto(): Lotto {
         println(INPUT_WINNING_LOTTO_MESSAGE)
         return getInputWinningLotto(readLine())
@@ -41,6 +52,8 @@ class InputView {
         const val INPUT_MONEY_MESSAGE = "구입금액을 입력해 주세요."
         const val INPUT_WINNING_LOTTO_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
         const val INPUT_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
+        const val INPUT_MANUAL_LOTTO_COUNT_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
+        const val INPUT_MANUAL_LOTTO_NUMBER_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
 
         const val INPUT_VALUE_ERROR_MESSAGE = "값이 입력되지 않았습니다."
     }
