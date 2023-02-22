@@ -4,12 +4,10 @@ import model.LottoNumber
 
 class ShuffledNumberGenerator : NumberGenerator {
     override fun generate(): List<LottoNumber> {
-        val lottoNumbers: MutableList<LottoNumber> = mutableListOf()
-        var lottoNumber: Int = MINIMUM_LOTTO_NUMBER
+        val numbers: List<Int> = range.toList().shuffled()
 
-        repeat(MAXIMUM_LOTTO_NUMBER) { lottoNumbers.add(LottoNumber(lottoNumber++)) }
-
-        return lottoNumbers.shuffled()
+        return numbers
+            .map { number -> LottoNumber(number) }
             .take(LOTTO_NUMBER_COUNT)
             .sortedBy { lottoNumber -> lottoNumber.number }
     }
@@ -18,5 +16,6 @@ class ShuffledNumberGenerator : NumberGenerator {
         private const val MINIMUM_LOTTO_NUMBER = 1
         private const val MAXIMUM_LOTTO_NUMBER = 45
         private const val LOTTO_NUMBER_COUNT = 6
+        private val range = MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER
     }
 }
