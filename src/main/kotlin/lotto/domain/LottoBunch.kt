@@ -10,10 +10,4 @@ class LottoBunch(val value: List<Lotto>) {
             lotto.countMatchedMainLottoNumber(winningLotto),
             lotto.checkMatchedBonusLottoNumber(winningLotto),
         )
-
-    fun sumTotalPrizeMoney(winningResult: WinningResult): Int =
-        winningResult.rankTable.keys.fold(0) { acc, rank -> acc + getPrizeMoney(rank, winningResult) }
-
-    private fun getPrizeMoney(rank: Rank, winningResult: WinningResult): Int =
-        rank.prizeMoney * (winningResult.rankTable[rank] ?: throw IllegalStateException())
 }

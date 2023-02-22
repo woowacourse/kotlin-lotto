@@ -75,7 +75,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
         OutputView.printYieldRate(
             YieldRateCalculator.getYieldRate(
                 purchaseMoney,
-                lottoBunch.sumTotalPrizeMoney(winningResult),
+                winningResult.sumTotalPrizeMoney(),
             ),
         )
     }
