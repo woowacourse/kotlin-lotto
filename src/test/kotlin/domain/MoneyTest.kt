@@ -11,7 +11,7 @@ class MoneyTest {
     @ParameterizedTest
     fun `돈은 1000이상 100000이하만 가지고 있을 수 있다`(int: Int) {
         val money = Money(int)
-        assertThat(money.value).isEqualTo(int)
+        assertThat(money.toInt()).isEqualTo(int)
     }
 
     @ValueSource(ints = [-1, 100001])
@@ -25,7 +25,7 @@ class MoneyTest {
     @Test
     fun `접근하면 값을 반환한다`() {
         val a = Money(1000)
-        assertThat(a.value).isEqualTo(1000)
+        assertThat(a.toInt()).isEqualTo(1000)
     }
 
     @Test
