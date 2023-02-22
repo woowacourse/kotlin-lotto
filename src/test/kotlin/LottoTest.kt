@@ -35,8 +35,6 @@ class LottoTest {
         val winnigLotto = Lotto(
             1, 2, 3, 4, 5, 6
         )
-        val a = listOf(1, 2, 3, 4, 5, 6)
-        Lotto(*a.toIntArray())
         val bonusNumber = LottoNumber.from(6)
 
         // when
