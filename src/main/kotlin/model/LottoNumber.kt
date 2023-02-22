@@ -1,6 +1,7 @@
 package model
 
-class LottoNumber(val number: Int) {
+@JvmInline
+value class LottoNumber(val number: Int) {
 
     init {
         require(number in range) { LOTTO_NUMBER_RANGE_ERROR_MESSAGE }
