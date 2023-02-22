@@ -9,21 +9,12 @@ open class Lotto(numbers: Set<LottoNumber>) : Set<LottoNumber> by numbers {
     }
 
     private fun validateLottoNumbers() {
-        validateLottoNumbersSize()
-        validateLottoNumbersDuplication()
-    }
-
-    private fun validateLottoNumbersSize() {
-        require(size == LOTTO_SIZE) { ERROR_MESSAGE_INVALID_LOTTO_SIZE }
-    }
-
-    private fun validateLottoNumbersDuplication() {
-        check(distinctBy { it.value }.size == LOTTO_SIZE) { ERROR_MESSAGE_DUPLICATED_LOTTO_NUMBER }
+        require(size == LOTTO_SIZE) { ERROR_MESSAGE_INVALID_LOTTO_NUMBERS }
     }
 
     companion object {
         const val LOTTO_SIZE = 6
-        private const val ERROR_MESSAGE_INVALID_LOTTO_SIZE = "$ERROR_PREFIX 로또 번호는 ${LOTTO_SIZE}개이어야 합니다."
-        private const val ERROR_MESSAGE_DUPLICATED_LOTTO_NUMBER = "$ERROR_PREFIX 로또 번호는 중복되지 않아야 합니다."
+        private const val ERROR_MESSAGE_INVALID_LOTTO_NUMBERS =
+            "$ERROR_PREFIX 로또 번호가 ${LOTTO_SIZE}개가 아니거나, 중복되는 번호가 있습니다."
     }
 }
