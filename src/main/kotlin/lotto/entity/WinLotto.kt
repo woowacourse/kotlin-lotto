@@ -18,11 +18,11 @@ class WinLotto(private val winNumber: Lotto, private val bonus: LottoNumber) {
     private fun determineRank(lotto: Lotto): Rank {
         val countOfMatch = lotto.matchLottoNumberCount(winNumber)
         val isMatchBonus = lotto.isMatchBonus(bonus)
-        val determinedRank = Rank.values().filter { it.determine(countOfMatch, isMatchBonus) }
-        check(determinedRank.isNotEmpty()) {
+        val determinedRank = Rank.values().find { it.determine(countOfMatch, isMatchBonus) }
+        check(determinedRank != null) {
             String.format(ERROR_DETERMINED_RANK_IS_EMPTY)
         }
-        return determinedRank[0]
+        return determinedRank
     }
 
     companion object {
