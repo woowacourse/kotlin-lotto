@@ -29,20 +29,6 @@ class LottoController(
         return PurchaseMoney(money)
     }
 
-    private fun initializeCatchNumber(): Set<LottoNumber> {
-        val input = InputView.requestCatchNumbers()
-
-        return input.map { number ->
-            val verifiedNumber = numericValidator.validate(number)
-            LottoNumber.from(verifiedNumber)
-        }.toSet()
-    }
-
-    private fun initializeBonusNumber(): LottoNumber {
-        val input = InputView.requestBonusNumber()
-        return LottoNumber.from(numericValidator.validate(input))
-    }
-
     private fun purchaseLottos(purchaseMoney: PurchaseMoney): PurchasedLottos {
         val numberOfTotalLottos = purchaseMoney.money / LOTTO_PRICE
 
@@ -90,6 +76,20 @@ class LottoController(
         val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
 
         ResultView.printLottoResults(lottoResults, profit)
+    }
+
+    private fun initializeCatchNumber(): Set<LottoNumber> {
+        val input = InputView.requestCatchNumbers()
+
+        return input.map { number ->
+            val verifiedNumber = numericValidator.validate(number)
+            LottoNumber.from(verifiedNumber)
+        }.toSet()
+    }
+
+    private fun initializeBonusNumber(): LottoNumber {
+        val input = InputView.requestBonusNumber()
+        return LottoNumber.from(numericValidator.validate(input))
     }
 
     private fun <T> repeatWithRunCatching(action: () -> T): T {
