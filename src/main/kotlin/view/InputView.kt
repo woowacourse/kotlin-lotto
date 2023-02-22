@@ -6,13 +6,14 @@ import domain.Money
 
 class InputView {
     fun inputMoney(): Money {
-        println(INPUT_MONEY_MESSAGE)
-        return getInputMoney(readLine())
+        return Money(getInputMoney().toInt())
     }
 
-    private fun getInputMoney(input: String?): Money {
-        require(!input.isNullOrEmpty()) { INPUT_VALUE_ERROR_MESSAGE }
-        return Money(input.toInt())
+    private fun getInputMoney(): String {
+        while (true) {
+            println(INPUT_MONEY_MESSAGE)
+            return readlnOrNull() ?: continue
+        }
     }
 
     fun inputWinningLotto(): Lotto {
