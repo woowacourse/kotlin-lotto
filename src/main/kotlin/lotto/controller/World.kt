@@ -77,8 +77,8 @@ class World {
     }
 
     private fun makePurchasedLottos(purchaseMoney: PurchaseMoney, lottoManualCount: LottoCount): PurchasedLottos {
-        val manualLottoGenerator = RandomLottoGenerator()
-        val autoLottoGenerator = InputLottoGenerator { initSingleLotto() }
+        val manualLottoGenerator = InputLottoGenerator { initSingleLotto() }
+        val autoLottoGenerator = RandomLottoGenerator()
         outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
         return LottoMachine(manualLottoGenerator, autoLottoGenerator).makePurchasedLottos(
             purchaseMoney, lottoManualCount
