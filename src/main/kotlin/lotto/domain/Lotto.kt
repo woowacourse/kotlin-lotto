@@ -1,7 +1,5 @@
 package lotto.domain
 
-import lotto.constant.LOTTO_SIZE
-
 class Lotto(val lottoNumbers: Set<LottoNumber>) {
 
     init {
@@ -13,6 +11,8 @@ class Lotto(val lottoNumbers: Set<LottoNumber>) {
     }
 
     companion object {
+        const val LOTTO_SIZE = 6
+
         private const val LOTTO_SIZE_ERROR = "로또 숫자의 개수가 올바르지 않습니다."
     }
 }

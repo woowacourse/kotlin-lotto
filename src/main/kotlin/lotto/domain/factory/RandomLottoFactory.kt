@@ -1,7 +1,7 @@
 package lotto.domain.factory
 
-import lotto.constant.LOTTO_SIZE
 import lotto.domain.Lotto
+import lotto.domain.Lotto.Companion.LOTTO_SIZE
 import lotto.domain.LottoNumber
 import lotto.domain.LottoNumber.Companion.LOTTO_MAXIMUM_NUMBER
 import lotto.domain.LottoNumber.Companion.LOTTO_MINIMUM_NUMBER
