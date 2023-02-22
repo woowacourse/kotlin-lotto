@@ -20,10 +20,21 @@ class Controller {
 
     private fun initializeLotto(): List<Lotto> {
         val count = readInputMoney().amount / LottoMoney.MONEY_UNIT
+        readManualLottoCount(count)
         OutputView.printLottoCountMessage(count)
         val lottoNumbers = LottoGenerator.generateAuto(count)
         OutputView.printLottoNumbers(lottoNumbers)
         return lottoNumbers
+    }
+
+    private fun readManualLottoCount(totalCount: Int): Int {
+        return kotlin.runCatching {
+            OutputView.printInputManualCountPrompt()
+            InputView.readInputManualCount(totalCount)
+        }.getOrElse {
+            println("[ERROR] ${it.message}")
+            readManualLottoCount(totalCount)
+        }
     }
 
     private fun readInputMoney(): LottoMoney {

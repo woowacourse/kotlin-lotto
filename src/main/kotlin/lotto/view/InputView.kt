@@ -22,4 +22,10 @@ object InputView {
         Validator.checkInputBonusNumber(input)
         return LottoNumber.from(input.toInt())
     }
+
+    fun readInputManualCount(totalCount: Int): Int {
+        val input = readln()
+        Validator.checkInputManualCount(input, totalCount)
+        return input.toInt()
+    }
 }

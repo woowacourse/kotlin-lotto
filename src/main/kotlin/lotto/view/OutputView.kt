@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.domain.Rank
 import lotto.domain.Lotto
+import lotto.domain.Rank
 
 object OutputView {
     private const val INPUT_MONEY_PROMPT = "구입금액을 입력해 주세요."
@@ -15,6 +15,7 @@ object OutputView {
     private const val SECOND_PRIZE_MESSAGE = "5개 일치, 보너스 볼 일치 (30000000원) - %d개"
     private const val FIRST_PRIZE_MESSAGE = "6개 일치 (2000000000원) - %d개"
     private const val YIELD_MESSAGE = "총 수익률은 %.2f입니다."
+    private const val INPUT_MANUAL_COUNT_PROMPT = "수동으로 구매할 로또 수를 입력해 주세요."
 
     fun printInputMoneyPrompt() {
         println(INPUT_MONEY_PROMPT)
@@ -26,10 +27,6 @@ object OutputView {
 
     fun printLottoNumbers(lottoNumbers: List<Lotto>) {
         lottoNumbers.forEach { lotto -> printLotto(lotto) }
-    }
-
-    private fun printLotto(lotto: Lotto) {
-        println("[${lotto.numbers.map { lottoNumber -> lottoNumber.number }.joinToString(", ")}]")
     }
 
     fun printInputWinningNumbersPrompt() {
@@ -44,6 +41,14 @@ object OutputView {
         printResultMessage()
         printMatchingCount(ranks)
         printYield(yield)
+    }
+
+    fun printInputManualCountPrompt() {
+        println(INPUT_MANUAL_COUNT_PROMPT)
+    }
+
+    private fun printLotto(lotto: Lotto) {
+        println("[${lotto.numbers.map { lottoNumber -> lottoNumber.number }.joinToString(", ")}]")
     }
 
     private fun printResultMessage() {
