@@ -10,16 +10,13 @@ import util.common.constant.ERROR_PREFIX
 import util.common.generateDistinctRandomNumbers
 
 class LottoMachine {
-    fun purchaseAutoLottos(money: Money): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
-        val lottoCount = money / Money(LOTTO_PRICE)
-        repeat(lottoCount) { add(generateRandomLotto()) }
-    }
+    fun purchaseAutoLottos(money: Money): List<PurchasedLotto> =
+        List(money / Money(LOTTO_PRICE)) { generateRandomLotto() }
 
-    private fun generateRandomLotto(): PurchasedLotto =
-        PurchasedLotto(
-            (LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER).generateDistinctRandomNumbers(Lotto.LOTTO_SIZE)
-                .map { LottoNumber(it) }.toSet()
-        )
+    private fun generateRandomLotto(): PurchasedLotto = PurchasedLotto(
+        (LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER).generateDistinctRandomNumbers(Lotto.LOTTO_SIZE)
+            .map { LottoNumber(it) }.toSet()
+    )
 
     fun purchaseManualLottos(
         money: Money,
