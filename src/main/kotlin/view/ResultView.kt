@@ -1,5 +1,6 @@
 package view
 
+import domain.Lotto
 import domain.LottoPurchaseInfo
 import domain.Rank
 import domain.Ticket
@@ -13,9 +14,17 @@ class ResultView : ResultViewInterface {
     override fun printTicket(purchaseInfo: LottoPurchaseInfo, ticket: Ticket) {
         println(PURCHASE_MANUAL_AND_AUTO_TICKET_COUNT.format(purchaseInfo.manualCount, purchaseInfo.autoCount))
         ticket.lottos.forEach { lotto ->
-            println(lotto.toString())
+            printLottoNumbers(lotto)
         }
         println()
+    }
+
+    private fun printLottoNumbers(lotto: Lotto) {
+        val sb = StringBuilder("[")
+        lotto.numbers.forEach { lottoNumber -> sb.append("${lottoNumber.number}, ") }
+        sb.delete(sb.length - 2, sb.length)
+        sb.append("]")
+        println(sb.toString())
     }
 
     override fun printStatistics(statisticsResult: Map<Rank, Int>) {
