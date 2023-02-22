@@ -30,7 +30,7 @@ class LottoMachine {
         require(money.isGreaterThan(Money(LOTTO_PRICE * lottoSize.value))) { ERROR_MESSAGE_INSUFFICIENT_AMOUNT }
         return Pair(
             money - (Money(LOTTO_PRICE * lottoSize.value)),
-            List(lottoSize.value) { generateManualLotto(lottoNumbers[it]) }
+            List(lottoSize.value) { generateManualLotto(lottoNumbers[it].toSet()) }
         )
     }
 

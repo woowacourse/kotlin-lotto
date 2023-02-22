@@ -31,7 +31,7 @@ class LottoMachineTest {
     fun `금액, 구매할 로또 개수, 로또 번호 리스트가 주어졌을 때, purchaseManualLottos 호출시, LottoSize만큼 구매한 로또 리스트를 반환한다`(
         money: Money,
         lottoSize: LottoSize,
-        lottoNumbers: List<List<LottoNumber>>,
+        lottoNumbers: List<Set<LottoNumber>>,
     ) {
         val (_, purchasedLottos) = lottoMachine.purchaseManualLottos(money, lottoSize, lottoNumbers)
         assertEquals(lottoSize.value, purchasedLottos.size)
@@ -42,7 +42,7 @@ class LottoMachineTest {
     fun `구매할 로또 개수와 다른 크기의 로또 번호 리스트가 주어졌을 때, purchaseManualLottos 호출시, IllegalArgumentException이 발생한다`(
         money: Money,
         lottoSize: LottoSize,
-        lottoNumbers: List<List<LottoNumber>>,
+        lottoNumbers: List<Set<LottoNumber>>,
     ) {
         assertThrows<IllegalArgumentException> {
             lottoMachine.purchaseManualLottos(money, lottoSize, lottoNumbers)
@@ -54,7 +54,7 @@ class LottoMachineTest {
     fun `구매 금액이 로또 가격의 총 합보다 작을 때, purchaseManualLottos 호출시, IllegalArgumentException이 발생한다`(
         money: Money,
         lottoSize: LottoSize,
-        lottoNumbers: List<List<LottoNumber>>,
+        lottoNumbers: List<Set<LottoNumber>>,
     ) {
         assertThrows<IllegalArgumentException> {
             lottoMachine.purchaseManualLottos(money, lottoSize, lottoNumbers)
