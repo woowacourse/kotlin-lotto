@@ -1,8 +1,8 @@
 package controller
 
+import domain.LottoMaker
 import domain.Lottos
 import domain.Money
-import domain.RandomLottoGenerator
 import domain.WinningNumber
 import domain.WinningResult
 import view.InputView
@@ -21,14 +21,16 @@ class LottoGame {
     }
     private fun getMoney(): Money {
         val money = input.inputMoney()
-        output.outputLottoSizeMessage(money)
         return money
     }
 
     private fun makeLottos(money: Money): Lottos {
-        val lottos = RandomLottoGenerator().generateLottos(money.lottoCount())
-        output.outputLottos(lottos)
-        return lottos
+        val count = input.InputManualLottoCount()
+        val manualLottos = LottoMaker().makeManualLottos(input.inputManualLottoNumber(count))
+        val autoLottos = LottoMaker().makeAutoLottos(money.lottoCount() - count)
+        output.outputLottoSizeMessage(count, money.lottoCount() - count)
+        output.outputLottos(Lottos(manualLottos + autoLottos))
+        return Lottos(manualLottos + autoLottos)
     }
 
     private fun startGame(lottos: Lottos): WinningResult {

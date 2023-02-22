@@ -1,5 +1,5 @@
 package domain
 
 interface LottoGenerator {
-    fun generateLottos(count: Int): Lottos
+    fun generateLottos(count: Int): List<Lotto>
 }
