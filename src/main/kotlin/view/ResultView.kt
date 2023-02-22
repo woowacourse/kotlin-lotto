@@ -1,6 +1,8 @@
 package view
 
+import domain.Lotto
 import domain.Rank
+import domain.Ticket
 
 class ResultView : ResultViewInterface {
     override fun printResult(winningCountBy: Map<Rank, Int>, profit: String) {
@@ -22,6 +24,16 @@ class ResultView : ResultViewInterface {
 
     override fun printCount(count: Int) {
         println("${count}개를 구매했습니다.")
+    }
+
+    override fun printLotto(lotto: Lotto) {
+        println(lotto.toList())
+    }
+
+    override fun printTicket(ticket: Ticket) {
+        ticket.forEach { lotto ->
+            printLotto(lotto)
+        }
     }
 
     private fun isMatch(rank: Rank) = if (rank == Rank.SECOND) ", 보너스 볼 일치" else " "

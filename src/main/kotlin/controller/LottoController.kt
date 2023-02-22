@@ -19,8 +19,9 @@ class LottoController(
     fun run() {
         val money = initializeMoney()
         val ticket = initializeTicket(money)
-        val winningLotto = initializeWinningLotto()
+        resultView.printTicket(ticket)
 
+        val winningLotto = initializeWinningLotto()
         val lottoStatistics = LottoStatistics(winningLotto)
         val result = lottoStatistics.compareTicket(ticket)
         val profit = lottoStatistics.calculateProfit(result)

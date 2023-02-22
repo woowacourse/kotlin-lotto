@@ -1,8 +1,12 @@
 package domain
 
-data class LottoNumber(val number: Int) {
+data class LottoNumber(private val number: Int) {
     init {
         require(number in MINIMUM_LOTTO_RANGE..MAXIMUM_LOTTO_RANGE) { ERROR_LOTTO_RANGE }
+    }
+
+    fun toInt(): Int {
+        return number
     }
 
     companion object {
