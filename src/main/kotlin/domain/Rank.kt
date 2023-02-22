@@ -1,25 +1,31 @@
 package domain
 
-enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
+enum class Rank(
+    private val countOfMatch: Int,
+    val winningMoney: Int,
+) {
+
     FIRST(6, 2_000_000_000),
-    SECOND(5, 30_000_000),
+    SECOND(5, 30_000_000) {
+        override fun lottoResultReader(countOfMatch: Int, isBonusMatch: Boolean) =
+            super.lottoResultReader(countOfMatch, isBonusMatch) and isBonusMatch
+    },
     THIRD(5, 1_500_000),
     FOURTH(4, 50_000),
     FIFTH(3, 5_000),
-    MISS(0, 0),
-    ;
+    MISS(0, 0) {
+        override fun lottoResultReader(countOfMatch: Int, isBonusMatch: Boolean) =
+            countOfMatch < MINIMUM
+    }, ;
+
+    open fun lottoResultReader(countOfMatch: Int, isBonusMatch: Boolean) =
+        this.countOfMatch == countOfMatch
 
     companion object {
-        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank? {
-            return values().find { rank ->
-                check(countOfMatch, matchBonus, rank)
-            }
-        }
-
-        private fun check(countOfMatch: Int, matchBonus: Boolean, rank: Rank): Boolean {
-            if (countOfMatch == 5 && !matchBonus) return rank.winningMoney == 1_500_000
-            if (countOfMatch < 3) return rank.countOfMatch < 3
-            return countOfMatch == rank.countOfMatch
-        }
+        private const val MINIMUM = 3
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean) =
+            values().find { rank ->
+                rank.lottoResultReader(countOfMatch, matchBonus)
+            } ?: MISS
     }
 }
