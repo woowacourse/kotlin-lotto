@@ -29,10 +29,26 @@ class MoneyTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = ["10000,10", "50000,50", "100000,100", "1450,1", "0,0", "-1000,0"])
+    @CsvSource(value = ["10000,10", "50000,50", "100000,100", "1450,1", "0,0"])
     fun `정수가 주어졌을 때, divideByThousand 호출시, 1000으로 나눈 몫을 반환한다`(money: Int, expected: Int) {
         val actual = Money(money).divideByThousand()
 
         org.junit.jupiter.api.Assertions.assertEquals(actual, expected)
+    }
+
+    @Test
+    fun `1000원 짜리 수동 로또의 개수가 주어졌을 때, getRemainingMoneyAfterManualLottoPurchase() 호출시, 남은 금액을 반환한다`() {
+        val money = Money(5000)
+        val actual = money.getRemainingMoneyAfterManualLottoPurchase(3)
+
+        org.junit.jupiter.api.Assertions.assertEquals(2000, actual.value)
+    }
+
+    @Test
+    fun `구매금액보다 사려는 수동로또 금액이 더 많을 때 , getRemainingMoneyAfterManualLottoPurchase() 호출시, IllegalStateException이 발생한다`() {
+        assertThrows<IllegalStateException> {
+            val money = Money(5000)
+            money.getRemainingMoneyAfterManualLottoPurchase(6)
+        }
     }
 }

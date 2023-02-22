@@ -6,6 +6,10 @@ import view.InputView
 import view.ResultView
 
 fun main() {
-    val lottoGameController = LottoGameController(InputView(InputValidator()), ResultView(), LottoGame(LottoMachine()))
+    val inputView = InputView(InputValidator())
+    val resultView = ResultView()
+    val lottoGame = LottoGame(LottoMachine())
+
+    val lottoGameController = LottoGameController(inputView, resultView, lottoGame)
     lottoGameController.startLottoGame()
 }

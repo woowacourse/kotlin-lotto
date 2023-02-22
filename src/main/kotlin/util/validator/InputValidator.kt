@@ -2,7 +2,7 @@ package util.validator
 
 class InputValidator {
     fun validateNumeric(value: String): Int =
-        value.toIntOrNull() ?: throw IllegalArgumentException(NOT_NUMERIC_EXCEPTION_MESSAGE)
+        value.toInt()
 
     fun validateWinningNumbersIsNumeric(value: List<String>): List<Int> {
         val winningNumbers = value.map { it.trim() }

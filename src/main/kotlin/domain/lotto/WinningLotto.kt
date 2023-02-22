@@ -7,11 +7,11 @@ class WinningLotto(numbers: List<LottoNumber>, bonusNumber: LottoNumber) : Lotto
         check(!this.contains(bonusNumber)) { ERROR_MESSAGE_CONTAINED_BONUS_NUMBER }
     }
 
-    fun matchLotto(purchasedLotto: PurchasedLotto, bonusNumber: LottoNumber): Pair<Int, Boolean> {
+    fun matchLotto(purchasedLotto: PurchasedLotto, bonusNumber: LottoNumber): MatchStatus {
         val countOfMatch = matchPurchasedLotto(purchasedLotto)
         val matchBonus = matchBonusNumber(purchasedLotto, bonusNumber)
 
-        return Pair(countOfMatch, matchBonus)
+        return MatchStatus(countOfMatch, matchBonus)
     }
 
     private fun matchPurchasedLotto(purchasedLotto: PurchasedLotto): Int =

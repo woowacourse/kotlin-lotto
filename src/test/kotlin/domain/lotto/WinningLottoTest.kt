@@ -15,7 +15,7 @@ class WinningLottoTest {
         winningLotto: WinningLotto,
         bonusNumber: LottoNumber,
         purchasedLotto: PurchasedLotto,
-        matchedResult: Pair<Int, Boolean>
+        matchedResult: MatchStatus
     ) {
         val expected = winningLotto.matchLotto(purchasedLotto, bonusNumber)
         Assertions.assertThat(expected).isEqualTo(matchedResult)
@@ -51,49 +51,49 @@ class WinningLottoTest {
                     WinningLotto((1..6).map { number -> LottoNumber(number) }, LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto((1..6).map { number -> LottoNumber(number) }),
-                    Pair(6, false)
+                    MatchStatus(6, false)
                 ),
                 Arguments.of(
                     WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 8, 10, 12).map { number -> LottoNumber(number) }),
-                    Pair(5, true)
+                    MatchStatus(5, true)
                 ),
                 Arguments.of(
                     WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 8, 12, 45).map { number -> LottoNumber(number) }),
-                    Pair(5, false)
+                    MatchStatus(5, false)
                 ),
                 Arguments.of(
                     WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 8, 44, 45).map { number -> LottoNumber(number) }),
-                    Pair(4, false)
+                    MatchStatus(4, false)
                 ),
                 Arguments.of(
                     WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 43, 44, 45).map { number -> LottoNumber(number) }),
-                    Pair(3, false)
+                    MatchStatus(3, false)
                 ),
                 Arguments.of(
                     WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 42, 43, 44, 45).map { number -> LottoNumber(number) }),
-                    Pair(2, false)
+                    MatchStatus(2, false)
                 ),
                 Arguments.of(
                     WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 41, 42, 43, 44, 45).map { number -> LottoNumber(number) }),
-                    Pair(1, false)
+                    MatchStatus(1, false)
                 ),
                 Arguments.of(
                     WinningLotto(listOf(2, 4, 6, 8, 12, 14).map { number -> LottoNumber(number) }, LottoNumber(10)),
                     LottoNumber(10),
                     PurchasedLotto(listOf(2, 4, 6, 10, 44, 45).map { number -> LottoNumber(number) }),
-                    Pair(3, true)
+                    MatchStatus(3, true)
                 ),
             )
 
