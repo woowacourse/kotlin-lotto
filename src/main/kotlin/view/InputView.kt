@@ -20,16 +20,16 @@ class InputView {
     fun inputManualLottoNumbers(size: LottoSize): List<List<LottoNumber>> {
         printEnter()
         printMessage(MANUAL_LOTTO_NUMBERS_INPUT_MESSAGE)
-        return List(size.value) { inputManualLottoNumber() }
+        return List(size.value) { inputLottoNumbers() }
     }
-
-    private fun inputManualLottoNumber(): List<LottoNumber> =
-        inputNumbersBy(WINNING_NUMBER_DELIMITER).map { LottoNumber.of(it) }
 
     fun inputLastWeekWinningNumbers(): List<LottoNumber> {
         printMessage(LAST_WEEK_WINNING_NUMBERS_INPUT_MESSAGE)
-        return inputNumbersBy(WINNING_NUMBER_DELIMITER).map { LottoNumber.of(it) }
+        return inputLottoNumbers()
     }
+
+    private fun inputLottoNumbers(): List<LottoNumber> =
+        inputNumbersBy(LOTTO_NUMBERS_DELIMITER).map { LottoNumber.of(it) }
 
     fun inputBonusBallNumber(): LottoNumber {
         printMessage(BONUS_BALL_NUMBERS_INPUT_MESSAGE)
@@ -69,6 +69,6 @@ class InputView {
         private const val ERROR_MESSAGE_NOT_NUMERIC_INPUT = "$ERROR_PREFIX 입력값은 숫자여야 합니다."
         private const val ERROR_MESSAGE_CONTAINS_NOT_NUMERIC = "$ERROR_PREFIX 입력에 숫자가 아닌 값이 포함되어 있습니다."
 
-        private const val WINNING_NUMBER_DELIMITER = ","
+        private const val LOTTO_NUMBERS_DELIMITER = ","
     }
 }
