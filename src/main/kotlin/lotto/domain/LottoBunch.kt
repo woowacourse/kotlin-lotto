@@ -2,7 +2,7 @@ package lotto.domain
 
 class LottoBunch(val value: List<Lotto>) {
 
-    fun getRanks(winningLotto: WinningLotto): List<Rank> =
+    fun calcRanks(winningLotto: WinningLotto): List<Rank> =
         value.map { getRank(it, winningLotto) }
 
     private fun getRank(lotto: Lotto, winningLotto: WinningLotto): Rank =

@@ -13,13 +13,13 @@ class LottoBunchTest {
     @Test
     fun `2등에 1번 당첨되었다`() {
         assertThat(
-            lottoBunch.getRanks(winningLotto),
+            lottoBunch.calcRanks(winningLotto),
         ).containsOnlyOnce(Rank.SECOND)
     }
 
     @Test
     fun `2등에 1번 당첨된경우 최종 당첨금액은 30000000다`() {
-        assertThat(lottoBunch.sumTotalPrizeMoney(WinningResult.from(lottoBunch.getRanks(winningLotto)))).isEqualTo(
+        assertThat(lottoBunch.sumTotalPrizeMoney(WinningResult.from(lottoBunch.calcRanks(winningLotto)))).isEqualTo(
             30000000,
         )
     }
