@@ -18,7 +18,7 @@ class LottoGameTest {
     fun setUp() {
         val bonusNumber = LottoNumber(7)
         val winningLotto = WinningLotto(
-            Lotto((1..6).map { LottoNumber(it) }),
+            Lotto((1..6).map { LottoNumber(it) }.toSet()),
             bonusNumber
         )
         lottoGame = LottoGame(winningLotto, bonusNumber)
@@ -34,10 +34,11 @@ class LottoGameTest {
     }
 
     @Test
-    fun `1등 로또가 1개 주어졌을 때, matchLottos 호출시, Rank의 FIRST를 하나 반환한다 `() {
-        val actual = lottoGame.matchLottos(listOf(PurchasedLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })))
+    fun `보너스 번호가 일치하지 않는 1등 로또가 1개 주어졌을 때, matchLottos 호출시, Rank의 FIRST를 하나 반환한다 `() {
+        val actual =
+            lottoGame.matchLottos(listOf(PurchasedLotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet())))
         val expected = mutableMapOf<Rank, Int>()
-        expected.put(Rank.FIRST_WITH_BONUS, 1)
+        expected[Rank.FIRST_WITHOUT_BONUS] = 1
         Assertions.assertEquals(expected, actual)
     }
 }
