@@ -9,16 +9,14 @@ import org.junit.jupiter.params.provider.ValueSource
 class MoneyTest {
 
     @ParameterizedTest
-    @ValueSource(ints = [999, 100001])
-    fun `돈을 생성할 때 금액이 1000 이상 100000 이하가 아니면 에러가 발생한다`(amount: Int) {
+    @ValueSource(ints = [-1, 100001])
+    fun `돈을 생성할 때 금액이 0 이상 100000 이하가 아니면 에러가 발생한다`(amount: Int) {
         assertThatIllegalArgumentException().isThrownBy { Money(amount) }
-            .withMessage("돈은 1000원 이상 100000원 이하의 값으로만 존재할 수 있습니다.")
+            .withMessage("돈은 0원 이상 100000원 이하의 값으로만 존재할 수 있습니다.")
     }
-
-    @Test
-    fun `1000 이상 100000 이하의 금액으로 돈을 생성할 수 있다`() {
-        val amount = 10000
-
+    @ParameterizedTest
+    @ValueSource(ints = [0, 100000])
+    fun `0 이상 100000 이하의 금액으로 돈을 생성할 수 있다`(amount: Int) {
         assertDoesNotThrow { Money(amount) }
     }
 

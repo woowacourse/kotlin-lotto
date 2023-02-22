@@ -1,12 +1,17 @@
 package view
 
 import domain.Lotto
-import domain.Money
 
 class InputView {
-    fun inputAmount(): Money {
-        return Money(readln().toInt())
-    }
+    fun inputAmount(): Int =
+        readln().toIntOrNull().let {
+            var amount = it
+            while (amount == null) {
+                println("int 타입으로 입력 바랍니다.")
+                amount = readln().toIntOrNull()
+            }
+            amount
+        }
 
     fun inputNumberOfLottosToBuyManually(): Int {
         return readln().toInt()

@@ -41,4 +41,12 @@ class OutputView {
         println("6개 일치 (${Rank.FIRST.winningMoney})원 - ${lottoResult[Rank.FIRST]}개")
         println("총 수익률은 ${floor(lottoResult.getRateOfReturn() * 100) / 100}입니다.")
     }
+
+    fun printMessage(message: String) {
+        println(message)
+    }
+
+    fun printErrorMessage(error: Throwable) {
+        println(error.message)
+    }
 }
