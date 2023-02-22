@@ -17,21 +17,16 @@ class LottoController(
 ) {
 
     fun run() {
-        val purchaseMoney = initializePurchaseMoney()
+        val purchaseMoney = repeatWithRunCatching { initializePurchaseMoney() }
         val purchasedLottos = purchaseLottos(purchaseMoney)
         purchasedLottos.printPurchasedLottos()
         checkPurchasedLottosResult(purchaseMoney, purchasedLottos)
     }
 
     private fun initializePurchaseMoney(): PurchaseMoney {
-        return runCatching {
-            val input = InputView.requestPurchaseMoney()
-            val money = numericValidator.validate(input)
-            PurchaseMoney(money)
-        }.getOrElse { error ->
-            println(error.message.toString())
-            initializePurchaseMoney()
-        }
+        val input = InputView.requestPurchaseMoney()
+        val money = numericValidator.validate(input)
+        return PurchaseMoney(money)
     }
 
     private fun initializeCatchNumber(): Set<LottoNumber> {
@@ -50,53 +45,38 @@ class LottoController(
 
     private fun purchaseLottos(purchaseMoney: PurchaseMoney): PurchasedLottos {
         val numberOfTotalLottos = purchaseMoney.money / LOTTO_PRICE
-        val numberOfManualLottos = getNumberOfManualLottos(numberOfTotalLottos)
-        val manualLottos = purchaseManualLottos(numberOfManualLottos)
 
-        val autoLottoGenerator =
-            LottoGenerator(numberOfLottos = purchaseMoney.money / LOTTO_PRICE - numberOfManualLottos)
+        val numberOfManualLottos = repeatWithRunCatching { getNumberOfManualLottos(numberOfTotalLottos) }
+        val manualLottos = repeatWithRunCatching { purchaseManualLottos(numberOfManualLottos) }
+
+        val autoLottoGenerator = LottoGenerator(numberOfLottos = numberOfTotalLottos - numberOfManualLottos)
         val autoLottos = autoLottoGenerator.generateLottos()
 
         return PurchasedLottos(manualLottos + autoLottos)
     }
 
-    private fun purchaseManualLottos(numberOfManualLottos: Int): List<Lotto> {
-        return runCatching {
-            ResultView.printManualLottoRequest()
-            val manualLottoGenerator = LottoGenerator(numberOfManualLottos) {
-                readManualNumbers()
-            }
-            manualLottoGenerator.generateLottos()
-        }.getOrElse { error ->
-            println(error.message.toString())
-            purchaseManualLottos(numberOfManualLottos)
+    private fun getNumberOfManualLottos(maximumQuantity: Int): Int {
+        val numberOfManualLottos =
+            numericValidator.validate(InputView.requestNumberOfManualLottos())
+
+        require(numberOfManualLottos <= maximumQuantity) {
+            NUMBER_OF_MANUAL_LOTTOS_ERROR
         }
+
+        return numberOfManualLottos
+    }
+
+    private fun purchaseManualLottos(numberOfManualLottos: Int): List<Lotto> {
+        ResultView.printManualLottoRequest()
+        val manualLottoGenerator = LottoGenerator(numberOfManualLottos) {
+            repeatWithRunCatching { readManualNumbers() }
+        }
+        return manualLottoGenerator.generateLottos()
     }
 
     private fun readManualNumbers(): List<Int> {
-        return runCatching {
-            val input = InputView.requestManualLottoNumbers()
-            input.map { numericValidator.validate(it) }
-        }.getOrElse { error ->
-            println(error.message.toString())
-            readManualNumbers()
-        }
-    }
-
-    private fun getNumberOfManualLottos(maximumQuantity: Int): Int {
-        return runCatching {
-            val numberOfManualLottos =
-                numericValidator.validate(InputView.requestNumberOfManualLottos())
-
-            require(numberOfManualLottos <= maximumQuantity) {
-                NUMBER_OF_MANUAL_LOTTOS_ERROR
-            }
-
-            numberOfManualLottos
-        }.getOrElse { error ->
-            println(error.message.toString())
-            getNumberOfManualLottos(maximumQuantity)
-        }
+        val input = InputView.requestManualLottoNumbers()
+        return input.map { numericValidator.validate(it) }
     }
 
     private fun PurchasedLottos.printPurchasedLottos() {
@@ -110,6 +90,13 @@ class LottoController(
         val profit = profitCalculator.getProfit(purchaseMoney, lottoResults)
 
         ResultView.printLottoResults(lottoResults, profit)
+    }
+
+    private fun <T> repeatWithRunCatching(action: () -> T): T {
+        return runCatching(action).getOrElse { error ->
+            println(error.message.toString())
+            repeatWithRunCatching(action)
+        }
     }
 
     companion object {
