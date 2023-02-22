@@ -1,7 +1,6 @@
 package domain
 
 class LottoStatistics(private val winningLotto: WinningLotto) {
-
     private fun getCountOfMatch(lotto: Lotto): Int {
         return winningLotto.match(lotto)
     }
@@ -15,7 +14,6 @@ class LottoStatistics(private val winningLotto: WinningLotto) {
         ticket.forEach { lotto ->
             result[getRank(lotto)] = result[getRank(lotto)]!! + 1
         }
-
         return result
     }
 
