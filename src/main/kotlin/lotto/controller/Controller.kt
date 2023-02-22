@@ -19,12 +19,14 @@ class Controller {
     }
 
     private fun initializeLotto(): List<Lotto> {
-        val count = readInputMoney().amount / LottoMoney.MONEY_UNIT
-        readManualLottoCount(count)
-        OutputView.printLottoCountMessage(count)
-        val lottoNumbers = LottoGenerator.generateAuto(count)
-        OutputView.printLottoNumbers(lottoNumbers)
-        return lottoNumbers
+        val totalCount = readInputMoney().amount / LottoMoney.MONEY_UNIT
+        val manualCount = readManualLottoCount(totalCount)
+        val lotto = mutableListOf<Lotto>()
+        readManualLotto(manualCount).map { lotto.add(it) }
+        OutputView.printLottoCountMessage(totalCount)
+        LottoGenerator.generate(totalCount - manualCount).map { lotto.add(it) }
+        OutputView.printLottoNumbers(lotto)
+        return lotto
     }
 
     private fun readManualLottoCount(totalCount: Int): Int {
@@ -34,6 +36,16 @@ class Controller {
         }.getOrElse {
             println("[ERROR] ${it.message}")
             readManualLottoCount(totalCount)
+        }
+    }
+
+    private fun readManualLotto(count: Int): List<Lotto> {
+        return kotlin.runCatching {
+            OutputView.printInputManualLottoNumbersPrompt()
+            InputView.readInputManualLotto(count)
+        }.getOrElse {
+            println("[ERROR] ${it.message}")
+            readManualLotto(count)
         }
     }
 

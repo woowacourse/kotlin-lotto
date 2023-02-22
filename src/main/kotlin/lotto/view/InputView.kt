@@ -28,4 +28,18 @@ object InputView {
         Validator.checkInputManualCount(input, totalCount)
         return input.toInt()
     }
+
+    fun readInputManualLotto(count: Int): List<Lotto> {
+        val manualLotto = mutableListOf<Lotto>()
+        repeat(count) {
+            val input = readln()
+            Validator.checkInputManualLottoNumbers(input)
+            manualLotto.add(makeInputToLotto(input))
+        }
+        return manualLotto
+    }
+
+    private fun makeInputToLotto(input: String): Lotto {
+        return Lotto(input.split(",").map { LottoNumber.from(it.trim().toInt()) })
+    }
 }

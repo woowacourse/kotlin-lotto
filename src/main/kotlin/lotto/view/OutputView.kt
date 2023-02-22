@@ -16,6 +16,7 @@ object OutputView {
     private const val FIRST_PRIZE_MESSAGE = "6개 일치 (2000000000원) - %d개"
     private const val YIELD_MESSAGE = "총 수익률은 %.2f입니다."
     private const val INPUT_MANUAL_COUNT_PROMPT = "수동으로 구매할 로또 수를 입력해 주세요."
+    private const val INPUT_MANUAL_LOTTO_NUMBERS_PROMPT = "수동으로 구매할 번호를 입력해 주세요."
 
     fun printInputMoneyPrompt() {
         println(INPUT_MONEY_PROMPT)
@@ -45,6 +46,10 @@ object OutputView {
 
     fun printInputManualCountPrompt() {
         println(INPUT_MANUAL_COUNT_PROMPT)
+    }
+
+    fun printInputManualLottoNumbersPrompt() {
+        println(INPUT_MANUAL_LOTTO_NUMBERS_PROMPT)
     }
 
     private fun printLotto(lotto: Lotto) {
