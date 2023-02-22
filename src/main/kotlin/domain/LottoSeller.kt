@@ -24,8 +24,11 @@ class LottoSeller(private val numberGenerator: RandomGenerator = NumberRandomGen
     private fun sellManualLottos(requestManualNumbers: List<Lotto>): Ticket = Ticket(requestManualNumbers)
 
     private fun sellAutoLottos(count: Int): Ticket =
-        if (count == 0) Ticket(emptyList())
-        else sellLottos(PurchaseLottoMoney(count * ONE_LOTTO_MONEY))
+        if (count == 0) {
+            Ticket(emptyList())
+        } else {
+            sellLottos(PurchaseLottoMoney(count * ONE_LOTTO_MONEY))
+        }
 
     companion object {
         private const val ERROR_MANUAL_COUNT_NOT_EQUAL = "[ERROR] 실제 수동 구매 개수는 %d이고 요청한 수동 구매의 로또 개수는 %d개 입니다."
