@@ -21,7 +21,7 @@ class Controller {
     private fun initializeLotto(): List<Lotto> {
         val count = readInputMoney().amount / LottoMoney.MONEY_UNIT
         OutputView.printLottoCountMessage(count)
-        val lottoNumbers = LottoGenerator.generate(count)
+        val lottoNumbers = LottoGenerator.generateAuto(count)
         OutputView.printLottoNumbers(lottoNumbers)
         return lottoNumbers
     }

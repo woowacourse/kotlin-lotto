@@ -1,6 +1,6 @@
 package lotto.domain
 
-class Lotto(val numbers: List<LottoNumber>) {
+data class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == LOTTO_SIZE) { LOTTO_SIZE_ERROR }
         require(numbers.distinct().size == LOTTO_SIZE) { LOTTO_DUPLICATE_ERROR }
