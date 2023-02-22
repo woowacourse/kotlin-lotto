@@ -23,7 +23,7 @@ class Controller {
         val manualCount = readManualLottoCount(totalCount)
         val lotto = mutableListOf<Lotto>()
         readManualLotto(manualCount).map { lotto.add(it) }
-        OutputView.printLottoCountMessage(totalCount)
+        OutputView.printLottoCountMessage(manualCount, totalCount - manualCount)
         LottoGenerator.generate(totalCount - manualCount).map { lotto.add(it) }
         OutputView.printLottoNumbers(lotto)
         return lotto
