@@ -20,41 +20,27 @@ class Controller {
 
     private fun initializeLotto(): List<Lotto> {
         val totalCount = readInputMoney().amount / LottoMoney.MONEY_UNIT
-        val manualCount = readManualLottoCount(totalCount)
+        val manualCount = readManualLottoCount()
         val totalLotto = readManualLotto(manualCount) + LottoGenerator.generate(totalCount - manualCount)
         OutputView.printLottoCountMessage(manualCount, totalCount - manualCount)
         OutputView.printLottoNumbers(totalLotto)
         return totalLotto
     }
 
-    private fun readManualLottoCount(totalCount: Int): Int {
-        return kotlin.runCatching {
-            OutputView.printInputManualCountPrompt()
-            InputView.readInputManualCount(totalCount)
-        }.getOrElse {
-            println("$ERROR_PREFIX ${it.message}")
-            readManualLottoCount(totalCount)
-        }
+    private fun readManualLottoCount(): Int {
+        OutputView.printInputManualCountPrompt()
+        // 수동 로또 구매 개수가 구매 가능 개수보다 많은 것은 논리적인 오류이다. 따라서 LottoGenerator에서 검사해주자~
+        return InputView.readInputManualLottoCount() ?: readManualLottoCount()
     }
 
     private fun readManualLotto(count: Int): List<Lotto> {
-        return kotlin.runCatching {
-            OutputView.printInputManualLottoNumbersPrompt()
-            InputView.readInputManualLotto(count)
-        }.getOrElse {
-            println("$ERROR_PREFIX ${it.message}")
-            readManualLotto(count)
-        }
+        OutputView.printInputManualLottoNumbersPrompt()
+        return InputView.readInputManualLotto(count) ?: readManualLotto(count)
     }
 
     private fun readInputMoney(): LottoMoney {
-        return kotlin.runCatching {
-            OutputView.printInputMoneyPrompt()
-            InputView.readInputMoney()
-        }.getOrElse {
-            println("$ERROR_PREFIX ${it.message}")
-            readInputMoney()
-        }
+        OutputView.printInputMoneyPrompt()
+        return InputView.readInputMoney() ?: readInputMoney()
     }
 
     private fun readWinningNumbers(): WinningNumbers {
@@ -64,25 +50,15 @@ class Controller {
     }
 
     private fun readWinningLotto(): Lotto {
-        return kotlin.runCatching {
-            OutputView.printInputWinningNumbersPrompt()
-            InputView.readInputWinningLotto()
-        }.getOrElse {
-            println("$ERROR_PREFIX ${it.message}")
-            readWinningLotto()
-        }
+        OutputView.printInputWinningNumbersPrompt()
+        return InputView.readInputWinningLotto() ?: readWinningLotto()
     }
 
     private fun readBonusNumber(winningLotto: Lotto): LottoNumber {
-        return kotlin.runCatching {
-            OutputView.printInputBonusNumberPrompt()
-            val bonusNumber = InputView.readInputBonusNumber()
-            WinningNumbers(winningLotto, bonusNumber)
-            bonusNumber
-        }.getOrElse {
-            println("$ERROR_PREFIX ${it.message}")
-            readBonusNumber(winningLotto)
-        }
+        OutputView.printInputBonusNumberPrompt()
+        val bonusNumber = InputView.readInputBonusNumber() ?: readBonusNumber(winningLotto)
+        WinningNumbers(winningLotto, bonusNumber)
+        return bonusNumber
     }
 
     companion object {
