@@ -73,6 +73,7 @@ class World {
         val winStatistics = makeWinStatistics(purchasedLottos)
         winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
 
+        val profitRate = winStatistics.calculateProfitRate(purchaseMoney)
         profitRateResult(profitRate)
     }
 
