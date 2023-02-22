@@ -34,7 +34,7 @@ class Controller {
             OutputView.printInputManualCountPrompt()
             InputView.readInputManualCount(totalCount)
         }.getOrElse {
-            println("[ERROR] ${it.message}")
+            println("$ERROR_PREFIX ${it.message}")
             readManualLottoCount(totalCount)
         }
     }
@@ -44,7 +44,7 @@ class Controller {
             OutputView.printInputManualLottoNumbersPrompt()
             InputView.readInputManualLotto(count)
         }.getOrElse {
-            println("[ERROR] ${it.message}")
+            println("$ERROR_PREFIX ${it.message}")
             readManualLotto(count)
         }
     }
@@ -54,7 +54,7 @@ class Controller {
             OutputView.printInputMoneyPrompt()
             InputView.readInputMoney()
         }.getOrElse {
-            println("[ERROR] ${it.message}")
+            println("$ERROR_PREFIX ${it.message}")
             readInputMoney()
         }
     }
@@ -70,7 +70,7 @@ class Controller {
             OutputView.printInputWinningNumbersPrompt()
             InputView.readInputWinningLotto()
         }.getOrElse {
-            println("[ERROR] ${it.message}")
+            println("$ERROR_PREFIX ${it.message}")
             readWinningLotto()
         }
     }
@@ -82,8 +82,12 @@ class Controller {
             WinningNumbers(winningLotto, bonusNumber)
             bonusNumber
         }.getOrElse {
-            println("[ERROR] ${it.message}")
+            println("$ERROR_PREFIX ${it.message}")
             readBonusNumber(winningLotto)
         }
+    }
+
+    companion object {
+        private const val ERROR_PREFIX = "[ERROR]"
     }
 }
