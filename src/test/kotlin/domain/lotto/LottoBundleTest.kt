@@ -33,4 +33,34 @@ internal class LottoBundleTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `add함수가 로또 번들을 잘 추가하는지 테스트`() {
+        // given
+        val baseLottoBundle = LottoBundle(lottos)
+        val beforeSize = baseLottoBundle.size
+        val lottoBundleToAdd = LottoBundle(listOf(Lotto(10, 11, 12, 13, 14, 15)))
+        val addSize: Int = lottoBundleToAdd.size
+
+        // when
+        baseLottoBundle.add(lottoBundleToAdd)
+        val actual: Int = baseLottoBundle.size
+        // then
+        assertThat(actual).isEqualTo(beforeSize + addSize)
+    }
+
+    @Test
+    fun `add함수가 로또 리스트를 잘 추가하는지 테스트`() {
+        // given
+        val baseLottoBundle = LottoBundle(lottos)
+        val beforeSize = baseLottoBundle.size
+        val lottos = listOf<Lotto>(Lotto(1, 2, 3, 4, 5, 6), Lotto(2, 3, 4, 5, 6, 7))
+
+        // when
+        baseLottoBundle.add(lottos)
+        val actual: Int = baseLottoBundle.size
+
+        // then
+        assertThat(actual).isEqualTo(beforeSize + 2)
+    }
 }
