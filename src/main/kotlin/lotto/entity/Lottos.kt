@@ -9,4 +9,6 @@ class Lottos(val value: List<Lotto>) {
             }
         )
     }
+
+    operator fun plus(lotto: Lottos): Lottos = Lottos(value + lotto.value)
 }

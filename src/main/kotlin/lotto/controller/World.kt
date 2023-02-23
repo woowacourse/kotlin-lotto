@@ -9,7 +9,7 @@ import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
 import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
-import lotto.model.RandomLottoGenerator
+import lotto.model.LottoStore
 import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
@@ -39,12 +39,12 @@ class World(
     }
 
     private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
-        val lottoGenerator = RandomLottoGenerator()
+        val store = LottoStore()
         val lottoCount = purchaseMoney.getPurchaseLottoCount()
-        val lottos = Lottos(lottoGenerator.generateLotto(lottoCount))
+        val autoLottos = store.buyAutoLotto(lottoCount)
         outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottoCount)
-        outputView.lottosResult(lottos)
-        return lottos
+        outputView.lottosResult(autoLottos)
+        return autoLottos
     }
 
     private fun initWinNumber(): Lotto {
