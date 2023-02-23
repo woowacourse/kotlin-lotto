@@ -1,9 +1,6 @@
 package lotto.controller
 
-import lotto.entity.Lotto
 import lotto.entity.LottoCount
-import lotto.entity.LottoNumber
-import lotto.entity.PurchaseMoney
 import lotto.entity.PurchasedLottos
 import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
@@ -46,7 +43,7 @@ class World {
         val manualLottoGenerator = InputLottoGenerator { inputView.readLotto() }
         val autoLottoGenerator = RandomLottoGenerator()
         outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
-        return LottoMachine(manualLottoGenerator, autoLottoGenerator).makePurchasedLottos(
+        return LottoMachine(manualLottoGenerator, autoLottoGenerator).producePurchasedLottos(
             lottoManualCount, lottoAutoCount
         )
     }
