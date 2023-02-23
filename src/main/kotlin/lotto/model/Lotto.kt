@@ -32,6 +32,6 @@ class Lotto private constructor(val lotto: List<LottoNumber>) {
     companion object {
         private const val LOTTO_SIZE: Int = 6
 
-        fun create(lotto: List<Int>) = Lotto(lotto.map { LottoNumber.create(it) })
+        fun create(lotto: List<Int>) = Lotto(lotto.map { LottoNumber.create(it) }.sortedBy { it.toInt() })
     }
 }
