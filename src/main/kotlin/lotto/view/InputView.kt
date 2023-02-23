@@ -1,37 +1,26 @@
 package lotto.view
 
-import lotto.domain.model.Lotto
-import lotto.domain.model.LottoMoney
-import lotto.domain.model.LottoNumber
-
 object InputView {
-    fun readInputMoney(): LottoMoney? {
-        val input = readln()
-        return LottoMoney(input.toIntOrNull() ?: return null)
+    fun readInputMoney(): Int {
+        return readln().toIntOrNull() ?: readInputMoney()
     }
 
-    fun readInputWinningLotto(): Lotto? {
-        val lottoNumbers = readln().split(",").map {
-            LottoNumber.from(it.toIntOrNull() ?: return null)
+    fun readInputLottoNumber(): List<Int> {
+        val input = readln().split(",").map {
+            it.trim()
         }
-        return Lotto(lottoNumbers)
-    }
-
-    fun readInputBonusNumber(): LottoNumber? {
-        return LottoNumber.from(readln().toIntOrNull() ?: return null)
-    }
-
-    fun readInputManualLottoCount(): Int? {
-        return readln().toIntOrNull()
-    }
-
-    fun readInputManualLotto(count: Int): List<Lotto>? {
-        val manualLotto = mutableListOf<Lotto>()
-        repeat(count) {
-            val input = readln()
-            val lottoNumbers = input.split(",").map { LottoNumber.from(it.trim().toIntOrNull() ?: return null) }
-            manualLotto.add(Lotto(lottoNumbers))
+        val lottoNumbers = input.map {
+            it.toIntOrNull()
         }
-        return manualLotto
+        if (lottoNumbers.contains(null)) readInputLottoNumber()
+        return input.map { it.toInt() }
+    }
+
+    fun readInputBonusNumber(): Int {
+        return readln().toIntOrNull() ?: readInputBonusNumber()
+    }
+
+    fun readInputManualLottoCount(): Int {
+        return readln().toIntOrNull() ?: readInputManualLottoCount()
     }
 }
