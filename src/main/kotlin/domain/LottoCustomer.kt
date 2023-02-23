@@ -20,9 +20,9 @@ class LottoCustomer(
 
     fun getMyProfitRate(lottoResults: List<LottoResult>): Double = lottoResults.sumOf { lottoResult ->
         lottoResult.prizeMoney
-    }.formatProfitRate(purchaseMoney)
+    }.toFormattingProfitRate(purchaseMoney)
 
-    private fun Int.formatProfitRate(purchaseMoney: PurchaseMoney) =
+    private fun Int.toFormattingProfitRate(purchaseMoney: PurchaseMoney) =
         floor((this.toDouble() / purchaseMoney.money) * DECIMAL_FORMAT) / DECIMAL_FORMAT.toDouble()
 
     companion object {
