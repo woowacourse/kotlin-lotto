@@ -11,8 +11,6 @@ class RandomLottoGenerator : LottoGenerator {
     }
 
     fun generateLotto(lottoCount: Int): List<Lotto> {
-        return buildList(lottoCount) {
-            add(generate())
-        }
+        return List(lottoCount) { generate() }
     }
 }
