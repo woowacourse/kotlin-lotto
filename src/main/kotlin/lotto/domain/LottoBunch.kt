@@ -17,8 +17,8 @@ class LottoBunch(val value: List<Lotto>) {
     }
 
     companion object {
-        private const val MINIMUM_LOTTO_COUNT = 1
+        private const val MINIMUM_LOTTO_COUNT = 0
         private const val MAXIMUM_LOTTO_COUNT = 100
-        private const val ERROR_LOTTO_COUNT_RANGE = "1이상 100 이하의 개수로만 구성될 수 있습니다."
+        private const val ERROR_LOTTO_COUNT_RANGE = "0이상 100 이하의 개수로만 구성될 수 있습니다."
     }
 }
