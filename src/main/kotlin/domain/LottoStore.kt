@@ -1,13 +1,16 @@
 package domain
 
 class LottoStore {
-
-    fun buyLotto(amount: Amount): List<Lotto> {
+    fun buyAutoLotto(count: Count): List<Lotto> {
         val lottoFactory = LottoFactory(RandomNumberGenerator())
-        return lottoFactory.create(getCount(amount))
+        return lottoFactory.create(count)
     }
 
-    private fun getCount(amount: Amount): Int = (amount / LOTTO_PRICE).toInt()
+    fun buyManualLotto(lottos: List<String>): List<Lotto> {
+        return lottos.map {
+            Lotto.create(it.split(",").map { it.toInt() })
+        }
+    }
 
     companion object {
         const val LOTTO_PRICE = 1000
