@@ -6,14 +6,16 @@ class WinLotto(private val winNumber: Lotto, private val bonus: LottoNumber) {
     init {
         require(!winNumber.numbers.contains(bonus)) {
             ERROR_MESSAGE_DUPLICATED_BONUS_NUMBER.format(
-                winNumber.toString(),
-                bonus.value
+                winNumber.toString(), bonus.value
             )
         }
     }
 
     fun makeWinStatistics(purchasedLottos: PurchasedLottos): WinStatistics =
-        WinStatistics(purchasedLottos.value.map { determineRank(it) })
+        WinStatistics(purchasedLottos.value
+            .groupBy { determineRank(it) }
+            .map { it.key to it.value.count() }
+            .toMap())
 
     private fun determineRank(lotto: Lotto): Rank {
         val countOfMatch = lotto.matchLottoNumberCount(winNumber)
