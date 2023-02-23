@@ -1,24 +1,22 @@
 package lotto.view
 
-import lotto.domain.Lotto
-import lotto.domain.LottoNumber
-import lotto.exception.Validator
-
 object InputView {
-    fun readInputMoney(): Int {
-        val input = readln()
-        Validator.checkInputMoney(input)
-        return input.toInt()
+    fun readInputMoney() = readInputNumber()
+
+    fun readInputManualLottoCount() = readInputNumber()
+
+    fun readInputBonusNumber() = readInputNumber()
+
+    private fun readInputNumber(): String {
+        return readln()
     }
 
-    fun readInputWinningLotto(): Lotto {
-        val input = readln()
-        return Lotto(input.split(",").map { LottoNumber(it.toInt()) })
-    }
+    fun readManualLottoNumbers() = readInputNumbers()
 
-    fun readInputBonusNumber(): LottoNumber {
+    fun readInputWinningLotto() = readInputNumbers()
+
+    private fun readInputNumbers(): List<String> {
         val input = readln()
-        Validator.checkInputBonusNumber(input)
-        return LottoNumber(input.toInt())
+        return input.split(",")
     }
 }

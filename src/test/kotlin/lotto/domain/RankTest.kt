@@ -1,12 +1,17 @@
 package lotto.domain
 
-import lotto.constants.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class RankTest {
+    @MethodSource("rankNumbers")
+    @ParameterizedTest
+    fun `당첨 등수를 구하는 기준은 일치 개수와 보너스볼 일치여부이다`(countOfMatch: Int, matchBonus: Boolean, rank: Rank) {
+        assertThat(rank.isSame(countOfMatch, matchBonus)).isTrue
+    }
+
     @MethodSource("rankNumbers")
     @ParameterizedTest
     fun `당첨 등수를 구한다`(countOfMatch: Int, matchBonus: Boolean, rank: Rank) {

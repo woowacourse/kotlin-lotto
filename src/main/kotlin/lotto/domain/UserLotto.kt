@@ -1,7 +1,5 @@
 package lotto.domain
 
-import lotto.constants.Rank
-
 class UserLotto(private val lottoNumbers: List<Lotto>) {
     fun calculateTotalRank(winningNumbers: WinningNumbers): List<Rank> {
         val ranks = mutableListOf<Rank>()
@@ -16,7 +14,13 @@ class UserLotto(private val lottoNumbers: List<Lotto>) {
         return ranks
     }
 
-    fun calculateCount(): Int {
-        return lottoNumbers.size
+    companion object {
+        private const val MANUAL_LOTTO_INPUT_ERROR = "수동 로또 구입 개수는 숫자여야 합니다."
+        private const val MANUAL_LOTTO_COUNT_ERROR = "수동 로또의 개수는 0이상 구매 로또 개수 이하여야 합니다."
+
+        fun validateInputManualLottoCount(lottoCount: Int, manualLottoCount: String) {
+            require(manualLottoCount.toIntOrNull() != null) { MANUAL_LOTTO_INPUT_ERROR }
+            require(manualLottoCount.toInt() in (0..lottoCount)) { MANUAL_LOTTO_COUNT_ERROR }
+        }
     }
 }
