@@ -9,6 +9,7 @@ class Lotto(val lottoNumbers: Set<LottoNumber>) {
     constructor(lottoNumbers: List<String>) : this(
         lottoNumbers
             .map { LottoNumber.of(it.toIntOrNull() ?: throw NumberFormatException("[Error] 숫자로만 입력해주세요.")) }
+            .sortedBy { it.number }
             .toSet()
     ) {
         require(lottoNumbers.size == lottoNumbers.distinct().size) { "[Error] 중복된 수가 있습니다." }

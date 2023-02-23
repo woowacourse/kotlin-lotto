@@ -100,4 +100,24 @@ class LottoTest {
         // then
         assertThat(exception.message).isEqualTo("[Error] 숫자로만 입력해주세요.")
     }
+
+    @Test
+    fun `순서에 맞지 않게 로또 번호가 입력될 경우 정렬한다`() {
+        // given
+        val lottoNumbers = listOf<String>("1", "5", "3", "6", "4", "2")
+        val expected = setOf(
+            LottoNumber.of(1),
+            LottoNumber.of(2),
+            LottoNumber.of(3),
+            LottoNumber.of(4),
+            LottoNumber.of(5),
+            LottoNumber.of(6)
+        ).toList()
+
+        // when
+        val actual = Lotto(lottoNumbers).lottoNumbers.toList()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }
