@@ -11,6 +11,10 @@ object InputView {
         return readln()
     }
 
+    fun inputManualLotto(): List<String> {
+        return (readln().split(SEPARATOR))
+    }
+
     fun inputWinningNumbers(): List<String> {
         return (readln().split(SEPARATOR))
     }

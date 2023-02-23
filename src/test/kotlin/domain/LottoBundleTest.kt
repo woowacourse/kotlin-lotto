@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test
 class LottoBundleTest {
 
     @Test
-    fun `로또 개수만큼 발행`() {
+    fun `자동으로 발행해야할 로또 개수만큼 발행`() {
         // given
-        val lottoCount: Int = 5
+        val lottoBundle = LottoBundle(mutableListOf<Lotto>())
         val lotto = Lotto(
             setOf(
                 LottoNumber.of(1),
@@ -19,10 +19,11 @@ class LottoBundleTest {
                 LottoNumber.of(6)
             )
         )
+
         // when
-        val lottoBundle = LottoBundle(lottoCount) { lotto }
+        lottoBundle.autoGenerate(5) { lotto }
 
         // then
-        Assertions.assertThat(lottoBundle.lottos.size).isEqualTo(lottoCount)
+        Assertions.assertThat(lottoBundle.lottos.size).isEqualTo(5)
     }
 }

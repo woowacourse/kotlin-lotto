@@ -61,7 +61,8 @@ class WinningNumbersTest {
             Lotto((1..6).map { LottoNumber.of(it) }.toSet()),
             LottoNumber.of(7)
         )
-        val lottoBundle = LottoBundle(3, TestLottos())
+        val lottoBundle = LottoBundle(mutableListOf())
+        lottoBundle.autoGenerate(3, TestLottos())
 
         val expected = mapOf<Rank, Int>(
             Rank.FIRST to 1,

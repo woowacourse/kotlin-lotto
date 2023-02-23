@@ -16,13 +16,12 @@ class LottoController {
     fun startLottoGame() {
         val spendMoney: Payment = getMoney()
         val maxLottoCount: Int = spendMoney.calculateLottoCount()
-
-        val manualCount = getManualCount(maxLottoCount)
-        OutputView.printPurchasedLottoCount(maxLottoCount)
-
-        val lottoBundle = LottoBundle(maxLottoCount, lottoGenerator)
+        val manualCount: ManualCount = getManualCount(maxLottoCount)
+        val autoCount: Int = manualCount.calculateAutoLottoCount()
+        val lottoBundle = LottoBundle(getManualLottos(manualCount.count))
+        lottoBundle.autoGenerate(autoCount, lottoGenerator)
+        OutputView.printPurchasedLottoCount(manualCount.count, autoCount)
         OutputView.printPurchasedLotto(lottoBundle)
-
         produceResult(lottoBundle, spendMoney)
     }
 
@@ -44,6 +43,25 @@ class LottoController {
             var manualCount: ManualCount? = null
             val result = kotlin.runCatching { manualCount = ManualCount(count, maxCount) }
             if (result.isSuccess) return manualCount!!
+            println(result.exceptionOrNull()?.message)
+        }
+    }
+
+    private fun getManualLottos(manualCount: Int): MutableList<Lotto> {
+        val manualLottos = mutableListOf<Lotto>()
+        if (manualCount != 0) OutputView.printRequestManualLottos()
+        while (manualLottos.size < manualCount) {
+            manualLottos.add(getManualLotto())
+        }
+        return manualLottos
+    }
+
+    private fun getManualLotto(): Lotto {
+        while (true) {
+            val lotto: List<String> = InputView.inputManualLotto()
+            var manualLotto: Lotto? = null
+            val result = kotlin.runCatching { manualLotto = Lotto(lotto) }
+            if (result.isSuccess) return manualLotto!!
             println(result.exceptionOrNull()?.message)
         }
     }
