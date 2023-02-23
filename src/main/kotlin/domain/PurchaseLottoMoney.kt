@@ -1,6 +1,7 @@
 package domain
 
-class PurchaseLottoMoney(val money: Int) {
+@JvmInline
+value class PurchaseLottoMoney(val money: Int) {
     val purchaseCount: Int
         get() = money / ONE_LOTTO_MONEY
 
