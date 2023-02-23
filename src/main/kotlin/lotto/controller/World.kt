@@ -47,7 +47,7 @@ class World(
 
     private fun initLottos(purchaseLottoCount: LottoCount, manualLottoCount: LottoCount): Lottos {
         val store = LottoStore()
-        val autoLottoCount = LottoCount(purchaseLottoCount.value - manualLottoCount.value)
+        val autoLottoCount = purchaseLottoCount.calculateAutoLottoCount(manualLottoCount)
         val manualLottos = store.buyManualLotto(manualLottoCount.value, *initManualLotto(manualLottoCount))
         val autoLottos = store.buyAutoLotto(autoLottoCount.value)
         val totalLottos = manualLottos + autoLottos
