@@ -2,7 +2,7 @@ package domain
 
 import model.LottoNumber
 
-class ShuffledNumberGenerator : NumberGenerator {
+class ShuffledLottoGenerator : LottoGenerator {
     override fun generate(): List<LottoNumber> {
         val numbers: List<Int> = range.toList().shuffled()
 

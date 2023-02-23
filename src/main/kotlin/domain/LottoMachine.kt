@@ -2,10 +2,10 @@ package domain
 
 import model.Lotto
 
-class LottoMachine(private val numberGenerator: NumberGenerator) {
+class LottoMachine(private val lottoGenerator: LottoGenerator) {
 
     fun generateLotto(): Lotto {
-        val numbers = numberGenerator.generate()
+        val numbers = lottoGenerator.generate()
 
         return Lotto(numbers)
     }
