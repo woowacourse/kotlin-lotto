@@ -1,9 +1,9 @@
 package domain
 
-class WinningResult(val result: Map<Rank, Int>) {
+class WinningResult(val winningRankResult: Map<Rank, Int>) {
 
     fun getWinningMoney(): Int {
-        return result.map { it.key.winningMoney * it.value }.sum()
+        return winningRankResult.map { it.key.winningMoney * it.value }.sum()
     }
 
     fun calculateYield(money: Money): Double {
