@@ -13,7 +13,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             return when (val rank = values().find { it.countOfMatch == countOfMatch }) {
                 SECOND, THIRD -> divideBonusRank(matchBonus)
                 FIRST, FOURTH, FIFTH, MISS -> rank
-                null -> rank
+                else -> null
             }
         }
 
