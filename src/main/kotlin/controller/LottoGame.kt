@@ -26,7 +26,7 @@ class LottoGame {
 
     private fun makeLottos(money: Money): Lottos {
         val count = input.InputManualLottoCount()
-        val manualLottos = LottoMaker().makeManualLottos(input.inputManualLottoNumber(count))
+        val manualLottos = LottoMaker().makeManualLottos(input.inputManualLottoNumber(count).map { LottoMaker().wrapLotto(it) })
         val autoLottos = LottoMaker().makeAutoLottos(money.lottoCount() - count)
         output.outputLottoSizeMessage(count, money.lottoCount() - count)
         output.outputLottos(Lottos(manualLottos + autoLottos))
@@ -34,7 +34,7 @@ class LottoGame {
     }
 
     private fun startGame(lottos: Lottos): WinningResult {
-        val winningNumber = WinningNumber(input.inputWinningLotto(), input.inputBonusNumber())
+        val winningNumber = WinningNumber(LottoMaker().wrapLotto(input.inputWinningLotto()), input.inputBonusNumber())
         return lottos.matchLottos(winningNumber)
     }
 
