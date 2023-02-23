@@ -1,11 +1,11 @@
 package domain
 
-data class Lotto(private val numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
+data class Lotto(private val numbers: Set<LottoNumber>) : Set<LottoNumber> by numbers {
     init {
         require(numbers.size == LOTTO_SIZE) { INPUT_LOTTO_SIZE_ERROR_MESSAGE }
     }
 
-    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) })
+    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) }.sortedBy { it.number }.toSet())
 
     fun countSameLottoNumber(lotto: Lotto): Int {
         return numbers.count { lotto.contains(it) }
