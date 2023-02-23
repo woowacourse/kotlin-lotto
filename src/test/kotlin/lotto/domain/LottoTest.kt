@@ -8,52 +8,35 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class LottoTest {
+    private fun Lotto(numbers: List<Int>): Lotto {
+        return Lotto(numbers.map { LottoNumber(it) })
+    }
+
     @Test
     fun `로또는 번호 여섯 개를 가져야 한다`() {
         assertThrows<IllegalArgumentException> {
-            Lotto(
-                TestNumberGenerator(
-                    listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3),
-                        LottoNumber(4), LottoNumber(5)
-                    )
-                ).generate()
-            )
+            Lotto(listOf(1, 2, 3, 4, 5))
         }
     }
 
     @Test
     fun `로또는 중복 되지 않는 숫자를 가져야 한다`() {
         assertThrows<IllegalArgumentException> {
-            Lotto(
-                TestNumberGenerator(
-                    listOf(
-                        LottoNumber(4), LottoNumber(3), LottoNumber(1), LottoNumber(2), LottoNumber(2),
-                        LottoNumber(
-                            2
-                        )
-                    )
-                ).generate()
-            )
+            Lotto(listOf(1, 2, 2, 3, 4, 5))
         }
     }
 
     @MethodSource("matchingCountNumbers")
     @ParameterizedTest
-    fun `당첨 번호와 몇개 일치 하는지 판단 한다`(numbers: List<LottoNumber>, matchCount: Int) {
+    fun `당첨 번호와 몇개 일치 하는지 판단 한다`(numbers: List<Int>, matchCount: Int) {
         val lotto = Lotto(numbers)
-        val winningLotto = Lotto(
-            listOf(
-                LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6)
-            )
-        )
-
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         assertThat(lotto.countMatchingNumbers(winningLotto)).isEqualTo(matchCount)
     }
 
     @MethodSource("matchingBonusNumber")
     @ParameterizedTest
-    fun `보너스 번호와 일치하는지 판단한다`(numbers: List<LottoNumber>, bonusNumber: LottoNumber, isCorrect: Boolean) {
+    fun `보너스 번호와 일치하는지 판단한다`(numbers: List<Int>, bonusNumber: LottoNumber, isCorrect: Boolean) {
         val lotto = Lotto(numbers)
         assertThat(lotto.checkMatchingBonusNumber(bonusNumber)).isEqualTo(isCorrect)
     }
@@ -63,48 +46,26 @@ class LottoTest {
         fun matchingCountNumbers(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    listOf(
-                        LottoNumber(7), LottoNumber(8), LottoNumber(9), LottoNumber(10), LottoNumber(11), LottoNumber(12)
-                    ),
-                    0
+                    listOf(7, 8, 9, 10, 11, 12), 0
                 ),
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1), LottoNumber(7), LottoNumber(8), LottoNumber(9), LottoNumber(10), LottoNumber(11)
-                    ),
-                    1
+                    listOf(1, 7, 8, 9, 10, 11), 1
                 ),
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(7), LottoNumber(8), LottoNumber(9), LottoNumber(10)
-                    ),
-                    2
+                    listOf(1, 2, 7, 8, 9, 10), 2
                 ),
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(7), LottoNumber(8), LottoNumber(9)
-                    ),
-                    3
+                    listOf(1, 2, 3, 7, 8, 9), 3
                 ),
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(7), LottoNumber(8)
-                    ),
-                    4
+                    listOf(1, 2, 3, 4, 7, 8), 4
                 ),
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(7)
-                    ),
-                    5
+                    listOf(1, 2, 3, 4, 5, 7), 5
                 ),
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6)
-                    ),
-                    6
+                    listOf(1, 2, 3, 4, 5, 6), 6
                 )
-
             )
         }
 
@@ -112,32 +73,12 @@ class LottoTest {
         fun matchingBonusNumber(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(4),
-                        LottoNumber(5),
-                        LottoNumber(6)
-                    ),
-                    LottoNumber(3), true
+                    listOf(1, 2, 3, 4, 5, 6), LottoNumber(3), true
                 ),
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5),
-                        LottoNumber(
-                            6
-                        )
-                    ),
-                    LottoNumber(7), false
+                    listOf(1, 2, 3, 4, 5, 6), LottoNumber(7), false
                 )
             )
-        }
-    }
-
-    class TestNumberGenerator(private val numbers: List<LottoNumber>) : LottoNumberGenerator {
-        override fun generate(): List<LottoNumber> {
-            return numbers
         }
     }
 }

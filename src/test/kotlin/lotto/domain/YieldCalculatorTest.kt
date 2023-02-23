@@ -6,7 +6,6 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class YieldCalculatorTest {
-
     @MethodSource("yieldTestNumbers")
     @ParameterizedTest
     fun `수익률을 계산한다`(lottoCount: Int, ranks: List<Rank>, yield: Double) {
