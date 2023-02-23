@@ -1,5 +1,6 @@
 package view.validator
 
+import common.convertToLottoNumberSet
 import domain.PurchaseLottoMoney
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -59,5 +60,19 @@ class ValidatorTest {
         val manualCount = 4
         val result = Validator.validateMakeLottoPurchaseInfo(money, manualCount)
         assertThat(result).isNull()
+    }
+
+    @Test
+    fun `주어진 배열이 Lotto로 변환에 성공해서 반환`() {
+        val numbers = listOf(1, 2, 3, 4, 5, 6)
+        val result = Validator.validateMakeLotto(numbers)
+        assertThat(result?.numbers).containsAll(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet())
+    }
+
+    @Test
+    fun `주어진 배열이 Lotto로 변환에 실패해서 null반환`() {
+        val numbers = listOf(1, 2, 3, 4, 5, 5)
+        val result = Validator.validateMakeLotto(numbers)
+        assertThat(result?.numbers).isNull()
     }
 }

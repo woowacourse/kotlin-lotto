@@ -1,5 +1,7 @@
 package view.validator
 
+import domain.Lotto
+import domain.LottoNumber
 import domain.LottoPurchaseInfo
 import domain.PurchaseLottoMoney
 
@@ -36,10 +38,25 @@ object Validator {
         return LottoPurchaseInfo(purchaseLottoMoney, manualCount)
     }
 
+    fun validateMakeLotto(numbers: List<Int>): Lotto? {
+        if (numbers.any { it !in LottoNumber.MINIMUM_LOTTO_RANGE..LottoNumber.MAXIMUM_LOTTO_RANGE }) {
+            println(ERROR_MAKE_LOTTO_TO_RANGE)
+            return null
+        }
+        if (numbers.distinct().size != Lotto.LOTTO_SIZE || numbers.size != Lotto.LOTTO_SIZE) {
+            println(ERROR_MAKE_LOTTO_TO_SIZE)
+            return null
+        }
+        return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
+    }
+
     private const val ERROR_CONVERT_INT = "[ERROR] 숫자로 다시 입력해주세요."
     private const val ERROR_CONVERT_INT_LIST = "[ERROR] %s로 숫자를 구분해서 다시 입력해주세요."
     private const val ERROR_MAKE_LOTTO_PURCHASE_MONEY =
         "[ERROR] 로또를 구입하기 위해서는 최소한 ${PurchaseLottoMoney.ONE_LOTTO_MONEY}원 이상의 금액이여야 합니다."
     private const val ERROR_MAKE_LOTTO_PURCHASE_INFO =
         "[ERROR] 수동 발급 개수는 발급 가능한 총 개수를 넘을 수 없는 음이 아닌 수여야 합니다."
+    private const val ERROR_MAKE_LOTTO_TO_RANGE =
+        "[ERROR] 각 숫자는 ${LottoNumber.MINIMUM_LOTTO_RANGE}에서 ${LottoNumber.MAXIMUM_LOTTO_RANGE} 사이로 구성되어야 합니다."
+    private const val ERROR_MAKE_LOTTO_TO_SIZE = "[ERROR] 로또는 서로 다른 ${Lotto.LOTTO_SIZE}개의 숫자로 구성되어야 합니다."
 }
