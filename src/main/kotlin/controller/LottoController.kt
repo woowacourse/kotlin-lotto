@@ -13,6 +13,14 @@ class LottoController(val inputView: InputView, val outputView: OutputView) {
         val autoLottos = LottoMachine(RandomLottoGenerator()).generateAutoLottos(lottoCount.getAutoLottoCount())
         outputView.outputLottoSizeMessage(lottoCount.count, lottoCount.getAutoLottoCount())
         outputView.outputLottos(manualLottos + autoLottos)
+        val winningResult = getWinningResult(manualLottos, autoLottos)
+        outputView.outputWinningResult(winningResult)
+        outputView.outputYield(winningResult.calculateYield(money))
+    }
+    private fun getWinningResult(manualLottos: List<Lotto>, autoLottos: List<Lotto>): WinningResult {
+        val winningLotto =
+            WinningLotto(askWinningLotto(inputView.inputWinningLotto()), askBonusNumber(inputView.inputBonusNumber()))
+        return WinningResult(matchLottos(manualLottos + autoLottos, winningLotto))
     }
     private fun askMoney(input: Int?): Money {
         return runCatching {
