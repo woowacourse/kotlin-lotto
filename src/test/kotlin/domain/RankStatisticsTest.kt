@@ -8,7 +8,7 @@ class RankStatisticsTest {
     fun `등수를 받아서 업데이트 하면 해당 등수 개수를 1 증가시킨다`() {
         // given
         val rank = Rank.FIFTH
-        val rankStatistics = RankStatistics(3000)
+        val rankStatistics = RankStatistics()
 
         // when
         rankStatistics.updateRankCount(rank)
@@ -23,7 +23,7 @@ class RankStatisticsTest {
     fun `해당하는 등수 개수를 반환한다`() {
         // given
         val rank = Rank.FIFTH
-        val rankStatistics = RankStatistics(3000)
+        val rankStatistics = RankStatistics()
 
         // when
         rankStatistics.updateRankCount(rank)
@@ -37,7 +37,7 @@ class RankStatisticsTest {
     fun `전체 로또의 수익률을 계산한다`() {
         // given
         val rank = Rank.FIFTH
-        val rankStatistics = RankStatistics(3000)
+        val rankStatistics = RankStatistics()
 
         // when
         rankStatistics.updateRankCount(rank)
