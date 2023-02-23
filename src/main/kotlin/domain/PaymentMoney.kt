@@ -3,11 +3,11 @@ package domain
 open class PaymentMoney(val value: Int) {
 
     init {
-        require(value > ONE_LOTTO_PRICE) { PAYMENT_MONEY_MINIMUM_ERROR_MESSAGE }
+        require(value >= ONE_LOTTO_PRICE) { PAYMENT_MONEY_MINIMUM_ERROR_MESSAGE }
     }
 
-    fun getTotalLottoCount(): Int {
-        return this.value / ONE_LOTTO_PRICE
+    fun getTotalLottoCount(): Count {
+        return Count(this.value / ONE_LOTTO_PRICE)
     }
 
     companion object {

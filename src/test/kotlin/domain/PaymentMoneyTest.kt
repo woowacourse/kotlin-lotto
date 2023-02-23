@@ -25,7 +25,7 @@ class PaymentMoneyTest() {
         val money = 14000
 
         // when
-        val actual = PaymentMoney(14000).getTotalLottoCount()
+        val actual = PaymentMoney(14000).getTotalLottoCount().value
 
         // then
         val expected = 14
