@@ -1,5 +1,3 @@
-package controller
-
 import domain.Count
 import domain.Lotto
 import domain.LottoCount
@@ -7,14 +5,10 @@ import domain.LottoMachine
 import domain.PaymentMoney
 import domain.RankStatistics
 import domain.WinningNumber
-import inputvalidation.BonusNumberValidation
-import inputvalidation.LottoValidation
-import inputvalidation.ManualLottoCountValidation
-import inputvalidation.PaymentMoneyValidation
 import view.InputViewInterface
 import view.OutputViewInterface
 
-class Controller(
+class LottoGameController(
     private val inputView: InputViewInterface,
     private val outputView: OutputViewInterface,
     private val lottoMachine: LottoMachine
