@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource
 class WinningLottoTest {
     @ParameterizedTest
     @MethodSource("provideWinningLottoAndPurchasedLottoAndMatchedResult")
-    fun `구매한 로또 한 개가 주어졌을 때, 호출 시, 일치하는 번호 개수와 보너스 번호 일치 여부를 반환한다`(
+    fun `구매한 로또 한 개가 주어졌을 때, 일치하는 번호 개수와 보너스 번호 일치 여부를 반환한다`(
         winningLotto: WinningLotto,
         bonusNumber: LottoNumber,
         purchasedLotto: PurchasedLotto,
@@ -23,7 +23,7 @@ class WinningLottoTest {
 
     @ParameterizedTest
     @MethodSource("provideWinningLottoAndNotContainedBonusNumber")
-    fun `당첨번호와 6개의 당첨번호에 포함되지 않는 보너스 번호가 주어졌을 때, LottoTicket 객체 생성시, 예외가 발생하지 않는다`(
+    fun `당첨번호와 6개의 당첨번호에 포함되지 않는 보너스 번호가 주어졌을 때, 예외가 발생하지 않는다`(
         lottoNumbers: List<LottoNumber>,
         bonusNumber: LottoNumber
     ) {
@@ -34,7 +34,7 @@ class WinningLottoTest {
 
     @ParameterizedTest
     @MethodSource("provideWinningLottoAndContainedBonusNumber")
-    fun `당첨번호와 6개의 당첨번호에 포함되는 보너스 번호가 주어졌을 때, WinningLotto 객체 생성시, IllegalStateException이 발생한다`(
+    fun `당첨번호와 6개의 당첨번호에 포함되는 보너스 번호가 주어졌을 때, IllegalStateException이 발생한다`(
         lottoNumbers: List<LottoNumber>,
         bonusNumber: LottoNumber
     ) {

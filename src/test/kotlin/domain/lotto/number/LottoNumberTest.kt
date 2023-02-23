@@ -9,14 +9,14 @@ import org.junit.jupiter.params.provider.ValueSource
 class LottoNumberTest {
     @ParameterizedTest
     @MethodSource("provideValidRangeLottoNumber")
-    fun `1이사 45이하 숫자가 주어졌을 때, LottoNumber 객체 생성시, 예외가 발생하지 않는다`(number: Int) {
+    fun `1이사 45이하 숫자가 주어졌을 때, 예외가 발생하지 않는다`(number: Int) {
         val lottoNumber = LottoNumber(number)
         Assertions.assertThat(lottoNumber.value).isBetween(1, 45)
     }
 
     @ParameterizedTest
     @ValueSource(ints = [-1, 0, 46, 100])
-    fun `1미만 45초과 숫자가 주어졌을 때, LottoNumber 객체 생성시, IllegalArgumentException이 발생한다`() {
+    fun `1미만 45초과 숫자가 주어졌을 때, IllegalArgumentException이 발생한다`() {
         Assertions.assertThatIllegalArgumentException().isThrownBy {
             val lottoNumber = LottoNumber(0)
             Assertions.assertThat(lottoNumber.value).isBetween(1, 45)

@@ -20,7 +20,7 @@ class PurchasedLottoTest {
 
     @ParameterizedTest
     @MethodSource("providePurchasedLotto")
-    fun `구매한 로또가 주어졌을 때, getSortedLotto 호출시, 정렬된 Lotto를 반환한다`(
+    fun `구매한 로또가 주어졌을 때, 정렬된 로또를 반환한다`(
         purchasedLotto: PurchasedLotto,
         expectedLotto: PurchasedLotto
     ) {
@@ -32,7 +32,7 @@ class PurchasedLottoTest {
 
     @ParameterizedTest
     @MethodSource("provideWinningLottoAndBonusNumberAndResultRank")
-    fun `WinningLotto와 BonusNumber가 주어졌을 때, matchLotto 호출시, expected와 동일한 Rank를 반환한다`(
+    fun `우승 로또와 보너스 로또가 주어졌을 때, expected와 동일한 랭크를 반환한다`(
         winningLotto: WinningLotto,
         bonusNumber: LottoNumber,
         expected: Rank
