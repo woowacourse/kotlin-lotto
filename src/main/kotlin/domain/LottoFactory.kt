@@ -2,10 +2,10 @@ package domain
 
 class LottoFactory(private val numberGenerator: RandomNumberGenerator) {
 
-    fun create(count: Int): List<Lotto> {
-        require(count in MINIMUM_COUNT..MAXIMUM_COUNT) { ERROR_CREATE_COUNT.format(count) }
+    fun create(count: Count): List<Lotto> {
+        require(count.toInt() in MINIMUM_COUNT..MAXIMUM_COUNT) { ERROR_CREATE_COUNT.format(count) }
 
-        return (1..count).map { createLotto() }
+        return (1..count.toInt()).map { createLotto() }
     }
 
     private fun createLotto() = Lotto.create(numberGenerator.generateNumbers())
