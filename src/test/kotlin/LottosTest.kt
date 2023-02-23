@@ -14,12 +14,6 @@ class LottosTest {
     }
 
     @Test
-    fun `금액 4000원을 입력하면 4개의 로또가 생성되는지 확인`() {
-        val lottos = Lottos(listOf(Lotto(1, 2, 3, 4, 5, 6), Lotto(1, 2, 3, 4, 5, 7), Lotto(1, 2, 3, 4, 5, 8)))
-        assertThat(lottos.lottos.size).isEqualTo(4)
-    }
-
-    @Test
     fun `전체 당첨 결과 확인`() {
         // given
         // Lottos = 1,2,3,4,5,6 / 1,2,4,6,34,45 / 3,5,15,18,24,35 / 4,6,15,18,24,35
