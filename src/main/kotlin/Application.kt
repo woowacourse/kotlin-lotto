@@ -1,4 +1,4 @@
-import Controller.Controller
+import controller.Controller
 import domain.LottoGenerator
 import domain.LottoMachine
 import view.InputView

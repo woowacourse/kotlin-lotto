@@ -13,4 +13,5 @@ interface OutputViewInterface {
 
     fun printRankCount(rank: Rank, count: Int)
     fun printProfitRate(profitRate: Double, isLoss: Boolean)
+    fun printErrorMessage(errorMessage: String)
 }

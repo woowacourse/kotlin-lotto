@@ -7,7 +7,7 @@ import domain.RankStatistics
 
 class OutputView : OutputViewInterface {
     override fun printLottoCountResult(lottoCount: LottoCount) {
-        println("수동으로 ${lottoCount.manualCount}장, 자동으로 ${lottoCount.automaticCount}개를 구매했습니다.")
+        println("수동으로 ${lottoCount.manualCount.value}장, 자동으로 ${lottoCount.automaticCount.value}개를 구매했습니다.")
     }
 
     override fun printAutomaticLottoNumbers(lotto: Lotto) {
@@ -33,6 +33,10 @@ class OutputView : OutputViewInterface {
         println("총 수익률은 ${String.format("%.2f", profitRate)}입니다.")
         if (isLoss) println(PROFIT_RATE_LOSS)
         if (!isLoss) println(PROFIT_RATE_GAIN)
+    }
+
+    override fun printErrorMessage(errorMessage: String) {
+        println(errorMessage)
     }
 
     companion object {
