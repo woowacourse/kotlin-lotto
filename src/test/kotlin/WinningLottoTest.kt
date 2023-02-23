@@ -1,8 +1,8 @@
 import domain.Lotto
 import domain.LottoNumber
+import domain.Rank
 import domain.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -18,58 +18,30 @@ class WinningLottoTest {
         }
     }
 
-    @Test
-    fun `로또와 당첨번호가 일치하는 개수가 3개인지 확인`() {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto(listOf(1, 2, 3, 10, 20, 30).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(40)
-
-        assertThat(WinningLotto(winningLotto, bonus).countSameLottoNumber(lotto)).isEqualTo(3)
-    }
-
-    @Test
-    fun `로또와 당첨번호가 일치하는 개수가 4개인지 확인`() {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 10, 20).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(40)
-
-        assertThat(WinningLotto(winningLotto, bonus).countSameLottoNumber(lotto)).isEqualTo(4)
-    }
-
-    @Test
-    fun `로또와 당첨번호가 일치하는 개수가 5개인지 확인`() {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 10).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(40)
-
-        assertThat(WinningLotto(winningLotto, bonus).countSameLottoNumber(lotto)).isEqualTo(5)
-    }
-
-    @Test
-    fun `로또와 당첨번호가 일치하는 개수가 6개인지 확인`() {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto((1..6).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(40)
-
-        assertThat(WinningLotto(winningLotto, bonus).countSameLottoNumber(lotto)).isEqualTo(6)
-    }
-
+    /**
+     * 생성된 로또 Lotto(1, 2, 3, 4, 5, 6)
+     * 당첨 로또 Lotto(1, 2, 3, 7, 8, 9)
+     */
+    @CsvSource(
+        value = ["1,2,3,7,8,9:20:FIFTH", "1,2,3,4,8,9:20:FOURTH", "1,2,3,4,5,9:20:THIRD", "1,2,3,4,5,9:6:SECOND", "1,2,3,4,5,6:20:FIRST"],
+        delimiter = ':',
+    )
     @ParameterizedTest
-    @CsvSource(value = ["6,true", "40,false"])
-    fun `보너스 번호가 로또 번호에 포함되어 있는지 확인`(number: Int, hasBonus: Boolean) {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto(listOf(1, 2, 3, 10, 20, 30).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(number)
+    fun `생성된 로또가 당첨 로또와 보너스 번호를 비교해서 등수 확인`(lottoNumbers: String, bonus: Int, rank: String) {
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val winningLotto = Lotto(*lottoNumbers.split(",").map { it.toInt() }.toIntArray())
+        val bonusNumber = LottoNumber.from(bonus)
 
-        assertThat(WinningLotto(winningLotto, bonus).hasBonusNumber(lotto)).isEqualTo(hasBonus)
+        val actual = WinningLotto(winningLotto, bonusNumber).matchLotto(lotto)
+        assertThat(actual).isEqualTo(Rank.valueOf(rank))
     }
 
     companion object {
         @JvmStatic
         fun produceOverlayBonusNumber(): List<Arguments> {
             return listOf(
-                Arguments.of(Lotto((1..6).map { LottoNumber.from(it) }), LottoNumber.from(6)),
-                Arguments.of(Lotto(listOf(1, 5, 10, 15, 20, 30).map { LottoNumber.from(it) }), LottoNumber.from(15)),
+                Arguments.of(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(6)),
+                Arguments.of(Lotto(1, 5, 10, 15, 20, 30), LottoNumber.from(15)),
             )
         }
     }

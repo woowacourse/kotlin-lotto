@@ -1,12 +1,18 @@
 package domain
 
-class Lotto(val numbers: List<LottoNumber>) {
+data class Lotto(private val numbers: List<LottoNumber>) : List<LottoNumber> by numbers {
     init {
         require(numbers.size == LOTTO_SIZE) { INPUT_LOTTO_SIZE_ERROR_MESSAGE }
-        require(numbers.toSet().size == LOTTO_SIZE) { INPUT_LOTTO_DUPLICATE_ERROR_MESSAGE }
     }
-    fun matchLotto(winningLotto: WinningLotto): Rank {
-        return Rank.valueOf(winningLotto.countSameLottoNumber(numbers), winningLotto.hasBonusNumber(numbers))
+
+    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) })
+
+    fun countSameLottoNumber(lotto: Lotto): Int {
+        return numbers.count { lotto.contains(it) }
+    }
+
+    fun hasBonusNumber(number: LottoNumber): Boolean {
+        return numbers.contains(number)
     }
 
     companion object {
