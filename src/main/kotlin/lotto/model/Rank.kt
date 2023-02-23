@@ -4,21 +4,17 @@ import lotto.entity.Money
 
 enum class Rank(val countOfMatch: Int, val winningMoney: Money) {
     FIRST(6, Money(2_000_000_000)),
-    SECOND(5, Money(30_000_000)) {
-        override fun determine(countOfMatch: Int, isMatchBonus: Boolean): Boolean {
-            return super.determine(countOfMatch, isMatchBonus) && isMatchBonus
-        }
-    },
+    SECOND(5, Money(30_000_000)),
     THIRD(5, Money(1_500_000)),
     FOURTH(4, Money(50_000)),
     FIFTH(3, Money(5_000)),
-    MISS(0, Money(0)) {
-        override fun determine(countOfMatch: Int, isMatchBonus: Boolean): Boolean {
-            return countOfMatch in (0..2)
-        }
-    };
+    MISS(0, Money(0));
 
-    open fun determine(countOfMatch: Int, isMatchBonus: Boolean): Boolean {
+    private fun determine(countOfMatch: Int, isMatchBonus: Boolean): Boolean {
+        if (this == SECOND && !isMatchBonus)
+            return false
+        if (this == MISS && countOfMatch in (0..2))
+            return true
         return this.countOfMatch == countOfMatch
     }
 
@@ -27,9 +23,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Money) {
 
         fun determineAll(countOfMatch: Int, isMatchBonus: Boolean): Rank {
             val determinedRank = Rank.values().find { it.determine(countOfMatch, isMatchBonus) }
-            check(determinedRank != null) {
-                ERROR_DETERMINED_RANK_IS_EMPTY
-            }
+            checkNotNull(determinedRank) { ERROR_DETERMINED_RANK_IS_EMPTY }
             return determinedRank
         }
     }
