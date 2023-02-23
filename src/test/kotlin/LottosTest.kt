@@ -31,7 +31,7 @@ class LottosTest {
         val winningNumber = WinningNumber(winningLotto, bonusNumber)
 
         // When
-        val result = testLottos.matchLottos(winningNumber).result
+        val result = testLottos.matchLottos(winningNumber).winningRankResult
 
         // Then
         assertThat(result[Rank.FIRST]).isEqualTo(0) // 1등 당첨 0개
