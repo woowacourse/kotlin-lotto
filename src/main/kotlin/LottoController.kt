@@ -2,6 +2,7 @@ import domain.Lotto
 import domain.LottoBundle
 import domain.LottoGenerator
 import domain.LottoNumber
+import domain.ManualCount
 import domain.Payment
 import domain.RandomLottoGenerator
 import domain.WinningNumbers
@@ -13,11 +14,13 @@ class LottoController {
     private val lottoGenerator: LottoGenerator = RandomLottoGenerator()
 
     fun startLottoGame() {
-        val spendMoney = getMoney()
-        val lottoCount = spendMoney.calculateLottoCount()
-        OutputView.printPurchasedLottoCount(lottoCount)
+        val spendMoney: Payment = getMoney()
+        val maxLottoCount: Int = spendMoney.calculateLottoCount()
 
-        val lottoBundle = LottoBundle(lottoCount, lottoGenerator)
+        val manualCount = getManualCount(maxLottoCount)
+        OutputView.printPurchasedLottoCount(maxLottoCount)
+
+        val lottoBundle = LottoBundle(maxLottoCount, lottoGenerator)
         OutputView.printPurchasedLotto(lottoBundle)
 
         produceResult(lottoBundle, spendMoney)
@@ -30,6 +33,17 @@ class LottoController {
             var payment: Payment? = null
             val result = kotlin.runCatching { payment = Payment(money) }
             if (result.isSuccess) return payment!!
+            println(result.exceptionOrNull()?.message)
+        }
+    }
+
+    private fun getManualCount(maxCount: Int): ManualCount {
+        while (true) {
+            OutputView.printRequestManualCount()
+            val count = InputView.inputManualCount()
+            var manualCount: ManualCount? = null
+            val result = kotlin.runCatching { manualCount = ManualCount(count, maxCount) }
+            if (result.isSuccess) return manualCount!!
             println(result.exceptionOrNull()?.message)
         }
     }

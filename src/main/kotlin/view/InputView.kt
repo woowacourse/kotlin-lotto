@@ -7,6 +7,10 @@ object InputView {
         return readln()
     }
 
+    fun inputManualCount(): String {
+        return readln()
+    }
+
     fun inputWinningNumbers(): List<String> {
         return (readln().split(SEPARATOR))
     }

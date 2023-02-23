@@ -13,6 +13,10 @@ object OutputView {
         println("구입금액을 입력해 주세요.")
     }
 
+    fun printRequestManualCount() {
+        println("수동으로 구매할 로또 수를 입력해 주세요.")
+    }
+
     fun printPurchasedLottoCount(lottoCount: Int) {
         println("${lottoCount}개를 구매했습니다.")
     }
