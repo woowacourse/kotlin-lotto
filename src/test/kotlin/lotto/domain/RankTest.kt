@@ -8,6 +8,12 @@ import org.junit.jupiter.params.provider.MethodSource
 class RankTest {
     @MethodSource("rankNumbers")
     @ParameterizedTest
+    fun `당첨 등수를 구하는 기준은 일치 개수와 보너스볼 일치여부이다`(countOfMatch: Int, matchBonus: Boolean, rank: Rank) {
+        assertThat(rank.isSame(countOfMatch, matchBonus)).isTrue
+    }
+
+    @MethodSource("rankNumbers")
+    @ParameterizedTest
     fun `당첨 등수를 구한다`(countOfMatch: Int, matchBonus: Boolean, rank: Rank) {
         assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(rank)
     }
