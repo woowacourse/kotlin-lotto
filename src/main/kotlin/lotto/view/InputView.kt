@@ -4,7 +4,7 @@ import lotto.entity.LottoPrice
 
 class InputView {
 
-    fun readPurchaseMoney(): Int {
+    fun readInt(): Int {
         val input = readln()
         require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
         return input.toInt()
@@ -13,9 +13,8 @@ class InputView {
     fun readManualLottoCount(purchaseMoney: Int): Int {
         val input = readln()
         require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
-        if (input.toInt() == 0)
-            return input.toInt()
-        require((purchaseMoney / (input.toInt() * LottoPrice.DEFAULT_LOTTO_PRICE) > 0)) { ERROR_MESSAGE_AVAILABLE_COUNT }
+        if (input.toInt() != 0)
+            require((purchaseMoney / (input.toInt() * LottoPrice.DEFAULT_LOTTO_PRICE) > 0)) { ERROR_MESSAGE_AVAILABLE_COUNT }
         return input.toInt()
     }
 
@@ -25,12 +24,6 @@ class InputView {
         val splittedInput = input.split(",").map { it.trim() }
         require(splittedInput.all { it.toIntOrNull() != null }) { ERROR_MESSAGE_SPLIT_ONLY_NUMBER }
         return splittedInput.map { it.toInt() }
-    }
-
-    fun readBonus(): Int {
-        val input = readln()
-        require(input.toIntOrNull() != null) { ERROR_MESSAGE_ONLY_NUMBER }
-        return input.toInt()
     }
 
     companion object {

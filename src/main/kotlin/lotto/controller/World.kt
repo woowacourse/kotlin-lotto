@@ -34,7 +34,7 @@ class World(
     private fun initPurchaseMoney(): PurchaseMoney {
         return tryAndRerun {
             outputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
-            PurchaseMoney(inputView.readPurchaseMoney())
+            PurchaseMoney(inputView.readInt())
         } as PurchaseMoney
     }
 
@@ -77,7 +77,7 @@ class World(
     private fun initBonus(winNumber: Lotto): LottoNumber {
         return tryAndRerun {
             outputView.printMessage(OutputView.MESSAGE_BONUS)
-            val bonus = LottoNumber(inputView.readBonus())
+            val bonus = LottoNumber(inputView.readInt())
             WinLotto(winNumber, bonus)
             bonus
         } as LottoNumber
