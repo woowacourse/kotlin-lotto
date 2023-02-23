@@ -1,6 +1,6 @@
 package domain
 
 object RandomNumberGenerator {
-    fun generate(): List<Int> =
-        (LottoNumber.MINIMUM_NUMBER..LottoNumber.MAXIMUM_NUMBER).shuffled().take(Lotto.NUMBER_SIZE).sorted()
+    fun generate(range: IntRange, size: Int): List<Int> =
+        range.shuffled().take(size).sorted()
 }
