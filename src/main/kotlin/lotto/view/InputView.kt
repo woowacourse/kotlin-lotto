@@ -1,40 +1,38 @@
 package lotto.view
 
-import kotlin.IllegalArgumentException
-
 class InputView {
     fun readPurchaseAmount(): Int {
-        return try {
+        return runCatching {
             println(PURCHASE_AMOUNT_GUIDE)
             val amount = readLine().toIntOrNull()
             requireNotNull(amount) { PURCHASE_AMOUNT_TYPE_ERROR }
             amount
-        } catch (e: IllegalArgumentException) {
-            printError(e.message ?: "")
+        }.getOrElse {
+            printError(it.message ?: "")
             readPurchaseAmount()
         }
     }
 
     fun readWinningNumbers(): List<Int> {
-        return try {
+        return runCatching {
             println(WINNING_NUMBERS_GUIDE)
             val numbers = readLine().split(", ").mapNotNull { it.toIntOrNull() }
             require(numbers.size == 6) { WINNING_NUMBERS_TYPE_ERROR }
             numbers
-        } catch (e: IllegalArgumentException) {
-            printError(e.message ?: "")
+        }.getOrElse {
+            printError(it.message ?: "")
             readWinningNumbers()
         }
     }
 
     fun readBonusNumber(): Int {
-        return try {
+        return kotlin.runCatching {
             println(BONUS_NUMBERS_GUIDE)
             val number = readLine().toIntOrNull()
             requireNotNull(number) { BONUS_NUMBERS_TYPE_ERROR }
             number
-        } catch (e: IllegalArgumentException) {
-            printError(e.message ?: "")
+        }.getOrElse {
+            printError(it.message ?: "")
             readBonusNumber()
         }
     }
