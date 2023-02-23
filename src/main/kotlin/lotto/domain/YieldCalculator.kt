@@ -3,8 +3,8 @@ package lotto.domain
 import kotlin.math.floor
 
 object YieldCalculator {
-    fun calculateYield(lottoCount: Int, ranks: List<Rank>): Double {
-        val yield = calculatePrize(ranks).toDouble() / (lottoCount * Money.MONEY_UNIT)
+    fun calculateYield(ranks: List<Rank>): Double {
+        val yield = calculatePrize(ranks).toDouble() / (ranks.size * Money.MONEY_UNIT)
         return floor(yield * 100.0) / 100.0
     }
 

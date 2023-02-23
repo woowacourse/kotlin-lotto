@@ -28,7 +28,7 @@ class UserLottoTest {
                 )
             )
         )
-        val userLotto = UserLotto(2, lotto)
+        val userLotto = UserLotto(lotto)
         assertThat(
             userLotto.calculateTotalRank(
                 WinningNumbers(

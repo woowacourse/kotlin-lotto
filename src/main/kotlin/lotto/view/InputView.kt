@@ -7,17 +7,16 @@ object InputView {
 
     fun readInputBonusNumber() = readInputNumber()
 
-    private fun readInputNumber(): Int? {
-        val input = readln()
-        return input.toIntOrNull()
+    private fun readInputNumber(): String {
+        return readln()
     }
 
     fun readManualLottoNumbers() = readInputNumbers()
 
     fun readInputWinningLotto() = readInputNumbers()
 
-    private fun readInputNumbers(): List<Int?> {
+    private fun readInputNumbers(): List<String> {
         val input = readln()
-        return input.split(",").map { it.toIntOrNull() }
+        return input.split(",")
     }
 }
