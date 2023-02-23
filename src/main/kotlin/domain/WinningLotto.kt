@@ -6,7 +6,7 @@ class WinningLotto(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     }
 
     fun match(lotto: Lotto): Int {
-        return lotto.numbers.count { number ->
+        return lotto.count { number ->
             winningLotto.contains(number)
         }
     }

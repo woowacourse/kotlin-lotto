@@ -1,6 +1,6 @@
 package domain
 
-class Lotto(val numbers: Set<LottoNumber>) {
+class Lotto(val numbers: Set<LottoNumber>) : Set<LottoNumber> by numbers {
     constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber).toSet())
 
     init {
@@ -11,10 +11,6 @@ class Lotto(val numbers: Set<LottoNumber>) {
         return numbers.map { LottoNumber ->
             LottoNumber.toInt()
         }
-    }
-
-    fun contains(number: LottoNumber): Boolean {
-        return numbers.contains(number)
     }
 
     companion object {
