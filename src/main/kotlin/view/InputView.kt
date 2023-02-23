@@ -52,6 +52,27 @@ class InputView {
         }.onFailure { OutputView().outputErrorMessage(it.message!!) }
             .getOrNull() ?: inputManualLottoCount()
     }
+
+    fun inputManualLottos(count: Int): List<IntArray> {
+        OutputView().outputManualLottosMessage()
+        return getInputManualLottos(count)
+    }
+
+    private fun getInputManualLottos(count: Int): List<IntArray> {
+        return runCatching {
+            (1..count).map { getInputManualLotto(readln()) }
+        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+            .getOrNull() ?: inputManualLottos(count)
+    }
+
+    private fun getInputManualLotto(input: String?): IntArray {
+        return runCatching {
+            require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
+            input.split(",").map { it.trim().toInt() }.toIntArray()
+        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+            .getOrNull() ?: throw IllegalArgumentException(INPUT_RIGHT_VALUE_ERROR_MESSAGE)
+    }
+
     companion object {
         const val INPUT_RIGHT_VALUE_ERROR_MESSAGE = "올바른 값이 입력되지 않았습니다."
         const val INPUT_VALUE_ERROR_MESSAGE = "값이 입력되지 않았습니다."
