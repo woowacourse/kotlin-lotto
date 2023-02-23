@@ -3,26 +3,24 @@ package controller
 import domain.Amount
 import domain.Count
 import domain.Lotto
+import domain.LottoCalculator
 import domain.LottoNumber
 import domain.LottoResult
 import domain.LottoStore
-import domain.LottoStore.Companion.LOTTO_PRICE
 import domain.WinningLotto
 import view.InputView
 import view.OutputView
 
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
-
     fun run() {
         runCatching {
             val amount = askAmount()
-            val count = askManualCount(amount)
-            val manualLottos = buyManualLotto(count)
-            val autoLottos = buyAutoLotto(Amount((amount.amount - (count.count * LOTTO_PRICE))))
+            val manualCount = askManualCount(amount)
+            val manualLottos = buyManualLotto(manualCount)
+            val autoLottos = buyAutoLotto(LottoCalculator(LOTTO_PRICE).getAutoCount(amount, manualCount))
             outputView.outputLottos(manualLottos, autoLottos)
-            val winningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
-            val result = LottoResult.of(manualLottos + autoLottos, winningLotto)
-            outputView.outputResult(result)
+            val winningLotto = askWinningInfo()
+            outputView.outputResult(LottoResult.of(manualLottos + autoLottos, winningLotto))
         }.onFailure {
             outputView.outputError(it.message)
         }
@@ -35,7 +33,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     private fun askManualCount(amount: Amount): Count {
         outputView.outputGetCount()
-        return Count(inputView.inputInt(), amount)
+        return Count(inputView.inputInt())
     }
 
     private fun buyManualLotto(count: Count): List<Lotto> {
@@ -47,10 +45,12 @@ class LottoController(private val inputView: InputView, private val outputView: 
         return store.buyManualLotto(lottos)
     }
 
-    private fun buyAutoLotto(amount: Amount): List<Lotto> {
+    private fun buyAutoLotto(count: Count): List<Lotto> {
         val store = LottoStore()
-        return store.buyAutoLotto(amount)
+        return store.buyAutoLotto(count)
     }
+
+    private fun askWinningInfo(): WinningLotto = WinningLotto(askWinningNumbers(), askBonusNumber())
 
     private fun askWinningNumbers(): Lotto {
         outputView.outputGetWinningNumbers()
@@ -60,5 +60,9 @@ class LottoController(private val inputView: InputView, private val outputView: 
     private fun askBonusNumber(): LottoNumber {
         outputView.outputGetBonusNumber()
         return LottoNumber(inputView.inputInt())
+    }
+
+    companion object {
+        private val LOTTO_PRICE = 1000
     }
 }
