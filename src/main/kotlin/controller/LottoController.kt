@@ -18,34 +18,34 @@ class LottoController {
 
     private fun askAmount(): Money {
         OutputView.printMessage(PURCHASE_AMOUNT_REQUEST_MESSAGE)
-        return TypeConverter.convert(InputView::readNumber, ::Money)
+        return InputValueConverter.convert(InputView::readNumber, ::Money)
     }
 
     private fun askManuallyLottoCountThatPurchasable(limitMoney: Money): Count {
         OutputView.printMessage(MANUALLY_LOTTO_COUNT_REQUEST_MESSAGE)
-        var count = TypeConverter.convert(InputView::readNumber, ::Count)
+        var count = InputValueConverter.convert(InputView::readNumber, ::Count)
         while (limitMoney < Money(LottoStore.LOTTO_PRICE) * count) {
             OutputView.printMessage(NOT_PURCHASABLE_MESSAGE)
-            count = TypeConverter.convert(InputView::readNumber, ::Count)
+            count = InputValueConverter.convert(InputView::readNumber, ::Count)
         }
         return count
     }
 
     private fun askManuallyLottos(count: Count): List<Lotto> {
         OutputView.printMessage(MANUALLY_LOTTO_REQUEST_MESSAGE)
-        return List(count.value) { TypeConverter.convert(InputView::readNumbers, Lotto::create) }
+        return List(count.value) { InputValueConverter.convert(InputView::readNumbers, Lotto::create) }
     }
 
     private fun askWinningLotto(): WinningLotto {
         OutputView.printMessage(WINNING_LOTTO_REQUEST_MESSAGE)
-        val winningNumbers = TypeConverter.convert(InputView::readNumbers, Lotto::create)
+        val winningNumbers = InputValueConverter.convert(InputView::readNumbers, Lotto::create)
         OutputView.printMessage(BONUS_NUMBER_REQUEST_MESSAGE)
-        var bonusNumber = TypeConverter.convert(InputView::readNumber, LottoNumber::valueOf)
+        var bonusNumber = InputValueConverter.convert(InputView::readNumber, LottoNumber::valueOf)
         while (true) {
             kotlin.runCatching { return WinningLotto(winningNumbers, bonusNumber) }
                 .onFailure {
                     OutputView.printErrorMessage(it)
-                    bonusNumber = TypeConverter.convert(InputView::readNumber, LottoNumber::valueOf)
+                    bonusNumber = InputValueConverter.convert(InputView::readNumber, LottoNumber::valueOf)
                 }
         }
     }
