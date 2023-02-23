@@ -1,6 +1,6 @@
 package domain.model.lotto
 
-class Lotto(private val numbers: Set<LottoNumber>) {
+data class Lotto(private val numbers: Set<LottoNumber>){
 
     init {
         require(numbers.size == NUMBER_COUNT) {
@@ -11,21 +11,6 @@ class Lotto(private val numbers: Set<LottoNumber>) {
     fun getMatchCount(otherLotto: Lotto): Int = numbers.intersect(otherLotto.numbers).size
 
     fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Lotto
-
-        if (numbers != other.numbers) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return numbers.hashCode()
-    }
 
     override fun toString(): String {
         return numbers.map(LottoNumber::value).toString()
