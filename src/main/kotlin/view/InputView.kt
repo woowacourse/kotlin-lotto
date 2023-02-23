@@ -1,32 +1,30 @@
 package view
 
-import domain.LottoNumber
-
 class InputView {
-    fun inputMoney(): Int {
+    fun inputMoney(): Int? {
         OutputView().outputMoneyMessage()
         return getInputMoney(readlnOrNull())
     }
 
-    private fun getInputMoney(input: String?): Int {
+    private fun getInputMoney(input: String?): Int? {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
-            input!!.toInt()
+            input!!.toIntOrNull() ?: throw IllegalArgumentException(INPUT_VALUE_NOT_INT_ERROR_MESSAGE)
         }.onFailure { OutputView().outputErrorMessage(it.message!!) }
-            .getOrThrow()
+            .getOrNull() ?: inputMoney()
     }
 
-    fun inputWinningLotto(): List<LottoNumber> {
+    fun inputWinningLotto(): IntArray {
         OutputView().outputWinningLottoMessage()
         return getInputWinningLotto(readlnOrNull())
     }
 
-    private fun getInputWinningLotto(input: String?): List<LottoNumber> {
+    private fun getInputWinningLotto(input: String?): IntArray {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
-            input!!.split(",").map { LottoNumber.from(it.trim().toInt()) }.sortedBy { it.number }
+            input.split(",").map { it.trim().toInt() }.toIntArray()
         }.onFailure { OutputView().outputErrorMessage(it.message!!) }
-            .getOrThrow()
+            .getOrNull() ?: inputWinningLotto()
     }
 
     fun inputBonusNumber(): Int {
@@ -37,12 +35,26 @@ class InputView {
     private fun getInputBonusNumber(input: String?): Int {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
-            input!!.toInt()
+            input.toInt()
         }.onFailure { OutputView().outputErrorMessage(it.message!!) }
-            .getOrThrow()
+            .getOrNull() ?: inputBonusNumber()
     }
 
+    fun inputManualLottoCount(): Int? {
+        OutputView().outputManualLottoCountMessage()
+        return getInputManualLottoCount(readlnOrNull())
+    }
+
+    private fun getInputManualLottoCount(input: String?): Int? {
+        return runCatching {
+            require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
+            input.toInt()
+        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+            .getOrNull() ?: inputManualLottoCount()
+    }
     companion object {
+        const val INPUT_RIGHT_VALUE_ERROR_MESSAGE = "올바른 값이 입력되지 않았습니다."
         const val INPUT_VALUE_ERROR_MESSAGE = "값이 입력되지 않았습니다."
+        const val INPUT_VALUE_NOT_INT_ERROR_MESSAGE = "숫자를 입력하세요."
     }
 }
