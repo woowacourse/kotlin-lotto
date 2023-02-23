@@ -13,34 +13,32 @@ class LottoStoreTest {
     @Test
     fun `수동 로또 2개를 구매한다`() {
         val purchaseMoney = PurchaseMoney(2000)
+        val lottoA = Lotto.from(
+            listOf(
+                LottoNumber(10),
+                LottoNumber(12),
+                LottoNumber(31),
+                LottoNumber(34),
+                LottoNumber(35),
+                LottoNumber(45)
+            )
+        )
+        val lottoB = Lotto.from(
+            listOf(
+                LottoNumber(10),
+                LottoNumber(12),
+                LottoNumber(31),
+                LottoNumber(34),
+                LottoNumber(35),
+                LottoNumber(45)
+            )
+        )
         val store = LottoStore()
-        val actual = store.buyManualLotto(purchaseMoney.getPurchaseLottoCount(), listOf(10, 12, 31, 34, 35, 45), listOf(1, 3, 12, 14, 25, 41))
+        val actual = store.buyManualLotto(purchaseMoney.getPurchaseLottoCount(), lottoA, lottoB)
         assertAll({
             assertThat(actual.value.size).isEqualTo(2)
-            assertThat(actual.value[0]).isEqualTo(
-                Lotto.from(
-                    listOf(
-                        LottoNumber(10),
-                        LottoNumber(12),
-                        LottoNumber(31),
-                        LottoNumber(34),
-                        LottoNumber(35),
-                        LottoNumber(45)
-                    )
-                )
-            )
-            assertThat(actual.value[1]).isEqualTo(
-                Lotto.from(
-                    listOf(
-                        LottoNumber(1),
-                        LottoNumber(3),
-                        LottoNumber(12),
-                        LottoNumber(14),
-                        LottoNumber(25),
-                        LottoNumber(41)
-                    )
-                )
-            )
+            assertThat(actual.value[0]).isEqualTo(lottoA)
+            assertThat(actual.value[1]).isEqualTo(lottoB)
         })
     }
 

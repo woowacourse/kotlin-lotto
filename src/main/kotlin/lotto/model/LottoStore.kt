@@ -1,13 +1,12 @@
 package lotto.model
 
 import lotto.entity.Lotto
-import lotto.entity.LottoNumber
 import lotto.entity.Lottos
 
 class LottoStore(private val lottoGenerator: LottoGenerator = RandomLottoGenerator()) {
-    fun buyManualLotto(lottoCount: Int, vararg lottos: List<Int>): Lottos {
+    fun buyManualLotto(lottoCount: Int, vararg lottos: Lotto): Lottos {
         require(lottoCount >= lottos.size) { ERROR_MESSAGE_OVER_TO_AVAILABLE_LOTTO }
-        return Lottos(lottos.map { lotto -> Lotto.from(lotto.map { number -> LottoNumber(number) }) })
+        return Lottos(lottos.map { it })
     }
 
     fun buyAutoLotto(lottoCount: Int): Lottos {
