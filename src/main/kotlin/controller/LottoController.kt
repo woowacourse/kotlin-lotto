@@ -7,11 +7,11 @@ import domain.PurchaseLottoMoney
 import domain.Ticket
 import domain.WinningLotto
 import view.InputViewInterface
-import view.ResultViewInterface
+import view.OutputViewInterface
 
 class LottoController(
     private val inputView: InputViewInterface,
-    private val resultView: ResultViewInterface
+    private val resultView: OutputViewInterface
 ) {
     private val lottoSeller: LottoSeller by lazy { LottoSeller() }
 
