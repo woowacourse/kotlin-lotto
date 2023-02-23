@@ -7,6 +7,10 @@ import domain.Rank
 import domain.Ticket
 
 class OutputView : OutputViewInterface {
+    override fun printMessage(message: String) {
+        println(message)
+    }
+
     override fun printResult(statisticsResult: LottoResult, profit: String) {
         printStatistics(statisticsResult)
         printProfit(profit)
