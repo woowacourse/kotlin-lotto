@@ -10,7 +10,6 @@ private fun Lottery(vararg numbers: Int): Lottery {
 class RankCounterTest {
     @Test
     fun `로또를 받아 등수를 카운트한다`() {
-        val counter = RankCounter()
         val lotteries = listOf(
             Lottery(1, 2, 3, 4, 5, 6),
             Lottery(1, 3, 4, 5, 6, 7),
@@ -20,31 +19,29 @@ class RankCounterTest {
         )
         val winningLottery = WinningLottery(Lottery(1, 2, 3, 4, 5, 6), LotteryNumber.from(7))
 
-        counter.count(lotteries, winningLottery)
+        val countResult = RankCounter.count(lotteries, winningLottery)
 
-        assertThat(counter.numberOfEachRank[Rank.FIRST]).isEqualTo(1)
-        assertThat(counter.numberOfEachRank[Rank.SECOND]).isEqualTo(1)
-        assertThat(counter.numberOfEachRank[Rank.THIRD]).isEqualTo(1)
-        assertThat(counter.numberOfEachRank[Rank.FOURTH]).isEqualTo(0)
-        assertThat(counter.numberOfEachRank[Rank.FIFTH]).isEqualTo(2)
-        assertThat(counter.numberOfEachRank[Rank.MISS]).isEqualTo(0)
+        assertThat(countResult[Rank.FIRST]).isEqualTo(1)
+        assertThat(countResult[Rank.SECOND]).isEqualTo(1)
+        assertThat(countResult[Rank.THIRD]).isEqualTo(1)
+        assertThat(countResult[Rank.FOURTH]).isEqualTo(0)
+        assertThat(countResult[Rank.FIFTH]).isEqualTo(2)
+        assertThat(countResult[Rank.MISS]).isEqualTo(0)
     }
 
     @Test
     fun `총 상금을 계산한다`() {
-        val counter = RankCounter(
-            mapOf(
-                Rank.FIRST to 2,
-                Rank.SECOND to 0,
-                Rank.THIRD to 1,
-                Rank.FOURTH to 0,
-                Rank.FIFTH to 1,
-                Rank.MISS to 5
-            )
+        val countResult = mapOf(
+            Rank.FIRST to 2,
+            Rank.SECOND to 0,
+            Rank.THIRD to 1,
+            Rank.FOURTH to 0,
+            Rank.FIFTH to 1,
+            Rank.MISS to 5
         )
 
-        val actual = counter.calculateTotalPrize()
+        val actual = RankCounter.calculateTotalPrize(countResult)
 
-        assertThat(actual).isEqualTo(4001505000)
+        assertThat(actual).isEqualTo(4_001_505_000)
     }
 }

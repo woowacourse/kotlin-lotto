@@ -25,9 +25,9 @@ class Controller(
         val winningLottery = getWinningLottery()
         outputView.printInterval()
 
-        val counter = getRankCounter(lotteries, winningLottery)
-        val profit = getProfit(purchase, counter.calculateTotalPrize())
-        outputView.printWinningResult(counter, profit)
+        val countResult = RankCounter.count(lotteries, winningLottery)
+        val profit = getProfit(purchase, RankCounter.calculateTotalPrize(countResult))
+        outputView.printWinningResult(countResult, profit)
     }
 
     private fun getPurchase(): PurchaseAmount {
@@ -42,12 +42,6 @@ class Controller(
         val winningNumbers = Lottery(inputView.readWinningNumbers().map { LotteryNumber.from(it) })
         val bonusNumber = LotteryNumber.from(inputView.readBonusNumber())
         return WinningLottery(winningNumbers, bonusNumber)
-    }
-
-    private fun getRankCounter(lotteries: List<Lottery>, winningLottery: WinningLottery): RankCounter {
-        val counter = RankCounter()
-        counter.count(lotteries, winningLottery)
-        return counter
     }
 
     private fun getProfit(purchase: PurchaseAmount, prize: Long): Double {

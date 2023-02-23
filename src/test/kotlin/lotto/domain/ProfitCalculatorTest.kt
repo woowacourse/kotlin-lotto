@@ -22,7 +22,7 @@ class ProfitCalculatorTest {
         expected: Double
     ) {
         val money = PurchaseAmount(amount)
-        val numbers = mapOf(
+        val countResult = mapOf(
             Rank.FIRST to first,
             Rank.SECOND to second,
             Rank.THIRD to third,
@@ -30,9 +30,8 @@ class ProfitCalculatorTest {
             Rank.FIFTH to fifth,
             Rank.MISS to miss
         )
-        val counter = RankCounter(numbers)
 
-        val actual = ProfitCalculator.calculate(money, counter.calculateTotalPrize())
+        val actual = ProfitCalculator.calculate(money, RankCounter.calculateTotalPrize(countResult))
 
         assertThat(actual).isEqualTo(expected)
     }
