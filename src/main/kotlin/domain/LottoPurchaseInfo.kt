@@ -1,7 +1,7 @@
 package domain
 
 class LottoPurchaseInfo(
-    private val purchaseLottoMoney: PurchaseLottoMoney,
+    val purchaseLottoMoney: PurchaseLottoMoney,
     val manualCount: Int
 ) {
     val totalCount: Int
