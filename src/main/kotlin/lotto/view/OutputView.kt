@@ -2,10 +2,11 @@ package lotto.view
 
 import lotto.model.Rank
 import lotto.model.UserLotto
+import lotto.model.UserLottoCount
 
 class OutputView : OutputInterface {
-    override fun printPurchaseCounts(manual: Int, auto: Int) {
-        println(PURCHASE.format(manual, auto))
+    override fun printPurchaseCounts(userLottoCount: UserLottoCount) {
+        println(PURCHASE.format(userLottoCount.manual, userLottoCount.auto))
     }
 
     override fun printUserLottos(userLotto: UserLotto) {

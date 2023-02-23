@@ -11,13 +11,9 @@ class InputView : InputInterface {
         return getNumber() ?: getManualLottoCount()
     }
 
-    override fun getManualLottoNumbers(count: Int): List<List<Int>> {
+    override fun getManualLottoNumbers(): List<Int> {
         println(INSERT_MANUAL_LOTTO)
-        val lottos = mutableListOf<List<Int>>()
-        while (lottos.size < count) {
-            getManualLotto(lottos)
-        }
-        return lottos
+        return getNumberList() ?: getManualLottoNumbers()
     }
 
     override fun getWinningLottoNumbers(): List<Int> {
@@ -28,15 +24,6 @@ class InputView : InputInterface {
     override fun getWinningBonusNumber(): Int {
         println(INSERT_BONUS_BALL)
         return getNumber() ?: getWinningBonusNumber()
-    }
-
-    private fun getManualLotto(lottos: MutableList<List<Int>>) {
-        val lotto = getNumberList()
-        if (!lotto.isNullOrEmpty()) {
-            lottos.add(lotto)
-        } else {
-            getManualLotto(lottos)
-        }
     }
 
     private fun getNumber(): Int? {
