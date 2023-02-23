@@ -7,7 +7,7 @@ class LottoMachineTest() {
     @Test
     fun `generator가 (1,2,3,4,5,6)인 리스트를 생성했을 때 로또 번호가(1,2,3,4,5,6)인 로또가 생성된다`() {
         // when
-        val actual = LottoMachine(Count(14), TestLottoNumbersGenerator()).generateLotto().numbers
+        val actual = LottoMachine(TestLottoNumbersGenerator()).generateLotto().numbers
         // then
         val expected = Lotto(
             listOf(
@@ -26,7 +26,7 @@ class LottoMachineTest() {
     @Test
     fun `count가 14이면, 자동 로또가 14개 생성된다`() {
         // when
-        val actual = LottoMachine(Count(14), TestLottoNumbersGenerator()).generateLotteries().size
+        val actual = LottoMachine(TestLottoNumbersGenerator()).generateLotteries(Count(14)).size
         // then
         val expected = 14
 
@@ -36,7 +36,7 @@ class LottoMachineTest() {
     @Test
     fun `generator가 (1,2,3,4,5,6)인 생성할 때, 모든 로또는 (1,2,3,4,5,6)이다`() {
         // given
-        val lotteries = LottoMachine(Count(14), TestLottoNumbersGenerator()).generateLotteries()
+        val lotteries = LottoMachine(TestLottoNumbersGenerator()).generateLotteries(Count(14))
         // then
         val expected = Lotto(
             listOf(
