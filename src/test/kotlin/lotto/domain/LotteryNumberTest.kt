@@ -11,7 +11,7 @@ class LotteryNumberTest {
     @ValueSource(ints = [1, 45])
     fun `번호를 하나 가진다`(number: Int) {
         val lotteryNumber = LotteryNumber.from(number)
-        assertThat(lotteryNumber.number).isEqualTo(number)
+        assertThat(lotteryNumber.toInt()).isEqualTo(number)
     }
 
     @ParameterizedTest(name = "로또 번호는 {0} 일 수 없다")

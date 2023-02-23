@@ -2,7 +2,11 @@ package lotto.domain
 
 import java.lang.IllegalArgumentException
 
-class LotteryNumber private constructor(val number: Int) {
+class LotteryNumber private constructor(private val number: Int) {
+    fun toInt(): Int {
+        return number
+    }
+
     companion object {
         private const val LOTTERY_NUMBER_LOWER_BOUNDARY = 1
         private const val LOTTERY_NUMBER_UPPER_BOUNDARY = 45
