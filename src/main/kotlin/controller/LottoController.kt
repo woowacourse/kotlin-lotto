@@ -4,6 +4,7 @@ import domain.Lotto
 import domain.LottoNumber
 import domain.LottoSeller
 import domain.LottoStatistics
+import domain.Money
 import domain.Ticket
 import domain.WinningLotto
 import view.InputViewInterface
@@ -18,6 +19,7 @@ class LottoController(
 
     fun run() {
         val money = initializeMoney()
+        resultView.printCount(money.divide(EACH_LOTTO_PRICE))
         val ticket = makeTicket(money)
 
         val winningLotto = makeWinningLotto()
@@ -50,21 +52,24 @@ class LottoController(
         }
     }
 
-    private fun makeTicket(money: Int): Ticket {
-        val manualTicket = makeManualTicket(money / EACH_LOTTO_PRICE)
-        val autoTicket = makeAutoTicket((money / EACH_LOTTO_PRICE) - manualTicket.size)
+    private fun makeTicket(money: Money): Ticket {
+        val manualTicket = makeManualTicket(money.divide(EACH_LOTTO_PRICE))
+        val autoTicket = makeAutoTicket((money.divide(EACH_LOTTO_PRICE)) - manualTicket.size)
         resultView.printTicket(manualTicket, autoTicket)
         return manualTicket.concatenateTicket(autoTicket)
     }
 
-    private fun calculateProfitRatio(profit: Int, totalMoney: Int): String {
-        return floor((profit / totalMoney).toDouble()).toString()
+    private fun calculateProfitRatio(profit: Int, totalMoney: Money): String {
+        return floor((profit / totalMoney.money).toDouble()).toString()
     }
 
-    private fun initializeMoney(): Int {
-        val money = inputView.getMoney()
-        resultView.printCount(money / EACH_LOTTO_PRICE)
-        return money
+    private fun initializeMoney(): Money {
+        return runCatching {
+            Money(inputView.getMoney())
+        }.getOrElse { error ->
+            println(error.message)
+            initializeMoney()
+        }
     }
 
     private fun makeWinningLotto(): WinningLotto {

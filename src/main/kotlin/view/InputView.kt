@@ -57,7 +57,8 @@ class InputView : InputViewInterface {
         return runCatching {
             println("수동으로 구매할 번호를 입력해 주세요.")
             getLottoNumbers()
-        }.getOrElse {
+        }.getOrElse { error ->
+            println(error)
             getManualLotto()
         }
     }
