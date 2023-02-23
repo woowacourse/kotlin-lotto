@@ -11,7 +11,7 @@ class OutputView : OutputInterface {
 
     override fun printUserLottos(userLotto: UserLotto) {
         userLotto.lotto.forEach { lotto ->
-            println(lotto)
+            println(LOTTO_FORMAT.format(lotto))
         }
     }
 
@@ -53,5 +53,6 @@ class OutputView : OutputInterface {
         private const val MATCH_COUNT = "- %d개"
         private const val EARNING_RATE = "총 수익률은 %s입니다."
         private const val LOSING_MONEY = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
+        private const val LOTTO_FORMAT = "[%s]"
     }
 }
