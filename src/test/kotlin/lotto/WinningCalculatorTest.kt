@@ -1,6 +1,7 @@
 package lotto
 
 import lotto.domain.WinningCalculator
+import lotto.model.Money
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -17,7 +18,7 @@ class WinningCalculatorTest {
 
     @Test
     fun `수익률을 계산한다`() {
-        val purchase = 14000
+        val purchase = Money(14000)
         val winning = 5000
 
         assertThat(

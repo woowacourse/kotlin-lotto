@@ -1,5 +1,6 @@
 package lotto.domain
 
+import lotto.model.Money
 import lotto.model.Rank
 import java.text.DecimalFormat
 
@@ -14,8 +15,8 @@ object WinningCalculator {
         return money
     }
 
-    fun getEarningRate(purchase: Int, winning: Int): String {
+    fun getEarningRate(purchase: Money, winning: Int): String {
         val decimalFormat = DecimalFormat("#.##")
-        return decimalFormat.format(winning.toDouble() / purchase)
+        return decimalFormat.format(winning.toDouble() / purchase.money)
     }
 }
