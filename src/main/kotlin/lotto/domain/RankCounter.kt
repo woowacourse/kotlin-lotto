@@ -1,11 +1,11 @@
 package lotto.domain
 
 class RankCounter(
-    numberOfEachRank: Map<String, Int> =
-        Rank.values().associate { it.name to NUMBER_DEFAULT_VALUE }
+    numberOfEachRank: Map<Rank, Int> =
+        Rank.values().associateWith { NUMBER_DEFAULT_VALUE }
 ) {
-    private val _numberOfEachRank: MutableMap<String, Int> = numberOfEachRank.toMutableMap()
-    val numberOfEachRank: Map<String, Int>
+    private val _numberOfEachRank: MutableMap<Rank, Int> = numberOfEachRank.toMutableMap()
+    val numberOfEachRank: Map<Rank, Int>
         get() = _numberOfEachRank.toMap()
 
     fun count(lotteries: List<Lottery>, winningLottery: WinningLottery) {
@@ -15,14 +15,14 @@ class RankCounter(
                 it.containBonusNumber(winningLottery.bonusNumber)
             )
 
-            _numberOfEachRank[rank.name] =
-                _numberOfEachRank.getOrDefault(rank.name, NUMBER_DEFAULT_VALUE) + INCREASE_VALUE
+            _numberOfEachRank[rank] =
+                _numberOfEachRank.getOrDefault(rank, NUMBER_DEFAULT_VALUE) + INCREASE_VALUE
         }
     }
 
     fun calculateTotalPrize(): Long {
-        val prize = numberOfEachRank.map { (name, count) ->
-            Rank.valueOf(name).calculatePrize(count)
+        val prize = numberOfEachRank.map { (rank, count) ->
+            rank.calculatePrize(count)
         }.sum()
         return prize
     }

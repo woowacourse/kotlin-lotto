@@ -17,18 +17,17 @@ class OutputView {
         println(WINNING_RESULT_GUIDE)
 
         var rankAnnouncement = StringBuilder()
-        counter.numberOfEachRank.forEach { (name, count) ->
-            rankAnnouncement.insert(0, getRankAnnouncement(name, count))
+        counter.numberOfEachRank.forEach { (rank, count) ->
+            rankAnnouncement.insert(0, getRankAnnouncement(rank, count))
         }
         print(rankAnnouncement)
 
         println("${TOTAL_PROFIT_GUIDE.format(profit)}${Revenue.valueOf(profit).description}")
     }
 
-    private fun getRankAnnouncement(name: String, count: Int): String {
-        if (name == "MISS") return ""
+    private fun getRankAnnouncement(rank: Rank, count: Int): String {
+        if (rank == Rank.MISS) return ""
 
-        val rank = Rank.valueOf(name)
         val announcement = StringBuilder()
         announcement.append(COUNT_OF_MATCH_DESCRIPTION.format(rank.countOfMatch))
         if (rank == Rank.SECOND) {
