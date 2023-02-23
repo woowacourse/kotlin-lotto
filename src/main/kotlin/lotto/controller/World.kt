@@ -16,40 +16,20 @@ import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
 
 class World {
-    private val inputView = InputView()
     private val outputView = OutputView()
-
-    private fun <T> getIntWithMessage(message: String, factory: (Int) -> T): T {
-        return tryAndRerun {
-            outputView.printMessage(message)
-            factory(inputView.readInt())
-        }
-    }
-
-    private fun <T> getIntList(factory: (List<Int>) -> T): T {
-        return tryAndRerun {
-            factory(inputView.readIntList())
-        }
-    }
-
-    private fun <T> getIntListWithMessage(message: String, factory: (List<Int>) -> T): T {
-        return tryAndRerun {
-            outputView.printMessage(message)
-            factory(inputView.readIntList())
-        }
-    }
+    private val inputView = InputView(outputView)
 
     private fun initWinLotto(): WinLotto {
         return tryAndRerun {
-            val winNumber = getIntListWithMessage(OutputView.MESSAGE_WIN_NUMBER) { Lotto(it) }
-            val bonus = getIntWithMessage(OutputView.MESSAGE_BONUS) { LottoNumber.from(it) }
+            val winNumber = inputView.readWinNumber(OutputView.MESSAGE_WIN_NUMBER)
+            val bonus = inputView.readBonus(OutputView.MESSAGE_BONUS)
             WinLotto(winNumber, bonus)
         }
     }
 
     fun processLotto() {
-        val purchaseMoney = getIntWithMessage(OutputView.MESSAGE_INPUT_MONEY) { PurchaseMoney(it) }
-        val lottoManualCount = getIntWithMessage(OutputView.MESSAGE_LOTTO_MANUAL_COUNT) { LottoCount(it) }
+        val purchaseMoney = inputView.readPurchaseMoney(OutputView.MESSAGE_INPUT_MONEY)
+        val lottoManualCount = inputView.readLottoManualCount(OutputView.MESSAGE_LOTTO_MANUAL_COUNT)
         val lottoAutoCount = purchaseMoney.calculateAutoLottoCount(lottoManualCount)
 
         val purchasedLottos = makePurchasedLottos(lottoManualCount, lottoAutoCount)
@@ -63,7 +43,7 @@ class World {
     }
 
     private fun makePurchasedLottos(lottoManualCount: LottoCount, lottoAutoCount: LottoCount): PurchasedLottos {
-        val manualLottoGenerator = InputLottoGenerator { getIntList { Lotto(it) } }
+        val manualLottoGenerator = InputLottoGenerator { inputView.readLotto() }
         val autoLottoGenerator = RandomLottoGenerator()
         outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
         return LottoMachine(manualLottoGenerator, autoLottoGenerator).makePurchasedLottos(
