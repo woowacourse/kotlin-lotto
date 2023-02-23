@@ -50,7 +50,7 @@ class World(
     private fun initWinNumber(): Lotto {
         return tryAndRerun {
             outputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
-            Lotto.from(inputView.readWinNumber().map { LottoNumber(it) })
+            Lotto.from(inputView.readLottoNumber().map { LottoNumber(it) })
         } as Lotto
     }
 
