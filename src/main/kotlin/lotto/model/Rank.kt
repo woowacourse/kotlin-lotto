@@ -28,7 +28,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Money) {
         fun determineAll(countOfMatch: Int, isMatchBonus: Boolean): Rank {
             val determinedRank = Rank.values().find { it.determine(countOfMatch, isMatchBonus) }
             check(determinedRank != null) {
-                String.format(ERROR_DETERMINED_RANK_IS_EMPTY)
+                ERROR_DETERMINED_RANK_IS_EMPTY
             }
             return determinedRank
         }
