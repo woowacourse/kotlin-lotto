@@ -50,6 +50,7 @@ class LottoController {
                 }
         }
     }
+
     companion object {
         private const val PURCHASE_AMOUNT_REQUEST_MESSAGE = "구입금액을 입력해 주세요."
         private const val MANUALLY_LOTTO_COUNT_REQUEST_MESSAGE = "\n수동으로 구매할 로또 수를 입력해 주세요."

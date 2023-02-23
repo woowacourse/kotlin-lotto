@@ -14,6 +14,7 @@ class MoneyTest {
         assertThatIllegalArgumentException().isThrownBy { Money(amount) }
             .withMessage("돈은 0원 이상 100000원 이하의 값으로만 존재할 수 있습니다.")
     }
+
     @ParameterizedTest
     @ValueSource(ints = [0, 100000])
     fun `0 이상 100000 이하의 금액으로 돈을 생성할 수 있다`(amount: Int) {
@@ -50,7 +51,7 @@ class MoneyTest {
     }
 
     @Test
-    fun `돈을 비교할 때 금액에 따라 비교한다`() {
+    fun `돈을 비교할 때 금액에 따라 비교할 수 있다`() {
         val money1 = Money(10000)
         val money2 = Money(9999)
 
