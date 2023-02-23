@@ -31,10 +31,10 @@ class MoneyTest {
     }
 
     @Test
-    fun `돈을 숫자로 곱하면 금액을 숫자로 곱한 금액의 돈을 반환한다`() {
+    fun `돈을 개수로 곱하면 금액을 개수로 곱한 금액의 돈을 반환한다`() {
         val money = Money(10000)
 
-        val result = money * 10
+        val result = money * Count(10)
 
         assertThat(result).isEqualTo(Money(100000))
     }

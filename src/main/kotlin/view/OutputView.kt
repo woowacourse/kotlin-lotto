@@ -1,5 +1,6 @@
 package view
 
+import domain.Count
 import domain.Lotto
 import domain.LottoResult
 import domain.Rank
@@ -26,8 +27,8 @@ class OutputView {
         println("보너스 볼을 입력해 주세요.")
     }
 
-    fun outputLottos(lottosToBuyManually: Int, lottos: List<Lotto>) {
-        println("\n수동으로 ${lottosToBuyManually}장, 자동으로 ${lottos.size - lottosToBuyManually}개를 구매했습니다.")
+    fun outputLottos(lottosToBuyManually: Count, lottos: List<Lotto>) {
+        println("\n수동으로 ${lottosToBuyManually.value}장, 자동으로 ${lottos.size - lottosToBuyManually.value}개를 구매했습니다.")
         lottos.forEach { println(it) }
     }
 

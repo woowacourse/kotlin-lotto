@@ -41,7 +41,7 @@ class LottoController {
             amount
         }
 
-    private fun askNumberOfLottosToBuyManually(limitedAmount: Money): Int {
+    private fun askNumberOfLottosToBuyManually(limitedAmount: Money): Count {
         outputView.outputGetNumberOfLottosToBuyManually()
         var numberOfLottosToBuyManually = getNumberOfLottosToBuyManually()
 
@@ -53,8 +53,8 @@ class LottoController {
         return numberOfLottosToBuyManually
     }
 
-    private fun getNumberOfLottosToBuyManually(): Int =
-        inputView.inputNumberOfLottosToBuyManually().let {
+    private fun getNumberOfLottosToBuyManually(): Count {
+        val numberOfLottosToBuyManually = inputView.inputNumberOfLottosToBuyManually().let {
             var count = it
             while (count == null) {
                 outputView.printMessage(ERROR_INPUT_NOT_INT_TYPE)
@@ -63,8 +63,16 @@ class LottoController {
             count
         }
 
-    private fun askLottosToBuyManually(count: Int): List<Lotto> {
-        if (count == 0) return listOf()
+        while (true) {
+            kotlin.runCatching {
+                return Count(numberOfLottosToBuyManually)
+            }
+                .onFailure { outputView.printErrorMessage(it) }
+        }
+    }
+
+    private fun askLottosToBuyManually(count: Count): List<Lotto> {
+        if (count.isZero()) return listOf()
         outputView.outputGetLottosToBuyManually()
         return inputView.inputLottosToBuyManually(count)
     }

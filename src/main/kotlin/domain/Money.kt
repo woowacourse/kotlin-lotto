@@ -7,7 +7,7 @@ data class Money(val amount: Int) : Comparable<Money> {
     }
 
     operator fun div(money: Money): Int = this.amount / money.amount
-    operator fun times(number: Int) = Money(this.amount * number)
+    operator fun times(count: Count) = Money(this.amount * count.value)
     operator fun minus(money: Money) = Money(this.amount - money.amount)
     override fun compareTo(other: Money): Int = this.amount - other.amount
 
