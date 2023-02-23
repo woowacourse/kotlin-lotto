@@ -1,5 +1,6 @@
 package view.validator
 
+import domain.PurchaseLottoMoney
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -14,8 +15,7 @@ class ValidatorTest {
     @Test
     fun `스트링에서 정수로 형변환이 안된다면 null반환`() {
         val result = Validator.validateConvertInt("3,")
-        val expected = null
-        assertThat(result).isEqualTo(expected)
+        assertThat(result).isNull()
     }
 
     @Test
@@ -27,7 +27,7 @@ class ValidatorTest {
     @Test
     fun `스트링에서 정수 배열로 형변환이 안된다면 null 반환`() {
         val result = Validator.validateConvertToIntList("1,a,3", ",")
-        assertThat(result).isEqualTo(null)
+        assertThat(result).isNull()
     }
 
     @Test
@@ -39,9 +39,25 @@ class ValidatorTest {
 
     @Test
     fun `받은 숫자가 PurchaseLottoMoney로 변환이 안된다면 null반환`() {
-        assertThat(Validator.validateMakePurchaseLottoMoney(500)?.money).isEqualTo(null)
-        assertThat(Validator.validateMakePurchaseLottoMoney(999)?.money).isEqualTo(null)
-        assertThat(Validator.validateMakePurchaseLottoMoney(0)?.money).isEqualTo(null)
-        assertThat(Validator.validateMakePurchaseLottoMoney(-1)?.money).isEqualTo(null)
+        assertThat(Validator.validateMakePurchaseLottoMoney(500)?.money).isNull()
+        assertThat(Validator.validateMakePurchaseLottoMoney(999)?.money).isNull()
+        assertThat(Validator.validateMakePurchaseLottoMoney(0)?.money).isNull()
+        assertThat(Validator.validateMakePurchaseLottoMoney(-1)?.money).isNull()
+    }
+
+    @Test
+    fun `주어진 돈으로 그만큼의 수동 구매 개수를 구매가능한지 검증하고 된다면 null이 아닌 값을 반환`() {
+        val money = PurchaseLottoMoney(3500)
+        val manualCount = 3
+        val result = Validator.validateMakeLottoPurchaseInfo(money, manualCount)
+        assertThat(result).isNotNull
+    }
+
+    @Test
+    fun `주어진 돈으로 그만큼의 수동 구매 개수를 구매가능한지 검증하고 실패한다면 null을 반환`() {
+        val money = PurchaseLottoMoney(3500)
+        val manualCount = 4
+        val result = Validator.validateMakeLottoPurchaseInfo(money, manualCount)
+        assertThat(result).isNull()
     }
 }
