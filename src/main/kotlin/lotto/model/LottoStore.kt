@@ -13,6 +13,8 @@ class LottoStore(private val lottoGenerator: LottoGenerator = RandomLottoGenerat
         return Lottos(List(lottoCount) { lottoGenerator.generate() })
     }
 
+    fun mergeLottos(manualLotto: Lottos, autoLotto: Lottos): Lottos = manualLotto + autoLotto
+
     companion object {
         private const val ERROR_MESSAGE_OVER_TO_AVAILABLE_LOTTO = "구매 가능한 로또 수를 초과하였습니다"
     }

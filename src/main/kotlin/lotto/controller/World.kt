@@ -50,7 +50,7 @@ class World(
         val autoLottoCount = purchaseLottoCount.calculateAutoLottoCount(manualLottoCount)
         val manualLottos = store.buyManualLotto(manualLottoCount.value, *initManualLotto(manualLottoCount))
         val autoLottos = store.buyAutoLotto(autoLottoCount.value)
-        val totalLottos = manualLottos + autoLottos
+        val totalLottos = store.mergeLottos(manualLottos, autoLottos)
         outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, manualLottoCount.value, autoLottoCount.value)
         outputView.lottosResult(totalLottos)
         return totalLottos
