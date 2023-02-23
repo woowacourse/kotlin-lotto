@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.entity.Lotto
+import lotto.entity.LottoCount
 import lotto.entity.LottoNumber
 import lotto.entity.Lottos
 import lotto.entity.ProfitRate
@@ -21,10 +22,9 @@ class World(
 
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
-        val lottos = initLottos(purchaseMoney)
-        val winNumber = initWinNumber()
-        val bonus = initBonus(winNumber)
-        val winLotto = WinLotto(winNumber, bonus)
+        val manualLottoCount = initManualLottoCount(purchaseMoney)
+        val lottos = initLottos(LottoCount(purchaseMoney.getPurchaseLottoCount()), manualLottoCount)
+        val winLotto = makeWinLotto()
         val winStatistics = makeWinStatistics(lottos, winLotto)
         outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
         val profitRate = makeProfitRate(purchaseMoney, winStatistics)
@@ -38,13 +38,33 @@ class World(
         } as PurchaseMoney
     }
 
-    private fun initLottos(purchaseMoney: PurchaseMoney): Lottos {
+    private fun initManualLottoCount(purchaseMoney: PurchaseMoney): LottoCount {
+        return tryAndRerun {
+            outputView.printMessage(OutputView.MESSAGE_INPUT_MANUAL_LOTTO_COUNT)
+            LottoCount(inputView.readManualLottoCount(purchaseMoney.value))
+        } as LottoCount
+    }
+
+    private fun initLottos(purchaseLottoCount: LottoCount, manualLottoCount: LottoCount): Lottos {
         val store = LottoStore()
-        val lottoCount = purchaseMoney.getPurchaseLottoCount()
-        val autoLottos = store.buyAutoLotto(lottoCount)
-        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, lottoCount)
-        outputView.lottosResult(autoLottos)
-        return autoLottos
+        val autoLottoCount = LottoCount(purchaseLottoCount.value - manualLottoCount.value)
+        val manualLottos = store.buyManualLotto(manualLottoCount.value, *initManualLotto(manualLottoCount))
+        val autoLottos = store.buyAutoLotto(autoLottoCount.value)
+        val totalLottos = manualLottos + autoLottos
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, manualLottoCount.value, autoLottoCount.value)
+        outputView.lottosResult(totalLottos)
+        return totalLottos
+    }
+
+    private fun initManualLotto(manualLottoCount: LottoCount): Array<Lotto> {
+        val lottos = mutableListOf<Lotto>()
+        if (manualLottoCount.value == 0)
+            return lottos.toTypedArray()
+        outputView.printMessage(OutputView.MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
+        repeat(manualLottoCount.value) {
+            tryAndRerun { lottos.add(Lotto.from(inputView.readLottoNumber().map { LottoNumber(it) })) }
+        }
+        return lottos.toTypedArray()
     }
 
     private fun initWinNumber(): Lotto {
@@ -61,6 +81,12 @@ class World(
             WinLotto(winNumber, bonus)
             bonus
         } as LottoNumber
+    }
+
+    private fun makeWinLotto(): WinLotto {
+        val winNumber = initWinNumber()
+        val bonus = initBonus(winNumber)
+        return WinLotto(winNumber, bonus)
     }
 
     private fun makeWinStatistics(lottos: Lottos, winLotto: WinLotto): WinStatistics {
