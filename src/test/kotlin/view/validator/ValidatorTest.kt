@@ -1,9 +1,12 @@
 package view.validator
 
 import common.convertToLottoNumberSet
+import domain.LottoNumber
 import domain.PurchaseLottoMoney
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class ValidatorTest {
     @Test
@@ -74,5 +77,20 @@ class ValidatorTest {
         val numbers = listOf(1, 2, 3, 4, 5, 5)
         val result = Validator.validateMakeLotto(numbers)
         assertThat(result?.numbers).isNull()
+    }
+
+    @ValueSource(ints = [1, 2, 3, 45])
+    @ParameterizedTest
+    fun `주어진 숫자가 LottoNumber로 변환에 성공해서 반환`(n: Int) {
+        val number = Validator.validateMakeLottoNumber(n)
+        val expected = LottoNumber.from(n)
+        assertThat(number).isEqualTo(expected)
+    }
+
+    @ValueSource(ints = [-1, 0, 46])
+    @ParameterizedTest
+    fun `주어진 숫자가 LottoNumber로 변환에 실패해서 null반환`(n: Int) {
+        val number = Validator.validateMakeLottoNumber(n)
+        assertThat(number).isNull()
     }
 }

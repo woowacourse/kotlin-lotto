@@ -50,6 +50,12 @@ object Validator {
         return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
     }
 
+    fun validateMakeLottoNumber(number: Int): LottoNumber? {
+        if (number in LottoNumber.MINIMUM_LOTTO_RANGE..LottoNumber.MAXIMUM_LOTTO_RANGE) return LottoNumber.from(number)
+        println(ERROR_MAKE_LOTTO_NUMBER)
+        return null
+    }
+
     private const val ERROR_CONVERT_INT = "[ERROR] 숫자로 다시 입력해주세요."
     private const val ERROR_CONVERT_INT_LIST = "[ERROR] %s로 숫자를 구분해서 다시 입력해주세요."
     private const val ERROR_MAKE_LOTTO_PURCHASE_MONEY =
@@ -59,4 +65,6 @@ object Validator {
     private const val ERROR_MAKE_LOTTO_TO_RANGE =
         "[ERROR] 각 숫자는 ${LottoNumber.MINIMUM_LOTTO_RANGE}에서 ${LottoNumber.MAXIMUM_LOTTO_RANGE} 사이로 구성되어야 합니다."
     private const val ERROR_MAKE_LOTTO_TO_SIZE = "[ERROR] 로또는 서로 다른 ${Lotto.LOTTO_SIZE}개의 숫자로 구성되어야 합니다."
+    private const val ERROR_MAKE_LOTTO_NUMBER =
+        "[ERROR] 로또의 숫자는 ${LottoNumber.MINIMUM_LOTTO_RANGE}에서 ${LottoNumber.MAXIMUM_LOTTO_RANGE} 사이여야 합니다."
 }
