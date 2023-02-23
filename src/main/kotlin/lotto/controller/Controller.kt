@@ -21,48 +21,86 @@ class Controller {
 
     private fun initializeLotto(): List<Lotto> {
         val totalLottoCount = readInputMoney().amount / LottoMoney.MONEY_UNIT
-        val manualLottoCount = readManualLottoCount()
-        ManualLottoCountValidator.checkAvailable(manualLottoCount, totalLottoCount)
-        val totalLotto = readManualLotto(manualLottoCount) + LottoGenerator.generate(totalLottoCount - manualLottoCount)
-        OutputView.printLottoCountMessage(manualLottoCount, totalLottoCount - manualLottoCount)
+        val manualLottoCount = readManualLottoCount(totalLottoCount)
+        val autoLottoCount = totalLottoCount - manualLottoCount
+        val manualLotto = readManualLottoNumber(manualLottoCount)
+        val totalLotto = manualLotto + LottoGenerator.generate(autoLottoCount)
+        OutputView.printLottoCountMessage(manualLottoCount, autoLottoCount)
         OutputView.printLottoNumbers(totalLotto)
         return totalLotto
     }
 
-    private fun readManualLottoCount(): Int {
+    private fun readManualLottoCount(totalLottoCount: Int): Int {
         OutputView.printInputManualCountPrompt()
-        return InputView.readInputManualLottoCount() ?: readManualLottoCount()
+        val manualLottoCount = InputView.readInputManualLottoCount()
+        return kotlin.runCatching {
+            ManualLottoCountValidator.checkAvailable(manualLottoCount, totalLottoCount)
+            manualLottoCount
+        }.getOrElse {
+            println(ERROR_PREFIX + it.message)
+            readManualLottoCount(totalLottoCount)
+        }
     }
 
-    private fun readManualLotto(count: Int): List<Lotto> {
+    private fun readManualLottoNumber(count: Int): List<Lotto> {
         OutputView.printInputManualLottoNumbersPrompt()
-        return InputView.readInputManualLotto(count) ?: readManualLotto(count)
+        val lotto = mutableListOf<Lotto>()
+        return kotlin.runCatching {
+            repeat(count) {
+                lotto.add(LottoGenerator.generateManual(InputView.readInputLottoNumber()))
+            }
+            lotto
+        }.getOrElse {
+            println(ERROR_PREFIX + it.message)
+            readManualLottoNumber(count)
+        }
     }
 
     private fun readInputMoney(): LottoMoney {
         OutputView.printInputMoneyPrompt()
-        return InputView.readInputMoney() ?: readInputMoney()
+        return kotlin.runCatching {
+            LottoMoney(InputView.readInputMoney())
+        }.getOrElse {
+            println(ERROR_PREFIX + it.message)
+            readInputMoney()
+        }
     }
 
     private fun readWinningNumbers(): WinningNumbers {
         val winningLotto = readWinningLotto()
         val bonusNumber = readBonusNumber(winningLotto)
-        return WinningNumbers(winningLotto, bonusNumber)
+        return kotlin.runCatching {
+            WinningNumbers(winningLotto, bonusNumber)
+        }.getOrElse {
+            println(ERROR_PREFIX + it.message)
+            readWinningNumbers()
+        }
     }
 
     private fun readWinningLotto(): Lotto {
         OutputView.printInputWinningNumbersPrompt()
-        return InputView.readInputWinningLotto() ?: readWinningLotto()
+        val numbers = InputView.readInputLottoNumber()
+        return kotlin.runCatching {
+            Lotto(numbers.map { LottoNumber.from(it) })
+        }.getOrElse {
+            println(ERROR_PREFIX + it.message)
+            readWinningLotto()
+        }
     }
 
     private fun readBonusNumber(winningLotto: Lotto): LottoNumber {
         OutputView.printInputBonusNumberPrompt()
-        val bonusNumber = InputView.readInputBonusNumber() ?: readBonusNumber(winningLotto)
-        WinningNumbers(winningLotto, bonusNumber)
-        return bonusNumber
+        val bonusNumber = InputView.readInputBonusNumber()
+        return kotlin.runCatching {
+            WinningNumbers(winningLotto, LottoNumber.from(bonusNumber))
+            LottoNumber.from(bonusNumber)
+        }.getOrElse {
+            println(ERROR_PREFIX + it.message)
+            readBonusNumber(winningLotto)
+        }
     }
 
     companion object {
-        private const val ERROR_PREFIX = "[ERROR]"
+        private const val ERROR_PREFIX = "[ERROR] "
     }
 }
