@@ -1,22 +1,22 @@
 package lotto.view
 
 object InputView {
-    fun readInputMoney() = readIntOrNull()
+    fun readInputMoney() = readInputNumber()
 
-    fun readInputManualLottoCount() = readIntOrNull()
+    fun readInputManualLottoCount() = readInputNumber()
 
-    fun readInputBonusNumber() = readIntOrNull()
+    fun readInputBonusNumber() = readInputNumber()
 
-    private fun readIntOrNull(): Int? {
+    private fun readInputNumber(): Int? {
         val input = readln()
         return input.toIntOrNull()
     }
 
-    fun readManualLottoNumbers() = readStringList()
+    fun readManualLottoNumbers() = readInputNumbers()
 
-    fun readInputWinningLotto() = readStringList()
+    fun readInputWinningLotto() = readInputNumbers()
 
-    private fun readStringList(): List<Int?> {
+    private fun readInputNumbers(): List<Int?> {
         val input = readln()
         return input.split(",").map { it.toIntOrNull() }
     }

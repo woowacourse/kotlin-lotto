@@ -12,7 +12,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     FIFTH(3, 5_000),
     MISS(0, 0) {
         override fun isSame(countOfMatch: Int, matchBonus: Boolean): Boolean {
-            return (countOfMatch < 3) or (countOfMatch > 6)
+            return (countOfMatch < MISS_RANGE_MAX) or (countOfMatch > WRONG_COUNT_RANGE)
         }
     };
 
@@ -21,6 +21,9 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     }
 
     companion object {
+        private const val MISS_RANGE_MAX = 3
+        private const val WRONG_COUNT_RANGE = 6
+
         fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
             return values().find {
                 it.isSame(countOfMatch, matchBonus)
