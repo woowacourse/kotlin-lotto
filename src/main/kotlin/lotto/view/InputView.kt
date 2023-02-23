@@ -6,11 +6,10 @@ object InputView {
         return if (input?.isNumber() == true) input.toIntOrNull() else null
     }
 
-    fun getNumberList(): List<Int>? {
+    fun getNumberList(): List<Int?>? {
         val input = readlnOrNull()?.trim()?.split(",")
-        val result = input?.map { it.trim().toIntOrNull() }
-        return if (input?.isNumbers() == true && result?.contains(null) == false)
-            input.map { it.trim().toInt() } else null
+        return if (input?.isNumbers() == true)
+            input.map { it.trim().toIntOrNull() } else null
     }
 
     private fun String.isNumber() = this.chars().allMatch { Character.isDigit(it) }

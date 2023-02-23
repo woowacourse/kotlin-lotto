@@ -46,6 +46,8 @@ class LottoController(
 
     private fun getManualLotto(numberOfLotto: Int): List<Lotto> {
         val manualLotto = mutableListOf<Lotto>()
+        if (numberOfLotto == 0)
+            return manualLotto
         printMessage(INSERT_MANUAL_LOTTO)
         repeat(numberOfLotto) {
             manualLotto.add(getLottoNumber())
@@ -86,7 +88,8 @@ class LottoController(
 
     private fun getLottoNumber(): Lotto {
         return validateInput {
-            InputView.getNumberList()?.sortedBy { it }?.let { number -> Lotto(number.map { LottoNumber.from(it) }) }
+            val numbers = InputView.getNumberList()?.sortedBy { it }?.filterNotNull()
+            numbers?.let { Lotto(*it.toIntArray()) }
         } ?: getLottoNumber()
     }
 
