@@ -9,9 +9,9 @@ class Money(val value: Int) {
         return value.div(1000)
     }
 
-    fun getRemainingMoneyAfterManualLottoPurchase(manualLottoCount: Int): Money {
-        check(value >= manualLottoCount * LOTTO_PRICE_FOR_WON) { ERROR_MESSAGE_LACK_OF_MONEY }
-        return Money(value - manualLottoCount * LOTTO_PRICE_FOR_WON)
+    fun getChangeByPurchasedLottos(lottoCount: Int): Money {
+        check(value >= lottoCount * LOTTO_PRICE_FOR_WON) { ERROR_MESSAGE_LACK_OF_MONEY }
+        return Money(value - lottoCount * LOTTO_PRICE_FOR_WON)
     }
 
     companion object {

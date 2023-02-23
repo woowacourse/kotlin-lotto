@@ -13,7 +13,7 @@ class LottoGame(
 ) {
 
     fun purchaseLottos(money: Money, manualLottos: List<Lotto>): List<PurchasedLotto> {
-        val remainMoney = money.getRemainingMoneyAfterManualLottoPurchase(manualLottos.size)
+        val remainMoney = money.getChangeByPurchasedLottos(manualLottos.size)
         return lottoMachine.purchaseManualLottos(manualLottos) + lottoMachine.purchaseAutoLottos(remainMoney)
     }
 
