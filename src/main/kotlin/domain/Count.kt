@@ -7,8 +7,6 @@ value class Count(val value: Int) {
         require(value in MINIMUM_COUNT..MAXIMUM_COUNT) { ERROR_COUNT_RANGE }
     }
 
-    fun isZero(): Boolean = value == 0
-
     companion object {
         private const val MINIMUM_COUNT = 0
         private const val MAXIMUM_COUNT = 100

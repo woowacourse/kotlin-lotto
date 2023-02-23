@@ -6,29 +6,10 @@ import domain.LottoResult
 import domain.Rank
 import kotlin.math.floor
 
-class OutputView {
-    fun outputGetAmount() {
-        println("구입금액을 입력해 주세요.")
-    }
+object OutputView {
 
-    fun outputGetNumberOfLottosToBuyManually() {
-        println("\n수동으로 구매할 로또 수를 입력해 주세요.")
-    }
-
-    fun outputGetLottosToBuyManually() {
-        println("\n수동으로 구매할 번호를 입력해 주세요.")
-    }
-
-    fun outputGetWinningNumbers() {
-        println("\n지난 주 당첨 번호를 입력해 주세요.")
-    }
-
-    fun outputGetBonusNumber() {
-        println("보너스 볼을 입력해 주세요.")
-    }
-
-    fun outputLottos(lottosToBuyManually: Count, lottos: List<Lotto>) {
-        println("\n수동으로 ${lottosToBuyManually.value}장, 자동으로 ${lottos.size - lottosToBuyManually.value}개를 구매했습니다.")
+    fun outputLottos(manuallyPurchaseCount: Count, lottos: List<Lotto>) {
+        println("\n수동으로 ${manuallyPurchaseCount.value}장, 자동으로 ${lottos.size - manuallyPurchaseCount.value}개를 구매했습니다.")
         lottos.forEach { println(it) }
     }
 

@@ -6,7 +6,7 @@ data class Money(val amount: Int) : Comparable<Money> {
         require(amount in MINIMUM_AMOUNT..MAXIMUM_AMOUNT) { ERROR_MONEY_AMOUNT }
     }
 
-    operator fun div(money: Money): Int = this.amount / money.amount
+    operator fun div(money: Money) = this.amount / money.amount
     operator fun times(count: Count) = Money(this.amount * count.value)
     operator fun minus(money: Money) = Money(this.amount - money.amount)
     override fun compareTo(other: Money): Int = this.amount - other.amount
