@@ -3,7 +3,7 @@ package domain
 class LottoGenerator() : LottoGeneratorInterface {
     override fun generateLotto(): Lotto {
         val possibleLottoNumbers = (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER).toList()
-        return Lotto(possibleLottoNumbers.map { LottoNumber(it) }.take(LOTTO_NUMBER_COUNT))
+        return Lotto(possibleLottoNumbers.map { LottoNumber(it) }.shuffled().take(LOTTO_NUMBER_COUNT))
     }
 
     companion object {

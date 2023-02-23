@@ -1,6 +1,6 @@
 package domain
 
-class RankStatistics(val moeny: Int) : PaymentMoney(moeny) {
+class RankStatistics {
     private val rankCount = HashMap<Rank, Int>()
 
     fun updateRankCount(rank: Rank) {
@@ -14,15 +14,21 @@ class RankStatistics(val moeny: Int) : PaymentMoney(moeny) {
 
     fun getProfitRate(): Double {
         var profit = INITIALIZE_TO_DOUBLE_ZERO
+        var totalCount = INITIALIZE_TO_ZERO
         this.rankCount.forEach { (rank, count) ->
             profit += rank.winningMoney * count
+            totalCount += count
         }
-        return profit / moeny
+        return profit / (totalCount * ONE_LOTTO_PRICE)
     }
+
+    fun isProfitable(profit: Double): Boolean = profit < MINIMUM_PROFITABLE_NUM
 
     companion object {
         const val INITIALIZE_TO_ZERO = 0
         const val INITIALIZE_TO_DOUBLE_ZERO = 0.00
         const val PLUS_ONE = 1
+        const val ONE_LOTTO_PRICE = 1000
+        const val MINIMUM_PROFITABLE_NUM = 1
     }
 }
