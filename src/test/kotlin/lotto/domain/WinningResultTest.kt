@@ -3,7 +3,9 @@ package lotto.domain
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 class WinningResultTest {
 
@@ -17,17 +19,37 @@ class WinningResultTest {
                     Pair(Rank.THIRD, 0),
                     Pair(Rank.FOURTH, 0),
                     Pair(Rank.FIFTH, 1)
-                )
+                ),
+                14000
             )
-        Assertions.assertThat(winningResult.calculateYield(14000)).isEqualTo(0.35)
+        Assertions.assertThat(winningResult.yield).isEqualTo(0.35)
     }
 
     @ParameterizedTest
-    @CsvSource("0.1, false", "1.0, true")
-    fun `수익률을 받아 1 이상이면 이득, 1 미만이면 손해로 판단한다`(yield: Double, expected: Boolean) {
-        val winningResult: WinningResult = WinningResult(
-            Rank.values().associateWith { 0 }.toMutableMap()
-        )
-        Assertions.assertThat(winningResult.isGain(yield)).isEqualTo(expected)
+    @MethodSource("gainCase")
+    fun `수익률을 받아 1 이상이면 이득, 1 미만이면 손해로 판단한다`(winningResult: WinningResult, expected: Boolean) {
+        Assertions.assertThat(winningResult.isGain).isEqualTo(expected)
+    }
+
+    companion object {
+        @JvmStatic
+        fun gainCase(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(
+                    WinningResult(
+                        Rank.values().associateWith { 0 }.toMutableMap(),
+                        5000
+                    ),
+                    false
+                ),
+                Arguments.of(
+                    WinningResult(
+                        Rank.values().associateWith { 1 }.toMutableMap(),
+                        5000
+                    ),
+                    true
+                )
+            )
+        }
     }
 }

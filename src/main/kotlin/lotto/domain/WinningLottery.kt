@@ -8,7 +8,7 @@ class WinningLottery(
         checkBonusNumberDuplicate()
     }
 
-    fun createResult(lotteries: List<Lottery>): WinningResult {
+    fun createResult(lotteries: List<Lottery>, amount: Int): WinningResult {
         val winningResult: MutableMap<Rank, Int> =
             Rank.values().associateWith { 0 }.toMutableMap()
 
@@ -19,7 +19,7 @@ class WinningLottery(
             winningResult[rank] = winningResult[rank]!!.plus(1)
         }
 
-        return WinningResult(winningResult)
+        return WinningResult(winningResult, amount)
     }
 
     private fun checkBonusNumberDuplicate() {

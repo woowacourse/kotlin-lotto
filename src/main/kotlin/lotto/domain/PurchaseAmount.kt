@@ -1,12 +1,14 @@
 package lotto.domain
 
 class PurchaseAmount(
-    val amount: Int
+    private val amount: Int
 ) {
     init {
         checkBoundary()
         checkUnit()
     }
+
+    fun toInt(): Int = amount
 
     fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
 

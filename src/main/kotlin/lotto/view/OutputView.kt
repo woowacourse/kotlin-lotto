@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.domain.PurchaseAmount
+import lotto.domain.Rank
 import lotto.domain.WinningResult
 
 class OutputView {
@@ -9,15 +9,27 @@ class OutputView {
         println(message)
     }
 
-    fun printWinningStats(amount: PurchaseAmount, result: WinningResult) {
+    fun printWinningStats(winningResult: WinningResult) {
         println()
         println(NOTICE_MESSAGE_WINNING_STAT)
         println(DIVIDER_LINE)
 
-        result.getResult().reversed().forEach { println(it) }
+        printMatches(winningResult)
 
-        print(NOTICE_FORMAT_MESSAGE_TOTAL_YIELD.format(result.calculateYield(amount.amount)))
-        if (!result.isGain(result.calculateYield(amount.amount))) println(NOTICE_MESSAGE_NOT_GAIN)
+        print(NOTICE_FORMAT_MESSAGE_TOTAL_YIELD.format(winningResult.yield))
+        if (!winningResult.isGain) println(NOTICE_MESSAGE_NOT_GAIN)
+    }
+
+    private fun printMatches(winningResult: WinningResult) {
+        val countMatchRanks = winningResult.toMap()
+        val texts: MutableList<String> = mutableListOf()
+
+        Rank.values().associateWith {
+            if (it != Rank.MISS)
+                texts.add("${it.description} (${it.winningMoney})- ${countMatchRanks[it]}")
+        }
+
+        texts.reversed().forEach { println(it) }
     }
 
     companion object {

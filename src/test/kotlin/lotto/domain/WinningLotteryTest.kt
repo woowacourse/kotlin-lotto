@@ -97,9 +97,9 @@ class WinningLotteryTest {
                 )
             )
 
-        val expectedWinningResult = winningLottery.createResult(lotteries)
+        val expectedWinningResult = winningLottery.createResult(lotteries, 5000)
 
-        assertThat(winningLottery.createResult(lotteries)[Rank.FIRST])
+        assertThat(winningLottery.createResult(lotteries, 5000)[Rank.FIRST])
             .isEqualTo(expectedWinningResult[Rank.FIRST])
     }
 }
