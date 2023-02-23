@@ -12,7 +12,7 @@ class InputView(
         println(PURCHASING_MONEY_INPUT_MESSAGE)
         lateinit var result: Money
         kotlin.runCatching {
-            inputValidator.validateNumeric(readln().trim())
+            readln().trim().toInt()
         }.onSuccess {
             result = Money(it)
         }.onFailure {
@@ -26,7 +26,7 @@ class InputView(
         println(PURCHASING_MANUAL_LOTTO_COUNT)
         var result: Int = 0
         kotlin.runCatching {
-            inputValidator.validateNumeric(readln().trim())
+            readln().trim().toInt()
         }.onSuccess {
             result = it
         }.onFailure {
@@ -68,7 +68,7 @@ class InputView(
         println(BONUS_BALL_NUMBERS_INPUT_MESSAGE)
         var result: Int = 0
         kotlin.runCatching {
-            inputValidator.validateNumeric(readln().trim())
+            readln().trim().toInt()
         }.onSuccess {
             result = it
         }.onFailure {

@@ -1,12 +1,9 @@
 package util.validator
 
 class InputValidator {
-    fun validateNumeric(value: String): Int =
-        value.toInt()
-
     fun validateWinningNumbersIsNumeric(value: List<String>): List<Int> {
         val winningNumbers = value.map { it.trim() }
-        winningNumbers.forEach { number -> validateNumeric(number) }
+        winningNumbers.forEach { number -> number.toInt() }
 
         return winningNumbers.map { it.toInt() }
     }
