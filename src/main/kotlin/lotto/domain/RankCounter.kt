@@ -10,11 +10,4 @@ object RankCounter {
         }
         return Rank.values().associateWith { key -> ranks.count { key == it } }
     }
-
-    fun calculateTotalPrize(ranks: Map<Rank, Int>): Long {
-        val prize = ranks.map { (rank, count) ->
-            rank.calculatePrize(count)
-        }.sum()
-        return prize
-    }
 }

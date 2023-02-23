@@ -4,9 +4,9 @@ import lotto.domain.LotteriesGenerator
 import lotto.domain.Lottery
 import lotto.domain.LotteryGenerator
 import lotto.domain.LotteryNumber
-import lotto.domain.ProfitCalculator
 import lotto.domain.PurchaseAmount
 import lotto.domain.RankCounter
+import lotto.domain.ResultCalculator
 import lotto.domain.WinningLottery
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -26,7 +26,8 @@ class Controller(
         outputView.printInterval()
 
         val countResult = RankCounter.count(lotteries, winningLottery)
-        val profit = getProfit(purchase, RankCounter.calculateTotalPrize(countResult))
+        val prize = ResultCalculator.calculateTotalPrize(countResult)
+        val profit = ResultCalculator.calculateProfit(purchase, prize)
         outputView.printWinningResult(countResult, profit)
     }
 
@@ -42,9 +43,5 @@ class Controller(
         val winningNumbers = Lottery(inputView.readWinningNumbers().map { LotteryNumber.from(it) })
         val bonusNumber = LotteryNumber.from(inputView.readBonusNumber())
         return WinningLottery(winningNumbers, bonusNumber)
-    }
-
-    private fun getProfit(purchase: PurchaseAmount, prize: Long): Double {
-        return ProfitCalculator.calculate(purchase, prize)
     }
 }

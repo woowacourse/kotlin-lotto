@@ -28,20 +28,4 @@ class RankCounterTest {
         assertThat(countResult[Rank.FIFTH]).isEqualTo(2)
         assertThat(countResult[Rank.MISS]).isEqualTo(0)
     }
-
-    @Test
-    fun `총 상금을 계산한다`() {
-        val countResult = mapOf(
-            Rank.FIRST to 2,
-            Rank.SECOND to 0,
-            Rank.THIRD to 1,
-            Rank.FOURTH to 0,
-            Rank.FIFTH to 1,
-            Rank.MISS to 5
-        )
-
-        val actual = RankCounter.calculateTotalPrize(countResult)
-
-        assertThat(actual).isEqualTo(4_001_505_000)
-    }
 }
