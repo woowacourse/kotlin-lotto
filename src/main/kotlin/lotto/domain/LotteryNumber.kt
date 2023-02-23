@@ -13,5 +13,9 @@ class LotteryNumber private constructor(val number: Int) {
         fun from(number: Int): LotteryNumber {
             return NUMBERS[number] ?: throw IllegalArgumentException(NUMBER_ERROR)
         }
+
+        fun all(): List<LotteryNumber> {
+            return NUMBERS.values.toList()
+        }
     }
 }
