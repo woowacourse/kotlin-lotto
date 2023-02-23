@@ -27,7 +27,7 @@ class ResultView : ResultViewInterface {
     }
 
     override fun printLotto(lotto: Lotto) {
-        println(lotto.toList())
+        println(lotto.toList().sorted())
     }
 
     override fun printTicket(manualTicket: Ticket, autoTicket: Ticket) {
