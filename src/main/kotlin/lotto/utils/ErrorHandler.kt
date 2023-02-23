@@ -10,8 +10,8 @@ fun <T> illegalArgumentExceptionHandler(
 
 fun <T> inputNullHandler(
     message: String,
-    value: T,
+    function: () -> T,
 ): T {
     println(message)
-    return value
+    return function()
 }

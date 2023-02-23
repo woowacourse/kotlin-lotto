@@ -14,11 +14,15 @@ object InputView {
 
     fun getPurchaseMoney(): Int {
         println(GET_PURCHASE_MONEY_SCRIPT)
-        return readln().trim().toIntOrNull() ?: inputNullHandler(ERROR_NOT_NUMBER, getPurchaseMoney())
+        return readln().trim().toIntOrNull() ?: inputNullHandler(ERROR_NOT_NUMBER, ::getPurchaseMoney)
     }
 
-    fun getManualNumberLines(): List<List<Int>> {
-        val lottoCount = getManualLottoCount()
+    fun getManualLottoCount(): Int {
+        println(GET_MANUAL_LOTTO_COUNT_SCRIPT)
+        return readln().trim().toIntOrNull() ?: inputNullHandler(ERROR_NOT_NUMBER, ::getManualLottoCount)
+    }
+
+    fun getManualNumberLines(lottoCount: Int): List<List<Int>> {
         println(GET_MANUAL_LOTTO_NUMBER_LINES_SCRIPT)
         return List(lottoCount) { getLottoNumbers() }
     }
@@ -31,18 +35,13 @@ object InputView {
     private fun getLottoNumbers(): List<Int> {
         val lottoNumbers = readln().split(MAIN_LOTTO_NUMBERS_DELIMITER)
             .map {
-                it.trim().toIntOrNull() ?: return inputNullHandler(ERROR_NOT_COMMA_NUMBER, getLottoNumbers())
+                it.trim().toIntOrNull() ?: return inputNullHandler(ERROR_NOT_COMMA_NUMBER, ::getLottoNumbers)
             }
         return lottoNumbers
     }
 
-    private fun getManualLottoCount(): Int {
-        println(GET_MANUAL_LOTTO_COUNT_SCRIPT)
-        return readln().trim().toIntOrNull() ?: inputNullHandler(ERROR_NOT_NUMBER, getManualLottoCount())
-    }
-
     fun getBonusLottoNumber(): Int {
         println(GET_BONUS_LOTTO_NUMBER_SCRIPT)
-        return readln().trim().toIntOrNull() ?: inputNullHandler(ERROR_NOT_NUMBER, getBonusLottoNumber())
+        return readln().trim().toIntOrNull() ?: inputNullHandler(ERROR_NOT_NUMBER, ::getBonusLottoNumber)
     }
 }
