@@ -4,18 +4,18 @@ import kotlin.math.floor
 
 class LottoStatistics(private val winningLotto: WinningLotto) {
 
-    fun matchTicket(ticket: Ticket): Map<Rank, Int> {
+    fun matchTicket(ticket: Ticket): LottoResult {
         val result = Rank.values().associateWith { 0 }.toMutableMap()
         ticket.lottos.forEach { lotto ->
             val matchRank = lotto.matchResult(winningLotto)
             result[matchRank] = (result[matchRank] ?: 0) + 1
         }
-        return result
+        return LottoResult(result)
     }
 
-    fun yield(result: Map<Rank, Int>, purchaseLottoMoney: PurchaseLottoMoney): String {
+    fun yield(lottoResult: LottoResult, purchaseLottoMoney: PurchaseLottoMoney): String {
         var sum = 0.0
-        for ((rank, count) in result) {
+        for ((rank, count) in lottoResult.result) {
             sum += rank.winningMoney * count
         }
         return (floor((sum / (purchaseLottoMoney.money)) * 100) / 100).toString()

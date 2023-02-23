@@ -2,11 +2,12 @@ package view
 
 import domain.Lotto
 import domain.LottoPurchaseInfo
+import domain.LottoResult
 import domain.Rank
 import domain.Ticket
 
 class ResultView : ResultViewInterface {
-    override fun printResult(statisticsResult: Map<Rank, Int>, profit: String) {
+    override fun printResult(statisticsResult: LottoResult, profit: String) {
         printStatistics(statisticsResult)
         printProfit(profit)
     }
@@ -27,10 +28,10 @@ class ResultView : ResultViewInterface {
         println(sb.toString())
     }
 
-    override fun printStatistics(statisticsResult: Map<Rank, Int>) {
+    override fun printStatistics(statisticsResult: LottoResult) {
         println(MATCH_RESULT)
         for (rank in Rank.values().take(5).reversed()) {
-            val rankCount = statisticsResult[rank]
+            val rankCount = statisticsResult.result[rank]
             println(PER_MATCH_RESULT.format(rank.countOfMatch, printBonus(rank), rank.winningMoney, rankCount))
         }
     }

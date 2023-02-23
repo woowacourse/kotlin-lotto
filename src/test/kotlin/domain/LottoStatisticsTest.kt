@@ -20,11 +20,11 @@ class LottoStatisticsTest {
         val bonusNumber = LottoNumber.from(13)
         val winningLotto = WinningLotto(Lotto(winningNumber.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val result: Map<Rank, Int> = lottoStatistics.matchTicket(ticket)
+        val lottoResult: LottoResult = lottoStatistics.matchTicket(ticket)
 
-        assertThat(result[Rank.FIRST]).isEqualTo(2)
-        assertThat(result[Rank.SECOND]).isEqualTo(1)
-        assertThat(result[Rank.THIRD]).isEqualTo(1)
+        assertThat(lottoResult.result[Rank.FIRST]).isEqualTo(2)
+        assertThat(lottoResult.result[Rank.SECOND]).isEqualTo(1)
+        assertThat(lottoResult.result[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
@@ -42,7 +42,7 @@ class LottoStatisticsTest {
         val winningLotto = WinningLotto(Lotto(winningNumber.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
         val purchaseLottoMoney = PurchaseLottoMoney(14000)
-        val result = lottoStatistics.yield(winResult, purchaseLottoMoney)
+        val result = lottoStatistics.yield(LottoResult(winResult), purchaseLottoMoney)
         val expected = "0.35"
         assertThat(result).isEqualTo(expected)
     }
