@@ -1,5 +1,3 @@
-package inputvalidation
-
 import domain.Count
 import domain.LottoCount
 

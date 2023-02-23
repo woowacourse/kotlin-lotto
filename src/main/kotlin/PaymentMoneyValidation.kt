@@ -1,5 +1,3 @@
-package inputvalidation
-
 import domain.PaymentMoney
 
 class PaymentMoneyValidation {

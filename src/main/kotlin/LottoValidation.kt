@@ -1,23 +1,23 @@
-package inputvalidation
-
 import domain.Lotto
 import domain.LottoNumber
 
 class LottoValidation {
     fun checkLottoValidation(input: String?): Result<Lotto> {
         if (input.isNullOrBlank()) return Result.failure(IllegalArgumentException(INPUT_IS_EMPTY_ERROR_MESSAGE))
-        val lottoNumbers = splitLottoNumbers(input)
-        if (lottoNumbers.size != LOTTO_NUMBERS_SIZE) return Result.failure(
+        val numbers = splitLottoNumbers(input)
+        if (numbers.size != LOTTO_NUMBERS_SIZE) return Result.failure(
             IllegalArgumentException(LOTTO_NUMBERS_COUNT_ERROR)
         )
-        val lotto = Lotto(lottoNumbers.map { input ->
+
+        val lottoNumbers = numbers.map { input ->
             val lottoNumber = input.toIntOrNull() ?: return Result.failure(IllegalArgumentException(NOT_INTEGER_ERROR))
             if (lottoNumber > MAXIMUM_LOTTO_NUMBER || lottoNumber < MINIMUM_LOTTO_NUMBER) return Result.failure(
                 IllegalArgumentException(LOTTO_NUMBER_RANGE_ERROR_MESSAGE)
             )
             LottoNumber(lottoNumber)
-        })
-        return Result.success(lotto)
+        }
+
+        return Result.success(Lotto(lottoNumbers))
     }
 
     fun splitLottoNumbers(input: String): List<String> {

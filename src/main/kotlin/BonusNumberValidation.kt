@@ -1,5 +1,3 @@
-package inputvalidation
-
 import domain.Lotto
 import domain.LottoNumber
 import domain.WinningNumber
