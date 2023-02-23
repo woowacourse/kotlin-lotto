@@ -29,10 +29,16 @@ class LottoController(
         resultView.printResult(result, profitRatio)
     }
 
-    private fun makeManualTicket(): Ticket {
-        val count = inputView.getManualLottoCount()
-        val numbers = inputView.getManualLottos(count)
-        return lottoSeller.sellManualLottos(numbers)
+    private fun makeManualTicket(count: Int): Ticket {
+        return runCatching {
+            val manualCount = inputView.getManualLottoCount()
+            checkValidManualCount(count - manualCount)
+            val numbers = inputView.getManualLottos(manualCount)
+            lottoSeller.sellManualLottos(numbers)
+        }.getOrElse { error ->
+            println(error.message)
+            makeManualTicket(count)
+        }
     }
 
     private fun makeAutoTicket(count: Int): Ticket {
@@ -45,7 +51,7 @@ class LottoController(
     }
 
     private fun makeTicket(money: Int): Ticket {
-        val manualTicket = makeManualTicket()
+        val manualTicket = makeManualTicket(money / EACH_LOTTO_PRICE)
         val autoTicket = makeAutoTicket((money / EACH_LOTTO_PRICE) - manualTicket.size)
         resultView.printTicket(manualTicket, autoTicket)
         return manualTicket.concatenateTicket(autoTicket)
@@ -81,7 +87,12 @@ class LottoController(
         }
     }
 
+    private fun checkValidManualCount(count: Int) {
+        require(count > 0) { ERROR_MANUAL_COUNT }
+    }
+
     companion object {
         private const val EACH_LOTTO_PRICE = 1000
+        private const val ERROR_MANUAL_COUNT = "구매한 로또의 수보다 많습니다."
     }
 }
