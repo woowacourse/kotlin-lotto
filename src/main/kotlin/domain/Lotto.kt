@@ -3,7 +3,7 @@ package domain
 class Lotto(val lottoNumbers: Set<LottoNumber>) {
 
     init {
-        require(lottoNumbers.size == 6) { "[Error] 로또번호는 6개여야합니다." }
+        require(lottoNumbers.size == 6) { "[Error] 로또번호는 서로 다른 숫자 6개여야합니다." }
     }
 
     constructor(lottoNumbers: List<String>) : this(

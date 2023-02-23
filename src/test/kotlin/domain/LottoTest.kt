@@ -61,7 +61,19 @@ class LottoTest {
 
         // then
         assertThatIllegalArgumentException().isThrownBy { Lotto(lottoNumbers) }
-            .withMessageContaining("[Error] 로또번호는 6개여야합니다.")
+            .withMessageContaining("[Error] 로또번호는 서로 다른 숫자 6개여야합니다.")
+    }
+
+    @Test
+    fun `로또 번호를 6개를 입력하나 중복이 있을 경우 에러발생`() {
+        // given
+        val lottoNumbers = listOf<String>("1", "2", "2", "3", "4", "5")
+
+        // when
+        val exception = assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
+
+        // then
+        assertThat(exception.message).isEqualTo("[Error] 로또번호는 서로 다른 숫자 6개여야합니다.")
     }
 
     @Test
