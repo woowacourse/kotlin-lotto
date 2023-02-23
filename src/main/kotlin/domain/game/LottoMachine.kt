@@ -8,7 +8,7 @@ import util.common.generateDistinctRandomNumbers
 
 class LottoMachine {
     fun purchaseManualLottos(manualLottos: List<Lotto>): List<PurchasedLotto> =
-        manualLottos.map { PurchasedLotto(it) }
+        manualLottos.map { it as PurchasedLotto }
 
     fun purchaseAutoLottos(money: Money): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
         val lottoCount = money.divideByThousand()
