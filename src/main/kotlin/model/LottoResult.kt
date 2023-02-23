@@ -3,16 +3,17 @@ package model
 import domain.Rank
 
 class LottoResult {
-    var result: HashMap<Rank, Int> = hashMapOf()
+    private val _result: MutableMap<Rank, Int> = mutableMapOf()
+    val result: Map<Rank, Int> get() = _result
 
-    fun plusRankCount(rank: Rank, lottoResult: HashMap<Rank, Int>) {
-        lottoResult[rank] = (lottoResult[rank] ?: NULL) + 1
+    fun updateRankCount(rank: Rank) {
+        _result[rank] = (_result[rank] ?: NULL) + 1
     }
 
-    fun getProfitRate(result: HashMap<Rank, Int>): Double {
+    fun getProfitRate(): Double {
         var profit = DOUBLE_ZERO
         var countOfTicket = DOUBLE_ZERO
-        result.forEach { (rank, count) ->
+        _result.forEach { (rank, count) ->
             profit += (rank.winningMoney * count)
             countOfTicket += count
         }

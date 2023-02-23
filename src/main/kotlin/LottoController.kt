@@ -45,7 +45,7 @@ class LottoController(
         }
     }
 
-    private fun calculateLottoResult(rank: Rank) = lottoResult.plusRankCount(rank, lottoResult.result)
+    private fun calculateLottoResult(rank: Rank) = lottoResult.updateRankCount(rank)
 
     private fun getLottoCount(): Count {
         outputView.printInputMoney()
@@ -80,7 +80,7 @@ class LottoController(
     }
 
     private fun showLottoResult() {
-        outputView.printLottoResult(lottoResult.result)
-        outputView.printLottoProfitRate(lottoResult.getProfitRate(lottoResult.result))
+        outputView.printLottoResult(lottoResult)
+        outputView.printLottoProfitRate(lottoResult.getProfitRate())
     }
 }

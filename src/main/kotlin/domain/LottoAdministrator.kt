@@ -16,6 +16,7 @@ class LottoAdministrator {
 
     fun isMatchBonus(lottoNumber: Lotto, bonusNumber: BonusNumber): Boolean {
         val lottoNumbers = lottoNumber.getNumbers()
+
         return lottoNumbers.contains(bonusNumber.bonusNumber.number)
     }
 

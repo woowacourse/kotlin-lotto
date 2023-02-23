@@ -2,6 +2,7 @@ package view
 
 import domain.Rank
 import model.Lotto
+import model.LottoResult
 
 class OutputView {
 
@@ -18,14 +19,14 @@ class OutputView {
         println(lottoNumbers)
     }
 
-    fun printLottoResult(lottoResult: HashMap<Rank, Int>) {
+    fun printLottoResult(lottoResult: LottoResult) {
         println(STATISTICS + BAR)
         println(
-            "3개 일치 (5,000원) - ${if (lottoResult[Rank.FIFTH] == null) 0 else lottoResult[Rank.FIFTH]}개\n" +
-                "4개 일치 (50,000원) - ${if (lottoResult[Rank.FOURTH] == null) 0 else lottoResult[Rank.FOURTH]}개\n" +
-                "5개 일치 (1,500,000원) - ${if (lottoResult[Rank.THIRD] == null) 0 else lottoResult[Rank.THIRD]}개\n" +
-                "5개 일치, 보너스 볼 일치 (30,000,000원) - ${if (lottoResult[Rank.SECOND] == null) 0 else lottoResult[Rank.SECOND]}개\n" +
-                "6개 일치 (2,000,000,000원) - ${if (lottoResult[Rank.FIRST] == null) 0 else lottoResult[Rank.FIRST]}개",
+            "3개 일치 (5,000원) - ${if (lottoResult.result[Rank.FIFTH] == null) 0 else lottoResult.result[Rank.FIFTH]}개\n" +
+                "4개 일치 (50,000원) - ${if (lottoResult.result[Rank.FOURTH] == null) 0 else lottoResult.result[Rank.FOURTH]}개\n" +
+                "5개 일치 (1,500,000원) - ${if (lottoResult.result[Rank.THIRD] == null) 0 else lottoResult.result[Rank.THIRD]}개\n" +
+                "5개 일치, 보너스 볼 일치 (30,000,000원) - ${if (lottoResult.result[Rank.SECOND] == null) 0 else lottoResult.result[Rank.SECOND]}개\n" +
+                "6개 일치 (2,000,000,000원) - ${if (lottoResult.result[Rank.FIRST] == null) 0 else lottoResult.result[Rank.FIRST]}개",
         )
     }
 
