@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertThrows
 class LottoCountTest {
 
     @Test
-    fun `총 로또 수가 0개라면, 예외를 발생한다`() {
+    fun `총 로또 수가 0개 일 수 없다`() {
         val exception = assertThrows<IllegalArgumentException> { LottoCount(Count(0), Count(0)) }
         assertEquals(LottoCount.TOTAL_LOTTO_COUNT_ERROR_MESSAGE, exception.message)
     }

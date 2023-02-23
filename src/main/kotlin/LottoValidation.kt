@@ -5,10 +5,7 @@ class LottoValidation {
     fun checkLottoValidation(input: String?): Result<Lotto> {
         if (input.isNullOrBlank()) return Result.failure(IllegalArgumentException(INPUT_IS_EMPTY_ERROR_MESSAGE))
         val numbers = splitLottoNumbers(input)
-        if (numbers.size != LOTTO_NUMBERS_SIZE) return Result.failure(
-            IllegalArgumentException(LOTTO_NUMBERS_COUNT_ERROR)
-        )
-
+        if (numbers.size != LOTTO_NUMBERS_SIZE) return Result.failure(IllegalArgumentException(LOTTO_NUMBERS_COUNT_ERROR))
         val lottoNumbers = numbers.map { input ->
             val lottoNumber = input.toIntOrNull() ?: return Result.failure(IllegalArgumentException(NOT_INTEGER_ERROR))
             if (lottoNumber > MAXIMUM_LOTTO_NUMBER || lottoNumber < MINIMUM_LOTTO_NUMBER) return Result.failure(
@@ -16,7 +13,6 @@ class LottoValidation {
             )
             LottoNumber(lottoNumber)
         }
-
         return Result.success(Lotto(lottoNumbers))
     }
 
