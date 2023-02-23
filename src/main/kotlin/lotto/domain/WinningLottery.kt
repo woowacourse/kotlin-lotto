@@ -8,20 +8,6 @@ class WinningLottery(
         checkBonusNumberDuplicate()
     }
 
-    fun createResult(lotteries: List<Lottery>, amount: Int): WinningResult {
-        val winningResult: MutableMap<Rank, Int> =
-            Rank.values().associateWith { 0 }.toMutableMap()
-
-        repeat(lotteries.size) {
-            val countOfMatch = lotteries[it].countMatches(lottery)
-            val matchBonus = lotteries[it].containBonusNumber(bonusNumber)
-            val rank = Rank.valueOf(countOfMatch, matchBonus)
-            winningResult[rank] = winningResult[rank]!!.plus(1)
-        }
-
-        return WinningResult(winningResult, amount)
-    }
-
     private fun checkBonusNumberDuplicate() {
         require(!lottery.numbers.contains(bonusNumber)) { BONUS_NUMBER_DUPLICATE_ERROR }
     }
