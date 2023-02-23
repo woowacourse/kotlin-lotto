@@ -19,6 +19,7 @@ class LottoGame {
         val winningResult = startGame(lottos)
         endGame(winningResult, money)
     }
+
     private fun getMoney(): Money {
         val money = input.inputMoney()
         return money
