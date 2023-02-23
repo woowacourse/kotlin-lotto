@@ -17,7 +17,7 @@ class PurchaseAmountTest {
 
     @ParameterizedTest(name = "구입 금액이 {0}원일 수 있다")
     @ValueSource(ints = [1000, 50000])
-    fun `구입금액이 1000원 이상이고 5만원 이하면 에러가 발생하지 않는다`(amount: Int) {
+    fun `구입금액이 1000원 이상이고 5만원 이하여야 한다`(amount: Int) {
         assertDoesNotThrow {
             PurchaseAmount(amount)
         }
@@ -25,7 +25,7 @@ class PurchaseAmountTest {
 
     @ParameterizedTest(name = "구입 금액이 {0}원일 수 없다")
     @ValueSource(ints = [999, 900, 51000, 50001])
-    fun `구입금액이 1000원 이상이 아니고 5만원을 초과하면 에러가 발생한다`(amount: Int) {
+    fun `구입금액이 1000원 이상이 아니고 5만원을 초과하면 안 된다`(amount: Int) {
         assertThrows<IllegalArgumentException> {
             PurchaseAmount(amount)
         }
@@ -33,13 +33,13 @@ class PurchaseAmountTest {
 
     @ParameterizedTest(name = "구입 금액이 {0}원일 수 있다")
     @ValueSource(ints = [1000, 50000])
-    fun `구입금액이 1000원 단위면 에러가 발생하지 않는다`(amount: Int) {
+    fun `구입금액이 1000원 단위로 나누어 떨어져야 한다`(amount: Int) {
         assertDoesNotThrow { PurchaseAmount(amount) }
     }
 
     @ParameterizedTest(name = "구입 금액이 {0}원일 수 없다")
     @ValueSource(ints = [1001, 49999])
-    fun `구입금액이 1000원 단위로 나누어 떨어지지 않으면 에러가 발생한다`(amount: Int) {
+    fun `구입금액이 1000원 단위로 나누어 떨어지지 않으면 안 된다`(amount: Int) {
         assertThrows<IllegalArgumentException> { PurchaseAmount(amount) }
     }
 

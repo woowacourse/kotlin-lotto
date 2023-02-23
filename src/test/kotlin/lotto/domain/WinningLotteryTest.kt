@@ -36,7 +36,7 @@ class WinningLotteryTest {
     }
 
     @Test
-    fun `당첨 로또 번호와 보너스 번호가 중복되면 에러가 발생한다`() {
+    fun `당첨 로또 번호와 보너스 번호가 중복되면 안 된다`() {
         val lottery = Lottery(1, 10, 20, 30, 40, 45)
         val bonusNumber = LotteryNumber.from(10)
 

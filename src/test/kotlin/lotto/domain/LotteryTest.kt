@@ -23,12 +23,12 @@ class LotteryTest {
 
     @ParameterizedTest(name = "로또 번호는 {0}개일 수 없다")
     @MethodSource("lotteryNumbersErrorCase")
-    fun `로또번호가 6개가 아니면 에러가 발생한다`(length: Int, numbers: IntArray) {
+    fun `로또번호가 6개여야 한다`(length: Int, numbers: IntArray) {
         assertThrows<IllegalArgumentException> { Lottery(*numbers) }
     }
 
     @Test
-    fun `6개의 로또번호에 중복이 있으면 에러가 발생한다`() {
+    fun `6개의 로또번호에 중복이 있으면 안 된다`() {
         assertThrows<IllegalArgumentException> { Lottery(10, 20, 30, 40, 10, 5) }
     }
 
