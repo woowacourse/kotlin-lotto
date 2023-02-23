@@ -2,16 +2,16 @@ package lotto.utils
 
 fun <T> illegalArgumentExceptionHandler(
     error: Throwable,
-    repeatFunction: () -> T,
+    function: () -> T,
 ): T {
     println(error.message)
-    return repeatFunction()
+    return function()
 }
 
 fun <T> inputNullHandler(
     message: String,
-    repeatFunction: T,
+    value: T,
 ): T {
     println(message)
-    return repeatFunction
+    return value
 }
