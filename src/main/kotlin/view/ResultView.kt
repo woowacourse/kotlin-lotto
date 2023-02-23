@@ -4,9 +4,10 @@ import domain.lotto.PurchasedLotto
 import domain.rank.Rank
 
 class ResultView {
-    fun printPurchasedLottos(lottos: List<PurchasedLotto>) {
-        println(PURCHASED_LOTTO_SIZE_FORMAT.format(lottos.size))
-        lottos.map { it.getSortedLotto() }.forEach { sortedNumber ->
+    fun printPurchasedLottos(manualLottos: List<PurchasedLotto>, autoLottos: List<PurchasedLotto>) {
+        println()
+        println(PURCHASED_LOTTO_SIZE_FORMAT.format(manualLottos.size, autoLottos.size))
+        (manualLottos + autoLottos).map { it.getSortedLotto() }.forEach { sortedNumber ->
             println(sortedNumber.map { it.value }.joinToString(", ", "[", "]"))
         }
         println()
@@ -25,6 +26,7 @@ class ResultView {
     }
 
     private fun printStaticsHead() {
+        println()
         println(WINNING_RATE_TITLE)
         println(DIVIDER)
     }
@@ -35,7 +37,7 @@ class ResultView {
     }
 
     companion object {
-        private const val PURCHASED_LOTTO_SIZE_FORMAT = "%d개를 구매했습니다."
+        private const val PURCHASED_LOTTO_SIZE_FORMAT = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
 
         private const val WINNING_RATE_TITLE = "당첨 통계"
         private const val DIVIDER = "---------"
