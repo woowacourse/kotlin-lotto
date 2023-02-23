@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.constant.PURCHASE_UNIT
 import lotto.domain.LottoBunch
 import lotto.domain.LottoCount
 import lotto.domain.LottoFactory
@@ -30,7 +31,7 @@ class LottoController {
 
     private fun getLottoCount(purchaseMoney: PurchaseMoney): LottoCount {
         return runCatching {
-            LottoCount.from(purchaseMoney.getPurchaseCount(), InputView.getManualLottoCount())
+            LottoCount.from(purchaseMoney.getPurchaseCount(PURCHASE_UNIT), InputView.getManualLottoCount())
         }.getOrElse { error ->
             println(error.message)
             getLottoCount(purchaseMoney)
