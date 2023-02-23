@@ -1,12 +1,12 @@
 package domain.model.lotto
 
 import domain.model.LottoResult
-import domain.model.WinningNumbers
+import domain.model.WinningLotto
 
 class PurchasedLottos(val lottos: List<Lotto>) {
 
-    fun getTotalLottoResults(winningNumbers: WinningNumbers) = lottos.map { lotto ->
-        lotto.getLottoResult(winningNumbers)
+    fun getTotalLottoResults(winningLotto: WinningLotto) = lottos.map { lotto ->
+        LottoResult.valueOf(lotto.getMatchCount(winningLotto.catchLotto), lotto.contains(winningLotto.bonusNumber))
     }.filter { lottoResult ->
         lottoResult != LottoResult.MISS
     }
