@@ -29,4 +29,19 @@ class ValidatorTest {
         val result = Validator.validateConvertToIntList("1,a,3", ",")
         assertThat(result).isEqualTo(null)
     }
+
+    @Test
+    fun `받은 숫자가 PurchaseLottoMoney로 변환이 되는지 검증하고 된다면 반환`() {
+        assertThat(1000).isEqualTo(Validator.validateMakePurchaseLottoMoney(1000)?.money)
+        assertThat(2500).isEqualTo(Validator.validateMakePurchaseLottoMoney(2500)?.money)
+        assertThat(3000).isEqualTo(Validator.validateMakePurchaseLottoMoney(3000)?.money)
+    }
+
+    @Test
+    fun `받은 숫자가 PurchaseLottoMoney로 변환이 안된다면 null반환`() {
+        assertThat(Validator.validateMakePurchaseLottoMoney(500)?.money).isEqualTo(null)
+        assertThat(Validator.validateMakePurchaseLottoMoney(999)?.money).isEqualTo(null)
+        assertThat(Validator.validateMakePurchaseLottoMoney(0)?.money).isEqualTo(null)
+        assertThat(Validator.validateMakePurchaseLottoMoney(-1)?.money).isEqualTo(null)
+    }
 }
