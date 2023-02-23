@@ -1,6 +1,7 @@
 package domain
 
-class Count(val value: Int) {
+@JvmInline
+value class Count(val value: Int) {
     init {
         require(value >= MINIMUM_NON_NEGATIVE_NUMBER) { COUNT_NEGATIVE_ERROR_MESSAGE }
     }
