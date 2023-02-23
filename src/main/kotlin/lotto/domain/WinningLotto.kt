@@ -4,17 +4,17 @@ import lotto.constant.BonusResult
 import lotto.constant.LOTTO_SIZE
 import lotto.constant.Rank
 
-class WinningLotto(val mainLottoNumbers: Set<LottoNumber>, val bonusLottoNumber: LottoNumber) {
+class WinningLotto(private val mainLottoNumbers: Set<LottoNumber>, private val bonusLottoNumber: LottoNumber) {
     init {
         validateLottoSize()
         validateDuplicateLottoNumbers()
     }
 
     private fun countMatchedMainLottoNumber(lotto: Lotto): Int =
-        mainLottoNumbers.count { lottoNumber -> lottoNumber in lotto.lottoNumbers }
+        mainLottoNumbers.count { lottoNumber -> lotto.contains(lottoNumber) }
 
     private fun checkMatchedBonusLottoNumber(lotto: Lotto): BonusResult {
-        if (bonusLottoNumber in lotto.lottoNumbers) return BonusResult.BONUS_MATCH
+        if (lotto.contains(bonusLottoNumber)) return BonusResult.BONUS_MATCH
         return BonusResult.BONUS_MISMATCH
     }
 

@@ -8,6 +8,10 @@ class Lotto(val lottoNumbers: Set<LottoNumber>) {
         validateLottoSize()
     }
 
+    fun contains(lottoNumber: LottoNumber): Boolean {
+        return lottoNumbers.contains(lottoNumber)
+    }
+
     private fun validateLottoSize() {
         require(lottoNumbers.size == LOTTO_SIZE) { LOTTO_SIZE_ERROR }
     }
