@@ -2,11 +2,10 @@ package lotto.domain
 
 class LottoStore(private val lottoFactory: LottoFactory) {
 
-    fun buyLottoes(purchaseMoney: PurchaseMoney, manualNumberLines: List<List<Int>> = listOf()): LottoBunch {
-        val totalLottoCount = purchaseMoney.getPurchaseCount()
+    fun buyLottoes(lottoCount: LottoCount, manualNumberLines: List<List<Int>> = listOf()): LottoBunch {
         return LottoBunch(
             buyManualLottoes(manualNumberLines),
-            buyAutoLottoes(totalLottoCount - manualNumberLines.size),
+            buyAutoLottoes(lottoCount.autoCount),
         )
     }
 

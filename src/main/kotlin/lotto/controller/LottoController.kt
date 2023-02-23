@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.domain.LottoBunch
+import lotto.domain.LottoCount
 import lotto.domain.LottoFactory
 import lotto.domain.LottoNumber
 import lotto.domain.LottoStore
@@ -14,24 +15,9 @@ import lotto.view.OutputView
 class LottoController {
     fun runLotto() {
         val purchaseMoney = getPurchaseMoney()
-        val lottoBunch = getLottoBunch(purchaseMoney)
+        val lottoBunch = getLottoBunch(getLottoCount(purchaseMoney))
         val winningLotto = getWinningLotto()
         checkWinningResult(lottoBunch, winningLotto, purchaseMoney)
-    }
-
-    private fun getLottoBunch(purchaseMoney: PurchaseMoney): LottoBunch {
-        val lottoBunch = LottoStore(LottoFactory()).buyLottoes(purchaseMoney, getManualNumberLines(purchaseMoney))
-        OutputView.printLottoBunch(lottoBunch)
-        return lottoBunch
-    }
-
-    private fun getManualNumberLines(purchaseMoney: PurchaseMoney): List<List<Int>> {
-        val manualNumberLines = InputView.getManualNumberLines()
-        OutputView.printPurchaseCount(
-            manualNumberLines.size,
-            purchaseMoney.getPurchaseCount() - manualNumberLines.size,
-        )
-        return manualNumberLines
     }
 
     private fun getPurchaseMoney(): PurchaseMoney {
@@ -40,6 +26,33 @@ class LottoController {
         }.getOrElse { error ->
             illegalArgumentExceptionHandler(error, ::getPurchaseMoney)
         }
+    }
+
+    private fun getLottoCount(purchaseMoney: PurchaseMoney): LottoCount {
+        return runCatching {
+            LottoCount.from(purchaseMoney.getPurchaseCount(), InputView.getManualLottoCount())
+        }.getOrElse { error ->
+            println(error.message)
+            getLottoCount(purchaseMoney)
+        }
+    }
+
+    private fun getLottoBunch(lottoCount: LottoCount): LottoBunch {
+        return runCatching {
+            val manualNumberLines = getManualNumberLines(lottoCount)
+            val lottoBunch = LottoStore(LottoFactory()).buyLottoes(lottoCount, manualNumberLines)
+            OutputView.printLottoBunch(lottoBunch)
+            lottoBunch
+        }.getOrElse { error ->
+            println(error.message)
+            getLottoBunch(lottoCount)
+        }
+    }
+
+    private fun getManualNumberLines(lottoCount: LottoCount): List<List<Int>> {
+        val manualNumberLines = InputView.getManualNumberLines(lottoCount.manualCount)
+        OutputView.printPurchaseCount(lottoCount.manualCount, lottoCount.autoCount)
+        return manualNumberLines
     }
 
     private fun getMainLottoNumber(): Set<LottoNumber> {
