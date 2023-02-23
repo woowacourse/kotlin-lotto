@@ -1,5 +1,6 @@
 import domain.LottoAdministrator
 import domain.LottoMachine
+import domain.Rank
 import domain.Seller
 import model.BonusNumber
 import model.Count
@@ -24,7 +25,8 @@ class LottoController(
         printLotto(lotteries)
         val winningNumber = getWinningNumber()
         val bonusNumber = getBonusNumber(winningNumber)
-        printLottoResult(lotteries, winningNumber, bonusNumber)
+        readyLottoResult(lotteries, winningNumber, bonusNumber)
+        showLottoResult()
     }
 
     private fun printLotto(lotteries: List<Lotto>) {
@@ -33,16 +35,17 @@ class LottoController(
         }
     }
 
-    private fun printLottoResult(lotteries: List<Lotto>, winningNumber: Lotto, bonusNumber: BonusNumber) {
+    private fun readyLottoResult(lotteries: List<Lotto>, winningNumber: Lotto, bonusNumber: BonusNumber) {
         lotteries.forEach { lotto ->
             val matchOfCount = compareLottoNumber(lotto, winningNumber)
             val isMatchBonus = checkBonusNumber(lotto, bonusNumber)
             val rank = lottoAdministrator.getRank(matchOfCount, isMatchBonus)
-            println("으아ㅏㅏㅏㅏㅏㅏㅏㅏ $rank")
-            lottoResult.plusRankCount(rank, lottoResult.result)
+
+            calculateLottoResult(rank)
         }
-        showLottoResult()
     }
+
+    private fun calculateLottoResult(rank: Rank) = lottoResult.plusRankCount(rank, lottoResult.result)
 
     private fun getLottoCount(): Count {
         outputView.printInputMoney()
