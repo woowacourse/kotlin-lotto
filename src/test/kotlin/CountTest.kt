@@ -7,6 +7,13 @@ import org.junit.jupiter.api.Test
 class CountTest {
 
     @Test
+    fun `수동으로 사려는 로또의 개수가 음수이면 예외가 발생한다`() {
+        assertThatIllegalArgumentException()
+            .isThrownBy { Count(Money(1000), -1) }
+            .withMessageContaining("입력값은 0보다 커야합니다.")
+    }
+
+    @Test
     fun `입력된 금액이 1000원이고 수동으로 사려는 로또의 개수가 2면 예외가 발생한다`() {
         assertThatIllegalArgumentException()
             .isThrownBy { Count(Money(1000), 2) }
