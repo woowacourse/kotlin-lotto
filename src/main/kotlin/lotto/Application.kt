@@ -1,7 +1,7 @@
 package lotto
 
-import lotto.domain.factory.RandomLottoFactory
+import lotto.controller.LottoController
 
 fun main() {
-    LottoController(RandomLottoFactory()).runLotto()
+    LottoController().runLotto()
 }
