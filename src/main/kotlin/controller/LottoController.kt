@@ -7,11 +7,10 @@ import view.OutputView
 class LottoController {
 
     fun run() {
-        var amount = askAmount()
+        val amount = askAmount()
         val manuallyLottoCount = askManuallyLottoCountThatPurchasable(amount)
         val manuallyLottos = askManuallyLottos(manuallyLottoCount)
-        amount -= Money(LottoStore.LOTTO_PRICE) * manuallyLottoCount
-        val lottos = manuallyLottos + LottoStore.sell(amount)
+        val lottos = manuallyLottos + LottoStore.sell(amount - Money(LottoStore.LOTTO_PRICE) * manuallyLottoCount)
         OutputView.outputLottos(manuallyLottoCount, lottos)
         val winningLotto = askWinningLotto()
         OutputView.outputResult(LottoResult.of(lottos, winningLotto))

@@ -7,9 +7,7 @@ object TypeConverter {
     inline fun <reified T, E> convert(getSource: () -> T?, export: (T) -> E): E {
         while (true) {
             runCatching { return export(getNotNullSource(getSource)) }
-                .onFailure {
-                    OutputView.printErrorMessage(it)
-                }
+                .onFailure { OutputView.printErrorMessage(it) }
         }
     }
 
