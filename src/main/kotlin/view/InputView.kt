@@ -10,30 +10,13 @@ class InputView(
 ) {
     fun inputPurchasingMoney(): Money {
         println(PURCHASING_MONEY_INPUT_MESSAGE)
-        lateinit var result: Money
-        kotlin.runCatching {
-            readln().trim().toInt()
-        }.onSuccess {
-            result = Money(it)
-        }.onFailure {
-            println(INPUT_REPEAT)
-            return inputPurchasingMoney()
-        }
-        return result
+        val input = readln().trim().toIntOrNull() ?: return inputPurchasingMoney()
+        return Money(input)
     }
 
     fun inputManualLottoCount(): Int {
         println(PURCHASING_MANUAL_LOTTO_COUNT)
-        var result: Int = 0
-        kotlin.runCatching {
-            readln().trim().toInt()
-        }.onSuccess {
-            result = it
-        }.onFailure {
-            println(INPUT_REPEAT)
-            return inputManualLottoCount()
-        }
-        return result
+        return readln().trim().toIntOrNull() ?: inputManualLottoCount()
     }
 
     fun inputManualLottos(manualLottoCount: Int): List<Lotto> {
@@ -41,7 +24,7 @@ class InputView(
         val manualLottos = mutableListOf<Lotto>()
         repeat(manualLottoCount) {
             val manualLotto = inputLottoNumbers() ?: return inputManualLottos(manualLottoCount)
-            manualLottos.add(Lotto(manualLotto.map { LottoNumber(it.toInt()) }))
+            manualLottos.add(Lotto(manualLotto.map { LottoNumber(it) }))
         }
         return manualLottos
     }
@@ -52,30 +35,12 @@ class InputView(
     }
 
     private fun inputLottoNumbers(): List<Int>? {
-        lateinit var result: List<Int>
-        kotlin.runCatching {
-            inputValidator.validateWinningNumbersIsNumeric(readln().split(WINNING_NUMBER_DELIMITER))
-        }.onSuccess {
-            result = it
-        }.onFailure {
-            println(INPUT_REPEAT)
-            return null
-        }
-        return result
+        return inputValidator.validateWinningNumbersIsNumeric(readln().split(WINNING_NUMBER_DELIMITER))
     }
 
     fun inputBonusBallNumber(): Int {
         println(BONUS_BALL_NUMBERS_INPUT_MESSAGE)
-        var result: Int = 0
-        kotlin.runCatching {
-            readln().trim().toInt()
-        }.onSuccess {
-            result = it
-        }.onFailure {
-            println(INPUT_REPEAT)
-            return inputBonusBallNumber()
-        }
-        return result
+        return readln().trim().toIntOrNull() ?: inputBonusBallNumber()
     }
 
     companion object {
@@ -84,7 +49,6 @@ class InputView(
         private const val PURCHASING_MANUAL_LOTTO = "수동으로 구매할 번호를 입력해 주세요."
         private const val LAST_WEEK_WINNING_NUMBERS_INPUT_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
         private const val BONUS_BALL_NUMBERS_INPUT_MESSAGE = "보너스 볼을 입력해 주세요."
-        private const val INPUT_REPEAT = "다시 입력해주세요."
 
         private const val WINNING_NUMBER_DELIMITER = ","
     }
