@@ -21,11 +21,9 @@ class LotteryTest {
         assertThat(lottery.numbers.size).isEqualTo(6)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "로또 번호는 {0}개일 수 없다")
     @MethodSource("lotteryNumbersErrorCase")
-    fun `로또번호가 6개가 아니면 에러가 발생한다`(numbers: IntArray, testName: String) {
-        println(testName)
-
+    fun `로또번호가 6개가 아니면 에러가 발생한다`(length: Int, numbers: IntArray) {
         assertThrows<IllegalArgumentException> { Lottery(*numbers) }
     }
 
@@ -42,11 +40,9 @@ class LotteryTest {
         assertThat(lottery.countMatches(winningLottery)).isEqualTo(3)
     }
 
-    @ParameterizedTest
-    @CsvSource("5, true, 보너스 번호가 로또 번호에 포함되어 있다", "10, false, 보너스 번호가 로또 번호에 포함되어 있지 않다")
-    fun `보너스번호가 로또번호에 포함되어 있는지 확인한다`(bonusNumber: Int, expected: Boolean, testName: String) {
-        println(testName)
-
+    @ParameterizedTest(name = "{0}")
+    @CsvSource("보너스 번호가 로또 번호에 포함되어 있다, 5, true", "보너스 번호가 로또 번호에 포함되어 있지 않다, 10, false")
+    fun `보너스번호가 로또번호에 포함되어 있는지 확인한다`(testName: String, bonusNumber: Int, expected: Boolean) {
         val bonusNumber = LotteryNumber.from(bonusNumber)
         val lottery = Lottery(1, 2, 3, 4, 5, 6)
 
@@ -58,12 +54,12 @@ class LotteryTest {
         fun lotteryNumbersErrorCase(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    intArrayOf(1, 20, 30, 40, 50),
-                    "로또 번호는 5개일 수 없다"
+                    5,
+                    intArrayOf(1, 20, 30, 40, 50)
                 ),
                 Arguments.of(
+                    7,
                     intArrayOf(1, 2, 10, 20, 30, 40, 45),
-                    "로또 번호는 7개일 수 없다"
                 )
             )
         }

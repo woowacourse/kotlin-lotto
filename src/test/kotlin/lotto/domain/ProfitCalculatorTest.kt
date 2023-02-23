@@ -6,11 +6,9 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class ProfitCalculatorTest {
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}")
     @MethodSource("calculateProfit")
-    fun `수익률을 계산한다`(amount: Int, numbers: Map<String, Int>, expected: Double, testName: String) {
-        println(testName)
-
+    fun `수익률을 계산한다`(testName: String, amount: Int, numbers: Map<Rank, Int>, expected: Double) {
         val money = PurchaseAmount(amount)
         val counter = RankCounter(numbers)
 
@@ -24,40 +22,43 @@ class ProfitCalculatorTest {
         fun calculateProfit(): Array<Arguments> {
             return arrayOf(
                 Arguments.of(
+                    "구입 금액이 14000원이고 5등이면 수익률은 0.35다",
                     14000,
                     mapOf(
-                        "FIRST" to 0,
-                        "SECOND" to 0,
-                        "THIRD" to 0,
-                        "FOURTH" to 0,
-                        "FIFTH" to 1
+                        Rank.FIRST to 0,
+                        Rank.SECOND to 0,
+                        Rank.THIRD to 0,
+                        Rank.FOURTH to 0,
+                        Rank.FIFTH to 1,
+                        Rank.MISS to 5
                     ),
-                    0.35,
-                    "구입 금액이 14000원이고 5등이면 수익률은 0.35다"
+                    0.35
                 ),
                 Arguments.of(
+                    "구입 금액이 14000원이고 1등이면 수익률은 142857.14다",
                     14000,
                     mapOf(
-                        "FIRST" to 1,
-                        "SECOND" to 0,
-                        "THIRD" to 0,
-                        "FOURTH" to 0,
-                        "FIFTH" to 0
+                        Rank.FIRST to 1,
+                        Rank.SECOND to 0,
+                        Rank.THIRD to 0,
+                        Rank.FOURTH to 0,
+                        Rank.FIFTH to 0,
+                        Rank.MISS to 4
                     ),
-                    142857.14,
-                    "구입 금액이 14000원이고 1등이면 수익률은 142857.14다"
+                    142857.14
                 ),
                 Arguments.of(
+                    "구입 금액이 1000원이고 5등이면 수익률은 5.00이다",
                     1000,
                     mapOf(
-                        "FIRST" to 0,
-                        "SECOND" to 0,
-                        "THIRD" to 0,
-                        "FOURTH" to 0,
-                        "FIFTH" to 1
+                        Rank.FIRST to 0,
+                        Rank.SECOND to 0,
+                        Rank.THIRD to 0,
+                        Rank.FOURTH to 0,
+                        Rank.FIFTH to 1,
+                        Rank.MISS to 2
                     ),
-                    5.00,
-                    "구입 금액이 1000원이고 5등이면 수익률은 5.00이다"
+                    5.00
                 )
             )
         }
