@@ -1,17 +1,20 @@
 package lotto.view
 
+import java.util.SortedSet
+
 object InputView {
     fun getNumber(): Int? {
-        val input = readlnOrNull()?.trim()
-        return if (input?.isNumber() == true) input.toIntOrNull() else null
+        val input = readln().trim()
+        return input.toIntOrNull()
     }
 
-    fun getNumberList(): List<Int?>? {
-        val input = readlnOrNull()?.trim()?.split(",")
-        return if (input?.isNumbers() == true)
-            input.map { it.trim().toIntOrNull() } else null
+    fun getNumberList(): SortedSet<Int>? {
+        val input = readln().trim().split(",").toSortedSet()
+        if (input.isNumbers())
+            return input.mapNotNull { it.toIntOrNull() }.toSortedSet()
+        return null
     }
 
     private fun String.isNumber() = this.chars().allMatch { Character.isDigit(it) }
-    private fun List<String>.isNumbers() = !this.any { !it.trim().isNumber() || it.trim().isBlank() }
+    private fun SortedSet<String>.isNumbers() = !this.any { !it.trim().isNumber() || it.trim().isBlank() }
 }

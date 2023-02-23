@@ -1,13 +1,11 @@
 package lotto.model
 
-import lotto.view.ERROR_DUPLICATE_NUMBER
 import lotto.view.ERROR_SIZE_OF_LOTTO
 
 class Lotto(val lotto: List<LottoNumber>) {
 
     init {
         require(lotto.size == LOTTO_SIZE) { ERROR_SIZE_OF_LOTTO }
-        require(hasNoDuplicateNumber()) { ERROR_DUPLICATE_NUMBER }
     }
 
     constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) })
@@ -22,9 +20,6 @@ class Lotto(val lotto: List<LottoNumber>) {
     }
 
     fun isContained(findNumber: LottoNumber): Boolean = lotto.contains(findNumber)
-
-    private fun hasNoDuplicateNumber(): Boolean = lotto.size == lotto.map { it.number }.toSet().size
-
     override fun toString(): String = lotto.map { it.number }.joinToString(", ")
 
     companion object {

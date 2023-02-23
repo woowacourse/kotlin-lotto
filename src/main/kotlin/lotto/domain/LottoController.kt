@@ -88,8 +88,7 @@ class LottoController(
 
     private fun getLottoNumber(): Lotto {
         return validateInput {
-            val numbers = InputView.getNumberList()?.sortedBy { it }?.filterNotNull()
-            numbers?.let { Lotto(*it.toIntArray()) }
+            InputView.getNumberList()?.let { Lotto(*it.toIntArray()) }
         } ?: getLottoNumber()
     }
 
