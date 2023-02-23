@@ -1,12 +1,13 @@
 package domain
 
 @JvmInline
-value class LottoNumber private constructor(val number: Int) {
+value class LottoNumber private constructor(private val number: Int) : Comparable<LottoNumber> {
     init {
         require(number in MINIMUM_NUMBER..MAXIMUM_NUMBER) { ERROR_NUMBER_IN_RANGE.format(number) }
     }
 
     override fun toString() = number.toString()
+    override fun compareTo(other: LottoNumber): Int = this.number - other.number
 
     companion object {
         const val MINIMUM_NUMBER = 1

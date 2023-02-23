@@ -5,7 +5,7 @@ data class Lotto(private val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
         require(numbers.isNotDuplicated()) { ERROR_NUMBER_DUPLICATED.format(numbers) }
-        require(numbers.sortedBy { it.number } == numbers) { ERROR_NUMBER_SEQUENCE }
+        require(numbers.sorted() == numbers) { ERROR_NUMBER_SEQUENCE }
     }
 
     private fun List<LottoNumber>.isNotDuplicated(): Boolean = this.distinct().size == this.size
