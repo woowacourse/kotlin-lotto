@@ -27,7 +27,7 @@ class LottoTest {
     fun `중복된 번호가 존재하는 경우 예외가 발생한다`() {
         assertThatIllegalArgumentException()
             .isThrownBy { Lotto(1, 2, 3, 4, 5, 5) }
-            .withMessageContaining("당첨 번호가 중복되었습니다.")
+            .withMessageContaining("당첨 번호가 6개가 아닙니다")
     }
 
     @Test

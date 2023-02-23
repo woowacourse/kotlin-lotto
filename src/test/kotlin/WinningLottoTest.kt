@@ -18,10 +18,6 @@ class WinningLottoTest {
         }
     }
 
-    /**
-     * 생성된 로또 Lotto(1, 2, 3, 4, 5, 6)
-     * 당첨 로또 Lotto(1, 2, 3, 7, 8, 9)
-     */
     @CsvSource(
         value = ["1,2,3,7,8,9:20:FIFTH", "1,2,3,4,8,9:20:FOURTH", "1,2,3,4,5,9:20:THIRD", "1,2,3,4,5,9:6:SECOND", "1,2,3,4,5,6:20:FIRST"],
         delimiter = ':',
