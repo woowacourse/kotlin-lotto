@@ -6,7 +6,7 @@ class UserLottoCount(
     money: Int,
     val manual: Int
 ) {
-    val all: Int
+    private val all: Int
     val auto: Int
         get() = all - manual
 

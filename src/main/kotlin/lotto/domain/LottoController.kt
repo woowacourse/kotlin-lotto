@@ -32,7 +32,7 @@ class LottoController(
         return validateInput { inputView.getManualLottoCount() } ?: getManualLottoCount()
     }
 
-    fun getUserLottoCount(money: Int): UserLottoCount {
+    private fun getUserLottoCount(money: Int): UserLottoCount {
         val manualLottoCount = getManualLottoCount()
         return validateInput { UserLottoCount(money, manualLottoCount) } ?: getUserLottoCount(money)
     }
