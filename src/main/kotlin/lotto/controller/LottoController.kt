@@ -38,22 +38,20 @@ class LottoController {
     }
 
     private fun getLottoBunch(lottoCount: LottoCount): LottoBunch {
+        val manualNumberLines = getManualNumberLines(lottoCount)
         return runCatching {
-            val manualNumberLines = getManualNumberLines(lottoCount)
-            val lottoBunch = LottoStore(LottoFactory()).buyLottoes(lottoCount, manualNumberLines)
-            OutputView.printLottoBunch(lottoBunch)
-            lottoBunch
+            LottoStore(LottoFactory()).buyLottoes(lottoCount, manualNumberLines)
+        }.onSuccess {
+            OutputView.printPurchaseCount(lottoCount.manualCount, lottoCount.autoCount)
+            OutputView.printLottoBunch(it)
         }.getOrElse { error ->
             println(error.message)
             getLottoBunch(lottoCount)
         }
     }
 
-    private fun getManualNumberLines(lottoCount: LottoCount): List<List<Int>> {
-        val manualNumberLines = InputView.getManualNumberLines(lottoCount.manualCount)
-        OutputView.printPurchaseCount(lottoCount.manualCount, lottoCount.autoCount)
-        return manualNumberLines
-    }
+    private fun getManualNumberLines(lottoCount: LottoCount): List<List<Int>> =
+        InputView.getManualNumberLines(lottoCount.manualCount)
 
     private fun getMainLottoNumber(): Set<LottoNumber> {
         return runCatching {
