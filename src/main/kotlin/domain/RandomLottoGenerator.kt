@@ -12,6 +12,6 @@ class RandomLottoGenerator : LottoGenerator {
     }
 
     companion object {
-        const val LOTTO_SIZE = 6
+        private const val LOTTO_SIZE = 6
     }
 }

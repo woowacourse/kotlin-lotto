@@ -12,10 +12,10 @@ class Money(val price: Int) {
     }
 
     companion object {
-        const val MIN_PRICE = 0
-        const val LOTTO_PRICE = 1000
+        private const val MIN_PRICE = 0
+        private const val LOTTO_PRICE = 1000
 
-        const val INPUT_MONEY_NEGATIVE_ERROR_MESSAGE = "금액은 양수여야 합니다."
-        const val INPUT_MONEY_NOT_DIVIDE_ERROR_MESSAGE = "금액은 1000원으로 나누어떨어져야 합니다."
+        private const val INPUT_MONEY_NEGATIVE_ERROR_MESSAGE = "금액은 양수여야 합니다."
+        private const val INPUT_MONEY_NOT_DIVIDE_ERROR_MESSAGE = "금액은 1000원으로 나누어떨어져야 합니다."
     }
 }
