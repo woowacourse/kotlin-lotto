@@ -10,7 +10,7 @@ class LottoStore(private val lottoFactory: LottoFactory) {
     }
 
     private fun buyManualLottoes(manualNumberLines: List<List<Int>>): LottoBunch =
-        LottoBunch(manualNumberLines.map { manualNumber -> lottoFactory.createLotto(manualNumber) })
+        LottoBunch(manualNumberLines.map { manualNumbers -> lottoFactory.createLotto(manualNumbers) })
 
     private fun buyAutoLottoes(lottoCount: Int): LottoBunch =
         LottoBunch(List(lottoCount) { lottoFactory.createLotto() })

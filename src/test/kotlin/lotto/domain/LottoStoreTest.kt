@@ -9,7 +9,8 @@ class LottoStoreTest {
     fun `5000원을 지불하고 수동을 넣지 않으면 총 5줄의 로또를 살 수 있다`() {
         assertThat(
             LottoStore(LottoFactory()).buyLottoes(
-                PurchaseMoney(5000),
+                LottoCount.from(5, 0),
+                listOf(),
             ).value,
         )
             .hasSize(5)
@@ -19,7 +20,7 @@ class LottoStoreTest {
     fun `5000원을 지불하고 수동 1개를 넣으면 총 5줄의 로또를 살 수 있다`() {
         assertThat(
             LottoStore(LottoFactory()).buyLottoes(
-                PurchaseMoney(5000),
+                LottoCount.from(5, 1),
                 listOf(listOf(1, 2, 3, 4, 5, 6)),
             ).value,
         )
