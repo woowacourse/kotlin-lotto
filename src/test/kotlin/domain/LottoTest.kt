@@ -40,7 +40,7 @@ class LottoTest {
     }
 
     @Test
-    fun `로또가 로또 넘버를 포함하면 참을 반환한다`() {
+    fun `in 연산자는 로또가 로또 넘버를 포함하면 참을 반환한다`() {
         val lottoNumber = LottoNumber.valueOf(1)
         val lotto = Lotto.create(1, 2, 3, 4, 5, 6)
 
