@@ -10,7 +10,7 @@ class Lotto private constructor(val lotto: List<LottoNumber>) {
         require(hasNoDuplicateNumber()) { ERROR_DUPLICATE_NUMBER }
     }
 
-    fun getCountOfMatch(winningLotto: WinningLotto): Rank {
+    fun getRank(winningLotto: WinningLotto): Rank {
         val count = lotto.count { winningLotto.winningNumbers.isContained(it) }
         if (count == Rank.SECOND.countOfMatch) {
             return getRankByBonusNumber(winningLotto)
@@ -27,11 +27,11 @@ class Lotto private constructor(val lotto: List<LottoNumber>) {
 
     private fun hasNoDuplicateNumber(): Boolean = lotto.size == lotto.map { it }.toSet().size
 
-    override fun toString(): String = lotto.map { it.number }.joinToString(", ")
+    override fun toString(): String = lotto.map { it.toInt() }.joinToString(", ")
 
     companion object {
-        private const val LOTTO_SIZE = 6
+        private const val LOTTO_SIZE: Int = 6
 
-        fun create(lotto: List<Int>) = Lotto(lotto.map { LottoNumber.create(it) })
+        fun create(lotto: List<Int>) = Lotto(lotto.map { LottoNumber.create(it) }.sortedBy { it.toInt() })
     }
 }

@@ -3,63 +3,76 @@ package lotto.domain
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.UserLotto
+import lotto.model.UserLottoCount
 import lotto.model.WinningLotto
-import lotto.model.generator.LottoGenerator
+import lotto.model.generator.LottosGenerator
+import lotto.model.generator.RandomLottoGenerator
+import lotto.view.InputInterface
 import lotto.view.InputView
+import lotto.view.OutputInterface
 import lotto.view.OutputView
 
 class LottoController(
-    private val inputView: InputView = InputView(),
-    private val outputView: OutputView = OutputView(),
-    private val generator: LottoGenerator = LottoGenerator()
+    private val inputView: InputInterface = InputView(),
+    private val outputView: OutputInterface = OutputView(),
+    private val generator: LottosGenerator = RandomLottoGenerator()
 ) {
     fun start() {
         val money = getMoney()
-        val numberOfLotto = getNumberOfLotto(money)
-        outputView.printPurchase(numberOfLotto)
-        val myLotto = getUserLotto(numberOfLotto)
-        outputView.printUserLotto(myLotto)
-
-        wrapUp(myLotto, money)
-    }
-
-    private fun wrapUp(myLotto: UserLotto, money: Int) {
-        val winningLotto = getWinningLotto(getWinningNumber())
-        val ranks = myLotto.getWinningStatistics(winningLotto)
-        val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
-        outputView.printResult(ranks, rates)
-    }
-
-    fun getUserLotto(number: Int): UserLotto {
-        val lotto = mutableListOf<Lotto>()
-        repeat(number) {
-            lotto.add(Lotto.create(generator.generate()))
-        }
-
-        return UserLotto(lotto)
+        val myLottoCount = getUserLottoCount(money)
+        val myLotto = getMyLotto(myLottoCount)
+        wrapUpResult(myLotto, money)
     }
 
     private fun getMoney(): Int {
-        return inputView.getNumber { outputView.printInsertMoneyMessage() }
+        return validateInput { inputView.getPurchaseMoney() } ?: getMoney()
     }
 
-    private fun getWinningLotto(lotto: Lotto): WinningLotto {
-        return validateInput {
-            WinningLotto(lotto, getBonusNumber())
-        } ?: getWinningLotto(lotto)
+    private fun getManualLottoCount(): Int {
+        return validateInput { inputView.getManualLottoCount() } ?: getManualLottoCount()
     }
 
-    private fun getBonusNumber(): LottoNumber {
-        return validateInput {
-            LottoNumber.create(inputView.getNumber { outputView.printInsertBonusNumber() })
-        } ?: getBonusNumber()
+    private fun getUserLottoCount(money: Int): UserLottoCount {
+        val manualLottoCount = getManualLottoCount()
+        return validateInput { UserLottoCount(money, manualLottoCount) } ?: getUserLottoCount(money)
     }
 
-    private fun getWinningNumber(): Lotto {
+    private fun getMyLotto(lottoCount: UserLottoCount): UserLotto {
+        val manualLottos = getManualLottos(lottoCount.manual)
+        val autoLottos = generator.generate(lottoCount.auto)
+        val myLottos = UserLotto(manualLottos + autoLottos)
+        outputView.printPurchaseCounts(lottoCount)
+        outputView.printUserLottos(myLottos)
+        return myLottos
+    }
 
-        return validateInput {
-            Lotto.create(inputView.getNumberList { outputView.printInsertWinningNumber() })
-        } ?: getWinningNumber()
+    private fun getManualLottos(count: Int): List<Lotto> {
+        val lottos = mutableListOf<Lotto>()
+        repeat(count) {
+            lottos.add(getEachOfManualLotto())
+        }
+        return lottos
+    }
+
+    private fun getEachOfManualLotto(): Lotto {
+        return validateInput { Lotto.create(inputView.getManualLottoNumbers()) } ?: getEachOfManualLotto()
+    }
+
+    private fun getWinningLotto(winningNumbers: Lotto): WinningLotto {
+        return validateInput { WinningLotto(winningNumbers, getBonusNumber()) } ?: getWinningLotto(winningNumbers)
+    }
+
+    private fun getWinningNumbers(): Lotto =
+        validateInput { Lotto.create(inputView.getWinningLottoNumbers()) } ?: getWinningNumbers()
+
+    private fun getBonusNumber(): LottoNumber =
+        validateInput { LottoNumber.create(inputView.getWinningBonusNumber()) } ?: getBonusNumber()
+
+    private fun wrapUpResult(myLotto: UserLotto, money: Int) {
+        val winningLotto = getWinningLotto(getWinningNumbers())
+        val ranks = myLotto.getWinningStatistics(winningLotto)
+        val rates = WinningCalculator.getEarningRate(money, WinningCalculator.getWinningMoney(ranks))
+        outputView.printResult(ranks, rates)
     }
 
     private fun <T> validateInput(create: () -> T): T? {
@@ -68,17 +81,5 @@ class LottoController(
         }.onFailure {
             println(it.message)
         }.getOrNull()
-    }
-
-    fun getNumberOfLotto(money: Int): Int {
-        return money / LOTTO_PRICE
-    }
-
-    fun isDivided(money: Int): Boolean {
-        return money % LOTTO_PRICE == 0
-    }
-
-    companion object {
-        private const val LOTTO_PRICE = 1000
     }
 }

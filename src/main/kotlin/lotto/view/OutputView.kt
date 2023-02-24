@@ -2,31 +2,20 @@ package lotto.view
 
 import lotto.model.Rank
 import lotto.model.UserLotto
+import lotto.model.UserLottoCount
 
-class OutputView {
-    fun printInsertMoneyMessage() {
-        println(INSERT_MONEY)
+class OutputView : OutputInterface {
+    override fun printPurchaseCounts(userLottoCount: UserLottoCount) {
+        println(PURCHASE.format(userLottoCount.manual, userLottoCount.auto))
     }
 
-    fun printPurchase(number: Int) {
-        println("$number$PURCHASE")
-    }
-
-    fun printUserLotto(userLotto: UserLotto) {
+    override fun printUserLottos(userLotto: UserLotto) {
         userLotto.lotto.forEach { lotto ->
-            println(lotto)
+            println(LOTTO_FORMAT.format(lotto))
         }
     }
 
-    fun printInsertWinningNumber() {
-        println(INSERT_WINNING_NUMBER)
-    }
-
-    fun printInsertBonusNumber() {
-        println(INSERT_BONUS_BALL)
-    }
-
-    fun printResult(ranks: List<Int>, rates: String) {
+    override fun printResult(ranks: List<Int>, rates: String) {
         println(WINNING_STATISTICS)
         println(DIVIDER)
 
@@ -55,12 +44,8 @@ class OutputView {
     }
 
     companion object {
-        private const val INSERT_MONEY = "구입금액을 입력해 주세요."
-        private const val INSERT_WINNING_NUMBER = "지난 주 당첨 번호를 입력해 주세요."
-        private const val INSERT_BONUS_BALL = "보너스 볼을 입력해 주세요."
-
-        private const val PURCHASE = "개를 구매했습니다."
-        private const val WINNING_STATISTICS = "당첨 통계"
+        private const val PURCHASE = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
+        private const val WINNING_STATISTICS = "\n당첨 통계"
         private const val DIVIDER = "---------"
         private const val MATCH_STANDARD = "%d개 일치"
         private const val MATCH_STANDARD_WITH_BONUS = ", 보너스볼 일치"
@@ -68,5 +53,6 @@ class OutputView {
         private const val MATCH_COUNT = "- %d개"
         private const val EARNING_RATE = "총 수익률은 %s입니다."
         private const val LOSING_MONEY = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
+        private const val LOTTO_FORMAT = "[%s]"
     }
 }
