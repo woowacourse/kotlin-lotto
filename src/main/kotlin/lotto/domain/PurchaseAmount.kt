@@ -20,11 +20,14 @@ class PurchaseAmount(
 
     fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
 
-    fun checkEnough(quantity: Int) {
-        require(quantity <= getPurchaseQuantity()) { MANUAL_QUANTITY_ERROR_MESSAGE }
+    fun getAutoPurchaseQuantity(quantity: Int): Int {
+        checkEnough(quantity)
+        return getPurchaseQuantity() - quantity
     }
 
-    fun getAutoPurchaseQuantity(quantity: Int): Int = getPurchaseQuantity() - quantity
+    private fun checkEnough(quantity: Int) {
+        require(quantity <= getPurchaseQuantity()) { MANUAL_QUANTITY_ERROR_MESSAGE }
+    }
 
     companion object {
         private const val MANUAL_QUANTITY_ERROR_MESSAGE = "구입금액보다 수동 로또 개수가 더 많습니다."

@@ -54,8 +54,8 @@ class PurchaseAmountTest {
     @Test
     fun `수동 로또 개수가 구입 로또 개수를 초과하지 않는지 확인한다`() {
         val purchase = PurchaseAmount(10000)
-        assertDoesNotThrow { purchase.checkEnough(10) }
-        assertThrows<IllegalArgumentException> { purchase.checkEnough(11) }
+        assertDoesNotThrow { purchase.getAutoPurchaseQuantity(10) }
+        assertThrows<IllegalArgumentException> { purchase.getAutoPurchaseQuantity(11) }
     }
 
     @Test
