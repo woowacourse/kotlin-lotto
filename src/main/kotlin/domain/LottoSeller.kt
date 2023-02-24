@@ -11,19 +11,16 @@ class LottoSeller(private val numberGenerator: RandomGenerator = NumberRandomGen
         return Ticket(List(money.purchaseCount) { sellLotto() })
     }
 
-    fun sellManualAndAuto(purchaseInfo: LottoPurchaseInfo, requestManualNumbers: List<Lotto>): Ticket? {
-        if (purchaseInfo.manualCount != requestManualNumbers.size) {
-            println(ERROR_MANUAL_COUNT_NOT_EQUAL.format(purchaseInfo.manualCount, requestManualNumbers.size))
+    fun sellManualAndAuto(purchaseInfo: LottoPurchaseInfo, requestManualTicket: Ticket): Ticket? {
+        if (purchaseInfo.manualCount != requestManualTicket.lottos.size) {
+            println(ERROR_MANUAL_COUNT_NOT_EQUAL.format(purchaseInfo.manualCount, requestManualTicket.lottos.size))
             return null
         }
-        val manual = sellManualLottos(requestManualNumbers)
-        val auto = sellAutoLottos(purchaseInfo.autoCount)
-        return Ticket(manual.lottos + auto.lottos)
+        val auto = sellAutoTicket(purchaseInfo.autoCount)
+        return Ticket(requestManualTicket.lottos + auto.lottos)
     }
 
-    private fun sellManualLottos(requestManualNumbers: List<Lotto>): Ticket = Ticket(requestManualNumbers)
-
-    private fun sellAutoLottos(count: Int): Ticket =
+    private fun sellAutoTicket(count: Int): Ticket =
         if (count == 0) {
             Ticket(emptyList())
         } else {

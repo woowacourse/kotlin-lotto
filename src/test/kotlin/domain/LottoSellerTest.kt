@@ -26,7 +26,7 @@ class LottoSellerTest {
             setOf(11, 12, 13, 14, 15, 16).convertToLotto(),
             setOf(21, 22, 23, 24, 25, 26).convertToLotto()
         )
-        assertThat(true).isEqualTo(lottoSeller.sellManualAndAuto(purchaseInfo, requestManualNumbers) == null)
+        assertThat(true).isEqualTo(lottoSeller.sellManualAndAuto(purchaseInfo, Ticket(requestManualNumbers)) == null)
     }
 
     @Test
@@ -39,7 +39,7 @@ class LottoSellerTest {
             setOf(11, 12, 13, 14, 15, 16).convertToLotto(),
             setOf(21, 22, 23, 24, 25, 26).convertToLotto()
         )
-        val result: Ticket = lottoSeller.sellManualAndAuto(purchaseInfo, requestManualNumbers)!!
+        val result: Ticket = lottoSeller.sellManualAndAuto(purchaseInfo, Ticket(requestManualNumbers))!!
         assertThat(result.lottos.size).isEqualTo(4)
         assertThat(result.lottos[0].numbers).containsAll(setOf(11, 12, 13, 14, 15, 16).convertToLottoNumberSet())
         assertThat(result.lottos[1].numbers).containsAll(setOf(21, 22, 23, 24, 25, 26).convertToLottoNumberSet())
