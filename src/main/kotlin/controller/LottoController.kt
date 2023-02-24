@@ -2,7 +2,6 @@ package controller
 
 import domain.ProfitCalculator
 import domain.model.lotto.PurchasedLottos
-import domain.LottoGenerator
 import domain.model.PurchaseMoney
 import domain.model.WinningNumbers
 import domain.model.lotto.Lotto
@@ -31,17 +30,13 @@ class LottoController(
     }
 
     private fun purchaseLottos(purchaseMoney: PurchaseMoney): PurchasedLottos {
-        val numberOfTotalLottos = purchaseMoney.money / LOTTO_PRICE
 
         val lottoShop = repeatWithRunCatching { LottoShop(purchaseMoney, InputView.requestNumberOfManualLottos()) }
-
-        val numberOfManualLottos = lottoShop.numberOfManualLottos // TODO
+                                                         행
         val manualLottos = repeatWithRunCatching { purchaseManualLottos(lottoShop) }
+        val autoLottos = lottoShop.purchaseAutoLotto()
 
-        val autoLottoGenerator = LottoGenerator(numberOfLottos = numberOfTotalLottos - numberOfManualLottos)
-        val autoLottos = autoLottoGenerator.generateLottos()
-
-        ResultView.printPurchasedNumberOfLottos(numberOfManualLottos, numberOfTotalLottos - numberOfManualLottos)
+        ResultView.printPurchasedNumberOfLottos(lottoShop.numberOfManualLottos, lottoShop.numberOfAutoLotto())
 
         return PurchasedLottos(manualLottos + autoLottos)
     }

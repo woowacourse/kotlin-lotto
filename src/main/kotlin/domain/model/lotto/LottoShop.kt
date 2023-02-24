@@ -7,6 +7,7 @@ class LottoShop(
     private val purchaseMoney: PurchaseMoney,
     val numberOfManualLottos: Int
 ) {
+
     init {
         require(numberOfManualLottos <= purchaseMoney.money / LOTTO_PRICE) {
             NUMBER_OF_MANUAL_LOTTOS_ERROR
@@ -17,8 +18,14 @@ class LottoShop(
     }
 
     fun purchaseManualLotto(numbers: List<Int>): Lotto {
-        return LottoGenerator { numbers }.generateLotto()
+        return LottoGenerator { numbers }.generateLottos().first()
     }
+
+    fun purchaseAutoLotto(): List<Lotto> {
+        return LottoGenerator(numberOfAutoLotto()).generateLottos()
+    }
+
+    fun numberOfAutoLotto(): Int = purchaseMoney.money / LOTTO_PRICE - numberOfManualLottos
 
     companion object {
         private const val LOTTO_PRICE = 1000

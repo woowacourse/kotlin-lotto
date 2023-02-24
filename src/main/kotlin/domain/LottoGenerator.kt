@@ -16,10 +16,6 @@ class LottoGenerator(
         }
     }
 
-    fun generateLotto(): Lotto {
-        return Lotto.create(numberGenerator())
-    }
-
     companion object {
         private const val MINIMUM_NUMBER = 1
         private const val MAXIMUM_NUMBER = 45
