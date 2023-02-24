@@ -1,6 +1,7 @@
 package lotto.domain
 
-data class LottoNumber(val value: Int) {
+@JvmInline
+value class LottoNumber(val value: Int) {
     init {
         require(value in LOTTO_MINIMUM_NUMBER..LOTTO_MAXIMUM_NUMBER) { LOTTO_NUMBER_RANGE_ERROR }
     }
