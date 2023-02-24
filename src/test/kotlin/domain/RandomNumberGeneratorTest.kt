@@ -13,7 +13,7 @@ class RandomNumberGeneratorTest {
         val result = RandomNumberGenerator.generate(range, size)
 
         assertAll(
-            { assertThat(result.size).isEqualTo(size) },
+            { assertThat(result).hasSize(size) },
             { assertThat(result).allMatch { it in range } },
             { assertThat(result).isEqualTo(result.sorted()) },
         )
