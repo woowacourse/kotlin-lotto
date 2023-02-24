@@ -13,6 +13,8 @@ class Lotto(val numbers: Set<LottoNumber>) {
 
     override fun toString(): String = "[${numbers.joinToString(", ") { it.value.toString() }}]"
 
+    override fun equals(other: Any?): Boolean = numbers == (other as Lotto).numbers
+
     companion object {
         const val ERROR_MESSAGE_WIN_NUMBER_IS_SIX = "로또 번호는 6개여야 합니다. 입력된 로또 번호 개수는 %d 입니다."
         const val LOTTO_NUMBER_COUNT = 6
