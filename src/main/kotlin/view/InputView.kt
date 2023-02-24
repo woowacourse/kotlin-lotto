@@ -1,15 +1,8 @@
 package view
 
-class InputView {
-    fun inputAmount(): Int {
-        return readln().toInt()
-    }
+object InputView {
 
-    fun inputWinningNumbers(): List<Int> {
-        return readln().replace("\\s".toRegex(), "").split(",").map { it.toInt() }
-    }
+    fun readNumber(): Int? = readln().toIntOrNull()
 
-    fun inputBonusNumber(): Int {
-        return readln().toInt()
-    }
+    fun readNumbers(): List<Int>? = readln().split(",").map { it.trim().toIntOrNull() ?: return null }
 }
