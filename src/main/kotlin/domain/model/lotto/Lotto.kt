@@ -17,6 +17,17 @@ class Lotto private constructor(val numbers: Set<LottoNumber>) {
         return LottoResult.valueOf(matchCount, hasBonusNumber)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (other is Lotto) {
+            return this.numbers == other.numbers
+        }
+        return false
+    }
+
+    override fun hashCode(): Int {
+        return numbers.hashCode()
+    }
+
     companion object {
         private const val NUMBER_COUNT = 6
         private const val NUMBER_COUNT_ERROR = "[ERROR] 로또 번호는 6개의 숫자로 이루어져야 합니다."
