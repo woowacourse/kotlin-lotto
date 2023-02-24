@@ -1,5 +1,6 @@
 package view.validator
 
+import common.convertToLotto
 import common.convertToLottoNumberSet
 import domain.LottoNumber
 import domain.PurchaseLottoMoney
@@ -92,5 +93,21 @@ class ValidatorTest {
     fun `주어진 숫자가 LottoNumber로 변환에 실패해서 null반환`(n: Int) {
         val number = Validator.validateMakeLottoNumber(n)
         assertThat(number).isNull()
+    }
+
+    @Test
+    fun `주어진 Lotto와 LottoNumber로 WinningLotto가 성공적으로 만들어짐`() {
+        val lotto = setOf(1, 2, 3, 4, 5, 6).convertToLotto()
+        val bonusNumber = LottoNumber.from(7)
+        val winningLotto = Validator.validateMakeWinningLotto(lotto, bonusNumber)
+        assertThat(winningLotto).isNotNull
+    }
+
+    @Test
+    fun `주어진 Lotto와 LottoNumber로 WinningLotto를 만드는데 실패`() {
+        val lotto = setOf(1, 2, 3, 4, 5, 6).convertToLotto()
+        val bonusNumber = LottoNumber.from(6)
+        val winningLotto = Validator.validateMakeWinningLotto(lotto, bonusNumber)
+        assertThat(winningLotto).isNull()
     }
 }

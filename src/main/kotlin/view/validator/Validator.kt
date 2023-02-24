@@ -4,6 +4,7 @@ import domain.Lotto
 import domain.LottoNumber
 import domain.LottoPurchaseInfo
 import domain.PurchaseLottoMoney
+import domain.WinningLotto
 
 object Validator {
     fun validateConvertInt(input: String): Int? {
@@ -56,6 +57,14 @@ object Validator {
         return null
     }
 
+    fun validateMakeWinningLotto(winningNumbers: Lotto, bonusNumber: LottoNumber): WinningLotto? {
+        if (winningNumbers.numbers.contains(bonusNumber)) {
+            println(ERROR_MAKE_WINNING_LOTTO_TO_DISTINCT)
+            return null
+        }
+        return WinningLotto(winningNumbers, bonusNumber)
+    }
+
     private const val ERROR_CONVERT_INT = "[ERROR] 숫자로 다시 입력해주세요."
     private const val ERROR_CONVERT_INT_LIST = "[ERROR] %s로 숫자를 구분해서 다시 입력해주세요."
     private const val ERROR_MAKE_LOTTO_PURCHASE_MONEY =
@@ -67,4 +76,5 @@ object Validator {
     private const val ERROR_MAKE_LOTTO_TO_SIZE = "[ERROR] 로또는 서로 다른 ${Lotto.LOTTO_SIZE}개의 숫자로 구성되어야 합니다."
     private const val ERROR_MAKE_LOTTO_NUMBER =
         "[ERROR] 로또의 숫자는 ${LottoNumber.MINIMUM_LOTTO_RANGE}에서 ${LottoNumber.MAXIMUM_LOTTO_RANGE} 사이여야 합니다."
+    private const val ERROR_MAKE_WINNING_LOTTO_TO_DISTINCT = "[ERROR] 당첨번호와 보너스 번호 사이에 중복이 있으면 안됩니다."
 }
