@@ -22,9 +22,9 @@ class LottoController(val inputView: InputView, val outputView: OutputView) {
             WinningLotto(askWinningLotto(inputView.inputWinningLotto()), askBonusNumber(inputView.inputBonusNumber()))
         return WinningResult(matchLottos(manualLottos + autoLottos, winningLotto))
     }
-    private fun askMoney(input: Int?): Money {
+    private fun askMoney(input: Int): Money {
         return runCatching {
-            Money(input!!)
+            Money(input)
         }.onFailure { outputView.outputErrorMessage(it.message!!) }
             .getOrNull() ?: askMoney(inputView.inputMoney())
     }
