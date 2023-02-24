@@ -1,7 +1,7 @@
 package lotto.controller
 
 import lotto.LotterySeller
-import lotto.domain.Lottery
+import lotto.domain.Lotteries
 import lotto.domain.LotteryMachine
 import lotto.domain.PurchaseAmount
 import lotto.domain.WinningLottery
@@ -17,9 +17,9 @@ class LottoController(
 ) {
     fun run() {
         val purchaseAmount: PurchaseAmount = inputView.readPurchaseAmount()
-        val lotteries: List<Lottery> = seller.generateLotteries(purchaseAmount)
+        val lotteries: Lotteries = Lotteries(seller.generateLotteries(purchaseAmount))
 
-        repeat(lotteries.size) { outputView.printMessage(lotteries[it].numbers.toString()) }
+        repeat(lotteries.size) { outputView.printMessage(lotteries.get(it).numbers.toString()) }
 
         val winningLottery: WinningLottery = WinningLottery(inputView.readLottery(), inputView.readBonusNumber())
         val result: WinningResult = machine.createWinningResult(winningLottery, lotteries, purchaseAmount)

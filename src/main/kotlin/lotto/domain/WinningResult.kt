@@ -22,12 +22,6 @@ class WinningResult(
     private fun isGain(yield: Double): Boolean = yield >= 1
 
     private fun calculateTotalPrize(): Long {
-        var sum: Long = 0
-
-        countMatchRanks.forEach {
-            sum += it.key.winningMoney * it.value
-        }
-
-        return sum
+        return countMatchRanks.map { it.key.winningMoney.toLong() * it.value }.sum()
     }
 }

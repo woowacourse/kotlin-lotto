@@ -40,7 +40,7 @@ class WinningLotteryTest {
             Lottery(1, 10, 20, 30, 40, 45),
             LotteryNumber(9)
         )
-        val lotteries = listOf(Lottery(1, 10, 20, 30, 40, 45))
+        val lotteries = Lotteries(listOf(Lottery(1, 10, 20, 30, 40, 45)))
         val expectedWinningResult = machine.createWinningResult(winningLottery, lotteries, PurchaseAmount(5000))
 
         assertThat(expectedWinningResult.get(Rank.FIRST))
