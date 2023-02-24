@@ -11,7 +11,8 @@ import view.ResultOutputView
 class LottoController {
 
     fun runLottoGame() {
-        val purchaser = Purchaser(getMoney())
+        val purchaser = Purchaser(getMoney(), getManualLottoCount())
+        purchaser.purchaseManualLottoBundle(getManualLottoBundle(purchaser.manualLottoCount))
         ResultOutputView.printPurchasingResult(purchaser)
         val winStatistics = WinStatistics(getWinningNumbers(), purchaser.purchasedLottoBundle, purchaser.spentMoney)
         ResultOutputView.printWinStatistics(winStatistics)
@@ -39,5 +40,15 @@ class LottoController {
         InputRequestView.printRequestBonusNumber()
         val bonusNumber = InputView.inputBonusNumber()
         return LottoNumber.of(bonusNumber)
+    }
+
+    private fun getManualLottoCount(): Int {
+        return InputView.getInputManualLottoCount()
+    }
+
+    private fun getManualLottoBundle(manualLottoCount: Int): LottoBundle {
+        val manualLottos = InputView.getInputManualLottos(manualLottoCount)
+            .map { Lotto(it) }
+        return LottoBundle(manualLottos)
     }
 }
