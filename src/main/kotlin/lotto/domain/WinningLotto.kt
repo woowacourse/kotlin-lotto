@@ -15,6 +15,15 @@ class WinningLotto(val mainLottoNumbers: Lotto, val bonusLottoNumber: LottoNumbe
     fun countMatchedMainLottoNumber(lotto: Lotto): Int =
         lotto.countContainLottoNumber(mainLottoNumbers)
 
+    fun calculateRank(lotto: Lotto): Rank =
+        getRank(lotto)
+
+    private fun getRank(lotto: Lotto): Rank =
+        Rank.convertToRank(
+            countMatchedMainLottoNumber(lotto),
+            checkMatchedBonusLottoNumber(lotto),
+        )
+
     companion object {
         private const val LOTTO_DUPLICATE_ERROR = "로또 메인 번호와 보너스 번호에 중복이 있습니다."
     }
