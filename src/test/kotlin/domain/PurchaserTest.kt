@@ -58,7 +58,7 @@ internal class PurchaserTest {
         // when
 
         // then
-        assertThrows<IllegalArgumentException> { purchaser.addLottoBundle(otherLottoBundle) }
+        assertThrows<IllegalArgumentException> { purchaser.purchaseManualLottoBundle(otherLottoBundle) }
             .shouldHaveMessage("$PREFIX 수동으로 구매한 로또 개수가 맞지 않습니다. 수동으로 구매할 로또 개수: ${1}, 발행된 수동 로또 개수: ${2}")
     }
 
@@ -66,12 +66,12 @@ internal class PurchaserTest {
     fun `수동 로또가 중복 발행되면 에러`() {
         // given
         val purchaser = Purchaser(Money(5000), 2)
-        purchaser.addLottoBundle(otherLottoBundle)
+        purchaser.purchaseManualLottoBundle(otherLottoBundle)
 
         // when
 
         // then
-        assertThrows<IllegalArgumentException> { purchaser.addLottoBundle(otherLottoBundle) }
+        assertThrows<IllegalArgumentException> { purchaser.purchaseManualLottoBundle(otherLottoBundle) }
             .shouldHaveMessage("$PREFIX 이미 수동 로또가 발행되었습니다.")
     }
 }

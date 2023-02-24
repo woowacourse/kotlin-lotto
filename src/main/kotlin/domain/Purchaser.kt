@@ -16,12 +16,12 @@ class Purchaser(val spentMoney: Money, val manualLottoCount: Int) {
         require(manualLottoCount <= totalLottoCount) { "$PREFIX 수동으로 구매할 로또의 개수가 총 로또 개수보다 많을 수 없습니다. 수동 로또 개수: $manualLottoCount, 총 로또 개수: $totalLottoCount" }
     }
 
-    fun addLottoBundle(lottoBundle: LottoBundle) {
+    fun purchaseManualLottoBundle(lottoBundle: LottoBundle) {
         validateLottoBundleToAdd(lottoBundle)
         purchasedLottoBundle.add(lottoBundle)
     }
 
-    fun addLottoBundle(lottoBundle: List<Lotto>) {
+    fun purchaseManualLottoBundle(lottoBundle: List<Lotto>) {
         purchasedLottoBundle.add(lottoBundle)
     }
 
