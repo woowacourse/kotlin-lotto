@@ -31,15 +31,14 @@ class Controller {
     }
 
     private fun readManualLottoCount(totalLottoCount: Int): Int {
-        OutputView.printInputManualCountPrompt()
-        val manualLottoCount = InputView.readInputManualLottoCount()
-        return kotlin.runCatching {
-            ManualLottoCountValidator.checkAvailable(manualLottoCount, totalLottoCount)
-            manualLottoCount
-        }.getOrElse {
-            println(ERROR_PREFIX + it.message)
-            readManualLottoCount(totalLottoCount)
-        }
+        var countAvailable: Boolean
+        var manualLottoCount: Int
+        do {
+            OutputView.printInputManualCountPrompt()
+            manualLottoCount = InputView.readInputManualLottoCount()
+            countAvailable = ManualLottoCountValidator.checkAvailable(manualLottoCount, totalLottoCount)
+        } while (!countAvailable)
+        return manualLottoCount
     }
 
     private fun readManualLottoNumber(count: Int): List<Lotto> {
@@ -101,6 +100,6 @@ class Controller {
     }
 
     companion object {
-        private const val ERROR_PREFIX = "[ERROR] "
+        const val ERROR_PREFIX = "[ERROR] "
     }
 }
