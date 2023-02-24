@@ -4,7 +4,7 @@ class LottoPurchaseInfo(
     val purchaseLottoMoney: PurchaseLottoMoney,
     val manualCount: Int
 ) {
-    val totalCount: Int
+    private val totalCount: Int
         get() = purchaseLottoMoney.purchaseCount
 
     val autoCount: Int
