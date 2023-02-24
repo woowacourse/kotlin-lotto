@@ -20,7 +20,7 @@ class WinningNumbersTest {
     }
 
     @Test
-    fun `당첨 번호가 6개인 경우`() {
+    fun `당첨 번호가 6개인 경우 예외가 발생하지 않고 WinningNumbers가 생성된다`() {
         assertDoesNotThrow {
             generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
         }
@@ -34,7 +34,7 @@ class WinningNumbersTest {
     }
 
     @Test
-    fun `보너스 번호가 당첨 번호와 중복되지 않은 경우`() {
+    fun `보너스 번호가 당첨 번호와 중복되지 않은 경우 예외가 발생하지 않고 WinningNumbers가 생성된다`() {
         assertDoesNotThrow {
             generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
         }
@@ -50,7 +50,7 @@ class WinningNumbersTest {
     }
 
     @Test
-    fun `로또 번호가 보너스 번호를 포함하는 경우`() {
+    fun `로또 번호가 보너스 번호를 포함한다`() {
         val winningNumber = generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
         val lotto = Lotto.create(listOf(1, 2, 3, 7, 8, 9))
         assertThat(winningNumber.checkMatchBonus(lotto.numbers)).isEqualTo(true)
