@@ -22,7 +22,7 @@ class LottoTest {
     }
 
     @Test
-    fun `로또 번호가 6개인 경우`() {
+    fun `로또 번호가 6개인 경우 예외가 발생하지 않는다`() {
         assertDoesNotThrow {
             Lotto.create(listOf(1, 45, 10, 11, 12, 13))
         }
