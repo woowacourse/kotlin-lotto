@@ -10,9 +10,6 @@ class LottoPurchaseInfo(
     val autoCount: Int
         get() = totalCount - manualCount
 
-    val money: Int
-        get() = purchaseLottoMoney.money
-
     init {
         require(purchaseLottoMoney.purchaseCount >= manualCount) {
             ERROR_MANUAL_LOTTO_COUNT_OVER_TOTAL_COUNT.format(manualCount, totalCount)
