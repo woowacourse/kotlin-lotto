@@ -6,7 +6,7 @@ import lotto.model.UserLotto
 import lotto.model.UserLottoCount
 import lotto.model.WinningLotto
 import lotto.model.generator.LottosGenerator
-import lotto.model.generator.RandomLottosGenerator
+import lotto.model.generator.RandomLottoGenerator
 import lotto.view.InputInterface
 import lotto.view.InputView
 import lotto.view.OutputInterface
@@ -15,7 +15,7 @@ import lotto.view.OutputView
 class LottoController(
     private val inputView: InputInterface = InputView(),
     private val outputView: OutputInterface = OutputView(),
-    private val generator: LottosGenerator = RandomLottosGenerator()
+    private val generator: LottosGenerator = RandomLottoGenerator()
 ) {
     fun start() {
         val money = getMoney()

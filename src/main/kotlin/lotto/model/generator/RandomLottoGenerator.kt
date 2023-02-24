@@ -2,7 +2,7 @@ package lotto.model.generator
 
 import lotto.model.Lotto
 
-class RandomLottosGenerator : LottosGenerator {
+class RandomLottoGenerator : LottosGenerator {
     override fun generate(count: Int): List<Lotto> {
         return List(count) { Lotto.create(RANGE.shuffled().take(6)) }
     }
