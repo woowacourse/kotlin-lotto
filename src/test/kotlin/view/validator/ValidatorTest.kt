@@ -1,7 +1,7 @@
 package view.validator
 
-import common.convertToLotto
 import common.convertToLottoNumberSet
+import domain.Lotto
 import domain.LottoNumber
 import domain.PurchaseLottoMoney
 import org.assertj.core.api.Assertions.assertThat
@@ -97,7 +97,7 @@ class ValidatorTest {
 
     @Test
     fun `주어진 Lotto와 LottoNumber로 WinningLotto가 성공적으로 만들어짐`() {
-        val lotto = setOf(1, 2, 3, 4, 5, 6).convertToLotto()
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber.from(7)
         val winningLotto = Validator.validateMakeWinningLotto(lotto, bonusNumber)
         assertThat(winningLotto).isNotNull
@@ -105,7 +105,7 @@ class ValidatorTest {
 
     @Test
     fun `주어진 Lotto와 LottoNumber로 WinningLotto를 만드는데 실패`() {
-        val lotto = setOf(1, 2, 3, 4, 5, 6).convertToLotto()
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber.from(6)
         val winningLotto = Validator.validateMakeWinningLotto(lotto, bonusNumber)
         assertThat(winningLotto).isNull()

@@ -10,10 +10,10 @@ class LottoStatisticsTest {
     fun `Ticket을 넘겨 받아서 당첨 번호와 비교한다`() {
         val ticket = Ticket(
             listOf(
-                Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()),
-                Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()),
-                Lotto(setOf(1, 2, 3, 4, 5, 13).convertToLottoNumberSet()),
-                Lotto(setOf(1, 2, 3, 4, 5, 9).convertToLottoNumberSet()),
+                Lotto(1, 2, 3, 4, 5, 6),
+                Lotto(1, 2, 3, 4, 5, 6),
+                Lotto(1, 2, 3, 4, 5, 13),
+                Lotto(1, 2, 3, 4, 5, 9),
             )
         )
         val winningNumber = setOf(1, 2, 3, 4, 5, 6)

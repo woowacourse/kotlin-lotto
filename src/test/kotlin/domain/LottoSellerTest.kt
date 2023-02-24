@@ -1,6 +1,5 @@
 package domain
 
-import common.convertToLotto
 import common.convertToLottoNumberSet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -14,7 +13,7 @@ class LottoSellerTest {
         val lottoSeller = LottoSeller(TestNumberGenerator())
         val lotto = lottoSeller.sellAutoTicket(money)
         assertThat(lotto.lottos.size).isEqualTo(1)
-        assertThat(lotto.lottos[0].numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet())
+        assertThat(lotto.lottos[0].numbers).isEqualTo(Lotto(1, 2, 3, 4, 5, 6).numbers)
     }
 
     @Test
@@ -23,8 +22,8 @@ class LottoSellerTest {
         val purchaseInfo = LottoPurchaseInfo(money, 3)
         val lottoSeller = LottoSeller(TestNumberGenerator())
         val requestManualNumbers = listOf(
-            setOf(11, 12, 13, 14, 15, 16).convertToLotto(),
-            setOf(21, 22, 23, 24, 25, 26).convertToLotto()
+            Lotto(11, 12, 13, 14, 15, 16),
+            Lotto(21, 22, 23, 24, 25, 26)
         )
         assertThat(true).isEqualTo(lottoSeller.sellManualAndAuto(purchaseInfo, Ticket(requestManualNumbers)) == null)
     }
@@ -36,13 +35,13 @@ class LottoSellerTest {
         val generator = TestNumberGenerator()
         val lottoSeller = LottoSeller(generator)
         val requestManualNumbers = listOf(
-            setOf(11, 12, 13, 14, 15, 16).convertToLotto(),
-            setOf(21, 22, 23, 24, 25, 26).convertToLotto()
+            Lotto(11, 12, 13, 14, 15, 16),
+            Lotto(21, 22, 23, 24, 25, 26)
         )
         val result: Ticket = lottoSeller.sellManualAndAuto(purchaseInfo, Ticket(requestManualNumbers))!!
         assertThat(result.lottos.size).isEqualTo(4)
-        assertThat(result.lottos[0].numbers).containsAll(setOf(11, 12, 13, 14, 15, 16).convertToLottoNumberSet())
-        assertThat(result.lottos[1].numbers).containsAll(setOf(21, 22, 23, 24, 25, 26).convertToLottoNumberSet())
+        assertThat(result.lottos[0].numbers).containsAll(Lotto(11, 12, 13, 14, 15, 16).numbers)
+        assertThat(result.lottos[1].numbers).containsAll(Lotto(21, 22, 23, 24, 25, 26).numbers)
         assertThat(result.lottos[2].numbers).containsAll(generator.pattern[0].map { LottoNumber.from(it) })
         assertThat(result.lottos[3].numbers).containsAll(generator.pattern[1].map { LottoNumber.from(it) })
     }
