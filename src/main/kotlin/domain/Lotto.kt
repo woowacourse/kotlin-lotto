@@ -11,12 +11,9 @@ class Lotto constructor(numbers: Set<LottoNumber>) {
 
     constructor(vararg number: Int) : this(number.map(LottoNumber::from).toSet())
 
-    fun matchResult(winningNumber: WinningLotto): Rank =
-        Rank.valueOf(matchNumbers(winningNumber.lotto), matchBonusNumber(winningNumber.bonusNumber))
+    fun matchNumbers(winningNumbers: Lotto): Int = winningNumbers.numbers.count { numbers.contains(it) }
 
-    private fun matchNumbers(winningNumbers: Lotto): Int = winningNumbers.numbers.count { numbers.contains(it) }
-
-    private fun matchBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
+    fun matchBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
 
     companion object {
         const val LOTTO_SIZE = 6

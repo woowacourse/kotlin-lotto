@@ -7,7 +7,7 @@ class LottoStatistics(private val winningLotto: WinningLotto) {
     fun matchTicket(ticket: Ticket): LottoResult {
         val result = Rank.values().associateWith { 0 }.toMutableMap()
         ticket.lottos.forEach { lotto ->
-            val matchRank = lotto.matchResult(winningLotto)
+            val matchRank = winningLotto.matchResult(lotto)
             result[matchRank] = (result[matchRank] ?: 0) + 1
         }
         return LottoResult(result)
