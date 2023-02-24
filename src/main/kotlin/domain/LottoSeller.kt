@@ -7,7 +7,7 @@ class LottoSeller(private val numberGenerator: RandomGenerator = NumberRandomGen
         return Lotto(numberGenerator.generate().map { LottoNumber.from(it) }.toSet())
     }
 
-    fun sellLottos(money: PurchaseLottoMoney): Ticket {
+    fun sellAutoTicket(money: PurchaseLottoMoney): Ticket {
         return Ticket(List(money.purchaseCount) { sellLotto() })
     }
 
@@ -16,13 +16,16 @@ class LottoSeller(private val numberGenerator: RandomGenerator = NumberRandomGen
             return null
         }
         val auto = sellAutoTicket(purchaseInfo.autoCount)
-        return Ticket(requestManualTicket.lottos + auto.lottos)
+        val manual = sellManualTicket(requestManualTicket)
+        return Ticket(manual.lottos + auto.lottos)
     }
 
     private fun sellAutoTicket(count: Int): Ticket =
         if (count == 0) {
             Ticket(emptyList())
         } else {
-            sellLottos(PurchaseLottoMoney(count * ONE_LOTTO_MONEY))
+            sellAutoTicket(PurchaseLottoMoney(count * ONE_LOTTO_MONEY))
         }
+
+    private fun sellManualTicket(ticket: Ticket): Ticket = Ticket(ticket.lottos.toList())
 }

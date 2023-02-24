@@ -12,7 +12,7 @@ class LottoSellerTest {
     fun `로또를 한 장 발급한다`() {
         val money = PurchaseLottoMoney(1 * 1000)
         val lottoSeller = LottoSeller(TestNumberGenerator())
-        val lotto = lottoSeller.sellLottos(money)
+        val lotto = lottoSeller.sellAutoTicket(money)
         assertThat(lotto.lottos.size).isEqualTo(1)
         assertThat(lotto.lottos[0].numbers).isEqualTo(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet())
     }
@@ -53,7 +53,7 @@ class LottoSellerTest {
         val money = PurchaseLottoMoney(count * 1000)
         val generator = TestNumberGenerator()
         val lottoSeller = LottoSeller(generator)
-        val ticket = lottoSeller.sellLottos(money)
+        val ticket = lottoSeller.sellAutoTicket(money)
         assertThat(ticket.lottos.map { lotto -> lotto.numbers }).isEqualTo(
             generator.pattern.map { it.convertToLottoNumberSet() }.take(count)
         )
