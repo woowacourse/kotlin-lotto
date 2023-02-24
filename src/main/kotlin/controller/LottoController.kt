@@ -32,7 +32,7 @@ class LottoController(
     private fun purchaseLottos(purchaseMoney: PurchaseMoney): PurchasedLottos {
 
         val lottoShop = repeatWithRunCatching { LottoShop(purchaseMoney, InputView.requestNumberOfManualLottos()) }
-                                                         행
+
         val manualLottos = repeatWithRunCatching { purchaseManualLottos(lottoShop) }
         val autoLottos = lottoShop.purchaseAutoLotto()
 
