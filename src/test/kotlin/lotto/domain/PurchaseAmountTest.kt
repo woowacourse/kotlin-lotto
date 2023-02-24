@@ -57,4 +57,13 @@ class PurchaseAmountTest {
         assertDoesNotThrow { purchase.checkEnough(10) }
         assertThrows<IllegalArgumentException> { purchase.checkEnough(11) }
     }
+
+    @Test
+    fun `자동 로또 개수를 계산한다`() {
+        val purchase = PurchaseAmount(10000)
+
+        val actual = purchase.getAutoPurchaseQuantity(8)
+
+        assertThat(actual).isEqualTo(2)
+    }
 }

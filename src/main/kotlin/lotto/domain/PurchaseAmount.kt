@@ -24,6 +24,8 @@ class PurchaseAmount(
         require(quantity <= getPurchaseQuantity()) { MANUAL_QUANTITY_ERROR_MESSAGE }
     }
 
+    fun getAutoPurchaseQuantity(quantity: Int): Int = getPurchaseQuantity() - quantity
+
     companion object {
         private const val MANUAL_QUANTITY_ERROR_MESSAGE = "구입금액보다 수동 로또 개수가 더 많습니다."
         private const val PURCHASE_AMOUNT_BOUNDARY_ERROR_MESSAGE = "구입금액은 1000원 이상 5만원 이하여야 합니다."
