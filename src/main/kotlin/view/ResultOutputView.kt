@@ -9,7 +9,7 @@ import domain.lotto.LottoNumber
 object ResultOutputView {
 
     fun printPurchasingResult(purchaser: Purchaser) {
-        printPurchasedLottoCount(purchaser.purchasedLottoCount)
+        printPurchasedLottoCount(purchaser.totalLottoCount)
         printPurchasedLotto(purchaser.purchasedLottoBundle)
     }
 
