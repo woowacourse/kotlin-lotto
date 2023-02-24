@@ -5,7 +5,7 @@ import lotto.model.LottoNumber
 import lotto.model.Money
 import lotto.model.UserLotto
 import lotto.model.WinningLotto
-import lotto.model.generator.AutoLottoGenerator
+import lotto.model.generator.UserLottoGenerator
 import lotto.view.ERROR_INSERT_AGAIN
 import lotto.view.ERROR_OUT_OF_LOTTO_NUMBER
 import lotto.view.InputView
@@ -14,7 +14,7 @@ import lotto.view.OutputView.printResult
 import lotto.view.OutputView.printUserLotto
 
 class LottoController(
-    private val generator: AutoLottoGenerator = AutoLottoGenerator(),
+    private val userLottoGenerator: UserLottoGenerator = UserLottoGenerator()
 ) {
     fun start() {
         val money = getMoney()
@@ -22,7 +22,7 @@ class LottoController(
         val manualNumberOfLotto = getNumberOfManualLotto(numberOfLotto)
         val autoNumberOfLotto = numberOfLotto - manualNumberOfLotto
         printMessage(PURCHASE.format(manualNumberOfLotto, autoNumberOfLotto))
-        val myLotto = getUserLotto(getManualLotto(manualNumberOfLotto), autoNumberOfLotto)
+        val myLotto = userLottoGenerator.generateLotto(getManualLotto(manualNumberOfLotto), autoNumberOfLotto)
         printUserLotto(myLotto)
         wrapUpResult(myLotto, money)
     }
@@ -53,16 +53,6 @@ class LottoController(
             manualLotto.add(getLottoNumber())
         }
         return manualLotto
-    }
-
-    fun getUserLotto(manualLotto: List<Lotto>, number: Int): UserLotto {
-        val lotto = mutableListOf<Lotto>()
-        lotto += manualLotto
-        repeat(number) {
-            lotto.add(generator.generate())
-        }
-
-        return UserLotto(lotto)
     }
 
     private fun wrapUpResult(myLotto: UserLotto, money: Money) {
