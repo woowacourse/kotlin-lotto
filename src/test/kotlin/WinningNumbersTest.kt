@@ -1,3 +1,4 @@
+import domain.model.LottoResult
 import domain.model.WinningNumbers
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
@@ -41,25 +42,44 @@ class WinningNumbersTest {
     }
 
     @Test
-    fun `당첨 번호와 일치하는 번호의 개수를 구한다`() {
+    fun `번호가 6개 일치하면 당첨 결과는 1등이다`() {
         val winningNumber = generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = Lotto.create(listOf(1, 2, 3, 7, 8, 9))
-        assertThat(
-            winningNumber.getMatchCount(lotto.numbers)
-        ).isEqualTo(3)
+        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 6))
+        assertThat(winningNumber.findLottoResult(lotto.numbers)).isEqualTo(LottoResult.FIRST)
     }
 
     @Test
-    fun `로또 번호가 보너스 번호를 포함한다`() {
+    fun `번호가 5개 일치하고 보너스 번호가 일치하면 당첨 결과는 2등이다`() {
         val winningNumber = generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
-        val lotto = Lotto.create(listOf(1, 2, 3, 7, 8, 9))
-        assertThat(winningNumber.checkMatchBonus(lotto.numbers)).isEqualTo(true)
+        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 7))
+        assertThat(winningNumber.findLottoResult(lotto.numbers)).isEqualTo(LottoResult.SECOND)
     }
 
     @Test
-    fun `로또 번호가 보너스 번호를 포함하지 않는 경우`() {
-        val winningNumber = generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 10)
-        val lotto = Lotto.create(listOf(1, 2, 3, 7, 8, 9))
-        assertThat(winningNumber.checkMatchBonus(lotto.numbers)).isEqualTo(false)
+    fun `번호가 5개 일치하고 보너스 번호가 일치하지 않으면 당첨 결과는 3등이다`() {
+        val winningNumber = generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
+        val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 8))
+        assertThat(winningNumber.findLottoResult(lotto.numbers)).isEqualTo(LottoResult.THIRD)
+    }
+
+    @Test
+    fun `번호가 4개 일치하면 당첨 결과는 4등이다`() {
+        val winningNumber = generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
+        val lotto = Lotto.create(listOf(1, 2, 3, 4, 8, 9))
+        assertThat(winningNumber.findLottoResult(lotto.numbers)).isEqualTo(LottoResult.FORTH)
+    }
+
+    @Test
+    fun `번호가 3개 일치하면 당첨 결과는 5등이다`() {
+        val winningNumber = generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
+        val lotto = Lotto.create(listOf(1, 2, 3, 10, 11, 12))
+        assertThat(winningNumber.findLottoResult(lotto.numbers)).isEqualTo(LottoResult.FIFTH)
+    }
+
+    @Test
+    fun `번호가 2개 이하로 일치하면 당첨되지 않는다`() {
+        val winningNumber = generateWinningNumbers(listOf(1, 2, 3, 4, 5, 6), 7)
+        val lotto = Lotto.create(listOf(1, 2, 10, 11, 12, 13))
+        assertThat(winningNumber.findLottoResult(lotto.numbers)).isEqualTo(LottoResult.MISS)
     }
 }

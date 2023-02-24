@@ -23,12 +23,19 @@ class WinningNumbers(
         }
     }
 
-    fun getMatchCount(numbers: Set<LottoNumber>): Int =
+    fun findLottoResult(numbers: Set<LottoNumber>): LottoResult {
+        val matchCount = getMatchCount(numbers)
+        val hasBonusNumber = checkMatchBonus(numbers)
+
+        return LottoResult.valueOf(matchCount, hasBonusNumber)
+    }
+
+    private fun getMatchCount(numbers: Set<LottoNumber>): Int =
         numbers.count { number ->
             catchNumbers.contains(number)
         }
 
-    fun checkMatchBonus(numbers: Set<LottoNumber>): Boolean =
+    private fun checkMatchBonus(numbers: Set<LottoNumber>): Boolean =
         numbers.contains(bonusNumber)
 
     companion object {

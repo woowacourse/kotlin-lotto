@@ -10,12 +10,8 @@ class Lotto private constructor(val numbers: Set<LottoNumber>) {
         }
     }
 
-    fun getLottoResult(winningNumbers: WinningNumbers): LottoResult {
-        val matchCount = winningNumbers.getMatchCount(numbers)
-        val hasBonusNumber = winningNumbers.checkMatchBonus(numbers)
-
-        return LottoResult.valueOf(matchCount, hasBonusNumber)
-    }
+    fun getLottoResult(winningNumbers: WinningNumbers): LottoResult =
+        winningNumbers.findLottoResult(numbers)
 
     override fun equals(other: Any?): Boolean {
         if (other is Lotto) {
