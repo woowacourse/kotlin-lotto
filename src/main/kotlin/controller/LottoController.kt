@@ -13,10 +13,10 @@ import view.OutputViewInterface
 class LottoController(
     private val inputView: InputViewInterface,
     private val outputView: OutputViewInterface
-) {
+) : Runnable {
     private val lottoSeller: LottoSeller by lazy { LottoSeller() }
 
-    fun run() {
+    override fun run() {
         outputView.printMessage(INPUT_MESSAGE_FOR_PURCHASE_MONEY)
         val purchaseLottoMoney = getMoney()
         val ticket = initializeTicket(purchaseLottoMoney)
