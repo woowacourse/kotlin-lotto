@@ -1,6 +1,6 @@
 package domain
 
-class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
+data class WinningLotto(private val lotto: Lotto, private val bonusNumber: LottoNumber) {
     init {
         require(bonusNumber !in lotto) { ERROR_DUPLICATE_BONUS_NUMBER.format(lotto.toList(), bonusNumber.toInt()) }
     }
