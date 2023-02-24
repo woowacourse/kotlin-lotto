@@ -6,7 +6,7 @@
 - [X] value class로 선언
 
 ## PurchaseLottoMoney
-- [X] 구입 금액의 원시값을 포장
+- [X] 구입 금액의 원시값을 포장. value class 로 선언
 - [X] 구입 금액으로부터 몇 장을 구매가능한지 반환해주는 기능
 
 ## LottoPurchaseInfo
@@ -32,6 +32,7 @@
   - [X] 당첨번호와 보너스 번호가 같으면 exception 발생
   - [X] 당첨번호와 보너스 번호가 다르면 winningLotto 생성
   - [X] 보너스번호가 범위안에 들어오는지 검증
+- [X] 받은 Lotto의 당첨결과를 반환하는 기능
 
 ## LottoResult
 - [X] 로또의 결과를 래핑하는 클래스
@@ -40,9 +41,9 @@
 ## LottoSeller
 - [X] 로또를 한 장 발급한다.
 - [X] 파라미터(PurchaseLottoMoney)로 살 수 있는 만큼 로또를 자동 발급한다.
-- [X] 파라미터(LottoPurchaseInfo와 List<Lotto>)를 받아서 로또를 수동 및 자동발급해준다.
+- [X] 파라미터(LottoPurchaseInfo와 Tikcket)를 받아서 로또를 수동 및 자동발급해준다.
   - [X] LottoPurchaseInfo의 프로퍼티 값에 따라서 로또를 자동 및 수동 발급해준다.
-  - [X] 만약 LottoPurchaseInfo의 수동 발급 개수와 제출한 List<Lotto>의 크기가 다르다면 null을 반환한다.
+  - [X] 만약 LottoPurchaseInfo의 수동 발급 개수와 제출한 Ticket의 크기가 다르다면 null을 반환한다.
 
 ## LottoStatistics
 - [X] 당첨 통계를 낸다.
@@ -90,14 +91,13 @@
 - [X] 전체 로직을 담당한다.
   - [X] 구입 금액을 입력받아 PurchaseLottoMoney를 얻음
   - [X] 수동 구매 개수를 입력받아서 LottoPurchaseInfo를 얻음
-  - [X] 수동 구매 개수의 크기를 가지는 List<Lotto>를 얻음
-  - [X] 이렇게 해서 얻은 LottoPurchaseInfo와 List<Lotto>로 수동 및 자동발급을 수행해서 Ticket 생성
-    - [X] 만약 수동 발급 개수와 List<Lotto>의 크기가 다르다면 에러 캐치하고 다시 입력 받기로 돌아감. 
-      - 근데 내가 작성하는 코드에서는 이런 에러 발생할 일이 있을 수 없음(애초에 인풋뷰에서 그만큼만 만들거니까). 그냥 안전처리 해주기
+  - [X] 수동 구매 개수의 크기를 가지는 Ticket을 얻음
+  - [X] 이렇게 해서 얻은 LottoPurchaseInfo와 Ticket으로 수동 및 자동발급을 수행해서 Ticket을 얻음
+    - [X] 만약 수동 발급 개수와 Ticket의 크기가 다르다면 널을 반환받고 다시 입력 받기로 돌아감. 
   - [X] Ticket의 목록을 출력
   - [X] 당첨 번호와 보너스 볼을 입력받아 WinningLotto 생성
   - [X] LottoStatistics를 통해 당첨 통계 계산
-  - [X] resultView에 결과를 전달하여 출력
+  - [X] outputView에 결과를 전달하여 출력
 
 
 
