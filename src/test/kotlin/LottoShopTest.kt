@@ -29,4 +29,10 @@ class LottoShopTest {
         val lotto = lottoShop.purchaseManualLotto(listOf(1, 2, 3, 4, 5, 6))
         assertThat(lotto).isEqualTo(Lotto.create(listOf(1, 2, 3, 4, 5, 6)))
     }
+
+    @Test
+    fun `구입 금액이 5000원이고, 수동 로또의 수가 2개이면 자동 로또의 수는 3개다`() {
+        val lottoShop = LottoShop(PurchaseMoney(5000), 2)
+        assertThat(lottoShop.numberOfAutoLotto()).isEqualTo(3)
+    }
 }
