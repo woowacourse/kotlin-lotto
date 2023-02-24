@@ -86,8 +86,4 @@ class LottoController(
             repeatWithRunCatching(action)
         }
     }
-
-    companion object {
-        private const val LOTTO_PRICE = 1000
-    }
 }
