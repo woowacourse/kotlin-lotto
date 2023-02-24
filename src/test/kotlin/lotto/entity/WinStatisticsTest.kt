@@ -8,7 +8,7 @@ class WinStatisticsTest {
     @Test
     fun `5등이 2개이면 상금은 10000원이다`() {
         // given
-        val winStatistics = WinStatistics(listOf(Rank.FIFTH, Rank.FIFTH))
+        val winStatistics = WinStatistics(mapOf(Rank.FIFTH to 2))
 
         // when
         val winMoney = winStatistics.calculateWinMoney()
@@ -21,7 +21,7 @@ class WinStatisticsTest {
     fun `구입금액이 14000원이고 당첨금이 5000원이면 수익률은 0_35이다`() {
         // given
         val purchaseMoney = PurchaseMoney(14000)
-        val winStatistics = WinStatistics(listOf(Rank.FIFTH))
+        val winStatistics = WinStatistics(mapOf(Rank.FIFTH to 1))
 
         // when
         val profitRate = winStatistics.calculateProfitRate(purchaseMoney).roundDown()
