@@ -55,7 +55,7 @@ class LottoController(
     private fun purchaseManualLottos(numberOfManualLottos: Int): List<Lotto> {
         ResultView.printManualLottoRequest()
         val manualLottoGenerator = LottoGenerator(numberOfManualLottos) {
-            repeatWithRunCatching { readManualNumbers() }
+            readManualNumbers()
         }
         return manualLottoGenerator.generateLottos()
     }
