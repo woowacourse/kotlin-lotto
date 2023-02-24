@@ -13,7 +13,7 @@ class LottoBunchTest {
     @Test
     fun `2등에 1번 당첨되었다`() {
         assertThat(
-            lottoBunch.calcRanks(winningLotto),
+            lottoBunch.calculateRanks(winningLotto),
         ).containsOnlyOnce(Rank.SECOND)
     }
 

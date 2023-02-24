@@ -45,7 +45,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
 
     private fun confirmLottoWinning(lottoBunch: LottoBunch, winningLotto: WinningLotto, purchaseMoney: PurchaseMoney) {
         OutputView.printWinningStatsScript()
-        val ranks = lottoBunch.calcRanks(winningLotto)
+        val ranks = lottoBunch.calculateRanks(winningLotto)
         val winningResult = WinningResult.from(ranks)
         OutputView.printWinningResult(winningResult)
 
