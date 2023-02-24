@@ -21,7 +21,6 @@ class OutputView : OutputViewInterface {
         ticket.lottos.forEach { lotto ->
             printLottoNumbers(lotto)
         }
-        println()
     }
 
     private fun printLottoNumbers(lotto: Lotto) {
@@ -47,8 +46,8 @@ class OutputView : OutputViewInterface {
     private fun printBonus(rank: Rank) = if (rank == Rank.SECOND) BONUS_MATCH else NO_BONUS_MATCH
 
     companion object {
-        private const val PURCHASE_MANUAL_AND_AUTO_TICKET_COUNT = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
-        private const val MATCH_RESULT = "당첨 통계\n" + "---------"
+        private const val PURCHASE_MANUAL_AND_AUTO_TICKET_COUNT = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
+        private const val MATCH_RESULT = "\n당첨 통계\n" + "---------"
         private const val PROFIT_RESULT = "총 수익률은 %s입니다."
         private const val PER_MATCH_RESULT = "%d개 일치%s(%d원)- %d개"
         private const val BONUS_MATCH = ", 보너스 볼 일치"
