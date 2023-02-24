@@ -4,14 +4,14 @@ data class Lotto(private val numbers: List<LottoNumber>) {
 
     init {
         require(numbers.size == NUMBER_SIZE) { ERROR_NUMBER_SIZE.format(numbers.size) }
-        require(numbers.isNotDuplicated()) { ERROR_NUMBER_DUPLICATED.format(numbers) }
+        require(numbers.isNotDuplicated()) { ERROR_NUMBER_DUPLICATED.format(numbers.map(LottoNumber::toInt)) }
         require(numbers.sorted() == numbers) { ERROR_NUMBER_SEQUENCE }
     }
 
     private fun List<LottoNumber>.isNotDuplicated(): Boolean = this.distinct().size == this.size
     operator fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
     fun getCountContainingNumbers(anyLotto: Lotto): Int = numbers.count { it in anyLotto }
-    override fun toString(): String = numbers.toString()
+    fun toList() = numbers.map(LottoNumber::toInt)
 
     companion object {
         const val NUMBER_SIZE = 6

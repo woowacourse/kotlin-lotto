@@ -2,7 +2,7 @@ package domain
 
 class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(bonusNumber !in lotto) { ERROR_DUPLICATE_BONUS_NUMBER.format(lotto, bonusNumber) }
+        require(bonusNumber !in lotto) { ERROR_DUPLICATE_BONUS_NUMBER.format(lotto.toList(), bonusNumber.toInt()) }
     }
 
     constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto.create(numbers), LottoNumber.valueOf(bonusNumber))

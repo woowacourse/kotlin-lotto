@@ -10,7 +10,7 @@ object OutputView {
 
     fun outputLottos(manuallyPurchaseCount: Count, lottos: List<Lotto>) {
         println("\n수동으로 ${manuallyPurchaseCount.toInt()}장, 자동으로 ${lottos.size - manuallyPurchaseCount.toInt()}개를 구매했습니다.")
-        lottos.forEach { println(it) }
+        lottos.forEach { println(it.toList()) }
     }
 
     fun outputResult(lottoResult: LottoResult) {

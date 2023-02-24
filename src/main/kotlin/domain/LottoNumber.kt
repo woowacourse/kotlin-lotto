@@ -6,7 +6,7 @@ value class LottoNumber private constructor(private val number: Int) : Comparabl
         require(number in MINIMUM_NUMBER..MAXIMUM_NUMBER) { ERROR_NUMBER_IN_RANGE.format(number) }
     }
 
-    override fun toString() = number.toString()
+    fun toInt() = number
     override fun compareTo(other: LottoNumber): Int = this.number - other.number
 
     companion object {

@@ -18,7 +18,7 @@ class WinningLottoTest {
         assertThatIllegalArgumentException()
             .isThrownBy { WinningLotto(numbers, bonusNumber) }
             .withMessage(
-                "보너스 번호는 당첨 번호와 중복될 수 없습니다. \n잘못된 값 : ${Lotto.create(numbers)}, $bonusNumber",
+                "보너스 번호는 당첨 번호와 중복될 수 없습니다. \n잘못된 값 : ${Lotto.create(numbers).toList()}, $bonusNumber",
             )
     }
 
