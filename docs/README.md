@@ -8,6 +8,8 @@
 - [x] 구입금액이 1000원 이상이 아니고 5만원을 초과하면 에러가 발생한다.
 - [x] 구입금액이 1000원 단위로 나누어 떨어지지 않으면 에러가 발생한다.
 - [x] 구입한 로또 개수를 계산한다.
+- [ ] 수동 로또 개수가 구입 로또 개수를 초과하지 않는지 확인한다.
+- [ ] 자동 로또 개수를 계산한다.
 
 
 - LotteryNumber
@@ -35,20 +37,17 @@
 
 - NumberOfRank
 - [x] 등수를 받아 카운트한다.
+
+
+- ResultCalculator
 - [x] 총 상금을 계산한다.
-
-
-- WinningResultCalculator
 - [x] 수익률을 계산한다.
 
 
-- Revenue
-- [x] 손해인지, 이득인지 알려준다.
-
-
-- RandomLotteryNumberGenerator
-- [x] 1이상 45이하의 숫자 하나를 생성한다.
+- RandomLotteryGenerator
+- [x] 1이상 45이하의 숫자 6개를 가진 로또를 생성한다.
 
 
 - LotteriesGenerator
 - [x] 구입 로또 개수만큼 로또를 발행한다.
+- [ ] 수동 로또를 발행한다.
