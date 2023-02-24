@@ -1,28 +1,35 @@
 package domain
 
-import domain.lotto.Lotto
 import domain.lotto.LottoBundle
 import domain.lotto.generator.LottoVendingMachine
 import util.PREFIX
 
-class Purchaser(val spentMoney: Money, val manualLottoCount: Int) {
+class Purchaser(spentMoney: Money) {
     val totalLottoCount: Int = (spentMoney / LOTTO_PRICE).toInt()
-    private val autoLottoCount: Int = totalLottoCount - manualLottoCount
-    val purchasedLottoBundle: LottoBundle = LottoVendingMachine.getLottoBundle(autoLottoCount)
+    var manualLottoCount: Int = UNINITIALIZED_INT
+        private set
+    lateinit var purchasedLottoBundle: LottoBundle
+        private set
 
     init {
         require(totalLottoCount > 0) { "$PREFIX 구매할 수 있는 로또가 없습니다. 구매하려는 로또 개수: $totalLottoCount" }
-        require(manualLottoCount >= 0) { "$PREFIX 수동으로 구매할 로또의 개수가 음수일 수 없습니다. 수동 로또 개수: $manualLottoCount" }
-        require(manualLottoCount <= totalLottoCount) { "$PREFIX 수동으로 구매할 로또의 개수가 총 로또 개수보다 많을 수 없습니다. 수동 로또 개수: $manualLottoCount, 총 로또 개수: $totalLottoCount" }
     }
 
-    fun purchaseManualLottoBundle(lottoBundle: LottoBundle) {
-        validateLottoBundleToAdd(lottoBundle)
-        purchasedLottoBundle.add(lottoBundle)
+    fun decideManualLottoCount(manualCount: Int) {
+        validateLottoCount(manualCount)
+        manualLottoCount = manualCount
+        val autoLottoCount = totalLottoCount - manualCount
+        purchasedLottoBundle = LottoVendingMachine.getLottoBundle(autoLottoCount)
     }
 
-    fun purchaseManualLottoBundle(lottoBundle: List<Lotto>) {
-        purchasedLottoBundle.add(lottoBundle)
+    fun purchaseManualLottoBundle(manualLottoBundle: LottoBundle) {
+        validateLottoBundleToAdd(manualLottoBundle)
+        purchasedLottoBundle += manualLottoBundle
+    }
+
+    private fun validateLottoCount(manualCount: Int) {
+        require(manualCount >= 0) { "$PREFIX 수동으로 구매할 로또의 개수가 음수일 수 없습니다. 수동 로또 개수: $manualCount" }
+        require(manualCount <= totalLottoCount) { "$PREFIX 수동으로 구매할 로또의 개수가 총 로또 개수보다 많을 수 없습니다. 수동 로또 개수: $manualCount, 총 로또 개수: $totalLottoCount" }
     }
 
     private fun validateLottoBundleToAdd(lottoBundle: LottoBundle) {
@@ -32,5 +39,6 @@ class Purchaser(val spentMoney: Money, val manualLottoCount: Int) {
 
     companion object {
         private val LOTTO_PRICE: Money = Money(1000)
+        private const val UNINITIALIZED_INT: Int = -1
     }
 }
