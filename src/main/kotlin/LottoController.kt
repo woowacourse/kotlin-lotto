@@ -11,29 +11,35 @@ import view.ResultOutputView
 class LottoController {
 
     fun runLottoGame() {
-        val purchaser = Purchaser(getMoney(), getManualLottoCount())
-        purchaser.purchaseManualLottoBundle(getManualLottoBundle(purchaser.manualLottoCount))
-        ResultOutputView.printPurchasingResult(purchaser)
-        val winStatistics = WinStatistics(getWinningNumbers(), purchaser.purchasedLottoBundle, purchaser.spentMoney)
+        val purchasedLottoBundle = purchaseLotto()
+        val winStatistics = WinStatistics(getWinningNumbers(), purchasedLottoBundle)
         ResultOutputView.printWinStatistics(winStatistics)
     }
 
+    private fun purchaseLotto(): LottoBundle {
+        val purchaser = checkError { Purchaser(getMoney()) }
+        checkError { purchaser.decideManualLottoCount(getManualLottoCount()) }
+        checkError { purchaser.purchaseManualLottoBundle(getManualLottoBundle(purchaser.manualLottoCount)) }
+        ResultOutputView.printPurchasingResult(purchaser)
+        return purchaser.purchasedLottoBundle
+    }
+
     private fun getMoney(): Money {
-        return Money(InputView.getInputMoney())
+        return checkError { Money(InputView.getInputMoney()) }
     }
 
     private fun getWinningNumbers(): WinningNumbers {
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
-        return WinningNumbers(winningLotto, bonusNumber)
+        return checkError { WinningNumbers(winningLotto, bonusNumber) }
     }
 
     private fun getWinningLotto(): Lotto {
-        return Lotto(InputView.getInputWinningLotto())
+        return checkError { Lotto(InputView.getInputWinningLotto()) }
     }
 
     private fun getBonusNumber(): LottoNumber {
-        return LottoNumber.of(InputView.getInputBonusNumber())
+        return checkError { LottoNumber.of(InputView.getInputBonusNumber()) }
     }
 
     private fun getManualLottoCount(): Int {
@@ -41,8 +47,18 @@ class LottoController {
     }
 
     private fun getManualLottoBundle(manualLottoCount: Int): LottoBundle {
-        val manualLottos = InputView.getInputManualLottos(manualLottoCount)
-            .map { Lotto(it) }
+        val manualLottos = checkError {
+            InputView.getInputManualLottos(manualLottoCount)
+                .map { Lotto(it) }
+        }
         return LottoBundle(manualLottos)
+    }
+
+    private fun <T> checkError(method: () -> T): T {
+        return runCatching { method() }
+            .getOrElse {
+                println(it.message)
+                return checkError(method)
+            }
     }
 }
