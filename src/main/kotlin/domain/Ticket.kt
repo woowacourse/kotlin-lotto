@@ -1,3 +1,7 @@
 package domain
 
-class Ticket(val lottos: List<Lotto>)
+class Ticket(lottos: List<Lotto>) {
+    private val _lottos = lottos.toList()
+    val lottos: List<Lotto>
+        get() = _lottos.toList()
+}
