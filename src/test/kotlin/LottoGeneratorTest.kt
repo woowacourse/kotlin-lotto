@@ -28,9 +28,23 @@ class LottoGeneratorTest {
         // then
         assertThat(lottos).isEqualTo(
             listOf(
-                Lotto.create(listOf(1,2,3,4,5,6)),
-                Lotto.create(listOf(1,2,3,4,5,6))
+                Lotto.create(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto.create(listOf(1, 2, 3, 4, 5, 6))
             )
+        )
+    }
+
+    @Test
+    fun `로또 1개를 발행한다`() {
+        // given
+        val lottoGenerator = LottoGenerator() {
+            listOf(1, 2, 3, 4, 5, 6)
+        }
+        // when
+        val lotto = lottoGenerator.generateLotto()
+        // then
+        assertThat(lotto).isEqualTo(
+            Lotto.create(listOf(1, 2, 3, 4, 5, 6))
         )
     }
 }

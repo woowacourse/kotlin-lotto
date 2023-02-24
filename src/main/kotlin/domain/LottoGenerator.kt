@@ -3,7 +3,7 @@ package domain
 import domain.model.lotto.Lotto
 
 class LottoGenerator(
-    private val numberOfLottos: Int,
+    private val numberOfLottos: Int = 1,
     private val numberGenerator: () -> List<Int> = {
         (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLotteryNumbers()
     }
@@ -14,6 +14,10 @@ class LottoGenerator(
             val numbers = numberGenerator()
             Lotto.create(numbers)
         }
+    }
+
+    fun generateLotto(): Lotto {
+        return Lotto.create(numberGenerator())
     }
 
     companion object {
