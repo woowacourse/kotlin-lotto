@@ -9,10 +9,10 @@ class WinningLotto(val mainLottoNumbers: Lotto, val bonusLottoNumber: LottoNumbe
         require(bonusLottoNumber.value !in mainLottoNumbers.lottoNumbers.map { it.value }) { LOTTO_DUPLICATE_ERROR }
     }
 
-    fun checkMatchedBonusLottoNumber(lotto: Lotto): Boolean =
+    private fun checkMatchedBonusLottoNumber(lotto: Lotto): Boolean =
         lotto.matchLottoNumber(bonusLottoNumber)
 
-    fun countMatchedMainLottoNumber(lotto: Lotto): Int =
+    private fun countMatchedMainLottoNumber(lotto: Lotto): Int =
         lotto.countContainLottoNumber(mainLottoNumbers)
 
     fun calculateRank(lotto: Lotto): Rank =
