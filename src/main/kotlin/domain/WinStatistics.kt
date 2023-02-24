@@ -2,8 +2,9 @@ package domain
 
 import domain.lotto.LottoBundle
 
-class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle, spentMoney: Money) {
+class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle) {
     val rankCount: Map<Rank, Int>
+    private val spentMoney: Money = Money(purchasedLottoBundle.size * LOTTO_PRICE)
     val earningRate: Double
 
     init {
@@ -40,5 +41,9 @@ class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoB
 
     override fun hashCode(): Int {
         return rankCount.hashCode()
+    }
+
+    companion object {
+        private const val LOTTO_PRICE = 1000
     }
 }
