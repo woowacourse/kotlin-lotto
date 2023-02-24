@@ -10,10 +10,10 @@ class Lotto(val lottoNumbers: Set<LottoNumber>) {
         require(lottoNumbers.size == LOTTO_SIZE) { LOTTO_SIZE_ERROR }
     }
 
-    fun countContainsMainLottoNumber(lotto: Lotto): Int =
+    fun countContainLottoNumber(lotto: Lotto): Int =
         lottoNumbers.count { lottoNumber -> lottoNumber.value in lotto.lottoNumbers.map { it.value } }
 
-    fun containsBonusLottoNumber(bonusNumber: LottoNumber): Boolean =
+    fun matchLottoNumber(bonusNumber: LottoNumber): Boolean =
         bonusNumber.value in lottoNumbers.map { lottoNumber -> lottoNumber.value }
 
     companion object {
