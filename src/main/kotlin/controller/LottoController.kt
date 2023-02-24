@@ -1,6 +1,7 @@
 package controller
 
 import domain.Lotto
+import domain.LottoCount
 import domain.LottoNumber
 import domain.LottoSeller
 import domain.LottoStatistics
@@ -34,7 +35,7 @@ class LottoController(
     private fun makeManualTicket(count: Int): Ticket {
         return runCatching {
             val manualCount = inputView.getManualLottoCount()
-            checkValidManualCount(count - manualCount)
+            LottoCount(count - manualCount)
             val numbers = inputView.getManualLottos(manualCount)
             lottoSeller.sellManualLottos(numbers)
         }.getOrElse { error ->
@@ -92,12 +93,7 @@ class LottoController(
         }
     }
 
-    private fun checkValidManualCount(count: Int) {
-        require(count > 0) { ERROR_MANUAL_COUNT }
-    }
-
     companion object {
         private const val EACH_LOTTO_PRICE = 1000
-        private const val ERROR_MANUAL_COUNT = "구매한 로또의 수보다 많습니다."
     }
 }
