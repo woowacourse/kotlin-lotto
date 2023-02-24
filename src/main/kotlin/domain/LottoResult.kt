@@ -9,17 +9,10 @@ data class LottoResult(private val result: Map<Rank, Int>) {
 
     private fun getInvestment(): Double = result.values.sum().toDouble() * LottoStore.LOTTO_PRICE
     private fun getRevenue(): Double = result.map { it.key.winningMoney.toDouble() * it.value }.sum()
-    operator fun get(rank: Rank) = result[rank]
+    operator fun get(rank: Rank) = result[rank] ?: 0
 
     companion object {
         fun of(lottos: List<Lotto>, winningLotto: WinningLotto): LottoResult =
-            LottoResult(
-                Rank.values().associateWith { 0 }.toMutableMap().apply {
-                    lottos.forEach {
-                        val rank = winningLotto.getRankOf(it)
-                        this[rank] = (this[rank] ?: 0) + 1
-                    }
-                },
-            )
+            LottoResult(lottos.asSequence().map { winningLotto.getRankOf(it) }.groupingBy { it }.eachCount())
     }
 }

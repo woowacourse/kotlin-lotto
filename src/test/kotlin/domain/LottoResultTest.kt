@@ -2,6 +2,7 @@ package domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class LottoResultTest {
     @Test
@@ -14,18 +15,14 @@ class LottoResultTest {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val result = LottoResult.of(lottos, winningLotto)
 
-        val expect = LottoResult(
-            mapOf(
-                Rank.FIRST to 1,
-                Rank.SECOND to 1,
-                Rank.THIRD to 0,
-                Rank.FOURTH to 1,
-                Rank.FIFTH to 0,
-                Rank.MISS to 0,
-            ),
+        assertAll(
+            { assertThat(result[Rank.FIRST]).isEqualTo(1) },
+            { assertThat(result[Rank.SECOND]).isEqualTo(1) },
+            { assertThat(result[Rank.THIRD]).isEqualTo(0) },
+            { assertThat(result[Rank.FOURTH]).isEqualTo(1) },
+            { assertThat(result[Rank.FIFTH]).isEqualTo(0) },
+            { assertThat(result[Rank.MISS]).isEqualTo(0) },
         )
-
-        assertThat(result).isEqualTo(expect)
     }
 
     @Test
