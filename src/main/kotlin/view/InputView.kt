@@ -53,7 +53,15 @@ class InputView : InputViewInterface {
         }
     }
 
-    override fun getManualLotto(): Set<Int> {
+    override fun getManualLotto(count: Int): List<Set<Int>> {
+        val result = MutableList<Set<Int>>(count) { emptySet() }
+        repeat(count) {
+            result[it] = getManualLotto()
+        }
+        return result
+    }
+
+    private fun getManualLotto(): Set<Int> {
         return runCatching {
             println("수동으로 구매할 번호를 입력해 주세요.")
             getLottoNumbers()
@@ -61,13 +69,5 @@ class InputView : InputViewInterface {
             println(error)
             getManualLotto()
         }
-    }
-
-    override fun getManualLottos(count: Int): List<Set<Int>> {
-        val result = MutableList<Set<Int>>(count) { emptySet() }
-        repeat(count) {
-            result[it] = getManualLotto()
-        }
-        return result
     }
 }

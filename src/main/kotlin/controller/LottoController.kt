@@ -36,7 +36,7 @@ class LottoController(
         return runCatching {
             val manualCount = inputView.getManualLottoCount()
             LottoCount(count - manualCount)
-            val numbers = inputView.getManualLottos(manualCount)
+            val numbers = inputView.getManualLotto(manualCount)
             lottoSeller.sellManualLottos(numbers)
         }.getOrElse { error ->
             println(error.message)
