@@ -44,27 +44,34 @@ class LottoController {
     }
 
     private fun askWinningLotto(): WinningLotto {
-        OutputView.printMessage(WINNING_LOTTO_REQUEST_MESSAGE)
-        val winningNumbers =
-            ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
-                InputView::readNumbers,
-                Lotto::create,
-            )
-        OutputView.printMessage(BONUS_NUMBER_REQUEST_MESSAGE)
-        var bonusNumber = ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
-            InputView::readNumber,
-            LottoNumber::valueOf,
-        )
+        val winningNumbers = askWinningNumbers()
+        var bonusNumber = askBonusNumber()
         while (true) {
             kotlin.runCatching { return WinningLotto(winningNumbers, bonusNumber) }
                 .onFailure {
                     OutputView.printErrorMessage(it)
                     bonusNumber = ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
                         InputView::readNumber,
-                        LottoNumber::valueOf,
+                        LottoNumber::valueOf
                     )
                 }
         }
+    }
+
+    private fun askWinningNumbers(): Lotto {
+        OutputView.printMessage(WINNING_LOTTO_REQUEST_MESSAGE)
+        return ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
+            InputView::readNumbers,
+            Lotto::create,
+        )
+    }
+
+    private fun askBonusNumber(): LottoNumber {
+        OutputView.printMessage(BONUS_NUMBER_REQUEST_MESSAGE)
+        return ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
+            InputView::readNumber,
+            LottoNumber::valueOf,
+        )
     }
 
     companion object {
