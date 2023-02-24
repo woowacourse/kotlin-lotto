@@ -1,10 +1,15 @@
 package domain
 
-class Lotto constructor(val numbers: Set<LottoNumber>) {
+class Lotto constructor(numbers: Set<LottoNumber>) {
+    private val _numbers = numbers.toSet()
+    val numbers
+        get() = _numbers.toSet()
 
     init {
         require(numbers.size == LOTTO_SIZE) { ERROR_LOTTO_SIZE.format(numbers.size) }
     }
+
+    constructor(vararg number: Int) : this(number.map(LottoNumber::from).toSet())
 
     fun matchResult(winningNumber: WinningLotto): Rank =
         Rank.valueOf(matchNumbers(winningNumber.lotto), matchBonusNumber(winningNumber.bonusNumber))
