@@ -18,34 +18,51 @@ class LottoController {
 
     private fun askAmount(): Money {
         OutputView.printMessage(PURCHASE_AMOUNT_REQUEST_MESSAGE)
-        return InputValueConverter.convert(InputView::readNumber, ::Money)
+        return ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(InputView::readNumber, ::Money)
     }
 
     private fun askManuallyLottoCountThatPurchasable(limitMoney: Money): Count {
         OutputView.printMessage(MANUALLY_LOTTO_COUNT_REQUEST_MESSAGE)
-        var count = InputValueConverter.convert(InputView::readNumber, ::Count)
+        var count =
+            ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(InputView::readNumber, ::Count)
         while (limitMoney < Money(LottoStore.LOTTO_PRICE) * count) {
             OutputView.printMessage(NOT_PURCHASABLE_MESSAGE)
-            count = InputValueConverter.convert(InputView::readNumber, ::Count)
+            count =
+                ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(InputView::readNumber, ::Count)
         }
         return count
     }
 
     private fun askManuallyLottos(count: Count): List<Lotto> {
         OutputView.printMessage(MANUALLY_LOTTO_REQUEST_MESSAGE)
-        return List(count.toInt()) { InputValueConverter.convert(InputView::readNumbers, Lotto::create) }
+        return List(count.toInt()) {
+            ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
+                InputView::readNumbers,
+                Lotto::create,
+            )
+        }
     }
 
     private fun askWinningLotto(): WinningLotto {
         OutputView.printMessage(WINNING_LOTTO_REQUEST_MESSAGE)
-        val winningNumbers = InputValueConverter.convert(InputView::readNumbers, Lotto::create)
+        val winningNumbers =
+            ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
+                InputView::readNumbers,
+                Lotto::create,
+            )
         OutputView.printMessage(BONUS_NUMBER_REQUEST_MESSAGE)
-        var bonusNumber = InputValueConverter.convert(InputView::readNumber, LottoNumber::valueOf)
+        var bonusNumber = ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
+            InputView::readNumber,
+            LottoNumber::valueOf,
+        )
         while (true) {
             kotlin.runCatching { return WinningLotto(winningNumbers, bonusNumber) }
                 .onFailure {
                     OutputView.printErrorMessage(it)
-                    bonusNumber = InputValueConverter.convert(InputView::readNumber, LottoNumber::valueOf)
+                    bonusNumber = ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
+                        InputView::readNumber,
+                        LottoNumber::valueOf,
+                    )
                 }
         }
     }
