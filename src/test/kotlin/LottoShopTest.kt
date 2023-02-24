@@ -1,4 +1,5 @@
 import domain.model.PurchaseMoney
+import domain.model.lotto.Lotto
 import domain.model.lotto.LottoShop
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -20,5 +21,12 @@ class LottoShopTest {
             LottoShop(PurchaseMoney(1000), -1)
         }
         assertThat(errorMessage.message).isEqualTo("[ERROR] 음수일 수 없습니다.")
+    }
+
+    @Test
+    fun `수동 로또를 구매한다`() {
+        val lottoShop = LottoShop(PurchaseMoney(1000), 1)
+        val lotto = lottoShop.purchaseManualLotto(listOf(1, 2, 3, 4, 5, 6))
+        assertThat(lotto).isEqualTo(Lotto.create(listOf(1, 2, 3, 4, 5, 6)))
     }
 }
