@@ -1,11 +1,13 @@
 package domain
 
 @JvmInline
-value class Count(val value: Int) {
+value class Count(private val value: Int) {
 
     init {
         require(value in MINIMUM_COUNT..MAXIMUM_COUNT) { ERROR_COUNT_RANGE }
     }
+
+    fun toInt() = value
 
     companion object {
         private const val MINIMUM_COUNT = 0

@@ -8,7 +8,7 @@ value class Money(private val amount: Int) : Comparable<Money> {
     }
 
     operator fun div(money: Money) = this.amount / money.amount
-    operator fun times(count: Count) = Money(this.amount * count.value)
+    operator fun times(count: Count) = Money(this.amount * count.toInt())
     operator fun minus(money: Money) = Money(this.amount - money.amount)
     override fun compareTo(other: Money): Int = this.amount - other.amount
 

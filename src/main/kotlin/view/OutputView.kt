@@ -9,7 +9,7 @@ import kotlin.math.floor
 object OutputView {
 
     fun outputLottos(manuallyPurchaseCount: Count, lottos: List<Lotto>) {
-        println("\n수동으로 ${manuallyPurchaseCount.value}장, 자동으로 ${lottos.size - manuallyPurchaseCount.value}개를 구매했습니다.")
+        println("\n수동으로 ${manuallyPurchaseCount.toInt()}장, 자동으로 ${lottos.size - manuallyPurchaseCount.toInt()}개를 구매했습니다.")
         lottos.forEach { println(it) }
     }
 

@@ -10,6 +10,6 @@ class LottoFactoryTest {
         val count = Count(10)
         val result = LottoFactory.create(count)
 
-        assertThat(result).hasSize(count.value)
+        assertThat(result).hasSize(count.toInt())
     }
 }

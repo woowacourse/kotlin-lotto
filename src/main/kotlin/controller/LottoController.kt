@@ -33,7 +33,7 @@ class LottoController {
 
     private fun askManuallyLottos(count: Count): List<Lotto> {
         OutputView.printMessage(MANUALLY_LOTTO_REQUEST_MESSAGE)
-        return List(count.value) { InputValueConverter.convert(InputView::readNumbers, Lotto::create) }
+        return List(count.toInt()) { InputValueConverter.convert(InputView::readNumbers, Lotto::create) }
     }
 
     private fun askWinningLotto(): WinningLotto {
