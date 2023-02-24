@@ -22,7 +22,7 @@ class LottoGameTest {
     }
 
     @Test
-    fun `manualLottoList와 금액이 주어졌을 때, 구매금액 만큼의 PurchasedLotto를 반환한다`() {
+    fun `수동 구매할 로또와 금액이 주어졌을 때, 구매금액 만큼의 구매로또를 반환한다`() {
         val manualLottos = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }))
         val actual =
             lottoGame.purchaseLottos(Money(5000), manualLottos).size

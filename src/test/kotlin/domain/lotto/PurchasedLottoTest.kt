@@ -32,7 +32,7 @@ class PurchasedLottoTest {
 
     @ParameterizedTest
     @MethodSource("provideWinningLottoAndBonusNumberAndResultRank")
-    fun `우승 로또와 보너스 로또가 주어졌을 때, expected와 동일한 랭크를 반환한다`(
+    fun `우승 로또와 보너스 로또가 주어졌을 때, 구매한 로또 하나의 매칭결과 등수를 반환한다`(
         winningLotto: WinningLotto,
         bonusNumber: LottoNumber,
         expected: Rank

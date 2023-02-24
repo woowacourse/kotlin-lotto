@@ -23,7 +23,7 @@ class LottoMachineTest {
     }
 
     @Test
-    fun `Lotto list가 주어졌을 때, PurchasedLotto list가 반환된다`() {
+    fun `로또 리스트가 주어졌을 때, 구매한 로또 리스트가 반환된다`() {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
         val purchasedLotto = lottoMachine.purchaseManualLottos(listOf(lotto))
         assertTrue(purchasedLotto is List<PurchasedLotto>)
