@@ -7,6 +7,7 @@ import domain.model.PurchaseMoney
 import domain.model.WinningNumbers
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
+import domain.model.lotto.LottoShop
 import domain.validator.NumericValidator
 import view.InputView
 import view.ResultView
@@ -32,7 +33,9 @@ class LottoController(
     private fun purchaseLottos(purchaseMoney: PurchaseMoney): PurchasedLottos {
         val numberOfTotalLottos = purchaseMoney.money / LOTTO_PRICE
 
-        val numberOfManualLottos = repeatWithRunCatching { getNumberOfManualLottos(numberOfTotalLottos) }
+        val lottoShop = repeatWithRunCatching { LottoShop(purchaseMoney, InputView.requestNumberOfManualLottos()) }
+
+        val numberOfManualLottos = lottoShop.numberOfManualLottos
         val manualLottos = repeatWithRunCatching { purchaseManualLottos(numberOfManualLottos) }
 
         val autoLottoGenerator = LottoGenerator(numberOfLottos = numberOfTotalLottos - numberOfManualLottos)
@@ -41,15 +44,6 @@ class LottoController(
         ResultView.printPurchasedNumberOfLottos(numberOfManualLottos, numberOfTotalLottos - numberOfManualLottos)
 
         return PurchasedLottos(manualLottos + autoLottos)
-    }
-
-    private fun getNumberOfManualLottos(maximumQuantity: Int): Int {
-        val numberOfManualLottos = InputView.requestNumberOfManualLottos()
-
-        require(numberOfManualLottos <= maximumQuantity) { NUMBER_OF_MANUAL_LOTTOS_ERROR }
-        require(numberOfManualLottos >= 0) { NEGATIVE_NUMBER_ERROR }
-
-        return numberOfManualLottos
     }
 
     private fun purchaseManualLottos(numberOfManualLottos: Int): List<Lotto> {
@@ -101,7 +95,5 @@ class LottoController(
 
     companion object {
         private const val LOTTO_PRICE = 1000
-        private const val NUMBER_OF_MANUAL_LOTTOS_ERROR = "[ERROR] 구입한 로또 개수를 초과했습니다."
-        private const val NEGATIVE_NUMBER_ERROR = "[ERROR] 음수일 수 없습니다."
     }
 }
