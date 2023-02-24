@@ -1,5 +1,6 @@
 package domain.model.lotto
 
+import domain.LottoGenerator
 import domain.model.PurchaseMoney
 
 class LottoShop(
@@ -13,6 +14,10 @@ class LottoShop(
         require(numberOfManualLottos >= 0) {
             NEGATIVE_NUMBER_ERROR
         }
+    }
+
+    fun purchaseManualLotto(numbers: List<Int>): Lotto {
+        return LottoGenerator { numbers }.generateLotto()
     }
 
     companion object {
