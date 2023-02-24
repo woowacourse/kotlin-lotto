@@ -12,10 +12,12 @@ class WinLotto(private val winNumber: Lotto, private val bonus: LottoNumber) {
     }
 
     fun makeWinStatistics(purchasedLottos: PurchasedLottos): WinStatistics =
-        WinStatistics(purchasedLottos.value
-            .groupBy { determineRank(it) }
-            .map { it.key to it.value.count() }
-            .toMap())
+        WinStatistics(
+            purchasedLottos.value
+                .groupBy { determineRank(it) }
+                .map { it.key to it.value.count() }
+                .toMap()
+        )
 
     private fun determineRank(lotto: Lotto): Rank {
         val countOfMatch = lotto.matchLottoNumberCount(winNumber)

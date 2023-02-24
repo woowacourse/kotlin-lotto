@@ -18,8 +18,10 @@ class LottoWinStatisticsFormatter : WinStatisticsFormatter {
         if (rank == Rank.SECOND)
             additionalMessage = ", 보너스 볼 일치"
 
-        return ("${rank.countOfMatch}개 일치$additionalMessage(${rank.winningMoney.value}원) - ${
+        return (
+            "${rank.countOfMatch}개 일치$additionalMessage(${rank.winningMoney.value}원) - ${
             winStatistics.value.getOrDefault(rank, 0)
-        }개")
+            }개"
+            )
     }
 }

@@ -1,10 +1,10 @@
 package lotto
 
-import lotto.controller.World
+import lotto.controller.WorldController
 
 fun main() {
     runCatching {
-        val world = World()
+        val world = WorldController()
         world.processLotto()
     }.onFailure {
         println("[ERROR]: " + it.message)

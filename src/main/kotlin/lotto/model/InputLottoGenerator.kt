@@ -1,9 +1,10 @@
 package lotto.model
 
+import lotto.controller.ManualLottoController
 import lotto.entity.Lotto
 
-class InputLottoGenerator(val input: () -> Lotto) : LottoGenerator {
+class InputLottoGenerator(private val manualLottoController: ManualLottoController) : LottoGenerator {
     override fun generate(): Lotto {
-        return input()
+        return manualLottoController.readLotto()
     }
 }

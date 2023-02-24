@@ -12,9 +12,10 @@ import lotto.view.InputView
 import lotto.view.LottoWinStatisticsFormatter
 import lotto.view.OutputView
 
-class World {
+class WorldController {
     private val outputView = OutputView()
     private val inputView = InputView(outputView)
+    private val manualLottoController = ManualLottoController(inputView)
 
     private fun initWinLotto(): WinLotto {
         return tryAndRerun {
@@ -29,6 +30,7 @@ class World {
         val lottoManualCount = inputView.readLottoManualCount(OutputView.MESSAGE_LOTTO_MANUAL_COUNT)
         val lottoAutoCount = purchaseMoney.calculateAutoLottoCount(lottoManualCount)
 
+        outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
         val purchasedLottos = makePurchasedLottos(lottoManualCount, lottoAutoCount)
         outputView.gameResult(purchasedLottos, lottoManualCount, lottoAutoCount)
 
@@ -40,9 +42,8 @@ class World {
     }
 
     private fun makePurchasedLottos(lottoManualCount: LottoCount, lottoAutoCount: LottoCount): PurchasedLottos {
-        val manualLottoGenerator = InputLottoGenerator { inputView.readLotto() }
+        val manualLottoGenerator = InputLottoGenerator(manualLottoController)
         val autoLottoGenerator = RandomLottoGenerator()
-        outputView.printMessage(OutputView.MESSAGE_LOTTO_MANUAL)
         return LottoMachine(manualLottoGenerator, autoLottoGenerator).producePurchasedLottos(
             lottoManualCount, lottoAutoCount
         )
