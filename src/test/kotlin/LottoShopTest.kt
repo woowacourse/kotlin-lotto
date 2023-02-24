@@ -1,5 +1,6 @@
 import domain.model.PurchaseMoney
 import domain.model.lotto.Lotto
+import domain.model.lotto.LottoTicket
 import domain.model.lotto.LottoShop
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -26,8 +27,14 @@ class LottoShopTest {
     @Test
     fun `수동 로또를 구매한다`() {
         val lottoShop = LottoShop(PurchaseMoney(1000), 1)
-        val lotto = lottoShop.purchaseManualLotto(listOf(1, 2, 3, 4, 5, 6))
-        assertThat(lotto).isEqualTo(Lotto.create(listOf(1, 2, 3, 4, 5, 6)))
+        val lotto = lottoShop.purchaseManualLotto(
+            LottoTicket(listOf(1, 2, 3, 4, 5, 6))
+        )
+        assertThat(lotto).isEqualTo(
+            Lotto.create(
+                LottoTicket(listOf(1, 2, 3, 4, 5, 6))
+            )
+        )
     }
 
     @Test

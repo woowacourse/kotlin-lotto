@@ -1,10 +1,11 @@
 package domain
 
 import domain.model.lotto.Lotto
+import domain.model.lotto.LottoTicket
 
 class LottoGenerator(
     private val numberOfLottos: Int = 1,
-    private val numberGenerator: () -> List<Int> = {
+    private val numberGenerator: () -> LottoTicket = {
         (MINIMUM_NUMBER..MAXIMUM_NUMBER).drawLotteryNumbers()
     }
 ) {
@@ -21,6 +22,6 @@ class LottoGenerator(
         private const val MAXIMUM_NUMBER = 45
         private const val NUMBER_COUNT = 6
 
-        private fun IntRange.drawLotteryNumbers() = this.shuffled().take(NUMBER_COUNT).sorted()
+        private fun IntRange.drawLotteryNumbers() = LottoTicket(this.shuffled().take(NUMBER_COUNT).sorted())
     }
 }

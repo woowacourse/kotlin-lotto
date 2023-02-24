@@ -17,7 +17,7 @@ class LottoShop(
         }
     }
 
-    fun purchaseManualLotto(numbers: List<Int>): Lotto {
+    fun purchaseManualLotto(numbers: LottoTicket): Lotto {
         return LottoGenerator { numbers }.generateLottos().first()
     }
 

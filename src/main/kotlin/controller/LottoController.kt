@@ -6,6 +6,7 @@ import domain.model.PurchaseMoney
 import domain.model.WinningNumbers
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
+import domain.model.lotto.LottoTicket
 import domain.model.lotto.LottoShop
 import domain.validator.NumericValidator
 import view.InputView
@@ -44,7 +45,7 @@ class LottoController(
     private fun purchaseManualLottos(lottoShop: LottoShop): List<Lotto> {
         ResultView.printManualLottoRequest()
         return List(lottoShop.numberOfManualLottos) {
-            lottoShop.purchaseManualLotto(readManualNumbers())
+            lottoShop.purchaseManualLotto(LottoTicket(readManualNumbers()))
         }
     }
 
