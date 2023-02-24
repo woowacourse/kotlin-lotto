@@ -52,7 +52,7 @@ class LottoController {
                     OutputView.printErrorMessage(it)
                     bonusNumber = ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
                         InputView::readNumber,
-                        LottoNumber::valueOf
+                        LottoNumber::valueOf,
                     )
                 }
         }
