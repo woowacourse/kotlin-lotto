@@ -20,7 +20,8 @@ class LottoStatistics(private val winningLotto: WinningLotto) {
     fun calculateProfit(results: Map<Rank, Int>): Int {
         var sum = 0
         for (result in results) {
-            sum += Rank.values()[result.key.ordinal].winningMoney * result.value
+            val rank = result.key
+            sum += rank.winningMoney * result.value
         }
         return sum
     }
