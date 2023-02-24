@@ -1,6 +1,10 @@
 package domain
 
-class LottoResult(val result: Map<Rank, Int>) {
+class LottoResult(result: Map<Rank, Int>) {
+    private val _result = result.toMap()
+    val result: Map<Rank, Int>
+        get() = _result.toMap()
+
     init {
         require(Rank.values().all { rank -> result[rank] != null }) {
             ERROR_LOTTO_RESULT_IS_NOT_CONTAIN_ALL
