@@ -1,6 +1,7 @@
 package model
 
-class BonusNumber(private val lotto: Lotto, val bonusNumber: LottoNumber) {
+class WinningNumber(private val lotto: Lotto, val bonusNumber: LottoNumber) {
+    val winningNumbers: List<LottoNumber> = lotto.lottoNumbers.plus(bonusNumber)
 
     init {
         require(checkDuplicateNumber()) { DUPLICATE_BONUS_NUMBER }

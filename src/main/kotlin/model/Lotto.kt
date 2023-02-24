@@ -8,15 +8,12 @@ class Lotto(val lottoNumbers: List<LottoNumber>) {
 
     fun getNumbers() = lottoNumbers.map { lottoNumber -> lottoNumber.number }
 
-    fun getMatchOfNumber(winningNumber: Lotto): Int {
-        val winningNumbers: List<LottoNumber> = winningNumber.getNumbers()
-            .map { number ->
-                LottoNumber(number)
-            }
+    fun getMatchOfNumber(winningNumber: Lotto) = lottoNumbers.filter { lottoNumber ->
+        winningNumber.lottoNumbers.contains(lottoNumber)
+    }.size
 
-        return lottoNumbers.filter { lottoNumber ->
-            winningNumbers.contains(lottoNumber)
-        }.size
+    fun isMatchBonus2(winningNumber: WinningNumber): Boolean {
+        return lottoNumbers.contains(winningNumber.bonusNumber)
     }
 
     companion object {

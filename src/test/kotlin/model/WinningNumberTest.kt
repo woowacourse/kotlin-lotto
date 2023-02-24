@@ -3,7 +3,7 @@ package model
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class BonusNumberTest {
+class WinningNumberTest {
 
     @Test
     fun `보너스번호는 당첨번호와 중복되면 안된다`() {
@@ -21,7 +21,7 @@ class BonusNumberTest {
         val bonusNumber = LottoNumber(3)
         // when
         assertThrows<IllegalArgumentException> {
-            BonusNumber(lotto, bonusNumber)
+            WinningNumber(lotto, bonusNumber)
         }
     }
 }

@@ -1,13 +1,12 @@
-import domain.LottoAdministrator
 import domain.LottoMachine
 import domain.Rank
 import domain.Seller
-import model.BonusNumber
 import model.Count
 import model.Lotto
 import model.LottoNumber
 import model.LottoResult
 import model.Payment
+import model.WinningNumber
 import view.InputView
 import view.OutputView
 
@@ -15,7 +14,6 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
     private val lottoMachine: LottoMachine,
-    private val lottoAdministrator: LottoAdministrator,
     private val lottoResult: LottoResult,
 ) {
 
@@ -35,11 +33,11 @@ class LottoController(
         }
     }
 
-    private fun readyLottoResult(lotteries: List<Lotto>, winningNumber: Lotto, bonusNumber: BonusNumber) {
+    private fun readyLottoResult(lotteries: List<Lotto>, winningNumber: Lotto, bonusNumber: WinningNumber) {
         lotteries.forEach { lotto ->
             val matchOfCount = compareLottoNumber(lotto, winningNumber)
             val isMatchBonus = checkBonusNumber(lotto, bonusNumber)
-            val rank = lottoAdministrator.getRank(matchOfCount, isMatchBonus)
+            val rank = Rank.valueOf(matchOfCount, isMatchBonus)
 
             calculateLottoResult(rank)
         }
@@ -66,18 +64,14 @@ class LottoController(
         return Lotto(winningNumber)
     }
 
-    private fun getBonusNumber(winningNumber: Lotto): BonusNumber {
+    private fun getBonusNumber(winningNumber: Lotto): WinningNumber {
         outputView.printInputBonusNumber()
-        return BonusNumber(winningNumber, LottoNumber(inputView.inputBonusNumber()))
+        return WinningNumber(winningNumber, LottoNumber(inputView.inputBonusNumber()))
     }
 
-    private fun compareLottoNumber(lotto: Lotto, winningNumber: Lotto): Int {
-        return lottoAdministrator.getMatchOfNumber(lotto, winningNumber)
-    }
+    private fun compareLottoNumber(lotto: Lotto, winningNumber: Lotto) = lotto.getMatchOfNumber(winningNumber)
 
-    private fun checkBonusNumber(lotto: Lotto, bonusNumber: BonusNumber): Boolean {
-        return lottoAdministrator.isMatchBonus(lotto, bonusNumber)
-    }
+    private fun checkBonusNumber(lotto: Lotto, winningNumber: WinningNumber) = lotto.isMatchBonus2(winningNumber)
 
     private fun showLottoResult() {
         outputView.printLottoResult(lottoResult)
