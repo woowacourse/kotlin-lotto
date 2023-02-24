@@ -37,11 +37,11 @@ class LottoGeneratorTest {
     @Test
     fun `로또 1개를 발행한다`() {
         // given
-        val lottoGenerator = LottoGenerator() {
+        val lottoGenerator = LottoGenerator {
             listOf(1, 2, 3, 4, 5, 6)
         }
         // when
-        val lotto = lottoGenerator.generateLotto()
+        val lotto = lottoGenerator.generateLottos().first()
         // then
         assertThat(lotto).isEqualTo(
             Lotto.create(listOf(1, 2, 3, 4, 5, 6))
