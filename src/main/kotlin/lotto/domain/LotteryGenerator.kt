@@ -1,6 +1,6 @@
 package lotto.domain
 
-import lotto.domain.LotteryNumber.Companion.LOTTERY_NUMBER_UPPER_BOUNDARY
+import lotto.domain.LotteryNumber.Companion.UPPER_BOUNDARY
 
 class LotteryGenerator {
 
@@ -16,11 +16,11 @@ class LotteryGenerator {
 
     private fun generateLottery(): Lottery {
         var randomLotteryNumberCandidates: MutableList<LotteryNumber> =
-            MutableList(LOTTERY_NUMBER_UPPER_BOUNDARY) { i -> LotteryNumber(i + 1) }
+            MutableList(UPPER_BOUNDARY) { i -> LotteryNumber(i + 1) }
         randomLotteryNumberCandidates = randomLotteryNumberCandidates.shuffled().toMutableList()
         val randomLotteryNumbers = mutableListOf<LotteryNumber>()
 
-        repeat(Lottery.LOTTERY_NUMBER_SIZE) {
+        repeat(Lottery.NUMBER_SIZE) {
             randomLotteryNumbers.add(randomLotteryNumberCandidates[it])
             randomLotteryNumberCandidates.removeAt(0)
         }

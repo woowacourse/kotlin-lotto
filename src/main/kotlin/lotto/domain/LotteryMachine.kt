@@ -8,7 +8,7 @@ class LotteryMachine {
 
         repeat(lotteries.size) {
             val countOfMatch = lotteries[it].countMatches(winningLottery.lottery)
-            val matchBonus = lotteries[it].containBonusNumber(winningLottery.bonusNumber)
+            val matchBonus = lotteries[it].contains(winningLottery.bonusNumber)
             val rank = Rank.valueOf(countOfMatch, matchBonus)
             winningResult[rank] = winningResult[rank]!!.plus(1)
         }
