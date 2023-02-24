@@ -3,7 +3,7 @@ package domain.model.lotto
 import domain.model.LottoResult
 import domain.model.WinningNumbers
 
-class Lotto private constructor(val numbers: Set<LottoNumber>) {
+data class Lotto private constructor(val numbers: Set<LottoNumber>) {
     init {
         require(numbers.size == NUMBER_COUNT) {
             NUMBER_COUNT_ERROR
@@ -12,17 +12,6 @@ class Lotto private constructor(val numbers: Set<LottoNumber>) {
 
     fun getLottoResult(winningNumbers: WinningNumbers): LottoResult =
         winningNumbers.findLottoResult(numbers)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is Lotto) {
-            return this.numbers == other.numbers
-        }
-        return false
-    }
-
-    override fun hashCode(): Int {
-        return numbers.hashCode()
-    }
 
     companion object {
         private const val NUMBER_COUNT = 6
