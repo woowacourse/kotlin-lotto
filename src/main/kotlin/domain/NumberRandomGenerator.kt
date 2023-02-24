@@ -5,8 +5,6 @@ class NumberRandomGenerator : RandomGenerator {
         lottoNumbers.shuffled().take(6).toSet()
 
     companion object {
-        private const val MINIMUM_GENERATOR_RANGE = 1
-        private const val MAXIMUM_GENERATOR_RANGE = 45
-        private val lottoNumbers = (MINIMUM_GENERATOR_RANGE..MAXIMUM_GENERATOR_RANGE).toList()
+        private val lottoNumbers = (LottoNumber.MINIMUM_LOTTO_RANGE..LottoNumber.MAXIMUM_LOTTO_RANGE).toList()
     }
 }
