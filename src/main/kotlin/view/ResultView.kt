@@ -26,10 +26,6 @@ class ResultView : ResultViewInterface {
         println("${count}개를 구매했습니다.")
     }
 
-    override fun printLotto(lotto: Lotto) {
-        println(lotto.toList().sorted())
-    }
-
     override fun printTicket(manualTicket: Ticket, autoTicket: Ticket) {
         println("수동으로 ${manualTicket.size}장, 자동으로 ${autoTicket.size}장을 구매했습니다.")
         manualTicket.forEach { lotto ->
@@ -38,6 +34,10 @@ class ResultView : ResultViewInterface {
         autoTicket.forEach { lotto ->
             printLotto(lotto)
         }
+    }
+
+    private fun printLotto(lotto: Lotto) {
+        println(lotto.toList().sorted())
     }
 
     private fun isMatch(rank: Rank) = if (rank == Rank.SECOND) ", 보너스 볼 일치" else " "
