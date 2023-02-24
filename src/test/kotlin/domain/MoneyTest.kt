@@ -7,9 +7,9 @@ import org.junit.jupiter.params.provider.ValueSource
 import util.PREFIX
 
 class MoneyTest {
-    @ValueSource(ints = [-1000, -1, -15000, -1234])
+    @ValueSource(doubles = [-1000.0, -1.0, -15000.0, -1234.0])
     @ParameterizedTest
-    fun `금액은 음수일 수 없다`(receivedMoney: Int) {
+    fun `금액은 음수일 수 없다`(receivedMoney: Double) {
         // given
 
         // when

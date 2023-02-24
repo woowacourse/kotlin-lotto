@@ -25,7 +25,7 @@ class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoB
     }
 
     private fun calculateEarningRate(spentMoney: Money): Double {
-        return getTotalIncome() / spentMoney
+        return (getTotalIncome() / spentMoney).toDouble()
     }
 
     override fun equals(other: Any?): Boolean {
