@@ -22,12 +22,9 @@ class LottoController(private val lottoFactory: LottoFactory) {
     private fun getPurchaseMoney(): PurchaseMoney = PurchaseMoney(InputView.getPurchaseMoney())
 
     private fun getLottoBunch(purchaseCount: Int): LottoBunch {
-        val lottoes = mutableListOf<Lotto>()
-        repeat(purchaseCount) {
-            lottoes.add(lottoFactory.createLotto())
-        }
-
-        val lottoBunch = LottoBunch(lottoes)
+        val lottoBunch = LottoBunch(
+            List(purchaseCount) { lottoFactory.createLotto() },
+        )
         OutputView.printPurchaseResult(lottoBunch, purchaseCount)
         return lottoBunch
     }
