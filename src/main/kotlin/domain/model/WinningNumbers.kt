@@ -23,7 +23,7 @@ class WinningNumbers(
         }
     }
 
-    fun getMatchCount(numbers: Set<LottoNumber>) =
+    fun getMatchCount(numbers: Set<LottoNumber>): Int =
         numbers.count { number ->
             catchNumbers.contains(number)
         }
