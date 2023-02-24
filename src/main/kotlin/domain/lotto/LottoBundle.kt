@@ -8,6 +8,7 @@ class LottoBundle(value: List<Lotto>) {
         .apply { addAll(value) }
     val lottos: List<Lotto> get() = _lottos
     val size: Int get() = lottos.size
+
     fun compareWithWinningNumbers(winningNumbers: WinningNumbers): List<Rank> {
         return lottos.map { winningNumbers.compareLotto(it) }
     }
