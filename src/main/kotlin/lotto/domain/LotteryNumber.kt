@@ -1,7 +1,5 @@
 package lotto.domain
 
-import java.lang.IllegalArgumentException
-
 class LotteryNumber private constructor(private val number: Int) {
     fun toInt(): Int {
         return number
@@ -15,7 +13,7 @@ class LotteryNumber private constructor(private val number: Int) {
             (LOTTERY_NUMBER_LOWER_BOUNDARY..LOTTERY_NUMBER_UPPER_BOUNDARY).associateWith(::LotteryNumber)
 
         fun from(number: Int): LotteryNumber {
-            return NUMBERS[number] ?: throw IllegalArgumentException(NUMBER_ERROR)
+            return requireNotNull(NUMBERS[number]) { NUMBER_ERROR }
         }
 
         fun all(): List<LotteryNumber> {
