@@ -18,9 +18,8 @@ class Controller(
 ) {
     fun run() {
         val purchase = getPurchase()
-        val lotteries = publishLotteries(purchase)
-        outputView.printLotteries(lotteries)
-        outputView.printInterval()
+
+        val lotteries = publishTickets(purchase)
 
         val winningLottery = getWinningLottery()
         outputView.printInterval()
@@ -32,11 +31,21 @@ class Controller(
     }
 
     private fun getPurchase(): PurchaseAmount {
-        return PurchaseAmount(inputView.readPurchaseAmount())
+        val amount = inputView.readPurchaseAmount()
+        outputView.printInterval()
+        return PurchaseAmount(amount)
     }
 
-    private fun publishLotteries(purchase: PurchaseAmount): List<Lottery> {
-        return LotteriesGenerator().generate(purchase.getPurchaseQuantity(), generator)
+    private fun publishTickets(purchase: PurchaseAmount): List<Lottery> {
+        val manualQuantity = inputView.readManualLotteryQuantity()
+        val autoQuantity = purchase.getAutoPurchaseQuantity(manualQuantity)
+        outputView.printInterval()
+
+        val autoTickets = LotteriesGenerator().generate(autoQuantity, generator)
+        val tickets = autoTickets
+        outputView.printLotteries(tickets)
+        outputView.printInterval()
+        return tickets
     }
 
     private fun getWinningLottery(): WinningLottery {
