@@ -10,8 +10,12 @@ class Payment(val amount: Long) {
         amount.toLongOrNull() ?: throw NumberFormatException("[Error] 1000 단위의 숫자로 값을 입력해주세요.")
     )
 
-    fun calculateLottoCount(): Int {
+    fun calculateMaxLottoCount(): Int {
         return (amount / LOTTO_PRICE).toInt()
+    }
+
+    fun calculateAutoLottoCount(maxLottoCount: Int, manualCount: Int): Int {
+        return maxLottoCount - manualCount
     }
 
     companion object {

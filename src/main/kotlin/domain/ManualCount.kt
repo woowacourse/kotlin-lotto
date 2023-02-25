@@ -9,8 +9,4 @@ class ManualCount(val count: Int, private val maxCount: Int) {
     constructor(count: String, maxCount: Int) : this(
         count.toIntOrNull() ?: throw NumberFormatException("[Error] 숫자로 입력해주세요."), maxCount
     )
-
-    fun calculateAutoLottoCount(): Int {
-        return maxCount - count
-    }
 }

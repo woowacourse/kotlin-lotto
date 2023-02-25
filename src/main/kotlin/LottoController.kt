@@ -15,9 +15,9 @@ class LottoController {
 
     fun startLottoGame() {
         val spendMoney: Payment = getMoney()
-        val maxLottoCount: Int = spendMoney.calculateLottoCount()
+        val maxLottoCount: Int = spendMoney.calculateMaxLottoCount()
         val manualCount: ManualCount = getManualCount(maxLottoCount)
-        val autoCount: Int = manualCount.calculateAutoLottoCount()
+        val autoCount: Int = spendMoney.calculateAutoLottoCount(maxLottoCount, manualCount.count)
         val lottoBundle = LottoBundle(getManualLottos(manualCount.count))
         lottoBundle.autoGenerate(autoCount, lottoGenerator)
         OutputView.printPurchasedLottoCount(manualCount.count, autoCount)

@@ -73,7 +73,7 @@ class LottoTest {
         val exception = assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
 
         // then
-        assertThat(exception.message).isEqualTo("[Error] 로또번호는 서로 다른 숫자 6개여야합니다.")
+        assertThat(exception.message).isEqualTo("[Error] 중복된 수가 있습니다.")
     }
 
     @Test
@@ -98,7 +98,7 @@ class LottoTest {
         val exception = assertThrows<NumberFormatException> { Lotto(lottoNumbers) }
 
         // then
-        assertThat(exception.message).isEqualTo("[Error] 숫자로만 입력해주세요.")
+        assertThat(exception.message).isEqualTo("[Error] 숫자로 입력해주세요.")
     }
 
     @Test
