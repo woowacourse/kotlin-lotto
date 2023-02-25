@@ -34,7 +34,7 @@ class OutputView : OutputViewInterface {
     override fun printStatistics(statisticsResult: LottoResult) {
         println(MATCH_RESULT)
         for (rank in Rank.values().take(5).reversed()) {
-            val rankCount = statisticsResult.result[rank]
+            val rankCount = statisticsResult[rank]
             println(PER_MATCH_RESULT.format(rank.countOfMatch, printBonus(rank), rank.winningMoney, rankCount))
         }
     }

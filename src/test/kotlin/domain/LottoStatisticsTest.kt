@@ -22,9 +22,9 @@ class LottoStatisticsTest {
         val lottoStatistics = LottoStatistics(winningLotto)
         val lottoResult: LottoResult = lottoStatistics.matchTicket(ticket)
 
-        assertThat(lottoResult.result[Rank.FIRST]).isEqualTo(2)
-        assertThat(lottoResult.result[Rank.SECOND]).isEqualTo(1)
-        assertThat(lottoResult.result[Rank.THIRD]).isEqualTo(1)
+        assertThat(lottoResult[Rank.FIRST]).isEqualTo(2)
+        assertThat(lottoResult[Rank.SECOND]).isEqualTo(1)
+        assertThat(lottoResult[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
