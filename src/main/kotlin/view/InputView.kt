@@ -1,6 +1,7 @@
 package view
 
 import domain.Lotto
+import domain.LottoNumber
 import domain.LottoPurchaseInfo
 import domain.PurchaseLottoMoney
 import domain.Ticket
@@ -9,13 +10,19 @@ import view.validator.Validator
 
 class InputView : InputViewInterface {
     override fun askMoney(): PurchaseLottoMoney? {
-        val number = Validator.validateConvertInt(readln()) ?: return null
-        return Validator.validateMakePurchaseLottoMoney(number)
+        val input = readln()
+        if (!Validator.validateConvertInt(input)) return null
+        val number = input.toInt()
+        if (!Validator.validateMakePurchaseLottoMoney(number)) return null
+        return PurchaseLottoMoney(number)
     }
 
     override fun askManualCount(purchaseLottoMoney: PurchaseLottoMoney): LottoPurchaseInfo? {
-        val number = Validator.validateConvertInt(readln()) ?: return null
-        return Validator.validateMakeLottoPurchaseInfo(purchaseLottoMoney, number)
+        val input = readln()
+        if (!Validator.validateConvertInt(input)) return null
+        val number = input.toInt()
+        if (!Validator.validateMakeLottoPurchaseInfo(purchaseLottoMoney, number)) return null
+        return LottoPurchaseInfo(purchaseLottoMoney, number)
     }
 
     override fun askManualNumbers(purchaseInfo: LottoPurchaseInfo): Ticket {
@@ -26,20 +33,30 @@ class InputView : InputViewInterface {
 
     private fun getManualNumber(): Lotto {
         while (true) {
-            val numbers = Validator.validateConvertToIntList(readln(), COMMA) ?: continue
-            return Validator.validateMakeLotto(numbers) ?: continue
+            val input = readln()
+            if (!Validator.validateConvertToIntList(input, COMMA)) continue
+            val numbers = input.split(COMMA).map { it.trim().toInt() }
+            if (!Validator.validateMakeLotto(numbers)) continue
+            return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
         }
     }
 
     override fun askWinningNumbers(): Lotto? {
-        val numbers = Validator.validateConvertToIntList(readln(), COMMA) ?: return null
-        return Validator.validateMakeLotto(numbers)
+        val input = readln()
+        if (!Validator.validateConvertToIntList(input, COMMA)) return null
+        val numbers = input.split(COMMA).map { it.trim().toInt() }
+        if (!Validator.validateMakeLotto(numbers)) return null
+        return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
     }
 
     override fun askBonusNumber(winningNumbers: Lotto): WinningLotto? {
-        val number = Validator.validateConvertInt(readln()) ?: return null
-        val bonusNumber = Validator.validateMakeLottoNumber(number) ?: return null
-        return Validator.validateMakeWinningLotto(winningNumbers, bonusNumber)
+        val input = readln()
+        if (!Validator.validateConvertInt(input)) return null
+        val number = input.toInt()
+        if (!Validator.validateMakeLottoNumber(number)) return null
+        val bonusNumber = LottoNumber.from(number)
+        if (!Validator.validateMakeWinningLotto(winningNumbers, bonusNumber)) return null
+        return WinningLotto(winningNumbers, bonusNumber)
     }
 
     companion object {

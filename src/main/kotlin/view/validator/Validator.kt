@@ -2,67 +2,67 @@ package view.validator
 
 import domain.Lotto
 import domain.LottoNumber
-import domain.LottoPurchaseInfo
 import domain.PurchaseLottoMoney
-import domain.WinningLotto
 
 object Validator {
-    fun validateConvertInt(input: String): Int? {
+    fun validateConvertInt(input: String): Boolean {
         val number = input.toIntOrNull()
-        if (number == null)
+        if (number == null) {
             println(ERROR_CONVERT_INT)
-        return number
+            return false
+        }
+        return true
     }
 
-    fun validateConvertToIntList(input: String, delimiter: String): List<Int>? {
+    fun validateConvertToIntList(input: String, delimiter: String): Boolean {
         val numbers = input.split(delimiter).map { it.trim().toIntOrNull() }
         if (numbers.contains(null)) {
             println(ERROR_CONVERT_INT_LIST.format(delimiter))
-            return null
+            return false
         }
-        return numbers.map { it!! }
+        return true
     }
 
-    fun validateMakePurchaseLottoMoney(money: Int): PurchaseLottoMoney? {
+    fun validateMakePurchaseLottoMoney(money: Int): Boolean {
         if (money < PurchaseLottoMoney.ONE_LOTTO_MONEY) {
             println(ERROR_MAKE_LOTTO_PURCHASE_MONEY)
-            return null
+            return false
         }
-        return PurchaseLottoMoney(money)
+        return true
     }
 
-    fun validateMakeLottoPurchaseInfo(purchaseLottoMoney: PurchaseLottoMoney, manualCount: Int): LottoPurchaseInfo? {
+    fun validateMakeLottoPurchaseInfo(purchaseLottoMoney: PurchaseLottoMoney, manualCount: Int): Boolean {
         if (purchaseLottoMoney.purchaseCount < manualCount || manualCount < 0) {
             println(ERROR_MAKE_LOTTO_PURCHASE_INFO)
-            return null
+            return false
         }
-        return LottoPurchaseInfo(purchaseLottoMoney, manualCount)
+        return true
     }
 
-    fun validateMakeLotto(numbers: List<Int>): Lotto? {
+    fun validateMakeLotto(numbers: List<Int>): Boolean {
         if (numbers.any { it !in LottoNumber.MINIMUM_LOTTO_RANGE..LottoNumber.MAXIMUM_LOTTO_RANGE }) {
             println(ERROR_MAKE_LOTTO_TO_RANGE)
-            return null
+            return false
         }
         if (numbers.distinct().size != Lotto.LOTTO_SIZE || numbers.size != Lotto.LOTTO_SIZE) {
             println(ERROR_MAKE_LOTTO_TO_SIZE)
-            return null
+            return false
         }
-        return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
+        return true
     }
 
-    fun validateMakeLottoNumber(number: Int): LottoNumber? {
-        if (number in LottoNumber.MINIMUM_LOTTO_RANGE..LottoNumber.MAXIMUM_LOTTO_RANGE) return LottoNumber.from(number)
+    fun validateMakeLottoNumber(number: Int): Boolean {
+        if (number in LottoNumber.MINIMUM_LOTTO_RANGE..LottoNumber.MAXIMUM_LOTTO_RANGE) return true
         println(ERROR_MAKE_LOTTO_NUMBER)
-        return null
+        return false
     }
 
-    fun validateMakeWinningLotto(winningNumbers: Lotto, bonusNumber: LottoNumber): WinningLotto? {
+    fun validateMakeWinningLotto(winningNumbers: Lotto, bonusNumber: LottoNumber): Boolean {
         if (winningNumbers.contains(bonusNumber)) {
             println(ERROR_MAKE_WINNING_LOTTO_TO_DISTINCT)
-            return null
+            return false
         }
-        return WinningLotto(winningNumbers, bonusNumber)
+        return true
     }
 
     private const val ERROR_CONVERT_INT = "[ERROR] 숫자로 다시 입력해주세요."
