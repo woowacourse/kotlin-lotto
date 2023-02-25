@@ -9,6 +9,8 @@ data class LotteryNumber(
 
     fun toInt(): Int = number
 
+    override fun toString(): String = number.toString()
+
     private fun checkNumberBoundary() {
         require(number in LOWER_BOUNDARY..UPPER_BOUNDARY) { ERROR_MESSAGE_BOUNDARY }
     }
