@@ -15,7 +15,7 @@ class PurchaseAmount(
 
     fun toInt(): Int = amount
 
-    fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
+    private fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
 
     private fun checkBoundary() {
         require(amount in PURCHASE_AMOUNT_LOWER_BOUNDARY..PURCHASE_AMOUNT_UPPER_BOUNDARY) {

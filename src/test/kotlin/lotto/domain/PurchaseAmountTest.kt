@@ -36,7 +36,7 @@ class PurchaseAmountTest {
 
     @ParameterizedTest
     @ValueSource(ints = [999, 900, 51000, 50001])
-    fun `구입금액이 1000원 이상이 아니고 5만원을 초과하면 에러가 발생한다`(amount: Int) {
+    fun `구입금액이 1000원 이하이고 5만원을 초과하면 에러가 발생한다`(amount: Int) {
         assertThrows<IllegalArgumentException> {
             PurchaseAmount(amount, 0)
         }
