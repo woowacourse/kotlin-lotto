@@ -14,37 +14,35 @@ class LottoController {
     private val lottoGenerator: LottoGenerator = RandomLottoGenerator()
 
     fun startLottoGame() {
-        val spendMoney: Payment = getMoney()
-        val maxLottoCount: Int = spendMoney.calculateMaxLottoCount()
+        val payment: Payment = getPayment()
+        val maxLottoCount: Int = payment.calculateMaxLottoCount()
         val manualCount: ManualCount = getManualCount(maxLottoCount)
-        val autoCount: Int = spendMoney.calculateAutoLottoCount(maxLottoCount, manualCount.count)
+        val autoCount: Int = payment.calculateAutoLottoCount(maxLottoCount, manualCount.count)
         val lottoBundle = LottoBundle(getManualLottos(manualCount.count))
         lottoBundle.autoGenerate(autoCount, lottoGenerator)
         OutputView.printPurchasedLottoCount(manualCount.count, autoCount)
         OutputView.printPurchasedLotto(lottoBundle)
-        produceResult(lottoBundle, spendMoney)
+        produceResult(lottoBundle, payment)
     }
 
-    private fun getMoney(): Payment {
-        while (true) {
-            OutputView.printRequestMoney()
-            val money = InputView.inputMoney()
-            var payment: Payment? = null
-            val result = kotlin.runCatching { payment = Payment(money) }
-            if (result.isSuccess) return payment!!
-            println(result.exceptionOrNull()?.message)
-        }
+    private fun getPayment(): Payment {
+        OutputView.printRequestMoney()
+        val money = InputView.inputMoney()
+        return runCatching { Payment(money) }
+            .getOrElse { error ->
+                println(error.message)
+                getPayment()
+            }
     }
 
     private fun getManualCount(maxCount: Int): ManualCount {
-        while (true) {
-            OutputView.printRequestManualCount()
-            val count = InputView.inputManualCount()
-            var manualCount: ManualCount? = null
-            val result = kotlin.runCatching { manualCount = ManualCount(count, maxCount) }
-            if (result.isSuccess) return manualCount!!
-            println(result.exceptionOrNull()?.message)
-        }
+        OutputView.printRequestManualCount()
+        val count = InputView.inputManualCount()
+        return runCatching { ManualCount(count, maxCount) }
+            .getOrElse { error ->
+                println(error.message)
+                getManualCount(maxCount)
+            }
     }
 
     private fun getManualLottos(manualCount: Int): MutableList<Lotto> {
@@ -57,13 +55,12 @@ class LottoController {
     }
 
     private fun getManualLotto(): Lotto {
-        while (true) {
-            val lotto: List<String> = InputView.inputManualLotto()
-            var manualLotto: Lotto? = null
-            val result = kotlin.runCatching { manualLotto = Lotto(lotto) }
-            if (result.isSuccess) return manualLotto!!
-            println(result.exceptionOrNull()?.message)
-        }
+        val lotto: List<String> = InputView.inputManualLotto()
+        return runCatching { Lotto(lotto) }
+            .getOrElse { error ->
+                println(error.message)
+                getManualLotto()
+            }
     }
 
     private fun produceResult(lottoBundle: LottoBundle, spendPayment: Payment) {
@@ -74,35 +71,32 @@ class LottoController {
     }
 
     private fun getWinningNumbers(): WinningNumbers {
-        while (true) {
-            val winningLotto = getWinningLotto()
-            val bonusNumber = getBonusNumber()
-            var winningNumbers: WinningNumbers? = null
-            val result = kotlin.runCatching { winningNumbers = WinningNumbers(winningLotto, bonusNumber) }
-            if (result.isSuccess) return winningNumbers!!
-            println(result.exceptionOrNull()?.message)
-        }
+        val winningLotto = getWinningLotto()
+        val bonusNumber = getBonusNumber()
+        return runCatching { WinningNumbers(winningLotto, bonusNumber) }
+            .getOrElse { error ->
+                println(error.message)
+                getWinningNumbers()
+            }
     }
 
     private fun getWinningLotto(): Lotto {
-        while (true) {
-            OutputView.printRequestWinningNumbers()
-            val winningNumbers: List<String> = InputView.inputWinningNumbers()
-            var lotto: Lotto? = null
-            val result = kotlin.runCatching { lotto = Lotto(winningNumbers) }
-            if (result.isSuccess) return lotto!!
-            println(result.exceptionOrNull()?.message)
-        }
+        OutputView.printRequestWinningNumbers()
+        val winningNumbers: List<String> = InputView.inputWinningNumbers()
+        return runCatching { Lotto(winningNumbers) }
+            .getOrElse { error ->
+                println(error.message)
+                getWinningLotto()
+            }
     }
 
     private fun getBonusNumber(): LottoNumber {
-        while (true) {
-            OutputView.printRequestBonusNumber()
-            val bonusNumber: String = InputView.inputBonusNumber()
-            var lottoNumber: LottoNumber? = null
-            val result = kotlin.runCatching { lottoNumber = LottoNumber.of(bonusNumber) }
-            if (result.isSuccess) return lottoNumber!!
-            println(result.exceptionOrNull()?.message)
-        }
+        OutputView.printRequestBonusNumber()
+        val bonusNumber: String = InputView.inputBonusNumber()
+        return runCatching { LottoNumber.of(bonusNumber) }
+            .getOrElse { error ->
+                println(error.message)
+                getBonusNumber()
+            }
     }
 }
