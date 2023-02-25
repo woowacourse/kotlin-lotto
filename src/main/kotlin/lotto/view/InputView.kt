@@ -6,7 +6,6 @@ class InputView {
             println(PURCHASE_AMOUNT_GUIDE)
             val amount = readInput().toIntOrNull()
             requireNotNull(amount) { PURCHASE_AMOUNT_TYPE_ERROR }
-            amount
         }.getOrElse {
             printError(it.message ?: "")
             readPurchaseAmount()
@@ -18,7 +17,6 @@ class InputView {
             println(MANUAL_LOTTERY_QUANTITY_GUIDE)
             val quantity = readInput().toIntOrNull()
             requireNotNull(quantity) { MANUAL_LOTTERY_QUANTITY_ERROR }
-            quantity
         }.getOrElse {
             printError(it.message ?: "")
             readManualLotteryQuantity()
@@ -58,7 +56,6 @@ class InputView {
             println(BONUS_NUMBERS_GUIDE)
             val number = readInput().toIntOrNull()
             requireNotNull(number) { BONUS_NUMBERS_TYPE_ERROR }
-            number
         }.getOrElse {
             printError(it.message ?: "")
             readBonusNumber()
