@@ -23,12 +23,11 @@ class LottoController(
         val ticket = makeTicket(money)
 
         val winningLotto = makeWinningLotto()
-        val lottoStatistics = LottoStatistics(winningLotto)
-        val result = lottoStatistics.compareTicket(ticket)
-        val profit = lottoStatistics.calculateProfit(result)
-        val profitRatio = lottoStatistics.calculateProfitRatio(profit, money)
+        val lottoStatistics = LottoStatistics(winningLotto, ticket)
 
-        resultView.printResult(result, profitRatio)
+        val winningCountBy = lottoStatistics.getWinningCountBy()
+        val profitRatio = lottoStatistics.calculateProfitRatio(money)
+        resultView.printResult(winningCountBy, profitRatio)
     }
 
     private fun makeManualTicket(count: Int): Ticket {
