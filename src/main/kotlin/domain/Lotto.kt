@@ -18,7 +18,7 @@ open class Lotto(val numbers: List<LottoNumber>) : List<LottoNumber> by numbers 
 
     companion object {
         const val LOTTO_NUMBERS_COUNT = 6
-        const val LOTTO_NUMBERS_COUNT_ERROR = "[ERROR] 로또의 번호가 6개가 아닙니다."
-        const val LOTTO_NUMBER_DUPLICATED_ERROR = "[ERROR] 중복된 로또 번호가 있습니다."
+        private const val LOTTO_NUMBERS_COUNT_ERROR = "[ERROR] 로또의 번호가 6개가 아닙니다."
+        private const val LOTTO_NUMBER_DUPLICATED_ERROR = "[ERROR] 중복된 로또 번호가 있습니다."
     }
 }

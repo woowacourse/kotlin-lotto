@@ -2,13 +2,7 @@ package domain
 
 class LottoGenerator() : LottoGeneratorInterface {
     override fun generateLotto(): Lotto {
-        val possibleLottoNumbers = (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER)
-        return Lotto(possibleLottoNumbers.shuffled().take(LOTTO_NUMBER_COUNT).sorted().map { LottoNumber(it) })
-    }
-
-    companion object {
-        private const val MINIMUM_LOTTO_NUMBER = 1
-        private const val MAXIMUM_LOTTO_NUMBER = 45
-        private const val LOTTO_NUMBER_COUNT = 6
+        val possibleLottoNumbers = (LottoNumber.MINIMUM_LOTTO_NUMBER..LottoNumber.MAXIMUM_LOTTO_NUMBER)
+        return Lotto(possibleLottoNumbers.shuffled().take(Lotto.LOTTO_NUMBERS_COUNT).sorted().map { LottoNumber(it) })
     }
 }
