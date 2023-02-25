@@ -1,28 +1,45 @@
 package domain
 
-class RankStatistics {
-    private val rankCount = HashMap<Rank, Int>()
+class RankStatistics(private val ranks: List<Rank>) {
+    private lateinit var _rankInformation: HashMap<Rank, Count>
+    val rankInformation: HashMap<Rank, Count>
+        get() = _rankInformation.deepCopy()
 
-    fun updateRankCount(rank: Rank) {
-        this.rankCount[rank] = (this.rankCount[rank] ?: INITIALIZE_TO_ZERO) + PLUS_ONE
+    init {
+        updateRankInformation()
+    }
+
+    private fun updateRankCount(rank: Rank) {
+        _rankInformation[rank] = (_rankInformation[rank] ?: Count(INITIALIZE_TO_ZERO)) + PLUS_ONE
+    }
+
+    private fun updateRankInformation() {
+        _rankInformation = hashMapOf()
+        ranks.forEach { rank ->
+            updateRankCount(rank)
+        }
     }
 
     fun getRankCount(rank: Rank): Int {
-        val count = runCatching { return this.rankCount.getValue(rank) }.getOrNull()
-        return count ?: INITIALIZE_TO_ZERO
+        val count = runCatching { return rankInformation.getValue(rank).value }.getOrNull()
+        return count ?: Count(INITIALIZE_TO_ZERO).value
     }
 
     fun getProfitRate(): Double {
         var profit = INITIALIZE_TO_DOUBLE_ZERO
-        var totalCount = INITIALIZE_TO_ZERO
-        this.rankCount.forEach { (rank, count) ->
-            profit += rank.winningMoney * count
-            totalCount += count
+        _rankInformation.forEach { (rank, count) ->
+            profit += rank.winningMoney * count.value
         }
-        return profit / (totalCount * ONE_LOTTO_PRICE)
+        return profit / (ranks.size * ONE_LOTTO_PRICE)
     }
 
-    fun isProfitable(profit: Double): Boolean = profit < MINIMUM_PROFITABLE_NUM
+    fun isProfitable(): Boolean = getProfitRate() < MINIMUM_PROFITABLE_NUM
+
+    fun HashMap<Rank, Count>.deepCopy(): HashMap<Rank, Count> {
+        val copy: HashMap<Rank, Count> = HashMap()
+        this.forEach { (key, value) -> copy[key] = value }
+        return copy
+    }
 
     companion object {
         const val INITIALIZE_TO_ZERO = 0

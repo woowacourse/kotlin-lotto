@@ -6,6 +6,10 @@ value class Count(val value: Int) {
         require(value >= MINIMUM_NON_NEGATIVE_NUMBER) { COUNT_NEGATIVE_ERROR_MESSAGE }
     }
 
+    operator fun plus(number: Int): Count {
+        return Count(this.value + number)
+    }
+
     companion object {
         const val COUNT_NEGATIVE_ERROR_MESSAGE = "[ERROR] 갯수는 음수가 될 수 없습니다."
         const val MINIMUM_NON_NEGATIVE_NUMBER = 0

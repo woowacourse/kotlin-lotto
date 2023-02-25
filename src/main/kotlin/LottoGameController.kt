@@ -15,14 +15,26 @@ class LottoGameController(
     private val lottoMachine: LottoMachine
 ) {
     fun run() {
+        val lottoCount = getLottoCount()
+        val lotteries = getLotteries(lottoCount)
+        val winningNumbers = getWinningNumber(getWinningLottoNumbers(), getBonusNumber())
+        val rankStatistics = getRankStatistics(lotteries, winningNumbers)
+        showRankResult(rankStatistics)
+        showProfitRateResult(rankStatistics)
+    }
+
+    private fun getLottoCount(): LottoCount {
         val totalLottoCount = getPaymentMoney().getTotalLottoCount()
         val lottoCount = getLottoCount(totalLottoCount)
         outputView.printLottoCountResult(lottoCount)
+        return lottoCount
+    }
+
+    private fun getLotteries(lottoCount: LottoCount): List<Lotto> {
         val manualLotteries = getManualLotteries(lottoCount.manualCount)
         val automaticLotteries = lottoMachine.generateLotteries(lottoCount.automaticCount)
         printAutoLotteries(automaticLotteries)
-        val winningNumbers = getWinningNumber(getWinningLottoNumbers(), getBonusNumber())
-        showResult(getRankStatistics(manualLotteries, automaticLotteries, winningNumbers))
+        return manualLotteries + automaticLotteries
     }
 
     private fun getPaymentMoney(): PaymentMoney {
@@ -57,31 +69,19 @@ class LottoGameController(
         outputView.printAutomaticLotteries(lotteries)
     }
 
-    private fun getRankStatistics(
-        manualLotteries: List<Lotto>,
-        autoLotteries: List<Lotto>,
-        winningNumber: WinningNumber
-    ): RankStatistics {
-        val rankStatistics = RankStatistics()
-        manualLotteries.forEach { lotto ->
-            val rank = winningNumber.getRank(lotto)
-            rankStatistics.updateRankCount(rank)
-        }
-        autoLotteries.forEach { lotto ->
-            val rank = winningNumber.getRank(lotto)
-            rankStatistics.updateRankCount(rank)
-        }
-        return rankStatistics
+    private fun getRankStatistics(lotteries: List<Lotto>, winningNumber: WinningNumber): RankStatistics {
+        return RankStatistics(lotteries.map { lotto ->
+            winningNumber.getRank(lotto)
+        })
     }
 
-    private fun showResult(rankStatistics: RankStatistics) {
+    private fun showRankResult(rankStatistics: RankStatistics) {
         outputView.printRankStatistics(rankStatistics)
-        getProfitRate(rankStatistics)
     }
 
-    private fun getProfitRate(rankStatistics: RankStatistics) {
+    private fun showProfitRateResult(rankStatistics: RankStatistics) {
         val profitRate = rankStatistics.getProfitRate()
-        val isLoss = rankStatistics.isProfitable(profitRate)
+        val isLoss = rankStatistics.isProfitable()
         outputView.printProfitRate(profitRate, isLoss)
     }
 }
