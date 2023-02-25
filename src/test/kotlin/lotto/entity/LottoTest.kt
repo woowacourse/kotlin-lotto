@@ -11,8 +11,8 @@ class LottoTest {
         val lotto = listOf(1, 2, 3, 4, 5, 6, 7)
 
         // when
-        var thrown = assertThrows<IllegalArgumentException> { Lotto(lotto) }
-        var except = String.format(Lotto.ERROR_MESSAGE_WIN_NUMBER_IS_SIX, lotto.size)
+        val thrown = assertThrows<IllegalArgumentException> { Lotto(lotto) }
+        val except = "로또 번호는 6개여야 합니다. 입력된 로또 번호 개수는 %d 입니다.".format(lotto.size)
 
         // then
         assertThat(thrown.message).isEqualTo(except)

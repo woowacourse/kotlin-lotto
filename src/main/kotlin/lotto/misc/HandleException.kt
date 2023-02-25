@@ -1,10 +1,10 @@
 package lotto.misc
 
-fun tryAndRerun(fn: () -> Any): Any {
-    return runCatching(fn).onSuccess {
+fun <T> tryAndRerun(target: () -> T): T {
+    return runCatching(target).onSuccess {
         return it
-    }.onFailure {
+    }.getOrElse {
         println("잘못된 입력 : " + it.message)
-        return tryAndRerun(fn)
+        return tryAndRerun(target)
     }
 }

@@ -1,40 +1,16 @@
 package lotto.model
 
-import lotto.entity.Lotto
-import lotto.entity.LottoNumber
-import lotto.entity.WinLotto
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
-internal class RankTest {
-    @Test
-    fun `번호가 5개 일치하고, 보너스 번호가 일치하면 2등이다`() {
-        // given
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val winNumber = Lotto(listOf(1, 2, 3, 4, 5, 7))
-        val bonus = LottoNumber.from(6)
-        val winLotto = WinLotto(winNumber, bonus)
+class RankTest {
 
-        // when
-        val determine = Rank.determine(lotto, winLotto)
-        val except = Rank.SECOND
+    @CsvSource(value = ["6,false,FIRST", "5,true,SECOND", "5,false,THIRD", "4,true,FOURTH", "3,false,FIFTH", "2,true,MISS"])
+    @ParameterizedTest
+    fun `일치하는 번호 개수와 보너스 번호 일치 여부로 등수 검사`(countOfMatch: Int, isMatchBonus: Boolean, except: Rank) {
+        val actual = Rank.determineAll(countOfMatch, isMatchBonus)
 
-        // then
-        assertThat(determine).isEqualTo(except)
-    }
-
-    @Test
-    fun `번호가 4개 일치하면 4등이다`() {
-        // given
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val winNumber = Lotto(listOf(1, 2, 3, 4, 7, 8))
-        val bonus = LottoNumber.from(6)
-        val winLotto = WinLotto(winNumber, bonus)
-        // when
-        val determine = Rank.determine(lotto, winLotto)
-        val except = Rank.FOURTH
-
-        // then
-        assertThat(determine).isEqualTo(except)
+        assertThat(except).isEqualTo(actual)
     }
 }

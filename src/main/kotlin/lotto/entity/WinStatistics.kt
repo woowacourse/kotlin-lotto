@@ -2,9 +2,10 @@ package lotto.entity
 
 import lotto.model.Rank
 
-class WinStatistics private constructor(val value: List<Rank>) {
-    companion object {
-        fun from(lottoGame: LottoGame, winLotto: WinLotto): WinStatistics =
-            WinStatistics(lottoGame.value.map { Rank.determine(it, winLotto) })
-    }
+class WinStatistics(val value: Map<Rank, Int>) {
+    fun calculateWinMoney(): Money =
+        Money(value.map { it.key.winningMoney.value * it.value }.sum())
+
+    fun calculateProfitRate(purchaseMoney: PurchaseMoney): ProfitRate =
+        ProfitRate(calculateWinMoney().value.toFloat() / purchaseMoney.value)
 }
