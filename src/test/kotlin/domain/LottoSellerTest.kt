@@ -12,8 +12,8 @@ class LottoSellerTest {
         val money = PurchaseLottoMoney(1 * 1000)
         val lottoSeller = LottoSeller(TestNumberGenerator())
         val lotto = lottoSeller.sellAutoTicket(money)
-        assertThat(lotto.lottos.size).isEqualTo(1)
-        assertThat(lotto.lottos[0].numbers).isEqualTo(Lotto(1, 2, 3, 4, 5, 6).numbers)
+        assertThat(lotto.size).isEqualTo(1)
+        assertThat(lotto[0].numbers).isEqualTo(Lotto(1, 2, 3, 4, 5, 6).numbers)
     }
 
     @Test
@@ -39,11 +39,11 @@ class LottoSellerTest {
             Lotto(21, 22, 23, 24, 25, 26)
         )
         val result: Ticket = lottoSeller.sellManualAndAuto(purchaseInfo, Ticket(requestManualNumbers))!!
-        assertThat(result.lottos.size).isEqualTo(4)
-        assertThat(result.lottos[0].numbers).containsAll(Lotto(11, 12, 13, 14, 15, 16).numbers)
-        assertThat(result.lottos[1].numbers).containsAll(Lotto(21, 22, 23, 24, 25, 26).numbers)
-        assertThat(result.lottos[2].numbers).containsAll(generator.pattern[0].map { LottoNumber.from(it) })
-        assertThat(result.lottos[3].numbers).containsAll(generator.pattern[1].map { LottoNumber.from(it) })
+        assertThat(result.size).isEqualTo(4)
+        assertThat(result[0].numbers).containsAll(Lotto(11, 12, 13, 14, 15, 16).numbers)
+        assertThat(result[1].numbers).containsAll(Lotto(21, 22, 23, 24, 25, 26).numbers)
+        assertThat(result[2].numbers).containsAll(generator.pattern[0].map { LottoNumber.from(it) })
+        assertThat(result[3].numbers).containsAll(generator.pattern[1].map { LottoNumber.from(it) })
     }
 
     @ParameterizedTest(name = "{0}개의 로또를 발급한다.")
