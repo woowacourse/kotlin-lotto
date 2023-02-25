@@ -10,7 +10,7 @@ class LottoMachineTest {
     @Test
     fun `자동로또 2개가 잘 생성되었는지 확인`() {
         val lottos = LottoMachine.generateAutoLottos(2, TestLottosGenerator())
-        assertThat(lottos.size).isEqualTo(2)
+        assertThat(lottos.lottos.size).isEqualTo(2)
     }
 
     @Test
@@ -19,8 +19,8 @@ class LottoMachineTest {
             listOf(intArrayOf(1, 2, 3, 4, 5, 6), intArrayOf(3, 4, 5, 6, 7, 8), intArrayOf(9, 10, 11, 12, 13, 14))
         val manualLottos = LottoMachine.generateManualLottos(numbers)
         assertAll({
-            assertThat(manualLottos.size).isEqualTo(3)
-            assertThat(manualLottos.toList().map { it.numbers.map { it.number } }).isEqualTo(
+            assertThat(manualLottos.lottos.size).isEqualTo(3)
+            assertThat(manualLottos.lottos.toList().map { it.numbers.map { it.number } }).isEqualTo(
                 listOf(
                     listOf(1, 2, 3, 4, 5, 6),
                     listOf(3, 4, 5, 6, 7, 8),

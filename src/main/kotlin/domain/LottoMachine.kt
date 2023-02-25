@@ -1,11 +1,11 @@
 package domain
 
 object LottoMachine {
-    fun generateAutoLottos(count: Int, lottoGenerator: LottoGenerator): List<Lotto> {
-        return List(count) { lottoGenerator.generateLotto() }
+    fun generateAutoLottos(count: Int, lottoGenerator: LottoGenerator): Lottos {
+        return Lottos(List(count) { lottoGenerator.generateLotto() })
     }
 
-    fun generateManualLottos(lottos: List<IntArray>): List<Lotto> {
-        return lottos.map { Lotto(*it) }
+    fun generateManualLottos(lottos: List<IntArray>): Lottos {
+        return Lottos(lottos.map { Lotto(*it) })
     }
 }

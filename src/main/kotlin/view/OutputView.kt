@@ -1,6 +1,7 @@
 package view
 
 import domain.Lotto
+import domain.Lottos
 import domain.Rank
 import domain.WinningResult
 
@@ -25,8 +26,8 @@ object OutputView {
     fun outputLottoSizeMessage(manualLottoCount: Int, autoLottoCount: Int) {
         println(OUTPUT_LOTTO_SIZE_MESSAGE.format(manualLottoCount, autoLottoCount))
     }
-    fun outputLottos(lottos: List<Lotto>) {
-        println(StringBuilder().getLottos(lottos))
+    fun outputLottos(lottos: Lottos) {
+        println(StringBuilder().getLottos(lottos.lottos))
     }
 
     private fun StringBuilder.getLottos(lottos: List<Lotto>): String {

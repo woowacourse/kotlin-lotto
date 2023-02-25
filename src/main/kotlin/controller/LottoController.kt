@@ -14,7 +14,7 @@ class LottoController {
         OutputView.outputYield(winningResult.calculateYield(money))
     }
 
-    private fun getWinningResult(lottos: List<Lotto>): WinningResult {
+    private fun getWinningResult(lottos: Lottos): WinningResult {
         OutputView.outputLottos(lottos)
         val winningLotto =
             WinningLotto(askWinningLotto(InputView.inputWinningLotto()), askBonusNumber(InputView.inputBonusNumber()))
@@ -28,7 +28,7 @@ class LottoController {
             .getOrNull() ?: askMoney()
     }
 
-    private fun buyLottos(money: Money): List<Lotto> {
+    private fun buyLottos(money: Money): Lottos {
         val manualLottoCount = InputView.inputManualLottoCount()
         val manualLottos = askManualLottos(manualLottoCount)
         val autoLottoCount = money.leftMoney(manualLottoCount).getLottoCount()
@@ -37,7 +37,7 @@ class LottoController {
         return manualLottos + autoLottos
     }
 
-    private fun askManualLottos(count: Int): List<Lotto> {
+    private fun askManualLottos(count: Int): Lottos {
         return runCatching {
             LottoMachine.generateManualLottos(InputView.inputManualLottos(count))
         }.onFailure { OutputView.outputErrorMessage(it.message!!) }

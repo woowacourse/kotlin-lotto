@@ -32,10 +32,10 @@ class WinningLottoTest {
 
     @Test
     fun `당첨된 결과를 확인`() {
-        val lottos = listOf(
-            Lotto(1, 2, 3, 4, 5, 6),
-            Lotto(3, 4, 5, 6, 7, 8),
-            Lotto(3, 4, 5, 10, 11, 12),
+        val lottos = Lottos(
+            intArrayOf(1, 2, 3, 4, 5, 6),
+            intArrayOf(3, 4, 5, 6, 7, 8),
+            intArrayOf(3, 4, 5, 10, 11, 12),
         )
         val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(20))
         val actual = WinningResult(

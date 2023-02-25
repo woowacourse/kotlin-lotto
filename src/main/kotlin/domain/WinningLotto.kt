@@ -9,8 +9,8 @@ class WinningLotto(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
         return Rank.valueOf(lotto.countSameLottoNumber(winningLotto), lotto.containsNumber(bonusNumber))
     }
 
-    fun matchLottos(lottos: List<Lotto>): WinningResult {
-        return lottos.map { matchLotto(it) }
+    fun matchLottos(lottos: Lottos): WinningResult {
+        return lottos.lottos.map { matchLotto(it) }
             .groupingBy { it }
             .eachCount()
             .let { WinningResult(it) }
