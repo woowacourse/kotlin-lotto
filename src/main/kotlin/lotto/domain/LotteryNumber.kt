@@ -13,7 +13,10 @@ class LotteryNumber private constructor(private val number: Int) {
             (LOTTERY_NUMBER_LOWER_BOUNDARY..LOTTERY_NUMBER_UPPER_BOUNDARY).associateWith(::LotteryNumber)
 
         fun from(number: Int): LotteryNumber {
-            return requireNotNull(NUMBERS[number]) { NUMBER_ERROR }
+            return requireNotNull(NUMBERS[number]) {
+                "$NUMBER_ERROR\n" +
+                    "오류값 : $number"
+            }
         }
 
         fun all(): List<LotteryNumber> {

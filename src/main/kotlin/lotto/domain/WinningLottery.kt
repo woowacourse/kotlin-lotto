@@ -9,7 +9,10 @@ class WinningLottery(
     }
 
     private fun checkBonusNumberDuplicate() {
-        require(!lottery.numbers.contains(bonusNumber)) { BONUS_NUMBER_DUPLICATE_ERROR }
+        require(!lottery.numbers.contains(bonusNumber)) {
+            "$BONUS_NUMBER_DUPLICATE_ERROR\n" +
+                "오류값 : ${bonusNumber.toInt()}"
+        }
     }
 
     companion object {

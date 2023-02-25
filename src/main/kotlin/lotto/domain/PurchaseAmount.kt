@@ -10,17 +10,27 @@ class PurchaseAmount(
 
     private fun checkBoundary() {
         require(amount in PURCHASE_AMOUNT_LOWER_BOUNDARY..PURCHASE_AMOUNT_UPPER_BOUNDARY) {
-            PURCHASE_AMOUNT_BOUNDARY_ERROR_MESSAGE
+            "$PURCHASE_AMOUNT_BOUNDARY_ERROR_MESSAGE\n" +
+                "오류값 : $amount"
         }
     }
 
     private fun checkUnit() {
-        require(amount % PURCHASE_AMOUNT_UNIT == 0) { PURCHASE_AMOUNT_UNIT_ERROR_MESSAGE }
+        require(amount % PURCHASE_AMOUNT_UNIT == 0) {
+            "$PURCHASE_AMOUNT_UNIT_ERROR_MESSAGE\n" +
+                "오류값 : $amount"
+        }
     }
 
     fun checkQuantity(quantity: Int) {
-        require(quantity >= 0) { MANUAL_QUANTITY_ERROR_MESSAGE }
-        require(quantity <= getPurchaseQuantity()) { MANUAL_QUANTITY_OVERFLOW_ERROR_MESSAGE }
+        require(quantity >= 0) {
+            "$MANUAL_QUANTITY_ERROR_MESSAGE\n" +
+                "오류값 : $quantity"
+        }
+        require(quantity <= getPurchaseQuantity()) {
+            "$MANUAL_QUANTITY_OVERFLOW_ERROR_MESSAGE\n" +
+                "오류값 : $quantity"
+        }
     }
 
     fun getAutoPurchaseQuantity(quantity: Int): Int {
