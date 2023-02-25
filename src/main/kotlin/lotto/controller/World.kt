@@ -39,10 +39,10 @@ class World(
     }
 
     private fun initLottos(purchaseLottoCount: LottoCount, manualLottoCount: LottoCount): Lottos {
-        val store = LottoStore()
-        val autoLottoCount = purchaseLottoCount.calculateAutoLottoCount(manualLottoCount)
-        val manualLottos = store.buyManualLotto(manualLottoCount.value, *initManualLotto(manualLottoCount))
-        val autoLottos = store.buyAutoLotto(autoLottoCount.value)
+        val store = LottoStore(purchaseLottoCount)
+        val manualLottos = store.buyManualLotto(manualLottoCount, *initManualLotto(manualLottoCount))
+        val autoLottoCount = store.calculateAutoLottoCount(manualLottoCount)
+        val autoLottos = store.buyAutoLotto(autoLottoCount)
         val totalLottos = store.mergeLottos(manualLottos, autoLottos)
         outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, manualLottoCount.value, autoLottoCount.value)
         outputView.lottosResult(totalLottos)

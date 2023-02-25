@@ -1,6 +1,7 @@
 package lotto.model
 
 import lotto.entity.Lotto
+import lotto.entity.LottoCount
 import lotto.entity.LottoNumber
 import lotto.entity.PurchaseMoney
 import org.assertj.core.api.Assertions.assertThat
@@ -33,8 +34,9 @@ class LottoStoreTest {
                 LottoNumber(45)
             )
         )
-        val store = LottoStore()
-        val actual = store.buyManualLotto(purchaseMoney.getPurchaseLottoCount(), lottoA, lottoB)
+        val purchaseCount = LottoCount(purchaseMoney.getPurchaseLottoCount())
+        val store = LottoStore(purchaseCount)
+        val actual = store.buyManualLotto(purchaseCount, lottoA, lottoB)
         assertAll({
             assertThat(actual.value.size).isEqualTo(2)
             assertThat(actual.value[0]).isEqualTo(lottoA)
@@ -45,8 +47,9 @@ class LottoStoreTest {
     @Test
     fun `자동 로또 2개를 구매한다`() {
         val purchaseMoney = PurchaseMoney(2000)
-        val store = LottoStore(lottoGenerator)
-        val actual = store.buyAutoLotto(purchaseMoney.getPurchaseLottoCount())
+        val purchaseCount = LottoCount(purchaseMoney.getPurchaseLottoCount())
+        val store = LottoStore(purchaseCount, lottoGenerator)
+        val actual = store.buyAutoLotto(purchaseCount)
         assertAll({
             assertThat(actual.value.size).isEqualTo(2)
             assertThat(actual.value[0]).isEqualTo(
