@@ -4,11 +4,10 @@ class AutoLotteryTicketsMachine(private val quantity: Int) : LotteryTicketsMachi
     private val numbers = LotteryNumber.all()
 
     override fun generate(): List<Lottery> {
-        return List(quantity) { Lottery(numbers.shuffled().subList(FROM_INDEX, TO_INDEX)) }
+        return List(quantity) { Lottery(numbers.shuffled().take(NUMBER_SIZE)) }
     }
 
     companion object {
-        private const val FROM_INDEX = 0
-        private const val TO_INDEX = 6
+        private const val NUMBER_SIZE = 6
     }
 }
