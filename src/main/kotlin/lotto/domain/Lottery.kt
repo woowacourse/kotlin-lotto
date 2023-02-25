@@ -8,7 +8,7 @@ class Lottery(val numbers: List<LotteryNumber>) {
 
     constructor(vararg numbers: Int) : this(numbers.map { LotteryNumber.from(it) }.toList())
 
-    override fun toString(): String = numbers.toString()
+    override fun toString(): String = numbers.sortedBy { it.toInt() }.toString()
 
     fun countMatches(lottery: Lottery): Int = lottery.numbers.count { numbers.contains(it) }
 
