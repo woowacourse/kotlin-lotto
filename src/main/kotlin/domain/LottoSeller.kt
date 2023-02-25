@@ -4,7 +4,7 @@ import domain.PurchaseLottoMoney.Companion.ONE_LOTTO_MONEY
 
 class LottoSeller(private val numberGenerator: RandomGenerator = NumberRandomGenerator()) {
     private fun sellLotto(): Lotto {
-        return Lotto(numberGenerator.generate().map { LottoNumber.from(it) }.toSet())
+        return Lotto.create(numberGenerator.generate())
     }
 
     fun sellManualAndAuto(purchaseInfo: LottoPurchaseInfo, requestManualTicket: Ticket): Ticket? {
