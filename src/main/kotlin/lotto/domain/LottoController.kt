@@ -14,20 +14,14 @@ import lotto.view.OutputView.printPurchaseMessage
 import lotto.view.OutputView.printResult
 import lotto.view.OutputView.printUserLotto
 
-class LottoController(
-    private val userLottoGenerator: UserLottoGenerator = UserLottoGenerator(),
-) {
+class LottoController {
     fun start() {
         val money = getMoney()
         val numberOfLotto = money.getNumberOfLotto()
-        val manualLotto = getNumberOfManualLotto(numberOfLotto)
-        printPurchaseMessage(manualLotto, numberOfLotto)
-        val myLotto = userLottoGenerator.generateLotto(
-            getManualLotto(manualLotto.numberOfLotto),
-            numberOfLotto - manualLotto.numberOfLotto
-        )
+        val manualLotto = createManualLotto(numberOfLotto)
+        val myLotto = UserLottoGenerator().generateLotto(manualLotto, numberOfLotto)
         printUserLotto(myLotto)
-        wrapUpResult(myLotto, money)
+        makeWinningStats(myLotto, money)
     }
 
     private fun getMoney(): Money {
@@ -37,6 +31,13 @@ class LottoController(
         } ?: getMoney()
     }
 
+    private fun createManualLotto(numberOfLotto: Int): ManualLotto {
+        val manualLotto = getNumberOfManualLotto(numberOfLotto)
+        printPurchaseMessage(manualLotto, numberOfLotto)
+        getManualLotto(manualLotto)
+        return manualLotto
+    }
+
     private fun getNumberOfManualLotto(numberOfLotto: Int): ManualLotto {
         printMessage(INSERT_MANUAL_LOTTO_NUMBER)
         return validateInput {
@@ -44,18 +45,14 @@ class LottoController(
         } ?: getNumberOfManualLotto(numberOfLotto)
     }
 
-    private fun getManualLotto(numberOfLotto: Int): List<Lotto> {
-        val manualLotto = mutableListOf<Lotto>()
-        if (numberOfLotto == 0)
-            return manualLotto
+    private fun getManualLotto(manualLotto: ManualLotto) {
         printMessage(INSERT_MANUAL_LOTTO)
-        repeat(numberOfLotto) {
+        repeat(manualLotto.numberOfLotto) {
             manualLotto.add(getLottoNumber())
         }
-        return manualLotto
     }
 
-    private fun wrapUpResult(myLotto: UserLotto, money: Money) {
+    private fun makeWinningStats(myLotto: UserLotto, money: Money) {
         printMessage(INSERT_WINNING_NUMBER)
         val winningLotto = getWinningLotto(getLottoNumber())
         val ranks = myLotto.getWinningStatistics(winningLotto)
