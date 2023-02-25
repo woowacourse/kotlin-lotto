@@ -11,7 +11,7 @@ class LottoMakerTest {
     fun `사용자가 입력한 대로 수동 로또가 생성되는지 확인`() {
         val numbers = listOf(listOf(1, 2, 3, 4, 5, 6), listOf(2, 3, 4, 5, 6, 7), listOf(3, 4, 5, 6, 7, 8))
         val manualLottos = lottoMaker.makeManualLottos(numbers)
-        assertThat(manualLottos.map { it.numbers.map { it.getNumber() } }).isEqualTo(numbers)
+        assertThat(manualLottos.lottos.map { it.numbers.map { it.getNumber() } }).isEqualTo(numbers)
     }
 
     @Test

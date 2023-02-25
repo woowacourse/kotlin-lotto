@@ -36,8 +36,8 @@ class LottoGame {
             val manualLottos = lottoMaker.makeManualLottos(input.inputManualLottoNumber(count))
             val autoLottos = lottoMaker.makeAutoLottos(money.lottoCount() - count,)
             output.outputLottoSizeMessage(count, money.lottoCount() - count)
-            output.outputLottos(Lottos(manualLottos + autoLottos))
-            return Lottos(manualLottos + autoLottos)
+            output.outputLottos(manualLottos + autoLottos)
+            return manualLottos + autoLottos
         }.getOrDefault(makeLottos(money))
     }
 

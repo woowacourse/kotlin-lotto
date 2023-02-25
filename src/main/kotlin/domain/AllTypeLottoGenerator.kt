@@ -6,7 +6,7 @@ class AllTypeLottoGenerator : LottoGenerator {
     }
 
     override fun generateLottos(manualLottos: List<List<Int>>): List<Lotto> {
-        return Lottos(manualLottos.map { Lotto(*it.toIntArray()) })
+        return manualLottos.map { Lotto(*it.toIntArray()) }
     }
 
     private fun generateLotto(): Lotto {
