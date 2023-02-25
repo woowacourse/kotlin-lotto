@@ -2,7 +2,7 @@ package lotto.domain
 
 class PurchaseAmount(
     private val amount: Int,
-    private val autoNumber: Int
+    val autoNumber: Int
 ) {
 
     val manualNumber: Int = getPurchaseQuantity() - autoNumber

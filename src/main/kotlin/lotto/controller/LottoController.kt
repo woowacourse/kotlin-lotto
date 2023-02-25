@@ -14,13 +14,15 @@ class LottoController(
     private val machine: LotteryMachine = LotteryMachine()
 ) {
     fun run() {
-        val purchaseAmount: PurchaseAmount = inputView.readPurchaseAmount()
-        val lotteries: Lotteries = machine.generateLotteries(purchaseAmount)
+        val amount: PurchaseAmount = inputView.readPurchaseAmount()
+        val autoLotteries: Lotteries = inputView.readLotteries(amount.autoNumber)
+        val manualLotteries: Lotteries = machine.generateLotteries(amount.manualNumber)
+        val lotteries: Lotteries = Lotteries(autoLotteries.lotteries + manualLotteries.lotteries)
 
-        repeat(lotteries.size) { outputView.printMessage(lotteries.get(it).numbers.toString()) }
+        outputView.printPurchaseLotteries(amount, lotteries)
 
-        val winningLottery: WinningLottery = WinningLottery(inputView.readLottery(), inputView.readBonusNumber())
-        val result: WinningResult = machine.createWinningResult(winningLottery, lotteries, purchaseAmount)
+        val winningLottery: WinningLottery = WinningLottery(inputView.readWinningLottery(), inputView.readBonusNumber())
+        val result: WinningResult = machine.createWinningResult(winningLottery, lotteries, amount)
 
         outputView.printWinningStats(result)
     }

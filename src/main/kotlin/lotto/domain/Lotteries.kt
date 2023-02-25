@@ -1,7 +1,7 @@
 package lotto.domain
 
 class Lotteries(
-    private val lotteries: List<Lottery>
+    val lotteries: List<Lottery>
 ) {
     val size: Int
         get() = lotteries.size

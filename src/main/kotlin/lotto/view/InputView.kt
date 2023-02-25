@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.domain.Lotteries
 import lotto.domain.Lottery
 import lotto.domain.LotteryNumber
 import lotto.domain.PurchaseAmount
@@ -12,7 +13,7 @@ class InputView {
         return LotteryNumber(input.toInt())
     }
 
-    fun readLottery(): Lottery {
+    fun readWinningLottery(): Lottery {
         println()
         println(REQUIRE_MESSAGE_WINNING_LOTTERY)
         val input = readln()
@@ -20,17 +21,30 @@ class InputView {
         return Lottery(lotteryNumbers)
     }
 
+    fun readLotteries(count: Int): Lotteries {
+        println()
+        println(REQUIRE_MESSAGE_AUTO_LOTTERIES)
+
+        val lotteries: MutableList<Lottery> = mutableListOf()
+        repeat(count) {
+            val lottery: Lottery = Lottery(readln().split(", ").map { LotteryNumber(it.toInt()) })
+            lotteries.add(lottery)
+        }
+
+        return Lotteries(lotteries)
+    }
+
     fun readPurchaseAmount(): PurchaseAmount {
         println(REQUIRE_MESSAGE_PURCHASE_AMOUNT)
-        val input = readln()
-        val purchaseAmount = PurchaseAmount(input.toInt(), 0)
-        println(NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY.format(purchaseAmount.getPurchaseQuantity()))
-        return purchaseAmount
+        val amount = readln()
+        println()
+        println(REQUIRE_MESSAGE_AUTO_LOTTERIES_SIZE)
+        val autoNumber = readln()
+
+        return PurchaseAmount(amount.toInt(), autoNumber.toInt())
     }
 
     companion object {
-        private const val NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
-
         private const val REQUIRE_MESSAGE_AUTO_LOTTERIES = "수동으로 구매할 번호를 입력해 주세요."
         private const val REQUIRE_MESSAGE_AUTO_LOTTERIES_SIZE = "수동으로 구매할 로또 수를 입력해 주세요."
         private const val REQUIRE_MESSAGE_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."

@@ -16,9 +16,8 @@ class LotteryMachine {
         return WinningResult(winningResult, amount.toInt())
     }
 
-    fun generateLotteries(purchaseAmount: PurchaseAmount): Lotteries {
+    fun generateLotteries(count: Int): Lotteries {
         val generator: LotteryGenerator = LotteryGenerator()
-        val quantity: Int = purchaseAmount.getPurchaseQuantity()
-        return generator.generateLotteries(quantity)
+        return generator.generateLotteries(count)
     }
 }
