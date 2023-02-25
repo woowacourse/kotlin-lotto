@@ -49,8 +49,10 @@ class InputView {
     }
 
     fun getManualLottos(manualLottoCount: LottoCount): Lottos {
-        println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
         val lottos = mutableListOf<Lotto>()
+        if (manualLottoCount.value == 0)
+            return Lottos(lottos)
+        println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
         repeat(manualLottoCount.value) {
             lottos.add(getManualLotto())
         }
