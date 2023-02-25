@@ -2,7 +2,7 @@ package lotto.domain
 
 import lotto.model.Lotto
 import lotto.model.LottoNumber
-import lotto.model.ManualLotto
+import lotto.model.ManualLottos
 import lotto.model.Money
 import lotto.model.UserLotto
 import lotto.model.WinningLotto
@@ -31,21 +31,21 @@ class LottoController {
         } ?: getMoney()
     }
 
-    private fun createManualLotto(numberOfLotto: Int): ManualLotto {
-        val manualLotto = getNumberOfManualLotto(numberOfLotto)
+    private fun createManualLotto(numberOfLotto: Int): ManualLottos {
+        val manualLotto = makeManualLotto(numberOfLotto)
         printPurchaseMessage(manualLotto, numberOfLotto)
         getManualLotto(manualLotto)
         return manualLotto
     }
 
-    private fun getNumberOfManualLotto(numberOfLotto: Int): ManualLotto {
+    private fun makeManualLotto(numberOfLotto: Int): ManualLottos {
         printMessage(INSERT_MANUAL_LOTTO_NUMBER)
         return validateInput {
-            InputView.getNumber()?.let { ManualLotto(it).validateNumberOfLotto(numberOfLotto) }
-        } ?: getNumberOfManualLotto(numberOfLotto)
+            InputView.getNumber()?.let { ManualLottos(it).validateNumberOfLotto(numberOfLotto) }
+        } ?: makeManualLotto(numberOfLotto)
     }
 
-    private fun getManualLotto(manualLotto: ManualLotto) {
+    private fun getManualLotto(manualLotto: ManualLottos) {
         printMessage(INSERT_MANUAL_LOTTO)
         repeat(manualLotto.numberOfLotto) {
             manualLotto.add(getLottoNumber())

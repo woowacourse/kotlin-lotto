@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.model.ManualLotto
+import lotto.model.ManualLottos
 import lotto.model.Rank
 import lotto.model.UserLotto
 
@@ -18,7 +18,7 @@ object OutputView {
         println(msg)
     }
 
-    fun printPurchaseMessage(manualLotto: ManualLotto, numberOfLotto: Int) {
+    fun printPurchaseMessage(manualLotto: ManualLottos, numberOfLotto: Int) {
         val autoNumberOfLotto = numberOfLotto - manualLotto.numberOfLotto
         printMessage(PURCHASE.format(manualLotto.numberOfLotto, autoNumberOfLotto))
     }
