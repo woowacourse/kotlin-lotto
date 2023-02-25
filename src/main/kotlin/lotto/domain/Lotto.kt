@@ -14,7 +14,7 @@ class Lotto(val lottoNumbers: Set<LottoNumber>) {
         lottoNumbers.count { lottoNumber -> lottoNumber.value in lotto.lottoNumbers.map { it.value } }
 
     fun matchLottoNumber(bonusNumber: LottoNumber): Boolean =
-        bonusNumber.value in lottoNumbers.map { lottoNumber -> lottoNumber.value }
+        lottoNumbers.count { lottoNumber -> lottoNumber == bonusNumber } != 0
 
     companion object {
         const val LOTTO_SIZE = 6
