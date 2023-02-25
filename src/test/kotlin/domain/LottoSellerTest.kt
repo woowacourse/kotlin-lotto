@@ -7,7 +7,7 @@ class LottoSellerTest {
     @Test
     fun `입력받은 개수만큼 랜덤 로또를 발급한다`() {
         // given
-        val lottoMachine = LottoVendingMachine()
+        val lottoMachine = RandomLottoMachine()
         val lottoSeller = LottoSeller(lottoMachine)
 
         // when
@@ -20,7 +20,7 @@ class LottoSellerTest {
     @Test
     fun `입력받은 번호로 수동 로또를 발급한다`() {
         // given
-        val lottoMachine = LottoVendingMachine()
+        val lottoMachine = RandomLottoMachine()
         val lottoSeller = LottoSeller(lottoMachine)
         val lottoNumbers = listOf(
             setOf(1, 2, 3, 4, 5, 6),
@@ -32,5 +32,23 @@ class LottoSellerTest {
 
         // then
         assertThat(actual.size).isEqualTo(2)
+    }
+
+    @Test
+    fun `입력받은 번호로 수동 로또를 발급한다2`() {
+        // given
+        val lottoMachine = RandomLottoMachine()
+        val lottoSeller = LottoSeller(lottoMachine)
+        val lottoNumbers = listOf(
+            setOf(1, 2, 3, 4, 5, 6),
+            setOf(3, 4, 5, 6, 7, 8)
+        )
+
+        // when
+        val actual = lottoSeller.sellManualLottos(lottoNumbers)
+
+        // then
+        assertThat(actual[0]).hasSameElementsAs(Lotto(1, 2, 3, 4, 5, 6))
+        assertThat(actual[1]).hasSameElementsAs(Lotto(3, 4, 5, 6, 7, 8))
     }
 }
