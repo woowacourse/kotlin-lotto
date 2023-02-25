@@ -16,7 +16,7 @@ class LotteryMachineTest {
         val machine: LotteryMachine = LotteryMachine()
 
         assertDoesNotThrow {
-            machine.createWinningResult(winningLottery, lotteries, PurchaseAmount(1000))
+            machine.createWinningResult(winningLottery, lotteries, PurchaseAmount(1000, 0))
         }
     }
 }

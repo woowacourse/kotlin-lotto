@@ -1,7 +1,8 @@
 package lotto.domain
 
 class PurchaseAmount(
-    private val amount: Int
+    private val amount: Int,
+    private val autoNumber: Int
 ) {
     init {
         checkBoundary()

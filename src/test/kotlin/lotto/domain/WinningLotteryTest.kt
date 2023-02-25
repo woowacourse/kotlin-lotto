@@ -41,7 +41,7 @@ class WinningLotteryTest {
             LotteryNumber(9)
         )
         val lotteries = Lotteries(listOf(Lottery(1, 10, 20, 30, 40, 45)))
-        val expectedWinningResult = machine.createWinningResult(winningLottery, lotteries, PurchaseAmount(5000))
+        val expectedWinningResult = machine.createWinningResult(winningLottery, lotteries, PurchaseAmount(5000, 0))
 
         assertThat(expectedWinningResult.get(Rank.FIRST))
             .isEqualTo(expectedWinningResult[Rank.FIRST])

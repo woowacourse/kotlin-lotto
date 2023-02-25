@@ -23,14 +23,16 @@ class InputView {
     fun readPurchaseAmount(): PurchaseAmount {
         println(REQUIRE_MESSAGE_PURCHASE_AMOUNT)
         val input = readln()
-        val purchaseAmount = PurchaseAmount(input.toInt())
+        val purchaseAmount = PurchaseAmount(input.toInt(), 0)
         println(NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY.format(purchaseAmount.getPurchaseQuantity()))
         return purchaseAmount
     }
 
     companion object {
-        private const val NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY = "%d개를 구매했습니다."
+        private const val NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
 
+        private const val REQUIRE_MESSAGE_AUTO_LOTTERIES = "수동으로 구매할 번호를 입력해 주세요."
+        private const val REQUIRE_MESSAGE_AUTO_LOTTERIES_SIZE = "수동으로 구매할 로또 수를 입력해 주세요."
         private const val REQUIRE_MESSAGE_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
         private const val REQUIRE_MESSAGE_WINNING_LOTTERY = "지난 주 당첨 번호를 입력해 주세요."
         private const val REQUIRE_MESSAGE_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
