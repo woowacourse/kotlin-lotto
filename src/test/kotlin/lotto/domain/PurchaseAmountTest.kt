@@ -49,6 +49,16 @@ class PurchaseAmountTest {
         assertThrows<IllegalArgumentException> { PurchaseAmount(1001, 0) }
     }
 
+    @Test
+    fun `수동 로또의 수가 구입금액을 1000으로 나눈 수 이하라면 에러가 발생하지 않는다`() {
+        assertDoesNotThrow { PurchaseAmount(1000, 0) }
+    }
+
+    @Test
+    fun `수동 로또의 수가 구입금액을 1000으로 나눈 수를 초과하면 에러가 발생한다`() {
+        assertThrows<IllegalArgumentException> { PurchaseAmount(1000, 2) }
+    }
+
     @ParameterizedTest
     @CsvSource("1000, 1", "50000, 50")
     fun `구입한 로또 개수를 계산한다`(amount: Int, expected: Int) {
