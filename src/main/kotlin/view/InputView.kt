@@ -1,17 +1,13 @@
 package view
 
-import domain.lotto.Lotto
-import domain.lotto.number.LottoNumber
-import domain.money.Money
 import util.validator.InputValidator
 
 class InputView(
     private val inputValidator: InputValidator
 ) {
-    fun inputPurchasingMoney(): Money {
+    fun inputPurchasingMoney(): Int {
         println(PURCHASING_MONEY_INPUT_MESSAGE)
-        val input = readln().trim().toIntOrNull() ?: return inputPurchasingMoney()
-        return Money(input)
+        return readln().trim().toIntOrNull() ?: return inputPurchasingMoney()
     }
 
     fun inputManualLottoCount(): Int {
@@ -19,12 +15,12 @@ class InputView(
         return readln().trim().toIntOrNull() ?: inputManualLottoCount()
     }
 
-    fun inputManualLottos(manualLottoCount: Int): List<Lotto> {
+    fun inputManualLottos(manualLottoCount: Int): List<List<Int>> {
         println(PURCHASING_MANUAL_LOTTO)
-        val manualLottos = mutableListOf<Lotto>()
+        val manualLottos = mutableListOf<List<Int>>()
         repeat(manualLottoCount) {
             val manualLotto = inputLottoNumbers() ?: return inputManualLottos(manualLottoCount)
-            manualLottos.add(Lotto(manualLotto.map { LottoNumber(it) }))
+            manualLottos.add(manualLotto)
         }
         return manualLottos
     }
