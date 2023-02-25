@@ -5,10 +5,9 @@ import kotlin.math.floor
 class LottoStatistics(private val winningLotto: WinningLotto) {
 
     fun matchTicket(ticket: Ticket): LottoResult {
-        val result = Rank.values().associateWith { 0 }.toMutableMap()
-        ticket.lottos.forEach { lotto ->
-            val matchRank = winningLotto.matchResult(lotto)
-            result[matchRank] = (result[matchRank] ?: 0) + 1
+        val result = ticket.matchTicketCount(winningLotto) as MutableMap
+        Rank.values().filter { result[it] == null }.forEach {
+            result[it] = 0
         }
         return LottoResult(result)
     }

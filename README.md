@@ -25,6 +25,7 @@
 
 ## Ticket
 - [X] 로또들의 정보를 저장
+- [X] 로또들의 당첨 등수의 각 개수를 Map<Rank,Int>로 만들어서 반환
 
 ## WinningLotto
 - [X] 일급 컬렉션으로 사용
