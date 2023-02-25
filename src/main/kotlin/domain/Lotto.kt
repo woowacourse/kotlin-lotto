@@ -1,6 +1,6 @@
 package domain
 
-data class Lotto(private val numbers: Set<LottoNumber>) {
+data class Lotto(val numbers: Set<LottoNumber>) {
     init {
         require(numbers.size == LOTTO_SIZE) { INPUT_LOTTO_SIZE_ERROR_MESSAGE }
     }

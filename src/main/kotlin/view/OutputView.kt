@@ -41,7 +41,7 @@ object OutputView {
     }
 
     private fun outputLotto(lotto: Lotto): String {
-        return lotto.map { it.number }
+        return lotto.numbers.map { it.number }
             .joinToString(prefix = PREFIX_MARK, separator = SEPERATOR_MARK, postfix = POSTFIX_MARK)
     }
 
