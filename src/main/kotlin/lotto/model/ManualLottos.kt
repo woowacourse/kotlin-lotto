@@ -4,8 +4,11 @@ import lotto.view.ERROR_OUT_OF_LOTTO_NUMBER
 
 class ManualLottos(
     val numberOfLotto: Int,
-    val lotto: MutableList<Lotto> = mutableListOf(),
+    lotto: List<Lotto> = listOf(),
 ) {
+    private val _lotto: MutableList<Lotto> = lotto.toMutableList()
+    val lotto: List<Lotto>
+        get() = _lotto.toList()
 
     fun validateNumberOfLotto(totalNumber: Int): ManualLottos {
         require(totalNumber >= numberOfLotto) { ERROR_OUT_OF_LOTTO_NUMBER }
@@ -13,6 +16,6 @@ class ManualLottos(
     }
 
     fun add(input: Lotto) {
-        lotto.add(input)
+        _lotto.add(input)
     }
 }
