@@ -18,7 +18,7 @@ class OutputView : OutputViewInterface {
 
     override fun printTicket(purchaseInfo: LottoPurchaseInfo, ticket: Ticket) {
         println(PURCHASE_MANUAL_AND_AUTO_TICKET_COUNT.format(purchaseInfo.manualCount, purchaseInfo.autoCount))
-        ticket.lottos.forEach { lotto ->
+        ticket.forEach { lotto ->
             printLottoNumbers(lotto)
         }
     }

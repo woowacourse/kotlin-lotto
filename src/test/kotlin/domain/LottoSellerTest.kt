@@ -53,7 +53,7 @@ class LottoSellerTest {
         val generator = TestNumberGenerator()
         val lottoSeller = LottoSeller(generator)
         val ticket = lottoSeller.sellAutoTicket(money)
-        assertThat(ticket.lottos.map { lotto -> lotto.numbers }).isEqualTo(
+        assertThat(ticket.map { lotto -> lotto.numbers }).isEqualTo(
             generator.pattern.map { it.convertToLottoNumberSet() }.take(count)
         )
     }

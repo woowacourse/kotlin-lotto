@@ -1,10 +1,6 @@
 package domain
 
-class Ticket(lottos: List<Lotto>) {
-    private val _lottos = lottos.toList()
-    val lottos: List<Lotto>
-        get() = _lottos.toList()
-
+class Ticket(private val lottos: List<Lotto>) {
     val size: Int
         get() = lottos.size
 
@@ -13,6 +9,14 @@ class Ticket(lottos: List<Lotto>) {
             .map { winningLotto.matchResult(it) }
             .groupingBy { it }
             .eachCount()
+    }
+
+    fun <R> map(transform: (Lotto) -> R): List<R> {
+        return lottos.map(transform)
+    }
+
+    fun forEach(action: (Lotto) -> Unit) {
+        lottos.forEach(action)
     }
 
     fun copy() = Ticket(lottos.toList())
