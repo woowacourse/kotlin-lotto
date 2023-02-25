@@ -10,19 +10,22 @@ import lotto.model.generator.UserLottoGenerator
 import lotto.view.ERROR_INSERT_AGAIN
 import lotto.view.InputView
 import lotto.view.OutputView.printMessage
+import lotto.view.OutputView.printPurchaseMessage
 import lotto.view.OutputView.printResult
 import lotto.view.OutputView.printUserLotto
 
 class LottoController(
-    private val userLottoGenerator: UserLottoGenerator = UserLottoGenerator()
+    private val userLottoGenerator: UserLottoGenerator = UserLottoGenerator(),
 ) {
     fun start() {
         val money = getMoney()
         val numberOfLotto = money.getNumberOfLotto()
         val manualLotto = getNumberOfManualLotto(numberOfLotto)
-        val autoNumberOfLotto = numberOfLotto - manualLotto.numberOfLotto
-        printMessage(PURCHASE.format(manualLotto.numberOfLotto, autoNumberOfLotto))
-        val myLotto = userLottoGenerator.generateLotto(getManualLotto(manualLotto.numberOfLotto), autoNumberOfLotto)
+        printPurchaseMessage(manualLotto, numberOfLotto)
+        val myLotto = userLottoGenerator.generateLotto(
+            getManualLotto(manualLotto.numberOfLotto),
+            numberOfLotto - manualLotto.numberOfLotto
+        )
         printUserLotto(myLotto)
         wrapUpResult(myLotto, money)
     }
@@ -96,6 +99,5 @@ class LottoController(
         private const val INSERT_MANUAL_LOTTO = "\n수동으로 구매할 번호를 입력해 주세요."
         private const val INSERT_WINNING_NUMBER = "\n지난 주 당첨 번호를 입력해 주세요."
         private const val INSERT_BONUS_BALL = "보너스 볼을 입력해 주세요."
-        private const val PURCHASE = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
     }
 }

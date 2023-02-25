@@ -6,9 +6,9 @@ import lotto.model.UserLotto
 class UserLottoGenerator(
     private val generator: LottoNumberGenerator = LottoNumberGenerator(),
 ) {
-    fun generateLotto(manualLotto: List<Lotto>, numberOfLotto: Int): UserLotto {
+    fun generateLotto(manualLotto: List<Lotto>, numberOfAutoLotto: Int): UserLotto {
         val lotto = mutableListOf<Lotto>()
-        repeat(numberOfLotto) {
+        repeat(numberOfAutoLotto) {
             lotto.add(generator.generate())
         }
         return UserLotto(manualLotto + lotto)
