@@ -3,10 +3,9 @@ package lotto.controller
 import lotto.domain.AutoLotteryTicketsMachine
 import lotto.domain.Lottery
 import lotto.domain.LotteryNumber
+import lotto.domain.LotteryResult
 import lotto.domain.ManualLotteryTicketsMachine
 import lotto.domain.PurchaseAmount
-import lotto.domain.RankCounter
-import lotto.domain.ResultCalculator
 import lotto.domain.WinningLottery
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -99,9 +98,9 @@ object Controller {
     }
 
     private fun announceResult(tickets: List<Lottery>, lottery: WinningLottery, purchase: PurchaseAmount) {
-        val countResult = RankCounter.count(tickets, lottery)
-        val prize = ResultCalculator.calculateTotalPrize(countResult)
-        val profit = ResultCalculator.calculateProfit(purchase, prize)
-        outputView.printWinningResult(countResult, profit)
+        val ranks = LotteryResult.getRanks(tickets, lottery)
+        val prize = LotteryResult.getTotalPrize(ranks)
+        val profit = LotteryResult.getProfit(purchase, prize)
+        outputView.printWinningResult(ranks, profit)
     }
 }

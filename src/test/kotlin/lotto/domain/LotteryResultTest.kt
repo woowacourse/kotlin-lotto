@@ -5,7 +5,32 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class ResultCalculatorTest {
+private fun Lottery(vararg numbers: Int): Lottery {
+    return Lottery(numbers.map { LotteryNumber.from(it) })
+}
+
+class LotteryResultTest {
+    @Test
+    fun `로또를 받아 등수를 카운트한다`() {
+        val tickets = listOf(
+            Lottery(1, 2, 3, 4, 5, 6),
+            Lottery(1, 3, 4, 5, 6, 7),
+            Lottery(1, 3, 4, 5, 6, 8),
+            Lottery(1, 2, 3, 7, 8, 9),
+            Lottery(1, 2, 3, 9, 10, 11)
+        )
+        val winningLottery = WinningLottery(Lottery(1, 2, 3, 4, 5, 6), LotteryNumber.from(7))
+
+        val ranks = LotteryResult.getRanks(tickets, winningLottery)
+
+        assertThat(ranks[Rank.FIRST]).isEqualTo(1)
+        assertThat(ranks[Rank.SECOND]).isEqualTo(1)
+        assertThat(ranks[Rank.THIRD]).isEqualTo(1)
+        assertThat(ranks[Rank.FOURTH]).isEqualTo(0)
+        assertThat(ranks[Rank.FIFTH]).isEqualTo(2)
+        assertThat(ranks[Rank.MISS]).isEqualTo(0)
+    }
+
     @Test
     fun `총 상금을 계산한다`() {
         val countResult = mapOf(
@@ -17,7 +42,7 @@ class ResultCalculatorTest {
             Rank.MISS to 5
         )
 
-        val actual = ResultCalculator.calculateTotalPrize(countResult)
+        val actual = LotteryResult.getTotalPrize(countResult)
 
         assertThat(actual).isEqualTo(4_001_505_000)
     }
@@ -48,8 +73,8 @@ class ResultCalculatorTest {
             Rank.MISS to miss
         )
 
-        val prize = ResultCalculator.calculateTotalPrize(countResult)
-        val actual = ResultCalculator.calculateProfit(money, prize)
+        val prize = LotteryResult.getTotalPrize(countResult)
+        val actual = LotteryResult.getProfit(money, prize)
 
         assertThat(actual).isEqualTo(expected)
     }
