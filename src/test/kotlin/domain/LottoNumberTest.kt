@@ -10,7 +10,7 @@ class LottoNumberTest {
 
     @ValueSource(ints = [1, 2, 3, 4, 5])
     @ParameterizedTest
-    fun `create를 사용하여 인자로 들어간 int값으로 LottoNumber를 만든다`(input: Int) {
+    fun `이미 캐싱된 LottoNumber를 가져온다`(input: Int) {
         // given
 
         // when
@@ -35,7 +35,7 @@ class LottoNumberTest {
 
     @ValueSource(strings = ["", "a", " "])
     @ParameterizedTest
-    fun `숫자가 아닌 값이 들어올 때`(number: String) {
+    fun `숫자가 아닌 값이 들어올 때 NumberFormatException을 발생시킨다`(number: String) {
         // given
 
         // when
