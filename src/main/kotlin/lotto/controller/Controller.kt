@@ -11,10 +11,10 @@ import lotto.domain.WinningLottery
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class Controller(
-    private val inputView: InputView,
-    private val outputView: OutputView
-) {
+object Controller {
+    private val inputView = InputView()
+    private val outputView = OutputView()
+
     fun run() {
         val purchase = getPurchase()
         outputView.printInterval()
