@@ -20,7 +20,7 @@ class LottoMachineTest {
         val manualLottos = LottoMachine.generateManualLottos(numbers)
         assertAll({
             assertThat(manualLottos.size).isEqualTo(3)
-            assertThat(manualLottos.toList().map { it.toList().map { it.number } }).isEqualTo(
+            assertThat(manualLottos.toList().map { it.numbers.map { it.number } }).isEqualTo(
                 listOf(
                     listOf(1, 2, 3, 4, 5, 6),
                     listOf(3, 4, 5, 6, 7, 8),
