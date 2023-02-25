@@ -10,6 +10,8 @@ class Money(val price: Int) {
         return price / LOTTO_PRICE
     }
 
+    fun leftMoney(count: Int): Money = Money(price - LOTTO_PRICE * count)
+
     companion object {
         const val INPUT_MONEY_NEGATIVE_ERROR_MESSAGE = "금액은 양수여야 합니다."
         const val LOTTO_PRICE = 1000
