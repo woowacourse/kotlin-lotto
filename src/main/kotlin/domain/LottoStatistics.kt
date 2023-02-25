@@ -14,10 +14,7 @@ class LottoStatistics(private val winningLotto: WinningLotto) {
     }
 
     fun yield(lottoResult: LottoResult, purchaseLottoMoney: PurchaseLottoMoney): String {
-        var sum = 0.0
-        for ((rank, count) in lottoResult.result) {
-            sum += rank.winningMoney * count
-        }
+        val sum = lottoResult.sumWinningMoney()
         return (floor((sum / (purchaseLottoMoney.money)) * 100) / 100).toString()
     }
 }
