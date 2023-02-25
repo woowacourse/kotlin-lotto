@@ -64,11 +64,11 @@ class LottoGameController(
     ): RankStatistics {
         val rankStatistics = RankStatistics()
         manualLotteries.forEach { lotto ->
-            val rank = lotto.getRank(winningNumber)
+            val rank = winningNumber.getRank(lotto)
             rankStatistics.updateRankCount(rank)
         }
         autoLotteries.forEach { lotto ->
-            val rank = lotto.getRank(winningNumber)
+            val rank = winningNumber.getRank(lotto)
             rankStatistics.updateRankCount(rank)
         }
         return rankStatistics

@@ -6,22 +6,12 @@ open class Lotto(val numbers: List<LottoNumber>) : List<LottoNumber> by numbers 
         require(!isContainDuplicatedNumber()) { LOTTO_NUMBER_DUPLICATED_ERROR }
     }
 
-    fun isContainDuplicatedNumber(): Boolean {
+    private fun isContainDuplicatedNumber(): Boolean {
         return numbers.size != numbers.toSet().size
     }
 
     fun getCountOfMatch(lotto: Lotto): Int {
-        return numbers.count { lotto.numbers.contains(it) }
-    }
-
-    fun isContainLottoNumber(lottoNumber: LottoNumber): Boolean {
-        return numbers.contains(lottoNumber)
-    }
-
-    fun getRank(winningNumber: WinningNumber): Rank {
-        val countOfMatch = getCountOfMatch(winningNumber)
-        val matchBonus = isContainLottoNumber(winningNumber.bonusNumber)
-        return Rank.valueOf(countOfMatch, matchBonus)
+        return numbers.count { lotto.contains(it) }
     }
 
     companion object {
