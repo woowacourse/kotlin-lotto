@@ -1,7 +1,6 @@
 package domain
 
-class LottoBundle(manualLottos: MutableList<Lotto>) {
-    private val _lottos: MutableList<Lotto> = manualLottos
+class LottoBundle(private val _lottos: MutableList<Lotto>) {
     val lottos: List<Lotto>
         get() = _lottos.toList()
 
