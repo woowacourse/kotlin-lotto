@@ -9,11 +9,12 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     MISS(0, 0);
 
     companion object {
-        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank =
-            if (checkRankIsThird(countOfMatch, matchBonus)) Rank.THIRD else
-                Rank.values().find {
-                    it.countOfMatch == countOfMatch
-                } ?: Rank.MISS
+        fun valueOf(countOfMatch: Int, matchBonus: Boolean): Rank {
+            if (checkRankIsThird(countOfMatch, matchBonus)) {
+                return THIRD
+            }
+            return Rank.values().find { it.countOfMatch == countOfMatch } ?: Rank.MISS
+        }
 
         private fun checkRankIsThird(countOfMatch: Int, matchBonus: Boolean): Boolean =
             countOfMatch == Rank.THIRD.countOfMatch && !matchBonus

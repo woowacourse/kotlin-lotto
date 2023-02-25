@@ -7,15 +7,18 @@ import domain.money.Money
 import util.common.generateDistinctRandomNumbers
 
 class LottoMachine {
-    fun purchaseLottos(money: Money): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
+    fun purchaseManualLottos(manualLottos: List<Lotto>): List<PurchasedLotto> =
+        manualLottos.toList().map { PurchasedLotto(it) }
+
+    fun purchaseAutoLottos(money: Money): List<PurchasedLotto> = mutableListOf<PurchasedLotto>().apply {
         val lottoCount = money.divideByThousand()
 
         repeat(lottoCount) {
-            add(purchaseLotto())
+            add(purchaseAutoLotto())
         }
     }
 
-    private fun purchaseLotto(): PurchasedLotto =
+    private fun purchaseAutoLotto(): PurchasedLotto =
         PurchasedLotto(
             (
                 LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER

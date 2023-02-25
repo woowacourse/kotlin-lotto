@@ -1,14 +1,8 @@
 package util.validator
 
 class InputValidator {
-    fun validateNumeric(value: String): Int =
-        value.toIntOrNull() ?: throw IllegalArgumentException(NOT_NUMERIC_EXCEPTION_MESSAGE)
-
-    fun validateWinningNumbersIsNumeric(value: List<String>): List<Int> {
-        val winningNumbers = value.map { it.trim() }
-        winningNumbers.forEach { number -> validateNumeric(number) }
-
-        return winningNumbers.map { it.toInt() }
+    fun validateWinningNumbersIsNumeric(value: List<String>): List<Int>? {
+        return value.map { it.trim().toIntOrNull() ?: return null }
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package domain.game
 
+import domain.lotto.Lotto
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
@@ -10,7 +11,11 @@ import kotlin.math.floor
 class LottoGame(
     private val lottoMachine: LottoMachine
 ) {
-    fun purchaseLottos(money: Money): List<PurchasedLotto> = lottoMachine.purchaseLottos(money)
+
+    fun purchaseLottos(money: Money, manualLottos: List<Lotto>): List<PurchasedLotto> {
+        val remainMoney = money.getChangeByPurchasedLottos(manualLottos.size)
+        return lottoMachine.purchaseManualLottos(manualLottos) + lottoMachine.purchaseAutoLottos(remainMoney)
+    }
 
     fun matchLottos(
         purchasedLottos: List<PurchasedLotto>,
@@ -22,7 +27,7 @@ class LottoGame(
             val rank = it.matchLotto(winningLotto, bonusNumber)
             val originCount = matchResult.getOrDefault(rank, 0)
 
-            matchResult[rank] = originCount + 1
+            matchResult[rank] = originCount + MATCHING_POINT
         }
 
         return matchResult
@@ -40,5 +45,9 @@ class LottoGame(
             income += (rank.winningMoney * count)
         }
         return income
+    }
+
+    companion object {
+        private const val MATCHING_POINT = 1
     }
 }

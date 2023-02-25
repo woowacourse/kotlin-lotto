@@ -1,6 +1,7 @@
 package controller
 
 import domain.game.LottoGame
+import domain.lotto.Lotto
 import domain.lotto.PurchasedLotto
 import domain.lotto.WinningLotto
 import domain.lotto.number.LottoNumber
@@ -15,8 +16,11 @@ class LottoGameController(
 ) {
 
     fun startLottoGame() {
-        val purchasedMoney = inputView.inputPurchasingMoney()
-        val purchasedLottos = lottoGame.purchaseLottos(purchasedMoney)
+        val purchasedMoney = Money(inputView.inputPurchasingMoney())
+        val manualLottoCount = inputView.inputManualLottoCount()
+        val manualLottos = inputView.inputManualLottos(manualLottoCount)
+            .map { numbers -> Lotto(makeLottoNumbers(numbers)) }
+        val purchasedLottos = lottoGame.purchaseLottos(purchasedMoney, manualLottos)
         resultView.printPurchasedLottos(purchasedLottos)
         matchLottos(purchasedLottos, purchasedMoney)
     }
@@ -24,8 +28,12 @@ class LottoGameController(
     private fun matchLottos(purchasedLottos: List<PurchasedLotto>, purchasedMoney: Money) {
         val winningNumbers = inputView.inputLastWeekWinningNumbers()
         val bonusNumber = inputView.inputBonusBallNumber()
-        val winningLotto = WinningLotto(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))
+        val winningLotto = WinningLotto(makeLottoNumbers(winningNumbers), LottoNumber(bonusNumber))
         val matchResult = lottoGame.matchLottos(purchasedLottos, winningLotto, LottoNumber(bonusNumber))
         resultView.printWinningRate(matchResult, lottoGame.calculateIncomeRate(matchResult, purchasedMoney))
+    }
+
+    private fun makeLottoNumbers(primitiveLotto: List<Int>): List<LottoNumber> {
+        return primitiveLotto.map { LottoNumber(it) }
     }
 }
