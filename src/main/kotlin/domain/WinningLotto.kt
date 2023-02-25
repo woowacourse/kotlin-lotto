@@ -2,11 +2,11 @@ package domain
 
 class WinningLotto(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(!winningLotto.contains(bonusNumber)) { BONUS_NUMBER_OVERLAY_ERROR_MESSAGE }
+        require(!winningLotto.containsNumber(bonusNumber)) { BONUS_NUMBER_OVERLAY_ERROR_MESSAGE }
     }
 
     fun matchLotto(lotto: Lotto): Rank {
-        return Rank.valueOf(lotto.countSameLottoNumber(winningLotto), lotto.hasBonusNumber(bonusNumber))
+        return Rank.valueOf(lotto.countSameLottoNumber(winningLotto), lotto.containsNumber(bonusNumber))
     }
 
     fun matchLottos(lottos: List<Lotto>): WinningResult {

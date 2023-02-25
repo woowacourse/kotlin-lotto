@@ -11,7 +11,7 @@ data class Lotto(private val numbers: Set<LottoNumber>) {
         return numbers.count { lotto.numbers.contains(it) }
     }
 
-    fun hasBonusNumber(number: LottoNumber): Boolean {
+    fun containsNumber(number: LottoNumber): Boolean {
         return numbers.contains(number)
     }
 
