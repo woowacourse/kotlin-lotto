@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 
 class WinningLottoTest {
@@ -16,18 +15,12 @@ class WinningLottoTest {
         }
     }
 
-    @CsvSource(
-        value = ["1,2,3,7,8,9:20:FIFTH", "1,2,3,4,8,9:20:FOURTH", "1,2,3,4,5,9:20:THIRD", "1,2,3,4,5,9:6:SECOND", "1,2,3,4,5,6:20:FIRST"],
-        delimiter = ':',
-    )
+    @MethodSource("produceLotto")
     @ParameterizedTest
-    fun `생성된 로또가 당첨 로또와 보너스 번호를 비교해서 등수 확인`(lottoNumbers: String, bonus: Int, rank: String) {
+    fun `생성된 로또가 당첨 로또와 보너스 번호를 비교해서 등수 확인`(winningLotto: Lotto, bonus: LottoNumber, rank: Rank) {
         val lotto = Lotto(1, 2, 3, 4, 5, 6)
-        val winningLotto = Lotto(*lottoNumbers.split(",").map { it.toInt() }.toIntArray())
-        val bonusNumber = LottoNumber.from(bonus)
-
-        val actual = WinningLotto(winningLotto, bonusNumber).matchLotto(lotto)
-        assertThat(actual).isEqualTo(Rank.valueOf(rank))
+        val actual = WinningLotto(winningLotto, bonus).matchLotto(lotto)
+        assertThat(actual).isEqualTo(rank)
     }
 
     @Test
@@ -54,6 +47,17 @@ class WinningLottoTest {
             return listOf(
                 Arguments.of(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(6)),
                 Arguments.of(Lotto(1, 5, 10, 15, 20, 30), LottoNumber.from(15)),
+            )
+        }
+
+        @JvmStatic
+        fun produceLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(Lotto(1, 2, 3, 7, 8, 9), LottoNumber.from(20), Rank.FIFTH),
+                Arguments.of(Lotto(1, 2, 3, 4, 8, 9), LottoNumber.from(20), Rank.FOURTH),
+                Arguments.of(Lotto(1, 2, 3, 4, 5, 9), LottoNumber.from(20), Rank.THIRD),
+                Arguments.of(Lotto(1, 2, 3, 4, 5, 9), LottoNumber.from(6), Rank.SECOND),
+                Arguments.of(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(20), Rank.FIRST),
             )
         }
     }
