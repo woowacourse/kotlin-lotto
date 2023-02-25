@@ -34,7 +34,8 @@ class LottoController {
     private fun createManualLotto(numberOfLotto: Int): ManualLottos {
         val manualLotto = makeManualLotto(numberOfLotto)
         printPurchaseMessage(manualLotto, numberOfLotto)
-        addManualLottos(manualLotto)
+        printMessage(INSERT_MANUAL_LOTTO)
+        manualLotto.generateManualLotto { getLottoNumber() }
         return manualLotto
     }
 
@@ -43,13 +44,6 @@ class LottoController {
         return validateInput {
             InputView.getNumber()?.let { ManualLottos(it).validateNumberOfLotto(numberOfLotto) }
         } ?: makeManualLotto(numberOfLotto)
-    }
-
-    private fun addManualLottos(manualLotto: ManualLottos) {
-        printMessage(INSERT_MANUAL_LOTTO)
-        repeat(manualLotto.numberOfLotto) {
-            manualLotto.add(getLottoNumber())
-        }
     }
 
     private fun makeWinningStats(myLotto: UserLotto, money: Money) {

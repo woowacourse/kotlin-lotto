@@ -15,10 +15,12 @@ class ManualLottosTest {
     }
 
     @Test
-    fun `수동 로또를 받아 저장한다`() {
-        val input = Lotto(1, 2, 3, 4, 5, 6)
-        val manualLotto = ManualLottos(1)
-        manualLotto.add(input)
-        assertThat(manualLotto.lotto).isEqualTo(listOf(input))
+    fun `입력된 수동 로또를 저장한다`() {
+        val result = ManualLottos(2).generateManualLotto { getLottoNumber() }
+        assertThat(result.size).isEqualTo(2)
+    }
+
+    private fun getLottoNumber(): Lotto {
+        return Lotto(1, 2, 3, 4, 5, 6)
     }
 }
