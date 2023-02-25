@@ -1,8 +1,6 @@
-import domain.Lotto
-import domain.LottoNumber
-import domain.Rank
-import domain.WinningLotto
+import domain.* // ktlint-disable no-wildcard-imports
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -30,6 +28,24 @@ class WinningLottoTest {
 
         val actual = WinningLotto(winningLotto, bonusNumber).matchLotto(lotto)
         assertThat(actual).isEqualTo(Rank.valueOf(rank))
+    }
+
+    @Test
+    fun `당첨된 결과를 확인`() {
+        val lottos = listOf(
+            Lotto(1, 2, 3, 4, 5, 6),
+            Lotto(3, 4, 5, 6, 7, 8),
+            Lotto(3, 4, 5, 10, 11, 12),
+        )
+        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(20))
+        val actual = WinningResult(
+            mapOf(
+                Rank.FIRST to 1,
+                Rank.FOURTH to 1,
+                Rank.FIFTH to 1,
+            ),
+        )
+        assertThat(winningLotto.matchLottos(lottos)).isEqualTo(actual)
     }
 
     companion object {

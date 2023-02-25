@@ -9,6 +9,13 @@ class WinningLotto(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
         return Rank.valueOf(lotto.countSameLottoNumber(winningLotto), lotto.hasBonusNumber(bonusNumber))
     }
 
+    fun matchLottos(lottos: List<Lotto>): WinningResult {
+        return lottos.map { matchLotto(it) }
+            .groupingBy { it }
+            .eachCount()
+            .let { WinningResult(it) }
+    }
+
     companion object {
         const val BONUS_NUMBER_OVERLAY_ERROR_MESSAGE = "보너스 번호가 당첨 번호에 포함되어 있습니다."
     }

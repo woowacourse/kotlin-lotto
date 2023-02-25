@@ -20,7 +20,7 @@ class LottoController {
     private fun getWinningResult(manualLottos: List<Lotto>, autoLottos: List<Lotto>): WinningResult {
         val winningLotto =
             WinningLotto(askWinningLotto(InputView.inputWinningLotto()), askBonusNumber(InputView.inputBonusNumber()))
-        return WinningResult(matchLottos(manualLottos + autoLottos, winningLotto))
+        return winningLotto.matchLottos(manualLottos + autoLottos)
     }
     private fun askMoney(input: Int): Money {
         return runCatching {
@@ -55,17 +55,5 @@ class LottoController {
             LottoNumber.from(input)
         }.onFailure { OutputView.outputErrorMessage(it.message!!) }
             .getOrNull() ?: askBonusNumber(InputView.inputBonusNumber())
-    }
-
-    fun matchLottos(lottos: List<Lotto>, winningLotto: WinningLotto): Map<Rank, Int> {
-        return mutableMapOf<Rank, Int>().getMatchLotto(lottos, winningLotto)
-    }
-
-    private fun MutableMap<Rank, Int>.getMatchLotto(lottos: List<Lotto>, winningLotto: WinningLotto): Map<Rank, Int> {
-        lottos.forEach {
-            val rank = winningLotto.matchLotto(it)
-            if (!rank.equals(Rank.MISS)) this.put(rank, this.getOrDefault(rank, 0) + 1)
-        }
-        return this
     }
 }
