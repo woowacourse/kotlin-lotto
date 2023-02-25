@@ -9,7 +9,7 @@ class Lottos(val lottos: List<Lotto>) {
         return WinningResult(winningResult)
     }
 
-    operator fun plus(a: Lottos): Lottos {
-        return Lottos(lottos + a.lottos)
+    operator fun plus(other: Lottos): Lottos {
+        return Lottos(lottos + other.lottos)
     }
 }
