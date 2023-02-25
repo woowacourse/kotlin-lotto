@@ -54,7 +54,7 @@ class InputView {
     }
 
     fun readBonusNumber(): Int {
-        return kotlin.runCatching {
+        return runCatching {
             println(BONUS_NUMBERS_GUIDE)
             val number = readLine().toIntOrNull()
             requireNotNull(number) { BONUS_NUMBERS_TYPE_ERROR }
@@ -69,7 +69,7 @@ class InputView {
         return readln()
     }
 
-    private fun printError(message: String) {
+    fun printError(message: String) {
         println("$ERROR_HEADER $message")
     }
 

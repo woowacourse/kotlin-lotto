@@ -18,19 +18,20 @@ class PurchaseAmount(
         require(amount % PURCHASE_AMOUNT_UNIT == 0) { PURCHASE_AMOUNT_UNIT_ERROR_MESSAGE }
     }
 
-    fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
+    fun checkQuantity(quantity: Int) {
+        require(quantity >= 0) { MANUAL_QUANTITY_ERROR_MESSAGE }
+        require(quantity <= getPurchaseQuantity()) { MANUAL_QUANTITY_OVERFLOW_ERROR_MESSAGE }
+    }
 
     fun getAutoPurchaseQuantity(quantity: Int): Int {
-        checkEnough(quantity)
         return getPurchaseQuantity() - quantity
     }
 
-    private fun checkEnough(quantity: Int) {
-        require(quantity <= getPurchaseQuantity()) { MANUAL_QUANTITY_ERROR_MESSAGE }
-    }
+    private fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
 
     companion object {
-        private const val MANUAL_QUANTITY_ERROR_MESSAGE = "구입금액보다 수동 로또 개수가 더 많습니다."
+        private const val MANUAL_QUANTITY_ERROR_MESSAGE = "수동 로또 개수는 음수일 수 없습니다."
+        private const val MANUAL_QUANTITY_OVERFLOW_ERROR_MESSAGE = "구입금액보다 수동 로또 개수가 더 많습니다."
         private const val PURCHASE_AMOUNT_BOUNDARY_ERROR_MESSAGE = "구입금액은 1000원 이상 5만원 이하여야 합니다."
         private const val PURCHASE_AMOUNT_LOWER_BOUNDARY = 1000
         private const val PURCHASE_AMOUNT_UNIT = 1000
