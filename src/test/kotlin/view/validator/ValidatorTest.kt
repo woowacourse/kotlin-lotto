@@ -1,6 +1,5 @@
 package view.validator
 
-import common.convertToLottoNumberSet
 import domain.Lotto
 import domain.LottoNumber
 import domain.PurchaseLottoMoney
@@ -70,14 +69,15 @@ class ValidatorTest {
     fun `주어진 배열이 Lotto로 변환에 성공해서 반환`() {
         val numbers = listOf(1, 2, 3, 4, 5, 6)
         val result = Validator.validateMakeLotto(numbers)
-        assertThat(result?.numbers).containsAll(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet())
+        val expected = Lotto(1, 2, 3, 4, 5, 6)
+        assertThat(result?.containsAll(expected)).isTrue
     }
 
     @Test
     fun `주어진 배열이 Lotto로 변환에 실패해서 null반환`() {
         val numbers = listOf(1, 2, 3, 4, 5, 5)
         val result = Validator.validateMakeLotto(numbers)
-        assertThat(result?.numbers).isNull()
+        assertThat(result).isNull()
     }
 
     @ValueSource(ints = [1, 2, 3, 45])

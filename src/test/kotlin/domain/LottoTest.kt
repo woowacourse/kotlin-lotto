@@ -9,7 +9,7 @@ class LottoTest {
     @Test
     fun `개수가 6개면 로또 생성`() {
         val lotto = Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet())
-        assertThat(lotto.numbers.size).isEqualTo(6)
+        assertThat(lotto.size).isEqualTo(6)
     }
 
     @Test

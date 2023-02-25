@@ -58,7 +58,7 @@ object Validator {
     }
 
     fun validateMakeWinningLotto(winningNumbers: Lotto, bonusNumber: LottoNumber): WinningLotto? {
-        if (winningNumbers.numbers.contains(bonusNumber)) {
+        if (winningNumbers.contains(bonusNumber)) {
             println(ERROR_MAKE_WINNING_LOTTO_TO_DISTINCT)
             return null
         }

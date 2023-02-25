@@ -1,6 +1,5 @@
 package domain
 
-import common.convertToLottoNumberSet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,7 +12,7 @@ class LottoSellerTest {
         val lottoSeller = LottoSeller(TestNumberGenerator())
         val lotto = lottoSeller.sellAutoTicket(money)
         assertThat(lotto.size).isEqualTo(1)
-        assertThat(lotto[0].numbers).isEqualTo(Lotto(1, 2, 3, 4, 5, 6).numbers)
+        assertThat(lotto[0].containsAll(Lotto(1, 2, 3, 4, 5, 6))).isTrue
     }
 
     @Test
@@ -40,10 +39,10 @@ class LottoSellerTest {
         )
         val result: Ticket = lottoSeller.sellManualAndAuto(purchaseInfo, Ticket(requestManualNumbers))!!
         assertThat(result.size).isEqualTo(4)
-        assertThat(result[0].numbers).containsAll(Lotto(11, 12, 13, 14, 15, 16).numbers)
-        assertThat(result[1].numbers).containsAll(Lotto(21, 22, 23, 24, 25, 26).numbers)
-        assertThat(result[2].numbers).containsAll(generator.pattern[0].map { LottoNumber.from(it) })
-        assertThat(result[3].numbers).containsAll(generator.pattern[1].map { LottoNumber.from(it) })
+        assertThat(result[0].containsAll(Lotto(11, 12, 13, 14, 15, 16))).isTrue
+        assertThat(result[1].containsAll(Lotto(21, 22, 23, 24, 25, 26))).isTrue
+        assertThat(result[2].containsAll(Lotto(1, 2, 3, 4, 5, 6))).isTrue
+        assertThat(result[3].containsAll(Lotto(9, 8, 7, 6, 5, 4))).isTrue
     }
 
     @ParameterizedTest(name = "{0}개의 로또를 발급한다.")
@@ -53,9 +52,10 @@ class LottoSellerTest {
         val generator = TestNumberGenerator()
         val lottoSeller = LottoSeller(generator)
         val ticket = lottoSeller.sellAutoTicket(money)
-        assertThat(ticket.map { lotto -> lotto.numbers }).isEqualTo(
-            generator.pattern.map { it.convertToLottoNumberSet() }.take(count)
-        )
+        assertThat(ticket.size).isEqualTo(count)
+        for (i in 0 until count) {
+            assertThat(ticket[i].containsAll(Lotto.create(generator.pattern[i]))).isTrue
+        }
     }
 
     inner class TestNumberGenerator : RandomGenerator {
