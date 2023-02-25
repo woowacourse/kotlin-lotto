@@ -27,5 +27,5 @@ class LottoSeller(private val numberGenerator: RandomGenerator = NumberRandomGen
             sellAutoTicket(PurchaseLottoMoney(count * ONE_LOTTO_MONEY))
         }
 
-    private fun sellManualTicket(ticket: Ticket): Ticket = ticket.copy()
+    private fun sellManualTicket(ticket: Ticket): Ticket = ticket.clone()
 }

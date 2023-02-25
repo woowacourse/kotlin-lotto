@@ -1,6 +1,6 @@
 package domain
 
-class Lotto constructor(private val numbers: Set<LottoNumber>) {
+class Lotto constructor(private val numbers: Set<LottoNumber>) : Cloneable {
     val size: Int
         get() = numbers.size
 
@@ -26,7 +26,9 @@ class Lotto constructor(private val numbers: Set<LottoNumber>) {
         return numbers.containsAll(lotto.numbers)
     }
 
-    fun copy() = Lotto(numbers.toSet())
+    public override fun clone(): Lotto {
+        return Lotto(numbers.toSet())
+    }
 
     companion object {
         const val LOTTO_SIZE = 6

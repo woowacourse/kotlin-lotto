@@ -1,6 +1,6 @@
 package domain
 
-class Ticket(private val lottos: List<Lotto>) {
+class Ticket(private val lottos: List<Lotto>) : Cloneable {
     val size: Int
         get() = lottos.size
 
@@ -19,7 +19,10 @@ class Ticket(private val lottos: List<Lotto>) {
         lottos.forEach(action)
     }
 
-    fun copy() = Ticket(lottos.map { it.copy() })
+    public override fun clone(): Ticket {
+        return Ticket(lottos.map { it.clone() }.toList())
+    }
+
     operator fun plus(ticket: Ticket) = Ticket(lottos.toList() + ticket.lottos.toList())
     operator fun get(index: Int): Lotto = lottos[index]
 }
