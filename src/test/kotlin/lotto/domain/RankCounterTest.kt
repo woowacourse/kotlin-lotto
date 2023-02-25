@@ -10,7 +10,7 @@ private fun Lottery(vararg numbers: Int): Lottery {
 class RankCounterTest {
     @Test
     fun `로또를 받아 등수를 카운트한다`() {
-        val lotteries = listOf(
+        val tickets = listOf(
             Lottery(1, 2, 3, 4, 5, 6),
             Lottery(1, 3, 4, 5, 6, 7),
             Lottery(1, 3, 4, 5, 6, 8),
@@ -19,7 +19,7 @@ class RankCounterTest {
         )
         val winningLottery = WinningLottery(Lottery(1, 2, 3, 4, 5, 6), LotteryNumber.from(7))
 
-        val countResult = RankCounter.count(lotteries, winningLottery)
+        val countResult = RankCounter.count(tickets, winningLottery)
 
         assertThat(countResult[Rank.FIRST]).isEqualTo(1)
         assertThat(countResult[Rank.SECOND]).isEqualTo(1)

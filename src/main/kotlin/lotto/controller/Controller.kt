@@ -1,10 +1,9 @@
 package lotto.controller
 
-import lotto.domain.LotteriesGenerator
+import lotto.domain.AutoLotteryTicketsMachine
 import lotto.domain.Lottery
-import lotto.domain.LotteryGenerator
 import lotto.domain.LotteryNumber
-import lotto.domain.ManualLotteryGenerator
+import lotto.domain.ManualLotteryTicketsMachine
 import lotto.domain.PurchaseAmount
 import lotto.domain.RankCounter
 import lotto.domain.ResultCalculator
@@ -13,7 +12,6 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 class Controller(
-    private val generator: LotteryGenerator,
     private val inputView: InputView,
     private val outputView: OutputView
 ) {
@@ -48,17 +46,19 @@ class Controller(
 
     private fun publishManualTickets(quantity: Int): List<Lottery> {
         val manualNumbers = inputView.readManualLotteryNumbers(quantity)
-        val manualTickets = LotteriesGenerator().generateManually(quantity, ManualLotteryGenerator(manualNumbers))
+        val ticketsMachine = ManualLotteryTicketsMachine(manualNumbers)
+        val manualTickets = ticketsMachine.generate()
         outputView.printInterval()
         return manualTickets
     }
 
     private fun publishAutoTickets(quantity: Int): List<Lottery> {
-        return LotteriesGenerator().generate(quantity, generator)
+        val ticketsMachine = AutoLotteryTicketsMachine(quantity)
+        return ticketsMachine.generate()
     }
 
     private fun getWinningLottery(): WinningLottery {
-        val winningNumbers = Lottery(inputView.readWinningNumbers().map { LotteryNumber.from(it) })
+        val winningNumbers = Lottery.from(inputView.readWinningNumbers())
         val bonusNumber = LotteryNumber.from(inputView.readBonusNumber())
         outputView.printInterval()
         return WinningLottery(winningNumbers, bonusNumber)

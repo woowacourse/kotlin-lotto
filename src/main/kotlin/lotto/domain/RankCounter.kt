@@ -1,8 +1,8 @@
 package lotto.domain
 
 object RankCounter {
-    fun count(lotteries: List<Lottery>, winningLottery: WinningLottery): Map<Rank, Int> {
-        val ranks = lotteries.map {
+    fun count(tickets: List<Lottery>, winningLottery: WinningLottery): Map<Rank, Int> {
+        val ranks = tickets.map {
             Rank.valueOf(
                 it.countMatches(winningLottery.lottery),
                 it.containBonusNumber(winningLottery.bonusNumber)
