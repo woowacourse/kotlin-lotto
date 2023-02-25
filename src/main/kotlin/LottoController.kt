@@ -18,7 +18,8 @@ class LottoController {
         val maxLottoCount: Int = payment.calculateMaxLottoCount()
         val manualCount: ManualCount = getManualCount(maxLottoCount)
         val autoCount: Int = payment.calculateAutoLottoCount(maxLottoCount, manualCount.count)
-        val lottoBundle = LottoBundle(getManualLottos(manualCount.count))
+        val lottoBundle = LottoBundle()
+        getManualLottos(lottoBundle, manualCount.count)
         lottoBundle.autoGenerate(autoCount, lottoGenerator)
         OutputView.printPurchasedLottoCount(manualCount.count, autoCount)
         OutputView.printPurchasedLotto(lottoBundle)
@@ -45,13 +46,11 @@ class LottoController {
             }
     }
 
-    private fun getManualLottos(manualCount: Int): MutableList<Lotto> {
-        val manualLottos = mutableListOf<Lotto>()
+    private fun getManualLottos(lottoBundle: LottoBundle, manualCount: Int) {
         if (manualCount != 0) OutputView.printRequestManualLottos()
-        while (manualLottos.size < manualCount) {
-            manualLottos.add(getManualLotto())
+        repeat(manualCount) {
+            lottoBundle.manualGenerate(getManualLotto())
         }
-        return manualLottos
     }
 
     private fun getManualLotto(): Lotto {
