@@ -27,7 +27,9 @@ class LottoGame {
         return runCatching {
             val money = input.inputMoney()
             return money
-        }.getOrDefault(getMoney())
+        }.getOrElse {
+            getMoney()
+        }
     }
 
     private fun makeLottos(money: Money): Lottos {
@@ -38,14 +40,18 @@ class LottoGame {
             output.outputLottoSizeMessage(count, money.lottoCount() - count)
             output.outputLottos(manualLottos + autoLottos)
             return manualLottos + autoLottos
-        }.getOrDefault(makeLottos(money))
+        }.getOrElse {
+            makeLottos(money)
+        }
     }
 
     private fun startGame(lottos: Lottos): WinningResult {
         return runCatching {
             val winningNumber = WinningNumber(Lotto(*input.inputWinningLotto().toIntArray()), input.inputBonusNumber())
             return lottos.matchLottos(winningNumber)
-        }.getOrDefault(startGame(lottos))
+        }.getOrElse {
+            startGame(lottos)
+        }
     }
 
     private fun endGame(winningResult: WinningResult, money: Money) {
