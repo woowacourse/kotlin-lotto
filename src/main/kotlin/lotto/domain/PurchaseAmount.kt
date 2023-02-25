@@ -3,6 +3,8 @@ package lotto.domain
 class PurchaseAmount(
     val amount: Int
 ) {
+    private val quantity = amount / PURCHASE_AMOUNT_UNIT
+
     init {
         checkBoundary()
         checkUnit()
@@ -27,17 +29,15 @@ class PurchaseAmount(
             "$MANUAL_QUANTITY_ERROR_MESSAGE\n" +
                 "오류값 : $quantity"
         }
-        require(quantity <= getPurchaseQuantity()) {
+        require(quantity <= this.quantity) {
             "$MANUAL_QUANTITY_OVERFLOW_ERROR_MESSAGE\n" +
                 "오류값 : $quantity"
         }
     }
 
     fun getAutoPurchaseQuantity(quantity: Int): Int {
-        return getPurchaseQuantity() - quantity
+        return this.quantity - quantity
     }
-
-    private fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
 
     companion object {
         private const val MANUAL_QUANTITY_ERROR_MESSAGE = "수동 로또 개수는 음수일 수 없습니다."
