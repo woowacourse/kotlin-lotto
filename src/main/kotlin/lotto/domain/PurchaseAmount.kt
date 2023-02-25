@@ -4,6 +4,9 @@ class PurchaseAmount(
     private val amount: Int,
     private val autoNumber: Int
 ) {
+
+    val manualNumber: Int = getPurchaseQuantity() - autoNumber
+
     init {
         checkBoundary()
         checkUnit()

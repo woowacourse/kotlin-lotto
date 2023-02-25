@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class PurchaseAmountTest {
@@ -19,6 +18,12 @@ class PurchaseAmountTest {
     @Test
     fun `수동 구매 개수를 가진다`() {
         assertDoesNotThrow { PurchaseAmount(2000, 2) }
+    }
+
+    @Test
+    fun `구입금액과 수동 구매 개수를 이용해 자동 구입 개수를 계산해 가진다`() {
+        val purchaseAmount = PurchaseAmount(5000, 1)
+        assertThat(purchaseAmount.manualNumber).isEqualTo(4)
     }
 
     @ParameterizedTest
@@ -57,12 +62,5 @@ class PurchaseAmountTest {
     @Test
     fun `수동 로또의 수가 구입금액을 1000으로 나눈 수를 초과하면 에러가 발생한다`() {
         assertThrows<IllegalArgumentException> { PurchaseAmount(1000, 2) }
-    }
-
-    @ParameterizedTest
-    @CsvSource("1000, 1", "50000, 50")
-    fun `구입한 로또 개수를 계산한다`(amount: Int, expected: Int) {
-        val actual = PurchaseAmount(amount, 0).getPurchaseQuantity()
-        assertThat(actual).isEqualTo(expected)
     }
 }
