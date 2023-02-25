@@ -1,6 +1,9 @@
 package domain
 
 class RandomLottoMachine : LottoMachine {
-    override fun create(start: Int, end: Int): Lotto =
-        Lotto((start..end).toList().shuffled().take(6).map { number -> LottoNumber(number) }.toSet())
+    override fun create(count: Int): List<Lotto> {
+        val result = mutableListOf<Lotto>()
+        repeat(count) { result.add(Lotto(LottoNumber.all().shuffled().take(6).toSet())) }
+        return result
+    }
 }

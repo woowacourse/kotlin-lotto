@@ -17,10 +17,10 @@ class LottoStatisticsTest {
         )
         val bonusNumber = LottoNumber(13)
         val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), bonusNumber)
-        val lottoStatistics = LottoStatistics(winningLotto)
+        val lottoStatistics = LottoStatistics(winningLotto, ticket)
 
         // when
-        val result: Map<Rank, Int> = lottoStatistics.compareTicket(ticket)
+        val result: Map<Rank, Int> = lottoStatistics.getWinningCountBy()
 
         // then
         assertThat(result[Rank.FIRST]).isEqualTo(2)
@@ -31,21 +31,22 @@ class LottoStatisticsTest {
     @Test
     fun `총 수익률을 계산한다`() {
         // given
-        val winResult = mutableMapOf(
-            Pair(Rank.FIRST, 0),
-            Pair(Rank.SECOND, 0),
-            Pair(Rank.THIRD, 0),
-            Pair(Rank.FOURTH, 0),
-            Pair(Rank.FIFTH, 1),
-            Pair(Rank.MISS, 13)
+        val ticket = Ticket(
+            listOf(
+                Lotto(1, 2, 3, 10, 11, 12),
+                Lotto(12, 13, 14, 15, 16, 17),
+                Lotto(17, 18, 19, 20, 21, 22),
+                Lotto(23, 24, 25, 26, 27, 28),
+                Lotto(29, 30, 31, 32, 33, 34),
+            )
         )
         val bonusNumber = LottoNumber(13)
         val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), bonusNumber)
-        val lottoStatistics = LottoStatistics(winningLotto)
-        val expected = "0.35"
+        val lottoStatistics = LottoStatistics(winningLotto, ticket)
+        val expected = "1.0"
 
         // when
-        val result = lottoStatistics.calculateProfit(winResult)
+        val result = lottoStatistics.getProfitRatio(Money(5000))
 
         // then
         assertThat(result).isEqualTo(expected)

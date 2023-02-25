@@ -1,11 +1,13 @@
 package controller
 
-import common.MAXIMUM_LOTTO_RANGE
-import common.MINIMUM_LOTTO_RANGE
 import domain.Lotto
+import domain.LottoCount
 import domain.LottoNumber
 import domain.LottoSeller
 import domain.LottoStatistics
+import domain.ManualLottoMachine
+import domain.Money
+import domain.RandomLottoMachine
 import domain.Ticket
 import domain.WinningLotto
 import view.InputViewInterface
@@ -18,47 +20,72 @@ class LottoController(
     private val lottoSeller: LottoSeller by lazy { LottoSeller() }
 
     fun run() {
-        val ticket = initializeTicket()
-        val winningLotto = initializeWinningLotto()
+        val money = makeMoney()
+        resultView.printCount(money.makeCount())
+        val ticket = makeTicket(money)
 
-        val lottoStatistics = LottoStatistics(winningLotto)
-        val result = lottoStatistics.compareTicket(ticket)
-        val profit = lottoStatistics.calculateProfit(result)
-        resultView.printResult(result, profit)
+        val winningLotto = makeWinningLotto()
+        val lottoStatistics = LottoStatistics(winningLotto, ticket)
+
+        val winningCountBy = lottoStatistics.getWinningCountBy()
+        val profitRatio = lottoStatistics.getProfitRatio(money)
+        resultView.printResult(winningCountBy, profitRatio)
     }
 
-    private fun initializeTicket(): Ticket {
-        while (true) {
-            runCatching { inputView.getMoney() }
-                .onSuccess { return lottoSeller.sellLottos(it) }
+    private fun makeManualTicket(count: Int): Ticket {
+        return runCatching {
+            val manualCount = inputView.getManualLottoCount()
+            LottoCount(count - manualCount)
+            val numbers = inputView.getManualLottos(manualCount)
+            lottoSeller.sellTicket(manualCount, ManualLottoMachine(numbers))
+        }.getOrElse { error ->
+            println(error.message)
+            makeManualTicket(count)
         }
     }
 
-    private fun initializeWinningLotto(): WinningLotto {
-        while (true) {
-            val winningNumbers = makeWinningLotto()
-            val bonusNumber = makeBonusNumber()
-            runCatching { WinningLotto(winningNumbers, LottoNumber(bonusNumber)) }
-                .onSuccess { return it }
+    private fun makeAutoTicket(count: Int): Ticket {
+        return runCatching {
+            lottoSeller.sellTicket(count, RandomLottoMachine())
+        }.getOrElse { error ->
+            println(error.message)
+            makeAutoTicket(count)
         }
     }
 
-    private fun makeWinningLotto(): Lotto {
-        while (true) {
-            runCatching { Lotto(inputView.getNumbers().map { number -> LottoNumber(number) }.toSet()) }
-                .onSuccess { return it }
+    private fun makeTicket(money: Money): Ticket {
+        val manualTicket = makeManualTicket(money.makeCount())
+        val autoTicket = makeAutoTicket((money.makeCount()) - manualTicket.size())
+        resultView.printTicket(manualTicket, autoTicket)
+        return manualTicket.concatenateTicket(autoTicket)
+    }
+
+    private fun makeMoney(): Money {
+        return runCatching {
+            Money(inputView.getMoney())
+        }.getOrElse { error ->
+            println(error.message)
+            makeMoney()
         }
     }
 
-    private fun makeBonusNumber(): Int {
-        while (true) {
+    private fun makeWinningLotto(): WinningLotto {
+        return runCatching {
+            val winningNumbers = initializeWinningLotto()
             val bonusNumber = inputView.getBonusNumber()
-            runCatching { validate(bonusNumber) }
-                .onSuccess { return bonusNumber }
+            WinningLotto(winningNumbers, LottoNumber(bonusNumber))
+        }.getOrElse { error ->
+            println(error)
+            makeWinningLotto()
         }
     }
 
-    private fun validate(bonus: Int) {
-        require(bonus in MINIMUM_LOTTO_RANGE..MAXIMUM_LOTTO_RANGE)
+    private fun initializeWinningLotto(): Lotto {
+        return runCatching {
+            Lotto(inputView.getWinningLotto().map { number -> LottoNumber(number) }.toSet())
+        }.getOrElse { error ->
+            println(error)
+            initializeWinningLotto()
+        }
     }
 }

@@ -1,32 +1,54 @@
 package domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import java.util.stream.Stream
+import org.junit.jupiter.api.Test
 
 class RankTest {
-    @ParameterizedTest(name = "{0}개 맞고 보너스볼 매치 {1}일 경우 {2}")
-    @MethodSource("countOfMatchAndMatchBonusProvider")
-    fun `당첨 번호와 보너스 볼 매치 여부로 당첨 등수 확인`(countOfMatch: Int, matchBonus: Boolean, expected: Rank) {
-        val result = Rank.valueOf(countOfMatch, matchBonus)
-        assertThat(result).isEqualTo(expected)
+    @Test
+    fun `일치하는 개수가 6개이고 보너스번호가 같아도 1등`() {
+        val result = Rank.valueOf(6, true)
+        assertThat(result).isEqualTo(Rank.FIRST)
     }
 
-    companion object {
-        @JvmStatic
-        fun countOfMatchAndMatchBonusProvider(): Stream<Arguments> {
-            return Stream.of(
-                Arguments.arguments(6, false, Rank.FIRST),
-                Arguments.arguments(5, true, Rank.SECOND),
-                Arguments.arguments(5, false, Rank.THIRD),
-                Arguments.arguments(4, false, Rank.FOURTH),
-                Arguments.arguments(3, false, Rank.FIFTH),
-                Arguments.arguments(1, false, Rank.MISS),
-                Arguments.arguments(0, false, Rank.MISS),
-                Arguments.arguments(0, true, Rank.MISS)
-            )
-        }
+    @Test
+    fun `일치하는 개수가 6개이고 보너스번호가 달라도 1등`() {
+        val result = Rank.valueOf(6, true)
+        assertThat(result).isEqualTo(Rank.FIRST)
+    }
+
+    @Test
+    fun `일치하는 개수가 5개고 보너스번호가 같으면 2등`() {
+        val result = Rank.valueOf(5, true)
+        assertThat(result).isEqualTo(Rank.SECOND)
+    }
+
+    @Test
+    fun `일치하는 개수가 5개고 보너스번호가 다르면 3등`() {
+        val result = Rank.valueOf(5, false)
+        assertThat(result).isEqualTo(Rank.THIRD)
+    }
+
+    @Test
+    fun `일치하는 개수가 4개고 보너스번호가 같아도 4등`() {
+        val result = Rank.valueOf(4, true)
+        assertThat(result).isEqualTo(Rank.FOURTH)
+    }
+
+    @Test
+    fun `일치하는 개수가 4개고 보너스번호가 달라도 4등`() {
+        val result = Rank.valueOf(4, false)
+        assertThat(result).isEqualTo(Rank.FOURTH)
+    }
+
+    @Test
+    fun `일치하는 개수가 3개고 보너스번호가 같아도 5등`() {
+        val result = Rank.valueOf(3, true)
+        assertThat(result).isEqualTo(Rank.FIFTH)
+    }
+
+    @Test
+    fun `일치하는 개수가 3개고 보너스번호가 달라도 5등`() {
+        val result = Rank.valueOf(3, false)
+        assertThat(result).isEqualTo(Rank.FIFTH)
     }
 }

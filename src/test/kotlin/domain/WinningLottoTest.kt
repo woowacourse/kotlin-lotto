@@ -1,5 +1,6 @@
 package domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -25,5 +26,33 @@ class WinningLottoTest {
         assertThrows<IllegalArgumentException> {
             WinningLotto(Lotto(1, 2, 3, 4, 5, 6), LottoNumber(bonusNumber))
         }
+    }
+
+    @Test
+    fun `6개가 일치하는지 확인`() {
+        // given
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val bonusNumber = LottoNumber(7)
+        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), bonusNumber)
+
+        // when
+        val matchCount = winningLotto.match(lotto)
+
+        // then
+        assertThat(matchCount).isEqualTo(6)
+    }
+
+    @Test
+    fun `5개가 일치하는지 확인`() {
+        // given
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val bonusNumber = LottoNumber(7)
+        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 9), bonusNumber)
+
+        // when
+        val matchCount = winningLotto.match(lotto)
+
+        // then
+        assertThat(matchCount).isEqualTo(5)
     }
 }

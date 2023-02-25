@@ -1,7 +1,7 @@
 package domain
 
-class LottoSeller(private val lottoMachine: LottoMachine = RandomLottoMachine()) {
-    fun sellLottos(count: Int): Ticket {
-        return Ticket(List(count) { lottoMachine.create() })
+class LottoSeller() {
+    fun sellTicket(count: Int, lottoMachine: LottoMachine): Ticket {
+        return Ticket(lottoMachine.create(count))
     }
 }

@@ -7,9 +7,11 @@ class Lotto(val numbers: Set<LottoNumber>) {
         require(numbers.size == LOTTO_SIZE) { ERROR_LOTTO_SIZE }
     }
 
-    fun contains(number: LottoNumber): Boolean {
-        return numbers.contains(number)
-    }
+    fun size(): Int = numbers.size
+
+    fun contains(number: LottoNumber): Boolean = numbers.contains(number)
+
+    fun toList(): List<LottoNumber> = numbers.toList()
 
     companion object {
         private const val LOTTO_SIZE = 6
