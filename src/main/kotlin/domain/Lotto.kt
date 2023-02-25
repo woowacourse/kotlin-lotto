@@ -7,7 +7,7 @@ class Lotto(val numbers: List<LottoNumber>) {
     }
     constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.from(it) })
 
-    fun matchLotto(lotto: Lotto, bonusNumber: LottoNumber): Rank? =
+    fun matchLotto(lotto: Lotto, bonusNumber: LottoNumber): Rank =
         Rank.valueOf(countMatchNumber(lotto), hasBonusNumber(bonusNumber))
 
     private fun countMatchNumber(lotto: Lotto): Int {
