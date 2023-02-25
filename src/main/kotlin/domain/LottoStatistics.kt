@@ -21,7 +21,7 @@ class LottoStatistics(private val winningLotto: WinningLotto, private val ticket
 
     fun getWinningCountBy(): Map<Rank, Int> {
         val result = Rank.values().associateWith { 0 }.toMutableMap()
-        ticket.forEach { lotto ->
+        ticket.lottos.forEach { lotto ->
             result[getRank(lotto)] = result[getRank(lotto)]!! + 1
         }
         return result

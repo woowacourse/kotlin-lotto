@@ -14,6 +14,6 @@ class TicketTest {
         val ticket = ticket1.concatenateTicket(ticket2)
 
         // then
-        assertThat(ticket.size).isEqualTo(2)
+        assertThat(ticket.size()).isEqualTo(2)
     }
 }

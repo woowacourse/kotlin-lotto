@@ -53,7 +53,7 @@ class LottoController(
 
     private fun makeTicket(money: Money): Ticket {
         val manualTicket = makeManualTicket(money.makeCount())
-        val autoTicket = makeAutoTicket((money.makeCount()) - manualTicket.size)
+        val autoTicket = makeAutoTicket((money.makeCount()) - manualTicket.size())
         resultView.printTicket(manualTicket, autoTicket)
         return manualTicket.concatenateTicket(autoTicket)
     }

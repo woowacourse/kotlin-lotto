@@ -14,7 +14,7 @@ class LottoSellerTest {
         val actual = lottoSeller.sellRandomLottos(2)
 
         // then
-        assertThat(actual.size).isEqualTo(2)
+        assertThat(actual.size()).isEqualTo(2)
     }
 
     @Test
@@ -31,7 +31,7 @@ class LottoSellerTest {
         val actual = lottoSeller.sellManualLottos(lottoNumbers)
 
         // then
-        assertThat(actual.size).isEqualTo(2)
+        assertThat(actual.size()).isEqualTo(2)
     }
 
     @Test
@@ -48,7 +48,6 @@ class LottoSellerTest {
         val actual = lottoSeller.sellManualLottos(lottoNumbers)
 
         // then
-        assertThat(actual[0].toList()).isEqualTo(listOf(1, 2, 3, 4, 5, 6).map(::LottoNumber))
-        assertThat(actual[1].toList()).isEqualTo(listOf(3, 4, 5, 6, 7, 8).map(::LottoNumber))
+        assertThat(actual.lottos[0].toList()).isEqualTo(listOf(1, 2, 3, 4, 5, 6).map(::LottoNumber))
     }
 }
