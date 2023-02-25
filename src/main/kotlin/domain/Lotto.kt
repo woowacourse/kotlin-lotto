@@ -26,6 +26,8 @@ class Lotto constructor(private val numbers: Set<LottoNumber>) {
         return numbers.containsAll(lotto.numbers)
     }
 
+    fun copy() = Lotto(numbers.toSet())
+
     companion object {
         const val LOTTO_SIZE = 6
         private const val ERROR_LOTTO_SIZE = "[ERROR] 현재의 로또 번호 개수는 %d개, 로또 번호는 ${LOTTO_SIZE}개여야 합니다."

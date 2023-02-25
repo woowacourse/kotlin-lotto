@@ -19,7 +19,7 @@ class Ticket(private val lottos: List<Lotto>) {
         lottos.forEach(action)
     }
 
-    fun copy() = Ticket(lottos.toList())
+    fun copy() = Ticket(lottos.map { it.copy() })
     operator fun plus(ticket: Ticket) = Ticket(lottos.toList() + ticket.lottos.toList())
     operator fun get(index: Int): Lotto = lottos[index]
 }
