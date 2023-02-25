@@ -44,12 +44,12 @@ object InputView {
             .getOrNull() ?: inputBonusNumber()
     }
 
-    fun inputManualLottoCount(): Int? {
+    fun inputManualLottoCount(): Int {
         OutputView.outputManualLottoCountMessage()
         return getInputManualLottoCount(readlnOrNull())
     }
 
-    private fun getInputManualLottoCount(input: String?): Int? {
+    private fun getInputManualLottoCount(input: String?): Int {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
             input.toInt()
