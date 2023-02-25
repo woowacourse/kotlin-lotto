@@ -7,40 +7,41 @@ import view.OutputView
 class LottoController {
 
     fun run() {
-        val money = askMoney(InputView.inputMoney())
-        val lottoCount = askManualLottoCount(InputView.inputManualLottoCount(), money)
-        val manualLottos = askManualLottos(InputView.inputManualLottos(lottoCount.count), lottoCount.count)
-        val autoLottos = LottoMachine.generateAutoLottos(lottoCount.getAutoLottoCount(), RandomLottoGenerator())
-        OutputView.outputLottoSizeMessage(lottoCount.count, lottoCount.getAutoLottoCount())
-        OutputView.outputLottos(manualLottos + autoLottos)
-        val winningResult = getWinningResult(manualLottos, autoLottos)
+        val money = askMoney()
+        val lottos = buyLottos(money)
+        val winningResult = getWinningResult(lottos)
         OutputView.outputWinningResult(winningResult)
         OutputView.outputYield(winningResult.calculateYield(money))
     }
-    private fun getWinningResult(manualLottos: List<Lotto>, autoLottos: List<Lotto>): WinningResult {
+
+    private fun getWinningResult(lottos: List<Lotto>): WinningResult {
+        OutputView.outputLottos(lottos)
         val winningLotto =
             WinningLotto(askWinningLotto(InputView.inputWinningLotto()), askBonusNumber(InputView.inputBonusNumber()))
-        return winningLotto.matchLottos(manualLottos + autoLottos)
-    }
-    private fun askMoney(input: Int): Money {
-        return runCatching {
-            Money(input)
-        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
-            .getOrNull() ?: askMoney(InputView.inputMoney())
+        return winningLotto.matchLottos(lottos)
     }
 
-    private fun askManualLottoCount(input: Int?, money: Money): Count {
+    private fun askMoney(): Money {
         return runCatching {
-            Count(money, input!!)
+            Money(InputView.inputMoney())
         }.onFailure { OutputView.outputErrorMessage(it.message!!) }
-            .getOrNull() ?: askManualLottoCount(InputView.inputManualLottoCount(), money)
+            .getOrNull() ?: askMoney()
     }
 
-    private fun askManualLottos(input: List<IntArray>, count: Int): List<Lotto> {
+    private fun buyLottos(money: Money): List<Lotto> {
+        val manualLottoCount = InputView.inputManualLottoCount()
+        val manualLottos = askManualLottos(manualLottoCount)
+        val autoLottoCount = money.leftMoney(manualLottoCount).getLottoCount()
+        val autoLottos = LottoMachine.generateAutoLottos(autoLottoCount, RandomLottoGenerator())
+        OutputView.outputLottoSizeMessage(manualLottoCount, autoLottoCount)
+        return manualLottos + autoLottos
+    }
+
+    private fun askManualLottos(count: Int): List<Lotto> {
         return runCatching {
-            LottoMachine.generateManualLottos(input)
+            LottoMachine.generateManualLottos(InputView.inputManualLottos(count))
         }.onFailure { OutputView.outputErrorMessage(it.message!!) }
-            .getOrNull() ?: askManualLottos(InputView.inputManualLottos(count), count)
+            .getOrNull() ?: askManualLottos(count)
     }
 
     private fun askWinningLotto(input: IntArray): Lotto {
