@@ -12,11 +12,11 @@ class LottoTest {
     fun `갖고 있는 로또와 당첨 번호 6개가 모두 같으면 6을 반환한다`() {
         // given
         val lotto = Lotto.from(
-            generateLotto(1, 6)
+            generateLotto(listOf(1, 2, 3, 4, 5, 6))
         )
         val winLotto = WinLotto(
             Lotto.from(
-                generateLotto(1, 6)
+                generateLotto(listOf(1, 2, 3, 4, 5, 6))
             ),
             LottoNumber(7)
         )
@@ -30,16 +30,17 @@ class LottoTest {
     fun `갖고 있는 로또와 당첨 보너스 번호가 같으면 true를 반환한다`() {
         // given
         val lotto = Lotto.from(
-            generateLotto(1, 6)
+            generateLotto(listOf(1, 2, 3, 4, 5, 6))
         )
         val winLotto = WinLotto(
             Lotto.from(
-                generateLotto(11, 16)
+                generateLotto(listOf(11, 12, 13, 14, 15, 16))
             ),
             LottoNumber(1)
         )
         // when
         val actual = lotto.determineMatchBonus(winLotto.bonus)
+        // then
         assertThat(actual).isEqualTo(true)
     }
 
@@ -60,24 +61,10 @@ class LottoTest {
         fun provideDuplicateLotto(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    listOf(
-                        LottoNumber(1),
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(4),
-                        LottoNumber(5)
-                    )
+                    generateLotto(listOf(1, 1, 2, 3, 4, 5))
                 ),
                 Arguments.of(
-                    listOf(
-                        LottoNumber(41),
-                        LottoNumber(41),
-                        LottoNumber(42),
-                        LottoNumber(43),
-                        LottoNumber(44),
-                        LottoNumber(45)
-                    )
+                    generateLotto(listOf(41, 41, 42, 43, 44, 45))
                 )
             )
         }
@@ -86,14 +73,14 @@ class LottoTest {
         fun provideLottoCountNotSix(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    generateLotto(1, 5)
+                    generateLotto(listOf(1, 2, 3, 4, 5))
                 ),
                 Arguments.of(
-                    generateLotto(1, 7)
+                    generateLotto(listOf(1, 2, 3, 4, 5, 6, 7))
                 )
             )
         }
 
-        fun generateLotto(startLottoNumber: Int, endLottoNumber: Int): List<LottoNumber> = (startLottoNumber..endLottoNumber).map { LottoNumber(it) }
+        fun generateLotto(lottoNumber: List<Int>): List<LottoNumber> = lottoNumber.map(::LottoNumber)
     }
 }
