@@ -7,21 +7,21 @@ import lotto.domain.PurchaseAmount
 
 class InputView {
 
-    fun readBonusNumber(): LotteryNumber {
+    fun readLotteryNumber(): LotteryNumber? {
         println(REQUIRE_MESSAGE_BONUS_NUMBER)
         val input = readln()
-        return LotteryNumber(input.toInt())
+        return runCatching { LotteryNumber(input.toInt()) }.getOrNull()
     }
 
-    fun readWinningLottery(): Lottery {
+    fun readLottery(): Lottery? {
         println()
         println(REQUIRE_MESSAGE_WINNING_LOTTERY)
         val input = readln()
         val lotteryNumbers = input.split(", ").map { LotteryNumber(it.toInt()) }
-        return Lottery(lotteryNumbers)
+        return runCatching { Lottery(lotteryNumbers) }.getOrNull()
     }
 
-    fun readLotteries(count: Int): Lotteries {
+    fun readLotteries(count: Int): Lotteries? {
         println()
         println(REQUIRE_MESSAGE_AUTO_LOTTERIES)
 
@@ -31,17 +31,17 @@ class InputView {
             lotteries.add(lottery)
         }
 
-        return Lotteries(lotteries)
+        return runCatching { Lotteries(lotteries) }.getOrNull()
     }
 
-    fun readPurchaseAmount(): PurchaseAmount {
+    fun readPurchaseAmount(): PurchaseAmount? {
         println(REQUIRE_MESSAGE_PURCHASE_AMOUNT)
         val amount = readln()
         println()
         println(REQUIRE_MESSAGE_AUTO_LOTTERIES_SIZE)
         val autoNumber = readln()
 
-        return PurchaseAmount(amount.toInt(), autoNumber.toInt())
+        return runCatching { PurchaseAmount(amount.toInt(), autoNumber.toInt()) }.getOrNull()
     }
 
     companion object {
