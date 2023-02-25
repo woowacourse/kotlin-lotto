@@ -30,9 +30,9 @@ class InputView {
 
     private fun readManualLotteryNumber(): List<Int> {
         return runCatching {
-            val numbers = readInput().split(", ").mapNotNull { it.toIntOrNull() }
-            require(numbers.size == 6) { MANUAL_LOTTERY_TICKET_ERROR }
-            numbers
+            val numbers = readInput().split(", ").map { it.toIntOrNull() }
+            require(numbers.count { it == null } == 0) { MANUAL_LOTTERY_TICKET_ERROR }
+            numbers.filterNotNull()
         }.getOrElse {
             printError(it.message ?: "")
             readManualLotteryNumber()
@@ -42,9 +42,9 @@ class InputView {
     fun readWinningNumbers(): List<Int> {
         return runCatching {
             println(WINNING_NUMBERS_GUIDE)
-            val numbers = readInput().split(", ").mapNotNull { it.toIntOrNull() }
-            require(numbers.size == 6) { WINNING_NUMBERS_TYPE_ERROR }
-            numbers
+            val numbers = readInput().split(", ").map { it.toIntOrNull() }
+            require(numbers.count { it == null } == 0) { WINNING_NUMBERS_TYPE_ERROR }
+            numbers.filterNotNull()
         }.getOrElse {
             printError(it.message ?: "")
             readWinningNumbers()
@@ -76,11 +76,11 @@ class InputView {
         private const val ERROR_HEADER = "[ERROR]"
         private const val MANUAL_LOTTERY_QUANTITY_GUIDE = "수동으로 구매할 로또 수를 입력해 주세요."
         private const val MANUAL_LOTTERY_QUANTITY_ERROR = "수동 로또 개수는 정수여야 합니다."
-        private const val MANUAL_LOTTERY_TICKET_ERROR = "수동 로또 번호는 6개의 정수여야 합니다."
+        private const val MANUAL_LOTTERY_TICKET_ERROR = "수동 로또 번호는 모두 정수여야 합니다."
         private const val MANUAL_LOTTERY_TICKETS_GUIDE = "수동으로 구매할 번호를 입력해 주세요."
         private const val PURCHASE_AMOUNT_GUIDE = "구입금액을 입력해 주세요."
         private const val PURCHASE_AMOUNT_TYPE_ERROR = "구매금액은 정수여야 합니다."
         private const val WINNING_NUMBERS_GUIDE = "지난 주 당첨 번호를 입력해 주세요."
-        private const val WINNING_NUMBERS_TYPE_ERROR = "당첨 번호는 6개의 정수여야 합니다."
+        private const val WINNING_NUMBERS_TYPE_ERROR = "당첨 번호는 모두 정수여야 합니다."
     }
 }
