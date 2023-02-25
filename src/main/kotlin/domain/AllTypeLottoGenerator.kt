@@ -1,8 +1,12 @@
 package domain
 
-class RandomLottoGenerator : LottoGenerator {
+class AllTypeLottoGenerator : LottoGenerator {
     override fun generateLottos(count: Int): List<Lotto> {
         return List(count) { generateLotto() }
+    }
+
+    override fun generateLottos(manualLottos: List<List<Int>>): List<Lotto> {
+        return Lottos(manualLottos.map { Lotto(*it.toIntArray()) })
     }
 
     private fun generateLotto(): Lotto {

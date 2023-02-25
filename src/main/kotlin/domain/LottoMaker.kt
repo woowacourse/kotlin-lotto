@@ -1,16 +1,13 @@
 package domain
 
-class LottoMaker {
-    fun wrapLotto(number: List<Int>): Lotto {
-        return Lotto(number.map { LottoNumber.from(it) })
+class LottoMaker(
+    private val LottoGenerator: AllTypeLottoGenerator
+) {
+    fun makeManualLottos(manualLottos: List<List<Int>>): Lottos {
+        return Lottos(LottoGenerator.generateLottos(manualLottos))
     }
 
-    fun makeManualLottos(manualLottos: List<Lotto>): Lottos {
-        return Lottos(manualLottos)
-    }
-
-    fun makeAutoLottos(count: Int): MutableList<Lotto> {
-        val autoLottos = RandomLottoGenerator().generateLottos(count)
-        return autoLottos.toMutableList()
+    fun makeAutoLottos(count: Int): Lottos {
+        return Lottos(LottoGenerator.generateLottos(count))
     }
 }

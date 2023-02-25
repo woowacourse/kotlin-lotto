@@ -1,5 +1,7 @@
 package controller
 
+import domain.AllTypeLottoGenerator
+import domain.Lotto
 import domain.LottoMaker
 import domain.Lottos
 import domain.Money
@@ -12,6 +14,7 @@ class LottoGame {
 
     private val input by lazy { InputView() }
     private val output by lazy { OutputView() }
+    private val lottoMaker by lazy { LottoMaker(AllTypeLottoGenerator()) }
 
     fun run() {
         val money = getMoney()
@@ -30,8 +33,8 @@ class LottoGame {
     private fun makeLottos(money: Money): Lottos {
         return runCatching {
             val count = input.InputManualLottoCount()
-            val manualLottos = LottoMaker().makeManualLottos(input.inputManualLottoNumber(count).map { LottoMaker().wrapLotto(it) })
-            val autoLottos = LottoMaker().makeAutoLottos(money.lottoCount() - count)
+            val manualLottos = lottoMaker.makeManualLottos(input.inputManualLottoNumber(count))
+            val autoLottos = lottoMaker.makeAutoLottos(money.lottoCount() - count,)
             output.outputLottoSizeMessage(count, money.lottoCount() - count)
             output.outputLottos(Lottos(manualLottos + autoLottos))
             return Lottos(manualLottos + autoLottos)
@@ -40,7 +43,7 @@ class LottoGame {
 
     private fun startGame(lottos: Lottos): WinningResult {
         return runCatching {
-            val winningNumber = WinningNumber(LottoMaker().wrapLotto(input.inputWinningLotto()), input.inputBonusNumber())
+            val winningNumber = WinningNumber(Lotto(*input.inputWinningLotto().toIntArray()), input.inputBonusNumber())
             return lottos.matchLottos(winningNumber)
         }.getOrDefault(startGame(lottos))
     }
