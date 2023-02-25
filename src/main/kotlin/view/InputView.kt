@@ -37,7 +37,7 @@ class InputView : InputViewInterface {
             if (!Validator.validateConvertToIntList(input, COMMA)) continue
             val numbers = input.split(COMMA).map { it.trim().toInt() }
             if (!Validator.validateMakeLotto(numbers)) continue
-            return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
+            return Lotto(numbers)
         }
     }
 
@@ -46,7 +46,7 @@ class InputView : InputViewInterface {
         if (!Validator.validateConvertToIntList(input, COMMA)) return null
         val numbers = input.split(COMMA).map { it.trim().toInt() }
         if (!Validator.validateMakeLotto(numbers)) return null
-        return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
+        return Lotto(numbers)
     }
 
     override fun askBonusNumber(winningNumbers: Lotto): WinningLotto? {

@@ -9,6 +9,7 @@ class Lotto constructor(private val numbers: Set<LottoNumber>) : Cloneable {
     }
 
     constructor(vararg number: Int) : this(number.map(LottoNumber::from).toSet())
+    constructor(numbers: List<Int>) : this(numbers.map(LottoNumber::from).toSet())
 
     fun matchNumbers(winningNumbers: Lotto): Int = winningNumbers.numbers.count { numbers.contains(it) }
 
