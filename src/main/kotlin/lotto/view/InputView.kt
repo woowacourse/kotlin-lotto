@@ -4,7 +4,7 @@ class InputView {
     fun readPurchaseAmount(): Int {
         return runCatching {
             println(PURCHASE_AMOUNT_GUIDE)
-            val amount = readLine().toIntOrNull()
+            val amount = readInput().toIntOrNull()
             requireNotNull(amount) { PURCHASE_AMOUNT_TYPE_ERROR }
             amount
         }.getOrElse {
@@ -16,7 +16,7 @@ class InputView {
     fun readManualLotteryQuantity(): Int {
         return runCatching {
             println(MANUAL_LOTTERY_QUANTITY_GUIDE)
-            val quantity = readLine().toIntOrNull()
+            val quantity = readInput().toIntOrNull()
             requireNotNull(quantity) { MANUAL_LOTTERY_QUANTITY_ERROR }
             quantity
         }.getOrElse {
@@ -32,7 +32,7 @@ class InputView {
 
     private fun readManualLotteryNumber(): List<Int> {
         return runCatching {
-            val numbers = readLine().split(", ").mapNotNull { it.toIntOrNull() }
+            val numbers = readInput().split(", ").mapNotNull { it.toIntOrNull() }
             require(numbers.size == 6) { MANUAL_LOTTERY_TICKET_ERROR }
             numbers
         }.getOrElse {
@@ -44,7 +44,7 @@ class InputView {
     fun readWinningNumbers(): List<Int> {
         return runCatching {
             println(WINNING_NUMBERS_GUIDE)
-            val numbers = readLine().split(", ").mapNotNull { it.toIntOrNull() }
+            val numbers = readInput().split(", ").mapNotNull { it.toIntOrNull() }
             require(numbers.size == 6) { WINNING_NUMBERS_TYPE_ERROR }
             numbers
         }.getOrElse {
@@ -56,7 +56,7 @@ class InputView {
     fun readBonusNumber(): Int {
         return runCatching {
             println(BONUS_NUMBERS_GUIDE)
-            val number = readLine().toIntOrNull()
+            val number = readInput().toIntOrNull()
             requireNotNull(number) { BONUS_NUMBERS_TYPE_ERROR }
             number
         }.getOrElse {
@@ -65,7 +65,7 @@ class InputView {
         }
     }
 
-    private fun readLine(): String {
+    private fun readInput(): String {
         return readln()
     }
 
