@@ -6,5 +6,5 @@ interface InputViewInterface {
     fun getWinningLotto(): Set<Int>
     fun getBonusNumber(): Int
     fun getManualLottoCount(): Int
-    fun getManualLotto(count: Int): List<Set<Int>>
+    fun getManualLottos(count: Int): List<Set<Int>>
 }

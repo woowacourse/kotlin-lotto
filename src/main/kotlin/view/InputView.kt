@@ -53,10 +53,10 @@ class InputView : InputViewInterface {
         }
     }
 
-    override fun getManualLotto(count: Int): List<Set<Int>> {
-        val result = MutableList<Set<Int>>(count) { emptySet() }
+    override fun getManualLottos(count: Int): List<Set<Int>> {
+        val result = mutableListOf<Set<Int>>()
         repeat(count) {
-            result[it] = getManualLotto()
+            result.add(getManualLotto())
         }
         return result
     }
