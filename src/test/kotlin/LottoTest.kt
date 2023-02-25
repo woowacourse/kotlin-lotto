@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class LottoTest {
-
     @Test
     fun `로또가 6개의 숫자로 잘 생성되었는지 확인`() {
         assertDoesNotThrow {
@@ -20,14 +19,14 @@ class LottoTest {
     fun `로또가 6개의 숫자로 이루어지지 않은 경우 예외가 발생한다`() {
         assertThatIllegalArgumentException()
             .isThrownBy { Lotto(1, 2, 3, 4, 5) }
-            .withMessageContaining("당첨 번호가 6개가 아닙니다")
+            .withMessageContaining("로또 번호가 6개가 아닙니다")
     }
 
     @Test
     fun `중복된 번호가 존재하는 경우 예외가 발생한다`() {
         assertThatIllegalArgumentException()
             .isThrownBy { Lotto(1, 2, 3, 4, 5, 5) }
-            .withMessageContaining("당첨 번호가 6개가 아닙니다")
+            .withMessageContaining("로또 번호가 6개가 아닙니다")
     }
 
     @Test
