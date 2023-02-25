@@ -7,7 +7,7 @@ class NumericValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = ["abc", "*", "우기"])
-    fun `입력이 정수 형태의 스트링이 아닌 경우`(input: String) {
+    fun `입력이 정수 형태의 스트링이 아닌 경우 예외가 발생한다`(input: String) {
         assertThrows<IllegalArgumentException> {
             NumericValidator().validate(input)
         }

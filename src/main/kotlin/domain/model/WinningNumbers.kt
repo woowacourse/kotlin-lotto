@@ -3,8 +3,8 @@ package domain.model
 import domain.model.lotto.LottoNumber
 
 class WinningNumbers(
-    val catchNumbers: Set<LottoNumber>,
-    val bonusNumber: LottoNumber
+    private val catchNumbers: Set<LottoNumber>,
+    private val bonusNumber: LottoNumber
 ) {
     init {
         validateCatchNumbers()
@@ -22,6 +22,21 @@ class WinningNumbers(
             OVERLAPPED_ERROR
         }
     }
+
+    fun findLottoResult(numbers: Set<LottoNumber>): LottoResult {
+        val matchCount = getMatchCount(numbers)
+        val hasBonusNumber = checkMatchBonus(numbers)
+
+        return LottoResult.valueOf(matchCount, hasBonusNumber)
+    }
+
+    private fun getMatchCount(numbers: Set<LottoNumber>): Int =
+        numbers.count { number ->
+            catchNumbers.contains(number)
+        }
+
+    private fun checkMatchBonus(numbers: Set<LottoNumber>): Boolean =
+        numbers.contains(bonusNumber)
 
     companion object {
         private const val CATCH_NUMBERS_COUNT = 6

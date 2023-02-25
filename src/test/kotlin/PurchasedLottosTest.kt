@@ -2,6 +2,7 @@ import domain.model.LottoResult
 import domain.model.WinningNumbers
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoNumber
+import domain.model.lotto.LottoTicket
 import domain.model.lotto.PurchasedLottos
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,36 +14,9 @@ class PurchasedLottosTest {
         // given
         val purchasedLottos = PurchasedLottos(
             listOf(
-                Lotto(
-                    setOf(
-                        LottoNumber.from(1),
-                        LottoNumber.from(2),
-                        LottoNumber.from(3),
-                        LottoNumber.from(4),
-                        LottoNumber.from(5),
-                        LottoNumber.from(6)
-                    )
-                ),
-                Lotto(
-                    setOf(
-                        LottoNumber.from(1),
-                        LottoNumber.from(2),
-                        LottoNumber.from(3),
-                        LottoNumber.from(4),
-                        LottoNumber.from(5),
-                        LottoNumber.from(7)
-                    )
-                ),
-                Lotto(
-                    setOf(
-                        LottoNumber.from(1),
-                        LottoNumber.from(2),
-                        LottoNumber.from(3),
-                        LottoNumber.from(4),
-                        LottoNumber.from(8),
-                        LottoNumber.from(9)
-                    )
-                )
+                Lotto.create(LottoTicket(listOf(1, 2, 3, 4, 5, 6))),
+                Lotto.create(LottoTicket(listOf(1, 2, 3, 4, 5, 7))),
+                Lotto.create(LottoTicket(listOf(1, 2, 3, 4, 8, 9)))
             )
         )
 

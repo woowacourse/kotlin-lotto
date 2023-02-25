@@ -14,7 +14,7 @@ class LottoNumberTest {
     }
 
     @Test
-    fun `로또 번호가 1 이상 45 이하인 경우`() {
+    fun `로또 번호가 1 이상 45 이하인 경우 예외가 발생하지 않는다`() {
         assertDoesNotThrow {
             LottoNumber.from(5)
         }
