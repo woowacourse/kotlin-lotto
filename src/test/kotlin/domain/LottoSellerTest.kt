@@ -48,7 +48,7 @@ class LottoSellerTest {
         val actual = lottoSeller.sellManualLottos(lottoNumbers)
 
         // then
-        assertThat(actual[0]).hasSameElementsAs(Lotto(1, 2, 3, 4, 5, 6))
-        assertThat(actual[1]).hasSameElementsAs(Lotto(3, 4, 5, 6, 7, 8))
+        assertThat(actual[0].toList()).isEqualTo(listOf(1, 2, 3, 4, 5, 6).map(::LottoNumber))
+        assertThat(actual[1].toList()).isEqualTo(listOf(3, 4, 5, 6, 7, 8).map(::LottoNumber))
     }
 }

@@ -17,6 +17,6 @@ class RandomLottoMachineTest {
     fun `생성한 랜덤 로또의 사이즈는 6`() {
         val randomLottoMachine = RandomLottoMachine()
         val lotto = randomLottoMachine.create()
-        assertThat(lotto.size).isEqualTo(6)
+        assertThat(lotto.size()).isEqualTo(6)
     }
 }
