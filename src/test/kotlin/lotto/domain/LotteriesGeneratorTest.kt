@@ -12,23 +12,34 @@ class LotteriesGeneratorTest {
     fun `구입 로또 개수만큼 로또를 2개 발행한다`() {
         val lotteryGenerator = TestLotteryGenerator()
         val generator = LotteriesGenerator()
-        val expectedLottery1 = listOf(
-            LotteryNumber.from(1), LotteryNumber.from(3), LotteryNumber.from(5),
-            LotteryNumber.from(7), LotteryNumber.from(9), LotteryNumber.from(11)
-        )
-        val expectedLottery2 = listOf(
-            LotteryNumber.from(5), LotteryNumber.from(10), LotteryNumber.from(15),
-            LotteryNumber.from(24), LotteryNumber.from(33), LotteryNumber.from(45)
-        )
+        val expectedLottery1 = Lottery(1, 3, 5, 7, 9, 11)
+        val expectedLottery2 = Lottery(45, 24, 33, 10, 5, 15)
 
         val lotteries = generator.generate(2, lotteryGenerator)
 
-        assertThat(lotteries[0].numbers).containsExactlyInAnyOrderElementsOf(expectedLottery1)
-        assertThat(lotteries[1].numbers).containsExactlyInAnyOrderElementsOf(expectedLottery2)
+        assertThat(lotteries[0].numbers).containsExactlyInAnyOrderElementsOf(expectedLottery1.numbers)
+        assertThat(lotteries[1].numbers).containsExactlyInAnyOrderElementsOf(expectedLottery2.numbers)
+    }
+
+    @Test
+    fun `수동 로또를 발행한다`() {
+        val numbers = mutableListOf(
+            listOf(1, 3, 5, 7, 9, 11),
+            listOf(45, 24, 33, 10, 5, 15)
+        )
+        val lotteryGenerator = ManualLotteryGenerator(numbers)
+        val generator = LotteriesGenerator()
+        val expectedLottery1 = Lottery(1, 3, 5, 7, 9, 11)
+        val expectedLottery2 = Lottery(45, 24, 33, 10, 5, 15)
+
+        val lotteries = generator.generateManually(2, lotteryGenerator)
+
+        assertThat(lotteries[0].numbers).containsExactlyInAnyOrderElementsOf(expectedLottery1.numbers)
+        assertThat(lotteries[1].numbers).containsExactlyInAnyOrderElementsOf(expectedLottery2.numbers)
     }
 
     class TestLotteryGenerator : LotteryGenerator {
-        val lotteries = mutableListOf(
+        private val lotteries = mutableListOf(
             Lottery(1, 3, 5, 7, 9, 11),
             Lottery(45, 24, 33, 10, 5, 15)
         )
