@@ -2,6 +2,10 @@ package domain
 
 class WinningNumber(private val lottoNumbers: List<LottoNumber>, private val bonusNumber: LottoNumber) :
     Lotto(lottoNumbers) {
+    init {
+        require(this.contains(bonusNumber)) { BONUS_NUMBER_DUPLICATION_ERROR_MESSAGE }
+    }
+
     fun getRank(lotto: Lotto): Rank {
         val countOfMatch = lotto.getCountOfMatch(this)
         val matchBonus = lotto.contains(bonusNumber)

@@ -6,6 +6,8 @@ open class Lotto(val numbers: List<LottoNumber>) : List<LottoNumber> by numbers 
         require(!isContainDuplicatedNumber()) { LOTTO_NUMBER_DUPLICATED_ERROR }
     }
 
+    constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber))
+
     private fun isContainDuplicatedNumber(): Boolean {
         return numbers.size != numbers.toSet().size
     }
