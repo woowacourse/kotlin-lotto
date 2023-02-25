@@ -4,14 +4,11 @@ import lotto.domain.LotteryNumber.Companion.UPPER_BOUNDARY
 
 class LotteryGenerator {
 
-    fun generateLotteries(count: Int): List<Lottery> {
+    fun generateLotteries(count: Int): Lotteries {
         val randomLotteries: MutableList<Lottery> = mutableListOf()
+        repeat(count) { randomLotteries.add(generateLottery()) }
 
-        repeat(count) {
-            randomLotteries.add(generateLottery())
-        }
-
-        return randomLotteries
+        return Lotteries(randomLotteries)
     }
 
     private fun generateLottery(): Lottery {

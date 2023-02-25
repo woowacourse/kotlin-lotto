@@ -7,16 +7,16 @@ class LotteryMachine {
             Rank.values().associateWith { 0 }.toMutableMap()
 
         repeat(lotteries.size) {
-            val countOfMatch = lotteries.get(it).countMatches(winningLottery.lottery)
-            val matchBonus = lotteries.get(it).contains(winningLottery.bonusNumber)
-            val rank = Rank.valueOf(countOfMatch, matchBonus)
+            val countOfMatch: Int = lotteries.get(it).countMatches(winningLottery.lottery)
+            val matchBonus: Boolean = lotteries.get(it).contains(winningLottery.bonusNumber)
+            val rank: Rank = Rank.valueOf(countOfMatch, matchBonus)
             winningResult[rank] = winningResult[rank]!!.plus(1)
         }
 
         return WinningResult(winningResult, amount.toInt())
     }
 
-    fun generateLotteries(purchaseAmount: PurchaseAmount): List<Lottery> {
+    fun generateLotteries(purchaseAmount: PurchaseAmount): Lotteries {
         val generator: LotteryGenerator = LotteryGenerator()
         val quantity: Int = purchaseAmount.getPurchaseQuantity()
         return generator.generateLotteries(quantity)

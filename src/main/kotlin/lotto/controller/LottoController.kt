@@ -15,7 +15,7 @@ class LottoController(
 ) {
     fun run() {
         val purchaseAmount: PurchaseAmount = inputView.readPurchaseAmount()
-        val lotteries: Lotteries = Lotteries(machine.generateLotteries(purchaseAmount))
+        val lotteries: Lotteries = machine.generateLotteries(purchaseAmount)
 
         repeat(lotteries.size) { outputView.printMessage(lotteries.get(it).numbers.toString()) }
 

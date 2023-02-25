@@ -38,9 +38,9 @@ class LotteryTest {
 
     @ParameterizedTest
     @CsvSource("5, true", "10, false")
-    fun `보너스번호가 로또번호에 포함되어 있는지 확인한다`(bonusNumber: Int, expected: Boolean) {
-        val bonusNumber: LotteryNumber = LotteryNumber(bonusNumber)
+    fun `숫자를 받아 로또번호와 일치하는 것이 있는지 확인한다`(number: Int, expected: Boolean) {
+        val lotteryNumber: LotteryNumber = LotteryNumber(number)
         val lottery: Lottery = Lottery(1, 2, 3, 4, 5, 6)
-        assertThat(lottery.contains(bonusNumber)).isEqualTo(expected)
+        assertThat(lottery.contains(lotteryNumber)).isEqualTo(expected)
     }
 }
