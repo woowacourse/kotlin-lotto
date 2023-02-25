@@ -8,7 +8,6 @@ import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
 import lotto.entity.WinStatistics
-import lotto.misc.tryAndRerun
 import lotto.model.LottoProfitRateCalculator
 import lotto.model.LottoStore
 import lotto.view.InputView
@@ -32,17 +31,11 @@ class World(
     }
 
     private fun initPurchaseMoney(): PurchaseMoney {
-        return tryAndRerun {
-            outputView.printMessage(OutputView.MESSAGE_INPUT_MONEY)
-            PurchaseMoney(inputView.readInt())
-        } as PurchaseMoney
+        return inputView.getPurchaseMoney()
     }
 
     private fun initManualLottoCount(purchaseMoney: PurchaseMoney): LottoCount {
-        return tryAndRerun {
-            outputView.printMessage(OutputView.MESSAGE_INPUT_MANUAL_LOTTO_COUNT)
-            LottoCount(inputView.readManualLottoCount(purchaseMoney.value))
-        } as LottoCount
+        return inputView.getManualLottoCount(purchaseMoney)
     }
 
     private fun initLottos(purchaseLottoCount: LottoCount, manualLottoCount: LottoCount): Lottos {
@@ -57,30 +50,15 @@ class World(
     }
 
     private fun initManualLotto(manualLottoCount: LottoCount): Array<Lotto> {
-        val lottos = mutableListOf<Lotto>()
-        if (manualLottoCount.value == 0)
-            return lottos.toTypedArray()
-        outputView.printMessage(OutputView.MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
-        repeat(manualLottoCount.value) {
-            tryAndRerun { lottos.add(Lotto.from(inputView.readLottoNumber().map { LottoNumber(it) })) }
-        }
-        return lottos.toTypedArray()
+        return inputView.getManualLottos(manualLottoCount).value.toTypedArray()
     }
 
     private fun initWinNumber(): Lotto {
-        return tryAndRerun {
-            outputView.printMessage(OutputView.MESSAGE_WIN_NUMBER)
-            Lotto.from(inputView.readLottoNumber().map { LottoNumber(it) })
-        } as Lotto
+        return inputView.getWinNumber()
     }
 
     private fun initBonus(winNumber: Lotto): LottoNumber {
-        return tryAndRerun {
-            outputView.printMessage(OutputView.MESSAGE_BONUS)
-            val bonus = LottoNumber(inputView.readInt())
-            WinLotto(winNumber, bonus)
-            bonus
-        } as LottoNumber
+        return inputView.getBonus(winNumber)
     }
 
     private fun makeWinLotto(): WinLotto {
