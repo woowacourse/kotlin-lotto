@@ -11,10 +11,6 @@ class Ticket(private val lottos: List<Lotto>) : Cloneable {
             .eachCount()
     }
 
-    fun <R> map(transform: (Lotto) -> R): List<R> {
-        return lottos.map(transform)
-    }
-
     fun forEach(action: (Lotto) -> Unit) {
         lottos.forEach(action)
     }
