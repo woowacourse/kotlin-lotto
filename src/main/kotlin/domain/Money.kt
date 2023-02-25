@@ -3,8 +3,8 @@ package domain
 class Money(val price: Int) {
 
     init {
-        require(price >= MIN_PRICE) { println(MONEY_ERROR_MESSAGE) }
-        require(price % LOTTO_PRICE == MIN_PRICE) { println(MONEY_ERROR_MESSAGE) }
+        require(price >= MIN_PRICE) { MONEY_ERROR_MESSAGE }
+        require(price % LOTTO_PRICE == MIN_PRICE) { MONEY_ERROR_MESSAGE }
     }
 
     fun lottoCount(): Int {
