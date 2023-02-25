@@ -44,9 +44,9 @@ class PurchaseAmountTest {
         assertThrows<IllegalArgumentException> { PurchaseAmount(amount) }
     }
 
-    @ParameterizedTest(name = "{0}원으로 로또 {1}장을 구매할 수 있다")
+    @ParameterizedTest(name = "{0}원으로 자동 로또 {1}장을 구매할 수 있다")
     @CsvSource("1000, 1", "50000, 50")
-    fun `구입한 로또 개수를 계산한다`(amount: Int, expected: Int) {
+    fun `자동 로또 개수를 계산한다`(amount: Int, expected: Int) {
         val actual = PurchaseAmount(amount).getAutoPurchaseQuantity(0)
         assertThat(actual).isEqualTo(expected)
     }
@@ -56,14 +56,5 @@ class PurchaseAmountTest {
         val purchase = PurchaseAmount(10000)
         assertDoesNotThrow { purchase.checkQuantity(10) }
         assertThrows<IllegalArgumentException> { purchase.checkQuantity(11) }
-    }
-
-    @Test
-    fun `자동 로또 개수를 계산한다`() {
-        val purchase = PurchaseAmount(10000)
-
-        val actual = purchase.getAutoPurchaseQuantity(8)
-
-        assertThat(actual).isEqualTo(2)
     }
 }
