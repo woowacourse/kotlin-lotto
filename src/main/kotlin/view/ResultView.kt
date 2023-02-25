@@ -37,7 +37,8 @@ class ResultView : ResultViewInterface {
     }
 
     private fun printLotto(lotto: Lotto) {
-        println(lotto.toList().sorted())
+        val lottoNumbers = lotto.toList().map { it.toInt() }
+        println(lottoNumbers.sorted())
     }
 
     private fun isMatch(rank: Rank) = if (rank == Rank.SECOND) ", 보너스 볼 일치" else " "

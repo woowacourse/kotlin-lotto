@@ -7,11 +7,7 @@ class Lotto(val numbers: Set<LottoNumber>) : Set<LottoNumber> by numbers {
         require(numbers.size == LOTTO_SIZE) { ERROR_LOTTO_SIZE }
     }
 
-    fun toList(): List<Int> {
-        return numbers.map { LottoNumber ->
-            LottoNumber.toInt()
-        }
-    }
+    fun toList(): List<LottoNumber> = numbers.toList()
 
     companion object {
         private const val LOTTO_SIZE = 6
