@@ -1,7 +1,7 @@
 package domain
 
-class LottoMachine(val lottoGenerator: LottoGenerator) {
-    fun generateAutoLottos(count: Int): List<Lotto> {
+object LottoMachine {
+    fun generateAutoLottos(count: Int, lottoGenerator: LottoGenerator): List<Lotto> {
         return (1..count).map { lottoGenerator.generateLotto() }
     }
 

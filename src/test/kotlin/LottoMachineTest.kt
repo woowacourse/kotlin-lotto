@@ -7,11 +7,9 @@ import org.junit.jupiter.api.assertAll
 
 class LottoMachineTest {
 
-    val lottoMachine = LottoMachine(TestLottosGenerator())
-
     @Test
     fun `자동로또 2개가 잘 생성되었는지 확인`() {
-        val lottos = lottoMachine.generateAutoLottos(2)
+        val lottos = LottoMachine.generateAutoLottos(2, TestLottosGenerator())
         assertThat(lottos.size).isEqualTo(2)
     }
 
@@ -19,7 +17,7 @@ class LottoMachineTest {
     fun `수동로또가 입력한 대로 잘 생성되었는지 확인`() {
         val numbers =
             listOf(intArrayOf(1, 2, 3, 4, 5, 6), intArrayOf(3, 4, 5, 6, 7, 8), intArrayOf(9, 10, 11, 12, 13, 14))
-        val manualLottos = lottoMachine.generateManualLottos(numbers)
+        val manualLottos = LottoMachine.generateManualLottos(numbers)
         assertAll({
             assertThat(manualLottos.size).isEqualTo(3)
             assertThat(manualLottos.toList().map { it.toList().map { it.number } }).isEqualTo(
