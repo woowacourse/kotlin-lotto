@@ -1,13 +1,13 @@
 package domain
 
 class LottoMaker(
-    private val LottoGenerator: AllTypeLottoGenerator
+    private val lottoGenerator: AllTypeLottoGenerator
 ) {
     fun makeManualLottos(manualLottos: List<List<Int>>): Lottos {
-        return Lottos(LottoGenerator.generateLottos(manualLottos))
+        return Lottos(lottoGenerator.generateLottos(manualLottos))
     }
 
     fun makeAutoLottos(count: Int): Lottos {
-        return Lottos(LottoGenerator.generateLottos(count))
+        return Lottos(lottoGenerator.generateLottos(count))
     }
 }
