@@ -34,7 +34,7 @@ class LottoController {
     private fun createManualLotto(numberOfLotto: Int): ManualLottos {
         val manualLotto = makeManualLotto(numberOfLotto)
         printPurchaseMessage(manualLotto, numberOfLotto)
-        getManualLotto(manualLotto)
+        addManualLottos(manualLotto)
         return manualLotto
     }
 
@@ -45,7 +45,7 @@ class LottoController {
         } ?: makeManualLotto(numberOfLotto)
     }
 
-    private fun getManualLotto(manualLotto: ManualLottos) {
+    private fun addManualLottos(manualLotto: ManualLottos) {
         printMessage(INSERT_MANUAL_LOTTO)
         repeat(manualLotto.numberOfLotto) {
             manualLotto.add(getLottoNumber())
