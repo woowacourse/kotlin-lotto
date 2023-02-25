@@ -47,7 +47,9 @@ class LottoGame {
 
     private fun startGame(lottos: Lottos): WinningResult {
         return runCatching {
-            val winningNumber = WinningNumber(Lotto(*input.inputWinningLotto().toIntArray()), input.inputBonusNumber())
+            val lotto = Lotto(*input.inputWinningLotto().toIntArray())
+            val bonusNumber = input.inputBonusNumber()
+            val winningNumber = WinningNumber(lotto, bonusNumber)
             return lottos.matchLottos(winningNumber)
         }.getOrElse {
             startGame(lottos)
