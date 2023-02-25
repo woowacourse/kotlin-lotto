@@ -1,21 +1,25 @@
 package view
 
-class InputView {
-    fun inputMoney(): Int? {
-        OutputView().outputMoneyMessage()
+object InputView {
+
+    private const val INPUT_RIGHT_VALUE_ERROR_MESSAGE = "올바른 값이 입력되지 않았습니다."
+    private const val INPUT_VALUE_ERROR_MESSAGE = "값이 입력되지 않았습니다."
+    private const val INPUT_VALUE_NOT_INT_ERROR_MESSAGE = "숫자를 입력하세요."
+    fun inputMoney(): Int {
+        OutputView.outputMoneyMessage()
         return getInputMoney(readlnOrNull())
     }
 
-    private fun getInputMoney(input: String?): Int? {
+    private fun getInputMoney(input: String?): Int {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
-            input!!.toIntOrNull() ?: throw IllegalArgumentException(INPUT_VALUE_NOT_INT_ERROR_MESSAGE)
-        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+            input.toIntOrNull() ?: throw IllegalArgumentException(INPUT_VALUE_NOT_INT_ERROR_MESSAGE)
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
             .getOrNull() ?: inputMoney()
     }
 
     fun inputWinningLotto(): IntArray {
-        OutputView().outputWinningLottoMessage()
+        OutputView.outputWinningLottoMessage()
         return getInputWinningLotto(readlnOrNull())
     }
 
@@ -23,12 +27,12 @@ class InputView {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
             input.split(",").map { it.trim().toInt() }.toIntArray()
-        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
             .getOrNull() ?: inputWinningLotto()
     }
 
     fun inputBonusNumber(): Int {
-        OutputView().outputBonusNumberMessage()
+        OutputView.outputBonusNumberMessage()
         return getInputBonusNumber(readlnOrNull())
     }
 
@@ -36,12 +40,12 @@ class InputView {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
             input.toInt()
-        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
             .getOrNull() ?: inputBonusNumber()
     }
 
     fun inputManualLottoCount(): Int? {
-        OutputView().outputManualLottoCountMessage()
+        OutputView.outputManualLottoCountMessage()
         return getInputManualLottoCount(readlnOrNull())
     }
 
@@ -49,19 +53,19 @@ class InputView {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
             input.toInt()
-        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
             .getOrNull() ?: inputManualLottoCount()
     }
 
     fun inputManualLottos(count: Int): List<IntArray> {
-        OutputView().outputManualLottosMessage()
+        OutputView.outputManualLottosMessage()
         return getInputManualLottos(count)
     }
 
     private fun getInputManualLottos(count: Int): List<IntArray> {
         return runCatching {
             (1..count).map { getInputManualLotto(readln()) }
-        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
             .getOrNull() ?: inputManualLottos(count)
     }
 
@@ -69,13 +73,7 @@ class InputView {
         return runCatching {
             require(!input.isNullOrBlank()) { INPUT_VALUE_ERROR_MESSAGE }
             input.split(",").map { it.trim().toInt() }.toIntArray()
-        }.onFailure { OutputView().outputErrorMessage(it.message!!) }
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
             .getOrNull() ?: throw IllegalArgumentException(INPUT_RIGHT_VALUE_ERROR_MESSAGE)
-    }
-
-    companion object {
-        const val INPUT_RIGHT_VALUE_ERROR_MESSAGE = "올바른 값이 입력되지 않았습니다."
-        const val INPUT_VALUE_ERROR_MESSAGE = "값이 입력되지 않았습니다."
-        const val INPUT_VALUE_NOT_INT_ERROR_MESSAGE = "숫자를 입력하세요."
     }
 }

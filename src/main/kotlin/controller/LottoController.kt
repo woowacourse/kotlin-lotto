@@ -4,58 +4,58 @@ import domain.* // ktlint-disable no-wildcard-imports
 import view.InputView
 import view.OutputView
 
-class LottoController(val inputView: InputView, val outputView: OutputView) {
+class LottoController {
 
     fun run() {
-        val money = askMoney(inputView.inputMoney())
-        val lottoCount = askManualLottoCount(inputView.inputManualLottoCount(), money)
-        val manualLottos = askManualLottos(inputView.inputManualLottos(lottoCount.count), lottoCount.count)
+        val money = askMoney(InputView.inputMoney())
+        val lottoCount = askManualLottoCount(InputView.inputManualLottoCount(), money)
+        val manualLottos = askManualLottos(InputView.inputManualLottos(lottoCount.count), lottoCount.count)
         val autoLottos = LottoMachine(RandomLottoGenerator()).generateAutoLottos(lottoCount.getAutoLottoCount())
-        outputView.outputLottoSizeMessage(lottoCount.count, lottoCount.getAutoLottoCount())
-        outputView.outputLottos(manualLottos + autoLottos)
+        OutputView.outputLottoSizeMessage(lottoCount.count, lottoCount.getAutoLottoCount())
+        OutputView.outputLottos(manualLottos + autoLottos)
         val winningResult = getWinningResult(manualLottos, autoLottos)
-        outputView.outputWinningResult(winningResult)
-        outputView.outputYield(winningResult.calculateYield(money))
+        OutputView.outputWinningResult(winningResult)
+        OutputView.outputYield(winningResult.calculateYield(money))
     }
     private fun getWinningResult(manualLottos: List<Lotto>, autoLottos: List<Lotto>): WinningResult {
         val winningLotto =
-            WinningLotto(askWinningLotto(inputView.inputWinningLotto()), askBonusNumber(inputView.inputBonusNumber()))
+            WinningLotto(askWinningLotto(InputView.inputWinningLotto()), askBonusNumber(InputView.inputBonusNumber()))
         return WinningResult(matchLottos(manualLottos + autoLottos, winningLotto))
     }
     private fun askMoney(input: Int): Money {
         return runCatching {
             Money(input)
-        }.onFailure { outputView.outputErrorMessage(it.message!!) }
-            .getOrNull() ?: askMoney(inputView.inputMoney())
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
+            .getOrNull() ?: askMoney(InputView.inputMoney())
     }
 
     private fun askManualLottoCount(input: Int?, money: Money): Count {
         return runCatching {
             Count(money, input!!)
-        }.onFailure { outputView.outputErrorMessage(it.message!!) }
-            .getOrNull() ?: askManualLottoCount(inputView.inputManualLottoCount(), money)
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
+            .getOrNull() ?: askManualLottoCount(InputView.inputManualLottoCount(), money)
     }
 
     private fun askManualLottos(input: List<IntArray>, count: Int): List<Lotto> {
         return runCatching {
             val lottoMachine = LottoMachine(RandomLottoGenerator())
             lottoMachine.generateManualLottos(input)
-        }.onFailure { outputView.outputErrorMessage(it.message!!) }
-            .getOrNull() ?: askManualLottos(inputView.inputManualLottos(count), count)
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
+            .getOrNull() ?: askManualLottos(InputView.inputManualLottos(count), count)
     }
 
     private fun askWinningLotto(input: IntArray): Lotto {
         return runCatching {
             Lotto(*input)
-        }.onFailure { outputView.outputErrorMessage(it.message!!) }
-            .getOrNull() ?: askWinningLotto(inputView.inputWinningLotto())
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
+            .getOrNull() ?: askWinningLotto(InputView.inputWinningLotto())
     }
 
     private fun askBonusNumber(input: Int): LottoNumber {
         return runCatching {
             LottoNumber.from(input)
-        }.onFailure { outputView.outputErrorMessage(it.message!!) }
-            .getOrNull() ?: askBonusNumber(inputView.inputBonusNumber())
+        }.onFailure { OutputView.outputErrorMessage(it.message!!) }
+            .getOrNull() ?: askBonusNumber(InputView.inputBonusNumber())
     }
 
     fun matchLottos(lottos: List<Lotto>, winningLotto: WinningLotto): Map<Rank, Int> {
