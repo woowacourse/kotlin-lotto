@@ -10,7 +10,6 @@ import domain.Ticket
 import domain.WinningLotto
 import view.InputViewInterface
 import view.ResultViewInterface
-import kotlin.math.floor
 
 class LottoController(
     private val inputView: InputViewInterface,
@@ -19,15 +18,15 @@ class LottoController(
     private val lottoSeller: LottoSeller by lazy { LottoSeller() }
 
     fun run() {
-        val money = initializeMoney()
-        resultView.printCount(money.divide(EACH_LOTTO_PRICE))
+        val money = makeMoney()
+        resultView.printCount(money.makeCount())
         val ticket = makeTicket(money)
 
         val winningLotto = makeWinningLotto()
         val lottoStatistics = LottoStatistics(winningLotto)
         val result = lottoStatistics.compareTicket(ticket)
         val profit = lottoStatistics.calculateProfit(result)
-        val profitRatio = calculateProfitRatio(profit, money)
+        val profitRatio = lottoStatistics.calculateProfitRatio(profit, money)
 
         resultView.printResult(result, profitRatio)
     }
@@ -54,22 +53,18 @@ class LottoController(
     }
 
     private fun makeTicket(money: Money): Ticket {
-        val manualTicket = makeManualTicket(money.divide(EACH_LOTTO_PRICE))
-        val autoTicket = makeAutoTicket((money.divide(EACH_LOTTO_PRICE)) - manualTicket.size)
+        val manualTicket = makeManualTicket(money.makeCount())
+        val autoTicket = makeAutoTicket((money.makeCount()) - manualTicket.size)
         resultView.printTicket(manualTicket, autoTicket)
         return manualTicket.concatenateTicket(autoTicket)
     }
 
-    private fun calculateProfitRatio(profit: Int, totalMoney: Money): String {
-        return floor((profit / totalMoney.money).toDouble()).toString()
-    }
-
-    private fun initializeMoney(): Money {
+    private fun makeMoney(): Money {
         return runCatching {
             Money(inputView.getMoney())
         }.getOrElse { error ->
             println(error.message)
-            initializeMoney()
+            makeMoney()
         }
     }
 
@@ -91,9 +86,5 @@ class LottoController(
             println(error)
             initializeWinningLotto()
         }
-    }
-
-    companion object {
-        private const val EACH_LOTTO_PRICE = 1000
     }
 }

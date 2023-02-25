@@ -1,9 +1,9 @@
 package domain
 
+import kotlin.math.floor
+
 class LottoStatistics(private val winningLotto: WinningLotto) {
-    private fun getCountOfMatch(lotto: Lotto): Int {
-        return winningLotto.match(lotto)
-    }
+    private fun getCountOfMatch(lotto: Lotto): Int = winningLotto.match(lotto)
 
     private fun isBonusNumberMatch(lotto: Lotto): Boolean = lotto.contains(winningLotto.bonusNumber)
 
@@ -24,5 +24,9 @@ class LottoStatistics(private val winningLotto: WinningLotto) {
             sum += rank.winningMoney * result.value
         }
         return sum
+    }
+
+    fun calculateProfitRatio(profit: Int, totalMoney: Money): String {
+        return floor((profit / totalMoney.money).toDouble()).toString()
     }
 }
