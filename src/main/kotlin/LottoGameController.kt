@@ -32,7 +32,7 @@ class LottoGameController(
 
     private fun getLotteries(lottoCount: LottoCount): List<Lotto> {
         val manualLotteries = getManualLotteries(lottoCount.manualCount)
-        val automaticLotteries = lottoMachine.generateLotteries(lottoCount.automaticCount)
+        val automaticLotteries = lottoMachine.generateAutoLotteries(lottoCount.automaticCount)
         printAutoLotteries(automaticLotteries)
         return manualLotteries + automaticLotteries
     }

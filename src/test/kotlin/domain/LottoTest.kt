@@ -10,7 +10,7 @@ class LottoTest {
         val exception = assertThrows<IllegalArgumentException> {
             Lotto(1, 2, 3, 4, 5, 6, 7)
         }
-        assertEquals(Lotto.LOTTO_NUMBERS_COUNT_ERROR, exception.message)
+        assertEquals("[ERROR] 로또의 번호가 6개가 아닙니다.", exception.message)
     }
 
     @Test
@@ -18,7 +18,7 @@ class LottoTest {
         val exception = assertThrows<IllegalArgumentException> {
             Lotto(1, 1, 3, 4, 5, 6)
         }
-        assertEquals(Lotto.LOTTO_NUMBER_DUPLICATED_ERROR, exception.message)
+        assertEquals("[ERROR] 중복된 로또 번호가 있습니다.", exception.message)
     }
 
     @Test
