@@ -48,24 +48,24 @@ class LottoGameControllerTest {
     }
 
     class TestInputView() : InputViewInterface {
-        override fun inputPaymentMoney(): String? {
-            return "5000"
+        override fun inputPaymentMoney(): Int {
+            return 5000
         }
 
-        override fun inputManualLottoCount(): String? {
-            return "1"
+        override fun inputManualLottoCount(): Int {
+            return 1
         }
 
-        override fun inputManualLotto(): String? {
-            return "1,2,3,4,5,28"
+        override fun inputManualLottoNumbers(): List<Int> {
+            return listOf(1, 2, 3, 4, 5, 28)
         }
 
-        override fun inputWinningLotto(): String? {
-            return "1,2,3,4,6,20"
+        override fun inputWinningLottoNumbers(): List<Int> {
+            return listOf(1, 2, 3, 4, 6, 20)
         }
 
-        override fun inputBonusNumber(): String? {
-            return "7"
+        override fun inputBonusNumber(): Int {
+            return 7
         }
     }
 

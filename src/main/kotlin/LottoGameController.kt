@@ -2,6 +2,7 @@ import domain.Count
 import domain.Lotto
 import domain.LottoCount
 import domain.LottoMachine
+import domain.LottoNumber
 import domain.PaymentMoney
 import domain.RankStatistics
 import domain.WinningNumber
@@ -20,51 +21,36 @@ class LottoGameController(
         val manualLotteries = getManualLotteries(lottoCount.manualCount)
         val automaticLotteries = lottoMachine.generateLotteries(lottoCount.automaticCount)
         printAutoLotteries(automaticLotteries)
-        val winningNumbers = getWinningNumbers(getWinningLotto())
+        val winningNumbers = getWinningNumber(getWinningLottoNumbers(), getBonusNumber())
         showResult(getRankStatistics(manualLotteries, automaticLotteries, winningNumbers))
     }
 
-    private fun <T> handleInputResult(result: Result<T>): T? {
-        result.onSuccess { input ->
-            return input
-        }.onFailure { error ->
-            println(error.message)
-            return null
-        }.also {
-            throw IllegalStateException(UNKNOWN_ERROR)
-        }
-    }
-
     private fun getPaymentMoney(): PaymentMoney {
-        val input = inputView.inputPaymentMoney()
-        val validationResult = PaymentMoneyValidation().checkPaymentMoney(input)
-        return handleInputResult(validationResult) ?: getPaymentMoney()
+        return PaymentMoney(inputView.inputPaymentMoney())
     }
 
     private fun getLottoCount(totalLottoCount: Count): LottoCount {
-        val input = inputView.inputManualLottoCount()
-        val validationResult = ManualLottoCountValidation().checkManualLottoCountValidation(input, totalLottoCount)
-        return handleInputResult(validationResult) ?: getLottoCount(totalLottoCount)
+        return LottoCount(Count(inputView.inputManualLottoCount()), totalLottoCount)
     }
 
     private fun getManualLotteries(manualLottoCount: Count): List<Lotto> {
-        return List(manualLottoCount.value) {
-            val input = inputView.inputManualLotto()
-            val validationResult = LottoValidation().checkLottoValidation(input)
-            handleInputResult(validationResult) ?: return getManualLotteries(manualLottoCount)
-        }
+        return List(manualLottoCount.value) { getManualLotto() }
     }
 
-    private fun getWinningLotto(): Lotto {
-        val input = inputView.inputWinningLotto()
-        val validationResult = LottoValidation().checkLottoValidation(input)
-        return handleInputResult(validationResult) ?: getWinningLotto()
+    private fun getManualLotto(): Lotto {
+        return Lotto(inputView.inputManualLottoNumbers().map(::LottoNumber))
     }
 
-    private fun getWinningNumbers(winningLotto: Lotto): WinningNumber {
-        val input = inputView.inputBonusNumber()
-        val validationResult = BonusNumberValidation().checkBonusNumberValidation(input, winningLotto)
-        return handleInputResult(validationResult) ?: getWinningNumbers(winningLotto)
+    private fun getWinningLottoNumbers(): List<LottoNumber> {
+        return inputView.inputWinningLottoNumbers().map(::LottoNumber)
+    }
+
+    private fun getBonusNumber(): LottoNumber {
+        return LottoNumber(inputView.inputBonusNumber())
+    }
+
+    private fun getWinningNumber(winningLottoNumbers: List<LottoNumber>, bonusNumber: LottoNumber): WinningNumber {
+        return WinningNumber(winningLottoNumbers, bonusNumber)
     }
 
     private fun printAutoLotteries(lotteries: List<Lotto>) {
@@ -97,9 +83,5 @@ class LottoGameController(
         val profitRate = rankStatistics.getProfitRate()
         val isLoss = rankStatistics.isProfitable(profitRate)
         outputView.printProfitRate(profitRate, isLoss)
-    }
-
-    companion object {
-        const val UNKNOWN_ERROR = "알수 없는 오류입니다"
     }
 }

@@ -1,9 +1,9 @@
 package view
 
 interface InputViewInterface {
-    fun inputPaymentMoney(): String?
-    fun inputManualLottoCount(): String?
-    fun inputManualLotto(): String?
-    fun inputWinningLotto(): String?
-    fun inputBonusNumber(): String?
+    fun inputPaymentMoney(): Int
+    fun inputManualLottoCount(): Int
+    fun inputManualLottoNumbers(): List<Int>
+    fun inputWinningLottoNumbers(): List<Int>
+    fun inputBonusNumber(): Int
 }
