@@ -9,12 +9,11 @@ class LottoStatistics(private val winningLotto: WinningLotto, private val ticket
 
     private fun getRank(lotto: Lotto): Rank = Rank.valueOf(getCountOfMatch(lotto), isBonusNumberMatch(lotto))
 
-    private fun calculateProfit(): Int {
+    private fun getProfit(): Int {
         val results = getWinningCountBy()
         var sum = 0
-        for (result in results) {
-            val rank = result.key
-            sum += rank.winningMoney * result.value
+        results.forEach { winningCountBy ->
+            sum += winningCountBy.key.winningMoney * winningCountBy.value
         }
         return sum
     }
@@ -27,7 +26,7 @@ class LottoStatistics(private val winningLotto: WinningLotto, private val ticket
         return result
     }
 
-    fun calculateProfitRatio(totalMoney: Money): String {
-        return floor((calculateProfit() / totalMoney.money).toDouble()).toString()
+    fun getProfitRatio(totalMoney: Money): String {
+        return floor((getProfit() / totalMoney.money).toDouble()).toString()
     }
 }

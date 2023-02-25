@@ -46,7 +46,7 @@ class LottoStatisticsTest {
         val expected = "1.0"
 
         // when
-        val result = lottoStatistics.calculateProfitRatio(Money(5000))
+        val result = lottoStatistics.getProfitRatio(Money(5000))
 
         // then
         assertThat(result).isEqualTo(expected)

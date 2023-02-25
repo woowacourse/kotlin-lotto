@@ -26,7 +26,7 @@ class LottoController(
         val lottoStatistics = LottoStatistics(winningLotto, ticket)
 
         val winningCountBy = lottoStatistics.getWinningCountBy()
-        val profitRatio = lottoStatistics.calculateProfitRatio(money)
+        val profitRatio = lottoStatistics.getProfitRatio(money)
         resultView.printResult(winningCountBy, profitRatio)
     }
 
