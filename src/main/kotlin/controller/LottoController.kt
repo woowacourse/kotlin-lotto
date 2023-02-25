@@ -5,7 +5,9 @@ import domain.LottoCount
 import domain.LottoNumber
 import domain.LottoSeller
 import domain.LottoStatistics
+import domain.ManualLottoMachine
 import domain.Money
+import domain.RandomLottoMachine
 import domain.Ticket
 import domain.WinningLotto
 import view.InputViewInterface
@@ -35,7 +37,7 @@ class LottoController(
             val manualCount = inputView.getManualLottoCount()
             LottoCount(count - manualCount)
             val numbers = inputView.getManualLottos(manualCount)
-            lottoSeller.sellManualLottos(numbers)
+            lottoSeller.sellTicket(manualCount, ManualLottoMachine(numbers))
         }.getOrElse { error ->
             println(error.message)
             makeManualTicket(count)
@@ -44,7 +46,7 @@ class LottoController(
 
     private fun makeAutoTicket(count: Int): Ticket {
         return runCatching {
-            lottoSeller.sellRandomLottos(count)
+            lottoSeller.sellTicket(count, RandomLottoMachine())
         }.getOrElse { error ->
             println(error.message)
             makeAutoTicket(count)
