@@ -2,12 +2,12 @@ package lotto.domain
 
 import lotto.model.Lotto
 import lotto.model.LottoNumber
+import lotto.model.ManualLotto
 import lotto.model.Money
 import lotto.model.UserLotto
 import lotto.model.WinningLotto
 import lotto.model.generator.UserLottoGenerator
 import lotto.view.ERROR_INSERT_AGAIN
-import lotto.view.ERROR_OUT_OF_LOTTO_NUMBER
 import lotto.view.InputView
 import lotto.view.OutputView.printMessage
 import lotto.view.OutputView.printResult
@@ -19,10 +19,10 @@ class LottoController(
     fun start() {
         val money = getMoney()
         val numberOfLotto = money.getNumberOfLotto()
-        val manualNumberOfLotto = getNumberOfManualLotto(numberOfLotto)
-        val autoNumberOfLotto = numberOfLotto - manualNumberOfLotto
-        printMessage(PURCHASE.format(manualNumberOfLotto, autoNumberOfLotto))
-        val myLotto = userLottoGenerator.generateLotto(getManualLotto(manualNumberOfLotto), autoNumberOfLotto)
+        val manualLotto = getNumberOfManualLotto(numberOfLotto)
+        val autoNumberOfLotto = numberOfLotto - manualLotto.numberOfLotto
+        printMessage(PURCHASE.format(manualLotto.numberOfLotto, autoNumberOfLotto))
+        val myLotto = userLottoGenerator.generateLotto(getManualLotto(manualLotto.numberOfLotto), autoNumberOfLotto)
         printUserLotto(myLotto)
         wrapUpResult(myLotto, money)
     }
@@ -34,14 +34,11 @@ class LottoController(
         } ?: getMoney()
     }
 
-    private fun getNumberOfManualLotto(numberOfLotto: Int): Int {
+    private fun getNumberOfManualLotto(numberOfLotto: Int): ManualLotto {
         printMessage(INSERT_MANUAL_LOTTO_NUMBER)
-        val number = InputView.getNumber() ?: getNumberOfManualLotto(numberOfLotto)
-        val result = runCatching {
-            require(numberOfLotto >= number) { ERROR_OUT_OF_LOTTO_NUMBER }
-        }.onFailure { println(it.message) }.isSuccess
-
-        return if (result) number else getNumberOfManualLotto(numberOfLotto)
+        return validateInput {
+            InputView.getNumber()?.let { ManualLotto(it).validateNumberOfLotto(numberOfLotto) }
+        } ?: getNumberOfManualLotto(numberOfLotto)
     }
 
     private fun getManualLotto(numberOfLotto: Int): List<Lotto> {
