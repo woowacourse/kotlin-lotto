@@ -2,7 +2,6 @@ package lotto.view
 
 import lotto.domain.Lottery
 import lotto.domain.Rank
-import java.lang.StringBuilder
 
 class OutputView {
     fun printLotteryTickets(manualQuantity: Int, tickets: List<Lottery>) {
