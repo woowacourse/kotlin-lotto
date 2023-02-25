@@ -15,4 +15,10 @@ class LotteryMachine {
 
         return WinningResult(winningResult, amount.toInt())
     }
+
+    fun generateLotteries(purchaseAmount: PurchaseAmount): List<Lottery> {
+        val generator: LotteryGenerator = LotteryGenerator()
+        val quantity: Int = purchaseAmount.getPurchaseQuantity()
+        return generator.generateLotteries(quantity)
+    }
 }
