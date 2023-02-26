@@ -5,8 +5,8 @@ class LottoBundle {
     val lottos: List<Lotto>
         get() = _lottos.toList()
 
-    fun manualGenerate(lotto: Lotto) {
-        _lottos.add(lotto)
+    fun manualGenerate(lottoNumbers: List<String>) {
+        _lottos.add(Lotto(lottoNumbers))
     }
 
     fun autoGenerate(lottoCount: Int, lottoGenerator: LottoGenerator) {

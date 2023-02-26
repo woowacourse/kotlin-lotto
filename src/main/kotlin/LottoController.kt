@@ -48,18 +48,12 @@ class LottoController {
 
     private fun getManualLottos(lottoBundle: LottoBundle, manualCount: Int) {
         if (manualCount != 0) OutputView.printRequestManualLottos()
-        repeat(manualCount) {
-            lottoBundle.manualGenerate(getManualLotto())
+        while (lottoBundle.lottos.size < manualCount) {
+            runCatching { lottoBundle.manualGenerate(InputView.inputManualLotto()) }
+                .getOrElse { error ->
+                    println(error.message)
+                }
         }
-    }
-
-    private fun getManualLotto(): Lotto {
-        val lotto: List<String> = InputView.inputManualLotto()
-        return runCatching { Lotto(lotto) }
-            .getOrElse { error ->
-                println(error.message)
-                getManualLotto()
-            }
     }
 
     private fun produceResult(lottoBundle: LottoBundle, spendPayment: Payment) {

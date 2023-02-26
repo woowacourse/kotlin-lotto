@@ -9,13 +9,13 @@ class LottoBundleTest {
     fun `수동으로 로또를 발행`() {
         // given
         val lottoBundle = LottoBundle()
-        val lotto = Lotto(listOf("1", "2", "3", "4", "5", "6"))
+        val lottoNumbers = listOf("1", "2", "3", "4", "5", "6")
 
         // when
-        lottoBundle.manualGenerate(lotto)
+        lottoBundle.manualGenerate(lottoNumbers)
 
         // then
-        assertThat(lottoBundle.lottos[0]).isEqualTo(lotto)
+        assertThat(lottoBundle.lottos[0].lottoNumbers).isEqualTo(Lotto(lottoNumbers).lottoNumbers)
     }
 
     @Test
