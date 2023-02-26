@@ -56,12 +56,12 @@ object Controller {
     }
 
     private fun publishTickets(receipt: Receipt): List<Lottery> {
-        val manualTickets = mutableListOf<Lottery>()
-        if (receipt.manual.count > 0) {
-            manualTickets.addAll(publishManualTickets(receipt.manual.count))
-            outputView.printInterval()
+        val manualTickets = buildList {
+            if (receipt.manual.count > 0) {
+                addAll(publishManualTickets(receipt.manual.count))
+                outputView.printInterval()
+            }
         }
-
         val autoTickets = publishAutoTickets(receipt.auto.count)
         val tickets = manualTickets + autoTickets
         outputView.printLotteryTickets(receipt, tickets)
