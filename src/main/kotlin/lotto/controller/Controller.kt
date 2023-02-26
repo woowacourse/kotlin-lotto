@@ -40,7 +40,7 @@ object Controller {
             val amount = inputView.readPurchaseAmount()
             PurchaseAmount(amount)
         }.getOrElse {
-            inputView.printError(it.message ?: "")
+            outputView.printError(it.message ?: "")
             getPurchase()
         }
     }
@@ -50,7 +50,7 @@ object Controller {
             val count = TicketCount(inputView.readManualLotteryCount())
             Receipt(purchase, count)
         }.getOrElse {
-            inputView.printError(it.message ?: "")
+            outputView.printError(it.message ?: "")
             getReceipt(purchase)
         }
     }
@@ -74,7 +74,7 @@ object Controller {
             val ticketsMachine = ManualLotteryTicketsMachine(manualNumbers)
             ticketsMachine.generate()
         }.getOrElse {
-            inputView.printError(it.message ?: "")
+            outputView.printError(it.message ?: "")
             publishManualTickets(count)
         }
     }
@@ -90,7 +90,7 @@ object Controller {
             val bonusNumber = LotteryNumber.from(inputView.readBonusNumber())
             WinningLottery(winningNumbers, bonusNumber)
         }.getOrElse {
-            inputView.printError(it.message ?: "")
+            outputView.printError(it.message ?: "")
             getWinningLottery()
         }
     }
