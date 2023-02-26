@@ -35,7 +35,7 @@ internal class LottoBundleTest {
     }
 
     @Test
-    fun `plus가 잘 작동하는지 테스트`() {
+    fun `LottoBundle을 합치는 plus 연산자 함수가 잘 작동하는지 테스트`() {
         // given
         val baseLottoBundle = LottoBundle(lottos)
         val beforeSize = baseLottoBundle.size
