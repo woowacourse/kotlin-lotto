@@ -29,6 +29,6 @@ class UserLottoTest {
     }
 
     private fun makeLotto(numbers: List<Int>): Lotto {
-        return Lotto(numbers.map { LottoNumber.from(it) })
+        return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
     }
 }
