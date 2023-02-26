@@ -1,6 +1,6 @@
 package lotto.domain.model
 
-import lotto.controller.Controller
+import lotto.view.OutputView
 
 class LottoMoney(val amount: Int) {
 
@@ -11,7 +11,7 @@ class LottoMoney(val amount: Int) {
     companion object {
         fun checkMoneyAvailable(amount: Int): Boolean {
             if (amount < MONEY_UNIT) {
-                println(Controller.ERROR_PREFIX + LottoMoney.MONEY_MINIMUM_ERROR)
+                println(OutputView.ERROR_PREFIX + MONEY_MINIMUM_ERROR)
                 return false
             }
             return true

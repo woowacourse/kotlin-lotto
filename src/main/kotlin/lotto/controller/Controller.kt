@@ -112,8 +112,4 @@ class Controller {
         if (WinningNumbers.checkBonusNumberAvailable(winningLotto, inputBonusNumber)) return false
         return true
     }
-
-    companion object {
-        const val ERROR_PREFIX = "[ERROR] "
-    }
 }

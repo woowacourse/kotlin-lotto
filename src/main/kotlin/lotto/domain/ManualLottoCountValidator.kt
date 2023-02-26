@@ -1,6 +1,6 @@
 package lotto.domain
 
-import lotto.controller.Controller
+import lotto.view.OutputView
 
 object ManualLottoCountValidator {
 
@@ -8,7 +8,7 @@ object ManualLottoCountValidator {
 
     fun checkAvailable(manualLottoCount: Int, totalLottoCount: Int): Boolean {
         if (manualLottoCount <= totalLottoCount) return true
-        println(Controller.ERROR_PREFIX + LOTTO_COUNT_NEGATIVE_ERROR)
+        println(OutputView.ERROR_PREFIX + LOTTO_COUNT_NEGATIVE_ERROR)
         return false
     }
 }

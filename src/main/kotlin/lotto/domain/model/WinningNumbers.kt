@@ -1,6 +1,6 @@
 package lotto.domain.model
 
-import lotto.controller.Controller
+import lotto.view.OutputView
 
 class WinningNumbers(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     init {
@@ -10,7 +10,7 @@ class WinningNumbers(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     companion object {
         fun checkBonusNumberAvailable(winningLotto: Lotto, bonusNumber: Int): Boolean {
             if (winningLotto.numbers.any { lottoNumber -> lottoNumber.number == bonusNumber }) {
-                println(Controller.ERROR_PREFIX + BONUS_NUMBER_DUPLICATE_ERROR)
+                println(OutputView.ERROR_PREFIX + BONUS_NUMBER_DUPLICATE_ERROR)
                 return true
             }
             return false

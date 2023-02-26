@@ -1,6 +1,6 @@
 package lotto.domain.model
 
-import lotto.controller.Controller
+import lotto.view.OutputView
 
 class LottoNumber private constructor(val number: Int) {
     companion object {
@@ -11,7 +11,7 @@ class LottoNumber private constructor(val number: Int) {
         const val LOTTO_NUMBER_RANGE_ERROR = "로또 번호는 ${MINIMUM_LOTTO_NUMBER}과 $MAXIMUM_LOTTO_NUMBER 사이여야 합니다."
         fun checkLottoNumberAvailable(number: Int): Boolean {
             if (number !in 1..45) {
-                println(Controller.ERROR_PREFIX + LOTTO_NUMBER_RANGE_ERROR)
+                println(OutputView.ERROR_PREFIX + LOTTO_NUMBER_RANGE_ERROR)
                 return false
             }
             return true

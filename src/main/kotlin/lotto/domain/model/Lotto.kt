@@ -1,6 +1,6 @@
 package lotto.domain.model
 
-import lotto.controller.Controller
+import lotto.view.OutputView
 
 data class Lotto(val numbers: Set<LottoNumber>) {
     init {
@@ -18,7 +18,7 @@ data class Lotto(val numbers: Set<LottoNumber>) {
     companion object {
         fun checkLottoAvailable(numbers: Set<LottoNumber>): Boolean {
             if (numbers.size == LOTTO_SIZE) return true
-            println(Controller.ERROR_PREFIX + LOTTO_SIZE_ERROR)
+            println(OutputView.ERROR_PREFIX + LOTTO_SIZE_ERROR)
             return false
         }
 
