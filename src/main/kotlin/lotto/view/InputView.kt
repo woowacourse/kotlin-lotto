@@ -12,14 +12,14 @@ class InputView {
         }
     }
 
-    fun readManualLotteryQuantity(): Int {
+    fun readManualLotteryCount(): Int {
         return runCatching {
             println(MANUAL_LOTTERY_QUANTITY_GUIDE)
             val quantity = readInput().toIntOrNull()
             requireNotNull(quantity) { MANUAL_LOTTERY_QUANTITY_ERROR }
         }.getOrElse {
             printError(it.message ?: "")
-            readManualLotteryQuantity()
+            readManualLotteryCount()
         }
     }
 
