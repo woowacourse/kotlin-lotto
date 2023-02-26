@@ -4,17 +4,15 @@ class RandomLottoGenerator : LottoGenerator {
 
     override fun generateLotto(): Lotto {
         return Lotto(
-            (LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER)
+            LottoNumber.NUMBERS.values
                 .shuffled()
-                .subList(0, LOTTO_LIMIT_SIZE)
-                .map { LottoNumber.from(it) }
-                .sortedBy { it.number },
+                .take(LOTTO_LIMIT_SIZE)
+                .sortedBy { it.number }
+                .toSet(),
         )
     }
 
     companion object {
         const val LOTTO_LIMIT_SIZE = 6
-        const val LOTTO_MIN_NUMBER = 1
-        const val LOTTO_MAX_NUMBER = 45
     }
 }

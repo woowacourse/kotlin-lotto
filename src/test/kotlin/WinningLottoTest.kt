@@ -1,12 +1,9 @@
-import domain.Lotto
-import domain.LottoNumber
-import domain.WinningLotto
+import domain.* // ktlint-disable no-wildcard-imports
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 
 class WinningLottoTest {
@@ -18,58 +15,49 @@ class WinningLottoTest {
         }
     }
 
-    @Test
-    fun `로또와 당첨번호가 일치하는 개수가 3개인지 확인`() {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto(listOf(1, 2, 3, 10, 20, 30).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(40)
-
-        assertThat(WinningLotto(winningLotto, bonus).countSameLottoNumber(lotto)).isEqualTo(3)
-    }
-
-    @Test
-    fun `로또와 당첨번호가 일치하는 개수가 4개인지 확인`() {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 10, 20).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(40)
-
-        assertThat(WinningLotto(winningLotto, bonus).countSameLottoNumber(lotto)).isEqualTo(4)
-    }
-
-    @Test
-    fun `로또와 당첨번호가 일치하는 개수가 5개인지 확인`() {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 10).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(40)
-
-        assertThat(WinningLotto(winningLotto, bonus).countSameLottoNumber(lotto)).isEqualTo(5)
-    }
-
-    @Test
-    fun `로또와 당첨번호가 일치하는 개수가 6개인지 확인`() {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto((1..6).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(40)
-
-        assertThat(WinningLotto(winningLotto, bonus).countSameLottoNumber(lotto)).isEqualTo(6)
-    }
-
+    @MethodSource("produceLotto")
     @ParameterizedTest
-    @CsvSource(value = ["6,true", "40,false"])
-    fun `보너스 번호가 로또 번호에 포함되어 있는지 확인`(number: Int, hasBonus: Boolean) {
-        val lotto = (1..6).map { LottoNumber.from(it) }
-        val winningLotto = Lotto(listOf(1, 2, 3, 10, 20, 30).map { LottoNumber.from(it) })
-        val bonus = LottoNumber.from(number)
+    fun `생성된 로또가 당첨 로또와 보너스 번호를 비교해서 등수 확인`(winningLotto: Lotto, bonus: LottoNumber, rank: Rank) {
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val actual = WinningLotto(winningLotto, bonus).matchLotto(lotto)
+        assertThat(actual).isEqualTo(rank)
+    }
 
-        assertThat(WinningLotto(winningLotto, bonus).hasBonusNumber(lotto)).isEqualTo(hasBonus)
+    @Test
+    fun `당첨된 결과를 확인`() {
+        val lottos = Lottos(
+            intArrayOf(1, 2, 3, 4, 5, 6),
+            intArrayOf(3, 4, 5, 6, 7, 8),
+            intArrayOf(3, 4, 5, 10, 11, 12),
+        )
+        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(20))
+        val actual = WinningResult(
+            mapOf(
+                Rank.FIRST to 1,
+                Rank.FOURTH to 1,
+                Rank.FIFTH to 1,
+            ),
+        )
+        assertThat(winningLotto.matchLottos(lottos)).isEqualTo(actual)
     }
 
     companion object {
         @JvmStatic
         fun produceOverlayBonusNumber(): List<Arguments> {
             return listOf(
-                Arguments.of(Lotto((1..6).map { LottoNumber.from(it) }), LottoNumber.from(6)),
-                Arguments.of(Lotto(listOf(1, 5, 10, 15, 20, 30).map { LottoNumber.from(it) }), LottoNumber.from(15)),
+                Arguments.of(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(6)),
+                Arguments.of(Lotto(1, 5, 10, 15, 20, 30), LottoNumber.from(15)),
+            )
+        }
+
+        @JvmStatic
+        fun produceLotto(): List<Arguments> {
+            return listOf(
+                Arguments.of(Lotto(1, 2, 3, 7, 8, 9), LottoNumber.from(20), Rank.FIFTH),
+                Arguments.of(Lotto(1, 2, 3, 4, 8, 9), LottoNumber.from(20), Rank.FOURTH),
+                Arguments.of(Lotto(1, 2, 3, 4, 5, 9), LottoNumber.from(20), Rank.THIRD),
+                Arguments.of(Lotto(1, 2, 3, 4, 5, 9), LottoNumber.from(6), Rank.SECOND),
+                Arguments.of(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(20), Rank.FIRST),
             )
         }
     }

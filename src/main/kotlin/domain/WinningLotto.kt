@@ -2,15 +2,18 @@ package domain
 
 class WinningLotto(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(!winningLotto.numbers.contains(bonusNumber)) { BONUS_NUMBER_OVERLAY_ERROR_MESSAGE }
+        require(!winningLotto.containsNumber(bonusNumber)) { BONUS_NUMBER_OVERLAY_ERROR_MESSAGE }
     }
 
-    fun countSameLottoNumber(lotto: List<LottoNumber>): Int {
-        return winningLotto.numbers.count { lotto.contains(it) }
+    fun matchLotto(lotto: Lotto): Rank {
+        return Rank.valueOf(lotto.countSameLottoNumber(winningLotto), lotto.containsNumber(bonusNumber))
     }
 
-    fun hasBonusNumber(lotto: List<LottoNumber>): Boolean {
-        return lotto.contains(bonusNumber)
+    fun matchLottos(lottos: Lottos): WinningResult {
+        return lottos.lottos.map { matchLotto(it) }
+            .groupingBy { it }
+            .eachCount()
+            .let { WinningResult(it) }
     }
 
     companion object {

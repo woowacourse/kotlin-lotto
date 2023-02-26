@@ -35,4 +35,10 @@ class MoneyTest {
 
         assertThat(actual).isEqualTo(count)
     }
+
+    @Test
+    fun `돈 10000원일 때 로또를 구매한 개수가 3개이면, 남은 돈이 7000원인지 확인`() {
+        val money = Money(10000)
+        assertThat(money.leftMoney(3).price).isEqualTo(7000)
+    }
 }

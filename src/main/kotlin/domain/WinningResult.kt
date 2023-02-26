@@ -1,6 +1,6 @@
 package domain
 
-class WinningResult(val result: Map<Rank, Int>) {
+data class WinningResult(val result: Map<Rank, Int>) {
 
     private fun getWinningMoney(): Int {
         return result.map { it.key.winningMoney * it.value }.sum()
