@@ -1,6 +1,5 @@
 package domain
 
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,16 +9,7 @@ class LottoBundleTest {
     fun `수동으로 로또를 발행`() {
         // given
         val lottoBundle = LottoBundle()
-        val lotto = Lotto(
-            setOf(
-                LottoNumber.of(1),
-                LottoNumber.of(2),
-                LottoNumber.of(3),
-                LottoNumber.of(4),
-                LottoNumber.of(5),
-                LottoNumber.of(6)
-            )
-        )
+        val lotto = Lotto(listOf("1", "2", "3", "4", "5", "6"))
 
         // when
         lottoBundle.manualGenerate(lotto)
@@ -32,21 +22,12 @@ class LottoBundleTest {
     fun `자동으로 발행해야할 로또 개수만큼 발행`() {
         // given
         val lottoBundle = LottoBundle()
-        val lotto = Lotto(
-            setOf(
-                LottoNumber.of(1),
-                LottoNumber.of(2),
-                LottoNumber.of(3),
-                LottoNumber.of(4),
-                LottoNumber.of(5),
-                LottoNumber.of(6)
-            )
-        )
+        val lotto = Lotto(listOf("1", "2", "3", "4", "5", "6"))
 
         // when
         lottoBundle.autoGenerate(5) { lotto }
 
         // then
-        Assertions.assertThat(lottoBundle.lottos.size).isEqualTo(5)
+        assertThat(lottoBundle.lottos.size).isEqualTo(5)
     }
 }

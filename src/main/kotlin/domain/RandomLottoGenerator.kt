@@ -3,7 +3,7 @@ package domain
 class RandomLottoGenerator : LottoGenerator {
     override fun generate(): Lotto {
         val randomNumbers: List<Int> = LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_NUMBER_COUNT).sorted()
-        val lottoNumbers: Set<LottoNumber> = randomNumbers.map { LottoNumber.of(it) }.toSet()
+        val lottoNumbers: List<String> = randomNumbers.map { it.toString() }
         return Lotto(lottoNumbers)
     }
 

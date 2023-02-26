@@ -9,17 +9,7 @@ class WinningNumbersTest {
     @Test
     fun `당첨 번호와 보너스 번호로 WinningNumbers를 만든다`() {
         // given
-        val lotto = Lotto(
-            setOf(
-                LottoNumber.of(1),
-                LottoNumber.of(2),
-                LottoNumber.of(3),
-                LottoNumber.of(4),
-                LottoNumber.of(5),
-                LottoNumber.of(6),
-            )
-        )
-
+        val lotto = Lotto(listOf("1", "2", "3", "4", "5", "6"))
         val bonusNumber = LottoNumber.of(7)
 
         // when
@@ -33,17 +23,7 @@ class WinningNumbersTest {
     @Test
     fun `당첨 번호와 보너스 번호가 중복 되면 에러 발생`() {
         // given
-        val lotto = Lotto(
-            setOf(
-                LottoNumber.of(1),
-                LottoNumber.of(2),
-                LottoNumber.of(3),
-                LottoNumber.of(4),
-                LottoNumber.of(5),
-                LottoNumber.of(6),
-            )
-        )
-
+        val lotto = Lotto(listOf("1", "2", "3", "4", "5", "6"))
         val bonusNumber = LottoNumber.of(6)
 
         // when
@@ -58,7 +38,7 @@ class WinningNumbersTest {
     fun `당첨 번호를 비교하여 결과를 반환한다`() {
         // given
         val winningNumbers = WinningNumbers(
-            Lotto((1..6).map { LottoNumber.of(it) }.toSet()),
+            Lotto((1..6).map { it.toString() }),
             LottoNumber.of(7)
         )
         val lottoBundle = LottoBundle()
@@ -81,9 +61,9 @@ class WinningNumbersTest {
     }
 
     inner class TestLottos : LottoGenerator {
-        private val firstRankLotto = Lotto((1..6).map { LottoNumber.of(it) }.toSet())
-        private val secondRankLotto = Lotto((2..7).map { LottoNumber.of(it) }.toSet())
-        private val fourthRankLotto = Lotto((3..8).map { LottoNumber.of(it) }.toSet())
+        private val firstRankLotto = Lotto((1..6).map { it.toString() })
+        private val secondRankLotto = Lotto((2..7).map { it.toString() })
+        private val fourthRankLotto = Lotto((3..8).map { it.toString() })
 
         private val pattern = listOf(firstRankLotto, secondRankLotto, fourthRankLotto)
         private var i = 0
