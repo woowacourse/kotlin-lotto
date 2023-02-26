@@ -60,37 +60,15 @@ class Controller {
         return Lotto(inputNumbers.map { LottoNumber.from(it) }.toSet())
     }
 
-    private fun checkLottoAvailable(inputNumbers: List<Int>): Boolean {
-        inputNumbers.forEach {
-            if (it !in 1..45) {
-                println(ERROR_PREFIX + LottoNumber.LOTTO_NUMBER_RANGE_ERROR)
-                return false
-            }
-        }
-        if (inputNumbers.toSet().size != Lotto.LOTTO_SIZE) {
-            println(ERROR_PREFIX + Lotto.LOTTO_SIZE_ERROR)
-            return false
-        }
-        return true
-    }
-
     private fun readInputMoney(): LottoMoney {
         OutputView.printInputMoneyPrompt()
         var inputMoney: Int
         var moneyAvailable: Boolean
         do {
             inputMoney = InputView.readInputMoney()
-            moneyAvailable = checkMoneyAvailable(inputMoney)
+            moneyAvailable = LottoMoney.checkMoneyAvailable(inputMoney)
         } while (!moneyAvailable)
         return LottoMoney(inputMoney)
-    }
-
-    private fun checkMoneyAvailable(inputMoney: Int): Boolean {
-        if (inputMoney < LottoMoney.MONEY_UNIT) {
-            println(ERROR_PREFIX + LottoMoney.MONEY_MINIMUM_ERROR)
-            return false
-        }
-        return true
     }
 
     private fun readWinningNumbers(): WinningNumbers {
@@ -121,15 +99,17 @@ class Controller {
         return LottoNumber.from(inputBonusNumber)
     }
 
+    private fun checkLottoAvailable(inputNumbers: List<Int>): Boolean {
+        inputNumbers.forEach {
+            if (!LottoNumber.checkLottoNumberAvailable(it)) return false
+        }
+        if (!Lotto.checkLottoAvailable(inputNumbers.map { LottoNumber.from(it) }.toSet())) return false
+        return true
+    }
+
     private fun checkBonusNumberAvailable(inputBonusNumber: Int, winningLotto: Lotto): Boolean {
-        if (inputBonusNumber !in 1..45) {
-            println(ERROR_PREFIX + LottoNumber.LOTTO_NUMBER_RANGE_ERROR)
-            return false
-        }
-        if (winningLotto.numbers.any { lottoNumber -> lottoNumber.number == inputBonusNumber }) {
-            println(ERROR_PREFIX + WinningNumbers.BONUS_NUMBER_DUPLICATE_ERROR)
-            return false
-        }
+        if (!LottoNumber.checkLottoNumberAvailable(inputBonusNumber)) return false
+        if (WinningNumbers.checkBonusNumberAvailable(winningLotto, inputBonusNumber)) return false
         return true
     }
 
