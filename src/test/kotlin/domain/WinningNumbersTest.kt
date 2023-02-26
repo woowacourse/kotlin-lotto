@@ -9,7 +9,7 @@ class WinningNumbersTest {
     @Test
     fun `당첨 번호와 보너스 번호로 WinningNumbers를 만든다`() {
         // given
-        val lotto = Lotto(listOf("1", "2", "3", "4", "5", "6"))
+        val lotto = Lotto("1, 2, 3, 4, 5, 6")
         val bonusNumber = LottoNumber.of(7)
 
         // when
@@ -23,7 +23,7 @@ class WinningNumbersTest {
     @Test
     fun `당첨 번호와 보너스 번호가 중복 되면 에러 발생`() {
         // given
-        val lotto = Lotto(listOf("1", "2", "3", "4", "5", "6"))
+        val lotto = Lotto("1, 2, 3, 4, 5, 6")
         val bonusNumber = LottoNumber.of(6)
 
         // when
@@ -37,12 +37,13 @@ class WinningNumbersTest {
     @Test
     fun `당첨 번호를 비교하여 결과를 반환한다`() {
         // given
-        val winningNumbers = WinningNumbers(
-            Lotto((1..6).map { it.toString() }),
-            LottoNumber.of(7)
-        )
-        val lottoBundle = LottoBundle()
-        lottoBundle.autoGenerate(3, TestLottos())
+        val winningNumbers = WinningNumbers(Lotto("1, 2, 3, 4, 5, 6"), LottoNumber.of(7))
+        val manualLottoGenerator = ManualLottoGenerator()
+        manualLottoGenerator.generate("1, 2, 3, 4, 5, 6")
+        manualLottoGenerator.generate("2, 3, 4, 5, 6, 7")
+        manualLottoGenerator.generate("3, 4, 5, 6, 7, 8")
+
+        val lottoBundle = LottoBundle(manualLottoGenerator.manualLottos, emptyList())
 
         val expected = mapOf<Rank, Int>(
             Rank.FIRST to 1,
@@ -58,18 +59,5 @@ class WinningNumbersTest {
 
         // then
         assertThat(actual).isEqualTo(expected)
-    }
-
-    inner class TestLottos : LottoGenerator {
-        private val firstRankLotto = Lotto((1..6).map { it.toString() })
-        private val secondRankLotto = Lotto((2..7).map { it.toString() })
-        private val fourthRankLotto = Lotto((3..8).map { it.toString() })
-
-        private val pattern = listOf(firstRankLotto, secondRankLotto, fourthRankLotto)
-        private var i = 0
-
-        override fun generate(): Lotto {
-            return pattern[i++]
-        }
     }
 }

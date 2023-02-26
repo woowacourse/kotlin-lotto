@@ -1,8 +1,6 @@
 package view
 
 object InputView {
-    private const val SEPARATOR = ", "
-
     fun inputMoney(): String {
         return readln()
     }
@@ -11,12 +9,12 @@ object InputView {
         return readln()
     }
 
-    fun inputManualLotto(): List<String> {
-        return (readln().split(SEPARATOR))
+    fun inputManualLotto(): String {
+        return readln()
     }
 
-    fun inputWinningNumbers(): List<String> {
-        return (readln().split(SEPARATOR))
+    fun inputWinningNumbers(): String {
+        return readln()
     }
 
     fun inputBonusNumber(): String {

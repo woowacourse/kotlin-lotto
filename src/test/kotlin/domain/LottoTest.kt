@@ -9,14 +9,14 @@ class LottoTest {
     @Test
     fun `주생성자로 생성시 로또 번호를 6개 가진 로또 객체가 생성된다`() {
         // given
-        val lottoNumbers = listOf("1", "2", "3", "4", "5", "6")
+        val lottoNumbers = "1, 2, 3, 4, 5, 6"
 
         // when
         val lotto = Lotto(lottoNumbers)
 
         // then
         assertThat(lotto.lottoNumbers).isEqualTo(
-            setOf(
+            listOf(
                 LottoNumber.of(1),
                 LottoNumber.of(2),
                 LottoNumber.of(3),
@@ -30,8 +30,7 @@ class LottoTest {
     @Test
     fun `로또 번호가 6개가 아니라면 에러 발생`() {
         // given
-        val lottoNumbers = listOf("1", "2", "3", "4", "5")
-
+        val lottoNumbers = "1, 2, 3, 4, 5"
         // when
 
         // then
@@ -42,7 +41,7 @@ class LottoTest {
     @Test
     fun `로또 번호를 6개를 입력하나 중복이 있을 경우 에러발생`() {
         // given
-        val lottoNumbers = listOf<String>("1", "2", "2", "3", "4", "5")
+        val lottoNumbers = "1, 2, 2, 3, 4, 5"
 
         // when
         val exception = assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
@@ -54,7 +53,7 @@ class LottoTest {
     @Test
     fun `로또 번호가 중복된다면 에러 발생`() {
         // given
-        val lottoNumbers = listOf<String>("1", "2", "3", "4", "5", "5", "6")
+        val lottoNumbers = "1, 2, 3, 4, 5, 5, 6"
 
         // when
 
@@ -67,7 +66,7 @@ class LottoTest {
     @Test
     fun `로또에 숫자가 아닌 것이 들어오면 에러 발생`() {
         // given
-        val lottoNumbers = listOf<String>("a", "2", "3", "4", "5", "6")
+        val lottoNumbers = "a, 2, 3, 4, 5, 6"
 
         // when
         val exception = assertThrows<NumberFormatException> { Lotto(lottoNumbers) }
@@ -79,7 +78,8 @@ class LottoTest {
     @Test
     fun `순서에 맞지 않게 로또 번호가 입력될 경우 정렬한다`() {
         // given
-        val lottoNumbers = listOf<String>("1", "5", "3", "6", "4", "2")
+        val lottoNumbers = "1, 5, 3, 6, 4, 2"
+
         val expected = setOf(
             LottoNumber.of(1),
             LottoNumber.of(2),
