@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.entity.Lotto
 import lotto.entity.LottoCount
 import lotto.entity.LottoNumber
+import lotto.entity.LottoTicket
 import lotto.entity.Lottos
 import lotto.entity.ProfitRate
 import lotto.entity.PurchaseMoney
@@ -40,7 +41,7 @@ class World(
 
     private fun initLottos(purchaseLottoCount: LottoCount, manualLottoCount: LottoCount): Lottos {
         val store = LottoStore(purchaseLottoCount)
-        val manualLottos = store.buyManualLotto(manualLottoCount, *initManualLotto(manualLottoCount))
+        val manualLottos = store.buyManualLotto(*initManualLotto(manualLottoCount))
         val autoLottoCount = store.calculateAutoLottoCount(manualLottoCount)
         val autoLottos = store.buyAutoLotto(autoLottoCount)
         val totalLottos = store.mergeLottos(manualLottos, autoLottos)
@@ -49,8 +50,8 @@ class World(
         return totalLottos
     }
 
-    private fun initManualLotto(manualLottoCount: LottoCount): Array<Lotto> {
-        return inputView.getManualLottos(manualLottoCount).value.toTypedArray()
+    private fun initManualLotto(manualLottoCount: LottoCount): Array<LottoTicket> {
+        return inputView.getManualLottos(manualLottoCount)
     }
 
     private fun initWinNumber(): Lotto {

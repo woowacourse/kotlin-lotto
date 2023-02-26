@@ -3,7 +3,7 @@ package lotto.view
 import lotto.entity.Lotto
 import lotto.entity.LottoCount
 import lotto.entity.LottoNumber
-import lotto.entity.Lottos
+import lotto.entity.LottoTicket
 import lotto.entity.PurchaseMoney
 import lotto.entity.WinLotto
 import lotto.misc.tryAndRerun
@@ -45,21 +45,21 @@ class InputView {
         return purchaseMoney.checkManualLottoCount(input.toInt())
     }
 
-    fun getManualLottos(manualLottoCount: LottoCount): Lottos {
-        val lottos = mutableListOf<Lotto>()
+    fun getManualLottos(manualLottoCount: LottoCount): Array<LottoTicket> {
+        val lottos = ArrayList<LottoTicket>()
         if (manualLottoCount.value == 0)
-            return Lottos(lottos)
+            return lottos.toTypedArray()
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
         repeat(manualLottoCount.value) {
             lottos.add(getManualLotto())
         }
-        return Lottos(lottos)
+        return lottos.toTypedArray()
     }
 
-    private fun getManualLotto(): Lotto {
+    private fun getManualLotto(): LottoTicket {
         return tryAndRerun {
-            Lotto.from(readLottoNumber().map(::LottoNumber))
-        } as Lotto
+            LottoTicket(readLottoNumber())
+        } as LottoTicket
     }
 
     fun getWinNumber(): Lotto {
