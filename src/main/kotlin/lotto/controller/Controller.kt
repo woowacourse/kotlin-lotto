@@ -8,10 +8,10 @@ import lotto.domain.model.LottoMoney
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.UserLotto
 import lotto.domain.model.WinningNumbers
-import lotto.view.InputView
+import lotto.view.LottoInputView
 import lotto.view.OutputView
 
-class Controller(private val inputView: InputView, private val outputView: OutputView) {
+class Controller(private val inputView: LottoInputView, private val outputView: OutputView) {
     fun start() {
         val lottoNumbers = initializeLotto()
         val userLotto = UserLotto(lottoNumbers)
@@ -19,12 +19,11 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         outputView.printResult(ranks, YieldCalculator.calculateYield(userLotto.calculateCount(), ranks))
     }
 
-    fun initializeLotto(): List<Lotto> {
+    private fun initializeLotto(): List<Lotto> {
         val totalLottoCount: Int = readInputMoney().amount / LottoMoney.MONEY_UNIT
         val manualLottoCount = readManualLottoCount(totalLottoCount)
         val autoLottoCount = totalLottoCount - manualLottoCount
-        val manualLotto = repeatReadManualLotto(manualLottoCount)
-        val totalLotto = manualLotto + LottoGenerator.generate(autoLottoCount)
+        val totalLotto = readManualLotto(manualLottoCount) + LottoGenerator.generate(autoLottoCount)
         outputView.printLottoCountMessage(manualLottoCount, autoLottoCount)
         outputView.printLottoNumbers(totalLotto)
         return totalLotto
@@ -33,7 +32,6 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
     private fun readManualLottoCount(totalLottoCount: Int): Int {
         var countAvailable: Boolean
         var manualLottoCount: Int
-        outputView.printInputManualCountPrompt()
         do {
             manualLottoCount = inputView.readManualLottoCount()
             countAvailable = ManualLottoCountValidator.checkAvailable(manualLottoCount, totalLottoCount)
@@ -41,12 +39,11 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         return manualLottoCount
     }
 
-    private fun repeatReadManualLotto(count: Int): List<Lotto> {
-        outputView.printInputManualLottoNumbersPrompt()
+    private fun readManualLotto(count: Int): List<Lotto> {
         var lottoAvailable: Boolean
         var inputLottosNumbers: List<List<Int>>
         do {
-            inputLottosNumbers = inputView.repeatReadLottoNumber(count)
+            inputLottosNumbers = inputView.readManualLottoNumber(count)
             lottoAvailable = checkLottosAvailable(inputLottosNumbers)
         } while (!lottoAvailable)
         return inputLottosNumbers.map { lottoNumbers -> Lotto(lottoNumbers.map { LottoNumber.from(it) }.toSet()) }
@@ -58,7 +55,6 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
     }
 
     private fun readInputMoney(): LottoMoney {
-        outputView.printInputMoneyPrompt()
         var inputMoney: Int
         var moneyAvailable: Boolean
         do {
@@ -75,18 +71,16 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
     }
 
     private fun readWinningLotto(): Lotto {
-        outputView.printInputWinningNumbersPrompt()
         var inputNumbers: List<Int>
         var lottoAvailable: Boolean
         do {
-            inputNumbers = inputView.readLottoNumber()
+            inputNumbers = inputView.readWinningLottoNumber()
             lottoAvailable = checkLottoAvailable(inputNumbers)
         } while (!lottoAvailable)
         return Lotto(inputNumbers.map { LottoNumber.from(it) }.toSet())
     }
 
     private fun readBonusNumber(winningLotto: Lotto): LottoNumber {
-        outputView.printInputBonusNumberPrompt()
         var inputBonusNumber: Int
         var bonusNumberAvailable: Boolean
         do {
