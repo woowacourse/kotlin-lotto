@@ -17,10 +17,10 @@ object Controller {
     private val outputView = OutputView()
 
     fun run() {
-        val receipt = buy()
+        val receipt = pay()
         outputView.printInterval()
 
-        val tickets = publishTickets(receipt)
+        val tickets = buyTickets(receipt)
         outputView.printInterval()
 
         val winningLottery = getWinningLottery()
@@ -29,7 +29,7 @@ object Controller {
         announceResult(tickets, winningLottery, receipt.purchase)
     }
 
-    private fun buy(): Receipt {
+    private fun pay(): Receipt {
         val purchase = getPurchase()
         outputView.printInterval()
         return getReceipt(purchase)
@@ -55,16 +55,21 @@ object Controller {
         }
     }
 
-    private fun publishTickets(receipt: Receipt): List<Lottery> {
-        val manualTickets = buildList {
-            if (receipt.manual.count > 0) {
-                addAll(publishManualTickets(receipt.manual.count))
-                outputView.printInterval()
-            }
-        }
-        val autoTickets = publishAutoTickets(receipt.auto.count)
+    private fun buyTickets(receipt: Receipt): List<Lottery> {
+        val manualTickets = buyManualTickets(receipt.manual.count)
+        val autoTickets = buyAutoTickets(receipt.auto.count)
         val tickets = manualTickets + autoTickets
         outputView.printLotteryTickets(receipt, tickets)
+        return tickets
+    }
+
+    private fun buyManualTickets(count: Int): List<Lottery> {
+        if (count == 0) {
+            return listOf()
+        }
+
+        val tickets = publishManualTickets(count)
+        outputView.printInterval()
         return tickets
     }
 
@@ -75,11 +80,11 @@ object Controller {
             ticketsMachine.generate()
         }.getOrElse {
             outputView.printError(it.message ?: "")
-            publishManualTickets(count)
+            buyManualTickets(count)
         }
     }
 
-    private fun publishAutoTickets(count: Int): List<Lottery> {
+    private fun buyAutoTickets(count: Int): List<Lottery> {
         val ticketsMachine = AutoLotteryTicketsMachine(count)
         return ticketsMachine.generate()
     }
