@@ -1,7 +1,6 @@
 package lotto.model
 
 import lotto.entity.Lotto
-import lotto.entity.LottoCount
 import lotto.entity.LottoNumber
 import lotto.entity.LottoTicket
 import lotto.entity.PurchaseMoney
@@ -18,10 +17,9 @@ class LottoStoreTest {
         val purchaseMoney = PurchaseMoney(2000)
         val lottoA = LottoTicket(listOf(10, 12, 31, 34, 35, 45))
         val lottoB = LottoTicket(listOf(10, 12, 31, 34, 35, 45))
-        val purchaseCount = LottoCount(purchaseMoney.getPurchaseLottoCount())
-        val store = LottoStore(purchaseCount)
+        val store = LottoStore(purchaseMoney, arrayOf(lottoA, lottoB))
         // when
-        val actual = store.buyManualLotto(lottoA, lottoB)
+        val actual = store.buyManualLotto()
         val expect = listOf(
             Lotto.from(lottoA.numbers.map(::LottoNumber)),
             Lotto.from(lottoB.numbers.map(::LottoNumber)),
@@ -38,10 +36,9 @@ class LottoStoreTest {
     fun `자동 로또 2개를 구매한다`() {
         // given
         val purchaseMoney = PurchaseMoney(2000)
-        val purchaseCount = LottoCount(purchaseMoney.getPurchaseLottoCount())
-        val store = LottoStore(purchaseCount, lottoGenerator)
+        val store = LottoStore(purchaseMoney, lottoGenerator = lottoGenerator)
         // when
-        val actual = store.buyAutoLotto(purchaseCount)
+        val actual = store.buyAutoLotto()
         // then
         assertAll({
             assertThat(actual.value.size).isEqualTo(2)

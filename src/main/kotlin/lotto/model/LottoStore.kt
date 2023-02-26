@@ -1,22 +1,31 @@
 package lotto.model
 
 import lotto.entity.Lotto
-import lotto.entity.LottoCount
 import lotto.entity.LottoNumber
 import lotto.entity.LottoTicket
 import lotto.entity.Lottos
+import lotto.entity.PurchaseMoney
 
-class LottoStore(private val purchaseLottoCount: LottoCount, private val lottoGenerator: LottoGenerator = RandomLottoGenerator()) {
+class LottoStore(
+    private val purchaseMoney: PurchaseMoney,
+    private val manualLottoTickets: Array<LottoTicket> = arrayOf(),
+    private val lottoGenerator: LottoGenerator = RandomLottoGenerator()
+) {
+    var lottoCount = purchaseMoney.getPurchaseLottoCount()
+        private set
 
-    fun buyManualLotto(vararg lottos: LottoTicket): Lottos {
-        return Lottos(lottos.map { lottoTicket -> Lotto.from(lottoTicket.numbers.map(::LottoNumber)) })
+    fun makeLottos(): Lottos {
+        return mergeLottos(buyManualLotto(), buyAutoLotto())
     }
 
-    fun calculateAutoLottoCount(manualLottoCount: LottoCount): LottoCount = purchaseLottoCount - manualLottoCount
-
-    fun buyAutoLotto(lottoCount: LottoCount): Lottos {
-        return Lottos(List(lottoCount.value) { lottoGenerator.generate() })
+    fun buyManualLotto(): Lottos {
+        lottoCount -= manualLottoTickets.size
+        return Lottos(manualLottoTickets.map { lottoTicket -> Lotto.from(lottoTicket.numbers.map(::LottoNumber)) })
     }
 
-    fun mergeLottos(manualLotto: Lottos, autoLotto: Lottos): Lottos = manualLotto + autoLotto
+    fun buyAutoLotto(): Lottos {
+        return Lottos(List(lottoCount) { lottoGenerator.generate() })
+    }
+
+    private fun mergeLottos(manualLotto: Lottos, autoLotto: Lottos): Lottos = manualLotto + autoLotto
 }

@@ -23,7 +23,7 @@ class World(
     fun processLotto() {
         val purchaseMoney = initPurchaseMoney()
         val manualLottoCount = initManualLottoCount(purchaseMoney)
-        val lottos = initLottos(LottoCount(purchaseMoney.getPurchaseLottoCount()), manualLottoCount)
+        val lottos = initLottos(purchaseMoney, manualLottoCount)
         val winLotto = makeWinLotto()
         val winStatistics = makeWinStatistics(lottos, winLotto)
         outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
@@ -39,14 +39,14 @@ class World(
         return inputView.getManualLottoCount(purchaseMoney)
     }
 
-    private fun initLottos(purchaseLottoCount: LottoCount, manualLottoCount: LottoCount): Lottos {
-        val store = LottoStore(purchaseLottoCount)
-        val manualLottos = store.buyManualLotto(*initManualLotto(manualLottoCount))
-        val autoLottoCount = store.calculateAutoLottoCount(manualLottoCount)
-        val autoLottos = store.buyAutoLotto(autoLottoCount)
-        val totalLottos = store.mergeLottos(manualLottos, autoLottos)
-        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, manualLottoCount.value, autoLottoCount.value)
+    private fun initLottos(purchaseMoney: PurchaseMoney, manualLottoCount: LottoCount): Lottos {
+        val store = LottoStore(purchaseMoney, initManualLotto(manualLottoCount))
+
+        val totalLottos = store.makeLottos()
+
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, manualLottoCount.value, store.lottoCount)
         outputView.lottosResult(totalLottos)
+
         return totalLottos
     }
 
