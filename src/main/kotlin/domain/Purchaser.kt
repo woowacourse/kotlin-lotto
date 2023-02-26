@@ -2,10 +2,11 @@ package domain
 
 import domain.lotto.LottoBundle
 import domain.lotto.generator.LottoVendingMachine
+import util.LOTTO_PRICE
 import util.PREFIX
 
 class Purchaser(spentMoney: Money) {
-    val totalLottoCount: Int = (spentMoney / LOTTO_PRICE).toInt()
+    val totalLottoCount: Int = (spentMoney / Money(LOTTO_PRICE)).toInt()
     var manualLottoCount: Int = UNINITIALIZED_INT
         private set
     lateinit var purchasedLottoBundle: LottoBundle
@@ -38,7 +39,6 @@ class Purchaser(spentMoney: Money) {
     }
 
     companion object {
-        private val LOTTO_PRICE: Money = Money(1000)
         private const val UNINITIALIZED_INT: Int = -1
     }
 }

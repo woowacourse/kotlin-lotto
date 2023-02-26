@@ -1,6 +1,7 @@
 package domain
 
 import domain.lotto.LottoBundle
+import util.LOTTO_PRICE
 
 class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle) {
     val rankCount: Map<Rank, Int>
@@ -44,7 +45,6 @@ class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoB
     }
 
     companion object {
-        private const val LOTTO_PRICE = 1000
         private val BASE_MAP: Map<Rank, Int> = Rank.validValues().associateWith { 0 }
     }
 }
