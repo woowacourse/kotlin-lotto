@@ -1,10 +1,8 @@
 package lotto.view
 
-object InputView {
-    private const val INPUT_NOT_INT_ERROR = "숫자를 입력해주세요."
-    private const val INPUT_SPLIT_ERROR = "콤마로 구분된 숫자를 입력해주세요."
+class InputView : LottoInputView {
 
-    fun readInputMoney(): Int {
+    override fun readMoney(): Int {
         var input: String
         var pass = true
         do {
@@ -15,7 +13,15 @@ object InputView {
         return input.toInt()
     }
 
-    fun readInputLottoNumber(): List<Int> {
+    override fun repeatReadLottoNumber(count: Int): List<List<Int>> {
+        val lottoNumbers = mutableListOf<List<Int>>()
+        repeat(count) {
+            lottoNumbers.add(readLottoNumber())
+        }
+        return lottoNumbers
+    }
+
+    override fun readLottoNumber(): List<Int> {
         var input: List<String>
         var lottoNumbers: List<Int?>
         var pass = true
@@ -32,7 +38,7 @@ object InputView {
         return input.map { it.toInt() }
     }
 
-    fun readInputBonusNumber(): Int {
+    override fun readBonusNumber(): Int {
         var input: String
         var pass = true
         do {
@@ -43,7 +49,7 @@ object InputView {
         return input.toInt()
     }
 
-    fun readInputManualLottoCount(): Int {
+    override fun readManualLottoCount(): Int {
         var input: String
         var pass = true
         do {
@@ -55,6 +61,11 @@ object InputView {
     }
 
     private fun printErrorMessageIfNotPass(pass: Boolean, message: String) {
-        if (!pass) OutputView.printErrorMessage(message)
+        if (!pass) println(OutputView.ERROR_PREFIX + message)
+    }
+
+    companion object {
+        private const val INPUT_NOT_INT_ERROR = "숫자를 입력해주세요."
+        private const val INPUT_SPLIT_ERROR = "콤마로 구분된 숫자를 입력해주세요."
     }
 }
