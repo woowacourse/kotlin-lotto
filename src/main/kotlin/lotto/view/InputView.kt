@@ -8,8 +8,8 @@ object InputView {
         var input: String
         var pass = true
         do {
-            input = readln()
             printErrorMessageIfNotPass(pass, INPUT_NOT_INT_ERROR)
+            input = readln()
             pass = input.toIntOrNull() != null
         } while (!pass)
         return input.toInt()
@@ -36,8 +36,8 @@ object InputView {
         var input: String
         var pass = true
         do {
-            input = readln()
             printErrorMessageIfNotPass(pass, INPUT_NOT_INT_ERROR)
+            input = readln()
             pass = input.toIntOrNull() != null
         } while (!pass)
         return input.toInt()
@@ -47,8 +47,8 @@ object InputView {
         var input: String
         var pass = true
         do {
-            input = readln()
             printErrorMessageIfNotPass(pass, INPUT_NOT_INT_ERROR)
+            input = readln()
             pass = input.toIntOrNull() != null
         } while (!pass)
         return input.toInt()

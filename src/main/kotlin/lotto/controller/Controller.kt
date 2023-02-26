@@ -33,8 +33,8 @@ class Controller {
     private fun readManualLottoCount(totalLottoCount: Int): Int {
         var countAvailable: Boolean
         var manualLottoCount: Int
+        OutputView.printInputManualCountPrompt()
         do {
-            OutputView.printInputManualCountPrompt()
             manualLottoCount = InputView.readInputManualLottoCount()
             countAvailable = ManualLottoCountValidator.checkAvailable(manualLottoCount, totalLottoCount)
         } while (!countAvailable)

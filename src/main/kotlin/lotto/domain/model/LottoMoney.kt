@@ -9,6 +9,7 @@ class LottoMoney(val amount: Int) {
     }
 
     companion object {
+
         fun checkMoneyAvailable(amount: Int): Boolean {
             if (amount < MONEY_UNIT) {
                 println(OutputView.ERROR_PREFIX + MONEY_MINIMUM_ERROR)

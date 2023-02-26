@@ -3,6 +3,7 @@ package lotto.domain.model
 import lotto.view.OutputView
 
 class WinningNumbers(val winningLotto: Lotto, val bonusNumber: LottoNumber) {
+
     init {
         require(!checkBonusNumberAvailable(winningLotto, bonusNumber.number)) { BONUS_NUMBER_DUPLICATE_ERROR }
     }
