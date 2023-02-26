@@ -6,28 +6,16 @@ import org.junit.jupiter.api.Test
 class LottoBundleTest {
 
     @Test
-    fun `수동으로 로또를 발행`() {
+    fun `수동생성된 로또와 자동 생성 로또를 합쳐서 로또번들을 만든다`() {
         // given
-        val lottoBundle = LottoBundle()
-        val lottoNumbers = listOf("1", "2", "3", "4", "5", "6")
+        val manualLottos = listOf(Lotto("1, 2, 3, 4, 5, 6"))
+        val autoLottos = listOf(Lotto("7, 8, 9, 10, 11, 12"))
 
         // when
-        lottoBundle.manualGenerate(lottoNumbers)
+        val lottoBundle = LottoBundle(manualLottos, autoLottos)
 
         // then
-        assertThat(lottoBundle.lottos[0].lottoNumbers).isEqualTo(Lotto(lottoNumbers).lottoNumbers)
-    }
-
-    @Test
-    fun `자동으로 발행해야할 로또 개수만큼 발행`() {
-        // given
-        val lottoBundle = LottoBundle()
-        val lotto = Lotto(listOf("1", "2", "3", "4", "5", "6"))
-
-        // when
-        lottoBundle.autoGenerate(5) { lotto }
-
-        // then
-        assertThat(lottoBundle.lottos.size).isEqualTo(5)
+        assertThat(lottoBundle.lottos[0]).isEqualTo(manualLottos[0])
+        assertThat(lottoBundle.lottos[1]).isEqualTo(autoLottos[0])
     }
 }

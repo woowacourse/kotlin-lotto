@@ -1,8 +1,8 @@
 import domain.Lotto
 import domain.LottoBundle
-import domain.LottoGenerator
 import domain.LottoNumber
 import domain.ManualCount
+import domain.ManualLottoGenerator
 import domain.Payment
 import domain.RandomLottoGenerator
 import domain.WinningNumbers
@@ -11,16 +11,16 @@ import view.OutputView
 
 class LottoController {
 
-    private val lottoGenerator: LottoGenerator = RandomLottoGenerator()
-
     fun startLottoGame() {
         val payment: Payment = getPayment()
         val maxLottoCount: Int = payment.calculateMaxLottoCount()
         val manualCount: ManualCount = getManualCount(maxLottoCount)
         val autoCount: Int = payment.calculateAutoLottoCount(maxLottoCount, manualCount.count)
-        val lottoBundle = LottoBundle()
-        getManualLottos(lottoBundle, manualCount.count)
-        lottoBundle.autoGenerate(autoCount, lottoGenerator)
+        val manualLottoGenerator = ManualLottoGenerator()
+        val randomLottoGenerator = RandomLottoGenerator()
+        getManualLottos(manualLottoGenerator, manualCount.count)
+        randomLottoGenerator.autoGenerate(autoCount)
+        val lottoBundle = LottoBundle(manualLottoGenerator.manualLottos, randomLottoGenerator.autoLottos)
         OutputView.printPurchasedLottoCount(manualCount.count, autoCount)
         OutputView.printPurchasedLotto(lottoBundle)
         produceResult(lottoBundle, payment)
@@ -46,10 +46,10 @@ class LottoController {
             }
     }
 
-    private fun getManualLottos(lottoBundle: LottoBundle, manualCount: Int) {
+    private fun getManualLottos(manualLottoGenerator: ManualLottoGenerator, manualCount: Int) {
         if (manualCount != 0) OutputView.printRequestManualLottos()
-        while (lottoBundle.lottos.size < manualCount) {
-            runCatching { lottoBundle.manualGenerate(InputView.inputManualLotto()) }
+        while (manualLottoGenerator.manualLottos.size < manualCount) {
+            runCatching { manualLottoGenerator.generate(InputView.inputManualLotto()) }
                 .getOrElse { error ->
                     println(error.message)
                 }
@@ -75,7 +75,7 @@ class LottoController {
 
     private fun getWinningLotto(): Lotto {
         OutputView.printRequestWinningNumbers()
-        val winningNumbers: List<String> = InputView.inputWinningNumbers()
+        val winningNumbers: String = InputView.inputWinningNumbers()
         return runCatching { Lotto(winningNumbers) }
             .getOrElse { error ->
                 println(error.message)

@@ -5,27 +5,28 @@ import org.junit.jupiter.api.Test
 
 class RandomLottoGeneratorTest {
 
-    private val randomLottoGenerator = RandomLottoGenerator()
-
     @Test
     fun `임의의 로또번호 6개를 생성한다`() {
         // given
+        val randomLottoGenerator = RandomLottoGenerator()
 
         // when
-        val actual: Lotto = randomLottoGenerator.generate()
+        randomLottoGenerator.autoGenerate(1)
 
         // then
-        assertThat(actual.lottoNumbers.size).isEqualTo(6)
+        assertThat(randomLottoGenerator.autoLottos[0].lottoNumbers.size).isEqualTo(6)
     }
 
     @Test
     fun `중복이 없는 로또 번호 6개를 생성한다`() {
         // given
+        val randomLottoGenerator = RandomLottoGenerator()
 
         // when
-        val actual = randomLottoGenerator.generate().lottoNumbers.distinct().size
+        randomLottoGenerator.autoGenerate(1)
+        val actual: List<LottoNumber> = randomLottoGenerator.autoLottos[0].lottoNumbers
 
         // then
-        assertThat(actual).isEqualTo(6)
+        assertThat(actual.distinct().size).isEqualTo(6)
     }
 }
