@@ -1,11 +1,10 @@
 package lotto.domain
 
 class Receipt(val purchase: PurchaseAmount, val manual: TicketCount) {
-    var auto: TicketCount
+    val auto: TicketCount by lazy { TicketCount(purchase.count - manual.count) }
 
     init {
         checkCount()
-        auto = TicketCount(purchase.count - manual.count)
     }
 
     private fun checkCount() {
