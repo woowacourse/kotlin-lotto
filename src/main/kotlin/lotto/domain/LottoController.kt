@@ -19,7 +19,7 @@ class LottoController {
         val money = getMoney()
         val numberOfLotto = money.getNumberOfLotto()
         val manualLotto = createManualLotto(numberOfLotto)
-        val myLotto = UserLottoGenerator().generateLotto(manualLotto, numberOfLotto)
+        val myLotto = UserLottoGenerator().generateLotto({ getLottoNumber() }, manualLotto, numberOfLotto)
         printUserLotto(myLotto)
         makeWinningStats(myLotto, money)
     }
@@ -35,7 +35,6 @@ class LottoController {
         val manualLotto = makeManualLotto(numberOfLotto)
         printPurchaseMessage(manualLotto, numberOfLotto)
         printMessage(INSERT_MANUAL_LOTTO)
-        manualLotto.generateManualLotto { getLottoNumber() }
         return manualLotto
     }
 

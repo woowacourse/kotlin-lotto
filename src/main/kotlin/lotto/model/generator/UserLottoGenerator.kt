@@ -5,13 +5,31 @@ import lotto.model.ManualLottos
 import lotto.model.UserLotto
 
 class UserLottoGenerator(
-    private val generator: LottoNumberGenerator = LottoNumberGenerator(),
+    private val autoLottoGenerator: LottoNumberGenerator = LottoNumberGenerator(),
 ) {
-    fun generateLotto(manualLotto: ManualLottos, totalNumberOfLotto: Int): UserLotto {
+    fun generateLotto(
+        input: () -> Lotto,
+        manualLotto: ManualLottos,
+        totalNumberOfLotto: Int,
+    ): UserLotto {
+        val manualLottos = generateManualLottos(input, manualLotto)
+        val autoLottos = generateAutoLottos(totalNumberOfLotto - manualLotto.numberOfLotto)
+
+        return UserLotto(manualLottos + autoLottos)
+    }
+
+    private fun generateAutoLottos(numberOfAutoLotto: Int): List<Lotto> {
         val lotto = mutableListOf<Lotto>()
-        repeat(totalNumberOfLotto - manualLotto.numberOfLotto) {
-            lotto.add(generator.generate())
+        repeat(numberOfAutoLotto) {
+            lotto.add(autoLottoGenerator.generate())
         }
-        return UserLotto(manualLotto.lotto + lotto)
+        return lotto
+    }
+
+    private fun generateManualLottos(input: () -> Lotto, manualLotto: ManualLottos): List<Lotto> {
+        repeat(manualLotto.numberOfLotto) {
+            manualLotto.add(input())
+        }
+        return manualLotto.lotto
     }
 }

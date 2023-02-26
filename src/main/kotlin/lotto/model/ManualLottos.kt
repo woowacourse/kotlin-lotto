@@ -15,10 +15,7 @@ class ManualLottos(
         return this
     }
 
-    fun generateManualLotto(input: () -> Lotto): List<Lotto> {
-        repeat(numberOfLotto) {
-            _lotto.add(input())
-        }
-        return lotto
+    fun add(lotto: Lotto) {
+        _lotto.add(lotto)
     }
 }

@@ -1,6 +1,5 @@
 package lotto.model
 
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -12,15 +11,5 @@ class ManualLottosTest {
         assertThrows<IllegalArgumentException> {
             ManualLottos(numberOfManualLotto).validateNumberOfLotto(totalNumber)
         }
-    }
-
-    @Test
-    fun `입력된 수동 로또를 저장한다`() {
-        val result = ManualLottos(2).generateManualLotto { getLottoNumber() }
-        assertThat(result.size).isEqualTo(2)
-    }
-
-    private fun getLottoNumber(): Lotto {
-        return Lotto(1, 2, 3, 4, 5, 6)
     }
 }
