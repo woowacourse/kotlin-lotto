@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.domain.LottoGenerator
+import lotto.domain.LottoNumberGenerator
 import lotto.domain.ManualLottoCountValidator
 import lotto.domain.YieldCalculator
 import lotto.domain.model.Lotto
@@ -9,9 +10,13 @@ import lotto.domain.model.LottoNumber
 import lotto.domain.model.UserLotto
 import lotto.domain.model.WinningNumbers
 import lotto.view.LottoInputView
-import lotto.view.OutputView
+import lotto.view.LottoOutputView
 
-class Controller(private val inputView: LottoInputView, private val outputView: OutputView) {
+class Controller(
+    private val inputView: LottoInputView,
+    private val outputView: LottoOutputView,
+    private val randomNumberGenerator: LottoNumberGenerator
+) {
     fun start() {
         val lottoNumbers = initializeLotto()
         val userLotto = UserLotto(lottoNumbers)
@@ -20,10 +25,11 @@ class Controller(private val inputView: LottoInputView, private val outputView: 
     }
 
     private fun initializeLotto(): List<Lotto> {
-        val totalLottoCount: Int = readInputMoney().amount / LottoMoney.MONEY_UNIT
+        val totalLottoCount: Int = readMoney().amount / LottoMoney.MONEY_UNIT
         val manualLottoCount = readManualLottoCount(totalLottoCount)
         val autoLottoCount = totalLottoCount - manualLottoCount
-        val totalLotto = readManualLotto(manualLottoCount) + LottoGenerator.generate(autoLottoCount)
+        val totalLotto =
+            readManualLotto(manualLottoCount) + LottoGenerator(randomNumberGenerator).generate(autoLottoCount)
         outputView.printLottoCountMessage(manualLottoCount, autoLottoCount)
         outputView.printLottoNumbers(totalLotto)
         return totalLotto
@@ -46,7 +52,11 @@ class Controller(private val inputView: LottoInputView, private val outputView: 
             inputLottosNumbers = inputView.readManualLottoNumber(count)
             lottoAvailable = checkLottosAvailable(inputLottosNumbers)
         } while (!lottoAvailable)
-        return inputLottosNumbers.map { lottoNumbers -> Lotto(lottoNumbers.map { LottoNumber.from(it) }.toSet()) }
+        return inputLottosNumbers.map { lottoNumbers ->
+            LottoGenerator(randomNumberGenerator).generateManual(
+                lottoNumbers
+            )
+        }
     }
 
     private fun checkLottosAvailable(inputNumbers: List<List<Int>>): Boolean {
@@ -54,7 +64,7 @@ class Controller(private val inputView: LottoInputView, private val outputView: 
         return true
     }
 
-    private fun readInputMoney(): LottoMoney {
+    private fun readMoney(): LottoMoney {
         var inputMoney: Int
         var moneyAvailable: Boolean
         do {
