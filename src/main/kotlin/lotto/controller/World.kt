@@ -24,10 +24,10 @@ class World(
         val purchaseMoney = initPurchaseMoney()
         val manualLottoCount = initManualLottoCount(purchaseMoney)
         val lottos = initLottos(purchaseMoney, manualLottoCount)
-        val winLotto = makeWinLotto()
-        val winStatistics = makeWinStatistics(lottos, winLotto)
-        outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
+        val winStatistics = makeWinStatistics(lottos, makeWinLotto())
         val profitRate = makeProfitRate(purchaseMoney, winStatistics)
+
+        outputView.winStatisticsResult(winStatistics, LottoWinStatisticsFormatter())
         outputView.profitRateResult(profitRate)
     }
 
