@@ -8,11 +8,11 @@ object LottoGenerator {
 
     fun generate(count: Int): List<Lotto> {
         val lottoNumbers = mutableListOf<Lotto>()
-        repeat(count) { lottoNumbers.add(Lotto(randomNumberGenerator.generate())) }
+        repeat(count) { lottoNumbers.add(Lotto(randomNumberGenerator.generate().toSet())) }
         return lottoNumbers
     }
 
     fun generateManual(lottoNumbers: List<Int>): Lotto {
-        return Lotto(lottoNumbers.map { LottoNumber.from(it) })
+        return Lotto(lottoNumbers.map { LottoNumber.from(it) }.toSet())
     }
 }
