@@ -4,20 +4,16 @@ import kotlin.math.floor
 
 class LottoStatistics(private val winningLotto: WinningLotto) {
 
-    fun matchTicket(ticket: Ticket): Map<Rank, Int> {
-        val result = Rank.values().associateWith { 0 }.toMutableMap()
-        ticket.lottos.forEach { lotto ->
-            val matchRank = lotto.matchResult(winningLotto)
-            result[matchRank] = (result[matchRank] ?: 0) + 1
+    fun matchTicket(ticket: Ticket): LottoResult {
+        val result = ticket.matchTicketCount(winningLotto) as MutableMap
+        Rank.values().filter { result[it] == null }.forEach {
+            result[it] = 0
         }
-        return result
+        return LottoResult(result)
     }
 
-    fun yield(result: Map<Rank, Int>, purchaseLottoMoney: PurchaseLottoMoney): String {
-        var sum = 0.0
-        for ((rank, count) in result) {
-            sum += rank.winningMoney * count
-        }
+    fun yield(lottoResult: LottoResult, purchaseLottoMoney: PurchaseLottoMoney): String {
+        val sum = lottoResult.sumWinningMoney()
         return (floor((sum / (purchaseLottoMoney.money)) * 100) / 100).toString()
     }
 }

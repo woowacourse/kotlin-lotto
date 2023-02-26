@@ -2,42 +2,64 @@ package view
 
 import domain.Lotto
 import domain.LottoNumber
+import domain.LottoPurchaseInfo
 import domain.PurchaseLottoMoney
+import domain.Ticket
+import domain.WinningLotto
+import view.validator.Validator
 
 class InputView : InputViewInterface {
-    override fun getMoney(): PurchaseLottoMoney {
+    override fun askMoney(): PurchaseLottoMoney? {
+        val input = readln()
+        if (!Validator.validateConvertInt(input)) return null
+        val number = input.toInt()
+        if (!Validator.validateMakePurchaseLottoMoney(number)) return null
+        return PurchaseLottoMoney(number)
+    }
+
+    override fun askManualCount(purchaseLottoMoney: PurchaseLottoMoney): LottoPurchaseInfo? {
+        val input = readln()
+        if (!Validator.validateConvertInt(input)) return null
+        val number = input.toInt()
+        if (!Validator.validateMakeLottoPurchaseInfo(purchaseLottoMoney, number)) return null
+        return LottoPurchaseInfo(purchaseLottoMoney, number)
+    }
+
+    override fun askManualNumbers(purchaseInfo: LottoPurchaseInfo): Ticket {
+        val lottos = mutableListOf<Lotto>()
+        repeat(purchaseInfo.manualCount) { lottos.add(getManualNumber()) }
+        return Ticket(lottos)
+    }
+
+    private fun getManualNumber(): Lotto {
         while (true) {
-            println(INPUT_MESSAGE_FOR_PURCHASE_MONEY)
-            val money = readln()
-            runCatching { PurchaseLottoMoney(money.toInt()) }
-                .onSuccess { return it }
-                .onFailure { println(it.message) }
+            val input = readln()
+            if (!Validator.validateConvertToIntList(input, COMMA)) continue
+            val numbers = input.split(COMMA).map { it.trim().toInt() }
+            if (!Validator.validateMakeLotto(numbers)) continue
+            return Lotto(numbers)
         }
     }
 
-    override fun getWinningNumbers(): Lotto {
-        while (true) {
-            println(INPUT_MESSAGE_FOR_WINNING_NUMBERS)
-            val numbers = readln()
-            runCatching { Lotto(numbers.split(",").map { LottoNumber.from(it.trim().toInt()) }.toSet()) }
-                .onSuccess { return it }
-                .onFailure { println(it.message) }
-        }
+    override fun askWinningNumbers(): Lotto? {
+        val input = readln()
+        if (!Validator.validateConvertToIntList(input, COMMA)) return null
+        val numbers = input.split(COMMA).map { it.trim().toInt() }
+        if (!Validator.validateMakeLotto(numbers)) return null
+        return Lotto(numbers)
     }
 
-    override fun getBonusNumber(): LottoNumber {
-        while (true) {
-            println(INPUT_MESSAGE_FOR_BONUS_NUMBER)
-            val bonusNumber = readln()
-            runCatching { LottoNumber.from(bonusNumber.toInt()) }
-                .onSuccess { return it }
-                .onFailure { println(it.message) }
-        }
+    override fun askBonusNumber(winningNumbers: Lotto): WinningLotto? {
+        val input = readln()
+        if (!Validator.validateConvertInt(input)) return null
+        val number = input.toInt()
+        if (!Validator.validateMakeLottoNumber(number)) return null
+        val bonusNumber = LottoNumber.from(number)
+        if (!Validator.validateMakeWinningLotto(winningNumbers, bonusNumber)) return null
+        return WinningLotto(winningNumbers, bonusNumber)
     }
 
     companion object {
-        private const val INPUT_MESSAGE_FOR_PURCHASE_MONEY = "구입 금액을 입력해 주세요."
-        private const val INPUT_MESSAGE_FOR_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
-        private const val INPUT_MESSAGE_FOR_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+        private const val COMMA = ","
     }
 }

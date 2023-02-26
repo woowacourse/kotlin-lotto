@@ -3,10 +3,6 @@ package domain
 import common.convertToLottoNumberSet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import java.util.stream.Stream
 
 class LottoStatisticsTest {
 
@@ -14,21 +10,21 @@ class LottoStatisticsTest {
     fun `Ticket을 넘겨 받아서 당첨 번호와 비교한다`() {
         val ticket = Ticket(
             listOf(
-                Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()),
-                Lotto(setOf(1, 2, 3, 4, 5, 6).convertToLottoNumberSet()),
-                Lotto(setOf(1, 2, 3, 4, 5, 13).convertToLottoNumberSet()),
-                Lotto(setOf(1, 2, 3, 4, 5, 9).convertToLottoNumberSet()),
+                Lotto(1, 2, 3, 4, 5, 6),
+                Lotto(1, 2, 3, 4, 5, 6),
+                Lotto(1, 2, 3, 4, 5, 13),
+                Lotto(1, 2, 3, 4, 5, 9),
             )
         )
         val winningNumber = setOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber.from(13)
         val winningLotto = WinningLotto(Lotto(winningNumber.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
-        val result: Map<Rank, Int> = lottoStatistics.matchTicket(ticket)
+        val lottoResult: LottoResult = lottoStatistics.matchTicket(ticket)
 
-        assertThat(result[Rank.FIRST]).isEqualTo(2)
-        assertThat(result[Rank.SECOND]).isEqualTo(1)
-        assertThat(result[Rank.THIRD]).isEqualTo(1)
+        assertThat(lottoResult[Rank.FIRST]).isEqualTo(2)
+        assertThat(lottoResult[Rank.SECOND]).isEqualTo(1)
+        assertThat(lottoResult[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
@@ -46,7 +42,7 @@ class LottoStatisticsTest {
         val winningLotto = WinningLotto(Lotto(winningNumber.convertToLottoNumberSet()), bonusNumber)
         val lottoStatistics = LottoStatistics(winningLotto)
         val purchaseLottoMoney = PurchaseLottoMoney(14000)
-        val result = lottoStatistics.yield(winResult, purchaseLottoMoney)
+        val result = lottoStatistics.yield(LottoResult(winResult), purchaseLottoMoney)
         val expected = "0.35"
         assertThat(result).isEqualTo(expected)
     }

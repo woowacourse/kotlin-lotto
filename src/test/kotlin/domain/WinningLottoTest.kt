@@ -1,6 +1,7 @@
 package domain
 
 import common.convertToLottoNumberSet
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -29,5 +30,13 @@ class WinningLottoTest {
         assertThrows<IllegalArgumentException> {
             WinningLotto(lotto, LottoNumber.from(bonusNumber))
         }
+    }
+
+    @Test
+    fun `자신의 번호와 정답번호를 비교해서 당첨 결과 등수를 반환`() {
+        val winningLotto = WinningLotto(Lotto(setOf(1, 2, 3, 4, 5, 7).convertToLottoNumberSet()), LottoNumber.from(6))
+        val result = winningLotto.matchResult(Lotto(1, 2, 3, 4, 5, 6))
+        val expected = Rank.SECOND
+        assertThat(result).isEqualTo(expected)
     }
 }
