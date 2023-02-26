@@ -6,14 +6,12 @@ class Lotto(val lottoNumbers: List<LottoNumber>) {
         require(lottoNumbers.toSet().size == LOTTO_NUMBER_COUNT_RULE) { LOTTO_NUMBER_DUPLICATE_ERROR_MESSAGE }
     }
 
-    fun getNumbers() = lottoNumbers.map { lottoNumber -> lottoNumber.number }
-
     fun getMatchOfNumber(winningNumber: Lotto) = lottoNumbers.filter { lottoNumber ->
         winningNumber.lottoNumbers.contains(lottoNumber)
     }.size
 
-    fun isMatchBonus2(winningNumber: WinningNumber): Boolean {
-        return lottoNumbers.contains(winningNumber.bonusNumber)
+    fun isMatchBonus(winningNumber: LottoNumber): Boolean {
+        return lottoNumbers.contains(winningNumber)
     }
 
     companion object {
