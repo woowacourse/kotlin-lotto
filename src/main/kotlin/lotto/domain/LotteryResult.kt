@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class LotteryResult(private val tickets: List<Lottery>, private val winningLottery: WinningLottery) {
-    val ranks = run {
+    val ranks: Map<Rank, Int> by lazy {
         val ranks = tickets.map {
             Rank.valueOf(
                 it.countMatches(winningLottery.lottery),
