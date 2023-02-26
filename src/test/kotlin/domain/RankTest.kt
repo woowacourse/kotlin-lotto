@@ -16,4 +16,16 @@ class RankTest {
         // then
         assertThat(actual).isEqualTo(Rank.SECOND)
     }
+
+    @Test
+    fun `MISS를 제외한 모든 Rank를 반환한다`() {
+        // given
+        val expected = listOf<Rank>(Rank.FIRST, Rank.SECOND, Rank.THIRD, Rank.FOURTH, Rank.FIFTH)
+
+        // when
+        val actual = Rank.validValues()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }

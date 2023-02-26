@@ -26,5 +26,9 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
                 it.checkSame(countOfMatch, matchBonus)
             } ?: MISS
         }
+
+        fun validValues(): List<Rank> {
+            return values().filter { it != MISS }
+        }
     }
 }

@@ -25,6 +25,8 @@ class WinStatisticsTest {
             Rank.FIRST to 2,
             Rank.SECOND to 1,
             Rank.THIRD to 2,
+            Rank.FOURTH to 0,
+            Rank.FIFTH to 0,
         )
 
         // when

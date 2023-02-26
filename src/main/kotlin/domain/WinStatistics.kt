@@ -8,7 +8,7 @@ class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoB
     val earningRate: Double
 
     init {
-        rankCount = purchasedLottoBundle
+        rankCount = BASE_MAP + purchasedLottoBundle
             .compareWithWinningNumbers(winningNumbers)
             .groupingBy { it }
             .eachCount()
@@ -45,5 +45,6 @@ class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoB
 
     companion object {
         private const val LOTTO_PRICE = 1000
+        private val BASE_MAP: Map<Rank, Int> = Rank.validValues().associateWith { 0 }
     }
 }
