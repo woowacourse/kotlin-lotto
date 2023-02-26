@@ -96,9 +96,8 @@ object Controller {
     }
 
     private fun announceResult(tickets: List<Lottery>, lottery: WinningLottery, purchase: PurchaseAmount) {
-        val ranks = LotteryResult.getRanks(tickets, lottery)
-        val prize = LotteryResult.getTotalPrize(ranks)
-        val profit = LotteryResult.getProfit(purchase, prize)
-        outputView.printWinningResult(ranks, profit)
+        val result = LotteryResult(tickets, lottery)
+        val profit = result.getProfit(purchase)
+        outputView.printWinningResult(result.ranks, profit)
     }
 }
