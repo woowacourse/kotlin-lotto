@@ -3,17 +3,7 @@ package lotto.domain
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class LotteryResult(private val tickets: List<Lottery>, private val winningLottery: WinningLottery) {
-    val ranks: Map<Rank, Int> by lazy {
-        val ranks = tickets.map {
-            Rank.valueOf(
-                it.countMatches(winningLottery.lottery),
-                it.containBonusNumber(winningLottery.bonusNumber)
-            )
-        }
-        Rank.values().associateWith { key -> ranks.count { key == it } }
-    }
-
+class LotteryResult(val ranks: Map<Rank, Int>) {
     fun getProfit(purchase: PurchaseAmount): Double {
         val prize = getTotalPrize()
         return BigDecimal(prize).divide(BigDecimal(purchase.amount), NUMBER_OF_DECIMAL_PLACES, RoundingMode.FLOOR)
