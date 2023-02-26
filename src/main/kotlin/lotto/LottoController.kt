@@ -4,7 +4,6 @@ import lotto.domain.Lotto
 import lotto.domain.LottoBunch
 import lotto.domain.LottoNumber
 import lotto.domain.ManualPurchaseCount
-import lotto.domain.ManualPurchaseCount.Companion.ManualPurchaseCount
 import lotto.domain.PurchaseMoney
 import lotto.domain.WinningLotto
 import lotto.domain.WinningResult
@@ -69,7 +68,7 @@ class LottoController(private val lottoFactory: LottoFactory) {
 
     private fun getManualPurchaseCount(purchaseCount: Int): ManualPurchaseCount {
         return runCatching {
-            ManualPurchaseCount(getManualPurchaseCount(), purchaseCount)
+            ManualPurchaseCount.from(getManualPurchaseCount(), purchaseCount)
         }.getOrElse { error ->
             println(error.message)
             getManualPurchaseCount(purchaseCount)

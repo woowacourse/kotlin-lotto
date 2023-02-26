@@ -11,7 +11,7 @@ value class ManualPurchaseCount private constructor(val value: Int) {
         private const val BIGGER_MANUAL_PURCHASE_MONEY_ERROR = "수동 구입 로또수는 총 구입로또 수 보다 작아야 합니다."
         private const val NEGATIVE_MANUAL_PURCHASE_MONEY_ERROR = "수동 구입 로또수는 음수일 수 없습니다"
 
-        fun ManualPurchaseCount(manualPurchaseCount: Int, purchaseCount: Int): ManualPurchaseCount {
+        fun from(manualPurchaseCount: Int, purchaseCount: Int): ManualPurchaseCount {
             require(manualPurchaseCount < purchaseCount) { BIGGER_MANUAL_PURCHASE_MONEY_ERROR }
             return ManualPurchaseCount(manualPurchaseCount)
         }
