@@ -2,10 +2,11 @@ package lotto.view
 
 import lotto.domain.Lottery
 import lotto.domain.Rank
+import lotto.domain.Receipt
 
 class OutputView {
-    fun printLotteryTickets(manualQuantity: Int, tickets: List<Lottery>) {
-        println("${NUMBER_OF_LOTTERY_TICKETS_GUIDE.format(manualQuantity, tickets.size - manualQuantity)}")
+    fun printLotteryTickets(receipt: Receipt, tickets: List<Lottery>) {
+        println("${NUMBER_OF_LOTTERY_TICKETS_GUIDE.format(receipt.manual.count, receipt.auto.count)}")
         tickets.forEach { ticket ->
             println(ticket.numbers.map { it.toInt() }.sorted())
         }

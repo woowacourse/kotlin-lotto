@@ -24,10 +24,6 @@ class PurchaseAmount(
         }
     }
 
-    fun getAutoPurchaseCount(quantity: Int): Int {
-        return count - quantity
-    }
-
     companion object {
         private const val PURCHASE_AMOUNT_BOUNDARY_ERROR_MESSAGE = "구입금액은 1000원 이상 5만원 이하여야 합니다."
         private const val PURCHASE_AMOUNT_LOWER_BOUNDARY = 1000

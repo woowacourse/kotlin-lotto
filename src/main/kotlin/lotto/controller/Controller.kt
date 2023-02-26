@@ -20,13 +20,13 @@ object Controller {
         val receipt = buy()
         outputView.printInterval()
 
-        val tickets = purchaseTickets(receipt)
+        val tickets = publishTickets(receipt)
         outputView.printInterval()
 
         val winningLottery = getWinningLottery()
         outputView.printInterval()
 
-        announceResult(tickets, winningLottery, receipt)
+        announceResult(tickets, winningLottery, receipt.purchase)
     }
 
     private fun buy(): Receipt {
@@ -55,21 +55,16 @@ object Controller {
         }
     }
 
-    private fun purchaseTickets(receipt: Receipt): List<Lottery> {
-        val autoCount = receipt.purchase.getAutoPurchaseCount(receipt.manual.count)
-        return publishTickets(receipt.manual.count, autoCount)
-    }
-
-    private fun publishTickets(manualCount: Int, autoCount: Int): List<Lottery> {
+    private fun publishTickets(receipt: Receipt): List<Lottery> {
         val manualTickets = mutableListOf<Lottery>()
-        if (manualCount > 0) {
-            manualTickets.addAll(publishManualTickets(manualCount))
+        if (receipt.manual.count > 0) {
+            manualTickets.addAll(publishManualTickets(receipt.manual.count))
             outputView.printInterval()
         }
 
-        val autoTickets = publishAutoTickets(autoCount)
+        val autoTickets = publishAutoTickets(receipt.auto.count)
         val tickets = manualTickets + autoTickets
-        outputView.printLotteryTickets(manualCount, tickets)
+        outputView.printLotteryTickets(receipt, tickets)
         return tickets
     }
 
@@ -77,8 +72,7 @@ object Controller {
         return runCatching {
             val manualNumbers = inputView.readManualLotteryNumbers(count)
             val ticketsMachine = ManualLotteryTicketsMachine(manualNumbers)
-            val manualTickets = ticketsMachine.generate()
-            manualTickets
+            ticketsMachine.generate()
         }.getOrElse {
             inputView.printError(it.message ?: "")
             publishManualTickets(count)
@@ -101,10 +95,10 @@ object Controller {
         }
     }
 
-    private fun announceResult(tickets: List<Lottery>, lottery: WinningLottery, receipt: Receipt) {
+    private fun announceResult(tickets: List<Lottery>, lottery: WinningLottery, purchase: PurchaseAmount) {
         val ranks = LotteryResult.getRanks(tickets, lottery)
         val prize = LotteryResult.getTotalPrize(ranks)
-        val profit = LotteryResult.getProfit(receipt.purchase, prize)
+        val profit = LotteryResult.getProfit(purchase, prize)
         outputView.printWinningResult(ranks, profit)
     }
 }

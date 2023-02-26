@@ -45,8 +45,8 @@ class PurchaseAmountTest {
 
     @ParameterizedTest(name = "{0}원으로 자동 로또 {1}장을 구매할 수 있다")
     @CsvSource("1000, 1", "50000, 50")
-    fun `자동 로또 개수를 계산한다`(amount: Int, expected: Int) {
-        val actual = PurchaseAmount(amount).getAutoPurchaseCount(0)
+    fun `로또 개수를 계산한다`(amount: Int, expected: Int) {
+        val actual = PurchaseAmount(amount).count
         assertThat(actual).isEqualTo(expected)
     }
 }

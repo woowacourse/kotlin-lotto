@@ -1,6 +1,8 @@
 package lotto.domain
 
 class Receipt(val purchase: PurchaseAmount, val manual: TicketCount) {
+    val auto = TicketCount(purchase.count - manual.count)
+
     init {
         checkCount()
     }

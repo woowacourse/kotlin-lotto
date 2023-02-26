@@ -19,4 +19,10 @@ class ReceiptTest {
         assertDoesNotThrow { Receipt(PurchaseAmount(5000), TicketCount(4)) }
         assertThrows<IllegalArgumentException> { Receipt(PurchaseAmount(5000), TicketCount(6)) }
     }
+
+    @Test
+    fun `자동 로또 개수를 계산한다`() {
+        val receipt = Receipt(PurchaseAmount(5000), TicketCount(2))
+        assertThat(receipt.auto.count).isEqualTo(3)
+    }
 }
