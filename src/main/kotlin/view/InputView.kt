@@ -1,46 +1,62 @@
 package view
 
-import domain.Lotto
 import domain.LottoNumber
 import domain.Money
 
 class InputView {
     fun inputMoney(): Money {
-        println(INPUT_MONEY_MESSAGE)
-        return getInputMoney(readLine())
+        return Money(getInputMoney())
     }
 
-    private fun getInputMoney(input: String?): Money {
-        require(!input.isNullOrEmpty()) { INPUT_VALUE_ERROR_MESSAGE }
-        return Money(input.toInt())
+    private fun getInputMoney(): Int {
+        while (true) {
+            println(INPUT_MONEY_MESSAGE)
+            return readln().toIntOrNull() ?: continue
+        }
     }
 
-    fun inputWinningLotto(): Lotto {
-        println(INPUT_WINNING_LOTTO_MESSAGE)
-        return getInputWinningLotto(readLine())
+    fun InputManualLottoCount(): Int {
+        while (true) {
+            println(INPUT_MANUAL_LOTTO_COUNT_MESSAGE)
+            return readln().toIntOrNull() ?: continue
+        }
     }
 
-    private fun getInputWinningLotto(input: String?): Lotto {
-        require(!input.isNullOrEmpty()) { INPUT_VALUE_ERROR_MESSAGE }
-        val winningNumber = input.split(",").map { number -> LottoNumber.from(number.toInt()) }
-        return Lotto(winningNumber)
+    fun inputManualLottoNumber(count: Int): List<List<Int>> {
+        return List(count) { getManualLottoNumber() }
+    }
+
+    private fun getManualLottoNumber(): List<Int> {
+        while (true) {
+            println(INPUT_MANUAL_LOTTO_NUMBER_MESSAGE)
+            val lotto = readln().split(",").map { it.toIntOrNull() }
+            if (lotto.contains(null)) { continue }
+            return lotto.filterNotNull()
+        }
+    }
+
+    fun inputWinningLotto(): List<Int> {
+        while (true) {
+            println(INPUT_WINNING_LOTTO_MESSAGE)
+            val winningNumber = readln().split(",").map { it.toIntOrNull() }
+            if (winningNumber.contains(null)) { continue }
+            return winningNumber.filterNotNull()
+        }
     }
 
     fun inputBonusNumber(): LottoNumber {
-        println(INPUT_BONUS_NUMBER_MESSAGE)
-        return getInputBonusNumber(readLine())
-    }
-
-    private fun getInputBonusNumber(input: String?): LottoNumber {
-        require(!input.isNullOrEmpty()) { INPUT_VALUE_ERROR_MESSAGE }
-        return LottoNumber.from(input.toInt())
+        while (true) {
+            println(INPUT_BONUS_NUMBER_MESSAGE)
+            val number = readln().toIntOrNull() ?: continue
+            return LottoNumber.from(number)
+        }
     }
 
     companion object {
-        const val INPUT_MONEY_MESSAGE = "구입금액을 입력해 주세요."
-        const val INPUT_WINNING_LOTTO_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
-        const val INPUT_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
-
-        const val INPUT_VALUE_ERROR_MESSAGE = "값이 입력되지 않았습니다."
+        private const val INPUT_MONEY_MESSAGE = "구입금액을 입력해 주세요."
+        private const val INPUT_WINNING_LOTTO_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
+        private const val INPUT_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
+        private const val INPUT_MANUAL_LOTTO_COUNT_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val INPUT_MANUAL_LOTTO_NUMBER_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
     }
 }
