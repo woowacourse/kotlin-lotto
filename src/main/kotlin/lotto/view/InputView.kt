@@ -4,26 +4,12 @@ class InputView : LottoInputView {
 
     override fun readMoney(): Int {
         println(INPUT_MONEY_PROMPT)
-        var input: String
-        var pass = true
-        do {
-            printErrorMessageIfNotPass(pass, INPUT_NOT_INT_ERROR)
-            input = readln()
-            pass = input.toIntOrNull() != null
-        } while (!pass)
-        return input.toInt()
+        return readInt()
     }
 
     override fun readManualLottoCount(): Int {
         println(INPUT_MANUAL_COUNT_PROMPT)
-        var input: String
-        var pass = true
-        do {
-            printErrorMessageIfNotPass(pass, INPUT_NOT_INT_ERROR)
-            input = readln()
-            pass = input.toIntOrNull() != null
-        } while (!pass)
-        return input.toInt()
+        return readInt()
     }
 
     override fun readManualLottoNumber(count: Int): List<List<Int>> {
@@ -40,37 +26,31 @@ class InputView : LottoInputView {
         return readLottoNumber()
     }
 
-    private fun readLottoNumber(): List<Int> {
-        var input: List<String>
-        var lottoNumbers: List<Int?>
-        var pass = true
-        do {
-            printErrorMessageIfNotPass(pass, INPUT_SPLIT_ERROR)
-            input = readln().split(",").map {
-                it.trim()
-            }
-            lottoNumbers = input.map {
-                it.toIntOrNull()
-            }
-            pass = !lottoNumbers.contains(null)
-        } while (!pass)
-        return input.map { it.toInt() }
-    }
-
     override fun readBonusNumber(): Int {
         println(INPUT_BONUS_NUMBER_PROMPT)
-        var input: String
-        var pass = true
-        do {
-            printErrorMessageIfNotPass(pass, INPUT_NOT_INT_ERROR)
-            input = readln()
-            pass = input.toIntOrNull() != null
-        } while (!pass)
-        return input.toInt()
+        return readInt()
     }
 
-    private fun printErrorMessageIfNotPass(pass: Boolean, message: String) {
-        if (!pass) println(OutputView.ERROR_PREFIX + message)
+    private fun readLottoNumber(): List<Int> {
+        val input = readln().split(",").map {
+            it.trim()
+        }
+        val lottoNumbers = input.map {
+            it.toIntOrNull()
+        }
+        return if (lottoNumbers.contains(null)) {
+            println(OutputView.ERROR_PREFIX + INPUT_SPLIT_ERROR)
+            readLottoNumber()
+        } else {
+            input.map { it.toInt() }
+        }
+    }
+
+    private fun readInt(): Int {
+        return readln().toIntOrNull() ?: run {
+            println(OutputView.ERROR_PREFIX + INPUT_NOT_INT_ERROR)
+            readInt()
+        }
     }
 
     companion object {
