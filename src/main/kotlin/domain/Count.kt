@@ -11,7 +11,7 @@ value class Count(val value: Int) {
     }
 
     companion object {
-        const val COUNT_NEGATIVE_ERROR_MESSAGE = "[ERROR] 갯수는 음수가 될 수 없습니다."
-        const val MINIMUM_NON_NEGATIVE_NUMBER = 0
+        private const val COUNT_NEGATIVE_ERROR_MESSAGE = "[ERROR] 갯수는 음수가 될 수 없습니다."
+        private const val MINIMUM_NON_NEGATIVE_NUMBER = 0
     }
 }

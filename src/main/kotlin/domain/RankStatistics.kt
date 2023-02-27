@@ -18,7 +18,7 @@ class RankStatistics(private val ranks: List<Rank>) {
     }
 
     fun getRankCount(rank: Rank): Int {
-        return rankInformation[rank]?.value ?: return INITIALIZE_TO_ZERO
+        return rankInformation[rank]?.value ?: INITIALIZE_TO_ZERO
     }
 
     fun getProfitRate(): Double {
@@ -32,10 +32,10 @@ class RankStatistics(private val ranks: List<Rank>) {
     fun isProfitable(): Boolean = getProfitRate() < MINIMUM_PROFITABLE_NUM
 
     companion object {
-        const val INITIALIZE_TO_ZERO = 0
-        const val INITIALIZE_TO_DOUBLE_ZERO = 0.00
-        const val PLUS_ONE = 1
-        const val ONE_LOTTO_PRICE = 1000
-        const val MINIMUM_PROFITABLE_NUM = 1
+        private const val INITIALIZE_TO_ZERO = 0
+        private const val INITIALIZE_TO_DOUBLE_ZERO = 0.00
+        private const val PLUS_ONE = 1
+        private const val ONE_LOTTO_PRICE = 1000
+        private const val MINIMUM_PROFITABLE_NUM = 1
     }
 }
