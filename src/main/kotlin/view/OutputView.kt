@@ -69,6 +69,6 @@ object OutputView {
     }
 
     fun printEarningRate(totalPrize: TotalPrize, spendPayment: Payment) {
-        println("총 수익률은 ${totalPrize.getEarningRate(spendPayment)}입니다.")
+        println("총 수익률은 ${totalPrize.calculateEarningRate(spendPayment)}입니다.")
     }
 }

@@ -4,7 +4,11 @@ import kotlin.math.round
 
 class TotalPrize(val amount: Long) {
 
-    fun getEarningRate(spendPayment: Payment): Double {
-        return round(amount / spendPayment.amount.toDouble() * 100) / 100
+    fun calculateEarningRate(spendPayment: Payment): Double {
+        return round(amount / spendPayment.amount.toDouble() * DECIMAL_PLACES_TO_DISPLAY) / DECIMAL_PLACES_TO_DISPLAY
+    }
+
+    companion object {
+        private const val DECIMAL_PLACES_TO_DISPLAY = 100
     }
 }

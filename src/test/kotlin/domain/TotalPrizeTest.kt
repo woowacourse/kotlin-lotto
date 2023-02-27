@@ -11,7 +11,7 @@ class TotalPrizeTest {
         val spendPayment: Payment = Payment(1000)
 
         // when
-        val actual: Double = totalPrize.getEarningRate(spendPayment)
+        val actual: Double = totalPrize.calculateEarningRate(spendPayment)
 
         // then
         Assertions.assertThat(actual).isEqualTo(10.0)
@@ -24,7 +24,7 @@ class TotalPrizeTest {
         val spendPayment: Payment = Payment(3000)
 
         // when
-        val actual: Double = totalPrize.getEarningRate(spendPayment)
+        val actual: Double = totalPrize.calculateEarningRate(spendPayment)
 
         // then
         Assertions.assertThat(actual).isEqualTo(666666.67)
