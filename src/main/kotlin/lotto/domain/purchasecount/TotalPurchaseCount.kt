@@ -1,13 +1,13 @@
 package lotto.domain.purchasecount
 
 class TotalPurchaseCount(totalPurchaseCount: Int, manualPurchaseCount: Int) {
-    val autoPurchaseCount: AutoPurchaseCount
-    val manualPurchaseCount: ManualPurchaseCount
+    val autoPurchaseCount: PurchaseCount
+    val manualPurchaseCount: PurchaseCount
 
     init {
         checkValidateManualPurchaseCount(totalPurchaseCount, manualPurchaseCount)
-        autoPurchaseCount = AutoPurchaseCount(totalPurchaseCount - manualPurchaseCount)
-        this.manualPurchaseCount = ManualPurchaseCount(manualPurchaseCount)
+        autoPurchaseCount = PurchaseCount(totalPurchaseCount - manualPurchaseCount)
+        this.manualPurchaseCount = PurchaseCount(manualPurchaseCount)
     }
 
     private fun checkValidateManualPurchaseCount(totalPurchaseCount: Int, manualPurchaseCount: Int) {

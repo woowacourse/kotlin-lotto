@@ -7,6 +7,6 @@ class ManualPurchaseCountTest {
 
     @Test
     fun `수동 구입 로또의 수는 음수가 아니여야한다`() {
-        assertThrows<IllegalArgumentException> { ManualPurchaseCount(-3) }
+        assertThrows<IllegalArgumentException> { PurchaseCount(-3) }
     }
 }

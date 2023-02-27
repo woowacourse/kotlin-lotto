@@ -1,7 +1,7 @@
 package lotto.domain.purchasecount
 
 @JvmInline
-value class ManualPurchaseCount(val value: Int) {
+value class PurchaseCount(val value: Int) {
 
     init {
         require(value > 0) { NEGATIVE_MANUAL_PURCHASE_MONEY_ERROR }
