@@ -16,19 +16,19 @@ class LottoController {
         val maxLottoCount: Int = payment.calculateMaxLottoCount()
         val manualCount: ManualCount = getManualCount(maxLottoCount)
         val autoCount: Int = payment.calculateAutoLottoCount(maxLottoCount, manualCount.count)
-        val manualLottoGenerator = ManualLottoGenerator()
-        val randomLottoGenerator = RandomLottoGenerator()
-        getManualLottos(manualLottoGenerator, manualCount.count)
-        randomLottoGenerator.autoGenerate(autoCount)
-        val lottoBundle = LottoBundle(manualLottoGenerator.manualLottos, randomLottoGenerator.autoLottos)
-        OutputView.printPurchasedLottoCount(manualCount.count, autoCount)
-        OutputView.printPurchasedLotto(lottoBundle)
+
+        val manualLottos: List<Lotto> = getManualLottos(manualCount)
+        val randomLottos: List<Lotto> = getRandomLottos(autoCount)
+        val lottoBundle = LottoBundle(manualLottos, randomLottos)
+
+        printPurchasedLottos(manualCount, autoCount, lottoBundle)
         produceResult(lottoBundle, payment)
     }
 
     private fun getPayment(): Payment {
         OutputView.printRequestMoney()
         val money = InputView.inputMoney()
+
         return runCatching { Payment(money) }
             .getOrElse { error ->
                 println(error.message)
@@ -39,6 +39,7 @@ class LottoController {
     private fun getManualCount(maxCount: Int): ManualCount {
         OutputView.printRequestManualCount()
         val count = InputView.inputManualCount()
+
         return runCatching { ManualCount(count, maxCount) }
             .getOrElse { error ->
                 println(error.message)
@@ -46,14 +47,32 @@ class LottoController {
             }
     }
 
-    private fun getManualLottos(manualLottoGenerator: ManualLottoGenerator, manualCount: Int) {
+    private fun getManualLottos(manualCount: ManualCount): List<Lotto> {
+        val manualLottoGenerator = ManualLottoGenerator()
+        generateManualLottos(manualLottoGenerator, manualCount.count)
+        return manualLottoGenerator.manualLottos
+    }
+
+    private fun generateManualLottos(manualLottoGenerator: ManualLottoGenerator, manualCount: Int) {
         if (manualCount != 0) OutputView.printRequestManualLottos()
+
         while (manualLottoGenerator.manualLottos.size < manualCount) {
             runCatching { manualLottoGenerator.generate(InputView.inputManualLotto()) }
                 .getOrElse { error ->
                     println(error.message)
                 }
         }
+    }
+
+    private fun getRandomLottos(autoCount: Int): List<Lotto> {
+        val randomLottoGenerator = RandomLottoGenerator()
+        randomLottoGenerator.autoGenerate(autoCount)
+        return randomLottoGenerator.autoLottos
+    }
+
+    private fun printPurchasedLottos(manualCount: ManualCount, autoCount: Int, lottoBundle: LottoBundle) {
+        OutputView.printPurchasedLottoCount(manualCount.count, autoCount)
+        OutputView.printPurchasedLotto(lottoBundle)
     }
 
     private fun produceResult(lottoBundle: LottoBundle, spendPayment: Payment) {
@@ -64,9 +83,7 @@ class LottoController {
     }
 
     private fun getWinningNumbers(): WinningNumbers {
-        val winningLotto = getWinningLotto()
-        val bonusNumber = getBonusNumber()
-        return runCatching { WinningNumbers(winningLotto, bonusNumber) }
+        return runCatching { WinningNumbers(getWinningLotto(), getBonusNumber()) }
             .getOrElse { error ->
                 println(error.message)
                 getWinningNumbers()
@@ -76,6 +93,7 @@ class LottoController {
     private fun getWinningLotto(): Lotto {
         OutputView.printRequestWinningNumbers()
         val winningNumbers: String = InputView.inputWinningNumbers()
+
         return runCatching { Lotto(winningNumbers) }
             .getOrElse { error ->
                 println(error.message)
@@ -86,6 +104,7 @@ class LottoController {
     private fun getBonusNumber(): LottoNumber {
         OutputView.printRequestBonusNumber()
         val bonusNumber: String = InputView.inputBonusNumber()
+
         return runCatching { LottoNumber.of(bonusNumber) }
             .getOrElse { error ->
                 println(error.message)
