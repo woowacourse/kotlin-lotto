@@ -33,22 +33,26 @@
 - [x] 해당 등수 당첨자의 총 상금을 계산한다.
 
 
-- NumberOfRank
+- LotteryResult
 - [x] 등수를 받아 카운트한다.
 - [x] 총 상금을 계산한다.
-
-
-- WinningResultCalculator
 - [x] 수익률을 계산한다.
 
 
-- Revenue
-- [x] 손해인지, 이득인지 알려준다.
-
-
-- RandomLotteryNumberGenerator
-- [x] 1이상 45이하의 숫자 하나를 생성한다.
-
-
-- LotteriesGenerator
+- AutoLotteryTicketsMachine
+- [x] 1이상 45이하의 숫자 6개를 가진 로또를 생성한다.
 - [x] 구입 로또 개수만큼 로또를 발행한다.
+
+
+- ManualLotteryTicketsMachine
+- [x] 수동 로또를 발행한다.
+
+
+- TicketCount
+- [x] 로또 개수를 가진다.
+
+
+- Receipt
+- [x] 구매금액과 수동 로또 개수를 가진다.
+- [x] 수동 로또 개수가 구입 로또 개수를 초과하지 않는지 확인한다.
+- [x] 자동 로또 개수를 계산한다.

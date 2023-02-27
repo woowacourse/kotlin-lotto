@@ -2,13 +2,13 @@ package lotto.view
 
 import lotto.domain.Lottery
 import lotto.domain.Rank
-import java.lang.StringBuilder
+import lotto.domain.Receipt
 
 class OutputView {
-    fun printLotteries(lotteries: List<Lottery>) {
-        println("${lotteries.size}$NUMBER_OF_LOTTERY_GUIDE")
-        lotteries.forEach { lottery ->
-            println(lottery.numbers.map { it.toInt() }.sorted())
+    fun printLotteryTickets(receipt: Receipt, tickets: List<Lottery>) {
+        println("${NUMBER_OF_LOTTERY_TICKETS_GUIDE.format(receipt.manual.count, receipt.auto.count)}")
+        tickets.forEach { ticket ->
+            println(ticket.numbers.map { it.toInt() }.sorted())
         }
     }
 
@@ -52,6 +52,10 @@ class OutputView {
         }
     }
 
+    fun printError(message: String) {
+        println("$ERROR_HEADER $message")
+    }
+
     fun printInterval() {
         println()
     }
@@ -59,7 +63,8 @@ class OutputView {
     companion object {
         private const val BONUS_MATCH_DESCRIPTION = ", 보너스 볼 일치"
         private const val COUNT_OF_MATCH_DESCRIPTION = "%d개 일치"
-        private const val NUMBER_OF_LOTTERY_GUIDE = "개를 구매했습니다."
+        private const val ERROR_HEADER = "[ERROR]"
+        private const val NUMBER_OF_LOTTERY_TICKETS_GUIDE = "수동으로 %d장, 자동으로 %d장 구매했습니다."
         private const val PRIZE_AND_COUNT_RESULT_DESCRIPTION = " (%d원) - %d개\n"
         private const val TOTAL_PROFIT_GUIDE = "총 수익률은 %.2f입니다."
         private const val WINNING_RESULT_GUIDE = "당첨 통계\n" +
