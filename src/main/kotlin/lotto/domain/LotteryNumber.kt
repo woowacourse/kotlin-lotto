@@ -1,18 +1,18 @@
 package lotto.domain
 
 data class LotteryNumber(
-    private val number: Int
+    val value: Int
 ) {
     init {
         checkNumberBoundary()
     }
 
-    fun toInt(): Int = number
+    fun toInt(): Int = value
 
-    override fun toString(): String = number.toString()
+    override fun toString(): String = value.toString()
 
     private fun checkNumberBoundary() {
-        require(number in LOWER_BOUNDARY..UPPER_BOUNDARY) { ERROR_MESSAGE_BOUNDARY }
+        require(value in LOWER_BOUNDARY..UPPER_BOUNDARY) { ERROR_MESSAGE_BOUNDARY }
     }
 
     companion object {
