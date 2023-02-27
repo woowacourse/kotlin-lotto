@@ -9,13 +9,6 @@ import util.PREFIX
 
 internal class PurchaserTest {
 
-    private val otherLottoBundle = LottoBundle(
-        listOf(
-            Lotto(1, 2, 3, 4, 5, 6),
-            Lotto(2, 3, 4, 5, 6, 7),
-        ),
-    )
-
     @Test
     fun `총 로또 개수는 0과 같거나 작으면 에러 발생 (금액이 1000보다 작으면)`() {
         // given
@@ -56,12 +49,18 @@ internal class PurchaserTest {
     fun `수동 로또가 개수보다 많이 발행되면 에러 발생`() {
         // given
         val purchaser = Purchaser(Money(5000))
+        val manualLottoBundle = LottoBundle(
+            listOf(
+                Lotto(1, 2, 3, 4, 5, 6),
+                Lotto(2, 3, 4, 5, 6, 7),
+            ),
+        )
         purchaser.decideManualLottoCount(1)
 
         // when
 
         // then
-        assertThrows<IllegalArgumentException> { purchaser.purchaseManualLottoBundle(otherLottoBundle) }
+        assertThrows<IllegalArgumentException> { purchaser.purchaseManualLottoBundle(manualLottoBundle) }
             .shouldHaveMessage("$PREFIX 수동으로 구매한 로또 개수가 맞지 않습니다. 수동으로 구매할 로또 개수: ${1}, 발행된 수동 로또 개수: ${2}")
     }
 
@@ -69,13 +68,18 @@ internal class PurchaserTest {
     fun `수동 로또가 중복 발행되면 에러`() {
         // given
         val purchaser = Purchaser(Money(5000))
+        val manualLottoBundle = LottoBundle(
+            listOf(
+                Lotto(1, 2, 3, 4, 5, 6),
+                Lotto(2, 3, 4, 5, 6, 7),
+            ),
+        )
         purchaser.decideManualLottoCount(2)
-        purchaser.purchaseManualLottoBundle(otherLottoBundle)
-
+        purchaser.purchaseManualLottoBundle(manualLottoBundle)
         // when
 
         // then
-        assertThrows<IllegalArgumentException> { purchaser.purchaseManualLottoBundle(otherLottoBundle) }
+        assertThrows<IllegalArgumentException> { purchaser.purchaseManualLottoBundle(manualLottoBundle) }
             .shouldHaveMessage("$PREFIX 이미 수동 로또가 발행되었습니다.")
     }
 }
