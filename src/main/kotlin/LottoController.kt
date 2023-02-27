@@ -1,3 +1,5 @@
+
+import domain.LottoCount
 import domain.Money
 import domain.Purchaser
 import domain.WinStatistics
@@ -5,13 +7,15 @@ import domain.WinningNumbers
 import domain.lotto.Lotto
 import domain.lotto.LottoBundle
 import domain.lotto.LottoNumber
+import domain.lotto.generator.LottoVendingMachine
+import domain.lotto.generator.RandomLottoGenerator
 import view.InputView
 import view.ResultOutputView
 
 class LottoController {
 
     fun runLottoGame() {
-        val purchasedLottoBundle = purchaseLotto()
+        val purchasedLottoBundle = refactoredPurchaseLotto() // purchaseLotto()
         val winStatistics = WinStatistics(getWinningNumbers(), purchasedLottoBundle)
         ResultOutputView.printWinStatistics(winStatistics)
     }
@@ -22,6 +26,16 @@ class LottoController {
         checkError { purchaser.purchaseManualLottoBundle(getManualLottoBundle(purchaser.manualLottoCount)) }
         ResultOutputView.printPurchasingResult(purchaser)
         return purchaser.purchasedLottoBundle
+    }
+
+    private fun refactoredPurchaseLotto(): LottoBundle {
+        val lottoCount = checkError { LottoCount(getMoney(), getManualLottoCount()) }
+        ResultOutputView.printPurchasedLottoCount(lottoCount.totalCount)
+        val manualLottoBundle = getManualLottoBundle(lottoCount.manualCount)
+        val autoLottoBundle = LottoVendingMachine.getLottoBundle((lottoCount.autoCount), RandomLottoGenerator())
+        val totalLottoBundle = manualLottoBundle + autoLottoBundle
+        ResultOutputView.printPurchasedLotto(totalLottoBundle)
+        return totalLottoBundle
     }
 
     private fun getMoney(): Money {

@@ -23,11 +23,11 @@ object ResultOutputView {
         printEarningRate(winStatistics.earningRate)
     }
 
-    private fun printPurchasedLottoCount(lottoCount: Int) {
+    fun printPurchasedLottoCount(lottoCount: Int) {
         println("${lottoCount}개를 구매했습니다.")
     }
 
-    private fun printPurchasedLotto(lottoBundle: LottoBundle) {
+    fun printPurchasedLotto(lottoBundle: LottoBundle) {
         lottoBundle.lottos.forEach {
             println(it.lottoNumbers.map { lottoNumber: LottoNumber -> lottoNumber.number })
         }
