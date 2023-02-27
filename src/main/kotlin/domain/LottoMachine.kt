@@ -1,13 +1,12 @@
 package domain
 
-import model.Lotto
-import model.LottoNumber
+class LottoMachine(val lottoGenerator: LottoGeneratorInterface) {
 
-class LottoMachine(private val lottoNumbersGenerator: NumbersGenerator) {
+    fun generateAutoLotto(): Lotto {
+        return lottoGenerator.generateLotto()
+    }
 
-    fun generateLotto(): Lotto {
-        val numbers = lottoNumbersGenerator.generate()
-        val lottoNumbers = numbers.map { number -> LottoNumber.from(number) }
-        return Lotto(lottoNumbers)
+    fun generateAutoLotteries(count: Count): List<Lotto> {
+        return List(count.value) { generateAutoLotto() }
     }
 }

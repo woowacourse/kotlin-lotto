@@ -1,60 +1,24 @@
 package domain
 
-import model.Lotto
-import model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class RankTest {
-
-    private val testLotto = Lotto(
-        listOf(
-            LottoNumber.from(1),
-            LottoNumber.from(2),
-            LottoNumber.from(3),
-            LottoNumber.from(4),
-            LottoNumber.from(5),
-            LottoNumber.from(6),
-        ),
-    )
-
     @Test
-    fun `승리로또의 번호와 구매자의 로또의 번호가 3개 일치하면 3을 반환한다`() {
+    fun `5개 번호가 일치하고, 보너스 번호를 포함하고 있다면 2등이다`() {
         // given
-        val lotto = testLotto
-        val winningLottoNumbers = Lotto(
-            listOf(
-                LottoNumber.from(1),
-                LottoNumber.from(2),
-                LottoNumber.from(3),
-                LottoNumber.from(7),
-                LottoNumber.from(8),
-                LottoNumber.from(9),
-            ),
-        )
+        val matchOfCount = 5
+        val bonusMatch = true
 
         // when
-        val actual = Rank.getCountOfMatch(lotto, winningLottoNumbers)
+        val actual = Rank.valueOf(matchOfCount, bonusMatch)
 
         // then
-        val expected = 3
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @ParameterizedTest
-    @CsvSource("1,true", "10,false")
-    fun `보너스번호가 로또번호에 포함되어 있다면 true, 아니면 false를 반환한다`(number: Int, expected: Boolean) {
-        // given
-        val bonusNumber = LottoNumber.from(number)
-        val lotto = testLotto
-
-        // when
-        val actual = Rank.isBonusMatch(lotto, bonusNumber)
-
-        // then
-        assertThat(actual).isEqualTo(expected)
+        val expected = Rank.SECOND
+        assertEquals(expected, actual)
     }
 
     @ParameterizedTest

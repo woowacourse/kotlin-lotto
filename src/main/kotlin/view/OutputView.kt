@@ -1,44 +1,48 @@
 package view
 
+import domain.Lotto
+import domain.LottoCount
 import domain.Rank
-import model.Lotto
+import domain.RankStatistics
 
-class OutputView {
-
-    fun printInputMoney() = println(ENTER_MONEY)
-    fun printLottoCount(count: Int) = println("$count" + PURCHASE_COUNT)
-    fun printInputWinningNumbers() = println(ENTER_WINNING_NUMBER)
-    fun printInputBonusNumber() = println(ENTER_BONUS_NUMBER)
-
-    fun printLotto(lotto: Lotto) {
-        val lottoNumbers = mutableListOf<Int>()
-        lotto.lottoNumbers.forEach { lottoNumber ->
-            lottoNumbers.add(lottoNumber.number)
-        }
-        println(lottoNumbers)
+class OutputView : OutputViewInterface {
+    override fun printLottoCountResult(lottoCount: LottoCount) {
+        println("수동으로 ${lottoCount.manualCount.value}장, 자동으로 ${lottoCount.automaticCount.value}개를 구매했습니다.")
     }
 
-    fun printLottoRankResult(lottoResult: HashMap<Rank, Int>) {
-        println(STATISTICS + BAR)
+    override fun printAutomaticLottoNumbers(lotto: Lotto) {
+        println(lotto.map { it.number })
+    }
+
+    override fun printAutomaticLotteries(lotteries: List<Lotto>) {
+        lotteries.forEach { lotto -> printAutomaticLottoNumbers(lotto) }
+    }
+
+    override fun printRankStatistics(rankStatistics: RankStatistics) {
+        println(RANK_STATISTICS_INTRO)
         Rank.values().forEach { rank: Rank ->
-            printLottoRankCount(rank, lottoResult)
+            printRankCount(rank, rankStatistics.getRankCount(rank))
         }
     }
 
-    fun printLottoRankCount(rank: Rank, lottoResult: HashMap<Rank, Int>) {
-        if (rank != Rank.MISS) println("${rank.countOfMatch}개 일치 (${rank.winningMoney}원) - ${lottoResult[rank] ?: 0} 개)")
+    override fun printRankCount(rank: Rank, count: Int) {
+        if (rank != Rank.MISS) println("${rank.countOfMatch}개 일치 (${rank.winningMoney}원) - $count 개)")
     }
 
-    fun printLottoProfitRate(profitRate: Double) {
+    override fun printProfitRate(profitRate: Double, isLoss: Boolean) {
         println("총 수익률은 ${String.format("%.2f", profitRate)}입니다.")
+        if (isLoss) println(PROFIT_RATE_LOSS)
+        if (!isLoss) println(PROFIT_RATE_GAIN)
+    }
+
+    override fun printErrorMessage(errorMessage: String) {
+        println(errorMessage)
     }
 
     companion object {
-        private const val ENTER_MONEY = "구입금액을 입력해 주세요."
-        private const val PURCHASE_COUNT = "개를 구매했습니다."
-        private const val ENTER_WINNING_NUMBER = "\n지난 주 당첨 번호를 입력해 주세요."
-        private const val ENTER_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
-        private const val STATISTICS = "\n당첨 통계\n"
-        private const val BAR = "---"
+        private const val RANK_STATISTICS_INTRO = "당첨 통계\n" +
+            "---------"
+        private const val PROFIT_RATE_LOSS = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
+        private const val PROFIT_RATE_GAIN = "(기준이 1이기 때문에 결과적으로 이득이라는 의미임)"
     }
 }

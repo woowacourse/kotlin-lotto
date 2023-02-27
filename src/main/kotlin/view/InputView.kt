@@ -1,25 +1,39 @@
 package view
 
-private const val SEPARATOR = ","
-private const val INPUT_NULL = "[ERROR] null 값이 들어왔습니다. \n다시 입력해주세요"
-
-class InputView {
-    fun inputMoney(): Int {
-        val input = runCatching {
-            readLine()?.toInt()
-        }.getOrNull()
-        if (input == null) {
-            println(INPUT_NULL)
-            return inputMoney()
-        }
-        return input
+class InputView : InputViewInterface {
+    override fun inputPaymentMoney(): Int {
+        println(INPUT_PAYMENT_MONEY)
+        return readln().toIntOrNull() ?: return inputPaymentMoney()
     }
 
-    fun inputWinningNumbers(): List<String> {
-        return (readLine() ?: throw IllegalArgumentException(INPUT_NULL)).split(SEPARATOR)
+    override fun inputManualLottoCount(): Int {
+        println(INPUT_MANUAL_LOTTO_COUNT)
+        return readln().toIntOrNull() ?: return inputManualLottoCount()
     }
 
-    fun inputBonusNumber(): Int {
-        return readLine()?.toIntOrNull() ?: throw IllegalArgumentException(INPUT_NULL)
+    override fun inputManualLottoNumbers(): List<Int> {
+        println(INPUT_MANUAL_LOTTO_NUMBERS)
+        val input = readlnOrNull() ?: return inputManualLottoNumbers()
+        return input.split(DELIMITER).map { it.toIntOrNull() ?: return inputManualLottoNumbers() }
+    }
+
+    override fun inputWinningLottoNumbers(): List<Int> {
+        println(INPUT_WINNING_LOTTO_NUMBERS)
+        val input = readlnOrNull() ?: return inputWinningLottoNumbers()
+        return input.split(DELIMITER).map { it.toIntOrNull() ?: return inputWinningLottoNumbers() }
+    }
+
+    override fun inputBonusNumber(): Int {
+        println(INPUT_BONUS_NUMBER)
+        return readln().toIntOrNull() ?: return inputBonusNumber()
+    }
+
+    companion object {
+        private const val INPUT_PAYMENT_MONEY = "구입금액을 입력해 주세요."
+        private const val INPUT_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val INPUT_MANUAL_LOTTO_NUMBERS = "수동으로 구매할 번호를 입력해 주세요."
+        private const val INPUT_WINNING_LOTTO_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
+        private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+        private const val DELIMITER = ","
     }
 }
