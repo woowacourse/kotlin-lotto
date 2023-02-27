@@ -16,7 +16,7 @@ class WinningLottery(
             val countOfMatch: Int = lotteries.get(it).countMatches(lottery)
             val matchBonus: Boolean = lotteries.get(it).contains(bonusNumber)
             val rank: Rank = Rank.valueOf(countOfMatch, matchBonus)
-            winningResult[rank] = winningResult[rank]!!.plus(1)
+            winningResult[rank] = winningResult[rank]?.plus(1) ?: throw IllegalStateException()
         }
 
         return WinningResult(winningResult, amount.toInt())
