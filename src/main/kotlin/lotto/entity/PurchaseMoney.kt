@@ -8,8 +8,9 @@ class PurchaseMoney(val value: Int) {
     fun getPurchaseLottoCount(): Int = value / LottoPrice.DEFAULT_LOTTO_PRICE
 
     fun checkManualLottoCount(manualLottoCount: Int): Int {
-        if (manualLottoCount != 0)
+        if (manualLottoCount != 0) {
             require(value / (manualLottoCount * LottoPrice.DEFAULT_LOTTO_PRICE) > 0) { ERROR_MESSAGE_AVAILABLE_COUNT }
+        }
         return manualLottoCount
     }
 
