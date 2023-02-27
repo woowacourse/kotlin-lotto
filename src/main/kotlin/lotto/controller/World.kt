@@ -44,7 +44,7 @@ class World(
 
         val totalLottos = store.makeLottos()
 
-        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, manualLottoCount.value, store.lottoCount)
+        outputView.printMessage(OutputView.MESSAGE_PURCHASE_COUNT, manualLottoCount.value, store.getAutoLottoCount())
         outputView.lottosResult(totalLottos)
 
         return totalLottos
