@@ -23,7 +23,7 @@ class PurchaseAmountTest {
     @Test
     fun `구입금액과 수동 구매 개수를 이용해 자동 구입 개수를 계산해 가진다`() {
         val purchaseAmount = PurchaseAmount(5000, 1)
-        assertThat(purchaseAmount.manualNumber).isEqualTo(4)
+        assertThat(purchaseAmount.autoNumber).isEqualTo(4)
     }
 
     @ParameterizedTest

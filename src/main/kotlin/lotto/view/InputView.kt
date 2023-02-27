@@ -16,8 +16,10 @@ class InputView {
     fun readLottery(): Lottery? {
         println()
         println(REQUIRE_MESSAGE_WINNING_LOTTERY)
+
         val input = readln()
         val lotteryNumbers = input.split(", ").map { LotteryNumber(it.toInt()) }
+
         return runCatching { Lottery(lotteryNumbers) }.getOrNull()
     }
 
@@ -39,9 +41,9 @@ class InputView {
         val amount = readln()
         println()
         println(REQUIRE_MESSAGE_AUTO_LOTTERIES_SIZE)
-        val autoNumber = readln()
+        val manualNumber = readln()
 
-        return runCatching { PurchaseAmount(amount.toInt(), autoNumber.toInt()) }.getOrNull()
+        return runCatching { PurchaseAmount(amount.toInt(), manualNumber.toInt()) }.getOrNull()
     }
 
     companion object {

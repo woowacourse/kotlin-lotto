@@ -9,7 +9,7 @@ class OutputView {
 
     fun printPurchaseLotteries(amount: PurchaseAmount, lotteries: Lotteries) {
         println()
-        println(NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY.format(amount.autoNumber, amount.manualNumber))
+        println(NOTICE_FORMAT_MESSAGE_PURCHASE_QUANTITY.format(amount.manualNumber, amount.autoNumber))
         repeat(lotteries.size) { index ->
             println(lotteries.get(index))
         }
