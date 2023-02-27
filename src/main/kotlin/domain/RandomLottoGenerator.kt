@@ -1,9 +1,17 @@
 package domain
 
-class RandomLottoGenerator : LottoGenerator {
-    override fun generate(): Lotto {
+class RandomLottoGenerator {
+    private val _autoLottos = mutableListOf<Lotto>()
+    val autoLottos: List<Lotto>
+        get() = _autoLottos.toList()
+
+    fun autoGenerate(lottoCount: Int) {
+        _autoLottos.addAll(List(lottoCount) { generate() })
+    }
+
+    private fun generate(): Lotto {
         val randomNumbers: List<Int> = LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_NUMBER_COUNT).sorted()
-        val lottoNumbers: Set<LottoNumber> = randomNumbers.map { LottoNumber.of(it) }.toSet()
+        val lottoNumbers: List<LottoNumber> = randomNumbers.map { LottoNumber.of(it) }
         return Lotto(lottoNumbers)
     }
 

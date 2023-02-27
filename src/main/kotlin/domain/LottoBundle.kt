@@ -1,5 +1,5 @@
 package domain
 
-class LottoBundle(lottoCount: Int, lottoGenerator: LottoGenerator) {
-    val lottos: List<Lotto> = List(lottoCount) { lottoGenerator.generate() }
+class LottoBundle(manualLottos: List<Lotto>, autoLottos: List<Lotto>) {
+    val lottos: List<Lotto> = manualLottos + autoLottos
 }

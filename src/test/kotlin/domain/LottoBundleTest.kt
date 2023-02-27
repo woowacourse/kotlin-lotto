@@ -1,28 +1,21 @@
 package domain
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoBundleTest {
 
     @Test
-    fun `로또 개수만큼 발행`() {
+    fun `수동생성된 로또와 자동 생성 로또를 합쳐서 로또번들을 만든다`() {
         // given
-        val lottoCount: Int = 5
-        val lotto = Lotto(
-            setOf(
-                LottoNumber.of(1),
-                LottoNumber.of(2),
-                LottoNumber.of(3),
-                LottoNumber.of(4),
-                LottoNumber.of(5),
-                LottoNumber.of(6)
-            )
-        )
+        val manualLottos = listOf(Lotto("1, 2, 3, 4, 5, 6"))
+        val autoLottos = listOf(Lotto("7, 8, 9, 10, 11, 12"))
+
         // when
-        val lottoBundle = LottoBundle(lottoCount) { lotto }
+        val lottoBundle = LottoBundle(manualLottos, autoLottos)
 
         // then
-        Assertions.assertThat(lottoBundle.lottos.size).isEqualTo(lottoCount)
+        assertThat(lottoBundle.lottos[0]).isEqualTo(manualLottos[0])
+        assertThat(lottoBundle.lottos[1]).isEqualTo(autoLottos[0])
     }
 }

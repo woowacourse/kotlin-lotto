@@ -1,33 +1,75 @@
 import domain.Lotto
 import domain.LottoBundle
-import domain.LottoGenerator
 import domain.LottoNumber
+import domain.ManualCount
+import domain.ManualLottoGenerator
 import domain.Payment
 import domain.RandomLottoGenerator
 import domain.WinningNumbers
 import view.InputView
 import view.OutputView
-import view.UI
 
 class LottoController {
 
-    private val lottoGenerator: LottoGenerator = RandomLottoGenerator()
-
     fun startLottoGame() {
-        val spendMoney = getMoney()
-        val lottoCount = spendMoney.calculateLottoCount()
-        OutputView.printPurchasedLottoCount(lottoCount)
+        val payment: Payment = getPayment()
+        val maxLottoCount: Int = payment.calculateMaxLottoCount()
+        val manualCount: ManualCount = getManualCount(maxLottoCount)
+        val autoCount: Int = payment.calculateAutoLottoCount(maxLottoCount, manualCount.count)
+        val lottoBundle = LottoBundle(getManualLottos(manualCount), getRandomLottos(autoCount))
 
-        val lottoBundle = LottoBundle(lottoCount, lottoGenerator)
-        OutputView.printPurchasedLotto(lottoBundle)
-
-        produceResult(lottoBundle, spendMoney)
+        printPurchasedLottos(manualCount, autoCount, lottoBundle)
+        produceResult(lottoBundle, payment)
     }
 
-    private fun getMoney(): Payment {
-        UI.printRequestMoney()
+    private fun getPayment(): Payment {
+        OutputView.printRequestMoney()
         val money = InputView.inputMoney()
-        return Payment(money)
+
+        return runCatching { Payment(money) }
+            .getOrElse { error ->
+                println(error.message)
+                getPayment()
+            }
+    }
+
+    private fun getManualCount(maxCount: Int): ManualCount {
+        OutputView.printRequestManualCount()
+        val count = InputView.inputManualCount()
+
+        return runCatching { ManualCount(count, maxCount) }
+            .getOrElse { error ->
+                println(error.message)
+                getManualCount(maxCount)
+            }
+    }
+
+    private fun getManualLottos(manualCount: ManualCount): List<Lotto> {
+        val manualLottoGenerator = ManualLottoGenerator()
+        generateManualLottos(manualLottoGenerator, manualCount.count)
+        return manualLottoGenerator.manualLottos
+    }
+
+    private fun generateManualLottos(manualLottoGenerator: ManualLottoGenerator, manualCount: Int) {
+        if (manualCount != 0) OutputView.printRequestManualLottos()
+
+        while (manualLottoGenerator.manualLottos.size < manualCount) {
+            runCatching { manualLottoGenerator.generate(InputView.inputManualLotto()) }
+                .getOrElse { error ->
+                    println(error.message)
+                }
+        }
+    }
+
+    private fun getRandomLottos(autoCount: Int): List<Lotto> {
+        val randomLottoGenerator = RandomLottoGenerator()
+        randomLottoGenerator.autoGenerate(autoCount)
+        return randomLottoGenerator.autoLottos
+    }
+
+    private fun printPurchasedLottos(manualCount: ManualCount, autoCount: Int, lottoBundle: LottoBundle) {
+        OutputView.printPurchasedLottoCount(manualCount.count, autoCount)
+        OutputView.printPurchasedLotto(lottoBundle)
     }
 
     private fun produceResult(lottoBundle: LottoBundle, spendPayment: Payment) {
@@ -38,20 +80,32 @@ class LottoController {
     }
 
     private fun getWinningNumbers(): WinningNumbers {
-        val winningLotto = getWinningLotto()
-        val bonusNumber = getBonusNumber()
-        return WinningNumbers(winningLotto, bonusNumber)
+        return runCatching { WinningNumbers(getWinningLotto(), getBonusNumber()) }
+            .getOrElse { error ->
+                println(error.message)
+                getWinningNumbers()
+            }
     }
 
     private fun getWinningLotto(): Lotto {
-        UI.printRequestWinningNumbers()
-        val winningNumbers: List<String> = InputView.inputWinningNumbers()
-        return Lotto(winningNumbers)
+        OutputView.printRequestWinningNumbers()
+        val winningNumbers: String = InputView.inputWinningNumbers()
+
+        return runCatching { Lotto(winningNumbers) }
+            .getOrElse { error ->
+                println(error.message)
+                getWinningLotto()
+            }
     }
 
     private fun getBonusNumber(): LottoNumber {
-        UI.printRequestBonusNumber()
-        val bonusNumber = InputView.inputBonusNumber()
-        return LottoNumber.of(bonusNumber)
+        OutputView.printRequestBonusNumber()
+        val bonusNumber: String = InputView.inputBonusNumber()
+
+        return runCatching { LottoNumber.of(bonusNumber) }
+            .getOrElse { error ->
+                println(error.message)
+                getBonusNumber()
+            }
     }
 }
