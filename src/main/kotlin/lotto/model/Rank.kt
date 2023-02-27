@@ -1,6 +1,6 @@
 package lotto.model
 
-enum class Rank(val countOfMatch: Int, val winningMoney: Int, val matchBonus: Boolean = false) {
+enum class Rank(val countOfMatch: Int, val winningMoney: Long, val matchBonus: Boolean = false) {
     FIRST(6, 2_000_000_000),
     SECOND(5, 30_000_000, matchBonus = true),
     THIRD(5, 1_500_000),

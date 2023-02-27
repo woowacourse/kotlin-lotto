@@ -10,80 +10,49 @@ import org.junit.jupiter.params.provider.MethodSource
 class LottoTest {
     @Test
     fun `갖고 있는 로또와 당첨 번호 6개가 모두 같으면 6을 반환한다`() {
+        // given
         val lotto = Lotto.from(
-            setOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(6)
-            )
+            generateLotto(listOf(1, 2, 3, 4, 5, 6))
         )
-
         val winLotto = WinLotto(
             Lotto.from(
-                setOf(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5),
-                    LottoNumber(6)
-                )
+                generateLotto(listOf(1, 2, 3, 4, 5, 6))
             ),
             LottoNumber(7)
         )
-        assertThat(lotto.determineCountOfMatch(winLotto.winNumber)).isEqualTo(6)
+        // when
+        val actual = lotto.determineCountOfMatch(winLotto.winNumber)
+        // then
+        assertThat(actual).isEqualTo(6)
     }
 
     @Test
     fun `갖고 있는 로또와 당첨 보너스 번호가 같으면 true를 반환한다`() {
+        // given
         val lotto = Lotto.from(
-            setOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(6)
-            )
+            generateLotto(listOf(1, 2, 3, 4, 5, 6))
         )
         val winLotto = WinLotto(
             Lotto.from(
-                setOf(
-                    LottoNumber(11),
-                    LottoNumber(12),
-                    LottoNumber(13),
-                    LottoNumber(14),
-                    LottoNumber(15),
-                    LottoNumber(16)
-                )
+                generateLotto(listOf(11, 12, 13, 14, 15, 16))
             ),
             LottoNumber(1)
         )
-        assertThat(lotto.determineMatchBonus(winLotto.bonus)).isEqualTo(true)
+        // when
+        val actual = lotto.determineMatchBonus(winLotto.bonus)
+        // then
+        assertThat(actual).isEqualTo(true)
     }
 
     @MethodSource("provideLottoCountNotSix")
     @ParameterizedTest
-    fun `로또 번호가 6개가 아니면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
-            Lotto.from(
-                setOf(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5)
-                )
-            )
-        }
+    fun `로또 번호가 6개가 아니면 예외가 발생한다`(lotto: List<LottoNumber>) {
+        assertThrows<IllegalArgumentException> { Lotto.from(lotto) }
     }
 
     @MethodSource("provideDuplicateLotto")
     @ParameterizedTest
-    fun `로또 번호가 중복되면 예외가 발생한다`(lotto: Set<LottoNumber>) {
+    fun `로또 번호가 중복되면 예외가 발생한다`(lotto: List<LottoNumber>) {
         assertThrows<IllegalArgumentException> { Lotto.from(lotto) }
     }
 
@@ -92,24 +61,10 @@ class LottoTest {
         fun provideDuplicateLotto(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    setOf(
-                        LottoNumber(1),
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(4),
-                        LottoNumber(5)
-                    )
+                    generateLotto(listOf(1, 1, 2, 3, 4, 5))
                 ),
                 Arguments.of(
-                    setOf(
-                        LottoNumber(41),
-                        LottoNumber(41),
-                        LottoNumber(42),
-                        LottoNumber(43),
-                        LottoNumber(44),
-                        LottoNumber(45)
-                    )
+                    generateLotto(listOf(41, 41, 42, 43, 44, 45))
                 )
             )
         }
@@ -118,26 +73,14 @@ class LottoTest {
         fun provideLottoCountNotSix(): List<Arguments> {
             return listOf(
                 Arguments.of(
-                    setOf(
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(4),
-                        LottoNumber(5)
-                    )
+                    generateLotto(listOf(1, 2, 3, 4, 5))
                 ),
                 Arguments.of(
-                    setOf(
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(4),
-                        LottoNumber(5),
-                        LottoNumber(6),
-                        LottoNumber(7)
-                    )
+                    generateLotto(listOf(1, 2, 3, 4, 5, 6, 7))
                 )
             )
         }
+
+        fun generateLotto(lottoNumber: List<Int>): List<LottoNumber> = lottoNumber.map(::LottoNumber)
     }
 }

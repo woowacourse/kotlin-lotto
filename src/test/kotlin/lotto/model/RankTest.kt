@@ -12,7 +12,7 @@ internal class RankTest {
     @Test
     fun `번호가 5개 일치하고, 보너스 번호가 일치하면 2등이다`() {
         val lotto = Lotto.from(
-            setOf(
+            listOf(
                 LottoNumber(1),
                 LottoNumber(2),
                 LottoNumber(3),
@@ -23,14 +23,14 @@ internal class RankTest {
         )
         val countOfMatch = lotto.determineCountOfMatch(winLotto.winNumber)
         val matchBonus = lotto.determineMatchBonus(winLotto.bonus)
-
-        assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(Rank.SECOND)
+        val actual = Rank.valueOf(countOfMatch, matchBonus)
+        assertThat(actual).isEqualTo(Rank.SECOND)
     }
 
     @Test
     fun `번호가 4개 일치하면 4등이다`() {
         val lotto = Lotto.from(
-            setOf(
+            listOf(
                 LottoNumber(1),
                 LottoNumber(2),
                 LottoNumber(3),
@@ -41,8 +41,9 @@ internal class RankTest {
         )
         val countOfMatch = lotto.determineCountOfMatch(winLotto.winNumber)
         val matchBonus = lotto.determineMatchBonus(winLotto.bonus)
+        val actual = Rank.valueOf(countOfMatch, matchBonus)
 
-        assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(Rank.FOURTH)
+        assertThat(actual).isEqualTo(Rank.FOURTH)
     }
 
     companion object {
@@ -53,7 +54,7 @@ internal class RankTest {
         fun init() {
             winLotto = WinLotto(
                 Lotto.from(
-                    setOf(
+                    listOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),

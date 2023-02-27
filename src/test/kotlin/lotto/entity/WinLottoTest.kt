@@ -7,7 +7,7 @@ class WinLottoTest {
     @Test
     fun `보너스 번호와 당첨번호가 중복되면 예외가 발생한다`() {
         val winNumber = Lotto.from(
-            setOf(
+            listOf(
                 LottoNumber(1),
                 LottoNumber(2),
                 LottoNumber(3),
