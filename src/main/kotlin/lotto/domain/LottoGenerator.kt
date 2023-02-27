@@ -1,11 +1,15 @@
 package lotto.domain
 
-object LottoGenerator {
-    private val randomNumberGenerator = RandomNumberGenerator()
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoNumber
+
+class LottoGenerator(private val randomNumberGenerator: LottoNumberGenerator) {
 
     fun generate(count: Int): List<Lotto> {
-        val lottoNumbers = mutableListOf<Lotto>()
-        repeat(count) { lottoNumbers.add(Lotto(randomNumberGenerator.generate())) }
-        return lottoNumbers
+        return randomNumberGenerator.generate(count).map { lottoNumbers -> Lotto(lottoNumbers.toSet()) }
+    }
+
+    fun generateManual(lottoNumbers: List<Int>): Lotto {
+        return Lotto(lottoNumbers.map { LottoNumber.from(it) }.toSet())
     }
 }

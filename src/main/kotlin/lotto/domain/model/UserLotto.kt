@@ -1,4 +1,4 @@
-package lotto.domain
+package lotto.domain.model
 
 class UserLotto(private val lottoNumbers: List<Lotto>) {
     fun calculateTotalRank(winningNumbers: WinningNumbers): List<Rank> {

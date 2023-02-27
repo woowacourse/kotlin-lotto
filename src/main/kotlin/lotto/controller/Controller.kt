@@ -1,39 +1,77 @@
 package lotto.controller
 
-import lotto.domain.Lotto
 import lotto.domain.LottoGenerator
-import lotto.domain.LottoMoney
-import lotto.domain.LottoNumber
-import lotto.domain.UserLotto
-import lotto.domain.WinningNumbers
+import lotto.domain.LottoNumberGenerator
+import lotto.domain.ManualLottoCountValidator
 import lotto.domain.YieldCalculator
-import lotto.view.InputView
-import lotto.view.OutputView
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoMoney
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.UserLotto
+import lotto.domain.model.WinningNumbers
+import lotto.view.LottoInputView
+import lotto.view.LottoOutputView
 
-class Controller {
+class Controller(
+    private val inputView: LottoInputView,
+    private val outputView: LottoOutputView,
+    private val randomNumberGenerator: LottoNumberGenerator
+) {
     fun start() {
         val lottoNumbers = initializeLotto()
         val userLotto = UserLotto(lottoNumbers)
         val ranks = userLotto.calculateTotalRank(readWinningNumbers())
-        OutputView.printResult(ranks, YieldCalculator.calculateYield(userLotto.calculateCount(), ranks))
+        outputView.printResult(ranks, YieldCalculator.calculateYield(userLotto.calculateCount(), ranks))
     }
 
     private fun initializeLotto(): List<Lotto> {
-        val count = readInputMoney().amount / LottoMoney.MONEY_UNIT
-        OutputView.printLottoCountMessage(count)
-        val lottoNumbers = LottoGenerator.generate(count)
-        OutputView.printLottoNumbers(lottoNumbers)
-        return lottoNumbers
+        val totalLottoCount: Int = readMoney().amount / LottoMoney.MONEY_UNIT
+        val manualLottoCount = readManualLottoCount(totalLottoCount)
+        val autoLottoCount = totalLottoCount - manualLottoCount
+        val totalLotto =
+            readManualLotto(manualLottoCount) + LottoGenerator(randomNumberGenerator).generate(autoLottoCount)
+        outputView.printLottoCountMessage(manualLottoCount, autoLottoCount)
+        outputView.printLottoNumbers(totalLotto)
+        return totalLotto
     }
 
-    private fun readInputMoney(): LottoMoney {
-        return kotlin.runCatching {
-            OutputView.printInputMoneyPrompt()
-            InputView.readInputMoney()
-        }.getOrElse {
-            println("[ERROR] ${it.message}")
-            readInputMoney()
+    private fun readManualLottoCount(totalLottoCount: Int): Int {
+        var countAvailable: Boolean
+        var manualLottoCount: Int
+        do {
+            manualLottoCount = inputView.readManualLottoCount()
+            countAvailable = ManualLottoCountValidator.checkAvailable(manualLottoCount, totalLottoCount)
+        } while (!countAvailable)
+        return manualLottoCount
+    }
+
+    private fun readManualLotto(count: Int): List<Lotto> {
+        var lottoAvailable: Boolean
+        var inputLottosNumbers: List<List<Int>>
+        do {
+            inputLottosNumbers = inputView.readManualLottoNumber(count)
+            lottoAvailable = checkLottosAvailable(inputLottosNumbers)
+        } while (!lottoAvailable)
+        return inputLottosNumbers.map { lottoNumbers ->
+            LottoGenerator(randomNumberGenerator).generateManual(
+                lottoNumbers
+            )
         }
+    }
+
+    private fun checkLottosAvailable(inputNumbers: List<List<Int>>): Boolean {
+        inputNumbers.forEach { if (!checkLottoAvailable(it)) return false }
+        return true
+    }
+
+    private fun readMoney(): LottoMoney {
+        var inputMoney: Int
+        var moneyAvailable: Boolean
+        do {
+            inputMoney = inputView.readMoney()
+            moneyAvailable = LottoMoney.checkMoneyAvailable(inputMoney)
+        } while (!moneyAvailable)
+        return LottoMoney(inputMoney)
     }
 
     private fun readWinningNumbers(): WinningNumbers {
@@ -43,24 +81,36 @@ class Controller {
     }
 
     private fun readWinningLotto(): Lotto {
-        return kotlin.runCatching {
-            OutputView.printInputWinningNumbersPrompt()
-            InputView.readInputWinningLotto()
-        }.getOrElse {
-            println("[ERROR] ${it.message}")
-            readWinningLotto()
-        }
+        var inputNumbers: List<Int>
+        var lottoAvailable: Boolean
+        do {
+            inputNumbers = inputView.readWinningLottoNumber()
+            lottoAvailable = checkLottoAvailable(inputNumbers)
+        } while (!lottoAvailable)
+        return Lotto(inputNumbers.map { LottoNumber.from(it) }.toSet())
     }
 
     private fun readBonusNumber(winningLotto: Lotto): LottoNumber {
-        return kotlin.runCatching {
-            OutputView.printInputBonusNumberPrompt()
-            val bonusNumber = InputView.readInputBonusNumber()
-            WinningNumbers(winningLotto, bonusNumber)
-            bonusNumber
-        }.getOrElse {
-            println("[ERROR] ${it.message}")
-            readBonusNumber(winningLotto)
+        var inputBonusNumber: Int
+        var bonusNumberAvailable: Boolean
+        do {
+            inputBonusNumber = inputView.readBonusNumber()
+            bonusNumberAvailable = checkBonusNumberAvailable(inputBonusNumber, winningLotto)
+        } while (!bonusNumberAvailable)
+        return LottoNumber.from(inputBonusNumber)
+    }
+
+    private fun checkLottoAvailable(inputNumbers: List<Int>): Boolean {
+        inputNumbers.forEach {
+            if (!LottoNumber.checkLottoNumberAvailable(it)) return false
         }
+        if (!Lotto.checkLottoAvailable(inputNumbers.map { LottoNumber.from(it) }.toSet())) return false
+        return true
+    }
+
+    private fun checkBonusNumberAvailable(inputBonusNumber: Int, winningLotto: Lotto): Boolean {
+        if (!LottoNumber.checkLottoNumberAvailable(inputBonusNumber)) return false
+        if (WinningNumbers.checkBonusNumberAvailable(winningLotto, inputBonusNumber)) return false
+        return true
     }
 }

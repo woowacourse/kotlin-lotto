@@ -1,5 +1,8 @@
 package lotto.domain
 
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.WinningNumbers
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -15,6 +18,6 @@ class WinningNumbersTest {
     }
 
     private fun makeLotto(numbers: List<Int>): Lotto {
-        return Lotto(numbers.map { LottoNumber.from(it) })
+        return Lotto(numbers.map { LottoNumber.from(it) }.toSet())
     }
 }

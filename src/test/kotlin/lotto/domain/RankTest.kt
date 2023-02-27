@@ -1,5 +1,6 @@
 package lotto.domain
 
+import lotto.domain.model.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -8,10 +9,10 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class RankTest {
     @ParameterizedTest
-    @CsvSource(value = ["6:false:1", "5:true:2", "5:false:3", "4:true:4", "1:true:0"], delimiter = ':')
-    fun `당첨 등수를 구한다`(countOfMatch: Int, matchBonus: Boolean, rank: Int) {
-        val ranks = mapOf(1 to Rank.FIRST, 2 to Rank.SECOND, 3 to Rank.THIRD, 4 to Rank.FOURTH, 0 to Rank.MISS)
-        assertThat(Rank.valueOf(countOfMatch, matchBonus)).isEqualTo(ranks[rank])
+    @CsvSource(value = ["6:false:FIRST", "5:true:SECOND", "5:false:THIRD", "4:true:FOURTH", "1:true:MISS"], delimiter = ':')
+    fun `당첨 등수를 구한다`(countOfMatch: Int, matchBonus: Boolean, expected: Rank) {
+        val actual = Rank.valueOf(countOfMatch, matchBonus)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
