@@ -1,9 +1,11 @@
 package lotto.view
 
+import lotto.model.ManualLottos
 import lotto.model.Rank
 import lotto.model.UserLotto
 
 object OutputView {
+    private const val PURCHASE = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
     private const val WINNING_STATISTICS = "\n당첨 통계\n---------"
     private const val MATCH_STANDARD = "%d개 일치"
     private const val MATCH_STANDARD_WITH_BONUS = ", 보너스볼 일치"
@@ -14,6 +16,11 @@ object OutputView {
 
     fun printMessage(msg: String) {
         println(msg)
+    }
+
+    fun printPurchaseMessage(manualLotto: ManualLottos, numberOfLotto: Int) {
+        val autoNumberOfLotto = numberOfLotto - manualLotto.numberOfLotto
+        printMessage(PURCHASE.format(manualLotto.numberOfLotto, autoNumberOfLotto))
     }
 
     fun printUserLotto(userLotto: UserLotto) {
