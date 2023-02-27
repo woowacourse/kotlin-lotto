@@ -1,45 +1,35 @@
 package domain
 
 class RankStatistics(private val ranks: List<Rank>) {
-    private lateinit var _rankInformation: HashMap<Rank, Count>
-    val rankInformation: HashMap<Rank, Count>
-        get() = _rankInformation.deepCopy()
+    private val rankInformation: HashMap<Rank, Count> = HashMap()
 
     init {
-        updateRankInformation()
+        initRankInformation()
     }
 
     private fun updateRankCount(rank: Rank) {
-        _rankInformation[rank] = (_rankInformation[rank] ?: Count(INITIALIZE_TO_ZERO)) + PLUS_ONE
+        rankInformation[rank] = (rankInformation[rank] ?: Count(INITIALIZE_TO_ZERO)) + PLUS_ONE
     }
 
-    private fun updateRankInformation() {
-        _rankInformation = hashMapOf()
+    private fun initRankInformation() {
         ranks.forEach { rank ->
             updateRankCount(rank)
         }
     }
 
     fun getRankCount(rank: Rank): Int {
-        val count = runCatching { return rankInformation.getValue(rank).value }.getOrNull()
-        return count ?: Count(INITIALIZE_TO_ZERO).value
+        return rankInformation[rank]?.value ?: return INITIALIZE_TO_ZERO
     }
 
     fun getProfitRate(): Double {
         var profit = INITIALIZE_TO_DOUBLE_ZERO
-        _rankInformation.forEach { (rank, count) ->
+        rankInformation.forEach { (rank, count) ->
             profit += rank.winningMoney * count.value
         }
         return profit / (ranks.size * ONE_LOTTO_PRICE)
     }
 
     fun isProfitable(): Boolean = getProfitRate() < MINIMUM_PROFITABLE_NUM
-
-    fun HashMap<Rank, Count>.deepCopy(): HashMap<Rank, Count> {
-        val copy: HashMap<Rank, Count> = HashMap()
-        this.forEach { (key, value) -> copy[key] = value }
-        return copy
-    }
 
     companion object {
         const val INITIALIZE_TO_ZERO = 0
