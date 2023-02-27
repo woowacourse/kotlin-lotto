@@ -16,7 +16,7 @@ class Lotto(val lottoNumbers: Set<LottoNumber>) {
     }
 
     fun matchLottoNumber(bonusNumber: LottoNumber): Boolean =
-        lottoNumbers.count { lottoNumber -> lottoNumber == bonusNumber } != 0
+        lottoNumbers.any { lottoNumber -> lottoNumber == bonusNumber }
 
     companion object {
         const val LOTTO_SIZE = 6
