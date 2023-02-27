@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.domain.ManualPurchaseCount
+import lotto.domain.purchasecount.ManualPurchaseCount
 
 object InputView {
     private const val ERROR_NOT_NUMBER = "숫자 이외의 입력이 들어갔거나 올바르지 않은 입력입니다."
