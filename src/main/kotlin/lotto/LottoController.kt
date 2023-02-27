@@ -12,12 +12,11 @@ import lotto.domain.purchasecount.TotalPurchaseCount
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class LottoController(private val lottoFactory: LottoFactory) {
+class LottoController(private val autoLottoFactory: LottoFactory, private val manualLottoFactory: LottoFactory) {
     fun runLotto() {
         val purchaseMoney = getPurchaseMoney()
         val totalPurchaseCount = getTotalPurchaseCount(purchaseMoney.getPurchaseCount())
-        val manualPurchaseLotto = getManualPurchaseLotto(totalPurchaseCount)
-        val lottoBunch = getLottoBunch(totalPurchaseCount, manualPurchaseLotto)
+        val lottoBunch = getLottoBunch(totalPurchaseCount)
         val winningLotto = getWinningLotto()
         confirmLottoWinning(purchaseMoney = purchaseMoney, lottoBunch = lottoBunch, winningLotto = winningLotto)
     }
@@ -26,16 +25,23 @@ class LottoController(private val lottoFactory: LottoFactory) {
 
     private fun getLottoBunch(
         totalPurchaseCount: TotalPurchaseCount,
-        manualPurchaseLotto: List<Lotto>,
     ): LottoBunch {
         val lottoBunch =
-            LottoBunch(manualPurchaseLotto + List(totalPurchaseCount.autoPurchaseCount.value) { lottoFactory.createLotto() })
+            LottoBunch(getManualPurchaseLotto(totalPurchaseCount) + getAutoPurchaseLotto(totalPurchaseCount))
         OutputView.printPurchaseResult(
             totalPurchaseCount.manualPurchaseCount.value,
             totalPurchaseCount.autoPurchaseCount.value,
             lottoBunch,
         )
         return lottoBunch
+    }
+
+    private fun getAutoPurchaseLotto(totalPurchaseCount: TotalPurchaseCount): List<Lotto> =
+        List(totalPurchaseCount.autoPurchaseCount.value) { autoLottoFactory.createLotto() }
+
+    private fun getManualPurchaseLotto(totalPurchaseCount: TotalPurchaseCount): List<Lotto> {
+        InputView.printManualPurchaseLottoScript()
+        return List(totalPurchaseCount.manualPurchaseCount.value) { manualLottoFactory.createLotto() }
     }
 
     private fun getWinningLotto(): WinningLotto {
@@ -66,15 +72,6 @@ class LottoController(private val lottoFactory: LottoFactory) {
         )
     }
 
-    private fun getManualPurchaseLotto(totalPurchaseCount: TotalPurchaseCount): List<Lotto> {
-        return runCatching {
-            InputView.getManualPurchaseLotto(totalPurchaseCount.manualPurchaseCount).map { convertToLotto(it) }
-        }.getOrElse { error ->
-            println(error.message)
-            getManualPurchaseLotto(totalPurchaseCount)
-        }
-    }
-
     private fun getTotalPurchaseCount(totalPurchaseCount: Int): TotalPurchaseCount {
         return runCatching {
             TotalPurchaseCount(totalPurchaseCount, InputView.getManualPurchaseCount())
@@ -83,7 +80,4 @@ class LottoController(private val lottoFactory: LottoFactory) {
             getTotalPurchaseCount(totalPurchaseCount)
         }
     }
-
-    private fun convertToLotto(numbers: List<Int>): Lotto =
-        Lotto(numbers.map { LottoNumber(it) }.toSet())
 }
