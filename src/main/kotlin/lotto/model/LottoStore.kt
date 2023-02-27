@@ -18,11 +18,11 @@ class LottoStore(
         return mergeLottos(buyManualLotto(), buyAutoLotto())
     }
 
-    fun buyManualLotto(): Lottos {
+    private fun buyManualLotto(): Lottos {
         return Lottos(manualLottoTickets.map { lottoTicket -> Lotto.from(lottoTicket.numbers.map(::LottoNumber)) })
     }
 
-    fun buyAutoLotto(): Lottos {
+    private fun buyAutoLotto(): Lottos {
         return Lottos(List(auttoLottoCount) { lottoGenerator.generate() })
     }
 

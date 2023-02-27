@@ -19,7 +19,7 @@ class LottoStoreTest {
         val lottoB = LottoTicket(listOf(10, 12, 31, 34, 35, 45))
         val store = LottoStore(purchaseMoney, arrayOf(lottoA, lottoB))
         // when
-        val actual = store.buyManualLotto()
+        val actual = store.makeLottos()
         val expect = listOf(
             Lotto.from(lottoA.numbers.map(::LottoNumber)),
             Lotto.from(lottoB.numbers.map(::LottoNumber)),
@@ -38,7 +38,7 @@ class LottoStoreTest {
         val purchaseMoney = PurchaseMoney(2000)
         val store = LottoStore(purchaseMoney, lottoGenerator = lottoGenerator)
         // when
-        val actual = store.buyAutoLotto()
+        val actual = store.makeLottos()
         // then
         assertAll({
             assertThat(actual.value.size).isEqualTo(2)
