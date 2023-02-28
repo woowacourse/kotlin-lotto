@@ -1,13 +1,15 @@
 package domain
 
 import domain.lotto.LottoBundle
+import util.LOTTO_PRICE
 
-class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle, spentMoney: Money) {
+class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoBundle) {
     val rankCount: Map<Rank, Int>
+    private val spentMoney: Money = Money(purchasedLottoBundle.size * LOTTO_PRICE)
     val earningRate: Double
 
     init {
-        rankCount = purchasedLottoBundle
+        rankCount = BASE_MAP + purchasedLottoBundle
             .compareWithWinningNumbers(winningNumbers)
             .groupingBy { it }
             .eachCount()
@@ -24,7 +26,7 @@ class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoB
     }
 
     private fun calculateEarningRate(spentMoney: Money): Double {
-        return getTotalIncome() / spentMoney
+        return (getTotalIncome() / spentMoney).toDouble()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -40,5 +42,9 @@ class WinStatistics(winningNumbers: WinningNumbers, purchasedLottoBundle: LottoB
 
     override fun hashCode(): Int {
         return rankCount.hashCode()
+    }
+
+    companion object {
+        private val BASE_MAP: Map<Rank, Int> = Rank.validValues().associateWith { 0 }
     }
 }

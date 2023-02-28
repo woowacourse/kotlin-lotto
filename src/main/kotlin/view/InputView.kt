@@ -1,20 +1,35 @@
 package view
 
 object InputView {
-    private const val SEPARATOR = ", "
-    const val PREFIX = "[ERROR]"
-
-    fun inputMoney(): Long {
-        return readLine()?.toLongOrNull() ?: throw IllegalArgumentException("$PREFIX 1000원 단위의 금액으로 입력해야합니다.")
+    fun getInputMoney(): Long {
+        InputRequestView.printRequestMoney()
+        return InputResponseView.inputMoney() ?: inputNullControl { getInputMoney() }
     }
 
-    fun inputWinningNumbers(): List<Int> {
-        return (readLine() ?: throw IllegalArgumentException("$PREFIX null값이 입력되었습니다."))
-            .split(SEPARATOR)
-            .map { it.toIntOrNull() ?: throw IllegalArgumentException("$PREFIX 숫자를 입력해야합니다.") }
+    fun getInputWinningLotto(): List<Int> {
+        InputRequestView.printRequestWinningNumbers()
+        return InputResponseView.inputLottoNumbers() ?: inputNullControl { getInputWinningLotto() }
     }
 
-    fun inputBonusNumber(): Int {
-        return readLine()?.toIntOrNull() ?: throw IllegalArgumentException("$PREFIX 당첨번호와 겹치지않고 1 ~ 45까지의 숫자를 입력해주세요.")
+    fun getInputBonusNumber(): Int {
+        InputRequestView.printRequestBonusNumber()
+        return InputResponseView.inputBonusNumber() ?: inputNullControl { getInputBonusNumber() }
+    }
+
+    fun getInputManualLottoCount(): Int {
+        InputRequestView.printRequestManualLottoCount()
+        return InputResponseView.inputManualLottoCount() ?: inputNullControl { getInputManualLottoCount() }
+    }
+
+    fun getInputManualLottos(manualLottoCount: Int): List<List<Int>> {
+        InputRequestView.printRequestManualLotto()
+        return InputResponseView.inputManualLottoBundle(manualLottoCount) ?: inputNullControl {
+            getInputManualLottos(manualLottoCount)
+        }
+    }
+
+    private fun <T> inputNullControl(inputMethod: () -> T): T {
+        println("잘못 입력하였습니다. 다시 입력하세요")
+        return inputMethod() ?: inputNullControl { inputMethod() }
     }
 }

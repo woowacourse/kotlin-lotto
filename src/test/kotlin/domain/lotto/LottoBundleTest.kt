@@ -33,4 +33,19 @@ internal class LottoBundleTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `LottoBundle을 합치는 plus 연산자 함수가 잘 작동하는지 테스트`() {
+        // given
+        val baseLottoBundle = LottoBundle(lottos)
+        val beforeSize = baseLottoBundle.size
+        val lottoBundleToAdd = LottoBundle(listOf(Lotto(10, 11, 12, 13, 14, 15)))
+        val addSize: Int = lottoBundleToAdd.size
+
+        // when
+        val totalLottoBundle = baseLottoBundle + lottoBundleToAdd
+        val actual = totalLottoBundle.size
+        // then
+        assertThat(actual).isEqualTo(beforeSize + addSize)
+    }
 }

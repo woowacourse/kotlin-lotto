@@ -3,12 +3,17 @@ package domain
 import util.PREFIX
 
 @JvmInline
-value class Money(val amount: Long) {
+value class Money(private val amount: Double) {
     constructor(amount: Int) : this(amount.toLong())
+    constructor(amount: Long) : this(amount.toDouble())
 
     init {
-        require((amount % 1000L == 0L) and (amount != 0L)) { "$PREFIX 받은 돈이 1000원 단위여야합니다." }
+        require(amount >= 0) { "$PREFIX 돈이 음수일 수 없습니다. 들어온 돈은 ${amount}입니다" }
     }
+
+    fun toInt(): Int = amount.toInt()
+    fun toLong(): Long = amount.toLong()
+    fun toDouble(): Double = amount.toDouble()
 
     operator fun plus(otherMoney: Money): Money {
         return Money(amount + otherMoney.amount)
@@ -18,8 +23,8 @@ value class Money(val amount: Long) {
         return Money(amount - otherMoney.amount)
     }
 
-    operator fun div(otherMoney: Money): Double {
-        return amount.toDouble() / otherMoney.amount
+    operator fun div(otherMoney: Money): Money {
+        return Money(amount / otherMoney.amount)
     }
 
     operator fun times(time: Int): Money {

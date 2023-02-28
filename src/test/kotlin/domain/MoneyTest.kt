@@ -1,21 +1,21 @@
 package domain
 
-import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
+import io.kotest.matchers.throwable.shouldHaveMessage
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import util.PREFIX
 
 class MoneyTest {
-    @ValueSource(ints = [14400, 1, 555, 0])
+    @ValueSource(doubles = [-1000.0, -1.0, -15000.0, -1234.0])
     @ParameterizedTest
-    fun `금액은 1000원 단위여야 한다`(receivedMoney: Int) {
+    fun `금액은 음수일 수 없다`(receivedMoney: Double) {
         // given
 
         // when
 
         // then
-        assertThatIllegalArgumentException()
-            .isThrownBy { Money(receivedMoney) }
-            .withMessageContaining("$PREFIX 받은 돈이 1000원 단위여야합니다.")
+        assertThrows<IllegalArgumentException> { Money(receivedMoney) }
+            .shouldHaveMessage("$PREFIX 돈이 음수일 수 없습니다. 들어온 돈은 ${receivedMoney}입니다")
     }
 }
