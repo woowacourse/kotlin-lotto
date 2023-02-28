@@ -52,7 +52,7 @@ class LottoController() {
 
     private fun getTotalPurchaseCount(totalPurchaseCount: Int): TotalPurchaseCount {
         return runCatching {
-            TotalPurchaseCount(totalPurchaseCount, InputView.getManualPurchaseCount())
+            TotalPurchaseCount.from(totalPurchaseCount, InputView.getManualPurchaseCount())
         }.getOrElse { error ->
             println(error.message)
             getTotalPurchaseCount(totalPurchaseCount)
