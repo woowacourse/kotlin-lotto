@@ -78,7 +78,7 @@ class LottoController(private val manualLottoFactory: LottoFactory, private val 
 
     private fun getManualPurchaseLotto(totalPurchaseCount: TotalPurchaseCount): List<Lotto> {
         InputView.printManualPurchaseLottoScript()
-        return List(totalPurchaseCount.manualPurchaseCount.value) { manualLottoFactory.createLotto(getManualPurchaseNumbers()) }
+        return List(totalPurchaseCount.manualPurchaseCount.value) { manualLottoFactory.createLotto(::getManualPurchaseNumbers) }
     }
 
     private fun getManualPurchaseNumbers(): List<Int> {
