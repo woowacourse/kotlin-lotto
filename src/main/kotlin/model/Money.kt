@@ -1,6 +1,6 @@
 package model
 
-class Money(value: Int) {
+class Money(val value: Int) {
 
     init {
         require(value >= MINIMUM_PRICE) { ERROR_UNDER_MINIMUM_PRICE }
