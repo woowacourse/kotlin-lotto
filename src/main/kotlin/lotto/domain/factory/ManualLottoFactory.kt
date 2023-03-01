@@ -2,17 +2,16 @@ package lotto.domain.factory
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.view.InputView
 
 class ManualLottoFactory : LottoFactory {
-    override fun createLotto(): Lotto = getManualPurchaseLotto()
+    override fun createLotto(numbers: List<Int>): Lotto = getManualPurchaseLotto(numbers)
 
-    private fun getManualPurchaseLotto(): Lotto {
+    private fun getManualPurchaseLotto(numbers: List<Int>): Lotto {
         return runCatching {
-            Lotto(InputView.getManualPurchaseLotto().map { LottoNumber(it) }.toSet())
+            Lotto(numbers.map { LottoNumber(it) }.toSet())
         }.getOrElse { error ->
             println(error.message)
-            getManualPurchaseLotto()
+            getManualPurchaseLotto(numbers)
         }
     }
 }
