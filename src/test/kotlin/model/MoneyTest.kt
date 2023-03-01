@@ -1,7 +1,9 @@
 package model
 
-import org.assertj.core.api.Assertions.assertThat
+import model.Money.Companion.ERROR_CHECK_PRICE_UNIT
+import model.Money.Companion.ERROR_UNDER_MINIMUM_PRICE
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class MoneyTest {
     @Test
@@ -9,11 +11,10 @@ class MoneyTest {
         // given
         val money = 500
 
-        // when
-        val actual = Money(money).requireOverMinimumPrice()
-
-        // then
-        assertThat(actual).isEqualTo(null)
+        // when, then
+        assertThrows<IllegalArgumentException>(ERROR_UNDER_MINIMUM_PRICE) {
+            Money(money)
+        }
     }
 
     @Test
@@ -21,10 +22,9 @@ class MoneyTest {
         // given
         val money = 1500
 
-        // when
-        val actual = Money(money).requireCheckPriceUnit()
-
-        // then
-        assertThat(actual).isEqualTo(null)
+        // when, then
+        assertThrows<IllegalArgumentException>(ERROR_CHECK_PRICE_UNIT) {
+            Money(money)
+        }
     }
 }
