@@ -7,15 +7,16 @@ import lotto.domain.PurchaseMoney
 import lotto.domain.WinningLotto
 import lotto.domain.WinningResult
 import lotto.domain.YieldRateCalculator
+import lotto.domain.factory.LottoFactory
 import lotto.domain.purchasecount.TotalPurchaseCount
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class LottoController() {
+class LottoController(private val manualLottoFactory: LottoFactory, private val autoLottoFactory: LottoFactory) {
     fun runLotto() {
         val purchaseMoney = getPurchaseMoney()
         val totalPurchaseCount = getTotalPurchaseCount(purchaseMoney.getPurchaseCount())
-        val lottoBunch = LottoBunch.from(totalPurchaseCount)
+        val lottoBunch = getLottoBunch(totalPurchaseCount)
         val winningLotto = getWinningLotto()
         confirmLottoWinning(purchaseMoney = purchaseMoney, lottoBunch = lottoBunch, winningLotto = winningLotto)
     }
@@ -57,5 +58,26 @@ class LottoController() {
             println(error.message)
             getTotalPurchaseCount(totalPurchaseCount)
         }
+    }
+
+    private fun getLottoBunch(
+        totalPurchaseCount: TotalPurchaseCount,
+    ): LottoBunch {
+        val lottoBunch =
+            LottoBunch(getManualPurchaseLotto(totalPurchaseCount) + getAutoPurchaseLotto(totalPurchaseCount))
+        OutputView.printPurchaseResult(
+            totalPurchaseCount.manualPurchaseCount.value,
+            totalPurchaseCount.autoPurchaseCount.value,
+            lottoBunch,
+        )
+        return lottoBunch
+    }
+
+    private fun getAutoPurchaseLotto(totalPurchaseCount: TotalPurchaseCount): List<Lotto> =
+        List(totalPurchaseCount.autoPurchaseCount.value) { autoLottoFactory.createLotto() }
+
+    private fun getManualPurchaseLotto(totalPurchaseCount: TotalPurchaseCount): List<Lotto> {
+        InputView.printManualPurchaseLottoScript()
+        return List(totalPurchaseCount.manualPurchaseCount.value) { manualLottoFactory.createLotto() }
     }
 }
