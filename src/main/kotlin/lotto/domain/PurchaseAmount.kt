@@ -4,7 +4,8 @@ class PurchaseAmount(
     val amount: Int,
     val manualNumber: Int,
 ) {
-    val autoNumber: Int = amount / PURCHASE_AMOUNT_UNIT - manualNumber
+    val autoNumber: Int
+        get(): Int = amount / PURCHASE_AMOUNT_UNIT - manualNumber
 
     init {
         checkBoundary()
