@@ -1,31 +1,38 @@
 package lotto.controller
 
+import lotto.domain.Lotteries
 import lotto.domain.Lottery
-import lotto.domain.LotteryGenerator
+import lotto.domain.LotteryMachine
+import lotto.domain.LotteryNumber
 import lotto.domain.PurchaseAmount
 import lotto.domain.WinningLottery
+import lotto.domain.WinningResult
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val lotteryGenerator: LotteryGenerator = LotteryGenerator()
+    private val machine: LotteryMachine = LotteryMachine()
 ) {
+
     fun run() {
-        val purchaseAmount = inputView.readPurchaseAmount()
-        val lotteries = createLotteries(purchaseAmount)
-        val winningLottery = WinningLottery(inputView.readLottery(), inputView.readBonusNumber())
-        val winningResult = winningLottery.calculateResult(lotteries)
+        val amount: PurchaseAmount = getPurchaseAmount()
+        val lotteries: Lotteries = machine.createLotteries(getLotteries(amount.manualNumber), amount.autoNumber)
+        outputView.printPurchaseLotteries(amount, lotteries)
 
-        outputView.printWinningStats(purchaseAmount, winningResult)
+        val winningLottery: WinningLottery = getWinningLottery()
+        val result: WinningResult = winningLottery.createWinningResult(lotteries, amount)
+        outputView.printWinningStats(result)
     }
 
-    private fun createLotteries(purchaseAmount: PurchaseAmount): List<Lottery> {
-        val lotteries = lotteryGenerator.generateLotteries(purchaseAmount.getPurchaseQuantity())
+    private fun getWinningLottery(): WinningLottery = WinningLottery(getLottery(), getLotteryNumber())
 
-        repeat(lotteries.size) { outputView.printMessage(lotteries[it].numbers.toString()) }
+    private fun getLottery(): Lottery = inputView.readLottery() ?: getLottery()
 
-        return lotteries
-    }
+    private fun getLotteryNumber(): LotteryNumber = inputView.readLotteryNumber() ?: getLotteryNumber()
+
+    private fun getPurchaseAmount(): PurchaseAmount = inputView.readPurchaseAmount() ?: getPurchaseAmount()
+
+    private fun getLotteries(count: Int): Lotteries = inputView.readLotteries(count) ?: getLotteries(count)
 }
