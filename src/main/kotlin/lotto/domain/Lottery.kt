@@ -6,7 +6,7 @@ class Lottery(val numbers: List<LotteryNumber>) {
         checkNumbersDuplicate()
     }
 
-    constructor(vararg numbers: Int) : this(numbers.map { LotteryNumber.from(it) }.toList())
+    constructor(vararg numbers: Int) : this(numbers.map { LotteryNumber(it) }.toList())
 
     override fun toString(): String = numbers.sortedBy { it.toInt() }.toString()
 
