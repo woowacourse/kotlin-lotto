@@ -12,7 +12,7 @@ class PurchaseAmountTest {
     @ValueSource(ints = [1000, 50000])
     fun `1000원 이상 50000 이하의 구입금액을 생성할 수 있다`(amount: Int) {
         val purchaseAmount = PurchaseAmount(amount, 0)
-        assertThat(purchaseAmount.toInt()).isEqualTo(amount)
+        assertThat(purchaseAmount.amount).isEqualTo(amount)
     }
 
     @Test

@@ -1,21 +1,16 @@
 package lotto.domain
 
 class PurchaseAmount(
-    private val amount: Int,
+    val amount: Int,
     val manualNumber: Int,
 ) {
-
-    val autoNumber: Int = getPurchaseQuantity() - manualNumber
+    val autoNumber: Int = amount / PURCHASE_AMOUNT_UNIT - manualNumber
 
     init {
         checkBoundary()
         checkUnit()
         checkAutoNumber()
     }
-
-    fun toInt(): Int = amount
-
-    private fun getPurchaseQuantity(): Int = amount / PURCHASE_AMOUNT_UNIT
 
     private fun checkBoundary() {
         require(amount in PURCHASE_AMOUNT_LOWER_BOUNDARY..PURCHASE_AMOUNT_UPPER_BOUNDARY) {
@@ -28,7 +23,7 @@ class PurchaseAmount(
     }
 
     private fun checkAutoNumber() {
-        val purchaseQuantity = getPurchaseQuantity()
+        val purchaseQuantity = amount / PURCHASE_AMOUNT_UNIT
         require(purchaseQuantity >= manualNumber) { ERROR_FORMAT_MESSAGE_AUTO_NUMBER.format(purchaseQuantity) }
     }
 

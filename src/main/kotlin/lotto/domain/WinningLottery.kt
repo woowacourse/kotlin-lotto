@@ -19,7 +19,7 @@ class WinningLottery(
             winningResult[rank] = winningResult[rank]?.plus(1) ?: throw IllegalStateException()
         }
 
-        return WinningResult(winningResult, amount.toInt())
+        return WinningResult(winningResult, amount.amount)
     }
 
     private fun checkBonusNumberDuplicate() {
