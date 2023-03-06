@@ -1,10 +1,11 @@
-import domain.LottoMachine
-import domain.ShuffledLottoGenerator
-import view.InputView
-import view.OutputView
+import model.domain.AutoLottoGenerator
+import model.domain.LottoMachine
+import model.domain.ManualLottoGenerator
+import presentation.OrderLottoView
 
-fun main() = LottoController(
-    InputView(),
-    OutputView(),
-    LottoMachine(ShuffledLottoGenerator()),
+fun main() = Controller(
+    OrderLottoView(),
+    LottoMachine(),
+    AutoLottoGenerator(),
+    ManualLottoGenerator(),
 ).run()

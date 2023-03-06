@@ -1,16 +1,17 @@
 package model
 
-import domain.Rank
+import model.domain.Rank
 
-class LottoResult(
-    private val bundleOfLotto: List<Lotto>,
-    private val winningNumber: WinningNumber,
-) {
+class LottoResult(private val rankList: List<Rank>) {
     private val _result: MutableMap<Rank, Int> = mutableMapOf()
     val result: Map<Rank, Int> get() = _result.toMap()
 
     init {
         readyLottoResult()
+    }
+
+    private fun updateRankCount(rank: Rank) {
+        _result[rank] = (_result[rank] ?: NULL) + COUNT_UP
     }
 
     fun getProfitRate(): Double {
@@ -25,24 +26,13 @@ class LottoResult(
     }
 
     private fun readyLottoResult() {
-        bundleOfLotto.forEach { lotto ->
-            val matchOfCount = compareLottoNumber(lotto, winningNumber.lotto)
-            val isMatchBonus = checkBonusNumber(lotto, winningNumber.bonusNumber)
-            val rank = Rank.valueOf(matchOfCount, isMatchBonus)
-
+        rankList.forEach { rank ->
             updateRankCount(rank)
         }
     }
 
-    private fun updateRankCount(rank: Rank) {
-        _result[rank] = (_result[rank] ?: NULL) + 1
-    }
-
-    private fun compareLottoNumber(lotto: Lotto, winningNumber: Lotto) = lotto.getMatchOfNumber(winningNumber)
-
-    private fun checkBonusNumber(lotto: Lotto, winningNumber: LottoNumber) = lotto.isMatchBonus(winningNumber)
-
     companion object {
+        private const val COUNT_UP = 1
         private const val NULL = 0
         private const val DOUBLE_ZERO = 0.00
         private const val ONE_LOTTO_PRICE = 1000

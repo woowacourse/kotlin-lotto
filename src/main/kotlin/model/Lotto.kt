@@ -1,22 +1,28 @@
 package model
 
-class Lotto(val lottoNumbers: List<LottoNumber>) {
+class Lotto(val ticket: List<LottoNumber>) {
+
     init {
-        require(lottoNumbers.size == LOTTO_NUMBER_COUNT_RULE) { LOTTO_NUMBER_COUNT_ERROR_MESSAGE }
-        require(lottoNumbers.toSet().size == LOTTO_NUMBER_COUNT_RULE) { LOTTO_NUMBER_DUPLICATE_ERROR_MESSAGE }
+        require(ticket.size == LOTTO_NUMBER_COUNT_RULE) { ERROR_LOTTO_SIZE }
+        require(ticket.map { it.value }.toSet().size == LOTTO_NUMBER_COUNT_RULE) { ERROR_LOTTO_NUMBER_DUPLICATION }
     }
 
-    fun getMatchOfNumber(winningNumber: Lotto) = lottoNumbers.filter { lottoNumber ->
-        winningNumber.lottoNumbers.contains(lottoNumber)
-    }.size
+    fun getMatchOfNumber(winningNumber: Lotto): Int {
+        val winningNumbers = winningNumber.ticket.map { ticket -> ticket.value }
+
+        return ticket.filter { lottoNumber ->
+            winningNumbers.contains(lottoNumber.value)
+        }.size
+    }
 
     fun isMatchBonus(winningNumber: LottoNumber): Boolean {
-        return lottoNumbers.contains(winningNumber)
+        val lotto = ticket.map { lotto -> lotto.value }
+        return lotto.contains(winningNumber.value)
     }
 
     companion object {
         private const val LOTTO_NUMBER_COUNT_RULE = 6
-        private const val LOTTO_NUMBER_COUNT_ERROR_MESSAGE = "[ERROR] 로또 번호의 개수가 6개가 아닙니다"
-        private const val LOTTO_NUMBER_DUPLICATE_ERROR_MESSAGE = "[ERROR] 로또 번호가 중복입니다"
+        const val ERROR_LOTTO_SIZE = "[ERROR] 로또 번호의 개수가 6개가 아닙니다"
+        const val ERROR_LOTTO_NUMBER_DUPLICATION = "[ERROR] 로또 번호가 중복입니다"
     }
 }

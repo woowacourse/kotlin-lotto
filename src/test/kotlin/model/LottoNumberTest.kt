@@ -1,20 +1,29 @@
 package model
 
-import io.kotest.matchers.throwable.haveMessage
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class LottoNumberTest {
 
     @Test
-    fun `내부로 들어오는 인자가, 1~45이외의 범위일 때, 예외를 발생한다`() {
+    fun `로또 번호가 46이 생성되었을 때, 익셉션을 던진다`() {
         // given
         val testNumber = 46
 
         // then
-        assertThrows<IllegalArgumentException> {
+        assertThrows<IllegalArgumentException>("[ERROR] 로또 번호가 1~45가 아닙니다") {
             LottoNumber(testNumber)
-            haveMessage("[ERROR] 로또 번호가 1~45가 아닙니다")
+        }
+    }
+
+    @Test
+    fun `로또 번호가 0이 생성되었을 때, 익셉션을 던진다`() {
+        // given
+        val testNumber = 0
+
+        // then
+        assertThrows<IllegalArgumentException>("[ERROR] 로또 번호가 1~45가 아닙니다") {
+            LottoNumber(testNumber)
         }
     }
 }
