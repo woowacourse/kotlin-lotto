@@ -4,7 +4,7 @@ class Lotto(val ticket: List<LottoNumber>) {
 
     init {
         require(ticket.size == LOTTO_NUMBER_COUNT_RULE) { ERROR_LOTTO_SIZE }
-        require(ticket.toSet().size == LOTTO_NUMBER_COUNT_RULE) { ERROR_LOTTO_NUMBER_DUPLICATION }
+        require(ticket.map { it.value }.toSet().size == LOTTO_NUMBER_COUNT_RULE) { ERROR_LOTTO_NUMBER_DUPLICATION }
     }
 
     fun getMatchOfNumber(winningNumber: Lotto): Int {
