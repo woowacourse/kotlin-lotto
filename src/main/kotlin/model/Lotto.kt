@@ -1,10 +1,23 @@
 package model
 
-class Lotto(ticket: List<LottoNumber>) {
+class Lotto(val ticket: List<LottoNumber>) {
 
     init {
         require(ticket.size == LOTTO_NUMBER_COUNT_RULE) { ERROR_LOTTO_SIZE }
-        require(ticket.toSet().size != LOTTO_NUMBER_COUNT_RULE) { ERROR_LOTTO_NUMBER_DUPLICATION }
+        require(ticket.toSet().size == LOTTO_NUMBER_COUNT_RULE) { ERROR_LOTTO_NUMBER_DUPLICATION }
+    }
+
+    fun getMatchOfNumber(winningNumber: Lotto): Int {
+        val winningNumbers = winningNumber.ticket.map { ticket -> ticket.value }
+
+        return ticket.filter { lottoNumber ->
+            winningNumbers.contains(lottoNumber.value)
+        }.size
+    }
+
+    fun isMatchBonus(winningNumber: LottoNumber): Boolean {
+        val lotto = ticket.map { lotto -> lotto.value }
+        return lotto.contains(winningNumber.value)
     }
 
     companion object {
