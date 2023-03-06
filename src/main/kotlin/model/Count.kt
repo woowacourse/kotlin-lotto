@@ -1,11 +1,11 @@
 package model
 
-class Count(money: Money, manualLottoCount: Int) {
+class Count(money: Money, val manualLottoCount: Int) {
     val autoLottoCount = (money.value / ONE_TICKET_PRICE) - manualLottoCount
 
     init {
         require(manualLottoCount >= MINIMUM_COUNT) { ERROR_MINUS_VALUE }
-        require(autoLottoCount > MINIMUM_COUNT) { ERROR_PURCHASE_LIMIT }
+        require(autoLottoCount >= MINIMUM_COUNT) { ERROR_PURCHASE_LIMIT }
     }
 
     companion object {
