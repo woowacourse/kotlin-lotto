@@ -98,7 +98,6 @@ class LottoTest {
             LottoNumber(5),
         )
 
-
         // when, then
         assertThrows<IllegalArgumentException>(ERROR_LOTTO_NUMBER_DUPLICATION) {
             Lotto(lotto).ticket.toSet().size
