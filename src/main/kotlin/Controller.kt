@@ -40,18 +40,20 @@ class Controller(
 
     private fun getWinningNumbers(): WinningNumbers {
         val inputWinningNumbersView = InputWinningNumbersView()
-        val winningNumber = Lotto(getWinningNumber(inputWinningNumbersView))
+        val winningNumber = getWinningNumber(inputWinningNumbersView)
         val bonusNumber = LottoNumber(getBonusNumber(inputWinningNumbersView))
 
         return WinningNumbers(winningNumber, bonusNumber)
     }
 
-    private fun getWinningNumber(inputWinningNumbersView: InputWinningNumbersView): List<LottoNumber> {
+    private fun getWinningNumber(inputWinningNumbersView: InputWinningNumbersView): Lotto {
         val winningNumber = inputWinningNumbersView.getWinningNumber()
 
-        return winningNumber.map { number ->
-            LottoNumber(number)
-        }
+        return Lotto(
+            winningNumber.map { number ->
+                LottoNumber(number)
+            },
+        )
     }
 
     private fun getBonusNumber(inputWinningNumbersView: InputWinningNumbersView): Int =

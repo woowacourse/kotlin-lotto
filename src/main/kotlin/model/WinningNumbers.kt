@@ -8,7 +8,7 @@ class WinningNumbers(private val lotto: Lotto, private val bonusNumber: LottoNum
         require(checkDuplicateNumber()) { DUPLICATE_BONUS_NUMBER }
     }
 
-    private fun checkDuplicateNumber() = lotto.ticket.contains(bonusNumber)
+    private fun checkDuplicateNumber() = !lotto.ticket.map { it.value }.contains(bonusNumber.value)
 
     private fun checkRank(lotto: Lotto): Rank {
         val matchOfCount = lotto.getMatchOfNumber(this.lotto)
