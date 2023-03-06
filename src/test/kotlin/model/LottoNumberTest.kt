@@ -1,30 +1,29 @@
 package model
 
-import model.LottoNumber.Companion.LOTTO_NUMBER_RANGE_ERROR_MESSAGE
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class LottoNumberTest {
 
     @Test
-    fun `로또 번호값에 '0'이 존재한다`() {
+    fun `로또 번호가 46이 생성되었을 때, 익셉션을 던진다`() {
         // given
-        val number = 0
+        val testNumber = 46
 
-        // when, then
-        assertThrows<IllegalArgumentException>(LOTTO_NUMBER_RANGE_ERROR_MESSAGE) {
-            LottoNumber(number)
+        // then
+        assertThrows<IllegalArgumentException>("[ERROR] 로또 번호가 1~45가 아닙니다") {
+            LottoNumber(testNumber)
         }
     }
 
     @Test
-    fun `로또 번호값에 '50'이 존재한다`() {
+    fun `로또 번호가 0이 생성되었을 때, 익셉션을 던진다`() {
         // given
-        val number = 50
+        val testNumber = 0
 
-        // when, then
-        assertThrows<IllegalArgumentException>(LOTTO_NUMBER_RANGE_ERROR_MESSAGE) {
-            LottoNumber(number)
+        // then
+        assertThrows<IllegalArgumentException>("[ERROR] 로또 번호가 1~45가 아닙니다") {
+            LottoNumber(testNumber)
         }
     }
 }
