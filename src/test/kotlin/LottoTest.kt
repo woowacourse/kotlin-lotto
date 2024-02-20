@@ -1,4 +1,4 @@
-import model.LottoNumber
+import model.Lotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -22,8 +22,4 @@ class LottoTest {
         val nums = intArrayOf(1, 2, 3, 4, 5, 6)
         assertThat(nums).hasSize(6)
     }
-}
-
-class Lotto(private val numbers: List<LottoNumber>) {
-    constructor(vararg nums: Int) : this(nums.map { LottoNumber(it) })
 }
