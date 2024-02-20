@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.util.Constant
+const val START_RESULT = "당첨 통계\n—"
 
 fun winningStatistics(){
-    println(Constant.START_RESULT)
+    println(START_RESULT)
 }
