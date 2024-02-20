@@ -5,8 +5,8 @@ import java.text.DecimalFormat
 
 class LotterySeller(private val money: Money) {
     init {
-        require(money.amount <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
-        require(money.amount >= PRICE.amount) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
+        require(money <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
+        require(money >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
     }
 
     fun exchange(): Money = money % PRICE
@@ -20,7 +20,7 @@ class LotterySeller(private val money: Money) {
         private val decimalFormat = DecimalFormat("#,###")
 
         private val PRICE = Money(BigDecimal(MIN_PRICE_AMOUNT))
-        private val MAX_PURCHASE_AMOUNT = BigDecimal(MAX_PRICE_AMOUNT)
+        private val MAX_PURCHASE_AMOUNT = Money(BigDecimal(MAX_PRICE_AMOUNT))
 
         private val ERROR_EXCEED_MAX_PURCHASE_AMOUNT = "${decimalFormat.format(MAX_PRICE_AMOUNT)}원 이하로만 구매가 가능합니다."
         private val ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT = "${decimalFormat.format(MIN_PRICE_AMOUNT)}원 이상의 금액을 지불해야 합니다."
