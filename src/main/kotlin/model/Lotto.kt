@@ -1,12 +1,12 @@
 package model
 
-class Lotto(val numbers: List<Int>) {
+class Lotto(val numbers: List<LottoNumber>) {
         init {
             require(numbers.size == LOTTO_SIZE) {
                 ERROR_LOTTO_SIZE
             }
 
-            require(numbers.distinctBy { it }.size == LOTTO_SIZE) {
+            require(numbers.distinctBy { it.number }.size == LOTTO_SIZE) {
                 ERROR_LOTTO_DUPLICATE
             }
         }
