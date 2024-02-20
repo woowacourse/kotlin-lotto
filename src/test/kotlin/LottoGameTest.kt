@@ -26,7 +26,6 @@ class LottoGameTest {
     fun `보너스 매치`() {
         assertThat(boomPrizeLotto.matchBonusNumber(correctWinningNumber)).isTrue()
     }
-
     @Test
     fun `당첨 계산`() {
         assertThat(firstPrizeLotto.matchCount(correctWinningNumber)).isEqualTo(6)
