@@ -1,4 +1,5 @@
 package lotto
 
 fun main(){
+
 }

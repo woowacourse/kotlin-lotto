@@ -9,4 +9,5 @@ class Lotto(private val numbers: Set<Int>) {
     fun getNumbers(): Set<Int> {
         return numbers
     }
+
 }
