@@ -1,6 +1,6 @@
 package model
 
-class Lottery(val lotteryNumbers: List<LotteryNumber>) {
+data class Lottery(val lotteryNumbers: List<LotteryNumber>) {
     init {
         val lotteryNumberCount = lotteryNumbers.size
         require(lotteryNumberCount == LOTTERY_NUMBER_COUNT) { ERROR_INVALID_LOTTERY_NUMBER_COUNT }
