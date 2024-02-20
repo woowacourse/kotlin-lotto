@@ -1,3 +1,4 @@
+import model.Winning
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -46,5 +47,26 @@ class InputTest {
     @ValueSource(strings = ["1,2,3,4,5,5", "1,1,3,4,5,6"])
     fun `당첨 번호 입력 예외 처리 (당첨 숫자가 중복되는 경우)`(winningNumbers: String) {
         assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(winningNumbers) }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["7", "23", "45"])
+    fun `올바른 보너스 번호 입력`(bonusNumber: String) {
+        val winning = Winning(listOf(1, 2, 3, 4, 5, 6))
+        assertDoesNotThrow { InputValidator.validateBonusNumber(bonusNumber, winning) }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["-1", "0", "46", "one", " 1", "1 ", " ", ""])
+    fun `보너스 번호 입력 예외 처리 (보너스 번호가 1~45사이의 숫자가 아닌 경우)`(bonusNumber: String) {
+        val winning = Winning(listOf(1, 2, 3, 4, 5, 6))
+        assertThrows<IllegalArgumentException> { InputValidator.validateBonusNumber(bonusNumber, winning) }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["1", "2", "3", "4", "5", "6"])
+    fun `보너스 번호 입력 예외 처리 (보너스 번호가 당첨 숫자와 중복되는 경우)`(bonusNumber: String) {
+        val winning = Winning(listOf(1, 2, 3, 4, 5, 6))
+        assertThrows<IllegalArgumentException> { InputValidator.validateBonusNumber(bonusNumber, winning) }
     }
 }

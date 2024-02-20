@@ -1,5 +1,7 @@
 package util
 
+import model.Winning
+
 object InputValidator {
     private const val INPUT_SEPARATOR = ','
 
@@ -47,5 +49,18 @@ object InputValidator {
         require(purchaseAmount % Constant.PURCHASE_AMOUNT_UNIT == 0) { InputException.INVALID_PURCHASE_AMOUNT_UNIT.getMessage() }
     }
 
+    fun validateBonusNumber(input: String, winning: Winning): Int {
+        val bonusNumber = input.toIntOrNull() ?: 0
+        validateBonusNumberRange(bonusNumber)
+        validateBonusNumberDuplicate(bonusNumber, winning)
+        return bonusNumber
+    }
 
+    private fun validateBonusNumberRange(bonusNumber: Int) {
+        require(bonusNumber in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE) { InputException.INVALID_BONUS_NUMBER_RANGE.getMessage() }
+    }
+
+    private fun validateBonusNumberDuplicate(bonusNumber: Int, winning: Winning) {
+        require(!winning.numbers.contains(bonusNumber)) { InputException.INVALID_BONUS_NUMBER_DUPLICATE.getMessage() }
+    }
 }

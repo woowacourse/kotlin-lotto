@@ -1,8 +1,6 @@
 package controller
 
-import model.Buyer
-import model.Lotto
-import model.Lottos
+import model.*
 import view.InputView
 import view.OutputView
 
@@ -12,7 +10,7 @@ class LottoController {
         val buyer = Buyer(purchaseAmount)
         val lottos = Lottos(List(buyer.numberOfLotto) { Lotto() })
         displayPurchaseResult(buyer, lottos)
-        val winningNumbers = InputView.inputWinningNumbers()
+        val winningLotto = publishWinningLotto()
     }
 
     private fun displayPurchaseResult(buyer: Buyer, lottos: Lottos) {
@@ -20,4 +18,9 @@ class LottoController {
         OutputView.outputLottos(lottos)
     }
 
+    private fun publishWinningLotto(): WinningLotto {
+        val winning = Winning(InputView.inputWinningNumbers())
+        val bonusNumber = InputView.inputBonusNumber(winning)
+        return WinningLotto(winning, bonusNumber)
+    }
 }
