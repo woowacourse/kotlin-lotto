@@ -18,7 +18,7 @@ class LottoNumberTest {
 
     @ParameterizedTest
     @ValueSource(ints = [0, 46])
-    fun `당첨번호가 1 ~ 45를 벗어나면 예외를 던지다`(number: Int) {
+    fun `당첨번호가 1 ~ 45를 벗어나면 예외를 던진다`(number: Int) {
         val exception = assertThrows<IllegalArgumentException> { LottoNumber(number) }
 
         assertThat(exception.message).isEqualTo(NUMBER_RANGE_EXCEPTION_MESSAGE)
