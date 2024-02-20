@@ -17,4 +17,17 @@ object InputView {
             inputPurchaseAmount()
         }
     }
+
+    fun inputWinningNumbers(): List<Int> {
+        println()
+        println("지난 주 당첨 번호를 입력해 주세요.")
+        val winningNumbers = br.readLine()
+
+        return try {
+            InputValidator.validateWinningNumbers(winningNumbers)
+        } catch (exception: IllegalArgumentException) {
+            println(exception.message)
+            inputWinningNumbers()
+        }
+    }
 }

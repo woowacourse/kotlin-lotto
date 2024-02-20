@@ -12,10 +12,12 @@ class LottoController {
         val buyer = Buyer(purchaseAmount)
         val lottos = Lottos(List(buyer.numberOfLotto) { Lotto() })
         displayPurchaseResult(buyer, lottos)
+        val winningNumbers = InputView.inputWinningNumbers()
     }
 
-    fun displayPurchaseResult(buyer: Buyer, lottos: Lottos) {
+    private fun displayPurchaseResult(buyer: Buyer, lottos: Lottos) {
         OutputView.outputNumberOfLotto(buyer.numberOfLotto)
         OutputView.outputLottos(lottos)
     }
+
 }
