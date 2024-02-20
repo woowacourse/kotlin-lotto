@@ -11,4 +11,11 @@ class LottoMachineTest {
         val actual = LottoMachine.getNumberOfTicket(input)
         assertThat(actual).isEqualTo(expected)
     }
+
+    @ParameterizedTest
+    @CsvSource("1", "2", "3", "10")
+    fun `발행 개수 만큼 로또를 발행한다`(count: Int) {
+        val result = LottoMachine.issueTickets(count)
+        assertThat(result.size).isEqualTo(count)
+    }
 }
