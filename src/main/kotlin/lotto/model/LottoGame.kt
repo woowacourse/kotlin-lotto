@@ -16,4 +16,12 @@ fun findRanking(matchCount: Int, matchBonus: Boolean): LottoPrize {
     return rank
 }
 
+
+
+fun prizeCalculate(matches: Map<LottoPrize, Int>): Long {
+    return matches.entries.sumOf {
+        (it.key.getPrice() * it.value).toLong()
+    }
+}
+
 private fun checkSecond(rank: LottoPrize, matchBonus: Boolean) = rank == LottoPrize.THIRD && matchBonus

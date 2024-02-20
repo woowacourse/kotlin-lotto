@@ -1,7 +1,4 @@
-import lotto.model.LottoPrize
-import lotto.model.findRanking
-import lotto.model.matchBonusNumber
-import lotto.model.matchCount
+import lotto.model.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -35,5 +32,15 @@ class LottoGameTest {
         assertThat(findRanking(4,false)).isEqualTo(LottoPrize.FOURTH)
         assertThat(findRanking(5,false)).isEqualTo(LottoPrize.THIRD)
         assertThat(findRanking(6,false)).isEqualTo(LottoPrize.FIRST)
+    }
+
+    @Test
+    fun `수익 계산`(){
+        assertThat(0).isEqualTo(prizeCalculate(mapOf(LottoPrize.BOOM to 1)))
+        assertThat(5_000).isEqualTo(prizeCalculate(mapOf(LottoPrize.FIFTH to 1)))
+        assertThat(50_000).isEqualTo(prizeCalculate(mapOf(LottoPrize.FOURTH to 1)))
+        assertThat(1_500_000).isEqualTo(prizeCalculate(mapOf(LottoPrize.THIRD to 1)))
+        assertThat(30_000_000).isEqualTo(prizeCalculate(mapOf(LottoPrize.SECOND to 1)))
+        assertThat(2_000_000_000).isEqualTo(prizeCalculate(mapOf(LottoPrize.FIRST to 1)))
     }
 }

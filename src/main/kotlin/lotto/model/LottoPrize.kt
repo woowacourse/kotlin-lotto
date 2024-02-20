@@ -19,4 +19,8 @@ enum class LottoPrize(
     fun getMatchNumbers(): Int {
         return matchNumbers
     }
+
+    fun getPrice(): Int {
+        return price
+    }
 }
