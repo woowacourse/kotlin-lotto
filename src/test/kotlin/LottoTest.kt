@@ -22,4 +22,10 @@ class LottoTest {
             Lotto(setOf(1,2,3,4,5))
         }
     }
+    @Test
+    fun `로또 번호 1~45 사이`(){
+        assertThrows<IllegalArgumentException>{
+            Lotto(setOf(0,2,3,4,5,46))
+        }
+    }
 }
