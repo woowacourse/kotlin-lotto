@@ -1,5 +1,8 @@
 package lotto.model
 
+import kotlin.math.round
+import kotlin.time.times
+
 fun matchCount(winningNumbers: Set<Int>, lotto: Set<Int>): Int {
     return winningNumbers.intersect(lotto).size
 }
@@ -17,11 +20,14 @@ fun findRanking(matchCount: Int, matchBonus: Boolean): LottoPrize {
 }
 
 
-
 fun prizeCalculate(matches: Map<LottoPrize, Int>): Long {
     return matches.entries.sumOf {
         (it.key.getPrice() * it.value).toLong()
     }
+}
+
+fun prizeRateCalculate(prize: Long, payCount: Int): Double {
+    return prize / payCount / 1000.0
 }
 
 private fun checkSecond(rank: LottoPrize, matchBonus: Boolean) = rank == LottoPrize.THIRD && matchBonus
