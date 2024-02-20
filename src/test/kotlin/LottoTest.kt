@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource
 class LottoTest {
     @ParameterizedTest
     @MethodSource("invalidateLottoSizeExample")
-    fun `로또 번호의 개수가 6개가 아니면 예외가 발생한다`(lotto:List<Int>) {
+    fun `로또 번호의 개수가 6개가 아니면 예외가 발생한다`(lotto: List<Int>) {
         assertThrows<IllegalArgumentException> {
             Lotto(lotto)
         }
@@ -19,24 +19,51 @@ class LottoTest {
 
     @ParameterizedTest
     @MethodSource("validateLottoSizeExample")
-    fun `로또 번호의 개수가 6개면 예외가 발생하지 않는다`(lotto:List<Int>) {
+    fun `로또 번호의 개수가 6개면 예외가 발생하지 않는다`(lotto: List<Int>) {
         assertDoesNotThrow { Lotto(lotto) }
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidateLottoDuplicateExample")
+    fun `로또 번호에 중복이 있을 경우 예외가 발생한다`(lotto: List<Int>) {
+        assertThrows<IllegalArgumentException> {
+            Lotto(lotto)
         }
+    }
 
+    @ParameterizedTest
+    @MethodSource("validateLottoDuplicateExample")
+    fun `로또 번호에 중복이 없을 경우 예외가 발생하지 않는다`(lotto: List<Int>) {
+        assertDoesNotThrow { Lotto(lotto) }
+    }
 
-    companion object{
+    companion object {
         @JvmStatic
         fun invalidateLottoSizeExample() =
             listOf(
-                Arguments.of(listOf(1,2,3,4,5)),
-                Arguments.of(listOf(1,2,3,4,5,6,7)),
+                Arguments.of(listOf(1, 2, 3, 4, 5)),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6, 7)),
             )
 
         @JvmStatic
         fun validateLottoSizeExample() =
             listOf(
-                Arguments.of(listOf(1,2,3,4,5,6)),
-                Arguments.of(listOf(7,8,9,10,11,12)),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6)),
+                Arguments.of(listOf(7, 8, 9, 10, 11, 12)),
+            )
+
+        @JvmStatic
+        fun invalidateLottoDuplicateExample() =
+            listOf(
+                Arguments.of(listOf(1, 2, 3, 4, 4, 5)),
+                Arguments.of(listOf(7, 8, 9, 9, 11, 11)),
+            )
+
+        @JvmStatic
+        fun validateLottoDuplicateExample() =
+            listOf(
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6)),
+                Arguments.of(listOf(7, 8, 9, 10, 11, 12)),
             )
     }
 }
