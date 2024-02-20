@@ -7,6 +7,10 @@ class Lotto(private val numbers: List<Int>) {
         require(numbers.all { it in NUMBER_RANGE }) { "Error: 로또 번호의 범위는 1~45 사이의 자연수입니다." }
     }
 
+    fun checkWinningNumbers(winningNumbers: List<Int>): Int = numbers.count { winningNumbers.contains(it) }
+
+    fun checkBonusNumbers(bonusNumber: Int): Boolean = numbers.contains(bonusNumber)
+
     companion object {
         const val NUMBER_COUNT = 6
         val NUMBER_RANGE = (1..45)
