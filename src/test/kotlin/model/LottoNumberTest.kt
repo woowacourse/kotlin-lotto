@@ -13,7 +13,7 @@ class LottoNumberTest {
     fun `당첨번호가 1 ~ 45면 예외를 던지지 않는다`(number: Int) {
         val lottoNumber = LottoNumber(number)
 
-        assertThat(lottoNumber.number).isEqualTo(number)
+        assertThat(lottoNumber.value).isEqualTo(number)
     }
 
     @ParameterizedTest
