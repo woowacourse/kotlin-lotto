@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class ServiceTest {
 
     @ParameterizedTest
-    @CsvSource("1000,1", "10000,10")
+    @CsvSource("1000, 1", "10000, 10")
     fun `구매할 수 있는 로또의 개수 계산한다`(purchasePrice: String, amount: Int) {
         val purchaseQuantity = PurchaseQuantity.create(purchasePrice)
         assertThat(purchaseQuantity.amount).isEqualTo(amount)
