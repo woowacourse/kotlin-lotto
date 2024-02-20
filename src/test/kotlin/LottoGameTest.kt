@@ -43,4 +43,9 @@ class LottoGameTest {
         assertThat(30_000_000).isEqualTo(prizeCalculate(mapOf(LottoPrize.SECOND to 1)))
         assertThat(2_000_000_000).isEqualTo(prizeCalculate(mapOf(LottoPrize.FIRST to 1)))
     }
+
+    @Test
+    fun `수익률 계산`(){
+        assertThat(0.357).isEqualTo(prizeRateCalculate(5000,14))
+    }
 }
