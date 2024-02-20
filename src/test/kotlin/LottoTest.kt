@@ -22,4 +22,10 @@ class LottoTest {
         val nums = intArrayOf(1, 2, 3, 4, 5, 6)
         assertThat(nums).hasSize(6)
     }
+
+    @Test
+    fun `로또 하나에 들어가는 숫자가 중복된다면, 예외를 발생시킨다`() {
+        val nums = intArrayOf(1, 1, 2, 3, 4, 5)
+        assertThrows<IllegalArgumentException> { Lotto(*nums) }
+    }
 }
