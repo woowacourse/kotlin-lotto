@@ -1,6 +1,7 @@
 package model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 
@@ -40,4 +41,10 @@ class MoneyTest {
         assertThat(money1 % money2).isEqualTo(Money(BigDecimal(500)))
     }
 
+    @Test
+    fun `돈 객체 간의 대소를 비교한다`() {
+        val money1 = Money(BigDecimal(1_500))
+        val money2 = Money(BigDecimal(1_000))
+        assertTrue(money1 > money2)
+    }
 }
