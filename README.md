@@ -24,7 +24,7 @@
     - 1,000 원 이하의 금액은 에러 메시지를 띄운다.
     - 100,000원 초과로 구매시 예외를 던진다. (국내 로또 구매 기준)
 
-- [ ] 로또 당첨 통계를 상수화 하는 enum class: WinningRank
+- [x] 로또 당첨 통계를 상수화 하는 enum class: WinningRank
 - [ ] 로또 번호를 랜덤으로 생성해준다. LottoGenerator
 
 - [ ] 로또 번호와 당천번호, 보너스 번호를 비교하여 당첨 결과를 알려준다: LotteryResultChecker
