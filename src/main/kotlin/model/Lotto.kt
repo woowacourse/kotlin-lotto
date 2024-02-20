@@ -1,6 +1,6 @@
 package model
 
-class Lotto(private val numbers: List<Int>) {
+class Lotto(val numbers: List<Int>) {
         init {
             require(numbers.size == LOTTO_SIZE) {
                 ERROR_LOTTO_SIZE
