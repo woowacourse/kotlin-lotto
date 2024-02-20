@@ -5,6 +5,7 @@ enum class LottoPrize(
     private val price: Int,
     private val message: String,
 ) {
+    BOOM(0,0,"꽝"),
     FIFTH(3, 5_000, "3개 일치 (5,000원) -"),
     FOURTH(4, 50_000, "4개 일치 (50,000원) -"),
     THIRD(5, 1_500_000, "5개 일치 (1,500,000원) -"),
@@ -13,5 +14,9 @@ enum class LottoPrize(
 
     fun getDetails(): Triple<Int, Int, String> {
         return Triple(matchNumbers, price, message)
+    }
+
+    fun getMatchNumbers(): Int {
+        return matchNumbers
     }
 }
