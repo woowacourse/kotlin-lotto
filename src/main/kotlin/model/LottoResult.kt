@@ -13,7 +13,7 @@ object LottoResult {
         val ranks = mutableMapOf<Rank, Int>()
 
         userLottos.forEach {
-            val rank = Rank.valueOf(it.getCountOfMatch(resultLotto.numbers), it.hasBonus(resultBonus))
+            val rank = Rank.valueOf(it.getCountOfMatch(resultLotto), it.hasBonus(resultBonus))
             ranks[rank] = (ranks[rank] ?: 0) + 1
         }
         return ranks

@@ -1,6 +1,6 @@
 package model
 
-class Lotto(val numbers: List<Int>) {
+class Lotto(private val numbers: List<Int>) {
     init {
         require(validateCount(numbers)) { EXCEPTION_INVALID_COUNT }
         require(validateDuplicate(numbers)) { EXCEPTION_DUPLICATED_NUMBER }
@@ -10,9 +10,11 @@ class Lotto(val numbers: List<Int>) {
 
     private fun validateDuplicate(numbers: List<Int>) = numbers.size == numbers.toSet().size
 
-    fun getCountOfMatch(numbers: List<Int>) = this.numbers.intersect(numbers).size
+    fun getCountOfMatch(lotto: Lotto) = numbers.intersect(lotto.numbers).size
 
     fun hasBonus(bonus: Bonus) = numbers.contains(bonus.number)
+
+    override fun toString() = "[${numbers.joinToString(", ")}]\n"
 
     companion object {
         const val EXCEPTION_INVALID_COUNT = "로또 번호는 6개여야 합니다"

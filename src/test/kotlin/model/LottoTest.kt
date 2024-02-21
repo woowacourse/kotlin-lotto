@@ -27,7 +27,7 @@ class LottoTest {
         val result = listOf(1, 2, 3, 4, 5, 6)
         val actual = Lotto(result)
 
-        val expected = listOf(1, 2, 3, 4, 5, 6)
+        val expected = Lotto(listOf(1, 2, 3, 4, 5, 6))
         assertThat(actual.getCountOfMatch(expected)).isEqualTo(6)
     }
 

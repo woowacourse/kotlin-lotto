@@ -8,7 +8,7 @@ class LottoResultTest {
     @Test
     fun `1,2,3,꽝 한장씩에 대한 결과 테스트`() {
         val resultLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val resultBonus = Bonus("7", resultLotto.numbers)
+        val resultBonus = Bonus("7", listOf(1, 2, 3, 4, 5, 6))
 
         val userLottos =
             listOf(
