@@ -1,5 +1,5 @@
-import model.Lotto
-import model.LottoNumber
+package model
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

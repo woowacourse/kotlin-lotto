@@ -1,8 +1,5 @@
-import model.AutoLottoGenerator
-import model.Lotto
-import model.LottoGenerator
-import model.Money
-import model.NumbersGenerator
+package model
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

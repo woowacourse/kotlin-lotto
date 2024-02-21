@@ -1,4 +1,5 @@
-import model.LottoNumber
+package model
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
