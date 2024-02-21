@@ -1,3 +1,5 @@
+package lotto
+
 import lotto.model.LottoNumbers
 import lotto.model.NumberGenerator
 
