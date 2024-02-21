@@ -11,6 +11,8 @@ class Lotto(private val numbers: List<Int>) {
 
     fun checkBonusNumbers(bonusNumber: Int): Boolean = numbers.contains(bonusNumber)
 
+    override fun toString(): String = numbers.toString()
+
     companion object {
         const val NUMBER_COUNT = 6
         val NUMBER_RANGE = (1..45)
