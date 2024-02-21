@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class LottoResultTest {
     @Test
     fun `2개의 로또를 구매했을 때, 2등과 3등이 된다면 수익률은 1575000 이다`() {
-        val numbers =
+        val lottoNumbers =
             listOf(
                 Lotto(
                     listOf(
@@ -29,7 +29,7 @@ class LottoResultTest {
                     ),
                 ),
             )
-        val winningNumbers =
+        val winningLottoNumbers =
             Lotto(
                 listOf(
                     LottoNumber("1"),
@@ -40,8 +40,8 @@ class LottoResultTest {
                     LottoNumber("7"),
                 ),
             )
-        val lottoGame = LottoAnalyzer(numbers, DrawResult(winningNumbers, LottoNumber("8")))
-        val lottoResult = lottoGame.calculateResult()
+        val lottoAnalyzer = LottoAnalyzer(lottoNumbers, DrawResult(winningLottoNumbers, LottoNumber("8")))
+        val lottoResult = lottoAnalyzer.calculateResult()
 
         Assertions.assertThat(lottoResult.getProfitRate()).isEqualTo(1575000.0)
     }
