@@ -1,9 +1,9 @@
 package lotto.model
 
-class WinningNumber (
+class WinningNumber(
     private val lotto: Lotto,
-    private val bonusNumber: Int
-){
+    private val bonusNumber: Int,
+) {
 
     fun getWinning(): Lotto {
         return lotto
