@@ -2,11 +2,12 @@ package model
 
 class LotteryGenerator {
     fun generate(): Lottery =
-        Lottery.from(
-            (MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER)
+        Lottery.of(
+            *(MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER)
                 .shuffled()
                 .take(LOTTERY_NUMBER_COUNT)
                 .sorted()
+                .toIntArray()
         )
 
     companion object {
