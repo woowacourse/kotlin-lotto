@@ -36,7 +36,7 @@ class LottoTest {
         val result = listOf(1, 2, 3, 4, 5, 6)
         val actual = Lotto(result)
 
-        val bonus = 5
+        val bonus = Bonus("5", listOf(6, 7, 8, 9, 10, 11))
         actual.hasBonus(bonus) shouldBe true
     }
 }
