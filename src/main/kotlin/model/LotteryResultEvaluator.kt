@@ -19,7 +19,8 @@ class LotteryResultEvaluator {
             WinningRank.SECOND to 0,
             WinningRank.THIRD to 0,
             WinningRank.FOURTH to 0,
-            WinningRank.FIFTH to 0
+            WinningRank.FIFTH to 0,
+            WinningRank.NONE to 0,
         )
     }
 }
