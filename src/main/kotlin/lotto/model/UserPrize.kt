@@ -15,4 +15,8 @@ class UserPrize(
     fun prizeRateCalculate(prize: Long, payCount: Int): Double {
         return prize / payCount / Constant.LOTTO_PRICE
     }
+
+    fun getUserPrize(): Map<LottoPrize, Int> {
+        return matches
+    }
 }

@@ -1,8 +1,6 @@
 package lotto.controller
 
-import lotto.model.Lotto
-import lotto.model.LottoGenerator
-import lotto.model.Lottos
+import lotto.model.*
 import lotto.util.Constant
 import lotto.view.*
 import java.io.BufferedReader
@@ -12,6 +10,7 @@ private val br = BufferedReader(InputStreamReader(System.`in`))
 
 class Controller {
     private val lottoGenerator = LottoGenerator()
+
     fun run() {
         insertCostMessage()
         val charge = inputCharge()
@@ -19,9 +18,24 @@ class Controller {
         purchaseCountMessage(count)
         val lottos = makeLottos(count) ?: return
         insertWinNumbers()
-        inputWinning()
+        val winning = inputWinning()
         insertBonusNumbers()
-        inputBonusNumber()
+        val bonusNumber = inputBonusNumber()
+
+        val winningNumber = WinningNumber(
+            lotto = winning,
+            bonusNumber = bonusNumber
+        )
+        val prize = lottos.matchlottos(winningNumber)
+
+
+        winningStatistics()
+        LottoPrize.entries.forEach {
+            if (it!= LottoPrize.BOOM){
+                println("${it.getMessage()} ${prize.getUserPrize().get(it)?:0}개")
+            }
+        }
+        println(prize.prizeRateCalculate(prize.prizeCalculate(),charge))
     }
 
     private fun makeLottos(count: Int): Lottos? {
@@ -55,9 +69,8 @@ class Controller {
                 readlnOrNull()
                     ?.split(SEPARATOR)
                     ?.map {
-                        it.toIntOrNull() ?: throw (IllegalArgumentException("로또 넘버는 숫자를 입력해야 합니다."))
-                    }
-                    ?.toSet()
+                        it.trim().toIntOrNull() ?: throw (IllegalArgumentException("로또 넘버는 숫자를 입력해야 합니다."))
+                    }?.toSet()
                     ?: throw (IllegalArgumentException("잘못 된 로또 값입니다."))
             )
         } catch (e: IllegalArgumentException) {
