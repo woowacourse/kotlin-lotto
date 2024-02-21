@@ -8,9 +8,17 @@ class LottoController {
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
         val buyer = Buyer(purchaseAmount)
-        val lottos = Lottos(List(buyer.numberOfLotto) { Lotto() })
+        val lottoNumbers = generateLottoNumbers()
+        val lottos = Lottos(List(buyer.numberOfLotto) { Lotto(lottoNumbers) })
         displayPurchaseResult(buyer, lottos)
         val winningLotto = publishWinningLotto()
+    }
+
+    private fun generateLottoNumbers(): List<Int> {
+        val numberGenerator = NumberGenerator()
+        val randomNumbers = numberGenerator.makeRandomNumbers()
+
+        return numberGenerator.drawSixNumbers(randomNumbers)
     }
 
     private fun displayPurchaseResult(buyer: Buyer, lottos: Lottos) {

@@ -1,17 +1,19 @@
 import model.Lotto
+import model.NumberGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class LottoTest {
-
-    private lateinit var lotto: Lotto
     private lateinit var lottoNumbers: List<Int>
+    private lateinit var lotto: Lotto
+    private val numberGenerator = NumberGenerator()
 
     @BeforeEach
     fun setUp() {
-        lotto = Lotto()
-        lottoNumbers = lotto.generateLottoNumbers()
+        val randomNumbers = numberGenerator.makeRandomNumbers()
+        lottoNumbers = numberGenerator.drawSixNumbers(randomNumbers)
+        lotto = Lotto(lottoNumbers)
     }
 
     @Test
