@@ -6,11 +6,21 @@ data class LotteryNumber(val number: Int) {
     }
 
     companion object {
-        fun bonusNumber(winningLottery: Lottery, bonusNumber: Int): LotteryNumber {
-            require(bonusNumber in LOTTERY_NUMBER_RANGE) { ERROR_LOTTERY_OUT_OF_RANGE }
-            require(!winningLottery.lotteryNumbers.contains(LotteryNumber(bonusNumber)))
-            return LotteryNumber(bonusNumber)
+
+        fun bonusNumber(winningLottery: Lottery, input: String): LotteryNumber {
+            val number = input.toIntOrNull()
+            requireNotNull(number) { "숫자를 입력하세요" }
+
+            require(number in LOTTERY_NUMBER_RANGE) { ERROR_LOTTERY_OUT_OF_RANGE }
+            require(!winningLottery.lotteryNumbers.contains(LotteryNumber(number)))
+            return LotteryNumber(number)
         }
+
+//        fun bonusNumber(winningLottery: Lottery, bonusNumber: Int): LotteryNumber {
+//            require(bonusNumber in LOTTERY_NUMBER_RANGE) { ERROR_LOTTERY_OUT_OF_RANGE }
+//            require(!winningLottery.lotteryNumbers.contains(LotteryNumber(bonusNumber)))
+//            return LotteryNumber(bonusNumber)
+//        }
 
         private const val MIN_LOTTERY_NUMBER = 1
         private const val MAX_LOTTERY_NUMBER = 45

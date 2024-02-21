@@ -32,7 +32,7 @@ class LotteryRankEvaluatorTest {
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
         val winningLottery = Lottery.of(1, 2, 3, 4, 8, 9)
 
-        val bonusNumber = LotteryNumber.bonusNumber(winningLottery, 6)
+        val bonusNumber = LotteryNumber.bonusNumber(winningLottery, "6")
         assertTrue(lotteryRankEvaluator.bonusMatch(lottery, bonusNumber))
     }
 }
