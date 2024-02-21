@@ -1,9 +1,12 @@
 package lotto.view
 
+import lotto.util.ValidationUtils
+
 object InputView {
     fun getPurchaseAmount(): Int {
         println("구입금액을 입력해 주세요.")
         val input = readln()
+        ValidationUtils.validatePurchaseAmount(input)
         return input.toInt()
     }
 
