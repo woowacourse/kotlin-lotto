@@ -24,11 +24,11 @@ class Lotto(private val numbers: Set<Int>) {
         return numbers.contains(winningNumber.getBonusNumber())
     }
 
-    fun findRanking(matchCount: Int, matchBonus: Boolean): LottoPrize {
+    fun findRanking(winningNumber: WinningNumber): LottoPrize {
         var rank = LottoPrize.entries.find {
-            it.getMatchNumbers() == matchCount
+            it.getMatchNumbers() == matchCount(winningNumber)
         } ?: LottoPrize.BOOM
-        if (checkSecond(rank, matchBonus)) rank = LottoPrize.SECOND
+        if (checkSecond(rank, matchBonusNumber(winningNumber))) rank = LottoPrize.SECOND
         return rank
     }
 
