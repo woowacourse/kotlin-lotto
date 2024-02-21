@@ -18,4 +18,8 @@ enum class LottoPrize(
     fun getPrice(): Int {
         return price
     }
+
+    fun getMessage(): String {
+        return message
+    }
 }
