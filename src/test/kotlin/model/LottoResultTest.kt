@@ -7,15 +7,15 @@ import org.junit.jupiter.api.Test
 class LottoResultTest {
     @Test
     fun `1,2,3,꽝 한장씩에 대한 결과 테스트`() {
-        val resultLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val resultLotto = Lotto.fromList((1..6).toList())
         val resultBonus = Bonus("7", listOf(1, 2, 3, 4, 5, 6))
 
         val userLottos =
             listOf(
-                Lotto(listOf(1, 2, 3, 4, 5, 6)),
-                Lotto(listOf(1, 2, 3, 4, 5, 7)),
-                Lotto(listOf(1, 2, 3, 4, 5, 8)),
-                Lotto(
+                Lotto.fromList(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto.fromList(listOf(1, 2, 3, 4, 5, 7)),
+                Lotto.fromList(listOf(1, 2, 3, 4, 5, 8)),
+                Lotto.fromList(
                     listOf(10, 11, 12, 13, 14, 15),
                 ),
             )

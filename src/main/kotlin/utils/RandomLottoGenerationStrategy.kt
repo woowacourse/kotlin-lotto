@@ -2,6 +2,7 @@ package utils
 
 import model.Amount
 import model.Lotto
+import model.LottoNumber
 
 class RandomLottoGenerationStrategy(private val amount: Amount) : LottoGenerationStrategy {
     override fun generateLottos(): List<Lotto> {
@@ -12,12 +13,15 @@ class RandomLottoGenerationStrategy(private val amount: Amount) : LottoGeneratio
         return lottos
     }
 
-    private fun generateNumbers(): List<Int> =
+    private fun generateNumbers(): List<LottoNumber> =
         (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER)
             .toList()
             .shuffled()
             .take(LOTTO_COUNT)
             .sorted()
+            .map {
+                LottoNumber(it)
+            }
 
     companion object {
         private const val MIN_LOTTO_NUMBER = 1
