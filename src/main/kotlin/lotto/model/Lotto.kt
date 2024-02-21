@@ -1,6 +1,6 @@
 package lotto.model
 
-class Lotto(private val numbers: List<Int>) {
+class Lotto(val numbers: List<Int>) {
     init {
         require(numbers.size == NUMBER_COUNT) { "Error: 로또 번호의 개수는 6개이어야 합니다." }
         require(numbers.toSet().size == numbers.size) { "Error: 로또 번호는 중복될 수 없습니다." }

@@ -1,5 +1,7 @@
 package lotto.controller
 
+import lotto.model.LotteryResult
+import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.WinningStatusChecker
 import lotto.util.WinningRank
@@ -14,14 +16,15 @@ class LottoGameController {
 
         OutputView.printNumberOfTicket(numberOfTicket)
         OutputView.printLottoTickets(lottoTickets)
+        makeResult(lottoTickets)
+    }
 
-        val winningNumbers = InputView.getWinningNumbers()
-        val bonusNumber = InputView.getBonusNumber()
-
+    private fun makeResult(lottoTickets: List<Lotto>) {
+        val lotteryResult = LotteryResult(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
         val winningResult = lottoTickets.map {
             WinningRank.convert(
-                it.checkWinningNumbers(winningNumbers),
-                it.checkBonusNumbers(bonusNumber)
+                it.checkWinningNumbers(lotteryResult.winning.numbers),
+                it.checkBonusNumbers(lotteryResult.bonusNumber)
             )
         }
         val winningStatusChecker = WinningStatusChecker(winningResult)
