@@ -1,12 +1,10 @@
 package lotto.controller
 
+import lotto.model.Lotto
 import lotto.model.LottoGenerator
 import lotto.model.Lottos
 import lotto.util.Constant
-import lotto.view.insertCostMessage
-import lotto.view.insertWinNumbers
-import lotto.view.purchaseCountMessage
-import lotto.view.showLotto
+import lotto.view.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -20,8 +18,8 @@ class Controller {
         val count = charge / Constant.LOTTO_PRICE.toInt()
         purchaseCountMessage(count)
         val lottos = makeLottos(count) ?: return
-
         insertWinNumbers()
+        inputWinning()
     }
 
     private fun makeLottos(count: Int): Lottos? {
@@ -46,6 +44,23 @@ class Controller {
         } catch (e: IllegalArgumentException) {
             println(e.message)
             inputCharge()
+        }
+    }
+
+    private fun inputWinning(): Lotto {
+        return try {
+            Lotto(
+                readlnOrNull()
+                    ?.split(SEPARATOR)
+                    ?.map {
+                        it.toIntOrNull() ?: throw (IllegalArgumentException("로또 넘버는 숫자를 입력해야 합니다."))
+                    }
+                    ?.toSet()
+                    ?: throw (IllegalArgumentException("잘못 된 로또 값입니다."))
+            )
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            inputWinning()
         }
     }
 }
