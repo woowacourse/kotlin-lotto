@@ -5,5 +5,9 @@ fun interface NumbersGenerator {
 }
 
 class RandomNumberGenerator : NumbersGenerator {
-    override fun generate(size: Int): List<Int> = (1..45).shuffled().take(size)
+    override fun generate(size: Int): List<Int> =
+        (1..45)
+            .shuffled()
+            .take(size)
+            .sorted()
 }
