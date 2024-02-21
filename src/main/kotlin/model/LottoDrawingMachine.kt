@@ -3,11 +3,12 @@ package model
 class LottoDrawingMachine {
 
     fun countRank(lottoTickets: List<Lotto>, winningLotto: Lotto, bonusNumber: LottoNumber): LottoDrawingResult {
-        val result = mutableListOf<Rank>()
+        val rankCountMap = Rank.entries.associateWith { 0 }.toMutableMap()
         lottoTickets.forEach { targetLotto ->
-            result.add(getRank(targetLotto, winningLotto, bonusNumber))
+            val rank = getRank(targetLotto, winningLotto, bonusNumber)
+            rankCountMap[rank] = rankCountMap.getOrDefault(rank, 0) + 1
         }
-        return LottoDrawingResult(result.groupingBy { it }.eachCount())
+        return LottoDrawingResult(rankCountMap)
     }
 
     private fun getRank(targetLotto: Lotto, winningLotto: Lotto, bonusNumber: LottoNumber): Rank {

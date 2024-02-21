@@ -2,6 +2,7 @@ package controller
 
 import model.Cashier
 import model.Lotto
+import model.LottoDrawingMachine
 import model.LottoGenerator
 import model.LottoNumber
 import model.Money
@@ -10,7 +11,8 @@ import view.OutputView
 
 class LottoController(
     private val cashier: Cashier,
-    private val lottoGenerator: LottoGenerator
+    private val lottoGenerator: LottoGenerator,
+    private val lottoDrawingMachine: LottoDrawingMachine
 ) {
 
     fun start() {
@@ -23,6 +25,9 @@ class LottoController(
 
         val winningLotto = getValidLotto()
         val bonusNumber = getValidBonusNumber()
+
+        val result = lottoDrawingMachine.countRank(lottoTickets, winningLotto, bonusNumber)
+        OutputView.printLottoResult(result)
     }
 
     private fun getValidMoney(): Money {
