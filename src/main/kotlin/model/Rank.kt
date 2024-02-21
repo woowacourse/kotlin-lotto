@@ -10,18 +10,22 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     ;
 
     companion object {
+        private const val MIN_COUNT = 0
+        private const val MISS_MAX_THRESHOLD = 2
+        private const val MAX_COUNT = 6
+        private val MISS_RANGE = MIN_COUNT..MISS_MAX_THRESHOLD
+
         fun valueOf(
             countOfMatch: Int,
             matchBonus: Boolean,
         ): Rank {
-            if (countOfMatch in 0..2) return MISS
-            val candidates =
-                entries.filter {
-                    it.countOfMatch == countOfMatch
-                }
-            if (candidates.size == 1) return candidates.first()
-            if (matchBonus) return SECOND
-            return THIRD
+            return when {
+                countOfMatch in MISS_RANGE -> MISS
+                countOfMatch == SECOND.countOfMatch && matchBonus -> SECOND
+                countOfMatch == THIRD.countOfMatch -> THIRD
+                countOfMatch in listOf(3, 4, 6) -> entries.first { it.countOfMatch == countOfMatch }
+                else -> throw IllegalArgumentException("$countOfMatch - countOfMatch 는 $MIN_COUNT ~ $MAX_COUNT 사이 값이어야합니다.")
+            }
         }
     }
 }
