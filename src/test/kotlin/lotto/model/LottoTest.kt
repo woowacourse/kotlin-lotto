@@ -3,6 +3,7 @@ package lotto.model
 import lotto.constants.LottoPrize
 import lotto.service.LottoNumberGenerator
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -57,6 +58,21 @@ class LottoTest {
         // then
         assertThat(actual.keys.first()).isEqualTo(expected)
         assertThat(actual.values.first()).isEqualTo(purchaseInfo.amount)
+    }
+
+    @Test
+    fun `ddd`() {
+        // given
+        val purchaseInfo = PurchaseInfo("8000")
+        val prizeCount = mapOf(
+            LottoPrize.FIFTH to 1
+        )
+
+        // when
+        val actual = ResultCalculator.calculateProfitRatio(purchaseInfo, prizeCount)
+
+        // then
+        assertThat(actual).isEqualTo(62.5)
     }
 
     companion object {
