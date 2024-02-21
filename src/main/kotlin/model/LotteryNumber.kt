@@ -6,9 +6,9 @@ data class LotteryNumber(val number: Int) {
     }
 
     companion object {
-        fun bonusNumber(lottery: Lottery, bonusNumber: Int): LotteryNumber {
+        fun bonusNumber(winningLottery: Lottery, bonusNumber: Int): LotteryNumber {
             require(bonusNumber in LOTTERY_NUMBER_RANGE) { ERROR_LOTTERY_OUT_OF_RANGE }
-            require(!lottery.lotteryNumbers.contains(LotteryNumber(bonusNumber)))
+            require(!winningLottery.lotteryNumbers.contains(LotteryNumber(bonusNumber)))
             return LotteryNumber(bonusNumber)
         }
 
