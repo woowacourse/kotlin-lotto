@@ -4,6 +4,7 @@ import lotto.model.DrawResult
 import lotto.model.Lotto
 import lotto.model.LottoAnalyzer
 import lotto.model.LottoMachine
+import lotto.model.LottoNumber
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -24,10 +25,10 @@ class LottoGameController {
 
     private fun lottoDraw(): DrawResult {
         val winningNumber = InputView.readWinningNumbers()
-        val winningLotto = Lotto(winningNumber.split(",").map { it.trim() })
+        val winningLotto = Lotto((winningNumber.split(",").map { LottoNumber(it.trim()) }))
         val bonusNumber = InputView.readBonusNumber()
 
-        return DrawResult(winningLotto, bonusNumber)
+        return DrawResult(winningLotto, LottoNumber(bonusNumber))
     }
 
     private fun matchResult(

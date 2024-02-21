@@ -8,7 +8,7 @@ class LottoTest {
     @ParameterizedTest
     @CsvSource("1,2,3,3,4,5", "1,2,3,한글,4,5", "1,2,3,4,5,46")
     fun `로또 번호는 중복이 없는 6개의 1부터 45사이의 자연수로 구성이 된다`(strNumber: String) {
-        val numbers = strNumber.split(",")
+        val numbers = strNumber.split(",").map { LottoNumber(it) }
         assertThrows<IllegalArgumentException> {
             Lotto(numbers)
         }
