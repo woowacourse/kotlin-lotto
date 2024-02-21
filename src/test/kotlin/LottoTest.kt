@@ -31,6 +31,11 @@ class LottoTest {
     }
 
     @Test
+    fun `로또 넘버 리스트는 오름차순이 아니면, 예외를 발생시킨다`() {
+        assertThrows<IllegalArgumentException> { Lotto(2, 1, 3, 4, 5, 6) }
+    }
+
+    @Test
     fun `로또는 해당 로또 넘버를 가지고 있는지 확인할 수 있다`() {
         // given
         val lotto = Lotto(1, 2, 3, 4, 5, 6)
