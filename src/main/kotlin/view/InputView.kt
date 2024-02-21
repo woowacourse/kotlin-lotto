@@ -19,4 +19,13 @@ object InputView {
             throw IllegalArgumentException("입력값은 정수여야 합니다.")
         }
     }
+
+    fun readBonusNumber(): Int {
+        return try {
+            println("보너스 볼을 입력해 주세요.")
+            readln().toInt()
+        } catch (e: NumberFormatException) {
+            throw IllegalArgumentException("입력값은 정수여야 합니다.")
+        }
+    }
 }

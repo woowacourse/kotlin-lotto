@@ -22,12 +22,12 @@ class LottoController(
         OutputView.printLottoNumbers(lottoTickets)
 
         val winningLotto = getValidLotto()
+        val bonusNumber = getValidBonusNumber()
     }
 
     private fun getValidMoney(): Money {
         return try {
-            val money = InputView.readPurchaseAmount()
-            Money(money)
+            Money(InputView.readPurchaseAmount())
         } catch (e: IllegalArgumentException) {
             println(e.message)
             getValidMoney()
@@ -40,6 +40,15 @@ class LottoController(
         } catch (e: IllegalArgumentException) {
             println(e.message)
             getValidLotto()
+        }
+    }
+
+    private fun getValidBonusNumber(): LottoNumber {
+        return try {
+            LottoNumber(InputView.readBonusNumber())
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            getValidBonusNumber()
         }
     }
 }
