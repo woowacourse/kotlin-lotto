@@ -15,6 +15,9 @@ class LottoController(
         val money = getValidMoney()
         val quantity = cashier.toTicketQuantity(money)
         OutputView.printLottoQuantity(quantity)
+
+        val lottoTickets = List(quantity) { lottoGenerator.make() }
+        OutputView.printLottoNumbers(lottoTickets)
     }
 
     private fun getValidMoney(): Money {
