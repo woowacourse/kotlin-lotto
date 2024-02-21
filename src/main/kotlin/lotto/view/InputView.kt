@@ -12,4 +12,10 @@ object InputView {
         val input = readln()
         return input.split(", ").map { it.toInt() }
     }
+
+    fun getBonusNumber(): Int {
+        println("보너스 번호를 입력해 주세요.")
+        val input = readln()
+        return input.toInt()
+    }
 }
