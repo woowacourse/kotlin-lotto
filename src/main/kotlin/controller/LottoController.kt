@@ -1,12 +1,20 @@
 package controller
 
+import model.Cashier
+import model.LottoGenerator
 import model.Money
 import view.InputView
+import view.OutputView
 
-class LottoController {
+class LottoController(
+    private val cashier: Cashier,
+    private val lottoGenerator: LottoGenerator
+) {
 
     fun start() {
-        getValidMoney()
+        val money = getValidMoney()
+        val quantity = cashier.toTicketQuantity(money)
+        OutputView.printLottoQuantity(quantity)
     }
 
     private fun getValidMoney(): Money {
