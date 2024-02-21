@@ -1,6 +1,6 @@
 package lotto
 
-import model.Lotto
+import lotto.model.LottoNumbers
 import model.LottoNumber
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -8,33 +8,33 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class LottoTest {
+class LottoNumbersTest {
     @ParameterizedTest
     @MethodSource("invalidLottoSizeExample")
     fun `로또 번호의 개수가 6개가 아니면 예외가 발생한다`(lotto: List<LottoNumber>) {
         assertThrows<IllegalArgumentException> {
-            Lotto(lotto)
+            LottoNumbers(lotto)
         }
     }
 
     @ParameterizedTest
     @MethodSource("validLottoSizeExample")
     fun `로또 번호의 개수가 6개면 예외가 발생하지 않는다`(lotto: List<LottoNumber>) {
-        assertDoesNotThrow { Lotto(lotto) }
+        assertDoesNotThrow { LottoNumbers(lotto) }
     }
 
     @ParameterizedTest
     @MethodSource("invalidLottoDuplicateExample")
     fun `로또 번호에 중복이 있을 경우 예외가 발생한다`(lotto: List<LottoNumber>) {
         assertThrows<IllegalArgumentException> {
-            Lotto(lotto)
+            LottoNumbers(lotto)
         }
     }
 
     @ParameterizedTest
     @MethodSource("validLottoDuplicateExample")
     fun `로또 번호에 중복이 없을 경우 예외가 발생하지 않는다`(lotto: List<LottoNumber>) {
-        assertDoesNotThrow { Lotto(lotto) }
+        assertDoesNotThrow { LottoNumbers(lotto) }
     }
 
     companion object {
