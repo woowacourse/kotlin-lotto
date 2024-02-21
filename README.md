@@ -29,7 +29,9 @@
 - [x] 로또 당첨 통계를 상수화 하는 enum class: WinningRank
 - [x] 로또 번호를 랜덤으로 생성해준다. LotteryGenerator
 
-- [ ] 로또 번호와 당천번호, 보너스 번호를 비교하여 당첨 결과를 알려준다: LotteryResultChecker
+- [x] 로또 번호와 당천번호, 보너스 번호를 비교하여 당첨 결과를 알려준다: LotteryResultChecker
+  - 로또와 당첨번호가 일치하는 숫자의 갯수를 알려준다.
+  - 로또에 보너스번호가 있는지 여부를 알려준다.
 
 - [ ] 구입 금액을 입력받는다: InputView
 - [ ] 지난 주 로또의 당첨 번호와 보너스 번호를 입력받는다.
