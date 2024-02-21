@@ -1,7 +1,7 @@
 package model
 
-class LotteryResultChecker {
-    fun judge(lottery: Lottery, winningLottery: Lottery, bonusNumber: LotteryNumber): WinningRank {
+class LotteryRankEvaluator {
+    fun evaluate(lottery: Lottery, winningLottery: Lottery, bonusNumber: LotteryNumber): WinningRank {
         val matchCount = match(lottery, winningLottery)
         val bonusMatch = bonusMatch(lottery, bonusNumber)
 
