@@ -1,6 +1,7 @@
 package lotto.model
 
 import lotto.constants.LottoPrize
+import lotto.service.LottoNumberGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -37,6 +38,25 @@ class LottoTest {
 
         // then
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest
+    @MethodSource("로또 당첨 결과 테스트 데이터")
+    fun `로또 당첨 결과의 개수를 확인한다`(winningLotto: List<Int>, bonusNumber: Int, expected: LottoPrize) {
+        // given
+        val purchaseQuantity = PurchaseQuantity("5000")
+        val lottoStore = LottoStore(purchaseQuantity,
+            object : LottoNumberGenerator {
+                override fun generate() = listOf(1, 2, 3, 4, 5, 6)
+            }
+        )
+
+        // when
+        val actual = lottoStore.calculatePrize(Lotto(winningLotto), bonusNumber)
+
+        // then
+        assertThat(actual.keys.first()).isEqualTo(expected)
+        assertThat(actual.values.first()).isEqualTo(purchaseQuantity.amount)
     }
 
     companion object {
