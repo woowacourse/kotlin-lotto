@@ -1,9 +1,14 @@
 package lotto.model
 
-class LottoMachine(val price: String) {
+class LottoMachine(private val price: String) {
     init {
         require(price.toIntOrNull()?.let { it >= MIN_PRICE } == true) { PRICE_ERROR_MESSAGE }
     }
+
+    fun createLottos() =
+        List(getLottoTicket()) {
+            Lotto((LottoAnalyzer.LOTTO_NUMBER_RANGE).shuffled().take(LottoAnalyzer.LOTTO_SIZE).sorted().map { it.toString() })
+        }
 
     fun getLottoTicket(): Int = price.toInt() / MIN_PRICE
 
