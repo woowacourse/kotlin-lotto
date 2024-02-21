@@ -1,6 +1,6 @@
 package lotto.util
 
-enum class WinningRank(val countOfMatch: Int, val winningMoney: Int) {
+enum class WinningRank(val countOfMatch: Int, val winningMoney: Long) {
     FIRST(6, 2_000_000_000),
     SECOND(5, 30_000_000),
     THIRD(5, 1_500_000),
@@ -11,10 +11,10 @@ enum class WinningRank(val countOfMatch: Int, val winningMoney: Int) {
     companion object {
         fun convert(matchCount: Int, matchBonus: Boolean): WinningRank =
             when (matchCount) {
-                6 -> FIRST
-                5 -> if (matchBonus) SECOND else THIRD
-                4 -> FOURTH
-                3 -> FIFTH
+                FIRST.countOfMatch -> FIRST
+                SECOND.countOfMatch -> if (matchBonus) SECOND else THIRD
+                FOURTH.countOfMatch -> FOURTH
+                FIFTH.countOfMatch -> FIFTH
                 else -> MISS
             }
     }
