@@ -1,6 +1,6 @@
 package lotto.service
 
-import lotto.model.PurchaseQuantity
+import lotto.model.PurchaseInfo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,8 +13,8 @@ class ServiceTest {
     @ParameterizedTest
     @CsvSource("1000, 1", "10000, 10")
     fun `구매할 수 있는 로또의 개수 계산한다`(purchasePrice: String, amount: Int) {
-        val purchaseQuantity = PurchaseQuantity(purchasePrice)
-        assertThat(purchaseQuantity.amount).isEqualTo(amount)
+        val purchaseInfo = PurchaseInfo(purchasePrice)
+        assertThat(purchaseInfo.amount).isEqualTo(amount)
     }
 
     @ParameterizedTest
@@ -22,7 +22,7 @@ class ServiceTest {
     @ValueSource(strings = ["0", "-1000", "1000100", "1000abc", "2200000000"])
     fun `로또의 구입 금액을 검증한다`(purchasePrice: String) {
         assertThrows<IllegalArgumentException> {
-            PurchaseQuantity(purchasePrice)
+            PurchaseInfo(purchasePrice)
         }
     }
 

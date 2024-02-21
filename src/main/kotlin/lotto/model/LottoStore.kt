@@ -4,14 +4,14 @@ import lotto.service.LottoNumberGenerator
 import lotto.service.RandomLottoNumberGenerator
 
 class LottoStore(
-    purchaseQuantity: PurchaseQuantity,
+    purchaseInfo: PurchaseInfo,
     lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator,
 ) {
     val lottos: List<Lotto>
 
     init {
         val tmpLottos = mutableListOf<Lotto>()
-        repeat(purchaseQuantity.amount) {
+        repeat(purchaseInfo.amount) {
             val lotto = Lotto(lottoNumberGenerator.generate())
             tmpLottos.add(lotto)
         }
