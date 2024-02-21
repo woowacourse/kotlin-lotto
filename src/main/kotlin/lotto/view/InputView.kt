@@ -20,6 +20,7 @@ object InputView {
     fun getBonusNumber(): Int {
         println("보너스 번호를 입력해 주세요.")
         val input = readln()
+        ValidationUtils.validateBonusNumber(input)
         return input.toInt()
     }
 }
