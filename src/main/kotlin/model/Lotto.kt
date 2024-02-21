@@ -1,9 +1,9 @@
 package model
 
-class Lotto(val lottoNumbers: List<LottoNumber>) {
+class Lotto(val numbers: List<LottoNumber>) {
     init {
-        require(lottoNumbers.size == LOTTO_NUMBER_SIZE) { NUMBER_SIZE_EXCEPTION_MESSAGE }
-        require(lottoNumbers.toSet().size == LOTTO_NUMBER_SIZE) { DUPLICATED_NUMBER_EXCEPTION_MESSAGE }
+        require(numbers.size == LOTTO_NUMBER_SIZE) { NUMBER_SIZE_EXCEPTION_MESSAGE }
+        require(numbers.toSet().size == LOTTO_NUMBER_SIZE) { DUPLICATED_NUMBER_EXCEPTION_MESSAGE }
     }
 
     companion object {
