@@ -1,6 +1,6 @@
 package model
 
-class Lotto(private val numbers: List<Int>) {
+class Lotto(val numbers: List<Int>) {
     init {
         require(validateCount(numbers)) { EXCEPTION_INVALID_COUNT }
         require(validateDuplicate(numbers)) { EXCEPTION_DUPLICATED_NUMBER }
