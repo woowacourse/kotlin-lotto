@@ -5,7 +5,7 @@ import java.math.BigDecimal
 enum class WinningRank(
     val matchNumbers: Int,
     bonusNumberMatch: Boolean,
-    winningPrize: Money,
+    val winningPrize: Money,
 ) {
     FIRST(6, false, Money(BigDecimal(2_000_000_000))),
     SECOND(5, true, Money(BigDecimal(30_000_000))),
