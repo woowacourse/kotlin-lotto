@@ -37,7 +37,7 @@
 
 - [ ] 로또들에 대해 당첨 번호와 보너스 번호를 비교하여 최종 당첨 결과를 구한다: LotteryResultEvaluator
     - Lottery 의 개수만큼 LotteryRankEvaluator 의 evaluate 메서드를 실행한다.
-    - WinningResult(Map<개수, WinningRank>) 를 리턴한다.
+    - WinningResult(Map<WinningRank, 개수>) 를 리턴한다.
 
 - [ ] 구입 금액을 입력받는다: InputView
 - [ ] 지난 주 로또의 당첨 번호와 보너스 번호를 입력받는다.
