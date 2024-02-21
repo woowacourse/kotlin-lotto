@@ -1,6 +1,5 @@
 package view
 
-import model.Winning
 import util.InputValidator
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -32,16 +31,16 @@ object InputView {
         }
     }
 
-    fun inputBonusNumber(winning: Winning): Int {
+    fun inputBonusNumber(winningNumbers: List<Int>): Int {
         println()
         println("보너스 볼을 입력해 주세요.")
         val bonusNumber = br.readLine()
 
         return try {
-            InputValidator.validateBonusNumber(bonusNumber, winning)
+            InputValidator.validateBonusNumber(bonusNumber, winningNumbers)
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
-            inputBonusNumber(winning)
+            inputBonusNumber(winningNumbers)
         }
     }
 }

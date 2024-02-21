@@ -1,3 +1,3 @@
 package model
 
-class WinningLotto(private val winning: Winning, private val bonusNumber: Int)
+open class WinningLotto(private val winningNumbers: List<Int>, private val bonusNumber: Int) : Lotto(winningNumbers)

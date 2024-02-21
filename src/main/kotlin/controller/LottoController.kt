@@ -5,13 +5,13 @@ import view.InputView
 import view.OutputView
 
 class LottoController {
+    private lateinit var buyer: Buyer
+
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
-        val buyer = Buyer(purchaseAmount)
-        val lottoNumbers = generateLottoNumbers()
-        val lottos = Lottos(List(buyer.numberOfLotto) { Lotto(lottoNumbers) })
-        displayPurchaseResult(buyer, lottos)
-        val winningLotto = publishWinningLotto()
+        buyer = Buyer(purchaseAmount)
+        val lottos = publishLottos()
+        val winningLotto = drawWinningLotto()
     }
 
     private fun generateLottoNumbers(): List<Int> {
@@ -21,14 +21,20 @@ class LottoController {
         return numberGenerator.drawSixNumbers(randomNumbers)
     }
 
-    private fun displayPurchaseResult(buyer: Buyer, lottos: Lottos) {
-        OutputView.outputNumberOfLotto(buyer.numberOfLotto)
-        OutputView.outputLottos(lottos)
+    private fun publishLottos() {
+        val lottos = Lottos(List(buyer.numberOfLotto) { Lotto(generateLottoNumbers()) })
+        buyer.buyLottos(lottos)
+        displayPurchaseResult()
     }
 
-    private fun publishWinningLotto(): WinningLotto {
-        val winning = Winning(InputView.inputWinningNumbers())
-        val bonusNumber = InputView.inputBonusNumber(winning)
-        return WinningLotto(winning, bonusNumber)
+    private fun displayPurchaseResult() {
+        OutputView.outputNumberOfLotto(buyer.numberOfLotto)
+        OutputView.outputLottos(buyer.lottos)
+    }
+
+    private fun drawWinningLotto(): WinningLotto {
+        val winningNumbers = InputView.inputWinningNumbers()
+        val bonusNumber = InputView.inputBonusNumber(winningNumbers)
+        return WinningLotto(winningNumbers, bonusNumber)
     }
 }
