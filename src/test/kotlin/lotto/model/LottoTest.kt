@@ -1,16 +1,14 @@
 package lotto.model
 
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 
 class LottoTest {
-    @ParameterizedTest
-    @CsvSource("1,2,3,3,4,5", "1,2,3,한글,4,5", "1,2,3,4,5,46")
-    fun `로또 번호는 중복이 없는 6개의 1부터 45사이의 자연수로 구성이 된다`(strNumber: String) {
-        val numbers = strNumber.split(",")
+    @Test
+    fun `로또 번호들은 중복이 없어야 한다`() {
+        val numbers = listOf("1", "2", "3", "3", "4", "5")
         assertThrows<IllegalArgumentException> {
-            Lotto(numbers)
+            Lotto(numbers.map { LottoNumber(it) })
         }
     }
 }

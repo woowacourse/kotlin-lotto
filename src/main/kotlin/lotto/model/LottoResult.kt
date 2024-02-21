@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoResult(val static: Map<Rank, Int>) {
+data class LottoResult(val static: Map<Rank, Int>) {
     fun getProfitRate(): Double {
         val totalProfit =
             static.entries.sumOf { (rank, count) ->
