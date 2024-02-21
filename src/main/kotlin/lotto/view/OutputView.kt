@@ -18,7 +18,7 @@ object OutputView {
         Rank.entries.reversed().forEach { rank ->
             val count = result[rank] ?: 0
             when (rank) {
-                Rank.MISS -> {}
+                Rank.MISS -> Unit
                 Rank.SECOND -> println("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney})- ${count}개")
                 else -> println("${rank.countOfMatch}개 일치 (${rank.winningMoney})- ${count}개")
             }
