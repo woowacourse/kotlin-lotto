@@ -10,15 +10,16 @@ class WinningStatusCheckerTest {
 
     @BeforeEach
     fun setting() {
-        winningStatusChecker = WinningStatusChecker(
-            listOf(
-                WinningRank.FIRST,
-                WinningRank.FIRST,
-                WinningRank.FIFTH,
-                WinningRank.FIFTH,
-                WinningRank.MISS
+        winningStatusChecker =
+            WinningStatusChecker(
+                listOf(
+                    WinningRank.FIRST,
+                    WinningRank.FIRST,
+                    WinningRank.FIFTH,
+                    WinningRank.FIFTH,
+                    WinningRank.MISS,
+                ),
             )
-        )
     }
 
     @Test

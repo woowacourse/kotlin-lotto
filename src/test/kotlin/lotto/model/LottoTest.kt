@@ -1,7 +1,9 @@
 package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -9,16 +11,17 @@ import org.junit.jupiter.params.provider.ValueSource
 import kotlin.IllegalArgumentException
 
 class LottoTest {
-    private val lotto = Lotto(
-        listOf(
-            LottoNumber("1"),
-            LottoNumber("2"),
-            LottoNumber("3"),
-            LottoNumber("4"),
-            LottoNumber("5"),
-            LottoNumber("6")
+    private val lotto =
+        Lotto(
+            listOf(
+                LottoNumber("1"),
+                LottoNumber("2"),
+                LottoNumber("3"),
+                LottoNumber("4"),
+                LottoNumber("5"),
+                LottoNumber("6"),
+            ),
         )
-    )
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 1, 1, 2, 3, 4", "1, 2, 3, 4, 5, 30, 1", "3, 4, 5, 30, 1"])
@@ -35,8 +38,15 @@ class LottoTest {
     }
 
     @ParameterizedTest
-    @CsvSource("1 2 3 4 5 6,6", "40 41 42 43 44 45,0", "7 2 3 4 5 35,4")
-    fun `당첨 번호를 비교하여 동일한 번호의 개수를 반환한다`(winning: String, expected: Int) {
+    @CsvSource(
+        "1 2 3 4 5 6,6",
+        "40 41 42 43 44 45,0",
+        "7 2 3 4 5 35,4",
+    )
+    fun `당첨 번호를 비교하여 동일한 번호의 개수를 반환한다`(
+        winning: String,
+        expected: Int,
+    ) {
         val result = lotto.checkWinningNumbers(winning.split(" ").map { LottoNumber(it) })
         assertThat(result).isEqualTo(expected)
     }
