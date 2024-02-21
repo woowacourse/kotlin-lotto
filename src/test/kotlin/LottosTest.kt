@@ -2,7 +2,6 @@ package lotto
 
 import TestNumberGenerator
 import lotto.model.LottoStore
-import model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

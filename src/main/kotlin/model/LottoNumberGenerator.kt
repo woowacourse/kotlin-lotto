@@ -1,11 +1,8 @@
 package lotto.model
 
-import model.LottoNumber
-
 class LottoNumberGenerator : NumberGenerator {
     override fun generate(): LottoNumbers =
-        LottoNumbers((LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) })
-
+        LottoNumbers.lottoNumbersOf(*(LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted().toIntArray())
 
     companion object {
         private const val LOTTO_MIN_NUMBER = 1
