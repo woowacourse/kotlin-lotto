@@ -6,7 +6,8 @@ data class LottoResult(val static: Map<Rank, Int>) {
             static.entries.sumOf { (rank, count) ->
                 rank.winningMoney * count
             }
-        return (totalProfit.toDouble() / (static.entries.size * PURCHASE_UNIT)) * RATE
+        val totalCount = static.entries.sumOf { (_, count) -> count }
+        return (totalProfit.toDouble() / (totalCount * PURCHASE_UNIT)) * RATE
     }
 
     companion object {

@@ -8,13 +8,13 @@ object OutputView {
     fun printLottos(lottos: List<Lotto>) {
         println("${lottos.size}개를 구매했습니다.")
         lottos.forEach { lotto ->
-            println(lotto.lottoNumbers)
+            println(lotto.lottoNumbers.map { it.number })
         }
         println()
     }
 
     fun printResult(lottoResult: LottoResult) {
-        println("당첨 통계\n---------")
+        println("\n당첨 통계\n---------")
         Rank.entries.reversed().forEach { rank ->
             val count = lottoResult.static[rank] ?: 0
             when (rank) {
