@@ -44,4 +44,8 @@ class Lotto(
         return userTicket.lottoTicket.contains(bonusNumber)
     }
 
+    fun makeWinningChart():Map<Rank, Int> {
+        val rankList = getRankList()
+        return rankList.groupingBy { it }.eachCount()
+    }
 }
