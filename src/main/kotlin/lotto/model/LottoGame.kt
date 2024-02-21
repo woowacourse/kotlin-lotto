@@ -2,13 +2,7 @@ package lotto.model
 
 import lotto.util.Constant
 
-fun matchCount(winningNumbers: Set<Int>, lotto: Set<Int>): Int {
-    return winningNumbers.intersect(lotto).size
-}
 
-fun matchBonusNumber(winningNumbers: Set<Int>, bonusNum: Int): Boolean {
-    return winningNumbers.contains(bonusNum)
-}
 
 fun findRanking(matchCount: Int, matchBonus: Boolean): LottoPrize {
     var rank = LottoPrize.entries.find {
