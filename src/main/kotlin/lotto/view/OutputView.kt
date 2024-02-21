@@ -9,6 +9,7 @@ object OutputView {
         lottos.forEach { lotto ->
             println(lotto.numbers)
         }
+        println()
     }
 
     fun printResult(result: Map<Rank, Int>) {
