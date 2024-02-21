@@ -34,11 +34,11 @@ class Lotto(private val lottoNumber: LottoNumber) {
         val LOTTO_NUM_RANGE = (1..45)
     }
 
-    fun findRanking(matchCount: Int, matchBonus: Boolean): LottoPrize {
+    fun findRanking(winningNumber: WinningNumber): LottoPrize {
         var rank = LottoPrize.entries.find {
-            it.getMatchNumbers() == matchCount
+            it.getMatchNumbers() == matchCount(winningNumber)
         } ?: LottoPrize.BOOM
-        if (checkSecond(rank, matchBonus)) rank = LottoPrize.SECOND
+        if (checkSecond(rank, matchBonusNumber(winningNumber))) rank = LottoPrize.SECOND
         return rank
     }
 
