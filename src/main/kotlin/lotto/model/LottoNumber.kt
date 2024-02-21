@@ -5,6 +5,8 @@ data class LottoNumber(val number: String) {
         require(number.toIntOrNull() in LOTTO_NUMBER_RANGE) { LOTTO_RANGE_ERROR_MESSAGE }
     }
 
+    override fun toString(): String = number
+
     companion object {
         private val LOTTO_NUMBER_RANGE: IntRange = 1..45
 
