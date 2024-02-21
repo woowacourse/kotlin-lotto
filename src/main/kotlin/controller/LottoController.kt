@@ -12,10 +12,16 @@ class LottoController {
         val amount = readAmount()
         val userLottos = purchaseLottos(amount)
         printPurchasedLottos(userLottos)
+
+        val winningNumbers = readWinningNumbers()
+
+
     }
 
     private fun readAmount() = Amount(InputView.readAmount())
-    
+
+    private fun readWinningNumbers() = Lotto.fromInput(InputView.readWinningNumbers())
+
     private fun purchaseLottos(amount: Amount): List<Lotto> {
         LottoStore.setStrategy(RandomLottoGenerationStrategy(amount))
 

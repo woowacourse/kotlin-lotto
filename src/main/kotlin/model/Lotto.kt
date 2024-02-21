@@ -14,7 +14,6 @@ class Lotto(private val numbers: List<LottoNumber>) {
 
     fun hasBonus(bonus: Bonus) = numbers.contains(LottoNumber(bonus.number))
 
-
     override fun toString() = "[${numbers.joinToString(", ")}]\n"
 
     companion object {
@@ -23,6 +22,16 @@ class Lotto(private val numbers: List<LottoNumber>) {
 
         fun fromList(numbers: List<Int>): Lotto {
             return Lotto(numbers.map { LottoNumber(it) })
+        }
+
+        fun fromInput(input: String): Lotto {
+            return input.split(",").map {
+                LottoNumber(it)
+            }
+                .toList()
+                .run {
+                    Lotto(this)
+                }
         }
     }
 }

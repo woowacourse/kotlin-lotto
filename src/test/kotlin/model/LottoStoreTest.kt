@@ -20,10 +20,11 @@ class LottoStoreTest {
 
     @Test
     fun `전략 패턴을 이용하여 로또 값을 지정해서 테스트`() {
-        val lottos = listOf(
-            Lotto.fromList(listOf(1, 2, 3, 4, 5, 6)),
-            Lotto.fromList(listOf(7, 8, 9, 10, 11, 12)),
-        )
+        val lottos =
+            listOf(
+                Lotto.fromList(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto.fromList(listOf(7, 8, 9, 10, 11, 12)),
+            )
         LottoStore.setStrategy(ExplicitLottoGenerationStrategy(lottos))
 
         val result = LottoStore.makeLotto()
