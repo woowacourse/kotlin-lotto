@@ -16,4 +16,7 @@ class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerat
             lottos.add(lotto)
         }
     }
+
+    //Todo: 로또 당첨금 계산을 불러온다.
+
 }
