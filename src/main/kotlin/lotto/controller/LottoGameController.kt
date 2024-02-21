@@ -12,5 +12,8 @@ class LottoGameController {
 
         OutputView.printNumberOfTicket(numberOfTicket)
         OutputView.printLottoTickets(lottoTickets)
+
+        val winningNumbers = InputView.getWinningNumbers()
+
     }
 }
