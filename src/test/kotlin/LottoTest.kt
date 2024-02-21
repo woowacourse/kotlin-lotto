@@ -1,4 +1,5 @@
 import model.Lotto
+import model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -27,5 +28,33 @@ class LottoTest {
     fun `로또 하나에 들어가는 숫자가 중복된다면, 예외를 발생시킨다`() {
         val nums = intArrayOf(1, 1, 2, 3, 4, 5)
         assertThrows<IllegalArgumentException> { Lotto(*nums) }
+    }
+
+    @Test
+    fun `로또는 해당 로또 넘버를 가지고 있는지 확인할 수 있다`() {
+        // given
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val lottoNumber = LottoNumber(1)
+        val lottoNumber2 = LottoNumber(7)
+        // when
+        val actualResult = lottoNumber in lotto
+        val actualResult2 = lottoNumber2 in lotto
+        // then
+        assertAll(
+            { assertThat(actualResult).isTrue },
+            { assertThat(actualResult2).isFalse },
+        )
+    }
+
+    @Test
+    fun `로또는 다른 로또와 일치하는 로또 넘버 개수를 반환할 수 있다`() {
+        // given
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val lotto2 = Lotto(2, 3, 4, 5, 6, 7)
+        val expectedMatchedCount = 5
+        // when
+        val actualMatchedCount = lotto.countMatch(lotto2)
+        // then
+        assertThat(actualMatchedCount).isEqualTo(expectedMatchedCount)
     }
 }
