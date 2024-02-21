@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.LottoResult
 import lotto.model.Rank
 
 object OutputView {
@@ -12,16 +13,17 @@ object OutputView {
         println()
     }
 
-    fun printResult(result: Map<Rank, Int>) {
+    fun printResult(lottoResult: LottoResult) {
         println("당첨 통계")
         println("---------")
         Rank.entries.reversed().forEach { rank ->
-            val count = result[rank] ?: 0
+            val count = lottoResult.static[rank] ?: 0
             when (rank) {
                 Rank.MISS -> Unit
                 Rank.SECOND -> println("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney})- ${count}개")
                 else -> println("${rank.countOfMatch}개 일치 (${rank.winningMoney})- ${count}개")
             }
         }
+        println("총 수익률은 ${String.format("%.2f", lottoResult.getProfitRate())}입니다.")
     }
 }
