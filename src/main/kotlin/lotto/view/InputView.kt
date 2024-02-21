@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.model.LottoNumber
 import lotto.util.ValidationUtils
 
 object InputView {
@@ -10,17 +11,15 @@ object InputView {
         return input.toInt()
     }
 
-    fun getWinningNumbers(): List<Int> {
+    fun getWinningNumbers(): List<LottoNumber> {
         println("지난 주 당첨 번호를 입력해 주세요.")
         val input = readln()
-        ValidationUtils.validateWinningNumbers(input)
-        return input.split(",").map { it.trim().toInt() }
+        return input.split(",").map { LottoNumber(it.trim()) }
     }
 
-    fun getBonusNumber(): Int {
+    fun getBonusNumber(): LottoNumber {
         println("보너스 번호를 입력해 주세요.")
         val input = readln()
-        ValidationUtils.validateBonusNumber(input)
-        return input.toInt()
+        return LottoNumber(input)
     }
 }

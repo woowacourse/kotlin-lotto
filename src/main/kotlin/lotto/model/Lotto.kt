@@ -1,15 +1,14 @@
 package lotto.model
 
-class Lotto(val numbers: List<Int>) {
+class Lotto(val numbers: List<LottoNumber>) {
     init {
-        require(numbers.size == NUMBER_COUNT) { "Error: 로또 번호의 개수는 6개이어야 합니다." }
-        require(numbers.toSet().size == numbers.size) { "Error: 로또 번호는 중복될 수 없습니다." }
-        require(numbers.all { it in NUMBER_RANGE }) { "Error: 로또 번호의 범위는 1~45 사이의 자연수입니다." }
+        require(numbers.size == NUMBER_COUNT) { "로또 번호의 개수는 6개이어야 합니다." }
+        require(numbers.toSet().size == numbers.size) { "로또 번호는 중복될 수 없습니다." }
     }
 
-    fun checkWinningNumbers(winningNumbers: List<Int>): Int = numbers.count { winningNumbers.contains(it) }
+    fun checkWinningNumbers(winningNumbers: List<LottoNumber>): Int = numbers.count { it in winningNumbers }
 
-    fun checkBonusNumbers(bonusNumber: Int): Boolean = numbers.contains(bonusNumber)
+    fun checkBonusNumbers(bonusNumber: LottoNumber): Boolean = bonusNumber in numbers
 
     override fun toString(): String = numbers.toString()
 

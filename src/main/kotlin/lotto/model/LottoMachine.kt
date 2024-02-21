@@ -8,7 +8,9 @@ object LottoMachine {
     fun issueTickets(count: Int): List<Lotto> {
         val tickets = mutableListOf<Lotto>()
         repeat(count) {
-            tickets.add(Lotto(Lotto.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted()))
+            tickets.add(
+                Lotto(Lotto.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted().map { LottoNumber(it) })
+            )
         }
         return tickets
     }

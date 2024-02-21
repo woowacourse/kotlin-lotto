@@ -16,6 +16,7 @@ class LottoGameController {
 
         OutputView.printNumberOfTicket(numberOfTicket)
         OutputView.printLottoTickets(lottoTickets)
+
         makeResult(lottoTickets)
     }
 
