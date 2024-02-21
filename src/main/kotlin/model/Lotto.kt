@@ -5,23 +5,27 @@ class Lotto(
     private val winningTicket: LottoTicket,
     private val bonusNumber: Int,
 ) {
-    fun getUserTickets(): List<LottoTicket> {
+    fun makeLottoCount(): Int {
+        return purchasePrice / 1000
+    }
+
+    fun makeUserTicket(): LottoTicket {
+        return LottoTicket((1..45).shuffled().take(6))
+    }
+
+    fun makeUserTickets(): List<LottoTicket> {
         val userTickets: MutableList<LottoTicket> = mutableListOf()
-        repeat(getLottoCount()) {
+        repeat(makeLottoCount()) {
             userTickets.add(makeUserTicket())
         }
         return userTickets
     }
 
-    fun makeUserTicket() = LottoTicket((1..45).shuffled().take(6))
-
-    fun getLottoCount(): Int = purchasePrice / 1000
-
     fun countMatchNumber(userTicket: LottoTicket): Int {
         return winningTicket.lottoTicket.intersect(userTicket.lottoTicket.toSet()).size
     }
 
-    fun getRankList(): List<Rank> = getUserTickets().map {
+    fun getRankList(): List<Rank> = makeUserTickets().map {
         val num = countMatchNumber(it)
         val hasBonusNumber = bonusIsInTicket(it)
         Rank.decideRank(num, hasBonusNumber)
