@@ -2,6 +2,6 @@ package model
 
 import lotto.model.LottoNumbers
 
-class Lotto(val lottoNumbers: LottoNumbers) {
+data class Lotto(val lottoNumbers: LottoNumbers) {
 
 }

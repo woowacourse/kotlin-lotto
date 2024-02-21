@@ -1,17 +1,23 @@
 package lotto
 
-import lotto.model.LottoStore
+import lotto.model.LottoNumberGenerator
+import lotto.model.LottoNumbers
+import lotto.model.Lottos
+import model.Lotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottosTest {
     @Test
-    fun `구입 금액만큼 로또를 생성하는지 테스트`() {
-        val lottoStore = LottoStore(1, TestNumberGenerator())
-        assertThat(lottoStore.lottos).isEqualTo(
-            listOf(
-                1, 2, 3, 4, 5, 6
-            )
+    fun `Lottos에 추가한 Lotto가 있는지 테스트`() {
+        val lottos = Lottos()
+        val lottoNumberGenerator = LottoNumberGenerator()
+        val testLotto1 = Lotto(lottoNumberGenerator.generate())
+        val testLotto2 = Lotto(lottoNumberGenerator.generate())
+        lottos.add(testLotto1)
+        lottos.add(testLotto2)
+        assertThat(lottos.lottos).usingRecursiveComparison().isEqualTo(
+            listOf(testLotto1, testLotto2)
         )
     }
 }
