@@ -21,17 +21,23 @@ class LottoGameResult private constructor(
             winningLotto: Lotto,
             purchasedLottie: List<Lotto>,
         ): LottoGameResult {
-            val ranks =
-                purchasedLottie.map { lotto ->
-                    val matchCount = lotto.getMatchCount(winningLotto)
-                    val hasBonusNumber = bonusNumber in lotto
-                    Rank.valueOf(matchCount, hasBonusNumber)
-                }
+            val ranks = generateRanks(purchasedLottie, winningLotto, bonusNumber)
             val rankMap: Map<Rank, Int> = ranks.groupingBy { it }.eachCount()
-            val rankResults: List<RankResult> =
-                rankMap.toList()
-                    .map { (rank, count) -> RankResult(rank, count) }
+            val rankResults: List<RankResult> = rankMap.toRankResults()
             return LottoGameResult(rankResults)
         }
+
+        private fun Map<Rank, Int>.toRankResults() = toList().map { (rank, count) -> RankResult(rank, count) }
+
+        private fun generateRanks(
+            purchasedLottie: List<Lotto>,
+            winningLotto: Lotto,
+            bonusNumber: LottoNumber,
+        ): List<Rank> =
+            purchasedLottie.map { lotto ->
+                val matchCount = lotto.getMatchCount(winningLotto)
+                val hasBonusNumber = bonusNumber in lotto
+                Rank.valueOf(matchCount, hasBonusNumber)
+            }
     }
 }
