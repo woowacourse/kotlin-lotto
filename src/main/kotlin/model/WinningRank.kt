@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 enum class WinningRank(
     val matchNumbers: Int,
-    bonusNumberMatch: Boolean,
+    val bonusNumberMatch: Boolean,
     val winningPrize: Money,
 ) {
     FIRST(6, false, Money(BigDecimal(2_000_000_000))),

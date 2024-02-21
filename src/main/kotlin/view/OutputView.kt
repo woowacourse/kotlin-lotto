@@ -20,18 +20,23 @@ class OutputView {
     fun showWinningResult(winningResult: WinningResult) {
         println(HEADER_WINNING_RESULT)
 
-        winningResult.result.entries.reversed().forEach {
-            println(
-                "${it.key.matchNumbers}개 일치 ${
-                    MONEY_FORMAT.format(
-                        it.key.winningPrize.amount.toInt()
-                    )
-                }- ${it.value}개"
-            )
+        for (result in winningResult.result.entries.reversed()) {
+            when (result.key) {
+                WinningRank.NONE -> {}
+                else -> printMatchStatus(result)
+            }
         }
     }
 
-    fun showProfitRate(profitRate: ProfitRate, profitStatus: ProfitStatus){
+    private fun printMatchStatus(result: Map.Entry<WinningRank, Int>) = println(
+        "${result.key.matchNumbers}개 일치 ${if (result.key.bonusNumberMatch) ", 보너스 볼 일치" else ""} ${
+            MONEY_FORMAT.format(
+                result.key.winningPrize.amount.toInt()
+            )
+        }- ${result.value}개"
+    )
+
+    fun showProfitRate(profitRate: ProfitRate, profitStatus: ProfitStatus) {
         print("총 수익률은 ${profitRate.rate}입니다.")
         println("(기준이 1이기 때문에 결과적으로 ${profitStatus.status}이라는 의미임)")
     }
