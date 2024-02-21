@@ -1,6 +1,7 @@
 package lotto.model
 
 import model.Lotto
+import model.LottoNumber
 
 class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerator: NumberGenerator) {
     var lottos = Lottos()
@@ -17,6 +18,8 @@ class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerat
         }
     }
 
-    //Todo: 로또 당첨금 계산을 불러온다.
+    fun getWinningResult(winningNumbers: Lotto, bonusNumber: LottoNumber): Map<WinningRank, Int> {
+        return lottos.winningResult(winningNumbers, bonusNumber)
+    }
 
 }

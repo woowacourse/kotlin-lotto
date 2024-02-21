@@ -3,6 +3,9 @@ package model
 import lotto.model.LottoNumbers
 
 data class Lotto(val lottoNumbers: LottoNumbers) {
-    //TODO: 로또 번호 몇개를 가지고 있는지
-    //TODO: 보너스 번호를 가지고 있는지
+    fun getMatchCount(winningNumbers: LottoNumbers): Int {
+        return lottoNumbers.numbers.count { it -> it.number in winningNumbers.numbers.map { it.number } }
+    }
+
+    fun getMatchBonus(bonusNumber: Int): Boolean = lottoNumbers.numbers.any { it.number == bonusNumber }
 }
