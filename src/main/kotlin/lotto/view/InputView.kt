@@ -27,5 +27,6 @@ fun insertWinNumbers() {
 }
 
 fun insertBonusNumbers() {
+    println()
     println(REQUEST_BONUS_NUM)
 }

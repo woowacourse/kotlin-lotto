@@ -20,6 +20,8 @@ class Controller {
         val lottos = makeLottos(count) ?: return
         insertWinNumbers()
         inputWinning()
+        insertBonusNumbers()
+        inputBonusNumber()
     }
 
     private fun makeLottos(count: Int): Lottos? {
@@ -61,6 +63,16 @@ class Controller {
         } catch (e: IllegalArgumentException) {
             println(e.message)
             inputWinning()
+        }
+    }
+
+    private fun inputBonusNumber(): Int {
+        return try {
+            readlnOrNull()?.toIntOrNull()
+                ?: throw (IllegalArgumentException("잘못 된 입력 값입니다."))
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            inputBonusNumber()
         }
     }
 }
