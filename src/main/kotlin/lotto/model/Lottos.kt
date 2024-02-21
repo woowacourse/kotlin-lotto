@@ -14,4 +14,8 @@ class Lottos(
                 .eachCount()
         )
     }
+
+    fun getLottos(): List<Lotto> {
+        return lottos
+    }
 }
