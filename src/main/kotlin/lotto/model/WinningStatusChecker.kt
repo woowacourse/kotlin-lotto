@@ -11,12 +11,12 @@ class WinningStatusChecker(results: List<WinningRank>) {
         }
     }
 
-    override fun toString(): String = WinningRank.entries.joinToString("\n") {
+    override fun toString(): String = WinningRank.entries.filter { it != WinningRank.MISS }.joinToString("\n") {
         "${WinningRank.formatByRank(it)} - ${status.getOrDefault(it, 0)}개"
     }
 
     fun getEarningRate(): Double {
-        val total: Long =  status.entries.sumOf { it.key.winningMoney * it.value }
+        val total: Long = status.entries.sumOf { it.key.winningMoney * it.value }
         return (total / (status.values.sum() * 1000).toDouble())
     }
 }
