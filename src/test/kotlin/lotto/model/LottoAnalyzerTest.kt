@@ -15,6 +15,6 @@ class LottoAnalyzerTest {
         val lottoGame = LottoAnalyzer(numbers, DrawResult(winningNumbers, "8"))
         val lottoResult = lottoGame.calculateResult()
 
-        assertThat(lottoResult).isEqualTo(LottoResult(mapOf(Rank.THIRD to 1, Rank.SECOND to 1)))
+        assertThat(lottoResult.static).isEqualTo(mapOf(Rank.THIRD to 1, Rank.SECOND to 1))
     }
 }
