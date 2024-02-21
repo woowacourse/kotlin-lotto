@@ -10,7 +10,7 @@ data class LottoResult(val static: Map<Rank, Int>) {
     }
 
     companion object {
-        const val PURCHASE_UNIT = 1_000
-        const val RATE = 100
+        private const val PURCHASE_UNIT = 1_000
+        private const val RATE = 100
     }
 }
