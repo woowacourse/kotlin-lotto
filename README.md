@@ -39,6 +39,9 @@
     - Lottery 의 개수만큼 LotteryRankEvaluator 의 evaluate 메서드를 실행한다.
     - WinningResult(Map<WinningRank, 개수>) 를 리턴한다.
 
+- [x] 소수 수익률을 가지고 있다: ProfitRate
+- [ ] 구매 금액과 총 당첨 금액을 가지고 수익률을 계산한다: Profit
+
 - [x] 구입 금액을 입력받는다: InputView
 - [x] 지난 주 로또의 당첨 번호와 보너스 번호를 입력받는다.
 
