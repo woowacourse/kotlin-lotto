@@ -1,9 +1,9 @@
 package model
 
-class Money(val value: Int) {
+data class Money(val amount: Int) {
     init {
-        require(value >= LOTTO_PRICE) { MINIMUM_VALUE_EXCEPTION_MESSAGE }
-        require(value % LOTTO_PRICE == 0) { INVALID_UNIT_EXCEPTION_MESSAGE }
+        require(amount >= LOTTO_PRICE) { MINIMUM_VALUE_EXCEPTION_MESSAGE }
+        require(amount % LOTTO_PRICE == 0) { INVALID_UNIT_EXCEPTION_MESSAGE }
     }
 
     companion object {
