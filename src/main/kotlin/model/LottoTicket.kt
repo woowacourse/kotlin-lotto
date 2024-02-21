@@ -5,6 +5,4 @@ class LottoTicket (val lottoTicket: List<Int>) {
         require(lottoTicket.size == 6)
         require(this.lottoTicket.all {it in 1..45})
     }
-
-
 }
