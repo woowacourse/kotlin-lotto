@@ -7,7 +7,10 @@ class LottoMachine(private val price: String) {
 
     fun createLottos() =
         List(getLottoTicket()) {
-            Lotto((LottoAnalyzer.LOTTO_NUMBER_RANGE).shuffled().take(LottoAnalyzer.LOTTO_SIZE).sorted().map { it.toString() })
+            Lotto(
+                (LottoAnalyzer.LOTTO_NUMBER_RANGE).shuffled().take(LottoAnalyzer.LOTTO_SIZE).sorted()
+                    .map { it.toString() },
+            )
         }
 
     fun getLottoTicket(): Int = price.toInt() / MIN_PRICE
