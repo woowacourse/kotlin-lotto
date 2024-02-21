@@ -17,10 +17,4 @@ class LottoStore(
         }
         lottos = tmpLottos
     }
-
-    fun calculatePrize(winningLotto: Lotto, bonusNumber: Int) =
-        lottos
-            .map { lotto -> lotto.compare(winningLotto, bonusNumber) }
-            .groupBy { it }
-            .mapValues { it.value.size }
 }
