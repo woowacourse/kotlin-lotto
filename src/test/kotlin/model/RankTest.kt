@@ -8,15 +8,15 @@ import java.util.stream.Stream
 
 class RankTest {
     @ParameterizedTest
-    @MethodSource("일치 개수와 보너스 매치 여부에 따른 랭크 반환 테스트")
-    fun name(countOfMatch: Int, matchBonus: Boolean, rank: Rank) {
+    @MethodSource("countOfMatch, matchBonus, Rank")
+    fun `일치 개수와 보너스 매치 여부에 따른 랭크 반환 테스트`(countOfMatch: Int, matchBonus: Boolean, rank: Rank) {
         val result = Rank.valueOf(countOfMatch, matchBonus)
         assertThat(result).isEqualTo(rank)
     }
 
     companion object {
         @JvmStatic
-        fun `일치 개수와 보너스 매치 여부에 따른 랭크 반환 테스트`(): Stream<Arguments> {
+        fun `countOfMatch, matchBonus, Rank`(): Stream<Arguments> {
             return Stream.of(
                 Arguments.arguments(6, false, Rank.FIRST),
                 Arguments.arguments(5, true, Rank.SECOND),
