@@ -35,7 +35,7 @@
 
 - [x] 당첨된 등수(WinningRank)와 그 갯수(Int)를 저장한다. WinningResult
 
-- [ ] 로또들에 대해 당첨 번호와 보너스 번호를 비교하여 최종 당첨 결과를 구한다: LotteryResultEvaluator
+- [x] 로또들에 대해 당첨 번호와 보너스 번호를 비교하여 최종 당첨 결과를 구한다: LotteryResultEvaluator
     - Lottery 의 개수만큼 LotteryRankEvaluator 의 evaluate 메서드를 실행한다.
     - WinningResult(Map<WinningRank, 개수>) 를 리턴한다.
 
