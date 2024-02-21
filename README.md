@@ -39,8 +39,8 @@
     - Lottery 의 개수만큼 LotteryRankEvaluator 의 evaluate 메서드를 실행한다.
     - WinningResult(Map<WinningRank, 개수>) 를 리턴한다.
 
-- [ ] 구입 금액을 입력받는다: InputView
-- [ ] 지난 주 로또의 당첨 번호와 보너스 번호를 입력받는다.
+- [x] 구입 금액을 입력받는다: InputView
+- [x] 지난 주 로또의 당첨 번호와 보너스 번호를 입력받는다.
 
 - [ ] 구매한 로또 장 수를 출력한다: OutputView
 - [ ] 구매한 로또의 번호들을 출력한다.
