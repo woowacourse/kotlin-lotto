@@ -11,7 +11,7 @@ class LotterySeller(private val money: Money) {
 
     fun exchange(): Money = money % PRICE
 
-    fun getLotteryCount(): Int = (money / PRICE).amount.toInt()
+    fun getLotteryCount(): Int = (money / PRICE).toInt()
 
     companion object {
         private const val MIN_PRICE_AMOUNT = 1_000

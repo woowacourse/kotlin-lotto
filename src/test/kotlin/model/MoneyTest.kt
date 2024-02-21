@@ -31,7 +31,7 @@ class MoneyTest {
     fun `돈 객체 간의 나눗셈 연산을 수행한다`() {
         val money1 = Money(BigDecimal(1_500))
         val money2 = Money(BigDecimal(1_000))
-        assertThat(money1 / money2).isEqualTo(Money(BigDecimal("1.50")))
+        assertThat(money1 / money2).isEqualTo(1.50)
     }
 
     @Test
