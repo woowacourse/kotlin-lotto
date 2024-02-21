@@ -58,7 +58,7 @@ class LottoTest {
         val lotto2 = Lotto(2, 3, 4, 5, 6, 7)
         val expectedMatchedCount = 5
         // when
-        val actualMatchedCount = lotto.countMatch(lotto2)
+        val actualMatchedCount = lotto.getMatchCount(lotto2)
         // then
         assertThat(actualMatchedCount).isEqualTo(expectedMatchedCount)
     }

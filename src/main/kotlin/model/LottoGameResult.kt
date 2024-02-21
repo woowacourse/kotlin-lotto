@@ -23,7 +23,7 @@ class LottoGameResult private constructor(
         ): LottoGameResult {
             val ranks =
                 purchasedLottie.map { lotto ->
-                    val matchCount = lotto.countMatch(winningLotto)
+                    val matchCount = lotto.getMatchCount(winningLotto)
                     val hasBonusNumber = bonusNumber in lotto
                     Rank.valueOf(matchCount, hasBonusNumber)
                 }

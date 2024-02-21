@@ -7,11 +7,11 @@ data class Lotto(private val numbers: List<LottoNumber>) {
         require(numbers.sortedBy { it.number } == numbers) { EXCEPTION_SORTED_LOTTO_NUMS }
     }
 
-    constructor(vararg nums: Int) : this(nums.map { LottoNumber(it) })
+    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber(it) })
 
-    fun countMatch(other: Lotto): Int = (other.numbers intersect numbers).size
+    fun getMatchCount(other: Lotto): Int = (other.numbers intersect numbers).size
 
-    operator fun contains(num: LottoNumber): Boolean = num in numbers
+    operator fun contains(number: LottoNumber): Boolean = number in numbers
 
     companion object {
         private const val LOTTO_NUM_SIZE = 6
