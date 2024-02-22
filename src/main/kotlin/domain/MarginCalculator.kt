@@ -1,4 +1,8 @@
-package model
+package domain
+
+import domain.model.LottoDrawingResult
+import domain.model.Margin
+import domain.model.Money
 
 object MarginCalculator {
 

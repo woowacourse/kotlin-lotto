@@ -1,4 +1,7 @@
-package model
+package domain
+
+import domain.model.Lotto
+import domain.model.LottoNumber
 
 class LottoGenerator {
     fun make(): Lotto {

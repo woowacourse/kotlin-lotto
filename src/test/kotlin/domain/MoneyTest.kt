@@ -1,7 +1,8 @@
-package model
+package domain
 
-import model.Money.Companion.INVALID_UNIT_EXCEPTION_MESSAGE
-import model.Money.Companion.MINIMUM_VALUE_EXCEPTION_MESSAGE
+import domain.model.Money
+import domain.model.Money.Companion.INVALID_UNIT_EXCEPTION_MESSAGE
+import domain.model.Money.Companion.MINIMUM_VALUE_EXCEPTION_MESSAGE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

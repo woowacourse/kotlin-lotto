@@ -1,4 +1,9 @@
-package model
+package domain
+
+import domain.model.Lotto
+import domain.model.LottoDrawingResult
+import domain.model.LottoNumber
+import domain.model.Rank
 
 class LottoDrawingMachine {
 

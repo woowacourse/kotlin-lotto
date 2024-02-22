@@ -1,5 +1,9 @@
-package model
+package domain
 
+import domain.model.LottoDrawingResult
+import domain.model.Margin
+import domain.model.Money
+import domain.model.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

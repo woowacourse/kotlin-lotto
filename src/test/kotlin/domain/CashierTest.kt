@@ -1,5 +1,6 @@
-package model
+package domain
 
+import domain.model.Money
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

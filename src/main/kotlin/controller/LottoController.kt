@@ -1,12 +1,12 @@
 package controller
 
-import model.Cashier
-import model.Lotto
-import model.LottoDrawingMachine
-import model.LottoGenerator
-import model.LottoNumber
-import model.MarginCalculator
-import model.Money
+import domain.Cashier
+import domain.LottoDrawingMachine
+import domain.LottoGenerator
+import domain.MarginCalculator
+import domain.model.Lotto
+import domain.model.LottoNumber
+import domain.model.Money
 import view.InputView
 import view.OutputView
 
