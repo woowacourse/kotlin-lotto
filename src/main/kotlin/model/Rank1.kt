@@ -50,7 +50,7 @@ enum class Rank1(val countOfMatch: Int, val winningMoney: Int) {
         }
     }, ;
 
-    abstract fun isMatching(
+    protected abstract fun isMatching(
         countOfMatch: Int,
         matchBonus: Boolean,
     ): Boolean
@@ -65,4 +65,7 @@ enum class Rank1(val countOfMatch: Int, val winningMoney: Int) {
             } ?: throw IllegalArgumentException()
         }
     }
+}
+
+fun main() {
 }
