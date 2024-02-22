@@ -4,6 +4,7 @@ import lotto.constants.LottoPrize
 import lotto.service.LottoNumberGenerator
 import lotto.service.ResultCalculator
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -72,6 +73,20 @@ class LottoTest {
 
         // then
         assertThat(actual).isEqualTo(profitRatio)
+    }
+
+    @Test
+    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoNumber(6))
+        }
+    }
+
+    @Test
+    fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() {
+        assertDoesNotThrow {
+            WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoNumber(7))
+        }
     }
 
     companion object {
