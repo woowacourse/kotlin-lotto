@@ -1,6 +1,9 @@
 package controller
 
 import model.*
+import model.lottery.*
+import model.profit.Profit
+import model.profit.ProfitStatusDecider
 import view.InputView
 import view.OutputView
 import java.math.BigDecimal

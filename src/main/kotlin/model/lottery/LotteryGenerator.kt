@@ -1,4 +1,4 @@
-package model
+package model.lottery
 
 class LotteryGenerator {
     fun generate(): Lottery =

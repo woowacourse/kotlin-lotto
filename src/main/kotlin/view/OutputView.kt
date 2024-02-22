@@ -1,6 +1,10 @@
 package view
 
 import model.*
+import model.lottery.Lotteries
+import model.lottery.Lottery
+import model.profit.ProfitRate
+import model.profit.ProfitStatus
 import java.text.DecimalFormat
 
 class OutputView {

@@ -1,4 +1,4 @@
-package model
+package model.lottery
 
 class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
     init {

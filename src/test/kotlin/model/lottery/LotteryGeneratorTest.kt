@@ -1,4 +1,4 @@
-package model
+package model.lottery
 
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.assertDoesNotThrow

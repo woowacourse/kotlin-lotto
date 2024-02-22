@@ -1,4 +1,4 @@
-package model
+package model.profit
 
 enum class ProfitStatus(
     val status: String

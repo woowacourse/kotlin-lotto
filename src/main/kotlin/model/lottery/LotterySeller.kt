@@ -1,5 +1,6 @@
-package model
+package model.lottery
 
+import model.Money
 import java.math.BigDecimal
 import java.text.DecimalFormat
 

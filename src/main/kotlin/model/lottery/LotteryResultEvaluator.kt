@@ -1,4 +1,7 @@
-package model
+package model.lottery
+
+import model.WinningRank
+import model.WinningResult
 
 class LotteryResultEvaluator {
     fun evaluate(lotteries: Lotteries, winningLottery: Lottery, bonusNumber: LotteryNumber): WinningResult {
