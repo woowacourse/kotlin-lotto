@@ -52,7 +52,7 @@ class OutputView {
         profitRate: ProfitRate,
         profitStatus: ProfitStatus,
     ) {
-        print("$TOTAL_PROFIT_RATE ${profitRate.rate}$ENDING_MENTION.")
+        print("$TOTAL_PROFIT_RATE ${profitRate.rate}$ENDING_MENTION")
         println("${OPENING_ROUND_BRACKET}$AS_RESULT_MENTION ${profitStatus.status}${MEANING_MENTION}$CLOSING_ROUND_BRACKET")
     }
 
