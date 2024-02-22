@@ -2,6 +2,7 @@ package lotto.model
 
 class LottoMachine(private val price: String) {
     init {
+        require(price.toIntOrNull() != null) { PRICE_TYPE_ERROR_MESSAGE }
         require(price.toIntOrNull()?.let { it >= MIN_PRICE } == true) { PRICE_ERROR_MESSAGE }
     }
 
@@ -20,6 +21,7 @@ class LottoMachine(private val price: String) {
         private val LOTTO_NUMBER_RANGE: IntRange = 1..45
         private const val MIN_PRICE = 1_000
 
+        private const val PRICE_TYPE_ERROR_MESSAGE = "구입 금액은 자연수여야 합니다."
         private const val PRICE_ERROR_MESSAGE = "구입 금액은 자연수이면서 1000 이상이여야 합니다."
     }
 }
