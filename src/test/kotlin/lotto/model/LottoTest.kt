@@ -8,7 +8,7 @@ class LottoTest {
     @ParameterizedTest
     @CsvSource("1,2,3,3,4,5", "1,2,3,4,4,5", "1,2,3,4,45,45")
     fun `로또 번호는 중복이 되면 안된다`(strNumber: String) {
-        val numbers = strNumber.split(",").map { LottoNumber.from(it) }
+        val numbers = strNumber.split(",").map { LottoNumber.from(it) }.toSet()
         assertThrows<IllegalArgumentException> {
             Lotto(numbers)
         }

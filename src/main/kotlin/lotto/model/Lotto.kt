@@ -1,8 +1,8 @@
 package lotto.model
 
-class Lotto(val lottoNumbers: List<LottoNumber>) {
+class Lotto(val lottoNumbers: Set<LottoNumber>) {
     init {
-        require(lottoNumbers.distinct().size == LOTTO_SIZE) { LOTTO_SIZE_ERROR_MESSAGE }
+        require(lottoNumbers.size == LOTTO_SIZE) { LOTTO_SIZE_ERROR_MESSAGE }
     }
 
     override fun toString(): String = lottoNumbers.toString()

@@ -12,7 +12,7 @@ class LottoMachine(private val price: String) {
         return LottoBundle(lottos)
     }
 
-    private fun randomLotto(): Lotto = Lotto(LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) })
+    private fun randomLotto(): Lotto = Lotto(LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }.toSet())
 
     fun getNumberOfLottoTickets(): Int = price.toInt() / MIN_PRICE
 

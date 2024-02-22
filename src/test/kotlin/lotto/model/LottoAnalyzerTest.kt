@@ -9,7 +9,7 @@ class LottoAnalyzerTest {
         val lottoNumbers =
             listOf(
                 Lotto(
-                    listOf(
+                    setOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),
@@ -19,7 +19,7 @@ class LottoAnalyzerTest {
                     ),
                 ),
                 Lotto(
-                    listOf(
+                    setOf(
                         LottoNumber(1),
                         LottoNumber(2),
                         LottoNumber(3),
@@ -31,7 +31,7 @@ class LottoAnalyzerTest {
             )
         val winningLottoNumbers =
             Lotto(
-                listOf(
+                setOf(
                     LottoNumber(1),
                     LottoNumber(2),
                     LottoNumber(3),
