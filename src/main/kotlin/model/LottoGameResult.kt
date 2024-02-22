@@ -22,10 +22,15 @@ class LottoGameResult private constructor(
             purchasedLottie: List<Lotto>,
         ): LottoGameResult {
             val ranks = generateRanks(purchasedLottie, winningLotto, bonusNumber)
-            val rankMap: Map<Rank, Int> = ranks.groupingBy { it }.eachCount()
-            val rankResults: List<RankResult> = rankMap.toRankResults()
+            val rankResults: List<RankResult> =
+                getRankMap().let { map ->
+                    ranks.forEach { map.merge(it, 1, Int::plus) }
+                    map.toRankResults()
+                }
             return LottoGameResult(rankResults)
         }
+
+        private fun getRankMap(): MutableMap<Rank, Int> = Rank.entries.reversed().associateWith { 0 }.toMutableMap()
 
         private fun Map<Rank, Int>.toRankResults() = toList().map { (rank, count) -> RankResult(rank, count) }
 
