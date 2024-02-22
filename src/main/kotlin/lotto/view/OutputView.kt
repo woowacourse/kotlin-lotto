@@ -6,7 +6,6 @@ import lotto.constants.StringConstants.OUTPUT_PROFIT_RATIO
 import lotto.model.LottoStore
 
 object OutputView {
-
     private const val DEFAULT_MATCHING_COUNT = 0
 
     fun printPurchaseLotto(lottoStore: LottoStore) {
@@ -20,7 +19,8 @@ object OutputView {
     fun printWinningStatistics(prizeCount: Map<LottoPrize, Int>, profitRatio: Double) {
         println(StringConstants.OUTPUT_WINNING_STATICS)
         println(StringConstants.OUTPUT_DIVIDER)
-        LottoPrize.values().forEach { lottoPrize ->
+
+        LottoPrize.entries.forEach { lottoPrize ->
             if (lottoPrize == LottoPrize.NOTHING) return@forEach
             val matchingCount = prizeCount.getOrDefault(lottoPrize, DEFAULT_MATCHING_COUNT)
             println(provideMatchingMessage(lottoPrize, matchingCount))
@@ -28,17 +28,17 @@ object OutputView {
         println(OUTPUT_PROFIT_RATIO.format(profitRatio.provideTwoDecimal()))
     }
 
-    private fun provideMatchingMessage(lottoPrize: LottoPrize, matchingCount: Int) =
+    private fun provideMatchingMessage(lottoPrize: LottoPrize, matchingCount: Int): String {
         if (lottoPrize == LottoPrize.SECOND) {
-            StringConstants.OUTPUT_MATCHING_COUNT_BONUS.format(
+            return StringConstants.OUTPUT_MATCHING_COUNT_BONUS.format(
                 lottoPrize.matchingCount,
                 lottoPrize.amount,
                 matchingCount
             )
-        } else {
-            StringConstants.OUTPUT_MATCHING_COUNT.format(lottoPrize.matchingCount, lottoPrize.amount, matchingCount)
         }
 
-    private fun Double.provideTwoDecimal() = "%.2f".format(this)
+        return StringConstants.OUTPUT_MATCHING_COUNT.format(lottoPrize.matchingCount, lottoPrize.amount, matchingCount)
+    }
 
+    private fun Double.provideTwoDecimal() = "%.2f".format(this)
 }

@@ -10,7 +10,6 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController {
-
     private val purchaseInfo: PurchaseInfo by lazy { readPurchasePrice() }
     private val winningLotto: WinningLotto by lazy { readWinningLotto() }
 

@@ -3,7 +3,6 @@ package lotto.model
 import lotto.constants.StringConstants.INVALID_PURCHASE_PRICE
 
 class PurchaseInfo(purchasePrice: String) {
-
     val price: Int
     val amount: Int
 

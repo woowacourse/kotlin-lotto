@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.*
 
 class ServiceTest {
-
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")
     fun `로또 당첨 결과의 개수를 확인한다`(winningLottoNumbers: List<Int>, bonusNumber: Int, expected: LottoPrize) {
@@ -61,6 +60,4 @@ class ServiceTest {
             Arguments.of("1000", mapOf(LottoPrize.FIRST to 1), 2_000_000)
         )
     }
-
-
 }

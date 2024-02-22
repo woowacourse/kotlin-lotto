@@ -8,5 +8,4 @@ class LottoStore(
     lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator,
 ) {
     val lottos = List(purchaseInfo.amount) { Lotto(lottoNumberGenerator.generate()) }
-
 }

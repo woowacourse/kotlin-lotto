@@ -13,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.*
 
 class ModelTest {
-
     @ParameterizedTest
     @MethodSource("유효하지 않은 로또 번호 테스트 데이터")
     fun `로또 번호가 잘못된 경우 예외가 발생한다`(lottoNumbers: List<Int>) {
@@ -97,5 +96,4 @@ class ModelTest {
             Arguments.of(listOf(10, 11, 12, 13, 14, 15), 16, LottoPrize.NOTHING),
         )
     }
-
 }

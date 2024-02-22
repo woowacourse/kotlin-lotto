@@ -11,7 +11,6 @@ import lotto.model.LottoNumber
 import lotto.model.PurchaseInfo
 
 object InputView {
-
     fun readPurchasePrice(): PurchaseInfo {
         println(INPUT_PURCHASE_PRICE)
         val purchasePrice = readln()
@@ -38,5 +37,4 @@ object InputView {
         }
 
     private fun isDigit(it: String) = it.toIntOrNull() != null
-
 }

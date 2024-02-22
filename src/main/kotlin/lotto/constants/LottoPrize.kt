@@ -9,13 +9,12 @@ enum class LottoPrize(val matchingCount: Int, val amount: Int) {
     FIRST(6, 2000000000);
 
     companion object {
-        fun getLottoPrize(matchingCount: Int, isMatchBonus: Boolean): LottoPrize {
+        fun getLottoPrize(matchingCount: Int, isMatchingBonus: Boolean): LottoPrize {
             if (matchingCount == 5) {
-                return if (isMatchBonus) SECOND
+                return if (isMatchingBonus) SECOND
                 else THIRD
             }
-            return LottoPrize.values().find { it.matchingCount == matchingCount } ?: NOTHING
+            return entries.find { it.matchingCount == matchingCount } ?: NOTHING
         }
-
     }
 }
