@@ -16,11 +16,11 @@ object OutputView {
 
     fun printStats(stats: Map<Rank, Int>) {
         Rank.entries.filter { it != Rank.MISS }.forEach {
-            println("${it.countOfMatch}개 일치 (${it.winningMoney}원) - ${stats[it]}")
+            println("${it.countOfMatch}개 일치 (${it.winningMoney}원) - ${stats[it] ?: 0}")
         }
     }
 
     fun printProfit(profit: Double) {
-        println("총 수익률은 ${profit}% 입니다.(기준이 1이기 때문에 결과적으로 손해라는 의미임")
+        println("총 수익률은 $profit% 입니다.(기준이 1이기 때문에 결과적으로 손해라는 의미임")
     }
 }

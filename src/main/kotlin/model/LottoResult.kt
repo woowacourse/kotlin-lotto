@@ -29,7 +29,7 @@ object LottoResult {
             prize += (it.key.winningMoney * it.value)
         }
 
-        return (prize / amount.money * PERCENTAGE_MULTIPLIER).round(DECIMALS)
+        return (prize / amount.money).round(DECIMALS)
     }
 
     fun Double.round(decimals: Int): Double {
