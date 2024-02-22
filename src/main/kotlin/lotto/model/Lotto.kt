@@ -1,5 +1,6 @@
 package lotto.model
 
+import lotto.constants.LottoConstants.LOTTO_SIZE
 import lotto.constants.LottoPrize
 import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER
 
@@ -26,8 +27,4 @@ class Lotto(numbers: List<Int>) {
     fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
 
     override fun toString() = numbers.toString()
-
-    companion object {
-        private const val LOTTO_SIZE = 6
-    }
 }

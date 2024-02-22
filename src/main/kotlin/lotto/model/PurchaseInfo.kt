@@ -1,5 +1,6 @@
 package lotto.model
 
+import lotto.constants.LottoConstants.LOTTO_PRICE
 import lotto.constants.StringConstants.INVALID_PURCHASE_PRICE
 
 class PurchaseInfo(purchasePrice: String) {
@@ -19,8 +20,4 @@ class PurchaseInfo(purchasePrice: String) {
     private fun String.isMoreThanMin() = toInt() >= LOTTO_PRICE
 
     private fun String.divideByLottoPrice() = toInt() % LOTTO_PRICE == 0
-
-    companion object {
-        private const val LOTTO_PRICE = 1000
-    }
 }
