@@ -5,6 +5,7 @@ import model.Lotto
 import model.LottoDrawingMachine
 import model.LottoGenerator
 import model.LottoNumber
+import model.MarginCalculator
 import model.Money
 import view.InputView
 import view.OutputView
@@ -28,6 +29,10 @@ class LottoController(
 
         val result = lottoDrawingMachine.countRank(lottoTickets, winningLotto, bonusNumber)
         OutputView.printLottoResult(result)
+
+        val totalPrize = MarginCalculator.calculateTotalPrize(result)
+        val marginRate = MarginCalculator.calculateMarginRate(totalPrize, money)
+        OutputView.printMargin(marginRate)
     }
 
     private fun getValidMoney(): Money {
