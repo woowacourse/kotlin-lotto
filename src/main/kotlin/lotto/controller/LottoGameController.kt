@@ -23,13 +23,12 @@ class LottoGameController {
     private fun makeResult(lottoTickets: List<Lotto>) {
         val lotteryResult = LotteryResult(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
         val winningResult =
-            lottoTickets
-                .map {
-                    WinningRank.convert(
-                        it.checkWinningNumbers(lotteryResult.winning.numbers),
-                        it.checkBonusNumbers(lotteryResult.bonusNumber),
-                    )
-                }
+            lottoTickets.map {
+                WinningRank.convert(
+                    it.checkWinningNumbers(lotteryResult.winning),
+                    it.checkBonusNumbers(lotteryResult.bonusNumber),
+                )
+            }
         val winningStatusChecker = WinningStatusChecker(winningResult)
 
         OutputView.printWinningStatus(winningStatusChecker.toString())

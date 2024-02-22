@@ -47,7 +47,7 @@ class LottoTest {
         winning: String,
         expected: Int,
     ) {
-        val result = lotto.checkWinningNumbers(winning.split(" ").map { LottoNumber(it) })
+        val result = lotto.checkWinningNumbers(Lotto(winning.split(" ").map { LottoNumber(it) }))
         assertThat(result).isEqualTo(expected)
     }
 
