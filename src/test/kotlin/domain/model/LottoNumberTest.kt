@@ -1,6 +1,5 @@
-package domain
+package domain.model
 
-import domain.model.LottoNumber
 import domain.model.LottoNumber.Companion.NUMBER_RANGE_EXCEPTION_MESSAGE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows

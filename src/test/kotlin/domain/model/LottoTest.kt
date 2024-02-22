@@ -1,10 +1,8 @@
-package domain
+package domain.model
 
-import domain.model.Lotto
 import domain.model.Lotto.Companion.DUPLICATED_NUMBER_EXCEPTION_MESSAGE
 import domain.model.Lotto.Companion.LOTTO_NUMBER_SIZE
 import domain.model.Lotto.Companion.NUMBER_SIZE_EXCEPTION_MESSAGE
-import domain.model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
