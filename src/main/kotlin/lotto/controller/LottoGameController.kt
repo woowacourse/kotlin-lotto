@@ -26,7 +26,7 @@ class LottoGameController {
             lottoTickets
                 .map {
                     WinningRank.convert(
-                        it.checkWinningNumbers(lotteryResult.winning.numbers),
+                        it.checkWinningNumbers(lotteryResult.winning),
                         it.checkBonusNumbers(lotteryResult.bonusNumber),
                     )
                 }

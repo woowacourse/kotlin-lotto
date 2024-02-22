@@ -1,12 +1,12 @@
 package lotto.model
 
-class Lotto(val numbers: List<LottoNumber>) {
+class Lotto(private val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == NUMBER_COUNT) { "로또 번호의 개수는 6개이어야 합니다." }
         require(numbers.toSet().size == numbers.size) { "로또 번호는 중복될 수 없습니다." }
     }
 
-    fun checkWinningNumbers(winningNumbers: List<LottoNumber>): Int = numbers.count { it in winningNumbers }
+    fun checkWinningNumbers(winning: Lotto): Int = numbers.count { it in winning.numbers }
 
     fun checkBonusNumbers(bonusNumber: LottoNumber): Boolean = bonusNumber in numbers
 
