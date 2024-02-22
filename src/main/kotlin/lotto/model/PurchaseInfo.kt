@@ -12,12 +12,16 @@ class PurchaseInfo(purchasePrice: String) {
             INVALID_PURCHASE_PRICE
         }
         price = purchasePrice.toInt()
-        amount = price / 1_000
+        amount = price / LOTTO_PRICE
     }
 
     private fun String.isValidDigit() = toIntOrNull() != null
 
-    private fun String.isMoreThanMin() = toInt() >= 1000
+    private fun String.isMoreThanMin() = toInt() >= LOTTO_PRICE
 
-    private fun String.divideByLottoPrice() = toInt() % 1000 == 0
+    private fun String.divideByLottoPrice() = toInt() % LOTTO_PRICE == 0
+
+    companion object {
+        private const val LOTTO_PRICE = 1000
+    }
 }

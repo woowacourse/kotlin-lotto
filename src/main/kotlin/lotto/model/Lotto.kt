@@ -14,10 +14,9 @@ class Lotto(numbers: List<Int>) {
         this.numbers = numbers.sorted().map { LottoNumber(it) }
     }
 
-    private fun List<Int>.isValidSize() = size == 6
+    private fun List<Int>.isValidSize() = size == LOTTO_SIZE
 
-    private fun List<Int>.isNotDuplicate() = distinct().size == 6
-
+    private fun List<Int>.isNotDuplicate() = distinct().size == LOTTO_SIZE
 
     fun compare(otherLotto: Lotto, bonusNumber: LottoNumber) =
         when (otherLotto.numbers.intersect(numbers).size) {
@@ -39,4 +38,7 @@ class Lotto(numbers: List<Int>) {
         return numbers.toString()
     }
 
+    companion object {
+        private const val LOTTO_SIZE = 6
+    }
 }
