@@ -30,7 +30,7 @@ class LottoTest {
     }
 
     @Test
-    fun `보너스번호가 포함되어 있으면 false를 리턴한다`() {
+    fun `보너스번호가 포함되어 있지않으면 false를 리턴한다`() {
         val lotto = Lotto((1..6).map { LottoNumber(it) })
         val bonusLottoNumber = LottoNumber(7)
         val matchBonus = lotto.calculateMatchBonus(bonusLottoNumber)
