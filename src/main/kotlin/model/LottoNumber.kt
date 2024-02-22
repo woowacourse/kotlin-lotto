@@ -9,6 +9,7 @@ data class LottoNumber(val number: Int) {
     }
 
     private fun validatePositive(number: Int) = number > 0
+
     private fun validateRange(number: Int) = (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).contains(number)
 
     companion object {

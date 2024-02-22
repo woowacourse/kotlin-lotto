@@ -2,7 +2,7 @@ package model
 
 class Bonus(val number: LottoNumber, private val lotto: Lotto) {
     constructor(input: String, lotto: Lotto) :
-            this(LottoNumber(input), lotto)
+        this(LottoNumber(input), lotto)
 
     init {
         require(validateUnique(number, lotto)) { EXCEPTION_DUPLICATED_NUMBER }

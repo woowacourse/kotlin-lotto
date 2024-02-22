@@ -6,7 +6,6 @@ import view.InputView
 import view.OutputView
 
 class LottoController {
-
     fun start() {
         val amount = readAmount()
         val userLottos = purchaseLottos(amount)
@@ -40,8 +39,14 @@ class LottoController {
 
     private fun printROI(roi: Double) = OutputView.printProfit(roi)
 
-    private fun getStats(userLottos: List<Lotto>, winningNumbers: Lotto, bonus: Bonus) =
-        LottoResult.getStats(userLottos, winningNumbers, bonus)
+    private fun getStats(
+        userLottos: List<Lotto>,
+        winningNumbers: Lotto,
+        bonus: Bonus,
+    ) = LottoResult.getStats(userLottos, winningNumbers, bonus)
 
-    private fun getROI(amount: Amount, stats: Map<Rank, Int>) = LottoResult.calculateROI(amount, stats)
+    private fun getROI(
+        amount: Amount,
+        stats: Map<Rank, Int>,
+    ) = LottoResult.calculateROI(amount, stats)
 }
