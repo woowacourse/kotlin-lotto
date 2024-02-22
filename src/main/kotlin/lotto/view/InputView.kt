@@ -1,39 +1,42 @@
 package lotto.view
 
+import lotto.constants.StringConstants.INPUT_BONUS_NUMBER
+import lotto.constants.StringConstants.INPUT_PURCHASE_PRICE
+import lotto.constants.StringConstants.INPUT_WINNING_LOTTO_NUMBERS
+import lotto.constants.StringConstants.INVALID_BONUS_NUMBER
+import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER
+import lotto.constants.StringConstants.LOTTO_NUMBER_DELIMITER
 import lotto.model.Lotto
+import lotto.model.LottoNumber
 import lotto.model.PurchaseInfo
 
 class InputView {
 
-    fun readPurchasePrice() = retryWhileNoException {
-        println("구입금액을 입력해 주세요.")
+    fun readPurchasePrice(): PurchaseInfo {
+        println(INPUT_PURCHASE_PRICE)
         val purchasePrice = readln()
-        PurchaseInfo(purchasePrice)
+        return PurchaseInfo(purchasePrice)
     }
 
-    fun readWinningLottoNumbers() = retryWhileNoException {
-        println("지난 주 당첨 번호를 입력해 주세요.")
+    fun readWinningLottoNumbers(): Lotto {
+        println(INPUT_WINNING_LOTTO_NUMBERS)
         val winningLottoNumbers = readln()
-        validateDigit(winningLottoNumbers)
-        Lotto(winningLottoNumbers.split(", ").map { it.toInt() })
+        validateDigit(winningLottoNumbers, INVALID_LOTTO_NUMBER)
+        return Lotto(winningLottoNumbers.split(LOTTO_NUMBER_DELIMITER).map { it.toInt() })
     }
 
-    private fun validateDigit(lottoNumbers: String) =
-        require(lottoNumbers.split(", ").all { it.toIntOrNull() != null }) {
-            "올바른 로또 번호를 입력해 주세요."
+    fun readBonusNumber(): LottoNumber {
+        println(INPUT_BONUS_NUMBER)
+        val bonusNumber = readln()
+        validateDigit(bonusNumber, INVALID_BONUS_NUMBER)
+        return LottoNumber(bonusNumber.toInt())
+    }
+
+    private fun validateDigit(lottoNumbers: String, errorMessage: String) =
+        require(lottoNumbers.split(LOTTO_NUMBER_DELIMITER).all { isDigit(it) }) {
+            errorMessage
         }
 
-    private fun <T> retryWhileNoException(action: () -> T): T {
-        return try {
-            action()
-        } catch (e: IllegalArgumentException) {
-            println("$ERROR_MESSAGE ${e.localizedMessage}")
-            action()
-        }
-    }
-
-    companion object {
-        private const val ERROR_MESSAGE = "[ERROR]"
-    }
+    private fun isDigit(it: String) = it.toIntOrNull() != null
 
 }
