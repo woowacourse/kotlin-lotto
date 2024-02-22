@@ -1,6 +1,21 @@
 package lotto.model
 
 class LottoResult(val static: Map<Rank, Int>) {
+    override fun toString(): String {
+        var result = ""
+
+        Rank.entries.reversed().forEach { rank ->
+            val count = static[rank] ?: EMPTY_COUNT
+            result +=
+                when (rank) {
+                    Rank.MISS -> ""
+                    Rank.SECOND -> WINNING_BONUS_MESSAGE.format(rank.countOfMatch, rank.winningMoney, count)
+                    else -> WINNING_MESSAGE.format(rank.countOfMatch, rank.winningMoney, count)
+                }
+        }
+        return result
+    }
+
     fun getProfitRate(): Double {
         val totalProfit =
             static.entries.sumOf { (rank, count) ->
@@ -13,5 +28,9 @@ class LottoResult(val static: Map<Rank, Int>) {
     companion object {
         private const val PURCHASE_UNIT = 1_000
         private const val RATE = 100
+        private const val EMPTY_COUNT = 0
+
+        private const val WINNING_BONUS_MESSAGE = "%d개 일치, 보너스 볼 일치(%d)- %d개\n"
+        private const val WINNING_MESSAGE = "%d개 일치 (%d)- %d개\n"
     }
 }
