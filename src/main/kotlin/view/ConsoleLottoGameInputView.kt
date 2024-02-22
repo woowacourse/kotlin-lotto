@@ -22,8 +22,6 @@ class ConsoleLottoGameInputView : LottoGameInputView {
 
     companion object {
         private const val MESSAGE_INPUT_PURCHASE_EXPENSE = "구입금액을 입력해 주세요."
-
-        //        private const val MESSAGE_PURCHASED_LOTTIE_COUNT = "%d개를 구매했습니다."
         private const val MESSAGE_INPUT_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
         private const val MESSAGE_INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
 
