@@ -9,7 +9,7 @@ import utils.RandomLottoGenerationStrategy
 
 class LottoStoreTest {
     @ParameterizedTest
-    @CsvSource("5000, 5", "10000, 10", "1000, 1")
+    @CsvSource("5000, 5", "10000, 10", "1000, 1", "3500, 3", "15500, 15")
     fun `로또가 구매한 갯수만큼 발행에 성공`(
         input: String,
         count: Int,
@@ -22,14 +22,14 @@ class LottoStoreTest {
     fun `전략 패턴을 이용하여 로또 값을 지정해서 테스트`() {
         val lottos =
             listOf(
-                Lotto.fromList(listOf(1, 2, 3, 4, 5, 6)),
-                Lotto.fromList(listOf(7, 8, 9, 10, 11, 12)),
-            )
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(7, 8, 9, 10, 11, 12),
+            ).map { Lotto.fromList(it) }
         LottoStore.setStrategy(ExplicitLottoGenerationStrategy(lottos))
 
-        val result = LottoStore.makeLotto()
-        result.forEachIndexed { index, lotto ->
-            assertThat(lotto.getCountOfMatch(lottos[index])).isEqualTo(6)
+        val userLottos = LottoStore.makeLotto()
+        userLottos.forEachIndexed { index, userLotto ->
+            assertThat(userLotto.getCountOfMatch(lottos[index])).isEqualTo(6)
         }
     }
 }
