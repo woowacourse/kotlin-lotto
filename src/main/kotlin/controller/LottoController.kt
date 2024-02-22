@@ -23,9 +23,8 @@ class LottoController {
         val bonusNumber = inputView.getBonusNumber()
 
         val lottoWinning = LottoWinning(winningTicket,bonusNumber,lottoTickets)
-        val rankList = lottoWinning.getRankList()
-        val winningChart = lottoWinning.makeWinningChart(rankList)
-        val winningRate = lottoWinning.calculateWinningRate(lottoCount)
+        val winningChart = lottoWinning.makeWinningChart()
+        val winningRate = lottoWinning.calculateWinningRate()
 
         outputView.printWinningChart(winningChart)
         outputView.printWinningRate(winningRate)
