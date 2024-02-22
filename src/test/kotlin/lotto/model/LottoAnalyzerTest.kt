@@ -10,37 +10,37 @@ class LottoAnalyzerTest {
             listOf(
                 Lotto(
                     listOf(
-                        LottoNumber("1"),
-                        LottoNumber("2"),
-                        LottoNumber("3"),
-                        LottoNumber("4"),
-                        LottoNumber("5"),
-                        LottoNumber("6"),
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5),
+                        LottoNumber(6),
                     ),
                 ),
                 Lotto(
                     listOf(
-                        LottoNumber("1"),
-                        LottoNumber("2"),
-                        LottoNumber("3"),
-                        LottoNumber("4"),
-                        LottoNumber("5"),
-                        LottoNumber("8"),
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5),
+                        LottoNumber(8),
                     ),
                 ),
             )
         val winningLottoNumbers =
             Lotto(
                 listOf(
-                    LottoNumber("1"),
-                    LottoNumber("2"),
-                    LottoNumber("3"),
-                    LottoNumber("4"),
-                    LottoNumber("5"),
-                    LottoNumber("7"),
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(7),
                 ),
             )
-        val lottoResult = LottoAnalyzer.calculateResult(LottoBundle(lottoNumbers), DrawResult(winningLottoNumbers, LottoNumber("8")))
+        val lottoResult = LottoAnalyzer.calculateResult(LottoBundle(lottoNumbers), DrawResult(winningLottoNumbers, LottoNumber.from("8")))
 
         assertThat(lottoResult.resultMap).isEqualTo(mapOf(Rank.THIRD to 1, Rank.SECOND to 1))
     }

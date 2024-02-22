@@ -11,17 +11,17 @@ class DrawResultTest {
         val winningLottoNumbers =
             Lotto(
                 listOf(
-                    LottoNumber("1"),
-                    LottoNumber("2"),
-                    LottoNumber("3"),
-                    LottoNumber("4"),
-                    LottoNumber("5"),
-                    LottoNumber("7"),
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(7),
                 ),
             )
 
         assertThrows<IllegalArgumentException> {
-            DrawResult(winningLottoNumbers, LottoNumber(bonusNumber))
+            DrawResult(winningLottoNumbers, LottoNumber.from(bonusNumber))
         }
     }
 }

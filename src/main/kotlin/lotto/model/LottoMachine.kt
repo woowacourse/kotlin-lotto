@@ -8,7 +8,7 @@ class LottoMachine(private val price: String) {
     fun createLottoBundle(): LottoBundle {
         val lottos =
             List(getNumberOfLottoTickets()) {
-                Lotto((LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it.toString()) })
+                Lotto((LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) })
             }
 
         return LottoBundle(lottos)
