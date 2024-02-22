@@ -15,27 +15,51 @@ class LottoGameController(
     private val lottoGenerator: LottoGenerator,
 ) {
     fun startLottoGame() {
-        // 1
-        val purchaseExpense: Int = lottoGameInputView.inputPurchaseExpense()
-        // 2
-        val autoLottie: List<Lotto> = lottoGenerator.generate(Money(purchaseExpense))
-        lottoGameOutputView.showPurchasedLottie(autoLottie)
-        // 3
-        val winningNumbers: List<Int> = lottoGameInputView.inputWinningNumbers()
-        val winningLotto = Lotto(*(winningNumbers.toIntArray()))
-        // 4
-        val bonusNumber: Int = lottoGameInputView.inputBonusNumber()
-        val bonusLottoNumber = LottoNumber(bonusNumber)
-        // 5
-        val lottoGameResult =
-            LottoGameResult(
-                bonusNumber = bonusLottoNumber,
-                winningLotto = winningLotto,
-                purchasedLottie = autoLottie,
-            )
+        val purchaseExpense: Int = getPurchaseExpense()
+        val lottie: List<Lotto> = purchaseLottie(purchaseExpense)
+        val winningLotto = getWinningLotto()
+        val bonusLottoNumber = getBonusLottoNumber()
+        val lottoGameResult = getLottoGameResult(bonusLottoNumber, winningLotto, lottie)
+        displayLottoResult(lottoGameResult, purchaseExpense)
+    }
+
+    private fun displayLottoResult(
+        lottoGameResult: LottoGameResult,
+        purchaseExpense: Int,
+    ) {
         val rankResults = lottoGameResult.results
         val earningRate = lottoGameResult.calculateEarningRate(Money(purchaseExpense))
         lottoGameOutputView.showGameResult(rankResults, truncateDecimal(earningRate))
+    }
+
+    private fun getLottoGameResult(
+        bonusLottoNumber: LottoNumber,
+        winningLotto: Lotto,
+        lottie: List<Lotto>,
+    ) = LottoGameResult(
+        bonusNumber = bonusLottoNumber,
+        winningLotto = winningLotto,
+        purchasedLottie = lottie,
+    )
+
+    private fun getBonusLottoNumber(): LottoNumber {
+        val bonusNumber = lottoGameInputView.inputBonusNumber()
+        return LottoNumber(bonusNumber)
+    }
+
+    private fun getWinningLotto(): Lotto {
+        val winningNumbers = lottoGameInputView.inputWinningNumbers()
+        return Lotto(*(winningNumbers.toIntArray()))
+    }
+
+    private fun getPurchaseExpense(): Int {
+        return lottoGameInputView.inputPurchaseExpense()
+    }
+
+    private fun purchaseLottie(purchaseExpense: Int): List<Lotto> {
+        val lottie = lottoGenerator.generate(Money(purchaseExpense))
+        lottoGameOutputView.showPurchasedLottie(lottie)
+        return lottie
     }
 
     private fun truncateDecimal(earningRate: Double): Double = floor(earningRate * 100) / 100
