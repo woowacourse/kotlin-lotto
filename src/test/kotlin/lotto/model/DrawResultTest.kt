@@ -8,7 +8,7 @@ class DrawResultTest {
     @ParameterizedTest
     @CsvSource("7", "1")
     fun `로또 게임에서 보너스 번호는 당첨 번호와 중복되면 안된다`(bonusNumber: String) {
-        val winningLotto = Lotto(listOf("1", "2", "3", "4", "5", "7").map { LottoNumber.valueOf(it) })
+        val winningLotto = Lotto((1..6).map { LottoNumber(it) })
 
         assertThrows<IllegalArgumentException> {
             DrawResult(winningLotto, LottoNumber.valueOf(bonusNumber))
