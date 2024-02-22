@@ -32,5 +32,10 @@ class Lotto(numbers: List<Int>) {
         return LottoPrize.THIRD
     }
 
+    fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
+
+    override fun toString(): String {
+        return numbers.toString()
+    }
 
 }
