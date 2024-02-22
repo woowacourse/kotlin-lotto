@@ -3,5 +3,5 @@ package utils
 import model.Lotto
 
 interface LottoGenerationStrategy {
-    fun generateLottos(): List<Lotto>
+    fun generateLotteries(): List<Lotto>
 }

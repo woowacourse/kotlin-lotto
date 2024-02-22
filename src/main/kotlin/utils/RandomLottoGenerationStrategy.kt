@@ -1,26 +1,26 @@
 package utils
 
 import model.Amount
+import model.LotteryNumber
 import model.Lotto
-import model.LottoNumber
 
 class RandomLottoGenerationStrategy(private val amount: Amount) : LottoGenerationStrategy {
-    override fun generateLottos(): List<Lotto> {
-        val lottos = mutableListOf<Lotto>()
+    override fun generateLotteries(): List<Lotto> {
+        val lotteries = mutableListOf<Lotto>()
         repeat(amount.money / LOTTO_TICKET_PRICE) {
-            lottos.add(Lotto(generateNumbers()))
+            lotteries.add(Lotto(generateNumbers()))
         }
-        return lottos
+        return lotteries
     }
 
-    private fun generateNumbers(): List<LottoNumber> =
+    private fun generateNumbers(): List<LotteryNumber> =
         (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER)
             .toList()
             .shuffled()
             .take(LOTTO_COUNT)
             .sorted()
             .map {
-                LottoNumber(it)
+                LotteryNumber(it)
             }
 
     companion object {

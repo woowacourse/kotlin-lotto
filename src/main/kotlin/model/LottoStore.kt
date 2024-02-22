@@ -10,5 +10,5 @@ object LottoStore {
         this.lottoGenerationStrategy = lottoGenerationStrategy
     }
 
-    fun makeLotto(): List<Lotto> = lottoGenerationStrategy.generateLottos()
+    fun makeLotteries(): List<Lotto> = lottoGenerationStrategy.generateLotteries()
 }

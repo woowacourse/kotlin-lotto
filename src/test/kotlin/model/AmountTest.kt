@@ -11,7 +11,7 @@ class AmountTest {
     @ValueSource(strings = ["500", "600", "700", "0", "-1000"])
     fun `로또 구입 금액이 1000원 미만일 경우 예외 발생`(input: String) {
         assertThatThrownBy {
-            Amount(input)
+            Amount.fromInput(input)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(Amount.EXCEPTION_LESS_THAN_THOUSAND)
     }
@@ -20,7 +20,7 @@ class AmountTest {
     @ValueSource(strings = ["hannah", "pangtae", "23pobi", "@-01af+"])
     fun `금액이 숫자가 아니라면 예외 발생`(input: String) {
         assertThatThrownBy {
-            Amount(input)
+            Amount.fromInput(input)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(Amount.EXCEPTION_IS_NOT_NUMBER)
     }
@@ -31,6 +31,6 @@ class AmountTest {
         input: String,
         money: Int,
     ) {
-        money shouldBe Amount(input).money
+        money shouldBe Amount.fromInput(input).money
     }
 }

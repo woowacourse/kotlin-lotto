@@ -14,22 +14,22 @@ class LottoStoreTest {
         input: String,
         count: Int,
     ) {
-        LottoStore.setStrategy(RandomLottoGenerationStrategy(Amount(input)))
-        assertThat(LottoStore.makeLotto().size).isEqualTo(count)
+        LottoStore.setStrategy(RandomLottoGenerationStrategy(Amount.fromInput(input)))
+        assertThat(LottoStore.makeLotteries().size).isEqualTo(count)
     }
 
     @Test
     fun `전략 패턴을 이용하여 로또 값을 지정해서 테스트`() {
-        val lottos =
+        val lotteries =
             listOf(
                 listOf(1, 2, 3, 4, 5, 6),
                 listOf(7, 8, 9, 10, 11, 12),
             ).map { Lotto.fromList(it) }
-        LottoStore.setStrategy(ExplicitLottoGenerationStrategy(lottos))
+        LottoStore.setStrategy(ExplicitLottoGenerationStrategy(lotteries))
 
-        val userLottos = LottoStore.makeLotto()
-        userLottos.forEachIndexed { index, userLotto ->
-            assertThat(userLotto.getCountOfMatch(lottos[index])).isEqualTo(6)
+        val userLotteries = LottoStore.makeLotteries()
+        userLotteries.forEachIndexed { index, userLotto ->
+            assertThat(userLotto.getCountOfMatch(lotteries[index])).isEqualTo(6)
         }
     }
 }

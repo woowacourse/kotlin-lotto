@@ -1,40 +1,39 @@
 package model
 
-class Lotto(private val numbers: List<LottoNumber>) {
+class Lotto(private val lotteryNumbers: List<LotteryNumber>) {
     init {
-        require(validateCount(numbers)) { EXCEPTION_INVALID_COUNT }
-        require(validateDuplicate(numbers)) { EXCEPTION_DUPLICATED_NUMBER }
+        require(validateCount(lotteryNumbers)) { EXCEPTION_INVALID_COUNT }
+        require(validateDuplicate(lotteryNumbers)) { EXCEPTION_DUPLICATED_NUMBER }
     }
 
-    private fun validateCount(numbers: List<LottoNumber>) = numbers.size == LOTTO_COUNT
+    private fun validateCount(lotteryNumbers: List<LotteryNumber>) = lotteryNumbers.size == LOTTERY_COUNT
 
-    private fun validateDuplicate(numbers: List<LottoNumber>) = numbers.size == numbers.toSet().size
+    private fun validateDuplicate(lotteryNumbers: List<LotteryNumber>) = lotteryNumbers.size == lotteryNumbers.toSet().size
 
-    fun getCountOfMatch(lotto: Lotto) = numbers.intersect(lotto.numbers).size
+    fun getCountOfMatch(lotto: Lotto) = lotteryNumbers.intersect(lotto.lotteryNumbers).size
 
-    fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
+    fun hasLotteryNumber(lotteryNumber: LotteryNumber) = lotteryNumbers.contains(lotteryNumber)
 
-    fun hasBonus(bonus: Bonus) = numbers.contains(bonus.number)
+    fun hasBonus(bonus: Bonus) = lotteryNumbers.contains(bonus.lotteryNumber)
 
-    override fun toString() = "[${numbers.map { it.number }.joinToString(", ")}]\n"
+    override fun toString() = "[${lotteryNumbers.map { it.number }.joinToString(", ")}]\n"
 
     companion object {
-        const val LOTTO_COUNT = 6
-        const val EXCEPTION_INVALID_COUNT = "로또 번호는 ${LOTTO_COUNT}개여야 합니다"
+        private const val LOTTERY_COUNT = 6
+        private const val LOTTERY_DELIMITER = ","
+        const val EXCEPTION_INVALID_COUNT = "로또 번호는 ${LOTTERY_COUNT}개여야 합니다"
         const val EXCEPTION_DUPLICATED_NUMBER = "로또 번호에 중복이 없어야 합니다"
 
         fun fromList(numbers: List<Int>): Lotto {
-            return Lotto(numbers.map { LottoNumber(it) })
+            return numbers.map { LotteryNumber(it) }.run { Lotto(this) }
         }
 
         fun fromInput(input: String): Lotto {
-            return input.split(",").map {
-                LottoNumber(it)
+            return input.split(LOTTERY_DELIMITER).map {
+                LotteryNumber.fromInput(it)
+            }.run {
+                Lotto(this)
             }
-                .toList()
-                .run {
-                    Lotto(this)
-                }
         }
     }
 }
