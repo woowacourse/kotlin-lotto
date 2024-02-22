@@ -1,8 +1,10 @@
-@file:Suppress("ktlint:standard:no-wildcard-imports")
-
 package lotto.controller
 
-import lotto.model.*
+import lotto.model.DrawResult
+import lotto.model.Lotto
+import lotto.model.LottoAnalyzer
+import lotto.model.LottoMachine
+import lotto.model.LottoNumber
 import lotto.view.InputView
 import lotto.view.OutputView
 
