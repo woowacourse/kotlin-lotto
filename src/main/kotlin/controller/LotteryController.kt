@@ -37,4 +37,8 @@ class LotteryController(
         outputView.showProfitRate(profitRate, ProfitStatusDecider.decide(purchaseAmount, totalPrize))
     }
 
+    private fun getProfitRate(
+        purchaseAmount: Money,
+        totalPrize: Money,
+    ): ProfitRate = profit.calculateRate(purchaseAmount, totalPrize)
 }
