@@ -5,6 +5,7 @@ import model.LottoGameResult
 import model.LottoGenerator
 import model.LottoNumber
 import model.Money
+import model.Rank
 import view.LottoGameInputView
 import view.LottoGameOutputView
 import kotlin.math.floor
@@ -18,8 +19,8 @@ class LottoGameController(
         val purchaseExpense: Int = getPurchaseExpense()
         val lottie: List<Lotto> = purchaseLottie(purchaseExpense)
         val winningLotto = getWinningLotto()
-        val bonusLottoNumber = getBonusLottoNumber()
-        val lottoGameResult = getLottoGameResult(bonusLottoNumber, winningLotto, lottie)
+        val bonusLottoNumber = createBonusLottoNumber(winningLotto)
+        val lottoGameResult = LottoGameResult(bonusLottoNumber, winningLotto, lottie)
         displayLottoResult(lottoGameResult, purchaseExpense)
     }
 
@@ -27,24 +28,18 @@ class LottoGameController(
         lottoGameResult: LottoGameResult,
         purchaseExpense: Int,
     ) {
-        val rankResults = lottoGameResult.results
+        val rankResults = lottoGameResult.results.filterNot { it.rank == Rank.MISS }
         val earningRate = lottoGameResult.calculateEarningRate(Money(purchaseExpense))
         lottoGameOutputView.showGameResult(rankResults, truncateDecimal(earningRate))
     }
 
-    private fun getLottoGameResult(
-        bonusLottoNumber: LottoNumber,
-        winningLotto: Lotto,
-        lottie: List<Lotto>,
-    ) = LottoGameResult(
-        bonusNumber = bonusLottoNumber,
-        winningLotto = winningLotto,
-        purchasedLottie = lottie,
-    )
-
-    private fun getBonusLottoNumber(): LottoNumber {
+    private fun createBonusLottoNumber(winningLotto: Lotto): LottoNumber {
         val bonusNumber = lottoGameInputView.inputBonusNumber()
-        return LottoNumber(bonusNumber)
+        val bonusLottoNumber = LottoNumber(bonusNumber)
+        check(bonusLottoNumber in winningLotto) {
+            "$bonusLottoNumber 는 $winningLotto 와 중복될 수 없습니다."
+        }
+        return bonusLottoNumber
     }
 
     private fun getWinningLotto(): Lotto {
