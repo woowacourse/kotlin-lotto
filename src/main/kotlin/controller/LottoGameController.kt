@@ -24,37 +24,54 @@ class LottoGameController(
         displayLottoResult(lottoGameResult, purchaseExpense)
     }
 
+    private fun getPurchaseExpense(): Int =
+        runCatching {
+            lottoGameInputView.inputPurchaseExpense()
+        }.onFailure {
+            if (it is IllegalArgumentException) return getPurchaseExpense()
+        }.getOrThrow()
+
+    private fun purchaseLottie(purchaseExpense: Int): List<Lotto> =
+        runCatching {
+            lottoGenerator.generate(Money(purchaseExpense))
+                .also(lottoGameOutputView::showPurchasedLottie)
+        }.onFailure {
+            if (it is IllegalArgumentException) return purchaseLottie(purchaseExpense)
+        }.getOrThrow()
+
+    private fun getWinningLotto(): Lotto =
+        runCatching {
+            val winningNumbers = lottoGameInputView.inputWinningNumbers()
+            Lotto(*(winningNumbers.toIntArray()))
+        }.onFailure {
+            if (it is IllegalArgumentException) return getWinningLotto()
+        }.getOrThrow()
+
+    private fun createBonusLottoNumber(winningLotto: Lotto): LottoNumber =
+        runCatching {
+            val bonusNumber = lottoGameInputView.inputBonusNumber()
+            val bonusLottoNumber = LottoNumber(bonusNumber)
+            check(bonusLottoNumber !in winningLotto) { EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT }
+            bonusLottoNumber
+        }.onFailure {
+            if (it is IllegalArgumentException || it is IllegalStateException) {
+                return createBonusLottoNumber(
+                    winningLotto,
+                )
+            }
+        }.getOrThrow()
+
     private fun displayLottoResult(
         lottoGameResult: LottoGameResult,
         purchaseExpense: Int,
     ) {
-        val rankResults = lottoGameResult.results.filterNot { it.rank == Rank.MISS }
-        val earningRate = lottoGameResult.calculateEarningRate(Money(purchaseExpense))
-        lottoGameOutputView.showGameResult(rankResults, truncateDecimal(earningRate))
-    }
-
-    private fun createBonusLottoNumber(winningLotto: Lotto): LottoNumber {
-        val bonusNumber = lottoGameInputView.inputBonusNumber()
-        val bonusLottoNumber = LottoNumber(bonusNumber)
-        check(bonusLottoNumber in winningLotto) {
-            EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT
+        runCatching {
+            val rankResults = lottoGameResult.results.filterNot { it.rank == Rank.MISS }
+            val earningRate = lottoGameResult.calculateEarningRate(Money(purchaseExpense))
+            lottoGameOutputView.showGameResult(rankResults, truncateDecimal(earningRate))
+        }.onFailure {
+            if (it is IllegalArgumentException) return displayLottoResult(lottoGameResult, purchaseExpense)
         }
-        return bonusLottoNumber
-    }
-
-    private fun getWinningLotto(): Lotto {
-        val winningNumbers = lottoGameInputView.inputWinningNumbers()
-        return Lotto(*(winningNumbers.toIntArray()))
-    }
-
-    private fun getPurchaseExpense(): Int {
-        return lottoGameInputView.inputPurchaseExpense()
-    }
-
-    private fun purchaseLottie(purchaseExpense: Int): List<Lotto> {
-        val lottie = lottoGenerator.generate(Money(purchaseExpense))
-        lottoGameOutputView.showPurchasedLottie(lottie)
-        return lottie
     }
 
     private fun truncateDecimal(earningRate: Double): Double = floor(earningRate * SCALE) / SCALE
