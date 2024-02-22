@@ -21,7 +21,6 @@ class LottoWinning(
 
     fun makeWinningChart(): LottoResult {
         val rankList = getRankList()
-
         return LottoResult(rankList.groupingBy { it }.eachCount())
     }
 
