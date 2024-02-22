@@ -8,15 +8,18 @@ class LottoMachine(private val price: String) {
         require(priceAsInt != null && priceAsInt >= LottoConstant.PRICE) { PRICE_ERROR_MESSAGE }
     }
 
-    fun createLottos() {
+    fun createLottos(): List<Lotto> {
         val count = price.toInt() / LottoConstant.PRICE
-        List(count) {
-            Lotto(
-                (LottoConstant.NUMBER_RANGE).shuffled().take(LottoConstant.SIZE).sorted()
-                    .map { LottoNumber(it) },
-            )
+        return List(count) {
+            createLotto()
         }
     }
+
+    private fun createLotto() =
+        Lotto(
+            (LottoConstant.NUMBER_RANGE).shuffled().take(LottoConstant.SIZE).sorted()
+                .map { LottoNumber(it) },
+        )
 
     companion object {
         private const val PRICE_ERROR_MESSAGE = "구입 금액은 자연수이면서 1000 이상이여야 합니다."
