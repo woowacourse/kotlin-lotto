@@ -19,9 +19,10 @@ class LottoWinning(
         Rank.decideRank(countOfMatch, hasBonusNumber)
     }
 
-    fun makeWinningChart(rankList: List<Rank>): Map<Rank, Int> {
+    fun makeWinningChart(): LottoResult {
         val rankList = getRankList()
-        return rankList.groupingBy { it }.eachCount().toSortedMap(compareBy{Rank.entries.indexOf(it)})
+
+        return LottoResult(rankList.groupingBy { it }.eachCount())
     }
 
     private fun calculateWinningPrize(): Int {
