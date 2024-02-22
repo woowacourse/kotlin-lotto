@@ -6,14 +6,15 @@ import view.OutputView
 
 class LottoController {
     private lateinit var buyer: Buyer
+    private lateinit var winningStatistics: WinningStatistics
 
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
         buyer = Buyer(purchaseAmount)
         val lottos = publishLottos()
         val winningLotto = drawWinningLotto()
-        val winningStatistics = makeWinningStatics(lottos, winningLotto)
-        OutputView.outputWinningStatistics(winningStatistics)
+        winningStatistics = makeWinningStatics(lottos, winningLotto)
+        displayWinningStatistics(purchaseAmount)
     }
 
     private fun generateLottoNumbers(): List<Int> {
@@ -58,5 +59,15 @@ class LottoController {
         val countOfMatch = winningLotto.calculateCountOfMatch(lotto)
         val bonusMatched = winningLotto.checkBonusNumberMatched(lotto)
         return Rank.getRank(countOfMatch, bonusMatched)
+    }
+
+    private fun displayWinningStatistics(purchaseAmount: Int) {
+        OutputView.outputWinningStatistics(winningStatistics)
+        displayRateOfReturn(purchaseAmount)
+    }
+
+    private fun displayRateOfReturn(purchaseAmount: Int) {
+        val rateOfReturn = winningStatistics.calculateRateOfReturn(purchaseAmount)
+        OutputView.outputRateOfReturn(rateOfReturn)
     }
 }

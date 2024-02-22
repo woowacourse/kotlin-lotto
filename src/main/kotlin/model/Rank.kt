@@ -2,7 +2,7 @@ package model
 
 import util.Constant
 
-enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
+enum class Rank(val countOfMatch: Int, val winningAmount: Int) {
     FIRST(6, Constant.FIRST_RANK_WINNING_MONEY),
     SECOND(5, Constant.SECOND_RANK_WINNING_MONEY),
     THIRD(5, Constant.THIRD_RANK_WINNING_MONEY),
