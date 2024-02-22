@@ -31,8 +31,8 @@ class LottoGameTest {
 
     @Test
     fun `당첨 계산`() {
-        assertThat(lottos.getLottos()[8].matchCount(winningNumberCorrect)).isEqualTo(6)
-        assertThat(lottos.getLottos()[8].matchCount(winningNumberWrong)).isEqualTo(6)
+        assertThat(lottos.getLottos()[7].matchCount(winningNumberCorrect)).isEqualTo(6)
+        assertThat(lottos.getLottos()[7].matchCount(winningNumberWrong)).isEqualTo(6)
     }
 
     @Test
