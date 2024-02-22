@@ -5,6 +5,8 @@ class Lotto(val lottoNumbers: List<LottoNumber>) {
         require(lottoNumbers.distinct().size == LOTTO_SIZE) { LOTTO_SIZE_ERROR_MESSAGE }
     }
 
+    override fun toString(): String = lottoNumbers.toString()
+
     companion object {
         private const val LOTTO_SIZE = 6
 
