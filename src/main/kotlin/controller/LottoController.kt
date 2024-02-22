@@ -11,10 +11,10 @@ class LottoController {
         val userLottos = purchaseLottos(amount)
         printPurchasedLottos(userLottos)
 
-        val winningNumbers = readWinningNumbers()
-        val bonus = readBonus(winningNumbers)
+        val winningLotto = readWinningLotto()
+        val bonus = readBonus(winningLotto)
 
-        val stats = getStats(userLottos, winningNumbers, bonus)
+        val stats = getStats(userLottos, winningLotto, bonus)
         printStats(stats)
 
         val roi = getROI(amount, stats)
@@ -23,9 +23,9 @@ class LottoController {
 
     private fun readAmount() = Amount(InputView.readAmount())
 
-    private fun readBonus(winningNumbers: Lotto) = Bonus(InputView.readBonus(), winningNumbers)
+    private fun readBonus(winningLotto: Lotto) = Bonus(InputView.readBonus(), winningLotto)
 
-    private fun readWinningNumbers() = Lotto.fromInput(InputView.readWinningNumbers())
+    private fun readWinningLotto() = Lotto.fromInput(InputView.readWinningLotto())
 
     private fun purchaseLottos(amount: Amount): List<Lotto> {
         LottoStore.setStrategy(RandomLottoGenerationStrategy(amount))
@@ -41,12 +41,12 @@ class LottoController {
 
     private fun getStats(
         userLottos: List<Lotto>,
-        winningNumbers: Lotto,
+        winningLotto: Lotto,
         bonus: Bonus,
-    ) = LottoResult.getStats(userLottos, winningNumbers, bonus)
+    ) = WinningResult.getStats(userLottos, winningLotto, bonus)
 
     private fun getROI(
         amount: Amount,
         stats: Map<Rank, Int>,
-    ) = LottoResult.calculateROI(amount, stats)
+    ) = WinningResult.calculateROI(amount, stats)
 }

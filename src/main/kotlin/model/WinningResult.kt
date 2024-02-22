@@ -1,19 +1,18 @@
 package model
 
-object LottoResult {
+object WinningResult {
     private const val DECIMALS = 2
-    private const val PERCENTAGE_MULTIPLIER = 100
     private const val BASE_MULTIPLIER = 10
 
     fun getStats(
         userLottos: List<Lotto>,
-        resultLotto: Lotto,
-        resultBonus: Bonus,
+        winningLotto: Lotto,
+        bonus: Bonus,
     ): Map<Rank, Int> {
         val ranks = mutableMapOf<Rank, Int>()
 
         userLottos.forEach {
-            val rank = Rank.valueOf(it.getCountOfMatch(resultLotto), it.hasBonus(resultBonus))
+            val rank = Rank.valueOf(it.getCountOfMatch(winningLotto), it.hasBonus(bonus))
             ranks[rank] = (ranks[rank] ?: 0) + 1
         }
         return ranks
@@ -21,11 +20,11 @@ object LottoResult {
 
     fun calculateROI(
         amount: Amount,
-        lottoResult: Map<Rank, Int>,
+        winningResult: Map<Rank, Int>,
     ): Double {
         var prize = 0.0
 
-        lottoResult.forEach {
+        winningResult.forEach {
             prize += (it.key.winningMoney * it.value)
         }
 

@@ -10,7 +10,7 @@ object InputView {
         return readln()
     }
 
-    fun readWinningNumbers(): String {
+    fun readWinningLotto(): String {
         println(HEADER_READ_WINNING_NUMBERS)
         return readln()
     }

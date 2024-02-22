@@ -6,7 +6,7 @@ class Lotto(private val numbers: List<LottoNumber>) {
         require(validateDuplicate(numbers)) { EXCEPTION_DUPLICATED_NUMBER }
     }
 
-    private fun validateCount(numbers: List<LottoNumber>) = numbers.size == 6
+    private fun validateCount(numbers: List<LottoNumber>) = numbers.size == LOTTO_COUNT
 
     private fun validateDuplicate(numbers: List<LottoNumber>) = numbers.size == numbers.toSet().size
 
@@ -19,7 +19,8 @@ class Lotto(private val numbers: List<LottoNumber>) {
     override fun toString() = "[${numbers.map { it.number }.joinToString(", ")}]\n"
 
     companion object {
-        const val EXCEPTION_INVALID_COUNT = "로또 번호는 6개여야 합니다"
+        const val LOTTO_COUNT = 6
+        const val EXCEPTION_INVALID_COUNT = "로또 번호는 ${LOTTO_COUNT}개여야 합니다"
         const val EXCEPTION_DUPLICATED_NUMBER = "로또 번호에 중복이 없어야 합니다"
 
         fun fromList(numbers: List<Int>): Lotto {

@@ -1,10 +1,10 @@
 package model
 
-import model.LottoResult.round
+import model.WinningResult.round
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class LottoResultTest {
+class WinningResultTest {
     @Test
     fun `1등, 2등, 3등, 꽝 한 장씩에 대한 결과 테스트`() {
         val winningLotto = Lotto.fromList((1..6).toList())
@@ -18,7 +18,7 @@ class LottoResultTest {
                 listOf(10, 11, 12, 13, 14, 15),
             ).map { Lotto.fromList(it) }
 
-        val result = LottoResult.getStats(userLottos, winningLotto, bonus)
+        val result = WinningResult.getStats(userLottos, winningLotto, bonus)
 
         assertThat(result[Rank.FIRST]).isEqualTo(1)
         assertThat(result[Rank.SECOND]).isEqualTo(1)
@@ -35,7 +35,7 @@ class LottoResultTest {
                 Rank.THIRD to 3,
             )
 
-        val profit = LottoResult.calculateROI(amount, winningResult)
+        val profit = WinningResult.calculateROI(amount, winningResult)
         val expected = (((Rank.FIRST.winningMoney + (Rank.THIRD.winningMoney * 3)) / 5000.0)).round(2)
         assertThat(profit).isEqualTo(expected)
     }

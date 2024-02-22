@@ -1,17 +1,17 @@
 package model
 
-class Bonus(val number: LottoNumber, private val lotto: Lotto) {
-    constructor(input: String, lotto: Lotto) :
-        this(LottoNumber(input), lotto)
+class Bonus(val number: LottoNumber, winningLotto: Lotto) {
+    constructor(input: String, winningLotto: Lotto) :
+        this(LottoNumber(input), winningLotto)
 
     init {
-        require(validateUnique(number, lotto)) { EXCEPTION_DUPLICATED_NUMBER }
+        require(validateUnique(number, winningLotto)) { EXCEPTION_DUPLICATED_NUMBER }
     }
 
     private fun validateUnique(
         number: LottoNumber,
-        lotto: Lotto,
-    ) = !lotto.contains(number)
+        winningLotto: Lotto,
+    ) = !winningLotto.contains(number)
 
     companion object {
         const val EXCEPTION_DUPLICATED_NUMBER = "보너스 번호는 로또 번호에 포함될 수 없습니다"
