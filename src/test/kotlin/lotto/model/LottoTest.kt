@@ -3,7 +3,6 @@ package lotto.model
 import lotto.constants.LottoPrize
 import lotto.service.LottoNumberGenerator
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -60,19 +59,17 @@ class LottoTest {
         assertThat(actual.values.first()).isEqualTo(purchaseInfo.amount)
     }
 
-    @Test
-    fun `ddd`() {
+    @ParameterizedTest
+    @MethodSource("로또 수익률 계산 테스트 데이터")
+    fun `로또 수익률을 계산한다`(lottoPrice: String, prizeCount: Map<LottoPrize, Int>, profitRatio: Double) {
         // given
-        val purchaseInfo = PurchaseInfo("8000")
-        val prizeCount = mapOf(
-            LottoPrize.FIFTH to 1
-        )
+        val purchaseInfo = PurchaseInfo(lottoPrice)
 
         // when
         val actual = ResultCalculator.calculateProfitRatio(purchaseInfo, prizeCount)
 
         // then
-        assertThat(actual).isEqualTo(62.5)
+        assertThat(actual).isEqualTo(profitRatio)
     }
 
     companion object {
@@ -97,6 +94,13 @@ class LottoTest {
             Arguments.of(listOf(1, 2, 3, 4, 7, 8), 9, LottoPrize.FOURTH),
             Arguments.of(listOf(1, 2, 3, 7, 8, 9), 10, LottoPrize.FIFTH),
             Arguments.of(listOf(10, 11, 12, 13, 14, 15), 16, LottoPrize.NOTHING),
+        )
+
+        @JvmStatic
+        fun `로또 수익률 계산 테스트 데이터`() = listOf(
+            Arguments.of("14000", mapOf(LottoPrize.FIFTH to 1), 0.35),
+            Arguments.of("8000", mapOf(LottoPrize.FIFTH to 1), 0.62),
+            Arguments.of("1000", mapOf(LottoPrize.FIRST to 1), 2_000_000)
         )
     }
 

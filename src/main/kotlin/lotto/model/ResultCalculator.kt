@@ -1,6 +1,7 @@
 package lotto.model
 
 import lotto.constants.LottoPrize
+import kotlin.math.floor
 
 object ResultCalculator {
 
@@ -13,10 +14,12 @@ object ResultCalculator {
     fun calculateProfitRatio(purchaseInfo: PurchaseInfo, prizeCount: Map<LottoPrize, Int>): Double {
         val totalPrizeAmount = prizeCount
             .map { (lottoPrize, count) ->
-                lottoPrize.amount * count
+                lottoPrize.amount * count.toLong()
             }.sum()
 
-        return totalPrizeAmount.toDouble() / purchaseInfo.price * 100
+        return (totalPrizeAmount.toDouble() / purchaseInfo.price).roundTwoDecimal()
     }
+
+    private fun Double.roundTwoDecimal() = floor(this * 100) / 100
 
 }
