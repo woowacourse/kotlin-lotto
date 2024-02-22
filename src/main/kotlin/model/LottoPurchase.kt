@@ -1,8 +1,6 @@
 package model
 
-class LottoPurchase(
-    val purchasePrice: Int
-) {
+class LottoPurchase(val purchasePrice: Int) {
     fun makeLottoCount(): Int {
         return purchasePrice / PRICE_OF_LOTTO_TICKET
     }
