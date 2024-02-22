@@ -1,6 +1,6 @@
 package lotto.model
 
-data class DrawResult(
+data class WinningBundle(
     val winningLotto: Lotto,
     val bonusLottoNumber: LottoNumber,
 ) {

@@ -1,18 +1,18 @@
 package lotto.controller
 
-import lotto.model.DrawResult
 import lotto.model.Lotto
 import lotto.model.LottoAnalyzer
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
+import lotto.model.WinningBundle
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoGameController {
     fun start() {
         val lottos = buyLottos()
-        val drawResult = lottoDraw()
-        matchResult(lottos, drawResult)
+        val winningBundle = createWinningBundle()
+        matchResult(lottos, winningBundle)
     }
 
     private fun buyLottos(): List<Lotto> {
@@ -23,19 +23,19 @@ class LottoGameController {
         return lottos
     }
 
-    private fun lottoDraw(): DrawResult {
+    private fun createWinningBundle(): WinningBundle {
         val winningNumber = InputView.readWinningNumbers()
         val winningLotto = Lotto(winningNumber.map { LottoNumber.from(it) })
         val bonusNumber = InputView.readBonusNumber()
 
-        return DrawResult(winningLotto, LottoNumber.from(bonusNumber))
+        return WinningBundle(winningLotto, LottoNumber.from(bonusNumber))
     }
 
     private fun matchResult(
         lottos: List<Lotto>,
-        drawResult: DrawResult,
+        winningBundle: WinningBundle,
     ) {
-        LottoAnalyzer.calculateResult(lottos, drawResult).also {
+        LottoAnalyzer.calculateResult(lottos, winningBundle).also {
             OutputView.printResult(it)
         }
     }

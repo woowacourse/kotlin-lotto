@@ -12,7 +12,7 @@ class LottoResultTest {
                 Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }),
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) })
-        val lottoResult = LottoAnalyzer.calculateResult(lottos, DrawResult(winningLotto, LottoNumber(8)))
+        val lottoResult = LottoAnalyzer.calculateResult(lottos, WinningBundle(winningLotto, LottoNumber(8)))
 
         Assertions.assertThat(lottoResult.getProfitRate()).isEqualTo(15750.0)
     }
