@@ -37,7 +37,7 @@ class LottoGameController(
         val bonusNumber = lottoGameInputView.inputBonusNumber()
         val bonusLottoNumber = LottoNumber(bonusNumber)
         check(bonusLottoNumber in winningLotto) {
-            "$bonusLottoNumber 는 $winningLotto 와 중복될 수 없습니다."
+            EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT
         }
         return bonusLottoNumber
     }
@@ -61,5 +61,6 @@ class LottoGameController(
 
     companion object {
         private const val SCALE = 100
+        private const val EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT = "보너스 번호는 우승 로또 번호와 중복될 수 없습니다."
     }
 }
