@@ -27,15 +27,9 @@ class Controller {
             bonusNumber = bonusNumber
         )
         val prize = lottos.matchlottos(winningNumber)
-
-
         winningStatistics()
-        LottoPrize.entries.forEach {
-            if (it!= LottoPrize.BOOM){
-                println("${it.getMessage()} ${prize.getUserPrize().get(it)?:0}개")
-            }
-        }
-        println(prize.prizeRateCalculate(prize.prizeCalculate(),charge))
+        outputWinningNumber(prize)
+        calculationOfYield(prize,charge.toDouble())
     }
 
     private fun makeLottos(count: Int): Lottos? {
