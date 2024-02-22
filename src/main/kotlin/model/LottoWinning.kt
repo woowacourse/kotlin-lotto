@@ -33,7 +33,7 @@ class LottoWinning(
         return winningPrize
     }
 
-    fun calculateWinningRate(lottoCount: Int): Float {
+    fun calculateWinningRate(): Float {
         val winningPrize = calculateWinningPrize()
         val purchaseAmount = lottoTickets.size * LottoPurchase.PRICE_OF_LOTTO_TICKET
         return winningPrize.toFloat() / purchaseAmount
