@@ -24,7 +24,14 @@ class LottoGameResultTest {
     fun `일치하는 숫자의 수와 보너스 넘버 일치 여부를 통해서 올바른 랭킹 리스트를 반환`() {
         // given : 준비물(객체를 만들기 위한 초기값들. 매개변수)
         val expectedRankResults =
-            listOf(LottoGameResult.RankResult(Rank.FIRST, 1), LottoGameResult.RankResult(Rank.MISS, 1))
+            listOf(
+                LottoGameResult.RankResult(Rank.MISS, 1),
+                LottoGameResult.RankResult(Rank.FIFTH, 0),
+                LottoGameResult.RankResult(Rank.FOURTH, 0),
+                LottoGameResult.RankResult(Rank.THIRD, 0),
+                LottoGameResult.RankResult(Rank.SECOND, 0),
+                LottoGameResult.RankResult(Rank.FIRST, 1),
+            )
         // when
         val actualResults = lottoGameResult.results
         // then
