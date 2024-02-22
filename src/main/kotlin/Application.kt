@@ -1,5 +1,5 @@
-import controller.LottoController
+import controller.LotteryController
 
 fun main() {
-    LottoController().start()
+    LotteryController().start()
 }

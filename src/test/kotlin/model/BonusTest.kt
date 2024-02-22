@@ -7,13 +7,13 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class BonusTest {
-    private val defaultLotto = Lotto((1..6).map { LotteryNumber(it) })
+    private val defaultLottery = Lottery((1..6).map { LotteryNumber(it) })
 
     @ParameterizedTest
     @ValueSource(strings = ["1", "2", "3"])
     fun `보너스 번호가 사용자가 입력한 로또번호에 포함된다면 예외 발생`(input: String) {
         assertThatThrownBy {
-            Bonus.fromInput(input, defaultLotto)
+            Bonus.fromInput(input, defaultLottery)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(Bonus.EXCEPTION_DUPLICATED_NUMBER)
     }
@@ -24,6 +24,6 @@ class BonusTest {
         input: String,
         number: Int,
     ) {
-        assertThat(Bonus.fromInput(input, defaultLotto).lotteryNumber.number).isEqualTo(number)
+        assertThat(Bonus.fromInput(input, defaultLottery).lotteryNumber.number).isEqualTo(number)
     }
 }

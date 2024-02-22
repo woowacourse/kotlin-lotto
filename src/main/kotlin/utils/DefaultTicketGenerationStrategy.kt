@@ -2,10 +2,10 @@ package utils
 
 import entity.Ticket
 import model.Amount
-import model.Lotto
+import model.Lottery
 
 class DefaultTicketGenerationStrategy : TicketGenerationStrategy {
-    private val defaultLotteries = listOf(Lotto.fromList(listOf(1, 2, 3, 4, 5, 6)))
+    private val defaultLotteries = listOf(Lottery.fromList(listOf(1, 2, 3, 4, 5, 6)))
     private val defaultAmount = Amount(1000)
 
     override fun issueTicket(): Ticket {

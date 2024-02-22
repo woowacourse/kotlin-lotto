@@ -6,16 +6,16 @@ class Bonus(val lotteryNumber: LotteryNumber) {
 
         fun fromInput(
             input: String,
-            winningLotto: Lotto,
+            winningLottery: Lottery,
         ): Bonus {
             val lotteryNumber = LotteryNumber.fromInput(input)
-            require(validateUniqueWithWinning(lotteryNumber, winningLotto)) { EXCEPTION_DUPLICATED_NUMBER }
+            require(validateUniqueWithWinning(lotteryNumber, winningLottery)) { EXCEPTION_DUPLICATED_NUMBER }
             return Bonus(lotteryNumber)
         }
 
         private fun validateUniqueWithWinning(
             number: LotteryNumber,
-            winningLotto: Lotto,
-        ) = !winningLotto.hasLotteryNumber(number)
+            winningLottery: Lottery,
+        ) = !winningLottery.hasLotteryNumber(number)
     }
 }

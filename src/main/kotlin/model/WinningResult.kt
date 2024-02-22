@@ -9,10 +9,10 @@ class WinningResult(val stats: Map<Rank, Int>, val roi: Double) {
 
         fun of(
             ticket: Ticket,
-            winningLotto: Lotto,
+            winningLottery: Lottery,
             bonus: Bonus,
         ): WinningResult {
-            val stats = getStats(ticket, winningLotto, bonus)
+            val stats = getStats(ticket, winningLottery, bonus)
             val roi = calculateROI(ticket, stats)
 
             return WinningResult(stats, roi)
@@ -26,13 +26,13 @@ class WinningResult(val stats: Map<Rank, Int>, val roi: Double) {
 
         private fun getStats(
             ticket: Ticket,
-            winningLotto: Lotto,
+            winningLottery: Lottery,
             bonus: Bonus,
         ): Map<Rank, Int> {
             val ranks = mutableMapOf<Rank, Int>()
 
             ticket.userLotteries.forEach {
-                val rank = Rank.valueOf(it.getCountOfMatch(winningLotto), it.hasBonus(bonus))
+                val rank = Rank.valueOf(it.getCountOfMatch(winningLottery), it.hasBonus(bonus))
                 ranks[rank] = (ranks[rank] ?: 0) + 1
             }
             return ranks

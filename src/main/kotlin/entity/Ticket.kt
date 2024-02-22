@@ -1,6 +1,6 @@
 package entity
 
 import model.Amount
-import model.Lotto
+import model.Lottery
 
-data class Ticket(val userLotteries: List<Lotto>, val amount: Amount)
+data class Ticket(val userLotteries: List<Lottery>, val amount: Amount)

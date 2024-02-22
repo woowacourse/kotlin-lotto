@@ -2,14 +2,14 @@ package utils
 
 import entity.Ticket
 import model.Amount
+import model.Lottery
 import model.LotteryNumber
-import model.Lotto
 
 class RandomTicketGenerationStrategy(private val amount: Amount) : TicketGenerationStrategy {
     override fun issueTicket(): Ticket {
-        val lotteries = mutableListOf<Lotto>()
+        val lotteries = mutableListOf<Lottery>()
         repeat(amount.money / LOTTO_TICKET_PRICE) {
-            lotteries.add(Lotto(generateNumbers()))
+            lotteries.add(Lottery(generateNumbers()))
         }
         return Ticket(lotteries, amount)
     }

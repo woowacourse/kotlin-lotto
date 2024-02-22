@@ -7,15 +7,15 @@ import org.junit.jupiter.params.provider.CsvSource
 import utils.ExplicitTicketGenerationStrategy
 import utils.RandomTicketGenerationStrategy
 
-class LottoStoreTest {
+class LotteryStoreTest {
     @ParameterizedTest
     @CsvSource("5000, 5", "10000, 10", "1000, 1", "3500, 3", "15500, 15")
     fun `로또가 구매한 갯수만큼 발행에 성공`(
         input: String,
         count: Int,
     ) {
-        val lottoStore = LottoStore().setStrategy(RandomTicketGenerationStrategy(Amount.fromInput(input)))
-        assertThat(lottoStore.issueTicket().userLotteries.size).isEqualTo(count)
+        val lotteryStore = LotteryStore().setStrategy(RandomTicketGenerationStrategy(Amount.fromInput(input)))
+        assertThat(lotteryStore.issueTicket().userLotteries.size).isEqualTo(count)
     }
 
     @Test
@@ -26,12 +26,13 @@ class LottoStoreTest {
                 listOf(1, 2, 3, 4, 5, 6),
                 listOf(7, 8, 9, 10, 11, 12),
             )
+        val explicitLotteries = explicitNumbers.map { Lottery.fromList(it) }.toList()
 
-        val lottoStore = LottoStore().setStrategy(ExplicitTicketGenerationStrategy(explicitAmount, explicitNumbers))
+        val lotteryStore = LotteryStore().setStrategy(ExplicitTicketGenerationStrategy(explicitAmount, explicitNumbers))
 
-        val ticket = lottoStore.issueTicket()
+        val ticket = lotteryStore.issueTicket()
         ticket.userLotteries.forEachIndexed { index, userLotto ->
-            assertThat(userLotto.getCountOfMatch(ticket.userLotteries[index])).isEqualTo(6)
+            assertThat(userLotto.getCountOfMatch(explicitLotteries[index])).isEqualTo(6)
         }
     }
 }

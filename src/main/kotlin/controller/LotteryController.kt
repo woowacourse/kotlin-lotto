@@ -6,7 +6,7 @@ import utils.RandomTicketGenerationStrategy
 import view.InputView
 import view.OutputView
 
-class LottoController {
+class LotteryController {
     fun start() {
         val amount = readAmount()
 
@@ -22,12 +22,12 @@ class LottoController {
 
     private fun readAmount() = Amount.fromInput(InputView.readAmount())
 
-    private fun readBonus(winningLotto: Lotto) = Bonus.fromInput(InputView.readBonus(), winningLotto)
+    private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(InputView.readBonus(), winningLottery)
 
-    private fun readWinningLotto() = Lotto.fromInput(InputView.readWinningLotto())
+    private fun readWinningLotto() = Lottery.fromInput(InputView.readWinningLotto())
 
     private fun issueTicket(amount: Amount): Ticket {
-        return LottoStore().setStrategy(RandomTicketGenerationStrategy(amount)).issueTicket()
+        return LotteryStore().setStrategy(RandomTicketGenerationStrategy(amount)).issueTicket()
     }
 
     private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)
@@ -36,7 +36,7 @@ class LottoController {
 
     private fun getWinningResult(
         ticket: Ticket,
-        winningLotto: Lotto,
+        winningLottery: Lottery,
         bonus: Bonus,
-    ) = WinningResult.of(ticket, winningLotto, bonus)
+    ) = WinningResult.of(ticket, winningLottery, bonus)
 }

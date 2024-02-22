@@ -8,8 +8,8 @@ import utils.ExplicitTicketGenerationStrategy
 class WinningResultTest {
     @Test
     fun `4000원 투자로 1등, 2등, 3등, 꽝 한 장씩에 대한 결과 테스트`() {
-        val winningLotto = Lotto.fromList((1..6).toList())
-        val bonus = Bonus.fromInput("7", winningLotto)
+        val winningLottery = Lottery.fromList((1..6).toList())
+        val bonus = Bonus.fromInput("7", winningLottery)
 
         val explicitWinning =
             listOf(
@@ -21,14 +21,14 @@ class WinningResultTest {
         val explicitAmount = Amount(4000)
 
         val ticket =
-            LottoStore().setStrategy(
+            LotteryStore().setStrategy(
                 ExplicitTicketGenerationStrategy(
                     explicitAmount,
                     explicitWinning,
                 ),
             ).issueTicket()
 
-        val winningResult = WinningResult.of(ticket, winningLotto, bonus)
+        val winningResult = WinningResult.of(ticket, winningLottery, bonus)
         val expectedROI =
             (((Rank.FIRST.winningMoney + Rank.SECOND.winningMoney + Rank.THIRD.winningMoney) / 4000.0)).round(2)
 
