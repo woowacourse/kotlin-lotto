@@ -18,6 +18,6 @@ class LottoMachineTest {
     @Test
     fun `1000으로 1장의 티켓을 받는다`() {
         val lottoMachine = LottoMachine("1000")
-        assertThat(lottoMachine.getLottoTicket()).isEqualTo(1)
+        assertThat(lottoMachine.getNumberOfLottoTickets()).isEqualTo(1)
     }
 }

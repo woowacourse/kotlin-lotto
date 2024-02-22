@@ -7,14 +7,14 @@ class LottoMachine(private val price: String) {
 
     fun createLottoBundle(): LottoBundle {
         val lottos =
-            List(getLottoTicket()) {
+            List(getNumberOfLottoTickets()) {
                 Lotto((LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it.toString()) })
             }
 
         return LottoBundle(lottos)
     }
 
-    fun getLottoTicket(): Int = price.toInt() / MIN_PRICE
+    fun getNumberOfLottoTickets(): Int = price.toInt() / MIN_PRICE
 
     companion object {
         private const val LOTTO_SIZE = 6
