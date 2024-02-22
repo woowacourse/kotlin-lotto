@@ -7,7 +7,9 @@ class Lotto(numbers: List<Int>) {
     private val numbers: List<LottoNumber>
 
     init {
-        require(numbers.isValidSize() && numbers.isNotDuplicate())
+        require(numbers.isValidSize() && numbers.isNotDuplicate()) {
+            "올바른 로또 번호를 입력해 주세요."
+        }
         this.numbers = numbers.sorted().map { LottoNumber(it) }
     }
 
