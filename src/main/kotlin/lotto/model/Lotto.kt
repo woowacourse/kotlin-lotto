@@ -3,12 +3,19 @@ package lotto.model
 import lotto.constants.LottoPrize
 
 
-class Lotto private constructor(val numbers: List<LottoNumber>) {
+class Lotto(numbers: List<Int>) {
+    private val numbers: List<LottoNumber>
+
     init {
         require(numbers.isValidSize() && numbers.isNotDuplicate())
+        this.numbers = numbers.map { LottoNumber(it) }
+
     }
 
-    constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) }.toList())
+    private fun List<Int>.isValidSize() = size == 6
+
+    private fun List<Int>.isNotDuplicate() = distinct().size == 6
+
 
     fun compare(otherLotto: Lotto, bonusNumber: LottoNumber) =
         when (otherLotto.numbers.intersect(numbers).size) {
@@ -24,7 +31,5 @@ class Lotto private constructor(val numbers: List<LottoNumber>) {
         return LottoPrize.THIRD
     }
 
-    private fun List<LottoNumber>.isValidSize() = size == 6
 
-    private fun List<LottoNumber>.isNotDuplicate() = distinct().size == 6
 }
