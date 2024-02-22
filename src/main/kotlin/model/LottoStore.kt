@@ -1,14 +1,18 @@
 package model
 
-import utils.EmptyLottoGenerationStrategy
-import utils.LottoGenerationStrategy
+import entity.Ticket
+import utils.DefaultTicketGenerationStrategy
+import utils.TicketGenerationStrategy
 
-object LottoStore {
-    private var lottoGenerationStrategy: LottoGenerationStrategy = EmptyLottoGenerationStrategy()
+class LottoStore {
+    private var ticketGenerationStrategy: TicketGenerationStrategy = DefaultTicketGenerationStrategy()
 
-    fun setStrategy(lottoGenerationStrategy: LottoGenerationStrategy) {
-        this.lottoGenerationStrategy = lottoGenerationStrategy
+    fun setStrategy(ticketGenerationStrategy: TicketGenerationStrategy): LottoStore {
+        this.ticketGenerationStrategy = ticketGenerationStrategy
+        return this
     }
 
-    fun makeLotteries(): List<Lotto> = lottoGenerationStrategy.generateLotteries()
+    fun issueTicket(): Ticket {
+        return ticketGenerationStrategy.issueTicket()
+    }
 }

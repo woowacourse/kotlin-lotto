@@ -1,16 +1,17 @@
 package utils
 
+import entity.Ticket
 import model.Amount
 import model.LotteryNumber
 import model.Lotto
 
-class RandomLottoGenerationStrategy(private val amount: Amount) : LottoGenerationStrategy {
-    override fun generateLotteries(): List<Lotto> {
+class RandomTicketGenerationStrategy(private val amount: Amount) : TicketGenerationStrategy {
+    override fun issueTicket(): Ticket {
         val lotteries = mutableListOf<Lotto>()
         repeat(amount.money / LOTTO_TICKET_PRICE) {
             lotteries.add(Lotto(generateNumbers()))
         }
-        return lotteries
+        return Ticket(lotteries, amount)
     }
 
     private fun generateNumbers(): List<LotteryNumber> =

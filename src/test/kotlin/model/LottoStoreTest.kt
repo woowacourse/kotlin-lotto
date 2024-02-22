@@ -4,8 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import utils.ExplicitLottoGenerationStrategy
-import utils.RandomLottoGenerationStrategy
+import utils.ExplicitTicketGenerationStrategy
+import utils.RandomTicketGenerationStrategy
 
 class LottoStoreTest {
     @ParameterizedTest
@@ -14,22 +14,24 @@ class LottoStoreTest {
         input: String,
         count: Int,
     ) {
-        LottoStore.setStrategy(RandomLottoGenerationStrategy(Amount.fromInput(input)))
-        assertThat(LottoStore.makeLotteries().size).isEqualTo(count)
+        val lottoStore = LottoStore().setStrategy(RandomTicketGenerationStrategy(Amount.fromInput(input)))
+        assertThat(lottoStore.issueTicket().userLotteries.size).isEqualTo(count)
     }
 
     @Test
     fun `전략 패턴을 이용하여 로또 값을 지정해서 테스트`() {
-        val lotteries =
+        val explicitAmount = Amount.fromInput("2000")
+        val explicitNumbers =
             listOf(
                 listOf(1, 2, 3, 4, 5, 6),
                 listOf(7, 8, 9, 10, 11, 12),
-            ).map { Lotto.fromList(it) }
-        LottoStore.setStrategy(ExplicitLottoGenerationStrategy(lotteries))
+            )
 
-        val userLotteries = LottoStore.makeLotteries()
-        userLotteries.forEachIndexed { index, userLotto ->
-            assertThat(userLotto.getCountOfMatch(lotteries[index])).isEqualTo(6)
+        val lottoStore = LottoStore().setStrategy(ExplicitTicketGenerationStrategy(explicitAmount, explicitNumbers))
+
+        val ticket = lottoStore.issueTicket()
+        ticket.userLotteries.forEachIndexed { index, userLotto ->
+            assertThat(userLotto.getCountOfMatch(ticket.userLotteries[index])).isEqualTo(6)
         }
     }
 }

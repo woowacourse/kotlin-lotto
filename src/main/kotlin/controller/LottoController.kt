@@ -1,52 +1,42 @@
 package controller
 
+import entity.Ticket
 import model.*
-import utils.RandomLottoGenerationStrategy
+import utils.RandomTicketGenerationStrategy
 import view.InputView
 import view.OutputView
 
 class LottoController {
     fun start() {
         val amount = readAmount()
-        val userLottos = purchaseLottos(amount)
-        printPurchasedLottos(userLottos)
+
+        val ticket = issueTicket(amount)
+        printTicketInfo(ticket)
 
         val winningLotto = readWinningLotto()
         val bonus = readBonus(winningLotto)
 
-        val stats = getStats(userLottos, winningLotto, bonus)
-        printStats(stats)
-
-        val roi = getROI(amount, stats)
-        printROI(roi)
+        val winningResult = getWinningResult(ticket, winningLotto, bonus)
+        printWinningResult(winningResult)
     }
 
-    private fun readAmount() = Amount(InputView.readAmount())
+    private fun readAmount() = Amount.fromInput(InputView.readAmount())
 
-    private fun readBonus(winningLotto: Lotto) = Bonus(InputView.readBonus(), winningLotto)
+    private fun readBonus(winningLotto: Lotto) = Bonus.fromInput(InputView.readBonus(), winningLotto)
 
     private fun readWinningLotto() = Lotto.fromInput(InputView.readWinningLotto())
 
-    private fun purchaseLottos(amount: Amount): List<Lotto> {
-        LottoStore.setStrategy(RandomLottoGenerationStrategy(amount))
-
-        return LottoStore.makeLotto()
+    private fun issueTicket(amount: Amount): Ticket {
+        return LottoStore().setStrategy(RandomTicketGenerationStrategy(amount)).issueTicket()
     }
 
-    private fun printPurchasedLottos(lottos: List<Lotto>) = OutputView.printPurchasedLotto(lottos)
+    private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)
 
-    private fun printStats(stats: Map<Rank, Int>) = OutputView.printStats(stats)
+    private fun printWinningResult(winningResult: WinningResult) = OutputView.printWinningResult(winningResult)
 
-    private fun printROI(roi: Double) = OutputView.printProfit(roi)
-
-    private fun getStats(
-        userLottos: List<Lotto>,
+    private fun getWinningResult(
+        ticket: Ticket,
         winningLotto: Lotto,
         bonus: Bonus,
-    ) = WinningResult.getStats(userLottos, winningLotto, bonus)
-
-    private fun getROI(
-        amount: Amount,
-        stats: Map<Rank, Int>,
-    ) = WinningResult.calculateROI(amount, stats)
+    ) = WinningResult.of(ticket, winningLotto, bonus)
 }
