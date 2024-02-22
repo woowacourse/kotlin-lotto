@@ -20,6 +20,6 @@ object StringConstants {
     const val OUTPUT_MATCHING_COUNT_BONUS = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
     const val OUTPUT_WINNING_STATICS = "당첨 통계"
     const val OUTPUT_DIVIDER = "---------"
-    const val OUTPUT_PROFIT_RATIO = "총 수익률은 %f입니다."
+    const val OUTPUT_PROFIT_RATIO = "총 수익률은 %s입니다."
 
 }

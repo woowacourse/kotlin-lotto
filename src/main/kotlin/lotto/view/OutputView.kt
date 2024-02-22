@@ -39,6 +39,6 @@ object OutputView {
             StringConstants.OUTPUT_MATCHING_COUNT.format(lottoPrize.matchingCount, lottoPrize.amount, matchingCount)
         }
 
-    private fun Double.provideTwoDecimal() = "%.1f".format(this)
+    private fun Double.provideTwoDecimal() = "%.2f".format(this)
 
 }
