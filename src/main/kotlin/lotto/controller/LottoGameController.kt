@@ -35,8 +35,7 @@ class LottoGameController {
         lottos: List<Lotto>,
         winningBundle: WinningBundle,
     ) {
-        LottoAnalyzer.calculateResult(lottos, winningBundle).also {
-            OutputView.printResult(it)
-        }
+        val lottoResult = LottoAnalyzer.calculateResult(lottos, winningBundle)
+        OutputView.printResult(lottoResult)
     }
 }
