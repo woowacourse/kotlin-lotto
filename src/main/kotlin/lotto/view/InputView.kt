@@ -10,7 +10,7 @@ import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.PurchaseInfo
 
-class InputView {
+object InputView {
 
     fun readPurchasePrice(): PurchaseInfo {
         println(INPUT_PURCHASE_PRICE)
