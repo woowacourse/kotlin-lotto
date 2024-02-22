@@ -26,8 +26,7 @@ class LottoController(
         OutputView.printLottoNumbers(lottoTickets)
 
         val winningLotto = getValidLotto()
-        val bonusNumber = getValidBonusNumber()
-        val winningNumber = WinningLotto(winningLotto, bonusNumber)
+        val winningNumber = getValidWinningLotto(winningLotto)
 
         val result = lottoDrawingMachine.countRank(lottoTickets, winningNumber)
         OutputView.printLottoResult(result)
@@ -55,12 +54,17 @@ class LottoController(
         }
     }
 
-    private fun getValidBonusNumber(): LottoNumber {
+    private fun getValidWinningLotto(winningLotto: Lotto): WinningLotto {
         return try {
-            LottoNumber(InputView.readBonusNumber())
+            val bonusNumber = getBonusNumber()
+            WinningLotto(winningLotto, bonusNumber)
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getValidBonusNumber()
+            getValidWinningLotto(winningLotto)
         }
+    }
+
+    private fun getBonusNumber(): LottoNumber {
+        return LottoNumber(InputView.readBonusNumber())
     }
 }
