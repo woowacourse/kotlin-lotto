@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class LottoTest {
+class PublishLottoTest {
     private lateinit var lottoNumbers: List<Int>
     private lateinit var lotto: Lotto
     private val numberGenerator = NumberGenerator()
