@@ -7,6 +7,8 @@ class Lotto(val lottoNumbers: List<LottoNumber>) {
 
     override fun toString(): String = lottoNumbers.toString()
 
+    fun getCountOfMatch(lotto: Lotto): Int = lottoNumbers.intersect(lotto.lottoNumbers.toSet()).size
+
     companion object {
         private const val LOTTO_SIZE = 6
 
