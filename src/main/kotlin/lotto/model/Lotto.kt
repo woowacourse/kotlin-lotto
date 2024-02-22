@@ -3,7 +3,6 @@ package lotto.model
 import lotto.constants.LottoPrize
 import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER
 
-
 class Lotto(numbers: List<Int>) {
     private val numbers: List<LottoNumber>
 
@@ -19,18 +18,7 @@ class Lotto(numbers: List<Int>) {
     private fun List<Int>.isNotDuplicate() = distinct().size == LOTTO_SIZE
 
     fun compare(otherLotto: Lotto, bonusNumber: LottoNumber) =
-        when (otherLotto.numbers.intersect(numbers).size) {
-            6 -> LottoPrize.FIRST
-            5 -> compareBonusNumber(bonusNumber)
-            4 -> LottoPrize.FOURTH
-            3 -> LottoPrize.FIFTH
-            else -> LottoPrize.NOTHING
-        }
-
-    private fun compareBonusNumber(bonusNumber: LottoNumber): LottoPrize {
-        if (numbers.contains(bonusNumber)) return LottoPrize.SECOND
-        return LottoPrize.THIRD
-    }
+        LottoPrize.getLottoPrize(otherLotto.numbers.intersect(numbers).size, contains(bonusNumber))
 
     fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
 
