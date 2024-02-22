@@ -1,9 +1,6 @@
 package controller
 
-import model.Amount
-import model.Bonus
-import model.Lotto
-import model.LottoStore
+import model.*
 import utils.RandomLottoGenerationStrategy
 import view.InputView
 import view.OutputView
@@ -17,6 +14,12 @@ class LottoController {
 
         val winningNumbers = readWinningNumbers()
         val bonus = readBonus(winningNumbers)
+
+        val stats = getStats(userLottos, winningNumbers, bonus)
+        printStats(stats)
+
+        val roi = getROI(amount, stats)
+        printROI(roi)
     }
 
     private fun readAmount() = Amount(InputView.readAmount())
@@ -32,4 +35,13 @@ class LottoController {
     }
 
     private fun printPurchasedLottos(lottos: List<Lotto>) = OutputView.printPurchasedLotto(lottos)
+
+    private fun printStats(stats: Map<Rank, Int>) = OutputView.printStats(stats)
+
+    private fun printROI(roi: Double) = OutputView.printProfit(roi)
+
+    private fun getStats(userLottos: List<Lotto>, winningNumbers: Lotto, bonus: Bonus) =
+        LottoResult.getStats(userLottos, winningNumbers, bonus)
+
+    private fun getROI(amount: Amount, stats: Map<Rank, Int>) = LottoResult.calculateROI(amount, stats)
 }
