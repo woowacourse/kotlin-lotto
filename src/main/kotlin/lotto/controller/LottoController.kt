@@ -1,11 +1,11 @@
 package lotto.controller
 
-import lotto.constants.StringConstants
 import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
 import lotto.service.ResultCalculator
 import lotto.model.WinningLotto
 import lotto.service.RandomLottoNumberGenerator
+import lotto.utils.retryWhileNoException
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -28,15 +28,6 @@ class LottoController {
         val winningLottoNumbers = retryWhileNoException { InputView.readWinningLottoNumbers() }
         return retryWhileNoException {
             WinningLotto(winningLottoNumbers, InputView.readBonusNumber())
-        }
-    }
-
-    private fun <T> retryWhileNoException(action: () -> T): T {
-        return try {
-            action()
-        } catch (e: IllegalArgumentException) {
-            println("${StringConstants.ERROR_MESSAGE} ${e.localizedMessage}")
-            action()
         }
     }
 }
