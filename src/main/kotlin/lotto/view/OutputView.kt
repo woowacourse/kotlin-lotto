@@ -24,10 +24,8 @@ object OutputView {
             val matchingCount = prizeCount.getOrDefault(lottoPrize, DEFAULT_MATCHING_COUNT)
             println(provideMatchingMessage(lottoPrize, matchingCount))
         }
-    }
-
-    fun printProfitRatio(profitRatio: Double) =
         println(OUTPUT_PROFIT_RATIO.format(profitRatio))
+    }
 
     private fun provideMatchingMessage(lottoPrize: LottoPrize, matchingCount: Int) =
         if (lottoPrize == LottoPrize.SECOND) {

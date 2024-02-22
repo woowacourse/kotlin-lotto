@@ -1,25 +1,35 @@
 package lotto.controller
 
 import lotto.constants.StringConstants
+import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
+import lotto.model.ResultCalculator
 import lotto.model.WinningLotto
+import lotto.service.RandomLottoNumberGenerator
 import lotto.view.InputView
+import lotto.view.OutputView
 
 class LottoController {
 
-    private val purchaseInfo: PurchaseInfo
-    private val winningLotto: WinningLotto
-
-    init {
-        purchaseInfo = retryWhileNoException { InputView.readPurchasePrice() }
-        val winningLottoNumbers = retryWhileNoException { InputView.readWinningLottoNumbers() }
-        winningLotto = retryWhileNoException {
-            WinningLotto(winningLottoNumbers, InputView.readBonusNumber())
-        }
-    }
+    private val purchaseInfo: PurchaseInfo by lazy { readPurchasePrice() }
+    private val winningLotto: WinningLotto by lazy { readWinningLotto() }
 
     fun run() {
+        val lottoStore = LottoStore(purchaseInfo, RandomLottoNumberGenerator)
+        OutputView.printPurchaseLotto(lottoStore)
 
+        val prizeCount = ResultCalculator.calculatePrizeCount(lottoStore, winningLotto)
+        val profitRatio = ResultCalculator.calculateProfitRatio(purchaseInfo, prizeCount)
+        OutputView.printWinningStatistics(prizeCount, profitRatio)
+    }
+
+    private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
+
+    private fun readWinningLotto(): WinningLotto {
+        val winningLottoNumbers = retryWhileNoException { InputView.readWinningLottoNumbers() }
+        return retryWhileNoException {
+            WinningLotto(winningLottoNumbers, InputView.readBonusNumber())
+        }
     }
 
     private fun <T> retryWhileNoException(action: () -> T): T {

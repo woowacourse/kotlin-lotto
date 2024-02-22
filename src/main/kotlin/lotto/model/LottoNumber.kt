@@ -8,6 +8,8 @@ data class LottoNumber(val number: Int) {
         }
     }
 
+    override fun toString() = number.toString()
+
     companion object {
         private const val MIN_RANGE_NUM = 1
         private const val MAX_RANGE_NUM = 45
