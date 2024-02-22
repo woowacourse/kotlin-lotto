@@ -24,7 +24,7 @@ object InputView {
 
     fun readWinningNumbers(): List<Int> {
         return try {
-            println("지난 주 당첨 번호를 입력해 주세요.")
+            println("\n지난 주 당첨 번호를 입력해 주세요.")
             readln().split(WINNING_NUMBER_DELIMITER).map { it.trim().toInt() }
         } catch (e: NumberFormatException) {
             throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)
