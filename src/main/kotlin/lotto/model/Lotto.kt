@@ -1,6 +1,7 @@
 package lotto.model
 
 import lotto.constants.LottoPrize
+import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER
 
 
 class Lotto(numbers: List<Int>) {
@@ -8,7 +9,7 @@ class Lotto(numbers: List<Int>) {
 
     init {
         require(numbers.isValidSize() && numbers.isNotDuplicate()) {
-            "올바른 로또 번호를 입력해 주세요."
+            INVALID_LOTTO_NUMBER
         }
         this.numbers = numbers.sorted().map { LottoNumber(it) }
     }

@@ -1,5 +1,7 @@
 package lotto.model
 
+import lotto.constants.StringConstants.INVALID_PURCHASE_PRICE
+
 class PurchaseInfo(purchasePrice: String) {
 
     val price: Int
@@ -7,7 +9,7 @@ class PurchaseInfo(purchasePrice: String) {
 
     init {
         require(purchasePrice.isValidDigit() && purchasePrice.isMoreThanMin() && purchasePrice.divideByLottoPrice()) {
-            "올바른 구매 금액을 입력해 주세요."
+            INVALID_PURCHASE_PRICE
         }
         price = purchasePrice.toInt()
         amount = price / 1_000

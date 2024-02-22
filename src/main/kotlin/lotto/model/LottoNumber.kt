@@ -1,10 +1,12 @@
 package lotto.model
 
+import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER_RANGE
+
 data class LottoNumber(val number: Int) {
 
     init {
         require(number in MIN_RANGE_NUM..MAX_RANGE_NUM) {
-            "${MIN_RANGE_NUM}부터 $MAX_RANGE_NUM 사이의 숫자를 입력해 주세요."
+            INVALID_LOTTO_NUMBER_RANGE.format(MIN_RANGE_NUM, MAX_RANGE_NUM)
         }
     }
 
