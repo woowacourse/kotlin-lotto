@@ -7,14 +7,6 @@ class LottoStore(
     purchaseInfo: PurchaseInfo,
     lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator,
 ) {
-    val lottos: List<Lotto>
+    val lottos = List(purchaseInfo.amount) { Lotto(lottoNumberGenerator.generate()) }
 
-    init {
-        val tmpLottos = mutableListOf<Lotto>()
-        repeat(purchaseInfo.amount) {
-            val lotto = Lotto(lottoNumberGenerator.generate())
-            tmpLottos.add(lotto)
-        }
-        lottos = tmpLottos
-    }
 }

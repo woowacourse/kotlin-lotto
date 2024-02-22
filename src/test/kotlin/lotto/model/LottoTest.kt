@@ -35,7 +35,7 @@ class LottoTest {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
 
         // when
-        val actual = lotto.compare(Lotto(otherLotto), bonusNumber)
+        val actual = lotto.compare(Lotto(otherLotto), LottoNumber(bonusNumber))
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -53,7 +53,7 @@ class LottoTest {
         )
 
         // when
-        val actual = ResultCalculator.calculatePrize(lottoStore, Lotto(winningLotto), bonusNumber)
+        val actual = ResultCalculator.calculatePrize(lottoStore, Lotto(winningLotto), LottoNumber(bonusNumber))
 
         // then
         assertThat(actual.keys.first()).isEqualTo(expected)

@@ -4,7 +4,7 @@ import lotto.constants.LottoPrize
 
 object ResultCalculator {
 
-    fun calculatePrize(lottoStore: LottoStore, winningLotto: Lotto, bonusNumber: Int) =
+    fun calculatePrize(lottoStore: LottoStore, winningLotto: Lotto, bonusNumber: LottoNumber) =
         lottoStore.lottos
             .map { lotto -> lotto.compare(winningLotto, bonusNumber) }
             .groupBy { it }
