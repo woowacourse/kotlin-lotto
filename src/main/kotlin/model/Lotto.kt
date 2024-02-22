@@ -1,6 +1,6 @@
 package model
 
-data class Lotto(private val numbers: List<LottoNumber>) {
+data class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == LOTTO_NUM_SIZE) { EXCEPTION_LOTTO_NUM_SIZE }
         require(numbers.distinct().size == LOTTO_NUM_SIZE) { EXCEPTION_DUPLICATED_LOTTO_NUM }
