@@ -4,6 +4,7 @@ import domain.model.Lotto
 import domain.model.LottoDrawingResult
 import domain.model.LottoNumber
 import domain.model.Rank
+import domain.model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -17,26 +18,86 @@ class LottoDrawingMachineTest {
 
     @ParameterizedTest
     @MethodSource("lottoNumbers, bonusNumber, expectedRank")
-    fun `로또 추첨 결과에 대한 당첨 통계를 반환한다`(lottoNumbers: List<Int>, bonusNumber: LottoNumber, expectedRank: Rank) {
-        val winningLotto = Lotto(lottoNumbers.map { LottoNumber(it) })
-        val expected = LottoDrawingResult(mapOf(expectedRank to 1))
-        val actual = lottoDrawingMachine.countRank(listOf(targetLotto), winningLotto, bonusNumber)
+    fun `로또 추첨 결과에 대한 당첨 통계를 반환한다`(
+        lottoNumbers: List<Int>,
+        bonusNumber: LottoNumber,
+        expectedResult: LottoDrawingResult
+    ) {
+        val winningLotto = WinningLotto(Lotto(lottoNumbers.map { LottoNumber(it) }), bonusNumber)
+        val actual = lottoDrawingMachine.countRank(listOf(targetLotto), winningLotto)
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expectedResult)
     }
 
     companion object {
         @JvmStatic
         fun `lottoNumbers, bonusNumber, expectedRank`(): Stream<Arguments> {
             return Stream.of(
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), LottoNumber(1), Rank.FIRST),
-                Arguments.arguments(listOf(2, 3, 4, 5, 6, 7), LottoNumber(1), Rank.SECOND),
-                Arguments.arguments(listOf(2, 3, 4, 5, 6, 7), LottoNumber(8), Rank.THIRD),
-                Arguments.arguments(listOf(3, 4, 5, 6, 7, 8), LottoNumber(1), Rank.FOURTH),
-                Arguments.arguments(listOf(4, 5, 6, 7, 8, 9), LottoNumber(1), Rank.FIFTH),
-                Arguments.arguments(listOf(5, 6, 7, 8, 9, 10), LottoNumber(1), Rank.MISS),
-                Arguments.arguments(listOf(6, 7, 8, 9, 10, 11), LottoNumber(1), Rank.MISS),
-                Arguments.arguments(listOf(7, 8, 9, 10, 11, 12), LottoNumber(1), Rank.MISS)
+                Arguments.arguments(
+                    listOf(1, 2, 3, 4, 5, 6),
+                    LottoNumber(7),
+                    LottoDrawingResult(
+                        mapOf(
+                            Rank.FIRST to 1,
+                            Rank.SECOND to 0,
+                            Rank.THIRD to 0,
+                            Rank.FOURTH to 0,
+                            Rank.FIFTH to 0
+                        )
+                    )
+                ),
+                Arguments.arguments(
+                    listOf(2, 3, 4, 5, 6, 7),
+                    LottoNumber(1),
+                    LottoDrawingResult(
+                        mapOf(
+                            Rank.FIRST to 0,
+                            Rank.SECOND to 1,
+                            Rank.THIRD to 0,
+                            Rank.FOURTH to 0,
+                            Rank.FIFTH to 0
+                        )
+                    )
+                ),
+                Arguments.arguments(
+                    listOf(2, 3, 4, 5, 6, 7),
+                    LottoNumber(8),
+                    LottoDrawingResult(
+                        mapOf(
+                            Rank.FIRST to 0,
+                            Rank.SECOND to 0,
+                            Rank.THIRD to 1,
+                            Rank.FOURTH to 0,
+                            Rank.FIFTH to 0
+                        )
+                    )
+                ),
+                Arguments.arguments(
+                    listOf(3, 4, 5, 6, 7, 8),
+                    LottoNumber(1),
+                    LottoDrawingResult(
+                        mapOf(
+                            Rank.FIRST to 0,
+                            Rank.SECOND to 0,
+                            Rank.THIRD to 0,
+                            Rank.FOURTH to 1,
+                            Rank.FIFTH to 0
+                        )
+                    )
+                ),
+                Arguments.arguments(
+                    listOf(4, 5, 6, 7, 8, 9),
+                    LottoNumber(1),
+                    LottoDrawingResult(
+                        mapOf(
+                            Rank.FIRST to 0,
+                            Rank.SECOND to 0,
+                            Rank.THIRD to 0,
+                            Rank.FOURTH to 0,
+                            Rank.FIFTH to 1
+                        )
+                    )
+                )
             )
         }
     }

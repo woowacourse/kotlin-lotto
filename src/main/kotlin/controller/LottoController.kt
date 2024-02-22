@@ -7,6 +7,7 @@ import domain.MarginCalculator
 import domain.model.Lotto
 import domain.model.LottoNumber
 import domain.model.Money
+import domain.model.WinningLotto
 import view.InputView
 import view.OutputView
 
@@ -26,8 +27,9 @@ class LottoController(
 
         val winningLotto = getValidLotto()
         val bonusNumber = getValidBonusNumber()
+        val winningNumber = WinningLotto(winningLotto, bonusNumber)
 
-        val result = lottoDrawingMachine.countRank(lottoTickets, winningLotto, bonusNumber)
+        val result = lottoDrawingMachine.countRank(lottoTickets, winningNumber)
         OutputView.printLottoResult(result)
 
         val totalPrize = MarginCalculator.calculateTotalPrize(result)

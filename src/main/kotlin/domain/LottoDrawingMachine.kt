@@ -4,21 +4,24 @@ import domain.model.Lotto
 import domain.model.LottoDrawingResult
 import domain.model.LottoNumber
 import domain.model.Rank
+import domain.model.WinningLotto
 
 class LottoDrawingMachine {
 
-    fun countRank(lottoTickets: List<Lotto>, winningLotto: Lotto, bonusNumber: LottoNumber): LottoDrawingResult {
-        val rankCountMap = Rank.entries.associateWith { 0 }.toMutableMap()
+    fun countRank(lottoTickets: List<Lotto>, winningLotto: WinningLotto): LottoDrawingResult {
+        val rankCountMap = Rank.entries.take(5).associateWith { 0 }.toMutableMap()
         lottoTickets.forEach { targetLotto ->
-            val rank = getRank(targetLotto, winningLotto, bonusNumber)
-            rankCountMap[rank] = rankCountMap.getOrDefault(rank, 0) + 1
+            val rank = getRank(targetLotto, winningLotto)
+            if (rank != Rank.MISS) {
+                rankCountMap[rank] = rankCountMap.getOrDefault(rank, 0) + 1
+            }
         }
         return LottoDrawingResult(rankCountMap)
     }
 
-    private fun getRank(targetLotto: Lotto, winningLotto: Lotto, bonusNumber: LottoNumber): Rank {
-        val countOfMatch = matchCount(targetLotto, winningLotto)
-        val matchBonus = bonusCount(targetLotto, bonusNumber)
+    private fun getRank(targetLotto: Lotto, winningLotto: WinningLotto): Rank {
+        val countOfMatch = matchCount(targetLotto, winningLotto.lotto)
+        val matchBonus = bonusCount(targetLotto, winningLotto.bonus)
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 
