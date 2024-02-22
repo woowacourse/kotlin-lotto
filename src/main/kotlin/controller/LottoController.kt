@@ -41,8 +41,10 @@ class LottoController(
     }
 
     private fun makeLottoTicket(quantity: Int): List<Lotto> {
-        val randomNumbers = LottoGenerator.makeRandomNumber()
-        val lottoTickets = List(quantity) { LottoGenerator.makeLotto(randomNumbers) }
+        val lottoTickets = List(quantity) {
+            val randomNumbers = LottoGenerator.makeRandomNumber()
+            LottoGenerator.makeLotto(randomNumbers)
+        }
         OutputView.printLottoNumbers(lottoTickets)
         return lottoTickets
     }
