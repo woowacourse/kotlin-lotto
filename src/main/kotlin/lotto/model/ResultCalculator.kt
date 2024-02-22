@@ -5,9 +5,9 @@ import kotlin.math.floor
 
 object ResultCalculator {
 
-    fun calculatePrizeCount(lottoStore: LottoStore, winningLotto: Lotto, bonusNumber: LottoNumber) =
+    fun calculatePrizeCount(lottoStore: LottoStore, winningLotto: WinningLotto) =
         lottoStore.lottos
-            .map { lotto -> lotto.compare(winningLotto, bonusNumber) }
+            .map { lotto -> lotto.compare(winningLotto.lotto, winningLotto.bonusNumber) }
             .groupBy { it }
             .mapValues { it.value.size }
 
