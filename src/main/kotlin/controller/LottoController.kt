@@ -26,7 +26,7 @@ class LottoController {
     private fun checkWinning(
         winningTicket: LottoTicket,
         bonusNumber: Int,
-        lottoTickets: List<LottoTicket>
+        lottoTickets: List<LottoTicket>,
     ): Pair<LottoResult, Float> {
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, lottoTickets)
         val winningChart = lottoWinning.makeWinningChart()

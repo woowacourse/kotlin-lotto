@@ -3,7 +3,7 @@ package model
 class LottoWinning(
     private val winningTicket: LottoTicket,
     private val bonusNumber: Int,
-    private val lottoTickets: List<LottoTicket>
+    private val lottoTickets: List<LottoTicket>,
 ) {
     fun countMatchNumber(userTicket: LottoTicket): Int {
         return winningTicket.lottoTicket.intersect(userTicket.lottoTicket.toSet()).size
