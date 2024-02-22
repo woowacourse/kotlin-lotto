@@ -42,7 +42,7 @@ class LottoTest {
 
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")
-    fun `로또 당첨 결과의 개수를 확인한다`(winningLotto: List<Int>, bonusNumber: Int, expected: LottoPrize) {
+    fun `로또 당첨 결과의 개수를 확인한다`(winningLottoNumbers: List<Int>, bonusNumber: Int, expected: LottoPrize) {
         // given
         val purchaseInfo = PurchaseInfo("5000")
         val lottoStore = LottoStore(purchaseInfo,
@@ -50,9 +50,10 @@ class LottoTest {
                 override fun generate() = listOf(1, 2, 3, 4, 5, 6)
             }
         )
+        val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
 
         // when
-        val actual = ResultCalculator.calculatePrizeCount(lottoStore, Lotto(winningLotto), LottoNumber(bonusNumber))
+        val actual = ResultCalculator.calculatePrizeCount(lottoStore, winningLotto)
 
         // then
         assertThat(actual.keys.first()).isEqualTo(expected)
