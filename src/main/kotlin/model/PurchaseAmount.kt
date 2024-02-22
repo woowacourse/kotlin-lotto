@@ -1,10 +1,11 @@
 package lotto.model
 
-class PurchaseAmount(private val inputMoney: String) {
-    init {
+class PurchaseAmount() {
+    fun getAmount(inputMoney: String): Int {
         val amount = inputMoney.toIntOrNull()
             ?: throw IllegalArgumentException(ERROR_INPUT_TYPE_MESSAGE)
         validateNumberRange(amount)
+        return amount
     }
 
     private fun validateNumberRange(amount: Int) {

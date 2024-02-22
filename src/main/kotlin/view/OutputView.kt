@@ -19,7 +19,7 @@ class OutputView {
                 separator = SEPARATOR_DELIMITER,
                 prefix = PREFIX_DELIMITER,
                 postfix = POSTFIX_DELIMITER
-            )
+            ) { lottoNumber -> lottoNumber.number.toString() }
             println(resultLotto)
         }
     }
@@ -32,18 +32,16 @@ class OutputView {
         println(MESSAGE_INPUT_BONUS_NUMBER)
     }
 
-    fun printWinningStatisticsMessage(winningResult: Map<WinningRank, Int>) {
-        println(MESSAGE_WINNING_STATISTICS)
-        winningResult.forEach { (winningRank, count) ->
-            if(winningRank == WinningRank.SECOND) {
-                println("${winningRank.matchCount}개 일치, 보너스 볼 일치(${winningRank.prize})- $count 개")
-                return@forEach
-            }
-            println("${winningRank.matchCount}개 일치(${winningRank.prize})- $count 개")
+    fun printRankStatistics(rank: WinningRank, count: Int) {
+        val formattedPrize = String.format("%,d원", rank.prize)
+        if (rank == WinningRank.SECOND) {
+            println("${rank.matchCount}개 일치, 보너스 볼 일치 (${formattedPrize}) - ${count}개")
+            return
         }
+        println("${rank.matchCount}개 일치 (${formattedPrize}) - ${count}개")
     }
 
-    fun printProfitRateMessage(profitRate:Double){
+    fun printProfitRateMessage(profitRate: Double) {
         println("${MESSAGE_PROFIT_RATE_START}${String.format("%.2f", profitRate)}${MESSAGE_PROFIT_RATE_END}")
     }
 

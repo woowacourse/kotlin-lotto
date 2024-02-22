@@ -21,5 +21,4 @@ class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerat
     fun getWinningResult(winningNumbers: Lotto, bonusNumber: LottoNumber): Map<WinningRank, Int> {
         return lottos.winningResult(winningNumbers, bonusNumber)
     }
-
 }
