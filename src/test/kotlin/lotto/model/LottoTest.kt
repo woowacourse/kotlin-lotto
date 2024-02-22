@@ -2,6 +2,7 @@ package lotto.model
 
 import lotto.constants.LottoPrize
 import lotto.service.LottoNumberGenerator
+import lotto.service.ResultCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

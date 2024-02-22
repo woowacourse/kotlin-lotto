@@ -3,7 +3,7 @@ package lotto.controller
 import lotto.constants.StringConstants
 import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
-import lotto.model.ResultCalculator
+import lotto.service.ResultCalculator
 import lotto.model.WinningLotto
 import lotto.service.RandomLottoNumberGenerator
 import lotto.view.InputView
