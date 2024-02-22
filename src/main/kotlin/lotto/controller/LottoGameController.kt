@@ -18,8 +18,7 @@ class LottoGameController {
 
     private fun buyLottoBundle(): LottoBundle {
         val price = InputView.readPrice()
-        val lottoMachine = LottoMachine(price)
-        val lottoBundle = lottoMachine.createLottoBundle()
+        val lottoBundle = LottoMachine.createLottoBundle(price)
         OutputView.printLottoBundle(lottoBundle)
         return lottoBundle
     }

@@ -11,13 +11,12 @@ class LottoMachineTest {
     @CsvSource("-1", "한글")
     fun `구입 금액은 자연수이면서 1000 이상이다`(price: String) {
         assertThrows<IllegalArgumentException> {
-            LottoMachine(price)
+            LottoMachine.createLottoBundle(price)
         }
     }
 
     @Test
     fun `1000으로 1장의 티켓을 받는다`() {
-        val lottoMachine = LottoMachine("1000")
-        assertThat(lottoMachine.getNumberOfLottoTickets()).isEqualTo(1)
+        assertThat(LottoMachine.getNumberOfLottoTickets("1000")).isEqualTo(1)
     }
 }
