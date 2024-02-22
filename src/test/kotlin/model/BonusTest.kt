@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class BonusTest {
-    private val defaultLottoNumbers = listOf(1, 2, 3, 4, 5, 6)
+    private val defaultLottoNumbers = (1..6).map { LottoNumber(it) }.run { Lotto(this) }
 
     @ParameterizedTest
     @ValueSource(strings = ["pang", "hannah", "a12", "%@"])

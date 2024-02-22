@@ -12,9 +12,11 @@ class Lotto(private val numbers: List<LottoNumber>) {
 
     fun getCountOfMatch(lotto: Lotto) = numbers.intersect(lotto.numbers).size
 
-    fun hasBonus(bonus: Bonus) = numbers.contains(LottoNumber(bonus.number))
+    fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
 
-    override fun toString() = "[${numbers.joinToString(", ")}]\n"
+    fun hasBonus(bonus: Bonus) = numbers.contains(bonus.number)
+
+    override fun toString() = "[${numbers.map { it.number }.joinToString(", ")}]\n"
 
     companion object {
         const val EXCEPTION_INVALID_COUNT = "로또 번호는 6개여야 합니다"

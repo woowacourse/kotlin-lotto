@@ -8,7 +8,7 @@ class LottoResultTest {
     @Test
     fun `1,2,3,꽝 한장씩에 대한 결과 테스트`() {
         val resultLotto = Lotto.fromList((1..6).toList())
-        val resultBonus = Bonus("7", listOf(1, 2, 3, 4, 5, 6))
+        val resultBonus = Bonus("7", resultLotto)
 
         val userLottos =
             listOf(
@@ -37,7 +37,7 @@ class LottoResultTest {
             )
 
         val profit = LottoResult.calculateROI(amount, lottoResult)
-        val expected = (((Rank.FIRST.winningMoney + (Rank.THIRD.winningMoney * 3)) / 5000) * 100.0).round(2)
+        val expected = (((Rank.FIRST.winningMoney + (Rank.THIRD.winningMoney * 3)) / 5000.0)).round(2)
         assertThat(profit).isEqualTo(expected)
     }
 }
