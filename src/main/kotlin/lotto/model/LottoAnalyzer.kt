@@ -7,8 +7,8 @@ object LottoAnalyzer {
     ): LottoResult {
         return LottoResult(
             lottos.map { lotto ->
-                val countOfMatch = lotto.lottoNumbers.intersect(drawResult.winningLotto.lottoNumbers.toSet()).size
-                val matchBonus = drawResult.bonusLottoNumber in lotto.lottoNumbers
+                val countOfMatch = lotto.calculateCountOfMatch(drawResult.winningLotto)
+                val matchBonus = lotto.calculateMatchBonus(drawResult.bonusLottoNumber)
                 Rank.valueOf(countOfMatch, matchBonus)
             }.groupingBy { it }.eachCount(),
         )
