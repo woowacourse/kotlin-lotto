@@ -25,7 +25,7 @@ object OutputView {
             val matchingCount = prizeCount.getOrDefault(lottoPrize, DEFAULT_MATCHING_COUNT)
             println(provideMatchingMessage(lottoPrize, matchingCount))
         }
-        println(OUTPUT_PROFIT_RATIO.format(profitRatio))
+        println(OUTPUT_PROFIT_RATIO.format(profitRatio.provideTwoDecimal()))
     }
 
     private fun provideMatchingMessage(lottoPrize: LottoPrize, matchingCount: Int) =
@@ -38,5 +38,7 @@ object OutputView {
         } else {
             StringConstants.OUTPUT_MATCHING_COUNT.format(lottoPrize.matchingCount, lottoPrize.amount, matchingCount)
         }
+
+    private fun Double.provideTwoDecimal() = "%.1f".format(this)
 
 }
