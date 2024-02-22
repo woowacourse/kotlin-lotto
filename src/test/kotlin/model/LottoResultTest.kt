@@ -10,12 +10,13 @@ class LottoResultTest {
         val winningLotto = Lotto.fromList((1..6).toList())
         val bonus = Bonus("7", winningLotto)
 
-        val userLottos = listOf(
-            listOf(1, 2, 3, 4, 5, 6),
-            listOf(1, 2, 3, 4, 5, 7),
-            listOf(1, 2, 3, 4, 5, 8),
-            listOf(10, 11, 12, 13, 14, 15)
-        ).map { Lotto.fromList(it) }
+        val userLottos =
+            listOf(
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(1, 2, 3, 4, 5, 7),
+                listOf(1, 2, 3, 4, 5, 8),
+                listOf(10, 11, 12, 13, 14, 15),
+            ).map { Lotto.fromList(it) }
 
         val result = LottoResult.getStats(userLottos, winningLotto, bonus)
 

@@ -20,7 +20,10 @@ class BonusTest {
 
     @ParameterizedTest
     @CsvSource("7, 7", "8, 8", "9, 9")
-    fun `보너스 번호가 사용자가 입력한 로또번호에 포함되지 않는다면 성공`(input: String, number: Int) {
+    fun `보너스 번호가 사용자가 입력한 로또번호에 포함되지 않는다면 성공`(
+        input: String,
+        number: Int,
+    ) {
         assertThat(Bonus(input, defaultLotto).number.number).isEqualTo(number)
     }
 }

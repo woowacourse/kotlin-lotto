@@ -27,7 +27,10 @@ class AmountTest {
 
     @ParameterizedTest
     @CsvSource("1000, 1000", "1500, 1500", "2000, 2000", "10000, 10000")
-    fun `로또 구입 금액이 1000원 이상일 경우 구입 완료`(input: String, money: Int) {
+    fun `로또 구입 금액이 1000원 이상일 경우 구입 완료`(
+        input: String,
+        money: Int,
+    ) {
         money shouldBe Amount(input).money
     }
 }
