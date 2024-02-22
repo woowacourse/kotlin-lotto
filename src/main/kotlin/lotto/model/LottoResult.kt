@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoResult(private val resultMap: Map<Rank, Int>) {
+class LottoResult(val resultMap: Map<Rank, Int>) {
     override fun toString(): String {
         var result = ""
 

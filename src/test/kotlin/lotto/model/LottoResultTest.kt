@@ -40,8 +40,8 @@ class LottoResultTest {
                     LottoNumber("7"),
                 ),
             )
-        val lottoAnalyzer = LottoAnalyzer(LottoBundle(lottoNumbers), DrawResult(winningLottoNumbers, LottoNumber("8")))
-        val lottoResult = lottoAnalyzer.calculateResult()
+        val lottoResult =
+            LottoAnalyzer.calculateResult(LottoBundle(lottoNumbers), DrawResult(winningLottoNumbers, LottoNumber("8")))
 
         Assertions.assertThat(lottoResult.getProfitRate()).isEqualTo(1575000.0)
     }

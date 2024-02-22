@@ -1,7 +1,10 @@
 package lotto.model
 
-class LottoAnalyzer(private val lottoBundle: LottoBundle, private val drawResult: DrawResult) {
-    fun calculateResult(): LottoResult {
+object LottoAnalyzer {
+    fun calculateResult(
+        lottoBundle: LottoBundle,
+        drawResult: DrawResult,
+    ): LottoResult {
         return LottoResult(
             lottoBundle.lottos.map { lotto ->
                 val countOfMatch = lotto.lottoNumbers.intersect(drawResult.winningLotto.lottoNumbers.toSet()).size
