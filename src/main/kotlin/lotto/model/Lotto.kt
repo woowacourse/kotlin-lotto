@@ -8,8 +8,7 @@ class Lotto(numbers: List<Int>) {
 
     init {
         require(numbers.isValidSize() && numbers.isNotDuplicate())
-        this.numbers = numbers.map { LottoNumber(it) }
-
+        this.numbers = numbers.sorted().map { LottoNumber(it) }
     }
 
     private fun List<Int>.isValidSize() = size == 6
