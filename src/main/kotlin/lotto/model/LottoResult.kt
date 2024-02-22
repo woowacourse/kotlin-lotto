@@ -1,5 +1,7 @@
 package lotto.model
 
+import lotto.constant.LottoConstant
+
 data class LottoResult(val static: Map<Rank, Int>) {
     fun getProfitRate(): Double {
         val totalProfit =
@@ -7,11 +9,10 @@ data class LottoResult(val static: Map<Rank, Int>) {
                 rank.winningMoney * count
             }
         val totalCount = static.entries.sumOf { (_, count) -> count }
-        return (totalProfit.toDouble() / (totalCount * PURCHASE_UNIT)) * RATE
+        return (totalProfit.toDouble() / (totalCount * LottoConstant.PRICE)) * RATE
     }
 
     companion object {
-        private const val PURCHASE_UNIT = 1_000
         private const val RATE = 100
     }
 }
