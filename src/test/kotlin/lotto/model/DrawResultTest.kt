@@ -11,7 +11,7 @@ class DrawResultTest {
         val winningLotto = Lotto((1..6).map { LottoNumber(it) })
 
         assertThrows<IllegalArgumentException> {
-            DrawResult(winningLotto, LottoNumber.valueOf(bonusNumber))
+            DrawResult(winningLotto, LottoNumber.from(bonusNumber))
         }
     }
 }
