@@ -11,7 +11,7 @@ data class LotteryNumber(val number: Int) {
             input: String,
         ): LotteryNumber {
             val number = input.toIntOrNull()
-            requireNotNull(number) { "숫자를 입력하세요" }
+            requireNotNull(number) { ERROR_INVALID_INPUT_NOT_NUMBER }
 
             require(number in LOTTERY_NUMBER_RANGE) { ERROR_LOTTERY_OUT_OF_RANGE }
             require(!winningLottery.lotteryNumbers.contains(LotteryNumber(number)))
@@ -24,5 +24,6 @@ data class LotteryNumber(val number: Int) {
         private val LOTTERY_NUMBER_RANGE: IntRange = MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER
 
         private const val ERROR_LOTTERY_OUT_OF_RANGE = "로또 번호는 $MIN_LOTTERY_NUMBER 이상 $MAX_LOTTERY_NUMBER 이하의 숫자여야 합니다."
+        private const val ERROR_INVALID_INPUT_NOT_NUMBER = "숫자를 입력하세요"
     }
 }
