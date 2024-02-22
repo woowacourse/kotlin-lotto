@@ -2,11 +2,16 @@ package view
 
 import model.LottoResult
 import model.LottoTicket
-import model.Rank
+import model.Rank.FIFTH
+import model.Rank.FOURTH
+import model.Rank.THIRD
+import model.Rank.SECOND
+import model.Rank.FIRST
+
 
 class OutputView {
     fun printLottoCount(lottoCount: Int) {
-        println("${lottoCount}개를 구매했습니다")
+        println(PURCHASE_MESSAGE.format(lottoCount))
     }
 
     fun printLottoTickets(lottoTickets: List<LottoTicket>) {
@@ -16,14 +21,21 @@ class OutputView {
     }
 
     fun printWinningChart(lottoResult: LottoResult) {
-        println("3개 일치 (${Rank.FIFTH.winningMoney}원)- ${lottoResult.getNum(Rank.FIFTH)}개")
-        println("4개 일치 (${Rank.FOURTH.winningMoney}원)- ${lottoResult.getNum(Rank.FOURTH)}개")
-        println("5개 일치 (${Rank.THIRD.winningMoney}원)- ${lottoResult.getNum(Rank.THIRD)}개")
-        println("5개 일치, 보너스 볼 일치(${Rank.SECOND.winningMoney}원) - ${lottoResult.getNum(Rank.SECOND)}개")
-        println("6개 일치 (${Rank.FIRST.winningMoney}원)- ${lottoResult.getNum(Rank.FIRST)}개")
+        println(MATCH_MESSAGE.format(FIFTH.countOfMatch, FIFTH.winningMoney, lottoResult.getNum(FIFTH)))
+        println(MATCH_MESSAGE.format(FOURTH.countOfMatch, FOURTH.winningMoney, lottoResult.getNum(FOURTH)))
+        println(MATCH_MESSAGE.format(THIRD.countOfMatch, THIRD.winningMoney, lottoResult.getNum(THIRD)))
+        println(MATCH_WITH_BONUS_MESSAGE.format(SECOND.countOfMatch, SECOND.winningMoney, lottoResult.getNum(SECOND)))
+        println(MATCH_MESSAGE.format(FIRST.countOfMatch, FIRST.winningMoney, lottoResult.getNum(FIRST)))
     }
 
     fun printWinningRate(winningRate: Float) {
-        println("총 수익률은 %.2f입니다.".format(winningRate))
+        println(TOTAL_WINNING_RATE_MESSAGE.format(winningRate))
+    }
+
+    companion object{
+        const val PURCHASE_MESSAGE = "%d개를 구매했습니다."
+        const val MATCH_MESSAGE = "%d개 일치 (%d원) - %d개"
+        const val MATCH_WITH_BONUS_MESSAGE = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
+        const val TOTAL_WINNING_RATE_MESSAGE = "총 수익률은 %.2f입니다."
     }
 }
