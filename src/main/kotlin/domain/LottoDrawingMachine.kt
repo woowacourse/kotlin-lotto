@@ -9,12 +9,10 @@ import domain.model.WinningLotto
 class LottoDrawingMachine {
 
     fun countRank(lottoTickets: List<Lotto>, winningLotto: WinningLotto): LottoDrawingResult {
-        val rankCountMap = Rank.entries.take(5).associateWith { 0 }.toMutableMap()
+        val rankCountMap = Rank.entries.associateWith { DEFAULT_COUNT }.toMutableMap()
         lottoTickets.forEach { targetLotto ->
             val rank = getRank(targetLotto, winningLotto)
-            if (rank != Rank.MISS) {
-                rankCountMap[rank] = rankCountMap.getOrDefault(rank, 0) + 1
-            }
+            rankCountMap[rank] = rankCountMap.getOrDefault(rank, DEFAULT_COUNT) + COUNT_STEP
         }
         return LottoDrawingResult(rankCountMap)
     }
@@ -31,5 +29,10 @@ class LottoDrawingMachine {
 
     private fun bonusCount(targetLotto: Lotto, bonusNumber: LottoNumber): Boolean {
         return targetLotto.numbers.contains(bonusNumber)
+    }
+
+    companion object {
+        private const val DEFAULT_COUNT = 0
+        private const val COUNT_STEP = 1
     }
 }

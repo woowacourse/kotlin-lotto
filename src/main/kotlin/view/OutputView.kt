@@ -19,7 +19,8 @@ object OutputView {
 
     fun printLottoResult(lottoDrawingResult: LottoDrawingResult) {
         println("당첨 통계\n---------")
-        lottoDrawingResult.statistics.forEach { (rank, count) ->
+        val resultWithoutMiss = lottoDrawingResult.statistics.filter { it.key != Rank.MISS }
+        resultWithoutMiss.forEach { (rank, count) ->
             if (rank == Rank.SECOND) {
                 println("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney}원)- ${count}개")
             } else {
