@@ -1,6 +1,7 @@
 package view
 
 import model.Lottos
+import model.WinningStatistics
 
 object OutputView {
     fun outputNumberOfLotto(numberOfLotto: Int) {
@@ -9,5 +10,12 @@ object OutputView {
 
     fun outputLottos(lottos: Lottos) {
         println(lottos)
+    }
+
+    fun outputWinningStatistics(winningStatistics: WinningStatistics) {
+        println()
+        println("당첨 통계")
+        println("---------")
+        println(winningStatistics)
     }
 }

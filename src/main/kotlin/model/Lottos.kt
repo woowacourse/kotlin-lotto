@@ -1,7 +1,7 @@
 package model
 
-class Lottos(val lottos: List<Lotto>) {
+class Lottos(val publishedLottos: List<Lotto>) {
     override fun toString(): String {
-        return lottos.joinToString("\n")
+        return publishedLottos.joinToString("\n")
     }
 }
