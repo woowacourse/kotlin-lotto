@@ -1,11 +1,11 @@
 package lotto.model
 
-class LottoResult(val static: Map<Rank, Int>) {
+class LottoResult(private val resultMap: Map<Rank, Int>) {
     override fun toString(): String {
         var result = ""
 
         Rank.entries.reversed().forEach { rank ->
-            val count = static[rank] ?: EMPTY_COUNT
+            val count = resultMap[rank] ?: EMPTY_COUNT
             result +=
                 when (rank) {
                     Rank.MISS -> ""
@@ -18,10 +18,10 @@ class LottoResult(val static: Map<Rank, Int>) {
 
     fun getProfitRate(): Double {
         val totalProfit =
-            static.entries.sumOf { (rank, count) ->
+            resultMap.entries.sumOf { (rank, count) ->
                 rank.winningMoney * count
             }
-        val totalCount = static.entries.sumOf { (_, count) -> count }
+        val totalCount = resultMap.entries.sumOf { (_, count) -> count }
         return (totalProfit.toDouble() / (totalCount * PURCHASE_UNIT)) * RATE
     }
 
