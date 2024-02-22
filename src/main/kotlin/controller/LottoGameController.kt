@@ -57,5 +57,9 @@ class LottoGameController(
         return lottie
     }
 
-    private fun truncateDecimal(earningRate: Double): Double = floor(earningRate * 100) / 100
+    private fun truncateDecimal(earningRate: Double): Double = floor(earningRate * SCALE) / SCALE
+
+    companion object {
+        private const val SCALE = 100
+    }
 }

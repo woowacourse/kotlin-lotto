@@ -19,7 +19,10 @@
   - [x] 수익률을 보여준다.
 
 ### 컨트롤러
-- [ ] 수익률 소수점 이하 2자리수까지 버림
+- [x] 수익률 소수점 이하 2자리수까지 버림
+- [x] RankResults 에서 Missing 필터링
+- [x] 보너스 번호가 당첨 번호 중에 하나 일 때 예외 발생 
+- [ ] IllegalArgumentException, IllegalStateException 발생 시 재 입력 받기
 
 ### 도메인
 - [x] 로또 숫자는 1 ~ 45이다.
