@@ -1,6 +1,7 @@
 package view
 
-import model.*
+import model.WinningRank
+import model.WinningResult
 import model.lottery.Lotteries
 import model.lottery.Lottery
 import model.profit.ProfitRate

@@ -1,12 +1,10 @@
 package controller
-
-import model.*
+import model.Money
 import model.lottery.*
 import model.profit.Profit
 import model.profit.ProfitStatusDecider
 import view.InputView
 import view.OutputView
-import java.math.BigDecimal
 
 class LotteryController(
     private val inputView: InputView = InputView(),
@@ -31,10 +29,9 @@ class LotteryController(
         val winningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
         outputView.showWinningResult(winningResult)
 
-        var totalPrize = Money(BigDecimal(0))
-        for (result in winningResult.result) {
-            totalPrize += (result.key.winningPrize * result.value)
-        }
+        val totalPrize = Money.wons(winningResult.result.entries.sumOf {
+            it.key.winningPrize.amount.toInt() * it.value
+        })
 
         val profitRate = profit.calculateRate(purchaseAmount, totalPrize)
 
