@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.model.DrawResult
 import lotto.model.Lotto
 import lotto.model.LottoAnalyzer
+import lotto.model.LottoBundle
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.view.InputView
@@ -10,17 +11,17 @@ import lotto.view.OutputView
 
 class LottoGameController {
     fun start() {
-        val lottos = buyLottos()
+        val lottoBundle = buyLottoBundle()
         val drawResult = lottoDraw()
-        matchResult(lottos, drawResult)
+        matchResult(lottoBundle, drawResult)
     }
 
-    private fun buyLottos(): List<Lotto> {
+    private fun buyLottoBundle(): LottoBundle {
         val price = InputView.readPrice()
         val lottoMachine = LottoMachine(price)
-        val lottos = lottoMachine.createLottos()
-        OutputView.printLottos(lottos)
-        return lottos
+        val lottoBundle = lottoMachine.createLottoBundle()
+        OutputView.printLottoBundle(lottoBundle)
+        return lottoBundle
     }
 
     private fun lottoDraw(): DrawResult {
@@ -33,10 +34,10 @@ class LottoGameController {
     }
 
     private fun matchResult(
-        lottos: List<Lotto>,
+        lottoBundle: LottoBundle,
         drawResult: DrawResult,
     ) {
-        val lottoAnalyzer = LottoAnalyzer(lottos, drawResult)
+        val lottoAnalyzer = LottoAnalyzer(lottoBundle, drawResult)
         val lottoResult = lottoAnalyzer.calculateResult()
         OutputView.printResult(lottoResult)
     }

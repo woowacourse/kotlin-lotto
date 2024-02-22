@@ -5,13 +5,14 @@ class LottoMachine(private val price: String) {
         require(price.toIntOrNull()?.let { it >= MIN_PRICE } == true) { PRICE_ERROR_MESSAGE }
     }
 
-    fun createLottos() =
-        List(getLottoTicket()) {
-            Lotto(
-                (LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted()
-                    .map { LottoNumber(it.toString()) },
-            )
-        }
+    fun createLottoBundle(): LottoBundle {
+        val lottos =
+            List(getLottoTicket()) {
+                Lotto((LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it.toString()) })
+            }
+
+        return LottoBundle(lottos)
+    }
 
     fun getLottoTicket(): Int = price.toInt() / MIN_PRICE
 

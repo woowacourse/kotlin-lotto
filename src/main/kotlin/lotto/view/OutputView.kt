@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.model.Lotto
+import lotto.model.LottoBundle
 import lotto.model.LottoResult
 import lotto.model.Rank
 
@@ -10,6 +10,9 @@ object OutputView {
         lottos.forEach { lotto ->
             println(lotto.lottoNumbers)
         }
+    fun printLottoBundle(lottoBundle: LottoBundle) {
+        println(LOTTO_SIZE_MESSAGE.format(lottoBundle.lottos.size))
+        println(lottoBundle)
         println()
     }
 

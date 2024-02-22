@@ -40,7 +40,7 @@ class LottoAnalyzerTest {
                     LottoNumber("7"),
                 ),
             )
-        val lottoAnalyzer = LottoAnalyzer(lottoNumbers, DrawResult(winningLottoNumbers, LottoNumber("8")))
+        val lottoAnalyzer = LottoAnalyzer(LottoBundle(lottoNumbers), DrawResult(winningLottoNumbers, LottoNumber("8")))
         val lottoResult = lottoAnalyzer.calculateResult()
 
         assertThat(lottoResult.static).isEqualTo(mapOf(Rank.THIRD to 1, Rank.SECOND to 1))
