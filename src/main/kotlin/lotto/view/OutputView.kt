@@ -21,6 +21,7 @@ object OutputView {
         println(StringConstants.OUTPUT_WINNING_STATICS)
         println(StringConstants.OUTPUT_DIVIDER)
         LottoPrize.values().forEach { lottoPrize ->
+            if (lottoPrize == LottoPrize.NOTHING) return@forEach
             val matchingCount = prizeCount.getOrDefault(lottoPrize, DEFAULT_MATCHING_COUNT)
             println(provideMatchingMessage(lottoPrize, matchingCount))
         }
