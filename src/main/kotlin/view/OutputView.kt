@@ -5,6 +5,10 @@ import model.Rank
 
 object OutputView {
     private const val LOTTO_PURCHASED = "%d개를 구매했습니다."
+    private const val HEADER_STATS =
+        "\n" +
+            "당첨 통계\n" +
+            "-----------"
 
     fun printPurchasedLotto(lottos: List<Lotto>) {
         println(LOTTO_PURCHASED.format(lottos.size))
@@ -15,12 +19,13 @@ object OutputView {
     }
 
     fun printStats(stats: Map<Rank, Int>) {
+        println(HEADER_STATS)
         Rank.entries.filter { it != Rank.MISS }.forEach {
-            println("${it.countOfMatch}개 일치 (${it.winningMoney}원) - ${stats[it] ?: 0}")
+            println("${it.getMessage()} - ${stats[it] ?: 0}개")
         }
     }
 
     fun printProfit(profit: Double) {
-        println("총 수익률은 $profit% 입니다.(기준이 1이기 때문에 결과적으로 손해라는 의미임")
+        println("총 수익률은 $profit 입니다.")
     }
 }
