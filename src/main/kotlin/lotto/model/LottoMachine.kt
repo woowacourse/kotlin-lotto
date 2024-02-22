@@ -2,14 +2,13 @@ package lotto.model
 
 import lotto.constant.LottoConstant
 
-class LottoMachine(private val price: String) {
+class LottoMachine(private val price: Int) {
     init {
-        val priceAsInt = price.toIntOrNull()
-        require(priceAsInt != null && priceAsInt >= LottoConstant.PRICE) { PRICE_ERROR_MESSAGE }
+        require(price >= LottoConstant.PRICE) { PRICE_ERROR_MESSAGE }
     }
 
     fun createLottos(): List<Lotto> {
-        val count = price.toInt() / LottoConstant.PRICE
+        val count = price / LottoConstant.PRICE
         return List(count) {
             createLotto()
         }
