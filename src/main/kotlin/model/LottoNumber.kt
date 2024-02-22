@@ -1,7 +1,11 @@
 package model
 
 data class LottoNumber(val number: Int) {
-    constructor(input: String) : this(input.toIntOrNull() ?: throw IllegalArgumentException(EXCEPTION_IS_NOT_NUMBER))
+    constructor(input: String) : this(
+        input.trim().toIntOrNull() ?: throw IllegalArgumentException(
+            EXCEPTION_IS_NOT_NUMBER
+        )
+    )
 
     init {
         require(validateRange(number)) { EXCEPTION_INVALID_RANGE }
