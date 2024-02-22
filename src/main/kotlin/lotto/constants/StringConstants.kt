@@ -9,4 +9,6 @@ object StringConstants {
     const val INPUT_PURCHASE_PRICE = "구입금액을 입력해 주세요."
     const val INPUT_WINNING_LOTTO_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
     const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+
+    const val OUTPUT_PURCHASE_COUNT = "%d개를 구매했습니다."
 }
