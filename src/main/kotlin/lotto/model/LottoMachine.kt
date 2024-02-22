@@ -4,7 +4,8 @@ import lotto.constant.LottoConstant
 
 class LottoMachine(private val price: String) {
     init {
-        require(price.toIntOrNull()?.let { it >= LottoConstant.PRICE } == true) { PRICE_ERROR_MESSAGE }
+        val priceAsInt = price.toIntOrNull()
+        require(priceAsInt != null && priceAsInt >= LottoConstant.PRICE) { PRICE_ERROR_MESSAGE }
     }
 
     fun createLottos() {
