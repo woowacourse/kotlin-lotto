@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.ValueSource
 class MoneyTest {
 
     @ParameterizedTest
-    @ValueSource(ints = [0, 999])
-    fun `구입 금액이 1000원 미만이면 예외를 던진다`(value: Int) {
+    @ValueSource(longs = [0, 999])
+    fun `구입 금액이 1000원 미만이면 예외를 던진다`(value: Long) {
         val exception = assertThrows<IllegalArgumentException> { Money(value) }
 
         assertThat(exception.message).isEqualTo(MINIMUM_VALUE_EXCEPTION_MESSAGE)
