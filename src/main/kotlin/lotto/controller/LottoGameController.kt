@@ -25,10 +25,10 @@ class LottoGameController {
 
     private fun lottoDraw(): DrawResult {
         val winningNumber = InputView.readWinningNumbers()
-        val winningLotto = Lotto(winningNumber.split(",").map { LottoNumber(it.trim()) })
+        val winningLotto = Lotto(winningNumber.split(",").map { LottoNumber.valueOf(it.trim()) })
         val bonusNumber = InputView.readBonusNumber()
 
-        return DrawResult(winningLotto, LottoNumber(bonusNumber))
+        return DrawResult(winningLotto, LottoNumber.valueOf(bonusNumber))
     }
 
     private fun matchResult(

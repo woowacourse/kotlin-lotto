@@ -9,7 +9,7 @@ class LottoMachine(private val price: String) {
         List(lottoCounts()) {
             Lotto(
                 (LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted()
-                    .map { LottoNumber(it.toString()) },
+                    .map { LottoNumber(it) },
             )
         }
 
