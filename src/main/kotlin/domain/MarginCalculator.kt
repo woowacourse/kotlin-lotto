@@ -3,10 +3,9 @@ package domain
 import domain.model.LottoDrawingResult
 import domain.model.Margin
 import domain.model.Money
+import util.Constants.LOTTO_PRICE
 
 object MarginCalculator {
-
-    private const val LOTTO_PRICE = 1000
 
     fun calculateTotalPrize(result: LottoDrawingResult): Money {
         return Money(

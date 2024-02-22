@@ -1,10 +1,10 @@
 package view
 
 import domain.model.Money
+import util.Constants.LOTTO_PRICE
 
 object InputView {
 
-    private const val LOTTO_PRICE = 1000
     private const val INVALID_UNIT_EXCEPTION_MESSAGE = "구입 금액은 ${1000}원 단위여야 합니다."
     private const val MINIMUM_VALUE_EXCEPTION_MESSAGE = "구입 금액은 ${Money.ZERO}원 이상이어야 합니다."
     private const val INVALID_FORMAT_EXCEPTION_MESSAGE = "입력값은 정수여야 합니다."
