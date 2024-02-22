@@ -1,7 +1,11 @@
 package model
 
 class LotteryResultEvaluator {
-    fun evaluate(lotteries: Lotteries, winningLottery: Lottery, bonusNumber: LotteryNumber): WinningResult {
+    fun evaluate(
+        lotteries: Lotteries,
+        winningLottery: Lottery,
+        bonusNumber: LotteryNumber,
+    ): WinningResult {
         val lotteryRankEvaluator = LotteryRankEvaluator()
         val winningResult = DEFAULT_WINNING_RESULT
 

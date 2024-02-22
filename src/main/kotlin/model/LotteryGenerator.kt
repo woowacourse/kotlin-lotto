@@ -7,7 +7,7 @@ class LotteryGenerator {
                 .shuffled()
                 .take(LOTTERY_NUMBER_COUNT)
                 .sorted()
-                .toIntArray()
+                .toIntArray(),
         )
 
     companion object {
