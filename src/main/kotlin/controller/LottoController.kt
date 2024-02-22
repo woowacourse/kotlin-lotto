@@ -5,6 +5,7 @@ import domain.LottoDrawingMachine
 import domain.LottoGenerator
 import domain.MarginCalculator
 import domain.model.Lotto
+import domain.model.LottoDrawingResult
 import domain.model.LottoNumber
 import domain.model.Money
 import domain.model.WinningLotto
@@ -17,23 +18,17 @@ class LottoController(
 ) {
 
     fun start() {
+        val (money, quantity) = receiveMoney()
+        val lottoTickets = makeLottoTicket(quantity)
+        val result = drawLotto(lottoTickets)
+        showResult(result, money)
+    }
+
+    private fun receiveMoney(): Pair<Money, Int> {
         val money = getValidMoney()
         val quantity = cashier.toTicketQuantity(money)
         OutputView.printLottoQuantity(quantity)
-
-        val randomNumbers = LottoGenerator.makeRandomNumber()
-        val lottoTickets = List(quantity) { LottoGenerator.makeLotto(randomNumbers) }
-        OutputView.printLottoNumbers(lottoTickets)
-
-        val winningLotto = getValidLotto()
-        val winningNumber = getValidWinningLotto(winningLotto)
-
-        val result = lottoDrawingMachine.countRank(lottoTickets, winningNumber)
-        OutputView.printLottoResult(result)
-
-        val totalPrize = MarginCalculator.calculateTotalPrize(result)
-        val marginRate = MarginCalculator.calculateMarginRate(totalPrize, money)
-        OutputView.printMargin(marginRate)
+        return Pair(money, quantity)
     }
 
     private fun getValidMoney(): Money {
@@ -43,6 +38,21 @@ class LottoController(
             println(e.message)
             getValidMoney()
         }
+    }
+
+    private fun makeLottoTicket(quantity: Int): List<Lotto> {
+        val randomNumbers = LottoGenerator.makeRandomNumber()
+        val lottoTickets = List(quantity) { LottoGenerator.makeLotto(randomNumbers) }
+        OutputView.printLottoNumbers(lottoTickets)
+        return lottoTickets
+    }
+
+    private fun drawLotto(lottoTickets: List<Lotto>): LottoDrawingResult {
+        val winningLotto = getValidLotto()
+        val winningNumber = getValidWinningLotto(winningLotto)
+        val result = lottoDrawingMachine.countRank(lottoTickets, winningNumber)
+        OutputView.printLottoResult(result)
+        return result
     }
 
     private fun getValidLotto(): Lotto {
@@ -66,5 +76,11 @@ class LottoController(
 
     private fun getBonusNumber(): LottoNumber {
         return LottoNumber(InputView.readBonusNumber())
+    }
+
+    private fun showResult(result: LottoDrawingResult, money: Money) {
+        val totalPrize = MarginCalculator.calculateTotalPrize(result)
+        val marginRate = MarginCalculator.calculateMarginRate(totalPrize, money)
+        OutputView.printMargin(marginRate)
     }
 }
