@@ -1,6 +1,6 @@
-import controller.LottoController
-import domain.Cashier
-import domain.LottoDrawingMachine
+import lotto.controller.LottoController
+import lotto.domain.Cashier
+import lotto.domain.LottoDrawingMachine
 
 fun main() {
     val controller = LottoController(Cashier(), LottoDrawingMachine())
