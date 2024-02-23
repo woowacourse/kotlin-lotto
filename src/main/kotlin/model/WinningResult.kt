@@ -1,3 +1,3 @@
 package model
 
-data class WinningResult(val result: Map<WinningRank, Int>)
+data class WinningResult(val result: Map<WinningRank, PrizeCount>)

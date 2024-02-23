@@ -36,7 +36,7 @@ class LotteryController(
         val totalPrize =
             Money.wons(
                 winningResult.result.entries.sumOf {
-                    it.key.winningPrize.amount.toInt() * it.value
+                    it.key.winningPrize.amount.toInt() * it.value.count
                 },
             )
 

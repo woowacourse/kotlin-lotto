@@ -1,5 +1,6 @@
 package view
 
+import model.PrizeCount
 import model.WinningRank
 import model.WinningResult
 import model.lottery.Lotteries
@@ -32,13 +33,13 @@ class OutputView {
         }
     }
 
-    private fun printMatchStatus(result: Map.Entry<WinningRank, Int>) =
+    private fun printMatchStatus(result: Map.Entry<WinningRank, PrizeCount>) =
         println(
             "${result.key.matchNumbers}개 일치 ${if (result.key.bonusNumberMatch) ", 보너스 볼 일치" else ""} ${
                 MONEY_FORMAT.format(
                     result.key.winningPrize.amount.toInt(),
                 )
-            }- ${result.value}개",
+            }- ${result.value.count}개",
         )
 
     fun showProfitRate(
