@@ -16,7 +16,7 @@ class Lottery(private val lotteryNumbers: List<LotteryNumber>) {
 
     fun hasBonus(bonus: Bonus) = lotteryNumbers.contains(bonus.lotteryNumber)
 
-    override fun toString() = "[${lotteryNumbers.map { it.number }.joinToString(", ")}]\n"
+    fun toString(delimiter: String) = lotteryNumbers.map { it.number }.joinToString(delimiter)
 
     companion object {
         private const val LOTTERY_COUNT = 6

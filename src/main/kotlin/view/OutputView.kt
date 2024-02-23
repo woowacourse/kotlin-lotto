@@ -6,6 +6,7 @@ import model.WinningResult
 
 object OutputView {
     private const val LOTTO_PURCHASED = "%d개를 구매했습니다."
+    private const val LOTTERY_DELIMITER = ", "
     private const val HEADER_STATS =
         "\n" +
             "당첨 통계\n" +
@@ -13,8 +14,8 @@ object OutputView {
 
     fun printTicketInfo(ticket: Ticket) {
         println(LOTTO_PURCHASED.format(ticket.userLotteries.size))
-        ticket.userLotteries.forEach {
-            print(it.toString())
+        ticket.userLotteries.forEach { lottery ->
+            print("[${lottery.toString(LOTTERY_DELIMITER)}]\n")
         }
         println()
     }
