@@ -20,7 +20,6 @@ class Lottery(private val lotteryNumbers: List<LotteryNumber>) {
 
     companion object {
         private const val LOTTERY_COUNT = 6
-        private const val LOTTERY_DELIMITER = ","
         const val EXCEPTION_INVALID_COUNT = "로또 번호는 ${LOTTERY_COUNT}개여야 합니다"
         const val EXCEPTION_DUPLICATED_NUMBER = "로또 번호에 중복이 없어야 합니다"
 
@@ -29,8 +28,8 @@ class Lottery(private val lotteryNumbers: List<LotteryNumber>) {
             return Lottery(lotteryNumbers)
         }
 
-        fun fromInput(input: String): Lottery {
-            val lotteryNumbers = input.split(LOTTERY_DELIMITER).map { LotteryNumber.fromInput(it) }
+        fun fromInput(input: List<String>): Lottery {
+            val lotteryNumbers = input.map { LotteryNumber.fromInput(it) }
             return Lottery(lotteryNumbers)
         }
     }
