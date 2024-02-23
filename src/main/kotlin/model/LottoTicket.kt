@@ -1,8 +1,7 @@
 package model
 
-class LottoTicket(val lottoTicket: List<Int>) {
+class LottoTicket(val lottoTicket: List<LottoNumber>) {
     init {
         require(lottoTicket.size == 6)
-        require(this.lottoTicket.all { it in 1..45 })
     }
 }

@@ -14,8 +14,9 @@ class OutputView {
     }
 
     fun printLottoTickets(lottoTickets: List<LottoTicket>) {
-        lottoTickets.forEach {
-            println(it.lottoTicket.sorted())
+        val lottoTicketsInt = lottoTickets.map { it.lottoTicket.map { it.number } }
+        lottoTicketsInt.forEach {
+            println(it)
         }
     }
 

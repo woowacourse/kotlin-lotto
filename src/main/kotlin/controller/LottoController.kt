@@ -1,5 +1,6 @@
 package controller
 
+import model.LottoNumber
 import model.LottoPurchase
 import model.LottoResult
 import model.LottoTicket
@@ -31,14 +32,14 @@ class LottoController {
         bonusNumber: Int,
         lottoTickets: List<LottoTicket>,
     ): Pair<LottoResult, Float> {
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, lottoTickets)
+        val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), lottoTickets)
         val winningChart = lottoWinning.makeWinningChart()
         val winningRate = lottoWinning.calculateWinningRate()
         return Pair(winningChart, winningRate)
     }
 
     private fun makeWinningTicket(): Pair<LottoTicket, Int> {
-        val winningTicket = LottoTicket(inputView.getWinningTicket())
+        val winningTicket = LottoTicket(inputView.getWinningTicket().map { LottoNumber((it)) })
         val bonusNumber = inputView.getBonusNumber()
         return Pair(winningTicket, bonusNumber)
     }

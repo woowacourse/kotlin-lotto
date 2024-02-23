@@ -11,7 +11,7 @@ class LottoWinningTest {
 
     @BeforeEach
     fun setup() {
-        winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
+        winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
     }
 
     @ParameterizedTest
@@ -20,7 +20,7 @@ class LottoWinningTest {
         val (userTicket, expected) = args
         val userTickets = listOf(userTicket)
         val bonusNumber = 7
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
+        val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
         val countMatchNumber = lottoWinning.countMatchNumber(userTicket)
         assertThat(countMatchNumber).isEqualTo(expected)
     }
@@ -31,7 +31,7 @@ class LottoWinningTest {
         val (userTicket, expected) = args
         val userTickets = listOf(userTicket)
         val bonusNumber = 7
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
+        val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
         val rankList = lottoWinning.getRankList()
         val actual = rankList[0]
         assertThat(actual).isEqualTo(expected)
@@ -39,11 +39,11 @@ class LottoWinningTest {
 
     @Test
     fun `보너스 번호 포함 여부 테스트`() {
-        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 7))
-        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
+        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) })
+        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
         val userTickets = listOf(userTicket)
         val bonusNumber = 7
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
+        val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
         val actual = lottoWinning.isBonusInTicket(winningTicket)
         assertThat(actual).isEqualTo(true)
     }
@@ -53,34 +53,34 @@ class LottoWinningTest {
         fun generateArgumentMatchTest() =
             listOf(
                 // 6개 겹침, 1등 케이스,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)) to 6,
+                LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }) to 6,
                 // 5개 겹침, 2등 케이스,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 7)) to 5,
+                LottoTicket(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) }) to 5,
                 // 5개 겹침 , 3등 케이스
-                LottoTicket(listOf(1, 2, 3, 4, 5, 8)) to 5,
+                LottoTicket(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }) to 5,
                 // 4개 겹침, 4등 케이스
-                LottoTicket(listOf(1, 2, 3, 4, 44, 45)) to 4,
+                LottoTicket(listOf(1, 2, 3, 4, 44, 45).map { LottoNumber(it) }) to 4,
                 // 3개 겹침, 5등 케이스
-                LottoTicket(listOf(1, 2, 3, 43, 44, 45)) to 3,
+                LottoTicket(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber(it) }) to 3,
                 // 역순 케이스
-                LottoTicket(listOf(6, 5, 4, 3, 2, 1)) to 6,
+                LottoTicket(listOf(6, 5, 4, 3, 2, 1).map { LottoNumber(it) }) to 6,
             )
 
         @JvmStatic
         fun generateArgumentRankTest() =
             listOf(
                 // 6개 겹침, 1등 케이스,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)) to Rank.FIRST,
+                LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }) to Rank.FIRST,
                 // 5개 겹침, 2등 케이스,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 7)) to Rank.SECOND,
+                LottoTicket(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) }) to Rank.SECOND,
                 // 5개 겹침 , 3등 케이스
-                LottoTicket(listOf(1, 2, 3, 4, 5, 8)) to Rank.THIRD,
+                LottoTicket(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }) to Rank.THIRD,
                 // 4개 겹침, 4등 케이스
-                LottoTicket(listOf(1, 2, 3, 4, 44, 45)) to Rank.FOURTH,
+                LottoTicket(listOf(1, 2, 3, 4, 44, 45).map { LottoNumber(it) }) to Rank.FOURTH,
                 // 3개 겹침, 5등 케이스
-                LottoTicket(listOf(1, 2, 3, 43, 44, 45)) to Rank.FIFTH,
+                LottoTicket(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber(it) }) to Rank.FIFTH,
                 // 없음.
-                LottoTicket(listOf(10, 11, 12, 13, 14, 15)) to Rank.MISS,
+                LottoTicket(listOf(10, 11, 12, 13, 14, 15).map { LottoNumber(it) }) to Rank.MISS,
             )
     }
 }

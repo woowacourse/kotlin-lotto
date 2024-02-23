@@ -2,7 +2,7 @@ package model
 
 class LottoWinning(
     private val winningTicket: LottoTicket,
-    private val bonusNumber: Int,
+    private val bonusNumber: LottoNumber,
     private val lottoTickets: List<LottoTicket>,
 ) {
     fun countMatchNumber(userTicket: LottoTicket): Int {
