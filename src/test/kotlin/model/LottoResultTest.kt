@@ -2,34 +2,37 @@ package model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 
 class LottoResultTest {
     @Test
-    fun `Map의 내부의 value에 null이 있을 경우 0을 반환한다`() {
+    fun `특정 등수에 당첨되지 않았을 경우 0으로 센다`() {
         val rankMap = emptyMap<Rank, Int>()
         val lottoResult = LottoResult(rankMap)
         val actual = lottoResult.getNum(Rank.THIRD)
         assertThat(actual).isEqualTo(0)
     }
 
-    @ParameterizedTest
-    @CsvSource(
-        "FIRST, 1",
-        "SECOND, 2",
-        "THIRD, 3",
-        "FOURTH, 4",
-        "FIFTH, 5",
-    )
-    fun `Map의 내부의 value가 null이 아닐 경우 제대로 반환한다`(
-        rank: Rank,
-        expected: Int,
-    ) {
-        val rankMap: MutableMap<Rank, Int> = mutableMapOf()
-        rankMap[rank] = expected
-        val lottoResult = LottoResult(rankMap)
-        val actual = lottoResult.getNum(rank)
+    @Test
+    fun `특정 등수에 당첨됐는지 그 개수를 센다`() {
+        val userLottoIterator =
+            listOf(
+                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
+            ).iterator()
+
+        val lottoPurchase = LottoPurchase(4000) { userLottoIterator.next() }
+        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = 7
+
+        val userTickets = lottoPurchase.makeUserTickets()
+        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
+        val winningChart = lottoWinning.makeWinningChart()
+
+        val actual = winningChart.getNum(Rank.FIRST)
+        val expected = 4
+
         assertThat(actual).isEqualTo(expected)
     }
 }
