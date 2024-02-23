@@ -7,10 +7,6 @@ data class LottoResult(val static: Map<Rank, Int>) {
                 rank.winningMoney * count
             }
         val totalCount = static.entries.sumOf { (_, count) -> count }
-        return totalProfit.toDouble() / (totalCount * LOTTO_PRICE)
-    }
-
-    companion object {
-        private const val LOTTO_PRICE = 1000
+        return totalProfit.toDouble() / (totalCount * Lotto.LOTTO_PRICE)
     }
 }
