@@ -1,20 +1,10 @@
 package lotto.service
 
 import lotto.constants.LottoPrize
-import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
-import lotto.model.WinningLotto
 import kotlin.math.floor
 
 object ResultCalculator {
-    fun calculatePrizeCount(
-        lottoStore: LottoStore,
-        winningLotto: WinningLotto,
-    ) = lottoStore.lottos
-        .map { it.compare(winningLotto.lotto, winningLotto.bonusNumber) }
-        .groupBy { it }
-        .mapValues { it.value.size }
-
     fun calculateProfitRatio(
         purchaseInfo: PurchaseInfo,
         prizeCount: Map<LottoPrize, Int>,
