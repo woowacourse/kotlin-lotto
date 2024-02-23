@@ -10,7 +10,7 @@ class Lotto(private val numbers: Set<LottoNumber>) {
 
     fun compareBonusNumbers(bonusNumber: LottoNumber): Boolean = bonusNumber in numbers
 
-    override fun toString(): String = numbers.toString()
+    override fun toString(): String = numbers.toList().sortedBy { it.number }.toString()
 
     companion object {
         const val NUMBER_COUNT = 6

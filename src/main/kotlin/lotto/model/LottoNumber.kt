@@ -1,14 +1,13 @@
 package lotto.model
 
-data class LottoNumber(val number: String) {
+data class LottoNumber(val number: Int) {
     init {
-        requireNotNull(number.toIntOrNull()) { "로또 번호는 숫자로 입력해주세요." }
-        require(number.toInt() in NUMBER_RANGE) { "로또 번호의 범위는 1~45 사이의 자연수입니다." }
+        require(number in NUMBER_RANGE) { "로또 번호의 범위는 1~45 사이의 자연수입니다." }
     }
 
-    constructor(inputNumber: Int) : this(inputNumber.toString())
+    constructor(inputNumber: String) : this(inputNumber.toInt())
 
-    override fun toString(): String = number
+    override fun toString(): String = number.toString()
 
     companion object {
         val NUMBER_RANGE = (1..45)

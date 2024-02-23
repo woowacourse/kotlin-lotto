@@ -14,12 +14,14 @@ object InputView {
     fun getWinningNumbers(): Set<LottoNumber> {
         println("지난 주 당첨 번호를 입력해 주세요.")
         val input = readln()
+        input.split(",").forEach { ValidationUtils.validateLottoNumber(it.trim()) }
         return input.split(",").map { LottoNumber(it.trim()) }.toSet()
     }
 
     fun getBonusNumber(): LottoNumber {
         println("보너스 번호를 입력해 주세요.")
         val input = readln()
+        ValidationUtils.validateLottoNumber(input)
         return LottoNumber(input)
     }
 }
