@@ -10,7 +10,7 @@
 ## model
 
 - [x] : getRankMap().let 로직 가독성 좋게 수정
-- [ ] : RandomNumberGenerator min, max 동적으로 바꾸기? 아니면 좀 더 고민하자
+- [x] : RandomNumberGenerator min, max 를 클라이언트가 바꿀 수 있도록 수정
 - [ ] : LottoGameResultTest.kt - 랜덤으로 번호가 주여졌을 경우도 테스트
 - [ ] : MoneyTest - 하드 코딩으로 들어간 -1, 10, 1에 대해서 상수 값으로 분류를 해보는 것도 고민
 - [ ] : RandomLottoGeneratorTest.kt - setUp() 랜덤하게 구현될 수 있도록 해보자!!

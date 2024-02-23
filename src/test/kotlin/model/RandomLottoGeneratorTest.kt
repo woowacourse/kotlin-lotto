@@ -9,7 +9,7 @@ class RandomLottoGeneratorTest {
 
     @BeforeEach
     fun setUp() {
-        numbersGenerator = NumbersGenerator { listOf(1, 2, 3, 4, 5, 6) }
+        numbersGenerator = NumbersGenerator { _, _ -> listOf(1, 2, 3, 4, 5, 6) }
     }
 
     @Test

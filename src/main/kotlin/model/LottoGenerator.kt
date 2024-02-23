@@ -11,7 +11,7 @@ class AutoLottoGenerator(
     override fun generate(purchaseCost: Money): List<Lotto> {
         val count = purchaseCost / price
         return List(count) {
-            val lottoNums = numbersGenerator.generate(LOTTO_NUMBER_SIZE).toIntArray()
+            val lottoNums = numbersGenerator.generate(LOTTO_NUMBER_SIZE, LOTTO_NUMBER_RANGE).toIntArray()
             Lotto(*lottoNums)
         }
     }
@@ -19,5 +19,6 @@ class AutoLottoGenerator(
     companion object {
         private val DEFAULT_LOTTO_PRICE = Money(1000)
         private val LOTTO_NUMBER_SIZE = 6
+        private val LOTTO_NUMBER_RANGE = 1..45
     }
 }
