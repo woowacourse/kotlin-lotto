@@ -29,6 +29,6 @@ fun outputWinningNumber(prize: UserPrize) {
     }
 }
 
-fun outputCalculationOfYield(prize: UserPrize, charge: Double) {
-    println(YIELD_RESULT.format(prize.prizeRateCalculate(prize.prizeCalculate(), charge)))
+fun outputCalculationOfYield(prizeCalculate: Double) {
+    println(YIELD_RESULT.format(prizeCalculate))
 }

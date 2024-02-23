@@ -35,6 +35,10 @@ class Controller {
         val prize = lottos.matchLottos(winningNumber)
         outputWinningStatistics()
         outputWinningNumber(prize)
-        outputCalculationOfYield(prize, charge.toDouble())
+        val prizeCalculate = prize.prizeRateCalculate(
+            prize = prize.prizeCalculate(),
+            charge = charge.toDouble()
+        )
+        outputCalculationOfYield(prizeCalculate)
     }
 }
