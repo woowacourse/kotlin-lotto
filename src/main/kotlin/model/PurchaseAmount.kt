@@ -7,6 +7,10 @@ class PurchaseAmount(val money: Int) {
 
     constructor(money: String) : this(validateInputMoney(money))
 
+    fun getNumberOfLottos(): Int {
+        return money / PURCHASE_UNIT
+    }
+
     companion object {
         private const val ERROR_PREFIX = "[ERROR] "
         private const val ERROR_INPUT_TYPE_MESSAGE = "${ERROR_PREFIX}숫자만 입력 가능합니다."
