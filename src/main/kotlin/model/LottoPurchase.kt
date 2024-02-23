@@ -9,7 +9,11 @@ class LottoPurchase(
     ) : this(
         purchasePrice,
         LottoTicketMakeMethod {
-            LottoTicket((1..45).shuffled().take(6))
+            val lottoNumbers =
+                LottoNumber.RANGE.shuffled()
+                    .take(LottoTicket.SIZE)
+                    .map { LottoNumber(it) }
+            LottoTicket(lottoNumbers)
         },
     )
 

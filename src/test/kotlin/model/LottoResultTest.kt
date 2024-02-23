@@ -16,15 +16,15 @@ class LottoResultTest {
     fun `특정 등수에 당첨됐는지 그 개수를 센다`() {
         val userLottoIterator =
             listOf(
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
             ).iterator()
 
         val lottoPurchase = LottoPurchase(4000) { userLottoIterator.next() }
-        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = 7
+        val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(7)
 
         val userTickets = lottoPurchase.makeUserTickets()
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)

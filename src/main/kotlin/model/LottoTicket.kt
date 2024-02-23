@@ -1,8 +1,13 @@
 package model
 
-class LottoTicket(val lottoTicket: List<Int>) {
+class LottoTicket(val lottoTicket: List<LottoNumber>) {
     init {
-        require(lottoTicket.size == 6)
-        require(this.lottoTicket.all { it in 1..45 })
+        require(lottoTicket.size == SIZE)
+    }
+
+    companion object {
+        const val SIZE = 6
+
+        fun from(intList: List<Int>) = LottoTicket(intList.map { LottoNumber(it) })
     }
 }

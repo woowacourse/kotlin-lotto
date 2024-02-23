@@ -11,7 +11,7 @@ class LottoWinningTest {
 
     @BeforeEach
     fun setup() {
-        winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
+        winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
     }
 
     @ParameterizedTest
@@ -19,7 +19,7 @@ class LottoWinningTest {
     fun `로또 번호가 당첨 번호와 몇 개 겹치는지 테스트`(args: Pair<LottoTicket, Int>) {
         val (userTicket, expected) = args
         val userTickets = listOf(userTicket)
-        val bonusNumber = 7
+        val bonusNumber = LottoNumber(7)
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
         val countMatchNumber = lottoWinning.countMatchNumber(userTicket)
         assertThat(countMatchNumber).isEqualTo(expected)
@@ -30,7 +30,7 @@ class LottoWinningTest {
     fun `랭크 판정 테스트`(args: Pair<LottoTicket, Rank>) {
         val (userTicket, expected) = args
         val userTickets = listOf(userTicket)
-        val bonusNumber = 7
+        val bonusNumber = LottoNumber(7)
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
         val rankList = lottoWinning.getRankList()
         val actual = rankList[0]
@@ -39,10 +39,10 @@ class LottoWinningTest {
 
     @Test
     fun `보너스 번호 포함 여부 테스트`() {
-        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 7))
-        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
+        val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 7))
+        val userTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
         val userTickets = listOf(userTicket)
-        val bonusNumber = 7
+        val bonusNumber = LottoNumber(7)
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
         val actual = lottoWinning.isBonusInTicket(winningTicket)
         assertThat(actual).isEqualTo(true)
@@ -52,16 +52,16 @@ class LottoWinningTest {
     fun `등수 통계 테스트`() {
         val userLottoIterator =
             listOf(
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)),
-                LottoTicket(listOf(1, 2, 3, 4, 5, 7)),
-                LottoTicket(listOf(1, 2, 3, 4, 5, 8)),
-                LottoTicket(listOf(1, 2, 3, 4, 9, 8)),
-                LottoTicket(listOf(1, 2, 3, 10, 9, 8)),
-                LottoTicket(listOf(43, 12, 36, 41, 25, 7)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 7)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 8)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 9, 8)),
+                LottoTicket.from(listOf(1, 2, 3, 10, 9, 8)),
+                LottoTicket.from(listOf(43, 12, 36, 41, 25, 7)),
             ).iterator()
         val lottoPurchase = LottoPurchase(6000) { userLottoIterator.next() }
-        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = 7
+        val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(7)
 
         val userTickets = lottoPurchase.makeUserTickets()
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
@@ -87,23 +87,23 @@ class LottoWinningTest {
         @JvmStatic
         fun generateArgumentMatchTest() =
             listOf(
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)) to 6,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 7)) to 5,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 8)) to 5,
-                LottoTicket(listOf(1, 2, 3, 4, 44, 45)) to 4,
-                LottoTicket(listOf(1, 2, 3, 43, 44, 45)) to 3,
-                LottoTicket(listOf(6, 5, 4, 3, 2, 1)) to 6,
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)) to 6,
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 7)) to 5,
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 8)) to 5,
+                LottoTicket.from(listOf(1, 2, 3, 4, 44, 45)) to 4,
+                LottoTicket.from(listOf(1, 2, 3, 43, 44, 45)) to 3,
+                LottoTicket.from(listOf(6, 5, 4, 3, 2, 1)) to 6,
             )
 
         @JvmStatic
         fun generateArgumentRankTest() =
             listOf(
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6)) to Rank.FIRST,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 7)) to Rank.SECOND,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 8)) to Rank.THIRD,
-                LottoTicket(listOf(1, 2, 3, 4, 44, 45)) to Rank.FOURTH,
-                LottoTicket(listOf(1, 2, 3, 43, 44, 45)) to Rank.FIFTH,
-                LottoTicket(listOf(10, 11, 12, 13, 14, 15)) to Rank.MISS,
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)) to Rank.FIRST,
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 7)) to Rank.SECOND,
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 8)) to Rank.THIRD,
+                LottoTicket.from(listOf(1, 2, 3, 4, 44, 45)) to Rank.FOURTH,
+                LottoTicket.from(listOf(1, 2, 3, 43, 44, 45)) to Rank.FIFTH,
+                LottoTicket.from(listOf(10, 11, 12, 13, 14, 15)) to Rank.MISS,
             )
     }
 }
