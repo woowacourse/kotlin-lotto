@@ -4,6 +4,7 @@ import model.NumberGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import util.Constant
 
 class PublishLottoTest {
     private lateinit var lottoNumbers: List<LottoNumber>
@@ -18,10 +19,10 @@ class PublishLottoTest {
     }
 
     @Test
-    fun `로또 번호가 1에서 45사이의 숫자인지 확인`() {
+    fun `로또 번호가 시작 범위에서 마지막 범위사이의 숫자인지 확인`() {
         assertThat(
             lottoNumbers.all {
-                it.number in 1..45
+                it.number in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE
             },
         ).isTrue
     }

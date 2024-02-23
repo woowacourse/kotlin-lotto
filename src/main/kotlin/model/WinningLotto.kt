@@ -1,7 +1,6 @@
 package model
 
-open class WinningLotto(private val winningNumbers: List<LottoNumber>, private val bonusNumber: Int) :
-    Lotto(winningNumbers) {
+class WinningLotto(private val winningNumbers: List<LottoNumber>, private val bonusNumber: Int) {
     fun calculateCountOfMatch(lotto: Lotto): Int {
         return winningNumbers.toSet().intersect(lotto.numbers).size
     }

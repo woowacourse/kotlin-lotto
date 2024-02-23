@@ -28,7 +28,7 @@ object InputValidator {
     }
 
     private fun validateMinimumPurchaseSizeOfManualLotto(purchaseSizeOfManualLotto: Int) {
-        require(purchaseSizeOfManualLotto >= Constant.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) {
+        require(purchaseSizeOfManualLotto > Constant.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) {
             InputException.INVALID_PURCHASE_SIZE_OF_MANUAL_LOTTO.getMessage()
         }
     }

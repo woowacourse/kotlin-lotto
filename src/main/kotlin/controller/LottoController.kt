@@ -35,7 +35,7 @@ class LottoController {
     }
 
     private fun publishLottos(numberOfManualLotto: Int) {
-        if (numberOfManualLotto > 0) buyer.buyLottos(generateManualLottos(numberOfManualLotto))
+        if (numberOfManualLotto > Constant.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) buyer.buyLottos(generateManualLottos(numberOfManualLotto))
         buyer.buyLottos(generateAutoLottos(numberOfManualLotto))
 
         displayPurchaseResult(numberOfManualLotto, buyer.numberOfLotto - numberOfManualLotto)
