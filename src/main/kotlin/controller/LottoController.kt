@@ -14,16 +14,15 @@ import model.LottoNumber
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
     fun run() {
         val purchaseAmount = initPurchaseAmount()
-        val numberOfLottos = initBuyLotto(purchaseAmount)
+        val numberOfLottos = initBuyLotto(purchaseAmount.money)
         val lottoStore = generateLotto(numberOfLottos)
         val (winningNumbers, bonusNumber) = generateWinningNumbers()
-        showLottoResult(lottoStore, winningNumbers, bonusNumber, purchaseAmount)
+        showLottoResult(lottoStore, winningNumbers, bonusNumber, purchaseAmount.money)
     }
 
-    private fun initPurchaseAmount(): Int {
+    private fun initPurchaseAmount(): PurchaseAmount {
         outputView.printPurchaseAmountMessage()
-        val purchaseAmount = PurchaseAmount().getAmount(inputView.readPurchaseAmount())
-        return purchaseAmount
+        return PurchaseAmount(inputView.readPurchaseAmount())
     }
 
     private fun initBuyLotto(purchaseAmount: Int): Int {
@@ -54,7 +53,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
         purchaseAmount: Int,
     ) {
         val rankCounts = lottoStore.getWinningResult(winningNumbers, bonusNumber)
-
+        outputView.printWinningMessage()
         WinningRank.entries.forEach { rank ->
             if (rank != WinningRank.NONE) {
                 outputView.printRankStatistics(rank, rankCounts[rank] ?: DEFAULT_COUNT)

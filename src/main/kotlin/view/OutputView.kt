@@ -33,11 +33,14 @@ class OutputView {
         println(MESSAGE_INPUT_BONUS_NUMBER)
     }
 
+    fun printWinningMessage() {
+        println(MESSAGE_WINNING_STATISTICS)
+    }
+
     fun printRankStatistics(
         rank: WinningRank,
         count: Int,
     ) {
-        println(MESSAGE_WINNING_STATISTICS)
         val formattedPrize = "%,d원".format(rank.prize)
         if (rank == WinningRank.SECOND) {
             println("${rank.matchCount}개 일치, 보너스 볼 일치 ($formattedPrize) - ${count}개")
