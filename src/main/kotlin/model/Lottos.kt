@@ -3,11 +3,7 @@ package lotto.model
 import model.Lotto
 import model.LottoNumber
 
-class Lottos(val lottos: MutableList<Lotto> = mutableListOf()) {
-    fun add(lotto: Lotto) {
-        lottos.add(lotto)
-    }
-
+class Lottos(val lottos: List<Lotto>) {
     fun winningResult(
         winningNumbers: Lotto,
         bonusNumber: LottoNumber,

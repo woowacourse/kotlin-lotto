@@ -1,27 +1,13 @@
 package lotto.model
 
 import model.Lotto
-import model.LottoNumber
 
 class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerator: NumberGenerator) {
-    var lottos = Lottos()
-        private set
-
-    init {
-        generateLottos()
-    }
-
-    private fun generateLottos() {
+    fun generateLottos(): Lottos {
+        val lottoBundle = mutableListOf<Lotto>()
         repeat(numberOfLottos) {
-            val lotto = Lotto(lottoNumberGenerator.generate())
-            lottos.add(lotto)
+            lottoBundle.add(Lotto(lottoNumberGenerator.generate()))
         }
-    }
-
-    fun getWinningResult(
-        winningNumbers: Lotto,
-        bonusNumber: LottoNumber,
-    ): Map<WinningRank, Int> {
-        return lottos.winningResult(winningNumbers, bonusNumber)
+        return Lottos(lottoBundle)
     }
 }

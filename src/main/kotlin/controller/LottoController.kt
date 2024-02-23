@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.model.LottoNumberGenerator
 import lotto.model.LottoNumbers
 import lotto.model.LottoStore
+import lotto.model.Lottos
 import lotto.model.PurchaseAmount
 import lotto.model.WinningPrizeCalculator
 import lotto.model.WinningRank
@@ -15,9 +16,10 @@ class LottoController(private val inputView: InputView, private val outputView: 
     fun run() {
         val purchaseAmount = initPurchaseAmount()
         val numberOfLottos = initBuyLotto(purchaseAmount)
-        val lottoStore = initLottoStore(numberOfLottos)
+        val lottoStore = LottoStore(numberOfLottos, LottoNumberGenerator())
+        val lottos = initGenerateLottos(lottoStore)
         val (winningNumbers, bonusNumber) = generateWinningNumbers()
-        showLottoResult(lottoStore, winningNumbers, bonusNumber, purchaseAmount.money)
+        showLottoResult(lottos, winningNumbers, bonusNumber, purchaseAmount.money)
     }
 
     private fun initPurchaseAmount(): PurchaseAmount {
@@ -31,10 +33,10 @@ class LottoController(private val inputView: InputView, private val outputView: 
         return numberOfLottos
     }
 
-    private fun initLottoStore(numberOfLottos: Int): LottoStore {
-        val lottoStore = LottoStore(numberOfLottos, LottoNumberGenerator())
-        outputView.printLottoNumbers(lottoStore.lottos)
-        return lottoStore
+    private fun initGenerateLottos(lottoStore: LottoStore): Lottos {
+        val lottos = lottoStore.generateLottos()
+        outputView.printLottoNumbers(lottos)
+        return lottos
     }
 
     private fun generateWinningNumbers(): Pair<Lotto, LottoNumber> {
@@ -47,12 +49,12 @@ class LottoController(private val inputView: InputView, private val outputView: 
     }
 
     private fun showLottoResult(
-        lottoStore: LottoStore,
+        lottos: Lottos,
         winningNumbers: Lotto,
         bonusNumber: LottoNumber,
         purchaseAmount: Int,
     ) {
-        val rankCounts = lottoStore.getWinningResult(winningNumbers, bonusNumber)
+        val rankCounts = lottos.winningResult(winningNumbers, bonusNumber)
         outputView.printWinningMessage()
         WinningRank.entries.forEach { rank ->
             if (rank != WinningRank.NONE) {
@@ -66,6 +68,5 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     companion object {
         private const val DEFAULT_COUNT = 0
-        private const val SPLIT_DELIMITER = ","
     }
 }
