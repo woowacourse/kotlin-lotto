@@ -1,7 +1,6 @@
 package lotto.controller
 
 import lotto.model.Lotto
-import lotto.model.LottoAnalyzer
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.WinningBundle
@@ -35,7 +34,7 @@ class LottoGameController {
         lottos: List<Lotto>,
         winningBundle: WinningBundle,
     ) {
-        val lottoResult = LottoAnalyzer.calculateResult(lottos, winningBundle)
+        val lottoResult = winningBundle.calculateResult(lottos)
         OutputView.printResult(lottoResult)
     }
 }
