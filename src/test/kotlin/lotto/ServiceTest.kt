@@ -24,7 +24,7 @@ class ServiceTest {
         // given
         val purchaseInfo = PurchaseInfo(5000)
         val lottoStore =
-            LottoStore(
+            LottoStore.create(
                 purchaseInfo,
                 object : LottoNumberGenerator {
                     override fun generate() = listOf(1, 2, 3, 4, 5, 6)

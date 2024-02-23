@@ -14,7 +14,7 @@ class LottoController {
     private val winningLotto: WinningLotto by lazy { readWinningLotto() }
 
     fun run() {
-        val lottoStore = LottoStore(purchaseInfo, RandomLottoNumberGenerator)
+        val lottoStore = LottoStore.create(purchaseInfo, RandomLottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
 
         val prizeCount = ResultCalculator.calculatePrizeCount(lottoStore, winningLotto)
