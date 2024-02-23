@@ -8,11 +8,11 @@ class LottoAnalyzerTest {
     fun `5개의 당첨 번호가 일치하고 보너스 번호가 일치하지 않으면 3등이고, 일치하면 2등이다`() {
         val lottos =
             listOf(
-                Lotto((1..6).map { LottoNumber(it) }),
-                Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }),
+                Lotto((1..6).map { LottoNumber.of(it) }),
+                Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber.of(it) }),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) })
-        val lottoResult = LottoAnalyzer.calculateResult(lottos, WinningBundle(winningLotto, LottoNumber(8)))
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber.of(it) })
+        val lottoResult = LottoAnalyzer.calculateResult(lottos, WinningBundle(winningLotto, LottoNumber.of(8)))
         assertThat(lottoResult).isEqualTo(LottoResult(mapOf(Rank.THIRD to 1, Rank.SECOND to 1)))
     }
 }

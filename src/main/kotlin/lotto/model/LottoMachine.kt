@@ -14,8 +14,8 @@ class LottoMachine(private val price: Int) {
 
     private fun createLotto() =
         Lotto(
-            (LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted()
-                .map { LottoNumber(it) },
+            (LottoNumber.LOTTO_NUMBER_RANGE).shuffled().take(LOTTO_SIZE).sorted()
+                .map { LottoNumber.of(it) },
         )
 
     companion object {
@@ -23,8 +23,5 @@ class LottoMachine(private val price: Int) {
 
         private const val LOTTO_SIZE = 6
         private const val LOTTO_PRICE = 1000
-        private const val LOTTO_MIN_NUMBER = 1
-        private const val LOTTO_MAX_NUMBER = 45
-        private val LOTTO_NUMBER_RANGE = LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER
     }
 }

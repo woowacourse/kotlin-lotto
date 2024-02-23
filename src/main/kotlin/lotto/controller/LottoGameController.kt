@@ -25,10 +25,10 @@ class LottoGameController {
 
     private fun createWinningBundle(): WinningBundle {
         val winningNumbers = InputView.readWinningNumbers()
-        val winningLotto = Lotto(winningNumbers.map { LottoNumber(it) })
+        val winningLotto = Lotto(winningNumbers.map { LottoNumber.of(it) })
         val bonusNumber = InputView.readBonusNumber()
 
-        return WinningBundle(winningLotto, LottoNumber(bonusNumber))
+        return WinningBundle(winningLotto, LottoNumber.of(bonusNumber))
     }
 
     private fun matchResult(
