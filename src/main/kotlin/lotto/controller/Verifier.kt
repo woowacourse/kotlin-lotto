@@ -6,7 +6,7 @@ const val SEPARATOR = ","
 const val WRONG_INPUT = "잘못 된 입력 값입니다."
 const val NEED_NUMBER = "로또 넘버는 숫자를 입력해야 합니다."
 
-object Veilfier {
+object Verifier {
     fun inputCharge(): Int {
         return try {
             readlnOrNull()
