@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test
 
 class LottoGameTest {
     private val lottos = Lottos(
-        lottos = listOf(
+        lottoCount = 8,
+        lottos = mutableListOf(
             Lotto(setOf(12, 11, 7, 8, 9, 10)),
             Lotto(setOf(1, 11, 7, 8, 9, 10)),
             Lotto(setOf(1, 2, 7, 8, 9, 10)),

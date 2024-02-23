@@ -1,10 +1,9 @@
 package lotto.model
 
 class Lottos(
-    private val lottoCount: Int
-) {
+    private val lottoCount: Int,
     private var lottos: MutableList<Lotto> = mutableListOf()
-
+) {
     init {
         makeLottos()
     }

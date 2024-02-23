@@ -24,7 +24,7 @@ fun winningStatistics() {
 fun outputWinningNumber(prize: UserPrize) {
     LottoPrize.entries.forEach {
         if (it != LottoPrize.BOOM) {
-            println("${it.getMessage()} ${prize.getUserPrize().get(it) ?: 0}개")
+            println("${LottoPrize.getLottoMessage(it)} ${prize.getUserPrize().get(it) ?: 0}개")
         }
     }
 }

@@ -6,7 +6,8 @@ import org.junit.jupiter.api.assertThrows
 class LottoTest {
     @Test
     fun `로또 번호 클래스`() {
-        assertThat(Lotto(setOf(1, 2, 3, 4, 5, 6)).getNumbers()).isEqualTo((setOf(1, 2, 3, 4, 5, 6)))
+        assertThat(Lotto(setOf(1, 2, 3, 4, 5, 6)).getNumbers())
+            .isEqualTo((setOf(1, 2, 3, 4, 5, 6)))
     }
 
     @Test
