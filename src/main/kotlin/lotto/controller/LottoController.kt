@@ -18,8 +18,10 @@ class LottoController {
         OutputView.printPurchaseLotto(lottoStore)
 
         val winningStatistics = lottoStore.calculateWinningStatistics(winningLotto)
+        OutputView.printWinningStatistics(winningStatistics)
+
         val profitRatio = ResultCalculator.calculateProfitRatio(purchaseInfo, winningStatistics)
-        OutputView.printWinningStatistics(winningStatistics, profitRatio)
+        OutputView.printProfitRatio(profitRatio)
     }
 
     private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
