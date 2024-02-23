@@ -27,7 +27,7 @@ class LotteryController {
     private fun readWinningLotto() = Lottery.fromInput(InputView.readWinningLotto())
 
     private fun issueTicket(amount: Amount): Ticket {
-        return LotteryStore().setStrategy(RandomTicketGenerationStrategy(amount)).issueTicket()
+        return LotteryStore(RandomTicketGenerationStrategy(amount)).issueTicket()
     }
 
     private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)

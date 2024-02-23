@@ -14,7 +14,7 @@ class LotteryStoreTest {
         input: String,
         count: Int,
     ) {
-        val lotteryStore = LotteryStore().setStrategy(RandomTicketGenerationStrategy(Amount.fromInput(input)))
+        val lotteryStore = LotteryStore(RandomTicketGenerationStrategy(Amount.fromInput(input)))
         assertThat(lotteryStore.issueTicket().userLotteries.size).isEqualTo(count)
     }
 
@@ -28,7 +28,7 @@ class LotteryStoreTest {
             )
         val explicitLotteries = explicitNumbers.map { Lottery.fromList(it) }.toList()
 
-        val lotteryStore = LotteryStore().setStrategy(ExplicitTicketGenerationStrategy(explicitAmount, explicitNumbers))
+        val lotteryStore = LotteryStore(ExplicitTicketGenerationStrategy(explicitAmount, explicitNumbers))
 
         val ticket = lotteryStore.issueTicket()
         ticket.userLotteries.forEachIndexed { index, userLotto ->

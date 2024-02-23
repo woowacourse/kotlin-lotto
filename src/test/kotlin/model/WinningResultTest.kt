@@ -21,7 +21,7 @@ class WinningResultTest {
         val explicitAmount = Amount(4000)
 
         val ticket =
-            LotteryStore().setStrategy(
+            LotteryStore(
                 ExplicitTicketGenerationStrategy(
                     explicitAmount,
                     explicitWinning,
