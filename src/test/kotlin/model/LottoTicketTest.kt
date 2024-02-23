@@ -5,7 +5,7 @@ import org.junit.jupiter.api.assertThrows
 
 class LottoTicketTest {
     @Test
-    fun `구매한 로또 번호 6개를 저장한다`() {
+    fun `로또의 번호는 6개이다`() {
         assertThrows<IllegalArgumentException> {
             LottoTicket(listOf(1, 2, 3, 4, 5, 6, 7))
         }
