@@ -1,7 +1,6 @@
 package model
 
 class WinningStatistics(private val results: List<WinningStatistic>) {
-
     fun calculateRateOfReturn(purchaseAmount: Int): Double {
         val totalWinningAmount = calculateTotalWinningAmount()
         return totalWinningAmount.toDouble() / purchaseAmount

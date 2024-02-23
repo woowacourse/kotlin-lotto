@@ -18,9 +18,11 @@ class PublishLottoTest {
 
     @Test
     fun `로또 번호가 1에서 45사이의 숫자인지 확인`() {
-        assertThat(lottoNumbers.all { number ->
-            number in 1..45
-        }).isTrue
+        assertThat(
+            lottoNumbers.all { number ->
+                number in 1..45
+            },
+        ).isTrue
     }
 
     @Test

@@ -1,7 +1,6 @@
 package model
 
 class WinningStatistic(val result: Pair<Rank, Int>) {
-
     override fun toString(): String {
         val rank = result.first
         val count = result.second
