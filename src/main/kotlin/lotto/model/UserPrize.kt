@@ -1,7 +1,5 @@
 package lotto.model
 
-import lotto.util.Constant
-
 class UserPrize(
     private val matches: Map<LottoPrize, Int>,
 ) {

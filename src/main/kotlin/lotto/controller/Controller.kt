@@ -1,8 +1,17 @@
 package lotto.controller
 
-import lotto.model.*
+import lotto.model.LottoGenerator
+import lotto.model.Lottos
+import lotto.model.WinningNumber
 import lotto.util.Constant
-import lotto.view.*
+import lotto.view.calculationOfYield
+import lotto.view.insertBonusNumbers
+import lotto.view.insertCostMessage
+import lotto.view.insertWinNumbers
+import lotto.view.outputWinningNumber
+import lotto.view.purchaseCountMessage
+import lotto.view.showLotto
+import lotto.view.winningStatistics
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -13,14 +22,14 @@ class Controller {
 
     fun run() {
         insertCostMessage()
-        val charge = Veilfier.inputCharge()
+        val charge = Verifier.inputCharge()
         val count = charge / Constant.LOTTO_PRICE.toInt()
         purchaseCountMessage(count)
         val lottos = makeLottos(count)
         insertWinNumbers()
-        val winning = Veilfier.inputWinning()
+        val winning = Verifier.inputWinning()
         insertBonusNumbers()
-        val bonusNumber = Veilfier.inputBonusNumber()
+        val bonusNumber = Verifier.inputBonusNumber()
 
         val winningNumber = WinningNumber(
             lotto = winning,
