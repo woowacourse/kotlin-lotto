@@ -7,10 +7,10 @@ class LottoResult(val resultMap: Map<Rank, Int>) {
         Rank.entries.reversed().forEach { rank ->
             val count = resultMap[rank] ?: EMPTY_COUNT
             result +=
-                when (rank) {
-                    Rank.MISS -> ""
-                    Rank.SECOND -> WINNING_BONUS_MESSAGE.format(rank.countOfMatch, rank.winningMoney, count)
-                    else -> WINNING_MESSAGE.format(rank.countOfMatch, rank.winningMoney, count)
+                when (rank.rankState) {
+                    RankState.WINNING -> WINNING_MESSAGE.format(rank.countOfMatch, rank.winningMoney, count)
+                    RankState.BONUS_WINNING -> WINNING_BONUS_MESSAGE.format(rank.countOfMatch, rank.winningMoney, count)
+                    else -> ""
                 }
         }
         return result
