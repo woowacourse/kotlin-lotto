@@ -1,6 +1,10 @@
 package lotto.model
 
 class PurchaseAmount(val money: Int) {
+    init {
+        validateNumberRange(money)
+    }
+
     constructor(money: String) : this(validateInputMoney(money))
 
     companion object {
@@ -16,11 +20,7 @@ class PurchaseAmount(val money: Int) {
         }
 
         private fun validateIsDigit(inputMoney: String) {
-            try {
-                inputMoney.toInt()
-            } catch (e: IllegalArgumentException) {
-                println(ERROR_INPUT_TYPE_MESSAGE)
-            }
+            require(inputMoney.all { it.isDigit() }) { ERROR_INPUT_TYPE_MESSAGE }
         }
 
         private fun validateNumberRange(amount: Int) {
