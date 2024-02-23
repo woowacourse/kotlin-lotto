@@ -11,7 +11,7 @@ object LottoMachine {
         val tickets = mutableListOf<Lotto>()
         repeat(count) {
             tickets.add(
-                Lotto(NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted().map { LottoNumber(it) }),
+                Lotto(NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).map { LottoNumber(it) }.toSet()),
             )
         }
         return tickets

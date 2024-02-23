@@ -13,7 +13,7 @@ import kotlin.IllegalArgumentException
 class LottoTest {
     private val lotto =
         Lotto(
-            listOf(
+            setOf(
                 LottoNumber("1"),
                 LottoNumber("2"),
                 LottoNumber("3"),
@@ -26,14 +26,14 @@ class LottoTest {
     @ParameterizedTest
     @ValueSource(strings = ["1, 1, 1, 2, 3, 4", "1, 2, 3, 4, 5, 30, 1", "3, 4, 5, 30, 1"])
     fun `로또 번호는 1~45 사이의 6개의 서로 다른 자연수를 갖지 않으면 오류를 발생시킨다`(input: String) {
-        val numbers = input.split(", ").map { LottoNumber(it) }
+        val numbers = input.split(", ").map { LottoNumber(it) }.toSet()
         assertThrows<IllegalArgumentException> { Lotto(numbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 2, 3, 4, 5, 6", "40, 41, 42, 43, 44, 45", "7, 2, 3, 4, 5, 35"])
     fun `로또 번호는 1~45 사이의 6개의 서로 다른 자연수를 갖는다`(input: String) {
-        val numbers = input.split(", ").map { LottoNumber(it) }
+        val numbers = input.split(", ").map { LottoNumber(it) }.toSet()
         assertDoesNotThrow { Lotto(numbers) }
     }
 
@@ -47,7 +47,8 @@ class LottoTest {
         winning: String,
         expected: Int,
     ) {
-        val result = lotto.matchWinningNumbers(Lotto(winning.split(" ").map { LottoNumber(it) }))
+        val winningNumbers = winning.split(" ").map { LottoNumber(it) }.toSet()
+        val result = lotto.matchWinningNumbers(Lotto(winningNumbers))
         assertThat(result).isEqualTo(expected)
     }
 
