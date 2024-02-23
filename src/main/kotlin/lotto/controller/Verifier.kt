@@ -6,21 +6,21 @@ private const val SEPARATOR = ","
 private const val WRONG_INPUT = "잘못 된 입력 값입니다."
 private const val NEED_NUMBER = "로또 넘버는 숫자를 입력해야 합니다."
 
-fun inputCharge(): Int {
+fun inputCharge(userInput: String?): Int? {
     return try {
-        readlnOrNull()
+        userInput
             ?.toIntOrNull()
             ?: throw (IllegalArgumentException(WRONG_INPUT))
     } catch (e: IllegalArgumentException) {
         println(e.message)
-        inputCharge()
+        null
     }
 }
 
-fun inputWinning(): Lotto {
+fun inputWinning(userInput: String?): Lotto? {
     return try {
         Lotto(
-            readlnOrNull()
+            userInput
                 ?.split(SEPARATOR)
                 ?.map {
                     it.trim().toIntOrNull() ?: throw (IllegalArgumentException(NEED_NUMBER))
@@ -29,16 +29,17 @@ fun inputWinning(): Lotto {
         )
     } catch (e: IllegalArgumentException) {
         println(e.message)
-        inputWinning()
+        null
     }
 }
 
-fun inputBonusNumber(): Int {
+fun inputBonus(userInput: String?): Int? {
     return try {
-        readlnOrNull()?.toIntOrNull()
+        userInput
+            ?.toIntOrNull()
             ?: throw (IllegalArgumentException(WRONG_INPUT))
     } catch (e: IllegalArgumentException) {
         println(e.message)
-        inputBonusNumber()
+        null
     }
 }
