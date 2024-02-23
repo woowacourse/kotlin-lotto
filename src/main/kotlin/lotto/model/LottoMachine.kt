@@ -1,17 +1,20 @@
 package lotto.model
 
-import lotto.model.LottoNumber.Companion.NUMBER_RANGE
+import lotto.util.NumbersGenerator
 
 object LottoMachine {
     const val TICKET_PRICE = 1_000
 
     fun getNumberOfTicket(cash: Int): Int = cash / TICKET_PRICE
 
-    fun issueTickets(count: Int): List<Lotto> {
+    fun issueTickets(
+        count: Int,
+        lottoNumbersGenerator: NumbersGenerator,
+    ): List<Lotto> {
         val tickets = mutableListOf<Lotto>()
         repeat(count) {
             tickets.add(
-                Lotto(NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).map { LottoNumber(it) }.toSet()),
+                Lotto(lottoNumbersGenerator.generateNumbers().map { LottoNumber(it) }.toSet()),
             )
         }
         return tickets
