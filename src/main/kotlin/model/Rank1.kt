@@ -66,6 +66,3 @@ enum class Rank1(val countOfMatch: Int, val winningMoney: Int) {
         }
     }
 }
-
-fun main() {
-}
