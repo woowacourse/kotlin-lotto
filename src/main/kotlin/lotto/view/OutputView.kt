@@ -29,7 +29,7 @@ object OutputView {
         lottoPrize: LottoPrize,
         matchingCount: Int,
     ): String {
-        if (lottoPrize == LottoPrize.SECOND) {
+        if (lottoPrize.isBonus()) {
             return StringConstants.OUTPUT_MATCHING_COUNT_BONUS.format(
                 lottoPrize.matchingCount,
                 lottoPrize.amount,

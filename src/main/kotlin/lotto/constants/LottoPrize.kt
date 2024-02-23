@@ -8,6 +8,8 @@ enum class LottoPrize(val matchingCount: Int, val amount: Int) {
     SECOND(5, 30000000),
     FIRST(6, 2000000000), ;
 
+    fun isBonus() = this == SECOND
+
     companion object {
         fun getLottoPrize(
             matchingCount: Int,
