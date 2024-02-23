@@ -6,10 +6,13 @@ enum class WinningRank(val matchCount: Int, val prize: Long, val isBonus: Boolea
     FOURTH(4, 50_000),
     THIRD(5, 1_500_000),
     SECOND(5, 30_000_000, isBonus = true),
-    FIRST(6, 2_000_000_000);
+    FIRST(6, 2_000_000_000), ;
 
     companion object {
-        fun findByMatchCount(matchCount: Int, isBonusMatched: Boolean): WinningRank {
+        fun findByMatchCount(
+            matchCount: Int,
+            isBonusMatched: Boolean,
+        ): WinningRank {
             return entries.firstOrNull {
                 (it.matchCount == matchCount) && (it.isBonus == isBonusMatched)
             } ?: NONE

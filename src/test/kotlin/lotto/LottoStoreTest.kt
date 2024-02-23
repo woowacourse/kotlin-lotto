@@ -17,8 +17,7 @@ class LottoStoreTest {
         val winningNumbers = setUpLotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(7)
         Assertions.assertThat(
-            lottoStore.getWinningResult(winningNumbers, bonusNumber)
+            lottoStore.getWinningResult(winningNumbers, bonusNumber),
         ).isEqualTo(mapOf(WinningRank.FIRST to 3))
-
     }
 }

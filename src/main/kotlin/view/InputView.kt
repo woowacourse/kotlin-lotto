@@ -1,11 +1,9 @@
 package lotto.view
 
 class InputView {
-    fun readPurchaseAmount(): String =
-        validateNullInput(readlnOrNull())
+    fun readPurchaseAmount(): String = validateNullInput(readlnOrNull())
 
-    fun readWinningNumbers(): String =
-        validateNullInput(readlnOrNull()).replace(" ", "")
+    fun readWinningNumbers(): String = validateNullInput(readlnOrNull()).replace(" ", "")
 
     fun readWinningBonusNumber(): Int {
         val bonusNumber = validateNullInput(readlnOrNull())
