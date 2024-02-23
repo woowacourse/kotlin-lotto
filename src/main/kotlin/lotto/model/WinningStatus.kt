@@ -1,7 +1,6 @@
 package lotto.model
 
 import lotto.model.LottoMachine.TICKET_PRICE
-import lotto.util.WinningRank
 
 data class WinningStatus(val resultStatus: Map<WinningRank, Int>) {
     fun getEarningRate(): Double {

@@ -1,6 +1,5 @@
 package lotto.model
 
-import lotto.util.WinningRank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

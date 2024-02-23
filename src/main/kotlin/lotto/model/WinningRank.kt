@@ -1,4 +1,4 @@
-package lotto.util
+package lotto.model
 
 enum class WinningRank(val countOfMatch: Int, val winningMoney: Long) {
     MISS(0, 0),
