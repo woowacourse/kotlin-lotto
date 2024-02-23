@@ -1,15 +1,15 @@
 package lotto.model
 
-import lotto.util.Constant
+import lotto.util.LottoRule
 
 object LottoGenerator {
-    private val lottos = Constant.LOTTO_NUM_RANGE.toList()
+    private val lottos = LottoRule.LOTTO_NUM_RANGE.toList()
 
     fun generateLotto(): Lotto {
         return Lotto(
             numbers = lottos
                 .shuffled()
-                .take(Constant.LOTTO_LEN)
+                .take(LottoRule.LOTTO_LEN)
                 .toSet()
         )
     }

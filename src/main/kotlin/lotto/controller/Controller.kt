@@ -2,7 +2,7 @@ package lotto.controller
 
 import lotto.model.Lottos
 import lotto.model.WinningNumber
-import lotto.util.Constant
+import lotto.util.LottoRule
 import lotto.view.calculationOfYield
 import lotto.view.inputBonusNumbers
 import lotto.view.inputCostMessage
@@ -17,7 +17,7 @@ class Controller {
     fun run() {
         inputCostMessage()
         val charge = Verifier.inputCharge()
-        val count = charge / Constant.LOTTO_PRICE.toInt()
+        val count = charge / LottoRule.LOTTO_PRICE.toInt()
         purchaseCountMessage(count)
         val lottos = Lottos(count)
         lottos.getLottos().forEach {

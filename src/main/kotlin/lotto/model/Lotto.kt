@@ -1,11 +1,11 @@
 package lotto.model
 
-import lotto.util.Constant
+import lotto.util.LottoRule
 
 class Lotto(private val numbers: Set<Int>) {
     init {
-        require(numbers.size == Constant.LOTTO_LEN)
-        require(numbers.all { it in Constant.LOTTO_NUM_RANGE })
+        require(numbers.size == LottoRule.LOTTO_LEN)
+        require(numbers.all { it in LottoRule.LOTTO_NUM_RANGE })
     }
 
     fun getNumbers(): Set<Int> {
