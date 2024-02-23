@@ -1,14 +1,14 @@
 package lotto.view
 
-import lotto.domain.model.Money
 import lotto.util.Constants.LOTTO_PRICE
 
 object InputView {
 
     private const val LOTTO_PRIZE = 1000
+    private const val MINIMUM_PURCHASE_AMOUNT = 0
     private const val WINNING_NUMBER_DELIMITER = ","
+    private const val MINIMUM_VALUE_EXCEPTION_MESSAGE = "구입 금액은 ${MINIMUM_PURCHASE_AMOUNT}원 이상이어야 합니다."
     private const val INVALID_UNIT_EXCEPTION_MESSAGE = "구입 금액은 ${LOTTO_PRIZE}원 단위여야 합니다."
-    private const val MINIMUM_VALUE_EXCEPTION_MESSAGE = "구입 금액은 ${Money.ZERO}원 이상이어야 합니다."
     private const val INVALID_FORMAT_EXCEPTION_MESSAGE = "입력값은 정수여야 합니다."
 
     fun readPurchaseAmount(): Long {

@@ -22,7 +22,6 @@ class LottoController(
         val lottoTickets = makeLottoTicket(quantity)
         val result = drawLotto(lottoTickets)
         showResult(result, money)
-        Money.ZERO
     }
 
     private fun receiveMoney(): Pair<Money, Int> {
