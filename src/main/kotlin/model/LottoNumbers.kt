@@ -2,7 +2,7 @@ package lotto.model
 
 import model.LottoNumber
 
-data class LottoNumbers(val numbers: List<LottoNumber>) {
+data class LottoNumbers(val numbers: Set<LottoNumber>) {
     init {
         require(numbers.size == LOTTO_SIZE) {
             ERROR_LOTTO_SIZE
@@ -18,7 +18,7 @@ data class LottoNumbers(val numbers: List<LottoNumber>) {
         private const val ERROR_LOTTO_DUPLICATE = "로또 번호는 중복될 수 없습니다."
 
         fun lottoNumbersOf(vararg numbers: Int): LottoNumbers {
-            return LottoNumbers(numbers.map { LottoNumber(it) }.toList())
+            return LottoNumbers(numbers.map { LottoNumber(it) }.toSet())
         }
     }
 }
