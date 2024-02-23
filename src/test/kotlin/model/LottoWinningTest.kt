@@ -1,8 +1,8 @@
 package model
 
-import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -10,7 +10,7 @@ class LottoWinningTest {
     private lateinit var winningTicket: LottoTicket
 
     @BeforeEach
-    fun setup(){
+    fun setup() {
         winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
     }
 
@@ -39,36 +39,48 @@ class LottoWinningTest {
 
     @Test
     fun `보너스 번호 포함 여부 테스트`() {
-        val winningTicket = LottoTicket(listOf(1,2,3,4,5,7))
-        val userTicket = LottoTicket(listOf(1,2,3,4,5,6))
+        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 7))
+        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
         val userTickets = listOf(userTicket)
         val bonusNumber = 7
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
         val actual = lottoWinning.isBonusInTicket(winningTicket)
         assertThat(actual).isEqualTo(true)
     }
-    /*
+
     @Test
     fun `등수 통계 테스트`() {
-        val userLottoSequence = sequence {
-            yield(LottoTicket(listOf(1, 2, 3, 4, 5, 6)))
-            yield(LottoTicket(listOf(1, 2, 3, 4, 5, 7)))
-            yield(LottoTicket(listOf(1, 2, 3, 4, 9, 8)))
-            yield(LottoTicket(listOf(1, 2, 3, 10, 9, 8)))
-            yield(LottoTicket(listOf(1, 2, 11, 10, 9, 8)))
-            yield(LottoTicket(listOf(43, 12, 36, 41, 25, 7)))
-            yield(LottoTicket(listOf(41, 12, 37, 43, 35, 7)))
-        }
-        val lottoPurchase = LottoPurchase(7000)
-        val winningTicket = LottoTicket(listOf(1,2,3,4,5,6))
+        val userLottoIterator = listOf(
+            LottoTicket(listOf(1, 2, 3, 4, 5, 6)), // rank first
+            LottoTicket(listOf(1, 2, 3, 4, 5, 7)), // rank second
+            LottoTicket(listOf(1, 2, 3, 4, 5, 8)), // rank third
+            LottoTicket(listOf(1, 2, 3, 4, 9, 8)), // rank fourth
+            LottoTicket(listOf(1, 2, 3, 10, 9, 8)), // rank fifth
+            LottoTicket(listOf(43, 12, 36, 41, 25, 7)), // rank miss
+        ).iterator()
+        val lottoPurchase = LottoPurchase(6000) { userLottoIterator.next() }
+        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = 7
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, lottoPurchase)
+
+        val userTickets = lottoPurchase.makeUserTickets()
+        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
         val winningChart = lottoWinning.makeWinningChart()
-        val actual = winningChart[Rank.]
-        assertThat(actual).isEqualTo(7)
+
+        val actual = Rank.entries.map {
+            it to winningChart.getNum(it)
+        }
+        val expected = listOf(
+            Rank.FIRST to 1,
+            Rank.SECOND to 1,
+            Rank.THIRD to 1,
+            Rank.FOURTH to 1,
+            Rank.FIFTH to 1,
+            Rank.MISS to 1,
+        )
+        assertThat(actual).isEqualTo(expected)
     }
-     */
-    companion object{
+
+    companion object {
         @JvmStatic
         fun generateArgumentMatchTest() = listOf(
             LottoTicket(listOf(1, 2, 3, 4, 5, 6)) to 6, // 6개 겹침, 1등 케이스,
