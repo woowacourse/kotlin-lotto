@@ -32,9 +32,9 @@ class OutputView {
     }
 
     companion object {
-        const val PURCHASE_MESSAGE = "%d개를 구매했습니다."
-        const val MATCH_MESSAGE = "%d개 일치 (%d원) - %d개"
-        const val MATCH_WITH_BONUS_MESSAGE = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
-        const val TOTAL_WINNING_RATE_MESSAGE = "총 수익률은 %.2f입니다."
+        private const val PURCHASE_MESSAGE = "%d개를 구매했습니다."
+        private const val MATCH_MESSAGE = "%d개 일치 (%d원) - %d개"
+        private const val MATCH_WITH_BONUS_MESSAGE = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
+        private const val TOTAL_WINNING_RATE_MESSAGE = "총 수익률은 %.2f입니다."
     }
 }
