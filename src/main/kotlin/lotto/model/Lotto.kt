@@ -1,6 +1,5 @@
 package lotto.model
 
-import lotto.constants.LottoPrize
 import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER
 
 class Lotto(numbers: List<Int>) {
@@ -17,14 +16,7 @@ class Lotto(numbers: List<Int>) {
 
     private fun List<Int>.isNotDuplicate() = distinct().size == SIZE
 
-    fun compare(
-        otherLotto: Lotto,
-        bonusNumber: LottoNumber,
-    ): LottoPrize {
-        val matchingCount = otherLotto.numbers.intersect(numbers).size
-        val isMatchingBonus = contains(bonusNumber)
-        return LottoPrize.getLottoPrize(matchingCount, isMatchingBonus)
-    }
+    fun getMatchingCount(otherLotto: Lotto) = otherLotto.numbers.intersect(numbers).size
 
     fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
 

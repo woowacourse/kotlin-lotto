@@ -34,15 +34,16 @@ class ModelTest {
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")
     fun `로또의 당첨 결과를 확인한다`(
-        otherLotto: List<Int>,
+        winningLottoNumbers: List<Int>,
         bonusNumber: Int,
         expected: LottoPrize,
     ) {
         // given
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
+        val otherLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
 
         // when
-        val actual = lotto.compare(Lotto(otherLotto), LottoNumber(bonusNumber))
+        val actual = winningLotto.getLottoPrize(otherLotto)
 
         // then
         assertThat(actual).isEqualTo(expected)

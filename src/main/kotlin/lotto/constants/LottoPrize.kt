@@ -11,7 +11,7 @@ enum class LottoPrize(val matchingCount: Int, val amount: Int) {
     fun isBonus() = this == SECOND
 
     companion object {
-        fun getLottoPrize(
+        fun valueOf(
             matchingCount: Int,
             isMatchingBonus: Boolean,
         ): LottoPrize {
