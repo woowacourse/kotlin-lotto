@@ -16,7 +16,8 @@ class Amount(val money: Int) {
         }
 
         fun fromInput(input: String): Amount {
-            return input.toInt().validatePriceBound().run { Amount(this) }
+            val money = input.toInt().validatePriceBound()
+            return Amount(money)
         }
     }
 }

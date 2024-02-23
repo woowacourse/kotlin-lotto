@@ -25,15 +25,13 @@ class Lottery(private val lotteryNumbers: List<LotteryNumber>) {
         const val EXCEPTION_DUPLICATED_NUMBER = "로또 번호에 중복이 없어야 합니다"
 
         fun fromList(numbers: List<Int>): Lottery {
-            return numbers.map { LotteryNumber(it) }.run { Lottery(this) }
+            val lotteryNumbers = numbers.map { LotteryNumber(it) }
+            return Lottery(lotteryNumbers)
         }
 
         fun fromInput(input: String): Lottery {
-            return input.split(LOTTERY_DELIMITER).map {
-                LotteryNumber.fromInput(it)
-            }.run {
-                Lottery(this)
-            }
+            val lotteryNumbers = input.split(LOTTERY_DELIMITER).map { LotteryNumber.fromInput(it) }
+            return Lottery(lotteryNumbers)
         }
     }
 }

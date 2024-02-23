@@ -17,7 +17,8 @@ data class LotteryNumber(val number: Int) {
         }
 
         fun fromInput(input: String): LotteryNumber {
-            return input.trim().toInt().validateRange().run { LotteryNumber(this) }
+            val validateRange = input.trim().toInt().validateRange()
+            return LotteryNumber(validateRange)
         }
     }
 }
