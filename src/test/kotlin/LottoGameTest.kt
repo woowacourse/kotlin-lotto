@@ -1,28 +1,129 @@
-import lotto.model.*
+import lotto.model.Lotto
+import lotto.model.LottoNumber
+import lotto.model.LottoPrize
+import lotto.model.Lottos
+import lotto.model.UserPrize
+import lotto.model.WinningNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoGameTest {
-    private val lottos = Lottos(
-        lottos = listOf(
-            Lotto(setOf(12, 11, 7, 8, 9, 10)),
-            Lotto(setOf(1, 11, 7, 8, 9, 10)),
-            Lotto(setOf(1, 2, 7, 8, 9, 10)),
-            Lotto(setOf(1, 2, 3, 7, 8, 9)),
-            Lotto(setOf(1, 2, 3, 4, 7, 8)),
-            Lotto(setOf(1, 2, 3, 4, 5, 8)),
-            Lotto(setOf(1, 2, 3, 4, 5, 7)),
-            Lotto(setOf(1, 2, 3, 4, 5, 6))
+    private val lottos =
+        Lottos(
+            lottos =
+                listOf(
+                    Lotto(
+                        setOf(
+                            LottoNumber(12),
+                            LottoNumber(11),
+                            LottoNumber(7),
+                            LottoNumber(8),
+                            LottoNumber(9),
+                            LottoNumber(10),
+                        ),
+                    ),
+                    Lotto(
+                        setOf(
+                            LottoNumber(1),
+                            LottoNumber(11),
+                            LottoNumber(7),
+                            LottoNumber(8),
+                            LottoNumber(9),
+                            LottoNumber(10),
+                        ),
+                    ),
+                    Lotto(
+                        setOf(
+                            LottoNumber(1),
+                            LottoNumber(2),
+                            LottoNumber(7),
+                            LottoNumber(8),
+                            LottoNumber(9),
+                            LottoNumber(10),
+                        ),
+                    ),
+                    Lotto(
+                        setOf(
+                            LottoNumber(1),
+                            LottoNumber(2),
+                            LottoNumber(3),
+                            LottoNumber(7),
+                            LottoNumber(8),
+                            LottoNumber(9),
+                        ),
+                    ),
+                    Lotto(
+                        setOf(
+                            LottoNumber(1),
+                            LottoNumber(2),
+                            LottoNumber(3),
+                            LottoNumber(4),
+                            LottoNumber(7),
+                            LottoNumber(8),
+                        ),
+                    ),
+                    Lotto(
+                        setOf(
+                            LottoNumber(1),
+                            LottoNumber(2),
+                            LottoNumber(3),
+                            LottoNumber(4),
+                            LottoNumber(5),
+                            LottoNumber(8),
+                        ),
+                    ),
+                    Lotto(
+                        setOf(
+                            LottoNumber(1),
+                            LottoNumber(2),
+                            LottoNumber(3),
+                            LottoNumber(4),
+                            LottoNumber(5),
+                            LottoNumber(7),
+                        ),
+                    ),
+                    Lotto(
+                        setOf(
+                            LottoNumber(1),
+                            LottoNumber(2),
+                            LottoNumber(3),
+                            LottoNumber(4),
+                            LottoNumber(5),
+                            LottoNumber(6),
+                        ),
+                    ),
+                ),
         )
-    )
-    private val winningNumberCorrect = WinningNumber(
-        lotto = Lotto(setOf(1,2,3,4,5,6)),
-        bonusNumber = 7
-    )
-    private val winningNumberWrong= WinningNumber(
-        lotto = Lotto(setOf(1,2,3,4,5,6)),
-        bonusNumber = 45
-    )
+    private val winningNumberCorrect =
+        WinningNumber(
+            lotto =
+                Lotto(
+                    setOf(
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5),
+                        LottoNumber(6),
+                    ),
+                ),
+            bonusNumber = LottoNumber(7),
+        )
+    private val winningNumberWrong =
+        WinningNumber(
+            lotto =
+                Lotto(
+                    setOf(
+                        LottoNumber(1),
+                        LottoNumber(2),
+                        LottoNumber(3),
+                        LottoNumber(4),
+                        LottoNumber(5),
+                        LottoNumber(6),
+                    ),
+                ),
+            bonusNumber = LottoNumber(45),
+        )
 
     @Test
     fun `보너스 매치`() {
@@ -69,6 +170,11 @@ class LottoGameTest {
 
     @Test
     fun `수익률 계산`() {
-        assertThat(0.35714285714285715).isEqualTo(UserPrize(mapOf(LottoPrize.FIRST to 1)).prizeRateCalculate(5000, 14000.0))
+        assertThat(0.35714285714285715).isEqualTo(
+            UserPrize(mapOf(LottoPrize.FIRST to 1)).prizeRateCalculate(
+                5000,
+                14000.0,
+            ),
+        )
     }
 }

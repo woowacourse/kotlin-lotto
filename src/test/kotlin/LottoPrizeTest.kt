@@ -15,6 +15,5 @@ class LottoPrizeTest {
             .isEqualTo(Triple(5, 30_000_000, "5개 일치, 보너스 볼 일치 (30,000,000원) -"))
         assertThat(LottoPrize.FIRST.getDetails())
             .isEqualTo(Triple(6, 2_000_000_000, "6개 일치 (2,000,000,000원) -"))
-
     }
 }

@@ -1,6 +1,8 @@
 package lotto.controller
 
 import lotto.model.Lotto
+import lotto.model.LottoNumber
+import lotto.util.Constant.LOTTO_LEN
 
 const val SEPARATOR = ","
 const val WRONG_INPUT = "잘못 된 입력 값입니다."
@@ -20,14 +22,17 @@ object Verifier {
 
     fun inputWinning(): Lotto {
         return try {
-            Lotto(
+            val inputNumbers =
                 readlnOrNull()
                     ?.split(SEPARATOR)
-                    ?.map {
-                        it.trim().toIntOrNull() ?: throw (IllegalArgumentException(NEED_NUMBER))
-                    }?.toSet()
-                    ?: throw (IllegalArgumentException(WRONG_INPUT))
-            )
+                    ?.map { it.trim().toIntOrNull() ?: throw IllegalArgumentException(NEED_NUMBER) }
+                    ?.map { LottoNumber(it) } // 정수를 LottoNumber로 변환
+                    ?.toSet()
+
+            if (inputNumbers?.size != LOTTO_LEN) {
+                throw IllegalArgumentException("정확히 ${LOTTO_LEN}개의 숫자를 입력해야 합니다.")
+            }
+            Lotto(inputNumbers)
         } catch (e: IllegalArgumentException) {
             println(e.message)
             inputWinning()

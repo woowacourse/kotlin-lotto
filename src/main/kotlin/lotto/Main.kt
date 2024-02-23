@@ -2,7 +2,7 @@ package lotto
 
 import lotto.controller.Controller
 
-fun main(){
+fun main() {
     val controller = Controller()
     controller.run()
 }

@@ -4,15 +4,17 @@ import lotto.util.Constant
 
 class LottoGenerator {
     fun generateLotto(): Lotto {
-        return Lotto(
-            numbers = lottos
-                .shuffled()
-                .take(Constant.LOTTO_LEN)
-                .toSet()
-        )
+        return Lotto(generateRandomLottoNumbers())
     }
 
     companion object {
-        private val lottos = Constant.LOTTO_NUM_RANGE.toList()
+        private fun generateRandomLottoNumbers(): Set<LottoNumber> {
+            return Constant
+                .LOTTO_NUM_RANGE
+                .shuffled()
+                .take(Constant.LOTTO_LEN)
+                .map { LottoNumber(it) }
+                .toSet()
+        }
     }
 }

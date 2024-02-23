@@ -1,12 +1,18 @@
 package lotto.controller
 
-import lotto.model.*
+import lotto.model.LottoGenerator
+import lotto.model.LottoNumber
+import lotto.model.Lottos
+import lotto.model.WinningNumber
 import lotto.util.Constant
-import lotto.view.*
-import java.io.BufferedReader
-import java.io.InputStreamReader
-
-private val br = BufferedReader(InputStreamReader(System.`in`))
+import lotto.view.calculationOfYield
+import lotto.view.insertBonusNumbers
+import lotto.view.insertCostMessage
+import lotto.view.insertWinNumbers
+import lotto.view.outputWinningNumber
+import lotto.view.purchaseCountMessage
+import lotto.view.showLotto
+import lotto.view.winningStatistics
 
 class Controller {
     private val lottoGenerator = LottoGenerator()
@@ -20,12 +26,12 @@ class Controller {
         insertWinNumbers()
         val winning = Verifier.inputWinning()
         insertBonusNumbers()
-        val bonusNumber = Verifier.inputBonusNumber()
-
-        val winningNumber = WinningNumber(
-            lotto = winning,
-            bonusNumber = bonusNumber
-        )
+        val bonusNumber = LottoNumber(Verifier.inputBonusNumber())
+        val winningNumber =
+            WinningNumber(
+                lotto = winning,
+                bonusNumber = bonusNumber,
+            )
         val prize = lottos.matchlottos(winningNumber)
         winningStatistics()
         outputWinningNumber(prize)
@@ -34,11 +40,12 @@ class Controller {
 
     private fun makeLottos(count: Int): Lottos {
         return Lottos(
-            lottos = List(count) {
-                val lotto = lottoGenerator.generateLotto()
-                showLotto(lotto)
-                lotto
-            }
+            lottos =
+                List(count) {
+                    val lotto = lottoGenerator.generateLotto()
+                    showLotto(lotto)
+                    lotto
+                },
         )
     }
 }

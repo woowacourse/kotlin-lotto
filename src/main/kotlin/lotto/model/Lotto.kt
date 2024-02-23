@@ -2,20 +2,15 @@ package lotto.model
 
 import lotto.util.Constant
 
-class Lotto(private val numbers: Set<Int>) {
+class Lotto(val numbers: Set<LottoNumber>) {
     init {
         require(numbers.size == Constant.LOTTO_LEN)
-        require(numbers.all { it in Constant.LOTTO_NUM_RANGE })
-    }
-
-    fun getNumbers(): Set<Int> {
-        return numbers
     }
 
     fun matchCount(winningNumber: WinningNumber): Int {
         return winningNumber
             .getWinning()
-            .getNumbers()
+            .numbers
             .intersect(numbers)
             .size
     }
@@ -25,12 +20,18 @@ class Lotto(private val numbers: Set<Int>) {
     }
 
     fun findRanking(winningNumber: WinningNumber): LottoPrize {
-        var rank = LottoPrize.entries.find {
-            it.getMatchNumbers() == matchCount(winningNumber)
-        } ?: LottoPrize.BOOM
-        if (checkSecond(rank, matchBonusNumber(winningNumber))) rank = LottoPrize.SECOND
+        var rank =
+            LottoPrize.entries.find {
+                it.getMatchNumbers() == matchCount(winningNumber)
+            } ?: LottoPrize.BOOM
+        if (checkSecond(rank, matchBonusNumber(winningNumber))) {
+            rank = LottoPrize.SECOND
+        }
         return rank
     }
 
-    private fun checkSecond(rank: LottoPrize, matchBonus: Boolean) = rank == LottoPrize.THIRD && matchBonus
+    private fun checkSecond(
+        rank: LottoPrize,
+        matchBonus: Boolean,
+    ) = rank == LottoPrize.THIRD && matchBonus
 }

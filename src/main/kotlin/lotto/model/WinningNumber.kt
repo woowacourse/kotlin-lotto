@@ -1,20 +1,14 @@
 package lotto.model
 
-import lotto.util.Constant
-
 class WinningNumber(
     private val lotto: Lotto,
-    private val bonusNumber: Int,
+    private val bonusNumber: LottoNumber,
 ) {
-    init {
-        require(bonusNumber in Constant.LOTTO_NUM_RANGE)
-    }
-
     fun getWinning(): Lotto {
         return lotto
     }
 
-    fun getBonusNumber(): Int {
+    fun getBonusNumber(): LottoNumber {
         return bonusNumber
     }
 }
