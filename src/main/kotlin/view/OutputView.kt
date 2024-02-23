@@ -26,7 +26,7 @@ class OutputView {
                     rank.countOfMatch,
                     if (rank == SECOND) ", 보너스 볼 일치" else "",
                     rank.winningMoney,
-                    lottoResults.getNum(rank),
+                    lottoResults.setNullZero(rank),
                 ),
             )
         }

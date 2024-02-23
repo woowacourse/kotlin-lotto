@@ -29,7 +29,7 @@ class LottoResultTest {
         val rankMap: MutableMap<Rank, Int> = mutableMapOf()
         rankMap[rank] = expected
         val lottoResult = LottoResult(rankMap)
-        val actual = lottoResult.getNum(rank)
+        val actual = lottoResult.setNullZero(rank)
         assertThat(actual).isEqualTo(expected)
     }
 }
