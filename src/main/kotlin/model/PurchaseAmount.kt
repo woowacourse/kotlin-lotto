@@ -2,14 +2,15 @@ package lotto.model
 
 class PurchaseAmount() {
     fun getAmount(inputMoney: String): Int {
-        val amount = inputMoney.toIntOrNull()
-            ?: throw IllegalArgumentException(ERROR_INPUT_TYPE_MESSAGE)
+        val amount =
+            inputMoney.toIntOrNull()
+                ?: throw IllegalArgumentException(ERROR_INPUT_TYPE_MESSAGE)
         validateNumberRange(amount)
         return amount
     }
 
     private fun validateNumberRange(amount: Int) {
-        require(amount > PURCHASE_UNIT) { ERROR_NUMBER_RANGE_MESSAGE }
+        require(amount >= PURCHASE_UNIT) { ERROR_NUMBER_RANGE_MESSAGE }
     }
 
     companion object {

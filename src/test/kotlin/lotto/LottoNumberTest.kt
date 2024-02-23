@@ -16,7 +16,7 @@ class LottoNumberTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [1,2,44,45])
+    @ValueSource(ints = [1, 2, 44, 45])
     fun `로또번호가 1~45 사이일 경우 예외가 발생하지 않는다`(number: Int) {
         assertDoesNotThrow { LottoNumber(number) }
     }

@@ -8,12 +8,16 @@ class Lottos(val lottos: MutableList<Lotto> = mutableListOf()) {
         lottos.add(lotto)
     }
 
-    fun winningResult(winningNumbers: Lotto, bonusNumber: LottoNumber): Map<WinningRank, Int> {
-        val winningResult = lottos.groupBy { lotto ->
-            val matchCount = lotto.getMatchCount(winningNumbers.lottoNumbers)
-            val matchBonus = lotto.getMatchBonus(bonusNumber.number)
-            WinningRank.findByMatchCount(matchCount, matchBonus)
-        }.mapValues { (_, value) -> value.size }
+    fun winningResult(
+        winningNumbers: Lotto,
+        bonusNumber: LottoNumber,
+    ): Map<WinningRank, Int> {
+        val winningResult =
+            lottos.groupBy { lotto ->
+                val matchCount = lotto.getMatchCount(winningNumbers.lottoNumbers)
+                val matchBonus = lotto.getMatchBonus(bonusNumber.number)
+                WinningRank.findByMatchCount(matchCount, matchBonus)
+            }.mapValues { (_, value) -> value.size }
 
         return winningResult
     }

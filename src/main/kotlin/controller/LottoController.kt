@@ -1,6 +1,11 @@
 package lotto.controller
 
-import lotto.model.*
+import lotto.model.LottoNumberGenerator
+import lotto.model.LottoNumbers
+import lotto.model.LottoStore
+import lotto.model.PurchaseAmount
+import lotto.model.WinningPrizeCalculator
+import lotto.model.WinningRank
 import lotto.view.InputView
 import lotto.view.OutputView
 import model.Lotto
@@ -38,7 +43,6 @@ class LottoController(private val inputView: InputView, private val outputView: 
         val winningNumbers =
             Lotto(LottoNumbers(inputView.readWinningNumbers().split(SPLIT_DELIMITER).map { LottoNumber(it.toInt()) }))
 
-
         outputView.printBonusNumberMessage()
         val bonusNumber = LottoNumber(inputView.readWinningBonusNumber())
         return Pair(winningNumbers, bonusNumber)
@@ -48,7 +52,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
         lottoStore: LottoStore,
         winningNumbers: Lotto,
         bonusNumber: LottoNumber,
-        purchaseAmount: Int
+        purchaseAmount: Int,
     ) {
         val rankCounts = lottoStore.getWinningResult(winningNumbers, bonusNumber)
 

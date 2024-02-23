@@ -19,7 +19,7 @@ class LottosTest {
         lottos.add(testLotto1)
         lottos.add(testLotto2)
         assertThat(lottos.lottos).usingRecursiveComparison().isEqualTo(
-            listOf(testLotto1, testLotto2)
+            listOf(testLotto1, testLotto2),
         )
     }
 
@@ -30,8 +30,8 @@ class LottosTest {
         assertThat(
             lottos.winningResult(
                 setUpLotto(1, 2, 3, 4, 5, 6),
-                LottoNumber(10)
-            )
+                LottoNumber(10),
+            ),
         ).isEqualTo(mapOf(WinningRank.FIRST to 1))
     }
 
@@ -42,8 +42,8 @@ class LottosTest {
         assertThat(
             lottos.winningResult(
                 setUpLotto(1, 2, 3, 4, 5, 7),
-                LottoNumber(6)
-            )
+                LottoNumber(6),
+            ),
         ).isEqualTo(mapOf(WinningRank.SECOND to 1))
     }
 
@@ -54,8 +54,8 @@ class LottosTest {
         assertThat(
             lottos.winningResult(
                 setUpLotto(1, 2, 3, 4, 5, 7),
-                LottoNumber(10)
-            )
+                LottoNumber(10),
+            ),
         ).isEqualTo(mapOf(WinningRank.THIRD to 1))
     }
 
@@ -66,8 +66,8 @@ class LottosTest {
         assertThat(
             lottos.winningResult(
                 setUpLotto(1, 2, 3, 4, 15, 25),
-                LottoNumber(10)
-            )
+                LottoNumber(10),
+            ),
         ).isEqualTo(mapOf(WinningRank.FOURTH to 1))
     }
 
@@ -78,8 +78,8 @@ class LottosTest {
         assertThat(
             lottos.winningResult(
                 setUpLotto(1, 2, 3, 14, 15, 17),
-                LottoNumber(40)
-            )
+                LottoNumber(40),
+            ),
         ).isEqualTo(mapOf(WinningRank.FIFTH to 1))
     }
 
@@ -90,8 +90,8 @@ class LottosTest {
         assertThat(
             lottos.winningResult(
                 setUpLotto(11, 22, 33, 34, 35, 37),
-                LottoNumber(17)
-            )
+                LottoNumber(17),
+            ),
         ).isEqualTo(mapOf(WinningRank.NONE to 1))
     }
 }
