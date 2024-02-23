@@ -1,6 +1,5 @@
 package lotto.model
 
-import lotto.constants.LottoConstants.LOTTO_SIZE
 import lotto.constants.LottoPrize
 import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER
 
@@ -14,9 +13,9 @@ class Lotto(numbers: List<Int>) {
         this.numbers = numbers.sorted().map { LottoNumber(it) }
     }
 
-    private fun List<Int>.isValidSize() = size == LOTTO_SIZE
+    private fun List<Int>.isValidSize() = size == SIZE
 
-    private fun List<Int>.isNotDuplicate() = distinct().size == LOTTO_SIZE
+    private fun List<Int>.isNotDuplicate() = distinct().size == SIZE
 
     fun compare(
         otherLotto: Lotto,
@@ -30,4 +29,9 @@ class Lotto(numbers: List<Int>) {
     fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
 
     override fun toString() = numbers.toString()
+
+    companion object {
+        const val SIZE = 6
+        const val PRICE = 1000
+    }
 }

@@ -1,11 +1,9 @@
 package lotto.service
 
-import lotto.constants.LottoConstants.LOTTO_MAX_NUMBER
-import lotto.constants.LottoConstants.LOTTO_MIN_NUMBER
-import lotto.constants.LottoConstants.LOTTO_SIZE
+import lotto.model.Lotto
 
 object RandomLottoNumberGenerator : LottoNumberGenerator {
-    private val randomLottoNumbers = (LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER).toList()
+    private val randomLottoNumbers = (Lotto.SIZE..Lotto.SIZE).toList()
 
-    override fun generate() = randomLottoNumbers.shuffled().take(LOTTO_SIZE)
+    override fun generate() = randomLottoNumbers.shuffled().take(Lotto.SIZE)
 }
