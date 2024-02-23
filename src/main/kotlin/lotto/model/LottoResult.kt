@@ -1,12 +1,16 @@
 package lotto.model
 
-data class LottoResult(val static: Map<Rank, Int>) {
+data class LottoResult(private val winningStatistics: Map<Rank, Int>) {
     fun getProfitRate(): Double {
         val totalProfit =
-            static.entries.sumOf { (rank, count) ->
+            winningStatistics.entries.sumOf { (rank, count) ->
                 rank.winningMoney * count
             }
-        val totalCount = static.entries.sumOf { (_, count) -> count }
+        val totalCount = winningStatistics.entries.sumOf { (_, count) -> count }
         return totalProfit.toDouble() / (totalCount * Lotto.LOTTO_PRICE)
+    }
+
+    fun getWinningCountBy(rank: Rank): Int {
+        return winningStatistics[rank] ?: 0
     }
 }
