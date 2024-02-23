@@ -6,6 +6,7 @@ const val REQUEST_BONUS_NUM = "보너스 번호를 입력해 주세요."
 
 fun inputCostMessage() {
     println(REQUEST_PURCHASE_PRICE)
+    readlnOrNull()
 }
 
 fun inputWinNumbers() {

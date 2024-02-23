@@ -8,7 +8,7 @@ class Lottos(
         makeLottos()
     }
 
-    fun matchlottos(
+    fun matchLottos(
         winningNumber: WinningNumber,
     ): UserPrize {
         return UserPrize(
