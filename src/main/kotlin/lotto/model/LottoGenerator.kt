@@ -2,7 +2,9 @@ package lotto.model
 
 import lotto.util.Constant
 
-class LottoGenerator {
+object LottoGenerator {
+    private val lottos = Constant.LOTTO_NUM_RANGE.toList()
+
     fun generateLotto(): Lotto {
         return Lotto(
             numbers = lottos
@@ -10,9 +12,5 @@ class LottoGenerator {
                 .take(Constant.LOTTO_LEN)
                 .toSet()
         )
-    }
-
-    companion object {
-        private val lottos = Constant.LOTTO_NUM_RANGE.toList()
     }
 }
