@@ -53,5 +53,4 @@ class WinningLottoTest {
 
         assertThat(actual).isEqualTo(expected)
     }
-
 }

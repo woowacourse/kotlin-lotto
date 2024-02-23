@@ -7,7 +7,8 @@ enum class InputException(private val message: String) {
     INVALID_WINNING_NUMBERS_SIZE("당첨 번호의 개수가 6개가 아닌 경우 예외 처리한다."),
     INVALID_WINNING_NUMBERS_DUPLICATE("당첨 숫자가 중복되는 경우 예외 처리한다."),
     INVALID_BONUS_NUMBER_RANGE("보너스 번호가 1~45사이의 숫자가 아닌 경우 예외 처리한다."),
-    INVALID_BONUS_NUMBER_DUPLICATE("보너스 번호가 당첨 숫자와 중복되는 경우 예외 처리한다.");
+    INVALID_BONUS_NUMBER_DUPLICATE("보너스 번호가 당첨 숫자와 중복되는 경우 예외 처리한다."),
+    ;
 
     fun getMessage() = "[ERROR] $message"
 }

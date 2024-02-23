@@ -5,7 +5,6 @@ import org.junit.jupiter.params.provider.ValueSource
 import util.InputValidator
 
 class InputTest {
-
     @ParameterizedTest
     @ValueSource(strings = ["8000", "1000", "15000"])
     fun `올바른 구입금액 입력`(purchaseAmount: String) {

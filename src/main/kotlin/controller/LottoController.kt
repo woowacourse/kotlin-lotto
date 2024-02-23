@@ -1,6 +1,13 @@
 package controller
 
-import model.*
+import model.Buyer
+import model.Lotto
+import model.Lottos
+import model.NumberGenerator
+import model.Rank
+import model.WinningLotto
+import model.WinningStatistic
+import model.WinningStatistics
 import view.InputView
 import view.OutputView
 
@@ -42,10 +49,14 @@ class LottoController {
         return WinningLotto(winningNumbers, bonusNumber)
     }
 
-    private fun makeWinningStatics(lottos: Lottos, winningLotto: WinningLotto): WinningStatistics {
-        val results = MutableList(6) {
-            WinningStatistic(Pair(Rank.getRankByOrdinal(it), 0))
-        }
+    private fun makeWinningStatics(
+        lottos: Lottos,
+        winningLotto: WinningLotto,
+    ): WinningStatistics {
+        val results =
+            MutableList(6) {
+                WinningStatistic(Pair(Rank.getRankByOrdinal(it), 0))
+            }
         repeat(lottos.publishedLottos.size) { index ->
             val rank = judgeRank(lottos.publishedLottos[index], winningLotto)
             val currentCount = results[rank.ordinal].result.second
@@ -55,7 +66,10 @@ class LottoController {
         return WinningStatistics(results)
     }
 
-    private fun judgeRank(lotto: Lotto, winningLotto: WinningLotto): Rank {
+    private fun judgeRank(
+        lotto: Lotto,
+        winningLotto: WinningLotto,
+    ): Rank {
         val countOfMatch = winningLotto.calculateCountOfMatch(lotto)
         val bonusMatched = winningLotto.checkBonusNumberMatched(lotto)
         return Rank.getRank(countOfMatch, bonusMatched)
