@@ -13,7 +13,7 @@ class LottoStoreTest {
 
     @Test
     fun `로또 결과 계산 테스트`() {
-        val lottoStore = LottoStore(3, TestNumberGenerator())
+        val lottoStore = LottoStore(3, TestLottoNumberGenerator())
         val winningNumbers = setUpLotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(7)
         Assertions.assertThat(
