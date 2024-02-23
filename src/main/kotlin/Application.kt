@@ -1,6 +1,6 @@
 import controller.LottoController
 
-fun main(){
+fun main() {
     val lottoController = LottoController()
     lottoController.run()
 }

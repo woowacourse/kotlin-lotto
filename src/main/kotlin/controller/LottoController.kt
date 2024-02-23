@@ -18,7 +18,10 @@ class LottoController {
         printWinningResult(winningChart, winningRate)
     }
 
-    private fun printWinningResult(winningChart: LottoResult, winningRate: Float) {
+    private fun printWinningResult(
+        winningChart: LottoResult,
+        winningRate: Float,
+    ) {
         outputView.printWinningChart(winningChart)
         outputView.printWinningRate(winningRate)
     }
@@ -26,7 +29,7 @@ class LottoController {
     private fun checkWinning(
         winningTicket: LottoTicket,
         bonusNumber: Int,
-        lottoTickets: List<LottoTicket>
+        lottoTickets: List<LottoTicket>,
     ): Pair<LottoResult, Float> {
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, lottoTickets)
         val winningChart = lottoWinning.makeWinningChart()
