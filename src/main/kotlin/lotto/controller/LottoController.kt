@@ -2,9 +2,9 @@ package lotto.controller
 
 import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
-import lotto.service.ResultCalculator
 import lotto.model.WinningLotto
 import lotto.service.RandomLottoNumberGenerator
+import lotto.service.ResultCalculator
 import lotto.utils.retryWhileNoException
 import lotto.view.InputView
 import lotto.view.OutputView

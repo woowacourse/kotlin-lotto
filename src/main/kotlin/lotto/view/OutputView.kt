@@ -10,13 +10,14 @@ object OutputView {
 
     fun printPurchaseLotto(lottoStore: LottoStore) {
         println(StringConstants.OUTPUT_PURCHASE_COUNT.format(lottoStore.lottos.size))
-        lottoStore.lottos.forEach { lotto ->
-            println(lotto)
-        }
+        lottoStore.lottos.forEach { println(it) }
         println()
     }
 
-    fun printWinningStatistics(prizeCount: Map<LottoPrize, Int>, profitRatio: Double) {
+    fun printWinningStatistics(
+        prizeCount: Map<LottoPrize, Int>,
+        profitRatio: Double,
+    ) {
         println(StringConstants.OUTPUT_WINNING_STATICS)
         println(StringConstants.OUTPUT_DIVIDER)
 
@@ -28,16 +29,23 @@ object OutputView {
         println(OUTPUT_PROFIT_RATIO.format(profitRatio.provideTwoDecimal()))
     }
 
-    private fun provideMatchingMessage(lottoPrize: LottoPrize, matchingCount: Int): String {
+    private fun provideMatchingMessage(
+        lottoPrize: LottoPrize,
+        matchingCount: Int,
+    ): String {
         if (lottoPrize == LottoPrize.SECOND) {
             return StringConstants.OUTPUT_MATCHING_COUNT_BONUS.format(
                 lottoPrize.matchingCount,
                 lottoPrize.amount,
-                matchingCount
+                matchingCount,
             )
         }
 
-        return StringConstants.OUTPUT_MATCHING_COUNT.format(lottoPrize.matchingCount, lottoPrize.amount, matchingCount)
+        return StringConstants.OUTPUT_MATCHING_COUNT.format(
+            lottoPrize.matchingCount,
+            lottoPrize.amount,
+            matchingCount,
+        )
     }
 
     private fun Double.provideTwoDecimal() = "%.2f".format(this)

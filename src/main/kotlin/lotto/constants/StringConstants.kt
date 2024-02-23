@@ -1,9 +1,6 @@
 package lotto.constants
 
-import lotto.model.LottoNumber
-
 object StringConstants {
-
     const val ERROR_MESSAGE = "[ERROR]"
     const val INVALID_PURCHASE_PRICE = "올바른 구매 금액을 입력해 주세요."
     const val INVALID_LOTTO_NUMBER = "올바른 로또 번호를 입력해 주세요."
@@ -21,5 +18,4 @@ object StringConstants {
     const val OUTPUT_WINNING_STATICS = "당첨 통계"
     const val OUTPUT_DIVIDER = "---------"
     const val OUTPUT_PROFIT_RATIO = "총 수익률은 %s입니다."
-
 }

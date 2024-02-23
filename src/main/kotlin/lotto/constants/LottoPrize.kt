@@ -6,13 +6,15 @@ enum class LottoPrize(val matchingCount: Int, val amount: Int) {
     FOURTH(4, 50000),
     THIRD(5, 1500000),
     SECOND(5, 30000000),
-    FIRST(6, 2000000000);
+    FIRST(6, 2000000000), ;
 
     companion object {
-        fun getLottoPrize(matchingCount: Int, isMatchingBonus: Boolean): LottoPrize {
+        fun getLottoPrize(
+            matchingCount: Int,
+            isMatchingBonus: Boolean,
+        ): LottoPrize {
             if (matchingCount == 5) {
-                return if (isMatchingBonus) SECOND
-                else THIRD
+                return if (isMatchingBonus) SECOND else THIRD
             }
             return entries.find { it.matchingCount == matchingCount } ?: NOTHING
         }
