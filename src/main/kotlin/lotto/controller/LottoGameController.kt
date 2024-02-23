@@ -21,8 +21,8 @@ class LottoGameController {
 
     private fun makeResult(lottoTickets: List<Lotto>) {
         val lotteryResult =
-            LotteryResult(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber(), lottoTickets)
-        val winningStatus = WinningStatus(lotteryResult.generateWinningStatus())
+            LotteryResult(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
+        val winningStatus = WinningStatus(lotteryResult.generateWinningStatus(lottoTickets))
 
         OutputView.printWinningStatus(winningStatus)
         OutputView.printEarningRate(winningStatus.getEarningRate())
