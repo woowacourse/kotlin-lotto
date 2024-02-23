@@ -44,7 +44,9 @@ object OutputView {
         )
     }
 
-    fun printProfitRatio(profitRatio: Double) = println(OUTPUT_PROFIT_RATIO.format(profitRatio.convertTwoDecimal()))
+    fun printProfitRatio(profitRatio: Double) {
+        return println(OUTPUT_PROFIT_RATIO.format(profitRatio.convertTwoDecimal()))
+    }
 
     private fun Double.convertTwoDecimal() = "%.2f".format(this)
 }
