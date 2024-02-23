@@ -10,14 +10,14 @@ object InputView {
         return price
     }
 
-    fun readWinningNumbers(): List<Int> {
+    fun readLottoWinningNumbers(): List<Int> {
         println("지난 주 당첨번호를 입력해 주세요.")
         val input = readlnOrNull().orEmpty()
         val winningNumbers = input.split(",").map { it.toIntOrNull() ?: INVALID_INPUT }
         return winningNumbers
     }
 
-    fun readBonusNumber(): Int {
+    fun readLottoBonusNumber(): Int {
         println("보너스 볼을 입력해 주세요.")
         val input = readlnOrNull().orEmpty()
         val bonusNumber = input.toIntOrNull() ?: INVALID_INPUT

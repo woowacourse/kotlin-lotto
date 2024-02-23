@@ -11,8 +11,8 @@ import lotto.view.OutputView
 class LottoGameController {
     fun start() {
         val lottos = buyLottos()
-        val winningBundle = createWinningBundle()
-        val lottoResult = winningBundle.calculateResult(lottos)
+        val lottoWinningBundle = createLottoWinningBundle()
+        val lottoResult = lottoWinningBundle.calculateResult(lottos)
         OutputView.printResult(lottoResult)
     }
 
@@ -24,11 +24,11 @@ class LottoGameController {
         return lottos
     }
 
-    private fun createWinningBundle(): LottoWinningBundle {
-        val winningNumbers = InputView.readWinningNumbers()
-        val winningLotto = Lotto(winningNumbers.map { LottoNumber.of(it) })
-        val bonusNumber = InputView.readBonusNumber()
+    private fun createLottoWinningBundle(): LottoWinningBundle {
+        val lottoWinningNumbers = InputView.readLottoWinningNumbers()
+        val winningLotto = Lotto(lottoWinningNumbers.map { LottoNumber.of(it) })
+        val lottoBonusNumber = InputView.readLottoBonusNumber()
 
-        return LottoWinningBundle(winningLotto, LottoNumber.of(bonusNumber))
+        return LottoWinningBundle(winningLotto, LottoNumber.of(lottoBonusNumber))
     }
 }
