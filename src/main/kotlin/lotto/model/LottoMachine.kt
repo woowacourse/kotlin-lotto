@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoMachine(private val price: Int, private val lottoNumberGenerator: LottoNumberGenerator) {
+class LottoMachine(private val price: Int, private val lottoNumbersGenerator: LottoNumbersGenerator) {
     init {
         require(price >= MIN_LOTTO_PURCHASE_PRICE) { PRICE_ERROR_MESSAGE }
     }
@@ -10,7 +10,7 @@ class LottoMachine(private val price: Int, private val lottoNumberGenerator: Lot
         return List(count) { createLotto() }
     }
 
-    private fun createLotto(): Lotto = Lotto(lottoNumberGenerator.generate())
+    private fun createLotto(): Lotto = Lotto(lottoNumbersGenerator.generate())
 
     companion object {
         private const val PRICE_ERROR_MESSAGE = "구입 금액은 자연수이면서 1000 이상이여야 합니다."

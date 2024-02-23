@@ -3,8 +3,8 @@ package lotto.controller
 import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
-import lotto.model.LottoRandomNumberGenerator
 import lotto.model.LottoWinningBundle
+import lotto.model.RandomLottoNumbersGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -18,7 +18,7 @@ class LottoGameController {
 
     private fun buyLottos(): List<Lotto> {
         val price = InputView.readPrice()
-        val lottoMachine = LottoMachine(price, LottoRandomNumberGenerator())
+        val lottoMachine = LottoMachine(price, RandomLottoNumbersGenerator)
         val lottos = lottoMachine.createLottos()
         OutputView.printLottos(lottos)
         return lottos

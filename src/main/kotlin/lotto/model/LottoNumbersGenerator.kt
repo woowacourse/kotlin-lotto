@@ -1,5 +1,5 @@
 package lotto.model
 
-interface LottoNumberGenerator {
+interface LottoNumbersGenerator {
     fun generate(): List<LottoNumber>
 }
