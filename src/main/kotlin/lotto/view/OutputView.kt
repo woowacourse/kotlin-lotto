@@ -1,6 +1,8 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.WinningStatus
+import lotto.util.WinningRank
 
 object OutputView {
     fun printNumberOfTicket(numberOfTicket: Int) {
@@ -12,10 +14,17 @@ object OutputView {
         println()
     }
 
-    fun printWinningStatus(winningStatus: String) {
+    fun printWinningStatus(winningStatus: WinningStatus) {
         println("\n당첨 통계")
         println("---------")
-        println(winningStatus)
+        for (rank in WinningRank.entries) {
+            when (rank) {
+                WinningRank.MISS -> continue
+                WinningRank.SECOND -> print("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney}원) - ")
+                else -> print("${rank.countOfMatch}개 일치 (${rank.winningMoney}원) - ")
+            }
+            println("${winningStatus.resultStatus.getOrDefault(rank, 0)}개")
+        }
     }
 
     fun printEarningRate(earningRate: Double) {
