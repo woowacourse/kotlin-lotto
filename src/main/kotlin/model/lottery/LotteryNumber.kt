@@ -6,8 +6,10 @@ data class LotteryNumber(val number: Int) {
     }
 
     companion object {
-
-        fun bonusNumber(winningLottery: Lottery, input: String): LotteryNumber {
+        fun bonusNumber(
+            winningLottery: Lottery,
+            input: String,
+        ): LotteryNumber {
             val number = input.toIntOrNull()
             requireNotNull(number) { "숫자를 입력하세요" }
 

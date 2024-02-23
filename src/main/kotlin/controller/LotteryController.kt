@@ -1,6 +1,11 @@
 package controller
 import model.Money
-import model.lottery.*
+import model.lottery.Lotteries
+import model.lottery.Lottery
+import model.lottery.LotteryGenerator
+import model.lottery.LotteryNumber
+import model.lottery.LotteryResultEvaluator
+import model.lottery.LotterySeller
 import model.profit.Profit
 import model.profit.ProfitStatusDecider
 import view.InputView
@@ -10,9 +15,8 @@ class LotteryController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
     private val lotteryResultEvaluator: LotteryResultEvaluator = LotteryResultEvaluator(),
-    private val profit: Profit = Profit()
+    private val profit: Profit = Profit(),
 ) {
-
     fun start() {
         val purchaseAmount = Money.from(inputView.readPurchaseAmount())
         val lotterySeller = LotterySeller(purchaseAmount)
@@ -29,13 +33,15 @@ class LotteryController(
         val winningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
         outputView.showWinningResult(winningResult)
 
-        val totalPrize = Money.wons(winningResult.result.entries.sumOf {
-            it.key.winningPrize.amount.toInt() * it.value
-        })
+        val totalPrize =
+            Money.wons(
+                winningResult.result.entries.sumOf {
+                    it.key.winningPrize.amount.toInt() * it.value
+                },
+            )
 
         val profitRate = profit.calculateRate(purchaseAmount, totalPrize)
 
         outputView.showProfitRate(profitRate, ProfitStatusDecider.decide(purchaseAmount, totalPrize))
     }
-
 }

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class LotteryTest {
-
     @Test
     fun `중복이 없는 6 개의 1 ~ 45 사이 숫자로 로또를 생성한다`() {
         assertDoesNotThrow {
@@ -33,5 +32,4 @@ class LotteryTest {
             Lottery.of(1, 2, 2, 4, 5, 6)
         }
     }
-
 }

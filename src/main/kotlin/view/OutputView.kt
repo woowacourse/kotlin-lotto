@@ -19,8 +19,7 @@ class OutputView {
         println()
     }
 
-    private fun showPurchasedLottery(lottery: Lottery) =
-        println("[${lottery.lotteryNumbers.joinToString(", ") { it.number.toString() }}]")
+    private fun showPurchasedLottery(lottery: Lottery) = println("[${lottery.lotteryNumbers.joinToString(", ") { it.number.toString() }}]")
 
     fun showWinningResult(winningResult: WinningResult) {
         println(HEADER_WINNING_RESULT)
@@ -33,25 +32,29 @@ class OutputView {
         }
     }
 
-    private fun printMatchStatus(result: Map.Entry<WinningRank, Int>) = println(
-        "${result.key.matchNumbers}개 일치 ${if (result.key.bonusNumberMatch) ", 보너스 볼 일치" else ""} ${
-            MONEY_FORMAT.format(
-                result.key.winningPrize.amount.toInt()
-            )
-        }- ${result.value}개"
-    )
+    private fun printMatchStatus(result: Map.Entry<WinningRank, Int>) =
+        println(
+            "${result.key.matchNumbers}개 일치 ${if (result.key.bonusNumberMatch) ", 보너스 볼 일치" else ""} ${
+                MONEY_FORMAT.format(
+                    result.key.winningPrize.amount.toInt(),
+                )
+            }- ${result.value}개",
+        )
 
-    fun showProfitRate(profitRate: ProfitRate, profitStatus: ProfitStatus) {
+    fun showProfitRate(
+        profitRate: ProfitRate,
+        profitStatus: ProfitStatus,
+    ) {
         print("총 수익률은 ${profitRate.rate}입니다.")
         println("(기준이 1이기 때문에 결과적으로 ${profitStatus.status}이라는 의미임)")
     }
 
-
     companion object {
         private val MONEY_FORMAT = DecimalFormat("(#,###원)")
 
-        private val HEADER_WINNING_RESULT = """당첨 통계
-            |---------""".trimMargin()
+        private val HEADER_WINNING_RESULT =
+            """당첨 통계
+            |---------
+            """.trimMargin()
     }
-
 }

@@ -4,7 +4,11 @@ import model.WinningRank
 import model.WinningResult
 
 class LotteryResultEvaluator {
-    fun evaluate(lotteries: Lotteries, winningLottery: Lottery, bonusNumber: LotteryNumber): WinningResult {
+    fun evaluate(
+        lotteries: Lotteries,
+        winningLottery: Lottery,
+        bonusNumber: LotteryNumber,
+    ): WinningResult {
         val lotteryRankEvaluator = LotteryRankEvaluator()
         val winningResult = DEFAULT_WINNING_RESULT
 
@@ -17,13 +21,14 @@ class LotteryResultEvaluator {
     }
 
     companion object {
-        private val DEFAULT_WINNING_RESULT = mutableMapOf(
-            WinningRank.FIRST to 0,
-            WinningRank.SECOND to 0,
-            WinningRank.THIRD to 0,
-            WinningRank.FOURTH to 0,
-            WinningRank.FIFTH to 0,
-            WinningRank.NONE to 0,
-        )
+        private val DEFAULT_WINNING_RESULT =
+            mutableMapOf(
+                WinningRank.FIRST to 0,
+                WinningRank.SECOND to 0,
+                WinningRank.THIRD to 0,
+                WinningRank.FOURTH to 0,
+                WinningRank.FIFTH to 0,
+                WinningRank.NONE to 0,
+            )
     }
 }
