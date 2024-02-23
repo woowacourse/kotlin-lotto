@@ -29,4 +29,17 @@ class WinningBundleTest {
         val lottoResult = winningBundle.calculateResult(lottos)
         assertThat(lottoResult).isEqualTo(LottoResult(mapOf(Rank.THIRD to 1, Rank.SECOND to 1)))
     }
+
+    @Test
+    fun `6개의 당첨 번호가 일치하면 1등이고, 4개의 당첨번호가 일치하면 4등이다`() {
+        val lottos =
+            listOf(
+                Lotto((1..6).map { LottoNumber.of(it) }),
+                Lotto(listOf(1, 2, 3, 4, 7, 8).map { LottoNumber.of(it) }),
+            )
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningBundle = WinningBundle(winningLotto, LottoNumber.of(8))
+        val lottoResult = winningBundle.calculateResult(lottos)
+        assertThat(lottoResult).isEqualTo(LottoResult(mapOf(Rank.FIRST to 1, Rank.FOURTH to 1)))
+    }
 }

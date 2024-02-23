@@ -11,11 +11,19 @@ data class WinningBundle(
     fun calculateResult(lottos: List<Lotto>): LottoResult {
         return LottoResult(
             lottos.map { lotto ->
-                val countOfMatch = lotto.calculateCountOfMatch(winningLotto)
-                val matchBonus = lotto.calculateMatchBonus(bonusLottoNumber)
+                val countOfMatch = calculateCountOfMatch(lotto)
+                val matchBonus = calculateMatchBonus(lotto)
                 Rank.valueOf(countOfMatch, matchBonus)
             }.groupingBy { it }.eachCount(),
         )
+    }
+
+    private fun calculateCountOfMatch(lotto: Lotto): Int {
+        return lotto.lottoNumbers.intersect(winningLotto.lottoNumbers.toSet()).size
+    }
+
+    private fun calculateMatchBonus(lotto: Lotto): Boolean {
+        return bonusLottoNumber in lotto.lottoNumbers
     }
 
     companion object {
