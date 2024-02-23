@@ -33,7 +33,7 @@ class ServiceTest {
         val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
 
         // when
-        val actual = lottoStore.calculatePrizeCount(winningLotto)
+        val actual = lottoStore.calculateWinningStatistics(winningLotto)
 
         // then
         assertThat(actual.keys.first()).isEqualTo(expected)

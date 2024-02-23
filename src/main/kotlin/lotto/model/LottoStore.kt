@@ -5,7 +5,7 @@ import lotto.service.LottoNumberGenerator
 import lotto.service.RandomLottoNumberGenerator
 
 class LottoStore private constructor(val lottos: List<Lotto>) {
-    fun calculatePrizeCount(winningLotto: WinningLotto): Map<LottoPrize, Int> =
+    fun calculateWinningStatistics(winningLotto: WinningLotto): Map<LottoPrize, Int> =
         lottos
             .map { it.compare(winningLotto.lotto, winningLotto.bonusNumber) }
             .groupBy { it }

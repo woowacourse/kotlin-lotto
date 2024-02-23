@@ -17,9 +17,9 @@ class LottoController {
         val lottoStore = LottoStore.create(purchaseInfo, RandomLottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
 
-        val prizeCount = lottoStore.calculatePrizeCount(winningLotto)
-        val profitRatio = ResultCalculator.calculateProfitRatio(purchaseInfo, prizeCount)
-        OutputView.printWinningStatistics(prizeCount, profitRatio)
+        val winningStatistics = lottoStore.calculateWinningStatistics(winningLotto)
+        val profitRatio = ResultCalculator.calculateProfitRatio(purchaseInfo, winningStatistics)
+        OutputView.printWinningStatistics(winningStatistics, profitRatio)
     }
 
     private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
