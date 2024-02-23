@@ -14,29 +14,30 @@ import lotto.model.PurchaseInfo
 object InputView {
     fun readPurchasePrice(): PurchaseInfo {
         println(INPUT_PURCHASE_PRICE)
-        val purchasePrice = readln()
-        validateDigit(purchasePrice, INVALID_PURCHASE_PRICE)
-        return PurchaseInfo(purchasePrice.toInt())
+        val inputPurchasePrice = readln()
+        val purchasePrice = inputPurchasePrice.validateAndConvertDigit(INVALID_PURCHASE_PRICE)
+        return PurchaseInfo(purchasePrice)
     }
 
     fun readWinningLottoNumbers(): Lotto {
         println(INPUT_WINNING_LOTTO_NUMBERS)
-        val winningLottoNumbers = readln()
-        validateDigit(winningLottoNumbers, INVALID_LOTTO_NUMBER)
-        return Lotto(winningLottoNumbers.split(LOTTO_NUMBER_DELIMITER).map { it.toInt() })
+        val inputWinningLottoNumbers = readln()
+        val winningLottoNumbers = inputWinningLottoNumbers.validateAndConvertDigitList(INVALID_LOTTO_NUMBER)
+        return Lotto(winningLottoNumbers)
     }
 
     fun readBonusNumber(): LottoNumber {
         println(INPUT_BONUS_NUMBER)
-        val bonusNumber = readln()
-        validateDigit(bonusNumber, INVALID_BONUS_NUMBER)
-        return LottoNumber(bonusNumber.toInt())
+        val inputBonusNumber = readln()
+        val bonusNumber = inputBonusNumber.validateAndConvertDigit(INVALID_BONUS_NUMBER)
+        return LottoNumber(bonusNumber)
     }
 
-    private fun validateDigit(
-        lottoNumbers: String,
-        errorMessage: String,
-    ) = require(lottoNumbers.split(LOTTO_NUMBER_DELIMITER).all { isDigit(it) }) { errorMessage }
+    private fun String.validateAndConvertDigitList(errorMessage: String): List<Int> {
+        return split(LOTTO_NUMBER_DELIMITER).map { it.validateAndConvertDigit(errorMessage) }
+    }
 
-    private fun isDigit(it: String) = it.toIntOrNull() != null
+    private fun String.validateAndConvertDigit(errorMessage: String): Int {
+        return toIntOrNull() ?: throw IllegalArgumentException(errorMessage)
+    }
 }
