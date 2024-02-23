@@ -42,7 +42,7 @@ class LottoGameResultTest {
     fun `로또 게임에 대한 수익률을 계산한다`() {
         // given : 준비물(객체를 만들기 위한 초기값들. 매개변수)
         val expense = Money(2000)
-        val expectedEarningRate = 2_000_000_000 / expense.amount.toDouble()
+        val expectedEarningRate = 1_000_000.00
         // when
         val actualRate = lottoGameResult.calculateEarningRate(expense)
         // then
