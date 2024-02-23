@@ -2,7 +2,7 @@ package lotto.model
 
 class Lotto(private val numbers: List<LottoNumber>) {
     init {
-        require(numbers.size == NUMBER_COUNT) { "로또 번호의 개수는 6개이어야 합니다." }
+        require(numbers.size == NUMBER_COUNT) { "로또 번호의 개수는 ${NUMBER_COUNT}개이어야 합니다." }
         require(numbers.toSet().size == numbers.size) { "로또 번호는 중복될 수 없습니다." }
     }
 
@@ -14,6 +14,5 @@ class Lotto(private val numbers: List<LottoNumber>) {
 
     companion object {
         const val NUMBER_COUNT = 6
-        val NUMBER_RANGE = (1..45)
     }
 }
