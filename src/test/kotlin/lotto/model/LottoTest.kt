@@ -47,21 +47,21 @@ class LottoTest {
         winning: String,
         expected: Int,
     ) {
-        val result = lotto.checkWinningNumbers(Lotto(winning.split(" ").map { LottoNumber(it) }))
+        val result = lotto.matchWinningNumbers(Lotto(winning.split(" ").map { LottoNumber(it) }))
         assertThat(result).isEqualTo(expected)
     }
 
     @ParameterizedTest
     @ValueSource(ints = [1, 5, 6])
     fun `로또 번호에 보너스 번호가 포함되어 있으면 True를 반환한다`(bonusNumber: Int) {
-        val result = lotto.checkBonusNumbers(LottoNumber(bonusNumber))
+        val result = lotto.compareBonusNumbers(LottoNumber(bonusNumber))
         assertTrue(result)
     }
 
     @ParameterizedTest
     @ValueSource(ints = [7, 10, 45])
     fun `로또 번호에 보너스 번호가 포함되어 있지 않으면 False을 반환한다`(bonusNumber: Int) {
-        val result = lotto.checkBonusNumbers(LottoNumber(bonusNumber))
+        val result = lotto.compareBonusNumbers(LottoNumber(bonusNumber))
         assertFalse(result)
     }
 }

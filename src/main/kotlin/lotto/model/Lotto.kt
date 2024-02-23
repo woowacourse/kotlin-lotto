@@ -6,9 +6,9 @@ class Lotto(private val numbers: List<LottoNumber>) {
         require(numbers.toSet().size == numbers.size) { "로또 번호는 중복될 수 없습니다." }
     }
 
-    fun checkWinningNumbers(winningNumbers: Lotto): Int = numbers.count { it in winningNumbers.numbers }
+    fun matchWinningNumbers(winningNumbers: Lotto): Int = numbers.count { it in winningNumbers.numbers }
 
-    fun checkBonusNumbers(bonusNumber: LottoNumber): Boolean = bonusNumber in numbers
+    fun compareBonusNumbers(bonusNumber: LottoNumber): Boolean = bonusNumber in numbers
 
     override fun toString(): String = numbers.toString()
 
