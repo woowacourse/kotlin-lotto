@@ -10,7 +10,10 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     ;
 
     companion object {
-        fun decideRank(countOfMatch: Int, matchBonus: Boolean): Rank {
+        fun decideRank(
+            countOfMatch: Int,
+            matchBonus: Boolean,
+        ): Rank {
             return when {
                 countOfMatch == 6 -> FIRST
                 countOfMatch == 5 && matchBonus -> SECOND
