@@ -1,6 +1,9 @@
 package controller
 
-import model.*
+import model.LottoPurchase
+import model.LottoResult
+import model.LottoTicket
+import model.LottoWinning
 import view.InputView
 import view.OutputView
 

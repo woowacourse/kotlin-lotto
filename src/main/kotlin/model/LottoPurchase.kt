@@ -2,13 +2,13 @@ package model
 
 class LottoPurchase(
     private val purchasePrice: Int,
-    private val buildMethod: LottoTicketBuildMethod,
+    private val makeMethod: LottoTicketMakeMethod,
 ) {
     constructor(
         purchasePrice: Int,
     ) : this(
         purchasePrice,
-        LottoTicketBuildMethod {
+        LottoTicketMakeMethod {
             LottoTicket((1..45).shuffled().take(6))
         },
     )
@@ -20,7 +20,7 @@ class LottoPurchase(
     fun makeUserTickets(): List<LottoTicket> {
         val userTickets: MutableList<LottoTicket> = mutableListOf()
         repeat(makeLottoCount()) {
-            userTickets.add(buildMethod.build())
+            userTickets.add(makeMethod.make())
         }
         return userTickets
     }
