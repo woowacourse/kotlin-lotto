@@ -22,7 +22,7 @@ class ServiceTest {
         expected: LottoPrize,
     ) {
         // given
-        val purchaseInfo = PurchaseInfo("5000")
+        val purchaseInfo = PurchaseInfo(5000)
         val lottoStore =
             LottoStore(
                 purchaseInfo,
@@ -43,7 +43,7 @@ class ServiceTest {
     @ParameterizedTest
     @MethodSource("로또 수익률 계산 테스트 데이터")
     fun `로또 수익률을 계산한다`(
-        lottoPrice: String,
+        lottoPrice: Int,
         prizeCount: Map<LottoPrize, Int>,
         profitRatio: Double,
     ) {

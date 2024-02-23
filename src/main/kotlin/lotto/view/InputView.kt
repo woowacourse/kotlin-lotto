@@ -5,6 +5,7 @@ import lotto.constants.StringConstants.INPUT_PURCHASE_PRICE
 import lotto.constants.StringConstants.INPUT_WINNING_LOTTO_NUMBERS
 import lotto.constants.StringConstants.INVALID_BONUS_NUMBER
 import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER
+import lotto.constants.StringConstants.INVALID_PURCHASE_PRICE
 import lotto.constants.StringConstants.LOTTO_NUMBER_DELIMITER
 import lotto.model.Lotto
 import lotto.model.LottoNumber
@@ -14,7 +15,8 @@ object InputView {
     fun readPurchasePrice(): PurchaseInfo {
         println(INPUT_PURCHASE_PRICE)
         val purchasePrice = readln()
-        return PurchaseInfo(purchasePrice)
+        validateDigit(purchasePrice, INVALID_PURCHASE_PRICE)
+        return PurchaseInfo(purchasePrice.toInt())
     }
 
     fun readWinningLottoNumbers(): Lotto {

@@ -51,7 +51,7 @@ class ModelTest {
     @ParameterizedTest
     @CsvSource("1000, 1", "10000, 10")
     fun `구매할 수 있는 로또의 개수 계산한다`(
-        purchasePrice: String,
+        purchasePrice: Int,
         amount: Int,
     ) {
         val purchaseInfo = PurchaseInfo(purchasePrice)
@@ -60,8 +60,8 @@ class ModelTest {
 
     @ParameterizedTest
     @EmptySource
-    @ValueSource(strings = ["0", "-1000", "1000100", "1000abc", "2200000000"])
-    fun `로또의 구입 금액을 검증한다`(purchasePrice: String) =
+    @ValueSource(strings = ["0", "-1000", "1000100", "100", "2200000000"])
+    fun `로또의 구입 금액을 검증한다`(purchasePrice: Int) =
         assertThrows<IllegalArgumentException> {
             PurchaseInfo(purchasePrice)
         }

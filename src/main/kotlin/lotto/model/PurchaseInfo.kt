@@ -3,21 +3,15 @@ package lotto.model
 import lotto.constants.LottoConstants.LOTTO_PRICE
 import lotto.constants.StringConstants.INVALID_PURCHASE_PRICE
 
-class PurchaseInfo(purchasePrice: String) {
-    val price: Int
+class PurchaseInfo(val price: Int) {
     val amount: Int
 
     init {
-        require(purchasePrice.isValidDigit() && purchasePrice.isMoreThanMin() && purchasePrice.divideByLottoPrice()) {
-            INVALID_PURCHASE_PRICE
-        }
-        price = purchasePrice.toInt()
+        require(price.isMoreThanMin() && price.divideByLottoPrice()) { INVALID_PURCHASE_PRICE }
         amount = price / LOTTO_PRICE
     }
 
-    private fun String.isValidDigit() = toIntOrNull() != null
+    private fun Int.isMoreThanMin() = this >= LOTTO_PRICE
 
-    private fun String.isMoreThanMin() = toInt() >= LOTTO_PRICE
-
-    private fun String.divideByLottoPrice() = toInt() % LOTTO_PRICE == 0
+    private fun Int.divideByLottoPrice() = this % LOTTO_PRICE == 0
 }
