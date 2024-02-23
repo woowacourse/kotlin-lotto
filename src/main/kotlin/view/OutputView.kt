@@ -19,12 +19,17 @@ class OutputView {
         }
     }
 
-    fun printWinningChart(lottoResult: LottoResult) {
-        println(MATCH_MESSAGE.format(FIFTH.countOfMatch, FIFTH.winningMoney, lottoResult.getNum(FIFTH)))
-        println(MATCH_MESSAGE.format(FOURTH.countOfMatch, FOURTH.winningMoney, lottoResult.getNum(FOURTH)))
-        println(MATCH_MESSAGE.format(THIRD.countOfMatch, THIRD.winningMoney, lottoResult.getNum(THIRD)))
-        println(MATCH_WITH_BONUS_MESSAGE.format(SECOND.countOfMatch, SECOND.winningMoney, lottoResult.getNum(SECOND)))
-        println(MATCH_MESSAGE.format(FIRST.countOfMatch, FIRST.winningMoney, lottoResult.getNum(FIRST)))
+    fun printWinningChart(lottoResults: LottoResult) {
+        for (rank in listOf(FIFTH, FOURTH, THIRD, SECOND, FIRST)) {
+            println(
+                MATCH_MESSAGE.format(
+                    rank.countOfMatch,
+                    if (rank == SECOND) ", 보너스 볼 일치" else "",
+                    rank.winningMoney,
+                    lottoResults.getNum(rank),
+                ),
+            )
+        }
     }
 
     fun printWinningRate(winningRate: Float) {
@@ -33,7 +38,7 @@ class OutputView {
 
     companion object {
         private const val PURCHASE_MESSAGE = "%d개를 구매했습니다."
-        private const val MATCH_MESSAGE = "%d개 일치 (%d원) - %d개"
+        private const val MATCH_MESSAGE = "%d개 일치%s (%d원) - %d개"
         private const val MATCH_WITH_BONUS_MESSAGE = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
         private const val TOTAL_WINNING_RATE_MESSAGE = "총 수익률은 %.2f입니다."
     }
