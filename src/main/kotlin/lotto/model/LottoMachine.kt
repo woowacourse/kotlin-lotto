@@ -1,5 +1,7 @@
 package lotto.model
 
+import lotto.model.LottoNumber.Companion.NUMBER_RANGE
+
 object LottoMachine {
     const val TICKET_PRICE = 1_000
 
@@ -9,7 +11,7 @@ object LottoMachine {
         val tickets = mutableListOf<Lotto>()
         repeat(count) {
             tickets.add(
-                Lotto(Lotto.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted().map { LottoNumber(it) }),
+                Lotto(NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted().map { LottoNumber(it) }),
             )
         }
         return tickets

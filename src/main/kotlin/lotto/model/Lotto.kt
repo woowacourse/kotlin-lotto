@@ -14,6 +14,5 @@ class Lotto(private val numbers: List<LottoNumber>) {
 
     companion object {
         const val NUMBER_COUNT = 6
-        val NUMBER_RANGE = (1..45)
     }
 }
