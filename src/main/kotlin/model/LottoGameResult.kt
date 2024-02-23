@@ -23,10 +23,9 @@ class LottoGameResult private constructor(
         ): LottoGameResult {
             val ranks = generateRanks(purchasedLottie, winningLotto, bonusNumber)
             val rankResults: List<RankResult> =
-                getRankMap().let { map ->
-                    ranks.forEach { map.merge(it, 1, Int::plus) }
-                    map.toRankResults()
-                }
+                getRankMap()
+                    .apply { ranks.forEach { merge(it, 1, Int::plus) } }
+                    .toRankResults()
             return LottoGameResult(rankResults)
         }
 
