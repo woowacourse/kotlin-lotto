@@ -1,6 +1,6 @@
 package lotto.model
 
-data class WinningBundle(
+data class LottoWinningBundle(
     val winningLotto: Lotto,
     val bonusLottoNumber: LottoNumber,
 ) {
@@ -13,7 +13,7 @@ data class WinningBundle(
             lottos.map { lotto ->
                 val countOfMatch = calculateCountOfMatch(lotto)
                 val matchBonus = calculateMatchBonus(lotto)
-                Rank.valueOf(countOfMatch, matchBonus)
+                LottoRank.valueOf(countOfMatch, matchBonus)
             }.groupingBy { it }.eachCount(),
         )
     }

@@ -1,6 +1,6 @@
 package lotto.model
 
-enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
+enum class LottoRank(val countOfMatch: Int, val winningMoney: Int) {
     FIRST(6, 2_000_000_000),
     SECOND(5, 30_000_000),
     THIRD(5, 1_500_000),
@@ -13,7 +13,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
         fun valueOf(
             countOfMatch: Int,
             matchBonus: Boolean,
-        ): Rank {
+        ): LottoRank {
             if (countOfMatch == THIRD.countOfMatch && !matchBonus) return THIRD
             return entries.find {
                 it.countOfMatch == countOfMatch

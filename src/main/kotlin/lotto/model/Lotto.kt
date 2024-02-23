@@ -1,6 +1,6 @@
 package lotto.model
 
-class Lotto(val lottoNumbers: List<LottoNumber>) {
+data class Lotto(val lottoNumbers: List<LottoNumber>) {
     init {
         require(lottoNumbers.distinct().size == LOTTO_SIZE) { LOTTO_SIZE_ERROR_MESSAGE }
     }
