@@ -4,24 +4,50 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.params.provider.MethodSource
 
 class LottoMachineTest {
-    val fixedNumbers = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val fixedNumbers = (1..10).toList()
+    val fixedLottoNumbersGenerator = FixedLottoNumbersGenerator(fixedNumbers)
+
+    companion object {
+        @JvmStatic
+        fun provideLottoPricesAndInvalidPrices() =
+            listOf(
+                arrayOf(5000, arrayOf(-1, 0, 4999)),
+                arrayOf(1000, arrayOf(-1, 0, 999)),
+            )
+    }
 
     @ParameterizedTest
-    @ValueSource(ints = [-1, 0, 999])
-    fun `구입 금액은 자연수이면서 1000 이상이다`(price: Int) {
-        assertThrows<IllegalArgumentException> {
-            LottoMachine(price, FixedLottoNumbersGenerator(fixedNumbers))
+    @MethodSource("provideLottoPricesAndInvalidPrices")
+    fun `구입 금액은 로또 1장의 가격 이상이여야합니다`(
+        lottoPrice: Int,
+        invalidPrices: Array<Int>,
+    ) {
+        invalidPrices.forEach { price ->
+            assertThrows<IllegalArgumentException> {
+                LottoMachine.createLottos(price, fixedLottoNumbersGenerator, lottoPrice)
+            }
         }
     }
 
     @Test
     fun `사전에 정의된 범위로 로또를 생성한다`() {
-        val lottoMachine = LottoMachine(Lotto.LOTTO_PRICE, FixedLottoNumbersGenerator(fixedNumbers))
-        val lotto = lottoMachine.createLottos().first()
-        val expectedLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val lotto = LottoMachine.createLottos(Lotto.LOTTO_PRICE, fixedLottoNumbersGenerator).first()
+        val expectedLotto = Lotto((1..6).map { LottoNumber.of(it) })
         assertThat(lotto).isEqualTo(expectedLotto)
+    }
+
+    @Test
+    fun `로또 한장의 가격이 5,000원일 때 2만원을 투입하면 총 4장의 로또를 발급한다`() {
+        val lottos = LottoMachine.createLottos(20000, fixedLottoNumbersGenerator, 5000)
+        assertThat(lottos.size).isEqualTo(4)
+    }
+
+    @Test
+    fun `로또 한장의 가격이 1,000원일 때 1만원을 투입하면 총 10장의 로또를 발급한다`() {
+        val lottos = LottoMachine.createLottos(10000, fixedLottoNumbersGenerator, 1000)
+        assertThat(lottos.size).isEqualTo(10)
     }
 }
