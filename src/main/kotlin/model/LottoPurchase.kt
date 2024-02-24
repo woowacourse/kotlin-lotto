@@ -4,6 +4,10 @@ class LottoPurchase(
     purchasePrice: Int,
     private val makeMethod: LottoTicketMakeMethod,
 ) {
+    init {
+        require(purchasePrice >= 0)
+    }
+
     val lottoCount = purchasePrice / PRICE_OF_LOTTO_TICKET
     constructor(
         purchasePrice: Int,
