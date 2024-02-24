@@ -4,12 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoResultTest {
-    private val winningTicket by lazy {
-        LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
-    }
-    private val bonusNumber by lazy {
-        LottoNumber(7)
-    }
+    private val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
+    private val bonusNumber = LottoNumber(7)
 
     @Test
     fun `특정 등수에 당첨되지 않았을 경우 0으로 센다`() {
@@ -21,13 +17,9 @@ class LottoResultTest {
 
     @Test
     fun `특정 등수에 당첨됐는지 그 개수를 센다`() {
+        val lottoCount = 4
         val userLottoIterator =
-            listOf(
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
-            ).iterator()
+            List(lottoCount) { LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)) }.iterator()
 
         val lottoPurchase = LottoPurchase(4000) { userLottoIterator.next() }
 
