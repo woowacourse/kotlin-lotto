@@ -1,4 +1,4 @@
-import controller.LottoController
+import lotto.controller.LottoController
 
 fun main() {
     val lottoController = LottoController()

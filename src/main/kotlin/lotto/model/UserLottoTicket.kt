@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
     init {

@@ -1,7 +1,7 @@
-package model
+package lotto.model
 
-import model.LottoNumber.Companion.MAX_LOTTO_NUMBER
-import model.LottoNumber.Companion.MIN_LOTTO_NUMBER
+import lotto.model.LottoNumber.Companion.MAX_LOTTO_NUMBER
+import lotto.model.LottoNumber.Companion.MIN_LOTTO_NUMBER
 
 class LottoPurchase(private val purchasePrice: Int) {
     private fun makeUserTicket(): UserLottoTicket {

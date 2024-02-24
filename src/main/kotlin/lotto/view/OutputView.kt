@@ -1,12 +1,12 @@
-package view
+package lotto.view
 
-import model.Rank
-import model.Rank.FIFTH
-import model.Rank.FIRST
-import model.Rank.FOURTH
-import model.Rank.SECOND
-import model.Rank.THIRD
-import model.UserLottoTicket
+import lotto.model.Rank
+import lotto.model.Rank.FIFTH
+import lotto.model.Rank.FIRST
+import lotto.model.Rank.FOURTH
+import lotto.model.Rank.SECOND
+import lotto.model.Rank.THIRD
+import lotto.model.UserLottoTicket
 
 class OutputView {
     fun printLottoCount(lottoCount: Int) {
