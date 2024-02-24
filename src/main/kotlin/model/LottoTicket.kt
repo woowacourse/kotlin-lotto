@@ -1,19 +1,19 @@
 package model
 
 class LottoTicket(
-    private val lottoTicket: List<LottoNumber>,
+    private val lottoNumbers: List<LottoNumber>,
 ) {
-    private val set = lottoTicket.toSet()
+    private val lottoNumberSet = lottoNumbers.toSet()
 
     init {
-        require(set.size == SIZE)
+        require(lottoNumberSet.size == SIZE)
     }
 
-    infix fun intersect(other: LottoTicket) = other.set intersect this.set
+    infix fun intersect(other: LottoTicket) = other.lottoNumberSet intersect this.lottoNumberSet
 
-    operator fun contains(lottoNumber: LottoNumber) = lottoNumber in lottoTicket
+    operator fun contains(lottoNumber: LottoNumber) = lottoNumber in lottoNumbers
 
-    fun toIntList() = lottoTicket.map { it.num }
+    fun toIntList() = lottoNumbers.map { it.num }
 
     companion object {
         const val SIZE = 6
