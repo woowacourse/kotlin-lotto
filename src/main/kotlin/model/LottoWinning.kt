@@ -6,11 +6,11 @@ class LottoWinning(
     private val lottoTickets: List<LottoTicket>,
 ) {
     fun countMatchNumber(userTicket: LottoTicket): Int {
-        return winningTicket.lottoTicket.intersect(userTicket.lottoTicket.toSet()).size
+        return (userTicket intersect winningTicket).size
     }
 
     fun isBonusInTicket(userTicket: LottoTicket): Boolean {
-        return userTicket.lottoTicket.contains(bonusNumber)
+        return bonusNumber in userTicket
     }
 
     fun getRankList(): List<Rank> =

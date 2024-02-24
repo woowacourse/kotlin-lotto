@@ -15,7 +15,7 @@ class ConsoleOutputView : OutputView {
 
     override fun printLottoTickets(lottoTickets: List<LottoTicket>) {
         lottoTickets.forEach {
-            println(it.lottoTicket.sorted())
+            println(it.sorted())
         }
     }
 

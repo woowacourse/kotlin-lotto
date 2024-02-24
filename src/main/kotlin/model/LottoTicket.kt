@@ -1,9 +1,19 @@
 package model
 
-class LottoTicket(val lottoTicket: List<LottoNumber>) {
+class LottoTicket(
+    private val lottoTicket: List<LottoNumber>,
+) {
+    private val set = lottoTicket.toSet()
+
     init {
         require(lottoTicket.size == SIZE)
     }
+
+    infix fun intersect(other: LottoTicket) = other.set intersect this.set
+
+    operator fun contains(lottoNumber: LottoNumber) = lottoNumber in lottoTicket
+
+    fun sorted() = lottoTicket.sorted()
 
     companion object {
         const val SIZE = 6
