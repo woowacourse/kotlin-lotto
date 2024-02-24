@@ -1,9 +1,10 @@
 package model
 
 class LottoPurchase(
-    private val purchasePrice: Int,
+    purchasePrice: Int,
     private val makeMethod: LottoTicketMakeMethod,
 ) {
+    val lottoCount = purchasePrice / PRICE_OF_LOTTO_TICKET
     constructor(
         purchasePrice: Int,
     ) : this(
@@ -17,13 +18,9 @@ class LottoPurchase(
         },
     )
 
-    fun makeLottoCount(): Int {
-        return purchasePrice / PRICE_OF_LOTTO_TICKET
-    }
-
     fun makeUserTickets(): List<LottoTicket> {
         val userTickets: MutableList<LottoTicket> = mutableListOf()
-        repeat(makeLottoCount()) {
+        repeat(lottoCount) {
             userTickets.add(makeMethod.make())
         }
         return userTickets

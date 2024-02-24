@@ -22,7 +22,7 @@ class LottoController(
     private fun purchaseLottoTickets(): List<LottoTicket> {
         val purchasePrice = inputView.getPurchasePrice()
         val lottoPurchase = LottoPurchase(purchasePrice)
-        val lottoCount = lottoPurchase.makeLottoCount()
+        val lottoCount = lottoPurchase.lottoCount
         val lottoTickets = lottoPurchase.makeUserTickets()
         outputView.printLottoCount(lottoCount)
         outputView.printLottoTickets(lottoTickets)
