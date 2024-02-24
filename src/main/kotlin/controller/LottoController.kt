@@ -41,7 +41,16 @@ class LottoController(private val inputView: InputView, private val outputView: 
     private fun generateWinningNumbers(): Pair<Lotto, LottoNumber> {
         outputView.printWinningNumbersMessage()
         val winningNumbers =
-            Lotto(LottoNumbers(inputView.readWinningNumbers().split(SPLIT_DELIMITER).map { LottoNumber(it.toInt()) }))
+            Lotto(
+                LottoNumbers(
+                    inputView.readWinningNumbers().split(
+                        SPLIT_DELIMITER,
+                    ).map {
+                        LottoNumber(it.toInt())
+                    }
+                        .toSet(),
+                ),
+            )
 
         outputView.printBonusNumberMessage()
         val bonusNumber = LottoNumber(inputView.readWinningBonusNumber())
