@@ -6,15 +6,14 @@ import lotto.model.LottoNumber.Companion.MIN_LOTTO_NUMBER
 class LottoPurchase(private val purchasePrice: Int) {
     private fun makeUserTicket(): UserLottoTicket {
         return UserLottoTicket(
-            (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).shuffled().take(6).sorted().map { LottoNumber(it) },
+            (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).shuffled().take(6).sorted()
+                .map { LottoNumber(it) },
         )
     }
 
     fun makeUserTickets(): List<UserLottoTicket> {
-        val userTickets: MutableList<UserLottoTicket> = mutableListOf()
-        repeat(purchasePrice / PRICE_OF_LOTTO_TICKET) {
-            userTickets.add(makeUserTicket())
-        }
+        val userTickets =
+            List(purchasePrice / PRICE_OF_LOTTO_TICKET) { makeUserTicket() }
         return userTickets
     }
 
