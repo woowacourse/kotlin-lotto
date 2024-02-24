@@ -1,5 +1,8 @@
 package lotto.model
 
+import lotto.constants.GameConstant.LOTTO_NUMBER_SIZE
+import lotto.constants.GameConstant.MAX_NUMBER
+import lotto.constants.GameConstant.MIN_NUMBER
 import model.Lotto
 import model.LottoNumber
 
@@ -13,7 +16,7 @@ class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerat
 
     private fun generateLottos() {
         repeat(numberOfLottos) {
-            val lotto = Lotto(lottoNumberGenerator.generate())
+            val lotto = Lotto(lottoNumberGenerator.generate(LOTTO_NUMBER_SIZE, MIN_NUMBER, MAX_NUMBER))
             lottos.add(lotto)
         }
     }
