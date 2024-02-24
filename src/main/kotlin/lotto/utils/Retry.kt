@@ -1,11 +1,11 @@
 package lotto.utils
 
-import lotto.constants.StringConstants
+private const val ERROR_MESSAGE = "[ERROR]"
 
 fun <T> retryWhileNoException(action: () -> T) =
     try {
         action()
     } catch (e: IllegalArgumentException) {
-        println("${StringConstants.ERROR_MESSAGE} ${e.localizedMessage}")
+        println("$ERROR_MESSAGE ${e.localizedMessage}")
         action()
     }

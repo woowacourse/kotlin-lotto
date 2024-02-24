@@ -1,14 +1,11 @@
 package lotto.model
 
-import lotto.constants.StringConstants.INVALID_LOTTO_NUMBER
-
 class Lotto(numbers: List<Int>) {
     private val numbers: List<LottoNumber>
 
     init {
-        require(numbers.isValidSize() && numbers.isNotDuplicate()) {
-            INVALID_LOTTO_NUMBER
-        }
+        require(numbers.isValidSize()) { INVALID_SIZE }
+        require(numbers.isNotDuplicate()) { INVALID_DUPLICATION }
         this.numbers = numbers.sorted().map { LottoNumber(it) }
     }
 
@@ -25,5 +22,7 @@ class Lotto(numbers: List<Int>) {
     companion object {
         const val SIZE = 6
         const val PRICE = 1000
+        private const val INVALID_SIZE = "${SIZE}개의 로또 번호를 입력해 주세요."
+        private const val INVALID_DUPLICATION = "중복되지 않는 로또 번호를 입력해 주세요."
     }
 }
