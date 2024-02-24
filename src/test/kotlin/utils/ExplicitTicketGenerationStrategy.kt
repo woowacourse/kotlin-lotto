@@ -6,10 +6,10 @@ import model.Lottery
 
 class ExplicitTicketGenerationStrategy(
     private val amount: Amount,
-    private val explicitLotteriesNumbers: List<List<Int>>,
+    private val explicitLotteriesNumbers: List<Set<Int>>,
 ) : TicketGenerationStrategy {
     override fun issueTicket(): Ticket {
-        val explicitLotteries = explicitLotteriesNumbers.map { Lottery.fromList(it) }.toList()
+        val explicitLotteries = explicitLotteriesNumbers.map { Lottery.fromSet(it) }
         return Ticket(explicitLotteries, amount)
     }
 }

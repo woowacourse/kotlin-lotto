@@ -1,14 +1,11 @@
 package model
 
-class Lottery(private val lotteryNumbers: List<LotteryNumber>) {
+class Lottery(private val lotteryNumbers: Set<LotteryNumber>) {
     init {
-        require(validateCount(lotteryNumbers)) { EXCEPTION_INVALID_COUNT }
         require(validateDuplicate(lotteryNumbers)) { EXCEPTION_DUPLICATED_NUMBER }
     }
 
-    private fun validateCount(lotteryNumbers: List<LotteryNumber>) = lotteryNumbers.size == LOTTERY_COUNT
-
-    private fun validateDuplicate(lotteryNumbers: List<LotteryNumber>) = lotteryNumbers.size == lotteryNumbers.toSet().size
+    private fun validateDuplicate(lotteryNumbers: Set<LotteryNumber>) = lotteryNumbers.size == LOTTERY_COUNT
 
     fun getCountOfMatch(lottery: Lottery) = lotteryNumbers.intersect(lottery.lotteryNumbers).size
 
@@ -23,13 +20,18 @@ class Lottery(private val lotteryNumbers: List<LotteryNumber>) {
         const val EXCEPTION_INVALID_COUNT = "로또 번호는 ${LOTTERY_COUNT}개여야 합니다"
         const val EXCEPTION_DUPLICATED_NUMBER = "로또 번호에 중복이 없어야 합니다"
 
-        fun fromList(numbers: List<Int>): Lottery {
-            val lotteryNumbers = numbers.map { LotteryNumber(it) }
+        private fun List<String>.validateCount(): List<String> {
+            require(this.size == LOTTERY_COUNT) { EXCEPTION_INVALID_COUNT }
+            return this
+        }
+
+        fun fromSet(numbers: Set<Int>): Lottery {
+            val lotteryNumbers = numbers.map { LotteryNumber(it) }.toSet()
             return Lottery(lotteryNumbers)
         }
 
         fun fromInput(input: List<String>): Lottery {
-            val lotteryNumbers = input.map { LotteryNumber.fromInput(it) }
+            val lotteryNumbers = input.validateCount().map { LotteryNumber.fromInput(it) }.toSet()
             return Lottery(lotteryNumbers)
         }
     }

@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class BonusTest {
-    private val defaultLottery = Lottery((1..6).map { LotteryNumber(it) })
+    private val defaultLottery = Lottery((1..6).map { LotteryNumber(it) }.toSet())
 
     @ParameterizedTest
     @ValueSource(strings = ["1", "2", "3"])

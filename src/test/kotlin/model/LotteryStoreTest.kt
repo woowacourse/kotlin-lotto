@@ -23,10 +23,10 @@ class LotteryStoreTest {
         val explicitAmount = Amount.fromInput("2000")
         val explicitNumbers =
             listOf(
-                listOf(1, 2, 3, 4, 5, 6),
-                listOf(7, 8, 9, 10, 11, 12),
+                setOf(1, 2, 3, 4, 5, 6),
+                setOf(7, 8, 9, 10, 11, 12),
             )
-        val explicitLotteries = explicitNumbers.map { Lottery.fromList(it) }.toList()
+        val explicitLotteries = explicitNumbers.map { Lottery.fromSet(it) }.toList()
 
         val lotteryStore = LotteryStore(ExplicitTicketGenerationStrategy(explicitAmount, explicitNumbers))
 
