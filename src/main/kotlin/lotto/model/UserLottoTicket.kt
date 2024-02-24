@@ -2,7 +2,7 @@ package lotto.model
 
 class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
     init {
-        require(userLottoTicket.size == 6)
+        require(userLottoTicket.size == LOTTO_TICKET_SIZE)
     }
 
     private fun countMatchNumber(winningNumbers: List<LottoNumber>): Int {
@@ -20,5 +20,9 @@ class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
         val countOfMatch = countMatchNumber(winningNumbers)
         val hasBonusNumber = isBonusInTicket(bonusNumber)
         return Rank.decideRank(countOfMatch, hasBonusNumber)
+    }
+
+    companion object {
+        private const val LOTTO_TICKET_SIZE = 6
     }
 }
