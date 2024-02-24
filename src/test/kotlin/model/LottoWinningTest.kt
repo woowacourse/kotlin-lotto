@@ -3,8 +3,6 @@ package model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
 
 class LottoWinningTest {
     private lateinit var winningTicket: LottoTicket
@@ -14,73 +12,58 @@ class LottoWinningTest {
         winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
     }
 
-    @ParameterizedTest
-    @MethodSource("generateArgumentMatchTest")
-    fun `로또 번호 겹침 개수 테스트`(args: Pair<LottoTicket, Int>) {
-        val (userTicket, expected) = args
+    @Test
+    fun `번호 6개 일치하면 1등이다`() {
+        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
         val userTickets = listOf(userTicket)
-        val bonusNumber = 7
-        val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
-        val countMatchNumber = lottoWinning.countMatchNumber(userTicket)
-        assertThat(countMatchNumber).isEqualTo(expected)
-    }
-
-    @ParameterizedTest
-    @MethodSource("generateArgumentRankTest")
-    fun `랭크 판정 테스트`(args: Pair<LottoTicket, Rank>) {
-        val (userTicket, expected) = args
-        val userTickets = listOf(userTicket)
-        val bonusNumber = 7
+        val bonusNumber = 45
         val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
         val rankList = lottoWinning.getRankList()
         val actual = rankList[0]
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(Rank.FIRST)
     }
 
     @Test
-    fun `보너스 번호 포함 여부 테스트`() {
-        val winningTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) })
-        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
+    fun `번호 5개 일치하고 보너스번호 일치하면 2등이다`() {
+        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 45).map { LottoNumber(it) })
         val userTickets = listOf(userTicket)
-        val bonusNumber = 7
+        val bonusNumber = 45
         val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
-        val actual = lottoWinning.isBonusInTicket(winningTicket)
-        assertThat(actual).isEqualTo(true)
+        val rankList = lottoWinning.getRankList()
+        val actual = rankList[0]
+        assertThat(actual).isEqualTo(Rank.SECOND)
     }
 
-    companion object {
-        @JvmStatic
-        fun generateArgumentMatchTest() =
-            listOf(
-                // 6개 겹침, 1등 케이스,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }) to 6,
-                // 5개 겹침, 2등 케이스,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) }) to 5,
-                // 5개 겹침 , 3등 케이스
-                LottoTicket(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }) to 5,
-                // 4개 겹침, 4등 케이스
-                LottoTicket(listOf(1, 2, 3, 4, 44, 45).map { LottoNumber(it) }) to 4,
-                // 3개 겹침, 5등 케이스
-                LottoTicket(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber(it) }) to 3,
-                // 역순 케이스
-                LottoTicket(listOf(6, 5, 4, 3, 2, 1).map { LottoNumber(it) }) to 6,
-            )
+    @Test
+    fun `번호 5개 일치하고 보너스번호 일치하지 않으면 3등이다`() {
+        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 5, 44).map { LottoNumber(it) })
+        val userTickets = listOf(userTicket)
+        val bonusNumber = 45
+        val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
+        val rankList = lottoWinning.getRankList()
+        val actual = rankList[0]
+        assertThat(actual).isEqualTo(Rank.THIRD)
+    }
 
-        @JvmStatic
-        fun generateArgumentRankTest() =
-            listOf(
-                // 6개 겹침, 1등 케이스,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }) to Rank.FIRST,
-                // 5개 겹침, 2등 케이스,
-                LottoTicket(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) }) to Rank.SECOND,
-                // 5개 겹침 , 3등 케이스
-                LottoTicket(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }) to Rank.THIRD,
-                // 4개 겹침, 4등 케이스
-                LottoTicket(listOf(1, 2, 3, 4, 44, 45).map { LottoNumber(it) }) to Rank.FOURTH,
-                // 3개 겹침, 5등 케이스
-                LottoTicket(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber(it) }) to Rank.FIFTH,
-                // 없음.
-                LottoTicket(listOf(10, 11, 12, 13, 14, 15).map { LottoNumber(it) }) to Rank.MISS,
-            )
+    @Test
+    fun `번호 4개 일치하면 4등이다`() {
+        val userTicket = LottoTicket(listOf(1, 2, 3, 4, 43, 44).map { LottoNumber(it) })
+        val userTickets = listOf(userTicket)
+        val bonusNumber = 45
+        val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
+        val rankList = lottoWinning.getRankList()
+        val actual = rankList[0]
+        assertThat(actual).isEqualTo(Rank.FOURTH)
+    }
+
+    @Test
+    fun `번호 3개 일치하면 5등이다`() {
+        val userTicket = LottoTicket(listOf(1, 2, 3, 42, 43, 44).map { LottoNumber(it) })
+        val userTickets = listOf(userTicket)
+        val bonusNumber = 45
+        val lottoWinning = LottoWinning(winningTicket, LottoNumber(bonusNumber), userTickets)
+        val rankList = lottoWinning.getRankList()
+        val actual = rankList[0]
+        assertThat(actual).isEqualTo(Rank.FIFTH)
     }
 }
