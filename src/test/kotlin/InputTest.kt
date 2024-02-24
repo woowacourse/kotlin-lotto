@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 import util.InputValidator
 
@@ -21,6 +22,39 @@ class InputTest {
     @ValueSource(strings = ["1100", "1010", "1001"])
     fun `구입금액 입력 예외 처리 (구입 금액이 1,000원으로 나누어 떨어지지 않는 경우)`(purchaseAmount: String) {
         assertThrows<IllegalArgumentException> { InputValidator.validatePurchaseAmount(purchaseAmount) }
+    }
+
+    @ParameterizedTest
+    @CsvSource("3,6000", "2,3000")
+    fun `올바른 수동으로 구매할 로또 수 입력`(
+        purchaseSizeOfManualLotto: String,
+        purchaseAmount: Int,
+    ) {
+        assertDoesNotThrow {
+            InputValidator.validatePurchaseSizeOfManualLotto(purchaseSizeOfManualLotto, purchaseAmount)
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource("-1,1000", "-5,1000")
+    fun `수동으로 구매할 로또 수 입력 예외 처리 (수동 로또 수가 0 이상의 숫자가 아닌 경우)`(
+        purchaseSizeOfManualLotto: String,
+        purchaseAmount: Int,
+    ) {
+        assertThrows<IllegalArgumentException> {
+            InputValidator.validatePurchaseSizeOfManualLotto(purchaseSizeOfManualLotto, purchaseAmount)
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource("5,3000", "4,3000", "3,1000")
+    fun `수동으로 구매할 로또 수 입력 예외 처리 (수동 로또 수가 구입 금액보다 많은 경우)`(
+        purchaseSizeOfManualLotto: String,
+        purchaseAmount: Int,
+    ) {
+        assertThrows<IllegalArgumentException> {
+            InputValidator.validatePurchaseSizeOfManualLotto(purchaseSizeOfManualLotto, purchaseAmount)
+        }
     }
 
     @ParameterizedTest

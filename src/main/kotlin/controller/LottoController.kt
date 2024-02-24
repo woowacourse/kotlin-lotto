@@ -18,6 +18,7 @@ class LottoController {
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
         buyer = Buyer(purchaseAmount)
+        val numberOfManualLotto = InputView.inputPurchaseSizeOfManualLotto(purchaseAmount)
         val lottos = publishLottos()
         val winningLotto = drawWinningLotto()
         winningStatistics = makeWinningStatics(lottos, winningLotto)

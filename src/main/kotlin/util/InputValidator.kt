@@ -12,6 +12,33 @@ object InputValidator {
         return purchaseAmount
     }
 
+    fun validatePurchaseSizeOfManualLotto(
+        input: String,
+        purchaseAmount: Int,
+    ): Int {
+        val purchaseSizeOfManualLotto = input.toIntOrNull() ?: 0
+
+        validateMinimumPurchaseSizeOfManualLotto(purchaseSizeOfManualLotto)
+        validatePurchaseSizeOfManualLottoExceedPurchaseAmount(purchaseSizeOfManualLotto, purchaseAmount)
+
+        return purchaseSizeOfManualLotto
+    }
+
+    private fun validateMinimumPurchaseSizeOfManualLotto(purchaseSizeOfManualLotto: Int) {
+        require(purchaseSizeOfManualLotto >= Constant.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) {
+            InputException.INVALID_PURCHASE_SIZE_OF_MANUAL_LOTTO.getMessage()
+        }
+    }
+
+    private fun validatePurchaseSizeOfManualLottoExceedPurchaseAmount(
+        purchaseSizeOfManualLotto: Int,
+        purchaseAmount: Int,
+    ) {
+        require(purchaseSizeOfManualLotto * Constant.PURCHASE_AMOUNT_UNIT <= purchaseAmount) {
+            InputException.INVALID_PURCHASE_SIZE_OF_MANUAL_LOTTO_AMOUNT.getMessage()
+        }
+    }
+
     fun validateWinningNumbers(input: String): List<Int> {
         val winningNumbers =
             input.split(INPUT_SEPARATOR).map { winningNumber ->
