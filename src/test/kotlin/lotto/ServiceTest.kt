@@ -3,11 +3,11 @@ package lotto
 import lotto.constants.LottoPrize
 import lotto.model.Lotto
 import lotto.model.LottoNumber
+import lotto.model.LottoNumberGenerator
 import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
 import lotto.model.WinningLotto
 import lotto.model.WinningStatistics
-import lotto.service.LottoNumberGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

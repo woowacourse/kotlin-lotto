@@ -1,7 +1,7 @@
 package lotto
 
 import lotto.controller.LottoController
-import lotto.service.RandomLottoNumberGenerator
+import lotto.model.RandomLottoNumberGenerator
 
 fun main() {
     LottoController(RandomLottoNumberGenerator).run()
