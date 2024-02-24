@@ -41,7 +41,7 @@ class LottoController(
         lottoTickets: List<LottoTicket>,
     ): Pair<LottoResult, Float> {
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, lottoTickets)
-        val winningChart = lottoWinning.makeWinningChart()
+        val winningChart = lottoWinning.makeLottoResult()
         val winningRate = lottoWinning.calculateWinningRate()
         return Pair(winningChart, winningRate)
     }

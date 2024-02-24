@@ -14,13 +14,13 @@ class LottoWinning(
 
     private fun countMatchNumber(userTicket: LottoTicket): Int = (userTicket intersect winningTicket).size
 
-    fun makeWinningChart(): LottoResult {
+    fun makeLottoResult(): LottoResult {
         val rankList = getRankList()
         return LottoResult(rankList.groupingBy { it }.eachCount())
     }
 
     fun calculateWinningRate(): Float {
-        val winningPrize = makeWinningChart().winningMoney
+        val winningPrize = makeLottoResult().winningMoney
         val purchaseAmount = lottoTickets.size * LottoPurchase.PRICE_OF_LOTTO_TICKET
         return winningPrize.toFloat() / purchaseAmount
     }

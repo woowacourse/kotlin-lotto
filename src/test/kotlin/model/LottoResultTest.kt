@@ -28,7 +28,7 @@ class LottoResultTest {
 
         val userTickets = lottoPurchase.makeUserTickets()
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
-        val winningChart = lottoWinning.makeWinningChart()
+        val winningChart = lottoWinning.makeLottoResult()
 
         val actual = winningChart.getNum(Rank.FIRST)
         val expected = 4
