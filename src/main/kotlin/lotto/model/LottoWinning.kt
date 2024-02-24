@@ -8,7 +8,7 @@ class LottoWinning(
     fun makeRankMap(): Map<Rank, Int> {
         val rankList = userTickets.map { it.getRank(winningNumbers, bonusNumber) }
         val rankMap = rankList.groupingBy { it }.eachCount().toMutableMap()
-        // 각각의 Rank가 없을 경우(null일 경우) 0으로 바꿔준다.
+        // Map에 각각의 Rank가 없을 경우(null일 경우) 0으로 바꿔준다.
         for (rank in Rank.entries) {
             rankMap[rank] = rankMap[rank] ?: 0
         }

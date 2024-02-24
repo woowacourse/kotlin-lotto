@@ -2,5 +2,5 @@ import lotto.controller.LottoController
 
 fun main() {
     val lottoController = LottoController()
-    lottoController.run()
+    lottoController.runLotto()
 }
