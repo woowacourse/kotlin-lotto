@@ -2,7 +2,6 @@ package lotto.view
 
 import lotto.model.Lottos
 import lotto.model.WinningRank
-import model.Lotto
 
 class OutputView {
     fun printPurchaseAmountMessage() {
@@ -14,15 +13,8 @@ class OutputView {
     }
 
     fun printLottoNumbers(lottos: Lottos) {
-        lottos.lottos.forEach { lotto: Lotto ->
-            val resultLotto =
-                lotto.numbers.joinToString(
-                    separator = SEPARATOR_DELIMITER,
-                    prefix = PREFIX_DELIMITER,
-                    postfix = POSTFIX_DELIMITER,
-                ) { lottoNumber -> lottoNumber.number.toString() }
-            println(resultLotto)
-        }
+        val lottoNumberStrings = lottos.printLottoNumbers()
+        lottoNumberStrings.forEach { println(it) }
     }
 
     fun printWinningNumbersMessage() {
