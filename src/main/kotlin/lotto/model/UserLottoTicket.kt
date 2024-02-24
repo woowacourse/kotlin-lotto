@@ -5,21 +5,21 @@ class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
         require(userLottoTicket.size == LOTTO_TICKET_SIZE)
     }
 
-    private fun countMatchNumber(winningNumbers: List<LottoNumber>): Int {
-        return winningNumbers.intersect(userLottoTicket.toSet()).size
+    private fun countOfMatchWithNumbers(numbers: List<LottoNumber>): Int {
+        return numbers.intersect(userLottoTicket.toSet()).size
     }
 
-    private fun isBonusInTicket(bonusNumber: LottoNumber): Boolean {
-        return userLottoTicket.contains(bonusNumber)
+    private fun isNumInTicket(number: LottoNumber): Boolean {
+        return userLottoTicket.contains(number)
     }
 
     fun getRank(
-        winningNumbers: List<LottoNumber>,
-        bonusNumber: LottoNumber,
+        numbers: List<LottoNumber>,
+        number: LottoNumber,
     ): Rank {
-        val countOfMatch = countMatchNumber(winningNumbers)
-        val hasBonusNumber = isBonusInTicket(bonusNumber)
-        return Rank.decideRank(countOfMatch, hasBonusNumber)
+        val countOfMatchWithWinningNumbers = countOfMatchWithNumbers(numbers)
+        val isBonusInTicket = isNumInTicket(number)
+        return Rank.decideRank(countOfMatchWithWinningNumbers, isBonusInTicket)
     }
 
     companion object {
