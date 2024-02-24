@@ -32,7 +32,7 @@ class LottoGameController {
                 }
         val winningStatusChecker = WinningStatusChecker(winningResult)
 
-        OutputView.printWinningStatus(winningStatusChecker.toString())
+        OutputView.printWinningStatus(winningStatusChecker)
         OutputView.printEarningRate(winningStatusChecker.getEarningRate())
     }
 }

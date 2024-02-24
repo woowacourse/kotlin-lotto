@@ -11,10 +11,7 @@ class WinningStatusChecker(results: List<WinningRank>) {
         }
     }
 
-    override fun toString(): String =
-        WinningRank.entries.filter { it != WinningRank.MISS }.joinToString("\n") {
-            "${WinningRank.formatByRank(it)} - ${status.getOrDefault(it, DEFAULT_MATCH_COUNT)}개"
-        }
+    fun getWinningCountsByRank(winningRank: WinningRank): String = status.getOrDefault(winningRank, DEFAULT_MATCH_COUNT).toString()
 
     fun getEarningRate(): Double {
         val total: Long = status.entries.sumOf { it.key.winningMoney * it.value }
