@@ -23,9 +23,9 @@ class LottoMachineTest {
     @MethodSource("provideLottoPricesAndInvalidPrices")
     fun `구입 금액은 로또 1장의 가격 이상이여야합니다`(
         lottoPrice: Int,
-        invalidPrices: Array<Int>,
+        invalidBuyPrices: Array<Int>,
     ) {
-        invalidPrices.forEach { price ->
+        invalidBuyPrices.forEach { price ->
             assertThrows<IllegalArgumentException> {
                 LottoMachine.createLottos(price, fixedLottoNumbersGenerator, lottoPrice)
             }
@@ -35,7 +35,7 @@ class LottoMachineTest {
     @Test
     fun `사전에 정의된 범위로 로또를 생성한다`() {
         val lotto = LottoMachine.createLottos(Lotto.LOTTO_PRICE, fixedLottoNumbersGenerator).first()
-        val expectedLotto = Lotto((1..6).map { LottoNumber.of(it) })
+        val expectedLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         assertThat(lotto).isEqualTo(expectedLotto)
     }
 

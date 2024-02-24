@@ -4,12 +4,12 @@ object LottoMachine {
     private const val PRICE_ERROR_MESSAGE = "구입 금액은 로또 1장의 가격 이상이여야합니다."
 
     fun createLottos(
-        price: Int,
+        buyPrice: Int,
         lottoNumbersGenerator: LottoNumbersGenerator,
         lottoPrice: Int = Lotto.LOTTO_PRICE,
     ): List<Lotto> {
-        require(price >= lottoPrice) { PRICE_ERROR_MESSAGE }
-        val count = price / lottoPrice
+        require(buyPrice >= lottoPrice) { PRICE_ERROR_MESSAGE }
+        val count = buyPrice / lottoPrice
         return List(count) { createLotto(lottoNumbersGenerator) }
     }
 

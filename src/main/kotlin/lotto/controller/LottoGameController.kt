@@ -17,8 +17,8 @@ class LottoGameController {
     }
 
     private fun buyLottos(): List<Lotto> {
-        val price = InputView.readPrice()
-        val lottos = LottoMachine.createLottos(price, RandomLottoNumbersGenerator)
+        val buyPrice = InputView.reedBuyPrice()
+        val lottos = LottoMachine.createLottos(buyPrice, RandomLottoNumbersGenerator)
         OutputView.printLottos(lottos)
         return lottos
     }

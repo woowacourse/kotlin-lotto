@@ -3,11 +3,11 @@ package lotto.view
 object InputView {
     const val INVALID_INPUT = -1
 
-    fun readPrice(): Int {
+    fun reedBuyPrice(): Int {
         println("구입금액을 입력해 주세요.")
         val input = readlnOrNull().orEmpty()
-        val price = input.toIntOrNull() ?: INVALID_INPUT
-        return price
+        val buyPrice = input.toIntOrNull() ?: INVALID_INPUT
+        return buyPrice
     }
 
     fun readLottoWinningNumbers(): List<Int> {
