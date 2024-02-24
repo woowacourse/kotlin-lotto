@@ -12,6 +12,15 @@ class LottoController {
     private val purchaseInfo: PurchaseInfo by lazy { readPurchasePrice() }
     private val winningLotto: WinningLotto by lazy { readWinningLotto() }
 
+    private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
+
+    private fun readWinningLotto(): WinningLotto {
+        val winningLottoNumbers = retryWhileNoException { InputView.readWinningLottoNumbers() }
+        return retryWhileNoException {
+            WinningLotto(winningLottoNumbers, InputView.readBonusNumber())
+        }
+    }
+
     fun run() {
         val lottoStore = LottoStore.create(purchaseInfo, RandomLottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
@@ -21,14 +30,5 @@ class LottoController {
 
         val profitRatio = winningStatistics.calculateProfitRatio(purchaseInfo)
         OutputView.printProfitRatio(profitRatio)
-    }
-
-    private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
-
-    private fun readWinningLotto(): WinningLotto {
-        val winningLottoNumbers = retryWhileNoException { InputView.readWinningLottoNumbers() }
-        return retryWhileNoException {
-            WinningLotto(winningLottoNumbers, InputView.readBonusNumber())
-        }
     }
 }
