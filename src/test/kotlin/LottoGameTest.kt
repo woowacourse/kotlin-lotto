@@ -137,25 +137,19 @@ class LottoGameTest {
     }
 
     @Test
-    fun `당첨금 계산 (보너스 당첨)`() {
+    fun `당첨금 계산`() {
         assertThat(lottos.getLottos()[0].findRanking(winningNumberCorrect)).isEqualTo(LottoPrize.BOOM)
         assertThat(lottos.getLottos()[1].findRanking(winningNumberCorrect)).isEqualTo(LottoPrize.BOOM)
         assertThat(lottos.getLottos()[2].findRanking(winningNumberCorrect)).isEqualTo(LottoPrize.BOOM)
         assertThat(lottos.getLottos()[3].findRanking(winningNumberCorrect)).isEqualTo(LottoPrize.FIFTH)
         assertThat(lottos.getLottos()[4].findRanking(winningNumberCorrect)).isEqualTo(LottoPrize.FOURTH)
-        assertThat(lottos.getLottos()[6].findRanking(winningNumberCorrect)).isEqualTo(LottoPrize.SECOND)
         assertThat(lottos.getLottos()[7].findRanking(winningNumberCorrect)).isEqualTo(LottoPrize.FIRST)
     }
 
     @Test
-    fun `당첨금 계산 (보너스 미당첨)`() {
-        assertThat(lottos.getLottos()[0].findRanking(winningNumberWrong)).isEqualTo(LottoPrize.BOOM)
-        assertThat(lottos.getLottos()[1].findRanking(winningNumberWrong)).isEqualTo(LottoPrize.BOOM)
-        assertThat(lottos.getLottos()[2].findRanking(winningNumberWrong)).isEqualTo(LottoPrize.BOOM)
-        assertThat(lottos.getLottos()[3].findRanking(winningNumberWrong)).isEqualTo(LottoPrize.FIFTH)
-        assertThat(lottos.getLottos()[4].findRanking(winningNumberWrong)).isEqualTo(LottoPrize.FOURTH)
+    fun `당첨금 계산 (보너스 당첨 and 미당첨)`() {
         assertThat(lottos.getLottos()[5].findRanking(winningNumberWrong)).isEqualTo(LottoPrize.THIRD)
-        assertThat(lottos.getLottos()[7].findRanking(winningNumberWrong)).isEqualTo(LottoPrize.FIRST)
+        assertThat(lottos.getLottos()[6].findRanking(winningNumberCorrect)).isEqualTo(LottoPrize.SECOND)
     }
 
     @Test
