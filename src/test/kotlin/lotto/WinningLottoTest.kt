@@ -13,16 +13,18 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class WinningLottoTest {
-    @Test
-    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() =
-        assertThrows<IllegalArgumentException> {
-            WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoNumber(6))
-        }
+    private val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
 
     @Test
     fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() =
         assertDoesNotThrow {
-            WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoNumber(7))
+            WinningLotto(lotto, LottoNumber(7))
+        }
+
+    @Test
+    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() =
+        assertThrows<IllegalArgumentException> {
+            WinningLotto(lotto, LottoNumber(6))
         }
 
     @ParameterizedTest
@@ -34,10 +36,9 @@ class WinningLottoTest {
     ) {
         // given
         val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
-        val otherLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
 
         // when
-        val actual = winningLotto.getLottoPrize(otherLotto)
+        val actual = winningLotto.getLottoPrize(lotto)
 
         // then
         Assertions.assertThat(actual).isEqualTo(expected)

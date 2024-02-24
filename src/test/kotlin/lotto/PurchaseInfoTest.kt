@@ -10,16 +10,16 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class PurchaseInfoTest {
     @ParameterizedTest
-    @ValueSource(strings = ["0", "-1000", "1000100", "100", "2200000000"])
-    fun `구매 금액이 잘못된 경우 예외가 발생한다`(purchasePrice: Int) =
-        assertThrows<IllegalArgumentException> {
+    @ValueSource(ints = [1000, 14000, 30000])
+    fun `구매 금액이 올바른 경우 예외가 발생하지 않는다`(purchasePrice: Int) =
+        assertDoesNotThrow {
             PurchaseInfo(purchasePrice)
         }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1000", "14000", "30000"])
-    fun `구매 금액이 올바른 경우 예외가 발생하지 않는다`(purchasePrice: Int) =
-        assertDoesNotThrow {
+    @ValueSource(ints = [0, -1000, 1000100, 100])
+    fun `구매 금액이 잘못된 경우 예외가 발생한다`(purchasePrice: Int) =
+        assertThrows<IllegalArgumentException> {
             PurchaseInfo(purchasePrice)
         }
 
