@@ -3,12 +3,14 @@ package lotto.controller
 import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
 import lotto.model.WinningLotto
-import lotto.service.RandomLottoNumberGenerator
+import lotto.service.LottoNumberGenerator
 import lotto.utils.retryWhileNoException
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class LottoController {
+class LottoController(
+    private val lottoNumberGenerator: LottoNumberGenerator,
+) {
     private val purchaseInfo: PurchaseInfo by lazy { readPurchasePrice() }
     private val winningLotto: WinningLotto by lazy { readWinningLotto() }
 
@@ -22,7 +24,7 @@ class LottoController {
     }
 
     fun run() {
-        val lottoStore = LottoStore.create(purchaseInfo, RandomLottoNumberGenerator)
+        val lottoStore = LottoStore.create(purchaseInfo, lottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
 
         val winningStatistics = lottoStore.calculateWinningStatistics(winningLotto)
