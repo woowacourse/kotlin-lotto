@@ -9,8 +9,8 @@ import view.InputView
 import view.OutputView
 
 class LottoController {
-    val inputView = InputView()
-    val outputView = OutputView()
+    private val inputView = InputView()
+    private val outputView = OutputView()
 
     fun run() {
         val lottoTickets = purchaseLottoTickets()
