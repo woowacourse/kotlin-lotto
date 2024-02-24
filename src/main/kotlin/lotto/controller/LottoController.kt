@@ -2,8 +2,8 @@ package lotto.controller
 
 import lotto.domain.Cashier
 import lotto.domain.LottoDrawingMachine
-import lotto.domain.LottoGenerator
 import lotto.domain.MarginCalculator
+import lotto.domain.RandomLottoGenerator
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
 import lotto.domain.model.LottoNumber
@@ -14,21 +14,16 @@ import lotto.view.OutputView
 
 class LottoController(
     private val cashier: Cashier,
+    private val randomLottoGenerator: RandomLottoGenerator,
     private val lottoDrawingMachine: LottoDrawingMachine
 ) {
 
     fun start() {
-        val (money, quantity) = receiveMoney()
+        val money = getValidMoney()
+        val quantity = getLottoQuantity(money)
         val lottoTickets = makeLottoTicket(quantity)
         val result = drawLotto(lottoTickets)
         showResult(result, money)
-    }
-
-    private fun receiveMoney(): Pair<Money, Int> {
-        val money = getValidMoney()
-        val quantity = cashier.toTicketQuantity(money)
-        OutputView.printLottoQuantity(quantity)
-        return Pair(money, quantity)
     }
 
     private fun getValidMoney(): Money {
@@ -40,10 +35,15 @@ class LottoController(
         }
     }
 
+    private fun getLottoQuantity(money: Money): Int {
+        val quantity = cashier.toTicketQuantity(money)
+        OutputView.printLottoQuantity(quantity)
+        return quantity
+    }
+
     private fun makeLottoTicket(quantity: Int): List<Lotto> {
         val lottoTickets = List(quantity) {
-            val randomNumbers = LottoGenerator.makeRandomNumber()
-            LottoGenerator.makeLotto(randomNumbers)
+            randomLottoGenerator.make()
         }
         OutputView.printLottoNumbers(lottoTickets)
         return lottoTickets

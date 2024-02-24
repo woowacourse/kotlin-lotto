@@ -1,18 +1,19 @@
 package lotto.domain
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoNumber
+import lotto.domain.model.Lotto.Companion.toLotto
 
-object LottoGenerator {
-    private const val MINIMUM_LOTTO_NUMBER = 1
-    private const val MAXIMUM_LOTTO_NUMBER = 45
-    private const val LOTTO_SIZE = 6
+interface LottoGenerator {
 
-    fun makeLotto(randomNumber: List<Int>): Lotto {
-        val randomNumbers = randomNumber.take(LOTTO_SIZE).sorted()
-        val lottoNumbers = randomNumbers.map { LottoNumber(it) }
-        return Lotto(lottoNumbers)
+    fun make(start: Int = MINIMUM_LOTTO_NUMBER, endInclusive: Int = MAXIMUM_LOTTO_NUMBER): Lotto {
+        val numbers = (start..endInclusive).toList()
+        return manipulate(numbers).toLotto()
     }
 
-    fun makeRandomNumber() = (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER).shuffled()
+    fun manipulate(numbers: List<Int>): List<Int>
+
+    companion object {
+        private const val MINIMUM_LOTTO_NUMBER = 1
+        private const val MAXIMUM_LOTTO_NUMBER = 45
+    }
 }
