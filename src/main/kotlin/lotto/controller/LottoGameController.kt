@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.model.DrawResult
+import lotto.model.GameState
 import lotto.model.Lotto
 import lotto.model.LottoAnalyzer
 import lotto.model.LottoBundle
@@ -12,10 +13,15 @@ import lotto.view.OutputView
 
 class LottoGameController {
     fun start() {
-        getLottoBundleAndDrawResult().onSuccess { response ->
-            matchResult(response.lottoBundle, response.drawResult)
-        }.onFailure { e ->
-            OutputView.printError(e)
+        var gameState: GameState = GameState.Play
+
+        while (gameState == GameState.Play) {
+            getLottoBundleAndDrawResult().onSuccess { response ->
+                matchResult(response.lottoBundle, response.drawResult)
+                gameState = GameState.End
+            }.onFailure { e ->
+                OutputView.printError(e)
+            }
         }
     }
 
