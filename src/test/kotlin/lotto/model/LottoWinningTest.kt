@@ -1,16 +1,10 @@
 package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class LottoWinningTest {
-    private lateinit var winningNumbers: List<LottoNumber>
-
-    @BeforeEach
-    fun setup() {
-        winningNumbers = listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }
-    }
+    private var winningNumbers: List<LottoNumber> = listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }
 
     @Test
     fun `번호 6개 일치하면 1등이다`() {
