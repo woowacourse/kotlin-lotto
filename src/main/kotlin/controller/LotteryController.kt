@@ -43,12 +43,6 @@ class LotteryController(
         return lotteries
     }
 
-    private fun getWinningResult(
-        lotteries: Lotteries,
-        winningNumbers: Lottery,
-        bonusNumber: LotteryNumber,
-    ): WinningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
-
     private fun getLotteries(lotteryCount: Int): Lotteries = Lotteries(List(lotteryCount) { lotteryGenerator.generate() })
 
     private fun showResultService(
@@ -63,6 +57,12 @@ class LotteryController(
         val totalPrize = getTotalPrize(winningResult)
         showRateResult(purchaseAmount, totalPrize)
     }
+
+    private fun getWinningResult(
+        lotteries: Lotteries,
+        winningNumbers: Lottery,
+        bonusNumber: LotteryNumber,
+    ): WinningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
 
     private fun getTotalPrize(winningResult: WinningResult): Money {
         var totalPrize = Money(BigDecimal(0))
