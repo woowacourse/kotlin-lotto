@@ -5,7 +5,7 @@ class LottoWinning(
     private val bonusNumber: LottoNumber,
     private val lottoTickets: List<LottoTicket>,
 ) {
-    fun getRankList(): List<Rank> =
+    private fun getRankList(): List<Rank> =
         lottoTickets.map {
             val countOfMatch = countMatchNumber(it)
             val hasBonusNumber = bonusNumber in it

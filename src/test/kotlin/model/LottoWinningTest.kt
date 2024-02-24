@@ -3,8 +3,6 @@ package model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
 
 class LottoWinningTest {
     private lateinit var winningTicket: LottoTicket
@@ -12,18 +10,6 @@ class LottoWinningTest {
     @BeforeEach
     fun setup() {
         winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
-    }
-
-    @ParameterizedTest
-    @MethodSource("generateArgumentRankTest")
-    fun `랭크 판정 테스트`(args: Pair<LottoTicket, Rank>) {
-        val (userTicket, expected) = args
-        val userTickets = listOf(userTicket)
-        val bonusNumber = LottoNumber(7)
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
-        val rankList = lottoWinning.getRankList()
-        val actual = rankList[0]
-        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
