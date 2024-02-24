@@ -8,5 +8,5 @@ class TestLottoNumberGenerator : NumberGenerator {
         size: Int,
         minNumber: Int,
         maxNumber: Int,
-    ): LottoNumbers = LottoNumbers.lottoNumbersOf(1, 2, 3, 4, 5, 6)
+    ): LottoNumbers = LottoNumbers.lottoNumbersOf(listOf(1, 2, 3, 4, 5, 6))
 }

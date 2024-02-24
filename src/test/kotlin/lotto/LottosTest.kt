@@ -9,7 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottosTest {
-    private fun setUpLotto(vararg numbers: Int): Lotto = Lotto(LottoNumbers.lottoNumbersOf(*numbers))
+    private fun setUpLotto(vararg numbers: Int): Lotto = Lotto(LottoNumbers.lottoNumbersOf(numbers.toList()))
 
     @Test
     fun `Lottos에 추가한 Lotto가 있는지 테스트`() {

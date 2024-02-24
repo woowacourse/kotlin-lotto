@@ -5,5 +5,5 @@ class LottoNumberGenerator : NumberGenerator {
         size: Int,
         minNumber: Int,
         maxNumber: Int,
-    ): LottoNumbers = LottoNumbers.lottoNumbersOf(*(minNumber..maxNumber).shuffled().take(size).sorted().toIntArray())
+    ): LottoNumbers = LottoNumbers.lottoNumbersOf((minNumber..maxNumber).shuffled().take(size).sorted())
 }
