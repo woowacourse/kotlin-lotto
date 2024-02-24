@@ -19,17 +19,8 @@ class LottoWinning(
         return LottoResult(rankList.groupingBy { it }.eachCount())
     }
 
-    private fun calculateWinningPrize(): Int {
-        val rankList = getRankList()
-        val winningPrize =
-            rankList.sumOf {
-                it.winningMoney
-            }
-        return winningPrize
-    }
-
     fun calculateWinningRate(): Float {
-        val winningPrize = calculateWinningPrize()
+        val winningPrize = makeWinningChart().winningMoney
         val purchaseAmount = lottoTickets.size * LottoPurchase.PRICE_OF_LOTTO_TICKET
         return winningPrize.toFloat() / purchaseAmount
     }
