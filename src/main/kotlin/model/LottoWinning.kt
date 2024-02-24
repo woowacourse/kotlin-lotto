@@ -1,39 +1,29 @@
 package model
 
 class LottoWinning(
-    private val winningTicket: LottoTicket,
+    private val userTickets: List<UserLottoTicket>,
+    private val winningNumbers: List<LottoNumber>,
     private val bonusNumber: LottoNumber,
-    private val lottoTickets: List<LottoTicket>,
 ) {
-    fun countMatchNumber(userTicket: LottoTicket): Int {
-        return winningTicket.lottoTicket.intersect(userTicket.lottoTicket.toSet()).size
-    }
-
-    fun isBonusInTicket(userTicket: LottoTicket): Boolean {
-        return userTicket.lottoTicket.contains(bonusNumber)
-    }
-
-    fun getRankList(): List<Rank> =
-        lottoTickets.map {
-            val countOfMatch = countMatchNumber(it)
-            val hasBonusNumber = isBonusInTicket(it)
-            Rank.decideRank(countOfMatch, hasBonusNumber)
+    fun makeRankMap(): Map<Rank, Int> {
+        val rankList = userTickets.map { it.getRank(winningNumbers, bonusNumber) }
+        val rankMap = rankList.groupingBy { it }.eachCount().toMutableMap()
+        // 각각의 Rank가 없을 경우(null일 경우) 0으로 바꿔준다.
+        for (rank in Rank.entries) {
+            rankMap[rank] = rankMap[rank] ?: 0
         }
-
-    fun makeWinningChart(): LottoResult {
-        val rankList = getRankList()
-        return LottoResult(rankList.groupingBy { it }.eachCount())
+        return rankMap
     }
 
     private fun calculateWinningPrize(): Int {
-        val rankList = getRankList()
-        val winningPrize = rankList.sumOf { it.winningMoney }
+        val rankMap = makeRankMap()
+        val winningPrize = rankMap.map { it.key.winningMoney * it.value }.sum()
         return winningPrize
     }
 
     fun calculateWinningRate(): Float {
         val winningPrize = calculateWinningPrize()
-        val purchaseAmount = lottoTickets.size * LottoPurchase.PRICE_OF_LOTTO_TICKET
+        val purchaseAmount = userTickets.size * LottoPurchase.PRICE_OF_LOTTO_TICKET
         return winningPrize.toFloat() / purchaseAmount
     }
 }

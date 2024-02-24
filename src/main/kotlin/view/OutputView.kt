@@ -1,33 +1,33 @@
 package view
 
-import model.LottoResult
-import model.LottoTicket
+import model.Rank
 import model.Rank.FIFTH
 import model.Rank.FIRST
 import model.Rank.FOURTH
 import model.Rank.SECOND
 import model.Rank.THIRD
+import model.UserLottoTicket
 
 class OutputView {
     fun printLottoCount(lottoCount: Int) {
         println(PURCHASE_MESSAGE.format(lottoCount))
     }
 
-    fun printLottoTickets(lottoTickets: List<LottoTicket>) {
-        val lottoTicketsInt = lottoTickets.map { it.lottoTicket.map { it.number } }
+    fun printLottoTickets(userLottoTickets: List<UserLottoTicket>) {
+        val lottoTicketsInt = userLottoTickets.map { it.userLottoTicket.map { it.number } }
         lottoTicketsInt.forEach {
             println(it)
         }
     }
 
-    fun printWinningChart(lottoResults: LottoResult) {
+    fun printWinningChart(rankMap: Map<Rank, Int>) {
         for (rank in listOf(FIFTH, FOURTH, THIRD, SECOND, FIRST)) {
             println(
                 MATCH_MESSAGE.format(
                     rank.countOfMatch,
                     if (rank == SECOND) ", 보너스 볼 일치" else "",
                     rank.winningMoney,
-                    lottoResults.setNullZero(rank),
+                    rankMap[rank],
                 ),
             )
         }
