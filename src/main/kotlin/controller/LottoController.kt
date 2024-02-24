@@ -47,9 +47,8 @@ class LottoController {
     private fun purchaseLottoTickets(): List<LottoTicket> {
         val purchasePrice = inputView.getPurchasePrice()
         val lottoPurchase = LottoPurchase(purchasePrice)
-        val lottoCount = lottoPurchase.makeLottoCount()
         val lottoTickets = lottoPurchase.makeUserTickets()
-        outputView.printLottoCount(lottoCount)
+        outputView.printLottoCount(lottoTickets.size)
         outputView.printLottoTickets(lottoTickets)
         return lottoTickets
     }
