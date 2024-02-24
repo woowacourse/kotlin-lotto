@@ -1,8 +1,11 @@
 package lotto.controller
 
+import lotto.constants.GameConstant.DEFAULT_COUNT
+import lotto.constants.GameConstant.PURCHASE_UNIT
 import lotto.model.LottoNumberGenerator
 import lotto.model.LottoStore
 import lotto.model.PurchaseAmount
+import lotto.model.WinningNumbersGenerator
 import lotto.model.WinningPrizeCalculator
 import lotto.model.WinningRank
 import lotto.view.InputView
@@ -21,8 +24,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     private fun initPurchaseAmount(): Int {
         outputView.printPurchaseAmountMessage()
-        val purchaseAmount = PurchaseAmount().getAmount(inputView.readPurchaseAmount())
-        return purchaseAmount
+        return PurchaseAmount().getAmount(inputView.readPurchaseAmount())
     }
 
     private fun initBuyLotto(purchaseAmount: Int): Int {
@@ -39,19 +41,13 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     private fun generateWinningNumbers(): Pair<Lotto, LottoNumber> {
         outputView.printWinningNumbersMessage()
-        val winningNumbers =
-            Lotto(
-                inputView.readWinningNumbers().split(
-                    SPLIT_DELIMITER,
-                ).map {
-                    LottoNumber(it.toInt())
-                }
-                    .toSet(),
-            )
+        val input = inputView.readWinningNumbers()
+        val winningNumbersGenerator = WinningNumbersGenerator()
+        val winningLotto = winningNumbersGenerator.generateWinningNumbers(input)
 
         outputView.printBonusNumberMessage()
         val bonusNumber = LottoNumber(inputView.readWinningBonusNumber())
-        return Pair(winningNumbers, bonusNumber)
+        return Pair(winningLotto, bonusNumber)
     }
 
     private fun showLottoResult(
@@ -70,11 +66,5 @@ class LottoController(private val inputView: InputView, private val outputView: 
         val profitAmount = WinningPrizeCalculator.calculateProfitAmount(rankCounts)
         val profitRate = WinningPrizeCalculator.calculateProfitRate(purchaseAmount, profitAmount)
         outputView.printProfitRateMessage(profitRate)
-    }
-
-    companion object {
-        private const val DEFAULT_COUNT = 0
-        private const val SPLIT_DELIMITER = ","
-        private const val PURCHASE_UNIT = 1000
     }
 }

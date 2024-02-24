@@ -6,4 +6,5 @@ object GameConstant {
     const val PURCHASE_UNIT = 1000
     const val LOTTO_NUMBER_SIZE = 6
     const val SPLIT_DELIMITER = ","
+    const val DEFAULT_COUNT = 0
 }
