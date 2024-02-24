@@ -4,7 +4,6 @@ import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
 import lotto.model.WinningLotto
 import lotto.service.RandomLottoNumberGenerator
-import lotto.service.ResultCalculator
 import lotto.utils.retryWhileNoException
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -20,7 +19,7 @@ class LottoController {
         val winningStatistics = lottoStore.calculateWinningStatistics(winningLotto)
         OutputView.printWinningStatistics(winningStatistics)
 
-        val profitRatio = ResultCalculator.calculateProfitRatio(purchaseInfo, winningStatistics)
+        val profitRatio = winningStatistics.calculateProfitRatio(purchaseInfo)
         OutputView.printProfitRatio(profitRatio)
     }
 

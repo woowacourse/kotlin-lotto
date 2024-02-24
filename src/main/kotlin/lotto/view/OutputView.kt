@@ -4,23 +4,23 @@ import lotto.constants.LottoPrize
 import lotto.constants.StringConstants
 import lotto.constants.StringConstants.OUTPUT_PROFIT_RATIO
 import lotto.model.LottoStore
+import lotto.model.ProfitRatio
+import lotto.model.WinningStatistics
 
 object OutputView {
-    private const val DEFAULT_MATCHING_COUNT = 0
-
     fun printPurchaseLotto(lottoStore: LottoStore) {
         println(StringConstants.OUTPUT_PURCHASE_COUNT.format(lottoStore.lottos.size))
         lottoStore.lottos.forEach { println(it) }
         println()
     }
 
-    fun printWinningStatistics(winningStatistics: Map<LottoPrize, Int>) {
+    fun printWinningStatistics(winningStatistics: WinningStatistics) {
         println(StringConstants.OUTPUT_WINNING_STATICS)
         println(StringConstants.OUTPUT_DIVIDER)
 
         LottoPrize.entries.forEach { lottoPrize ->
             if (lottoPrize == LottoPrize.NOTHING) return@forEach
-            val matchingCount = winningStatistics.getOrDefault(lottoPrize, DEFAULT_MATCHING_COUNT)
+            val matchingCount = winningStatistics[lottoPrize]
             println(provideMatchingMessage(lottoPrize, matchingCount))
         }
     }
@@ -44,9 +44,5 @@ object OutputView {
         )
     }
 
-    fun printProfitRatio(profitRatio: Double) {
-        return println(OUTPUT_PROFIT_RATIO.format(profitRatio.convertTwoDecimal()))
-    }
-
-    private fun Double.convertTwoDecimal() = "%.2f".format(this)
+    fun printProfitRatio(profitRatio: ProfitRatio) = println(OUTPUT_PROFIT_RATIO.format(profitRatio))
 }

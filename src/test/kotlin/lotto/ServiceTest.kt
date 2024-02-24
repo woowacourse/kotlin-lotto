@@ -6,8 +6,8 @@ import lotto.model.LottoNumber
 import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
 import lotto.model.WinningLotto
+import lotto.model.WinningStatistics
 import lotto.service.LottoNumberGenerator
-import lotto.service.ResultCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -36,25 +36,25 @@ class ServiceTest {
         val actual = lottoStore.calculateWinningStatistics(winningLotto)
 
         // then
-        assertThat(actual.keys.first()).isEqualTo(expected)
-        assertThat(actual.values.first()).isEqualTo(purchaseInfo.amount)
+        assertThat(actual[expected]).isEqualTo(1)
     }
 
     @ParameterizedTest
     @MethodSource("로또 수익률 계산 테스트 데이터")
     fun `로또 수익률을 계산한다`(
         lottoPrice: Int,
-        prizeCount: Map<LottoPrize, Int>,
-        profitRatio: Double,
+        statistics: Map<LottoPrize, Int>,
+        expected: String,
     ) {
         // given
         val purchaseInfo = PurchaseInfo(lottoPrice)
+        val winningStatistics = WinningStatistics(statistics)
 
         // when
-        val actual = ResultCalculator.calculateProfitRatio(purchaseInfo, prizeCount)
+        val actual = winningStatistics.calculateProfitRatio(purchaseInfo)
 
         // then
-        assertThat(actual).isEqualTo(profitRatio)
+        assertThat(actual.toString()).isEqualTo(expected)
     }
 
     companion object {
@@ -72,9 +72,9 @@ class ServiceTest {
         @JvmStatic
         fun `로또 수익률 계산 테스트 데이터`() =
             listOf(
-                Arguments.of("14000", mapOf(LottoPrize.FIFTH to 1), 0.35),
-                Arguments.of("8000", mapOf(LottoPrize.FIFTH to 1), 0.62),
-                Arguments.of("1000", mapOf(LottoPrize.FIRST to 1), 2_000_000),
+                Arguments.of("14000", mapOf(LottoPrize.FIFTH to 1), "0.35"),
+                Arguments.of("8000", mapOf(LottoPrize.FIFTH to 1), "0.62"),
+                Arguments.of("1000", mapOf(LottoPrize.FIRST to 1), "2000000.00"),
             )
     }
 }
