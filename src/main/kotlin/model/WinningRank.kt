@@ -13,6 +13,9 @@ enum class WinningRank(val matchCount: Int, val prize: Long, val isBonus: Boolea
             matchCount: Int,
             isBonusMatched: Boolean,
         ): WinningRank {
+            if (matchCount == 5 && isBonusMatched) {
+                return SECOND
+            }
             return entries.firstOrNull {
                 (it.matchCount == matchCount) && (it.isBonus == isBonusMatched)
             } ?: NONE

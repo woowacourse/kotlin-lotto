@@ -1,7 +1,6 @@
 package lotto.controller
 
 import lotto.model.LottoNumberGenerator
-import lotto.model.LottoNumbers
 import lotto.model.LottoStore
 import lotto.model.PurchaseAmount
 import lotto.model.WinningPrizeCalculator
@@ -42,14 +41,12 @@ class LottoController(private val inputView: InputView, private val outputView: 
         outputView.printWinningNumbersMessage()
         val winningNumbers =
             Lotto(
-                LottoNumbers(
-                    inputView.readWinningNumbers().split(
-                        SPLIT_DELIMITER,
-                    ).map {
-                        LottoNumber(it.toInt())
-                    }
-                        .toSet(),
-                ),
+                inputView.readWinningNumbers().split(
+                    SPLIT_DELIMITER,
+                ).map {
+                    LottoNumber(it.toInt())
+                }
+                    .toSet(),
             )
 
         outputView.printBonusNumberMessage()

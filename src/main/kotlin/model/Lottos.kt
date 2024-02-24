@@ -14,8 +14,8 @@ class Lottos(val lottos: MutableList<Lotto> = mutableListOf()) {
     ): Map<WinningRank, Int> {
         val winningResult =
             lottos.groupBy { lotto ->
-                val matchCount = lotto.getMatchCount(winningNumbers.lottoNumbers)
-                val matchBonus = lotto.getMatchBonus(bonusNumber.number)
+                val matchCount = lotto.getMatchCount(winningNumbers)
+                val matchBonus = lotto.getMatchBonus(bonusNumber)
                 WinningRank.findByMatchCount(matchCount, matchBonus)
             }.mapValues { (_, value) -> value.size }
 

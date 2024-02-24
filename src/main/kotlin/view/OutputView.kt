@@ -16,7 +16,7 @@ class OutputView {
     fun printLottoNumbers(lottos: Lottos) {
         lottos.lottos.forEach { lotto: Lotto ->
             val resultLotto =
-                lotto.lottoNumbers.numbers.joinToString(
+                lotto.numbers.joinToString(
                     separator = SEPARATOR_DELIMITER,
                     prefix = PREFIX_DELIMITER,
                     postfix = POSTFIX_DELIMITER,

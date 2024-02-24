@@ -1,9 +1,11 @@
 package lotto.model
 
+import model.Lotto
+
 class LottoNumberGenerator : NumberGenerator {
     override fun generate(
         size: Int,
         minNumber: Int,
         maxNumber: Int,
-    ): LottoNumbers = LottoNumbers.lottoNumbersOf((minNumber..maxNumber).shuffled().take(size).sorted())
+    ): Lotto = Lotto.lottoNumbersOf((minNumber..maxNumber).shuffled().take(size).sorted())
 }

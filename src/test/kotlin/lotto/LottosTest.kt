@@ -1,6 +1,5 @@
 package lotto
 
-import lotto.model.LottoNumbers
 import lotto.model.Lottos
 import lotto.model.WinningRank
 import model.Lotto
@@ -9,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottosTest {
-    private fun setUpLotto(vararg numbers: Int): Lotto = Lotto(LottoNumbers.lottoNumbersOf(numbers.toList()))
+    private fun setUpLotto(vararg numbers: Int): Lotto = Lotto.lottoNumbersOf(numbers.toList())
 
     @Test
     fun `Lottos에 추가한 Lotto가 있는지 테스트`() {

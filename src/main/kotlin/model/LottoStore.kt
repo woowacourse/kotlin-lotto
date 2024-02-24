@@ -16,7 +16,7 @@ class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerat
 
     private fun generateLottos() {
         repeat(numberOfLottos) {
-            val lotto = Lotto(lottoNumberGenerator.generate(LOTTO_NUMBER_SIZE, MIN_NUMBER, MAX_NUMBER))
+            val lotto = lottoNumberGenerator.generate(LOTTO_NUMBER_SIZE, MIN_NUMBER, MAX_NUMBER)
             lottos.add(lotto)
         }
     }

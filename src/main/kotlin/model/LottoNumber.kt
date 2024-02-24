@@ -1,6 +1,6 @@
 package model
 
-class LottoNumber(val number: Int) {
+data class LottoNumber(val number: Int) {
     init {
         require(number in LOTTO_NUMBER_RANGE) { ERROR_LOTTO_NUMBER_RANGE }
     }
