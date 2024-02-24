@@ -6,7 +6,7 @@ class LottoTicket(
     private val set = lottoTicket.toSet()
 
     init {
-        require(lottoTicket.size == SIZE)
+        require(set.size == SIZE)
     }
 
     infix fun intersect(other: LottoTicket) = other.set intersect this.set
