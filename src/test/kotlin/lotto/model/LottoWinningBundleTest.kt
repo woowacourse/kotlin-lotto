@@ -21,10 +21,10 @@ class LottoWinningBundleTest {
     fun `5개의 당첨 번호가 일치하고 보너스 번호가 일치하지 않으면 3등이고, 일치하면 2등이다`() {
         val lottos =
             listOf(
-                Lotto((1..6).map { LottoNumber.of(it) }),
-                Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber.of(it) }),
+                Lotto.of(1, 2, 3, 4, 5, 6),
+                Lotto.of(1, 2, 3, 4, 5, 8),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 7)
         val lottoWinningBundle = LottoWinningBundle(winningLotto, LottoNumber.of(8))
         val lottoResult = lottoWinningBundle.calculateResult(lottos)
         assertThat(lottoResult.winningCountsByLottoRank[LottoRank.THIRD]).isEqualTo(1)
@@ -35,10 +35,10 @@ class LottoWinningBundleTest {
     fun `6개의 당첨 번호가 일치하면 1등이고, 4개의 당첨번호가 일치하면 4등이다`() {
         val lottos =
             listOf(
-                Lotto((1..6).map { LottoNumber.of(it) }),
-                Lotto(listOf(1, 2, 3, 4, 7, 8).map { LottoNumber.of(it) }),
+                Lotto.of(1, 2, 3, 4, 5, 6),
+                Lotto.of(1, 2, 3, 4, 7, 8),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val lottoWinningBundle = LottoWinningBundle(winningLotto, LottoNumber.of(8))
         val lottoResult = lottoWinningBundle.calculateResult(lottos)
         assertThat(lottoResult.winningCountsByLottoRank[LottoRank.FIRST]).isEqualTo(1)
