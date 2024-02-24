@@ -30,6 +30,10 @@ class Lotto(val numbers: Set<LottoNumber>) {
         return rank
     }
 
+    fun contains(number: LottoNumber): Boolean {
+        return numbers.contains(number)
+    }
+
     private fun checkSecond(
         rank: LottoPrize,
         matchBonus: Boolean,
