@@ -1,9 +1,10 @@
 package model
 
 class LottoResult(private val lottoResult: Map<Rank, Int>) {
-    val winningMoney: Int by lazy {
+    val winningMoney: Long by lazy {
         lottoResult.map {
-            it.key.winningMoney * it.value
+            val money: Long = it.key.winningMoney.toLong() * it.value
+            money
         }.sum()
     }
 
