@@ -14,8 +14,8 @@ object OutputView {
     private const val OUTPUT_PROFIT_RATIO = "총 수익률은 %s입니다."
 
     fun printPurchaseLotto(lottoStore: LottoStore) {
-        println(OUTPUT_PURCHASE_COUNT.format(lottoStore.lottos.size))
-        lottoStore.lottos.forEach { println(it) }
+        println(OUTPUT_PURCHASE_COUNT.format(lottoStore.size))
+        lottoStore.forEach { println(it) }
         println()
     }
 

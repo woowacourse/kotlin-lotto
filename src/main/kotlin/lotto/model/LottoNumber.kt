@@ -1,6 +1,6 @@
 package lotto.model
 
-data class LottoNumber(val number: Int) {
+data class LottoNumber(private val number: Int) {
     init {
         require(number in MIN_RANGE..MAX_RANGE) { INVALID_RANGE }
     }
