@@ -1,7 +1,5 @@
 package lotto.model
 
-import lotto.util.WinningRank
-
 class WinningStatusChecker(results: List<WinningRank>) {
     private val status: MutableMap<WinningRank, Int> = mutableMapOf()
 

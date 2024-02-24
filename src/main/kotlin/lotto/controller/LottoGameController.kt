@@ -3,8 +3,8 @@ package lotto.controller
 import lotto.model.LotteryResult
 import lotto.model.Lotto
 import lotto.model.LottoMachine
+import lotto.model.WinningRank
 import lotto.model.WinningStatusChecker
-import lotto.util.WinningRank
 import lotto.view.InputView
 import lotto.view.OutputView
 

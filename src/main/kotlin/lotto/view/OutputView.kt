@@ -1,8 +1,8 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.WinningRank
 import lotto.model.WinningStatusChecker
-import lotto.util.WinningRank
 
 object OutputView {
     fun printNumberOfTicket(numberOfTicket: Int) {
