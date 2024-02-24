@@ -2,7 +2,7 @@ package model
 
 class LottoPurchase(
     purchasePrice: Int,
-    private val makeMethod: LottoTicketMakeMethod,
+    private val makeMethod: LottoTicketGenerator,
 ) {
     init {
         require(purchasePrice >= 0)
@@ -13,7 +13,7 @@ class LottoPurchase(
         purchasePrice: Int,
     ) : this(
         purchasePrice,
-        LottoTicketMakeMethod {
+        LottoTicketGenerator {
             val lottoNumbers =
                 LottoNumber.RANGE.shuffled()
                     .take(LottoTicket.SIZE)
@@ -25,7 +25,7 @@ class LottoPurchase(
     fun makeUserTickets(): List<LottoTicket> {
         val userTickets: MutableList<LottoTicket> = mutableListOf()
         repeat(lottoCount) {
-            userTickets.add(makeMethod.make())
+            userTickets.add(makeMethod.generate())
         }
         return userTickets
     }
