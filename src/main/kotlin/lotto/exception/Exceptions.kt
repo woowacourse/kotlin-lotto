@@ -12,4 +12,6 @@ sealed class Exceptions : Throwable() {
     class LottoNumberOutOfRangeException(val reason: String) : Exceptions()
 
     class InvalidNumberException(val reason: String) : Exceptions()
+
+    class ManualPurchaseCountNotNaturalNumberException(val reason: String) : Exceptions()
 }

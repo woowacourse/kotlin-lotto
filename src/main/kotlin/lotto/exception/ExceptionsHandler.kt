@@ -22,6 +22,7 @@ object ExceptionsHandler {
             1003 -> Exceptions.InvalidPurchaseAmountException(reason = reason)
             1004 -> Exceptions.LottoNumberOutOfRangeException(reason = reason)
             1005 -> Exceptions.InvalidNumberException(reason = reason)
+            1006 -> Exceptions.ManualPurchaseCountNotNaturalNumberException(reason = reason)
             else -> null
         }
 }
