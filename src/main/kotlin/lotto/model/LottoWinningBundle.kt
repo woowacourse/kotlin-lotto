@@ -9,7 +9,7 @@ data class LottoWinningBundle(
     }
 
     fun calculateResult(lottos: List<Lotto>): LottoResult {
-        val result: MutableMap<LottoRank, Int> = LottoRank.entries.associateWith { 0 }.toMutableMap()
+        val result: MutableMap<LottoRank, Int> = LottoRank.entries.reversed().associateWith { 0 }.toMutableMap()
         lottos.forEach { lotto ->
             val countOfMatch = calculateCountOfMatch(lotto)
             val matchBonus = calculateMatchBonus(lotto)

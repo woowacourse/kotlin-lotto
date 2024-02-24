@@ -15,13 +15,10 @@ object OutputView {
 
     fun printResult(lottoResult: LottoResult) {
         println("\n당첨 통계\n---------")
-        LottoRank.entries.filter { it != LottoRank.MISS }.reversed().forEach { rank ->
-            val count = lottoResult.getWinningCountBy(rank)
-            when (rank) {
-                LottoRank.SECOND -> println("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney})- ${count}개")
-                else -> println("${rank.countOfMatch}개 일치 (${rank.winningMoney})- ${count}개")
+        lottoResult.winningCountsByLottoRank.filterNot { it.key == LottoRank.MISS }
+            .forEach { (lottoRank, count) ->
+                println("${lottoRank.description()} - ${count}개")
             }
-        }
         println("총 수익률은 ${String.format("%.2f", lottoResult.getProfitRate())}입니다.")
     }
 }
