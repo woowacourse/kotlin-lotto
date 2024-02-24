@@ -21,8 +21,9 @@ data class Money(val amount: BigDecimal) : Comparable<Money> {
             val amount = input.toIntOrNull()
             requireNotNull(amount) { ERROR_INVALID_PURCHASE_AMOUNT }
             require(amount >= MIN_VALID_AMOUNT) { ERROR_MINUS_PURCHASE_AMOUNT }
+            val purchasableAmount = amount - (amount % 1000)
 
-            return Money(BigDecimal(input))
+            return Money(BigDecimal(purchasableAmount))
         }
 
         private const val MIN_VALID_AMOUNT = 0
