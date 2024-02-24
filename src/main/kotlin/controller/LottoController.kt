@@ -19,9 +19,9 @@ class LottoController {
         val purchaseAmount = InputView.inputPurchaseAmount()
         buyer = Buyer(purchaseAmount)
         val numberOfManualLotto = InputView.inputPurchaseSizeOfManualLotto(purchaseAmount)
-        val lottos = publishLottos()
+        publishLottos(numberOfManualLotto)
         val winningLotto = drawWinningLotto()
-        winningStatistics = makeWinningStatics(lottos, winningLotto)
+        winningStatistics = makeWinningStatics(buyer.purchasedLotto, winningLotto)
         displayWinningStatistics(purchaseAmount)
     }
 
@@ -32,16 +32,30 @@ class LottoController {
         return numberGenerator.drawSixNumbers(randomNumbers)
     }
 
-    private fun publishLottos(): Lottos {
-        val lottos = Lottos(List(buyer.numberOfLotto) { Lotto(generateLottoNumbers()) })
-        buyer.buyLottos(lottos)
-        displayPurchaseResult()
-        return lottos
+    private fun publishLottos(numberOfManualLotto: Int) {
+        buyer.buyLottos(generateManualLottos(numberOfManualLotto))
+        buyer.buyLottos(generateAutoLottos(numberOfManualLotto))
+
+        displayPurchaseResult(numberOfManualLotto, buyer.numberOfLotto - numberOfManualLotto)
     }
 
-    private fun displayPurchaseResult() {
-        OutputView.outputNumberOfLotto(buyer.numberOfLotto)
-        OutputView.outputLottos(buyer.lottos)
+    private fun generateManualLottos(numberOfManualLotto: Int): Lottos {
+        InputView.inputGuideManualLottoNumbers()
+        val manualLottos = Lottos(List(numberOfManualLotto) { Lotto(InputView.inputManualLottos()) })
+        return manualLottos
+    }
+
+    private fun generateAutoLottos(numberOfManualLotto: Int): Lottos {
+        val autoLottos = Lottos(List(buyer.numberOfLotto - numberOfManualLotto) { Lotto(generateLottoNumbers()) })
+        return autoLottos
+    }
+
+    private fun displayPurchaseResult(
+        numberOfManualLotto: Int,
+        numberOfAutoLotto: Int,
+    ) {
+        OutputView.outputNumberOfLotto(numberOfManualLotto, numberOfAutoLotto)
+        OutputView.outputLottos(buyer.purchasedLotto)
     }
 
     private fun drawWinningLotto(): WinningLotto {

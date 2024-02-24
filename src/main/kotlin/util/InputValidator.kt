@@ -16,7 +16,7 @@ object InputValidator {
         input: String,
         purchaseAmount: Int,
     ): Int {
-        val purchaseSizeOfManualLotto = input.toIntOrNull() ?: 0
+        val purchaseSizeOfManualLotto = input.toIntOrNull() ?: -1
 
         validateMinimumPurchaseSizeOfManualLotto(purchaseSizeOfManualLotto)
         validatePurchaseSizeOfManualLottoExceedPurchaseAmount(purchaseSizeOfManualLotto, purchaseAmount)
@@ -39,30 +39,30 @@ object InputValidator {
         }
     }
 
-    fun validateWinningNumbers(input: String): List<Int> {
-        val winningNumbers =
-            input.split(INPUT_SEPARATOR).map { winningNumber ->
-                validateWinningNumber(winningNumber)
+    fun validatePublishedLottos(input: String): List<Int> {
+        val numbers =
+            input.split(INPUT_SEPARATOR).map { number ->
+                validatePublishedLotto(number)
             }
-        validateWinningNumbersSize(winningNumbers)
-        validateWinningNumbersDuplicate(winningNumbers)
-        return winningNumbers
+        validateNumbersSize(numbers)
+        validateWinningNumbersDuplicate(numbers)
+        return numbers
     }
 
-    private fun validateWinningNumber(winningNumber: String): Int {
-        val validWinningNumber = winningNumber.toIntOrNull() ?: 0
-        validateWinningNumberRange(validWinningNumber)
-        return validWinningNumber
+    private fun validatePublishedLotto(number: String): Int {
+        val validNumber = number.toIntOrNull() ?: 0
+        validateNumberRange(validNumber)
+        return validNumber
     }
 
-    private fun validateWinningNumberRange(winningNumber: Int) {
+    private fun validateNumberRange(number: Int) {
         require(
-            winningNumber in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE,
+            number in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE,
         ) { InputException.INVALID_WINNING_NUMBER_RANGE.getMessage() }
     }
 
-    private fun validateWinningNumbersSize(winningNumbers: List<Int>) {
-        require(winningNumbers.size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_SIZE.getMessage() }
+    private fun validateNumbersSize(numbers: List<Int>) {
+        require(numbers.size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_SIZE.getMessage() }
     }
 
     private fun validateWinningNumbersDuplicate(winningNumbers: List<Int>) {
