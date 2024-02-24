@@ -3,7 +3,6 @@ package view
 import model.LottoResult
 import model.LottoTicket
 import model.Rank
-import model.Rank.FIFTH
 
 class ConsoleOutputView : OutputView {
     override fun printLottoCount(lottoCount: Int) {
@@ -12,14 +11,14 @@ class ConsoleOutputView : OutputView {
 
     override fun printLottoTickets(lottoTickets: List<LottoTicket>) {
         lottoTickets.forEach {
-            println(it.sorted())
+            println(it.toIntList().sorted())
         }
     }
 
     override fun printWinningChart(lottoResult: LottoResult) {
         Rank.entries.forEach {
             val bonusMessage = if (it.isBonusNumberNecessary) BONUS_MESSAGE else ""
-            println(MATCH_MESSAGE.format(it.countOfMatch, bonusMessage, it.winningMoney, lottoResult.getNum(FIFTH)))
+            println(MATCH_MESSAGE.format(it.countOfMatch, bonusMessage, it.winningMoney, lottoResult.getNum(it)))
         }
     }
 

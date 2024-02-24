@@ -1,7 +1,7 @@
 package model
 
 @JvmInline
-value class LottoNumber(private val num: Int) : Comparable<LottoNumber> {
+value class LottoNumber(val num: Int) : Comparable<LottoNumber> {
     init {
         require(num in RANGE)
     }

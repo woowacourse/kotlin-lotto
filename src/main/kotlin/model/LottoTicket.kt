@@ -13,7 +13,7 @@ class LottoTicket(
 
     operator fun contains(lottoNumber: LottoNumber) = lottoNumber in lottoTicket
 
-    fun sorted() = lottoTicket.sorted()
+    fun toIntList() = lottoTicket.map { it.num }
 
     companion object {
         const val SIZE = 6
