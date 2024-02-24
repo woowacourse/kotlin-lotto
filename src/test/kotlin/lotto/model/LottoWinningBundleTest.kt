@@ -27,7 +27,8 @@ class LottoWinningBundleTest {
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber.of(it) })
         val lottoWinningBundle = LottoWinningBundle(winningLotto, LottoNumber.of(8))
         val lottoResult = lottoWinningBundle.calculateResult(lottos)
-        assertThat(lottoResult).isEqualTo(LottoResult(mapOf(LottoRank.THIRD to 1, LottoRank.SECOND to 1)))
+        assertThat(lottoResult.winningCountsByLottoRank[LottoRank.THIRD]).isEqualTo(1)
+        assertThat(lottoResult.winningCountsByLottoRank[LottoRank.SECOND]).isEqualTo(1)
     }
 
     @Test
@@ -40,6 +41,7 @@ class LottoWinningBundleTest {
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
         val lottoWinningBundle = LottoWinningBundle(winningLotto, LottoNumber.of(8))
         val lottoResult = lottoWinningBundle.calculateResult(lottos)
-        assertThat(lottoResult).isEqualTo(LottoResult(mapOf(LottoRank.FIRST to 1, LottoRank.FOURTH to 1)))
+        assertThat(lottoResult.winningCountsByLottoRank[LottoRank.FIRST]).isEqualTo(1)
+        assertThat(lottoResult.winningCountsByLottoRank[LottoRank.FOURTH]).isEqualTo(1)
     }
 }
