@@ -5,20 +5,14 @@ class LottoWinning(
     private val bonusNumber: LottoNumber,
     private val lottoTickets: List<LottoTicket>,
 ) {
-    fun countMatchNumber(userTicket: LottoTicket): Int {
-        return (userTicket intersect winningTicket).size
-    }
-
-    fun isBonusInTicket(userTicket: LottoTicket): Boolean {
-        return bonusNumber in userTicket
-    }
-
     fun getRankList(): List<Rank> =
         lottoTickets.map {
             val countOfMatch = countMatchNumber(it)
-            val hasBonusNumber = isBonusInTicket(it)
+            val hasBonusNumber = bonusNumber in it
             Rank.decideRank(countOfMatch, hasBonusNumber)
         }
+
+    private fun countMatchNumber(userTicket: LottoTicket): Int = (userTicket intersect winningTicket).size
 
     fun makeWinningChart(): LottoResult {
         val rankList = getRankList()
