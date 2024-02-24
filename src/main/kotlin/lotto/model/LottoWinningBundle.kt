@@ -9,13 +9,14 @@ data class LottoWinningBundle(
     }
 
     fun calculateResult(lottos: List<Lotto>): LottoResult {
-        return LottoResult(
-            lottos.map { lotto ->
-                val countOfMatch = calculateCountOfMatch(lotto)
-                val matchBonus = calculateMatchBonus(lotto)
-                LottoRank.valueOf(countOfMatch, matchBonus)
-            }.groupingBy { it }.eachCount(),
-        )
+        val result: MutableMap<LottoRank, Int> = LottoRank.entries.associateWith { 0 }.toMutableMap()
+        lottos.forEach { lotto ->
+            val countOfMatch = calculateCountOfMatch(lotto)
+            val matchBonus = calculateMatchBonus(lotto)
+            val lottoRank = LottoRank.valueOf(countOfMatch, matchBonus)
+            result[lottoRank] = result.getOrDefault(lottoRank, 0) + 1
+        }
+        return LottoResult(result)
     }
 
     private fun calculateCountOfMatch(lotto: Lotto): Int {
