@@ -18,11 +18,15 @@ class LottoController {
         printLottoWinning(lottoWinning)
     }
 
-    private fun printLottoWinning(lottoWinning: LottoWinning) {
-        val rankMap = lottoWinning.makeRankMap()
-        val winningRate = lottoWinning.calculateWinningRate()
-        outputView.printWinningChart(rankMap)
-        outputView.printWinningRate(winningRate)
+    private fun makeUserLottoTickets(): List<UserLottoTicket> {
+        val purchasePrice = inputView.getPurchasePrice()
+        val lottoPurchase = LottoPurchase(purchasePrice)
+        return lottoPurchase.makeUserTickets()
+    }
+
+    private fun printLottoTickets(userTickets: List<UserLottoTicket>) {
+        outputView.printLottoCount(userTickets.size)
+        outputView.printLottoTickets(userTickets)
     }
 
     private fun checkLottoWinning(userTickets: List<UserLottoTicket>): LottoWinning {
@@ -32,14 +36,10 @@ class LottoController {
         return lottoWinning
     }
 
-    private fun printLottoTickets(userTickets: List<UserLottoTicket>) {
-        outputView.printLottoCount(userTickets.size)
-        outputView.printLottoTickets(userTickets)
-    }
-
-    private fun makeUserLottoTickets(): List<UserLottoTicket> {
-        val purchasePrice = inputView.getPurchasePrice()
-        val lottoPurchase = LottoPurchase(purchasePrice)
-        return lottoPurchase.makeUserTickets()
+    private fun printLottoWinning(lottoWinning: LottoWinning) {
+        val rankMap = lottoWinning.makeRankMap()
+        val winningRate = lottoWinning.calculateWinningRate()
+        outputView.printWinningChart(rankMap)
+        outputView.printWinningRate(winningRate)
     }
 }
