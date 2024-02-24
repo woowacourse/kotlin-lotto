@@ -6,15 +6,25 @@ import lotto.model.LottoAnalyzer
 import lotto.model.LottoBundle
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
+import lotto.model.LottoResponse
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoGameController {
     fun start() {
-        val lottoBundle = buyLottoBundle()
-        val drawResult = lottoDraw()
-        matchResult(lottoBundle, drawResult)
+        getLottoBundleAndDrawResult().onSuccess { response ->
+            matchResult(response.lottoBundle, response.drawResult)
+        }.onFailure { e ->
+            OutputView.printError(e)
+        }
     }
+
+    private fun getLottoBundleAndDrawResult(): Result<LottoResponse> =
+        runCatching {
+            val lottoBundle = buyLottoBundle()
+            val drawResult = lottoDraw()
+            LottoResponse(lottoBundle, drawResult)
+        }
 
     private fun buyLottoBundle(): LottoBundle {
         val price = InputView.readPrice()

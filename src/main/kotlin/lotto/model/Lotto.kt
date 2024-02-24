@@ -1,8 +1,11 @@
 package lotto.model
 
+import lotto.exception.ErrorCode.DUPLICATE_NUMBER
+import lotto.exception.ExceptionsHandler.handleValidation
+
 class Lotto(val lottoNumbers: Set<LottoNumber>) {
     init {
-        require(lottoNumbers.size == LOTTO_SIZE) { LOTTO_SIZE_ERROR_MESSAGE }
+        handleValidation(DUPLICATE_NUMBER) { lottoNumbers.size == LOTTO_SIZE }
     }
 
     override fun toString(): String = lottoNumbers.toString()
@@ -11,7 +14,5 @@ class Lotto(val lottoNumbers: Set<LottoNumber>) {
 
     companion object {
         private const val LOTTO_SIZE = 6
-
-        private const val LOTTO_SIZE_ERROR_MESSAGE = "로또의 숫자들은 중복되지 않는 6개입니다."
     }
 }
