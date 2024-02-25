@@ -1,9 +1,10 @@
 package lotto.model
 
 class Lottos(
-    private val lottoCount: Int,
-    private var lottos: MutableList<Lotto> = mutableListOf()
+    private val lottoCount: Int
 ) {
+    private var lottos: MutableList<Lotto> = mutableListOf()
+
     init {
         makeLottos()
     }
@@ -12,7 +13,7 @@ class Lottos(
         winningNumber: WinningNumber,
     ): UserPrize {
         return UserPrize(
-            matches = lottos
+            matchResult = lottos
                 .groupingBy { lotto ->
                     lotto.findRanking(winningNumber)
                 }

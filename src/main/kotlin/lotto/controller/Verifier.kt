@@ -1,6 +1,6 @@
 package lotto.controller
 
-import lotto.model.Lotto
+import lotto.model.LottoNumber
 
 private const val SEPARATOR = ","
 private const val WRONG_INPUT = "잘못 된 입력 값입니다."
@@ -17,9 +17,9 @@ fun inputCharge(userInput: String?): Int? {
     }
 }
 
-fun inputWinning(userInput: String?): Lotto? {
+fun inputWinning(userInput: String?): LottoNumber? {
     return try {
-        Lotto(
+        LottoNumber(
             userInput
                 ?.split(SEPARATOR)
                 ?.map {
