@@ -21,7 +21,7 @@ class LottoGameController(
         val purchaseExpense: Int = getPurchaseExpense()
         val lottie: List<Lotto> = purchaseLottie(purchaseExpense)
         val winningLotto = createWinningLotto()
-        val bonusLottoNumber = createBonusLottoNumber(winningLotto)
+        val bonusLottoNumber = createBonusLottoNumber(winningLotto.numbers)
         val lottoGameResult = LottoGameResult(bonusLottoNumber, winningLotto, lottie)
         displayLottoResult(lottoGameResult, purchaseExpense)
     }
@@ -49,14 +49,14 @@ class LottoGameController(
             if (it is IllegalArgumentException) return createWinningLotto()
         }.getOrThrow()
 
-    private fun createBonusLottoNumber(winningLotto: Lotto): LottoNumber =
+    private fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber =
         runCatching {
             val bonusNumber = lottoGameInputView.inputBonusNumber()
-            val bonusLottoNumber: LottoNumber = BonusLottoNumber.of(GeneralLottoNumber(bonusNumber), winningLotto)
+            val bonusLottoNumber: LottoNumber = BonusLottoNumber.of(GeneralLottoNumber(bonusNumber), winningLottoNumbers)
             bonusLottoNumber
         }.onFailure {
             if (it is IllegalArgumentException) {
-                return createBonusLottoNumber(winningLotto)
+                return createBonusLottoNumber(winningLottoNumbers)
             }
         }.getOrThrow()
 

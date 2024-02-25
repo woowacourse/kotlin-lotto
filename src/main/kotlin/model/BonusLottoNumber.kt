@@ -8,9 +8,9 @@ value class BonusLottoNumber private constructor(private val lottoNumber: LottoN
         @JvmStatic
         fun of(
             lottoNumber: LottoNumber,
-            lotto: Lotto,
+            winningNumbers: List<LottoNumber>,
         ): BonusLottoNumber {
-            require(lottoNumber !in lotto.numbers) { EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT }
+            require(lottoNumber !in winningNumbers) { EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT }
             return BonusLottoNumber(lottoNumber)
         }
     }
