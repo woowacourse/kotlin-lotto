@@ -9,14 +9,13 @@ class LotteryTest {
     @Test
     fun `중복이 없는 6 개의 1 ~ 45 사이 숫자로 로또를 생성한다`() {
         assertDoesNotThrow {
-            Lottery.of(1, 2, 3, 4, 5, 6)
+            SUCCESS_LOTTERY
         }
     }
 
     @Test
     fun `로또 번호 6개만을 저장한다`() {
-        val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
-        assertThat(lottery.lotteryNumbers.size).isEqualTo(6)
+        assertThat(SUCCESS_LOTTERY.lotteryNumbers.size).isEqualTo(6)
     }
 
     @Test
@@ -31,5 +30,9 @@ class LotteryTest {
         assertThrows<IllegalArgumentException> {
             Lottery.of(1, 2, 2, 4, 5, 6)
         }
+    }
+
+    companion object {
+        private val SUCCESS_LOTTERY = Lottery.of(1, 2, 3, 4, 5, 6)
     }
 }
