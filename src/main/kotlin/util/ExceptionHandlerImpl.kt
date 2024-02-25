@@ -5,6 +5,7 @@ class ExceptionHandlerImpl : ExceptionHandler {
         runCatching {
             action()
         }.onFailure {
+            println(it.message)
             return handleInputException(action, it) ?: return@onFailure
         }.getOrThrow()
 
