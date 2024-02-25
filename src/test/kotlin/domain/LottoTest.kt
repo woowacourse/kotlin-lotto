@@ -9,20 +9,14 @@ class LottoTest {
 
     @Test
     fun `로또 번호가 5개 일 때 예외를 던지는 지`() {
-        val lottoNumbers = listOf(1, 2, 3, 4, 5)
-        val lottery = lottoNumbers.map { LottoNumber(it) }.toSet()
-
-        val exception = assertThrows<IllegalArgumentException> { Lotto(lottery) }
+        val exception = assertThrows<IllegalArgumentException> { Lotto(1, 2, 3, 4, 5) }
 
         assertThat(exception.message).isEqualTo("로또 번호는 고유한 6개여야 합니다.")
     }
 
     @Test
     fun `로또 번호가 서로 중복될 때 예외를 던진다`() {
-        val lottoNumbers = listOf(1, 2, 3, 4, 5, 5)
-        val lottery = lottoNumbers.map { LottoNumber(it) }.toSet()
-
-        val exception = assertThrows<IllegalArgumentException> { Lotto(lottery) }
+        val exception = assertThrows<IllegalArgumentException> { Lotto(1, 2, 3, 4, 5, 5) }
 
         assertThat(exception.message).isEqualTo("로또 번호는 고유한 6개여야 합니다.")
     }
