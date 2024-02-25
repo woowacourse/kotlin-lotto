@@ -1,6 +1,6 @@
 package lotto.controller
 
-import lotto.model.LotteryResult
+import lotto.model.LotteryResultAnalyzer
 import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.WinningStatus
@@ -22,7 +22,7 @@ class LottoGameController {
 
     private fun makeResult(lottoTickets: List<Lotto>) {
         val lotteryResult =
-            LotteryResult(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
+            LotteryResultAnalyzer(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
         val winningStatus = WinningStatus(lotteryResult.generateWinningStatus(lottoTickets))
 
         OutputView.printWinningStatus(winningStatus)

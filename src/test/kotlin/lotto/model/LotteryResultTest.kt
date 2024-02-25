@@ -33,7 +33,7 @@ class LotteryResultTest {
                 ),
             )
         val expected = mapOf(WinningRank.FIRST to 1, WinningRank.SECOND to 1)
-        val actual = LotteryResult(winningNumbers, bonusNumber).generateWinningStatus(mine)
+        val actual = LotteryResultAnalyzer(winningNumbers, bonusNumber).generateWinningStatus(mine)
         assertThat(actual).isEqualTo(expected)
     }
 }

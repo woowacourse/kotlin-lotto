@@ -1,6 +1,6 @@
 package lotto.model
 
-class LotteryResult(private val winning: Lotto, private val bonusNumber: LottoNumber) {
+class LotteryResultAnalyzer(private val winning: Lotto, private val bonusNumber: LottoNumber) {
     init {
         require(!winning.hasMatchingBonusNumbers(bonusNumber)) { "보너스 숫자는 당첨 번호와 중복될 수 없습니다." }
     }
