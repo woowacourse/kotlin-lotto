@@ -25,23 +25,22 @@ class ManualLottoMachineTest {
     ) {
         buyPrices.forEach { buyPrice ->
             assertThrows<IllegalArgumentException> {
-                ManualLottoMachine(buyCount, LottoBuyPrice(buyPrice, lottoPrice))
+                ManualLottoMachine(buyCount, LottoBuyBudget(buyPrice, lottoPrice))
             }
         }
     }
 
     @Test
     fun `수동으로 입력된 숫자들로 로또가 생성된다`() {
-        val manualLottoMachine = ManualLottoMachine(2, LottoBuyPrice(20000))
+        val manualLottoMachine = ManualLottoMachine(2, LottoBuyBudget(20000))
         val manualInputNumbers =
             listOf(
                 listOf(1, 2, 3, 4, 5, 6),
                 listOf(7, 8, 9, 10, 11, 12),
             )
         val manualBuyedLottos =
-            manualInputNumbers.map {
-                manualLottoMachine.createLottoFrom(it)
-            }
+            manualLottoMachine.createLottosFrom(manualInputNumbers)
+
         Assertions.assertThat(manualBuyedLottos).isEqualTo(
             listOf(
                 Lotto.of(1, 2, 3, 4, 5, 6),

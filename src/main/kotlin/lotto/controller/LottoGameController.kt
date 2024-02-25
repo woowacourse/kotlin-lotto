@@ -1,10 +1,11 @@
 package lotto.controller
 
+import lotto.model.AutoLottoMachine
 import lotto.model.Lotto
-import lotto.model.LottoBuyPrice
-import lotto.model.LottoMachine
+import lotto.model.LottoBuyBudget
 import lotto.model.LottoNumber
 import lotto.model.LottoWinningBundle
+import lotto.model.ManualLottoMachine
 import lotto.model.RandomLottoNumbersGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -18,10 +19,18 @@ class LottoGameController {
     }
 
     private fun buyLottos(): List<Lotto> {
-        val lottoBuyPrice = LottoBuyPrice(InputView.reedLottoBuyPrice())
-        val buyedLottos = LottoMachine.createLottos(lottoBuyPrice, RandomLottoNumbersGenerator)
-        OutputView.printLottos(buyedLottos)
-        return buyedLottos
+        val lottoBuyBudget = LottoBuyBudget(InputView.reedLottoBuyPrice())
+
+        val manualLottoBuyCount = InputView.readManualLottoBuyCount()
+        val manualLottoMachine = ManualLottoMachine(manualLottoBuyCount, lottoBuyBudget)
+
+        val manualLottobuyNumbers = InputView.readManualLottoBuyNumbers(manualLottoBuyCount)
+        val manualBuyedLottos = manualLottoMachine.createLottosFrom(manualLottobuyNumbers)
+        lottoBuyBudget.subtractLottoBuyPrice(lottoBuyBudget.lottoPrice * manualLottoBuyCount)
+        val autoBuyedLottos = AutoLottoMachine.createLottos(lottoBuyBudget, RandomLottoNumbersGenerator)
+
+        OutputView.printLottos(manualBuyedLottos, autoBuyedLottos)
+        return autoBuyedLottos
     }
 
     private fun createLottoWinningBundle(): LottoWinningBundle {

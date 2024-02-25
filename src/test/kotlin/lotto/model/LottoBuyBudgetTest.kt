@@ -4,7 +4,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class LottoBuyPriceTest {
+class LottoBuyBudgetTest {
     companion object {
         @JvmStatic
         fun provideLottoPricesAndInvalidPrices() =
@@ -22,7 +22,7 @@ class LottoBuyPriceTest {
     ) {
         buyPrices.forEach { buyPrice ->
             assertThrows<IllegalArgumentException> {
-                LottoBuyPrice(buyPrice, lottoPrice)
+                LottoBuyBudget(buyPrice, lottoPrice)
             }
         }
     }

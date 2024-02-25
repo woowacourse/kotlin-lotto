@@ -5,9 +5,13 @@ import lotto.model.LottoRank
 import lotto.model.LottoResult
 
 object OutputView {
-    fun printLottos(buyedLottos: List<Lotto>) {
-        println("${buyedLottos.size}개를 구매했습니다.")
-        buyedLottos.forEach { lotto ->
+    fun printLottos(
+        manualBuyedLottos: List<Lotto>,
+        autoBuyedLottos: List<Lotto>,
+    ) {
+        println("\n수동으로 ${manualBuyedLottos.size}장, 자동으로 ${autoBuyedLottos.size}개를 구매했습니다.")
+        val totalBuyedLottos = manualBuyedLottos + autoBuyedLottos
+        totalBuyedLottos.forEach { lotto ->
             println(lotto.lottoNumbers)
         }
         println()

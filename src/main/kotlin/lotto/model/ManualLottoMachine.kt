@@ -1,12 +1,12 @@
 package lotto.model
 
-class ManualLottoMachine(val buyCount: Int, val lottoBuyPrice: LottoBuyPrice) {
+class ManualLottoMachine(val buyCount: Int, val lottoBuyBudget: LottoBuyBudget) {
     init {
-        require(buyCount <= lottoBuyPrice.getBuyCount()) { PRICE_ERROR_MESSAGE }
+        require(buyCount <= lottoBuyBudget.getLottoTotalBuyCount()) { PRICE_ERROR_MESSAGE }
     }
 
-    fun createLottoFrom(manualInputNumbers: List<Int>): Lotto {
-        return Lotto(manualInputNumbers.map(LottoNumber::of))
+    fun createLottosFrom(manualInputNumbers: List<List<Int>>): List<Lotto> {
+        return manualInputNumbers.map { Lotto(it.map(LottoNumber::of)) }
     }
 
     companion object {

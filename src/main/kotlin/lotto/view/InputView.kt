@@ -10,21 +10,23 @@ object InputView {
     }
 
     fun readManualLottoBuyCount(): Int {
-        println("수동으로 구매할 로또 수를 입력해 주세요.")
+        println("\n수동으로 구매할 로또 수를 입력해 주세요.")
         val input = readlnOrNull().orEmpty()
         return input.toIntOrNull() ?: INVALID_INPUT
     }
 
-    fun readManualLottoBuyNumbers(): List<Int> {
-        println("수동으로 구매할 번호를 입력해 주세요.")
-        val input = readlnOrNull().orEmpty()
-        return input.split(",").map { it.toIntOrNull() ?: INVALID_INPUT }
+    fun readManualLottoBuyNumbers(manualLottoBuyCount: Int): List<List<Int>> {
+        println("\n수동으로 구매할 번호를 입력해 주세요.")
+        return List(manualLottoBuyCount) {
+            val input = readlnOrNull().orEmpty()
+            input.split(",").map { it.trim().toIntOrNull() ?: INVALID_INPUT }
+        }
     }
 
     fun readLottoWinningNumbers(): List<Int> {
         println("지난 주 당첨번호를 입력해 주세요.")
         val input = readlnOrNull().orEmpty()
-        return input.split(",").map { it.toIntOrNull() ?: INVALID_INPUT }
+        return input.split(",").map { it.trim().toIntOrNull() ?: INVALID_INPUT }
     }
 
     fun readLottoBonusNumber(): Int {

@@ -1,11 +1,11 @@
 package lotto.model
 
-object LottoMachine {
+object AutoLottoMachine {
     fun createLottos(
-        lottoBuyPrice: LottoBuyPrice,
+        lottoBuyBudget: LottoBuyBudget,
         lottoNumbersGenerator: LottoNumbersGenerator,
     ): List<Lotto> {
-        val count = lottoBuyPrice.getBuyCount()
+        val count = lottoBuyBudget.getLottoTotalBuyCount()
         return List(count) { createLotto(lottoNumbersGenerator) }
     }
 
