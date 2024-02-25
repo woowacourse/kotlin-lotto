@@ -9,7 +9,7 @@ class LottoGameResultTest {
 
     @BeforeEach
     fun setUp() {
-        val bonusNumber = LottoNumber(1)
+        val bonusNumber: LottoNumber = GeneralLottoNumber(1)
         val winningLotto = Lotto(2, 3, 4, 5, 6, 7)
         val derivedLottie = listOf(Lotto(2, 3, 4, 5, 6, 7), Lotto(6, 7, 8, 9, 10, 11))
         lottoGameResult =

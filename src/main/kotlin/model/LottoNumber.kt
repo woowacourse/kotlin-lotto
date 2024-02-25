@@ -1,7 +1,7 @@
 package model
 
 @JvmInline
-value class LottoNumber(val number: Int) {
+value class GeneralLottoNumber(override val number: Int) : LottoNumber {
     init {
         require(number in LOTTO_NUM_RANGE) { EXCEPTION_NUM_RANGE }
     }
@@ -12,4 +12,8 @@ value class LottoNumber(val number: Int) {
         private const val EXCEPTION_NUM_RANGE = "로또 번호는 ${MIN_LOTTO_NUMBER}부터 ${MAX_LOTTO_NUMBER}까지만 가능합니다."
         private val LOTTO_NUM_RANGE = MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER
     }
+}
+
+interface LottoNumber {
+    val number: Int
 }

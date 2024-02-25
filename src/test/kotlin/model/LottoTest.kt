@@ -39,8 +39,8 @@ class LottoTest {
     fun `로또는 해당 로또 넘버를 가지고 있는지 확인할 수 있다`() {
         // given
         val lotto = Lotto(1, 2, 3, 4, 5, 6)
-        val lottoNumber = LottoNumber(1)
-        val lottoNumber2 = LottoNumber(7)
+        val lottoNumber: LottoNumber = GeneralLottoNumber(1)
+        val lottoNumber2: LottoNumber = GeneralLottoNumber(7)
         // when
         val actualResult = lottoNumber in lotto
         val actualResult2 = lottoNumber2 in lotto

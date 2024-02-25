@@ -1,5 +1,6 @@
 package controller
 
+import model.GeneralLottoNumber
 import model.Lotto
 import model.LottoGameResult
 import model.LottoGenerator
@@ -50,7 +51,7 @@ class LottoGameController(
     private fun createBonusLottoNumber(winningLotto: Lotto): LottoNumber =
         runCatching {
             val bonusNumber = lottoGameInputView.inputBonusNumber()
-            val bonusLottoNumber = LottoNumber(bonusNumber)
+            val bonusLottoNumber: LottoNumber = GeneralLottoNumber(bonusNumber)
             check(bonusLottoNumber !in winningLotto) { EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT }
             bonusLottoNumber
         }.onFailure {

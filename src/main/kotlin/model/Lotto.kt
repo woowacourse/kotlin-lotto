@@ -7,7 +7,7 @@ data class Lotto(val numbers: List<LottoNumber>) {
         require(numbers.sortedBy { it.number } == numbers) { EXCEPTION_SORTED_LOTTO_NUMS }
     }
 
-    constructor(vararg numbers: Int) : this(numbers.map { LottoNumber(it) })
+    constructor(vararg numbers: Int) : this(numbers.map { GeneralLottoNumber(it) })
 
     fun getMatchCount(other: Lotto): Int = (other.numbers intersect numbers).size
 
