@@ -3,8 +3,8 @@ package controller
 import model.Buyer
 import model.Lotto
 import model.LottoGenerator
+import model.LottoPrize
 import model.Lottos
-import model.Rank
 import model.WinningLotto
 import model.WinningStatistic
 import model.WinningStatistics
@@ -12,8 +12,8 @@ import view.InputView
 import view.OutputView
 
 class LottoController {
-    private lateinit var buyer: Buyer
     private lateinit var winningStatistics: WinningStatistics
+    private lateinit var buyer: Buyer
 
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
@@ -50,25 +50,25 @@ class LottoController {
     ): WinningStatistics {
         val results =
             MutableList(6) {
-                WinningStatistic(Pair(Rank.getRankByOrdinal(it), 0))
+                WinningStatistic(Pair(LottoPrize.getLottoPrizeByOrdinal(it), 0))
             }
         repeat(lottos.publishedLottos.size) { index ->
-            val rank = judgeRank(lottos.publishedLottos[index], winningLotto)
-            val currentCount = results[rank.ordinal].result.second
-            results[rank.ordinal] = WinningStatistic(Pair(rank, currentCount + 1))
+            val lottoPrize = judgeLottoPrize(lottos.publishedLottos[index], winningLotto)
+            val currentCount = results[lottoPrize.ordinal].result.second
+            results[lottoPrize.ordinal] = WinningStatistic(Pair(lottoPrize, currentCount + 1))
         }
 
         return WinningStatistics(results)
     }
 
-    private fun judgeRank(
+    private fun judgeLottoPrize(
         lotto: Lotto,
         winningLotto: WinningLotto,
-    ): Rank {
+    ): LottoPrize {
         val countOfMatch = winningLotto.calculateCountOfMatch(lotto)
         val bonusMatched = winningLotto.checkBonusNumberMatched(lotto)
 
-        return Rank.getRank(countOfMatch, bonusMatched)
+        return LottoPrize.getLottoPrize(countOfMatch, bonusMatched)
     }
 
     private fun displayWinningStatistics(purchaseAmount: Int) {

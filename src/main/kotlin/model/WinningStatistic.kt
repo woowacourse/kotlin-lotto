@@ -1,9 +1,12 @@
 package model
 
-class WinningStatistic(val result: Pair<Rank, Int>) {
+class WinningStatistic(val result: Pair<LottoPrize, Int>) {
     override fun toString(): String {
-        val rank = result.first
+        val lottoPrize = result.first
         val count = result.second
-        return "${rank.countOfMatch}개 일치${", 보너스 볼 일치".takeIf { result.first.ordinal == 1 } ?: " "}(${rank.winningAmount}원)- ${count}개"
+        return "${lottoPrize.countOfMatch}개 일치${
+            ", 보너스 볼 일치"
+                .takeIf { result.first.ordinal == 1 } ?: " "
+        }(${lottoPrize.winningAmount}원)- ${count}개"
     }
 }
