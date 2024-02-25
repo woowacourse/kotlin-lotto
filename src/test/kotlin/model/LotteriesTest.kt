@@ -10,8 +10,8 @@ class LotteriesTest {
         assertDoesNotThrow {
             Lotteries(
                 listOf(
-                    Lottery.of(1, 2, 3, 4, 5, 6),
-                    Lottery.of(1, 2, 3, 4, 5, 6),
+                    DEFAULT_LOTTERY,
+                    DEFAULT_LOTTERY,
                 ),
             )
         }
@@ -22,10 +22,14 @@ class LotteriesTest {
         val lotteries =
             Lotteries(
                 listOf(
-                    Lottery.of(1, 2, 3, 4, 5, 6),
-                    Lottery.of(1, 2, 3, 4, 5, 6),
+                    DEFAULT_LOTTERY,
+                    DEFAULT_LOTTERY,
                 ),
             )
         assertThat(lotteries.lotteries.size).isEqualTo(2)
+    }
+
+    companion object {
+        private val DEFAULT_LOTTERY = Lottery.of(1, 2, 3, 4, 5, 6)
     }
 }
