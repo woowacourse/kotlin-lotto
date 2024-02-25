@@ -7,48 +7,43 @@ class LottoPrizeTest {
     fun `당첨금 Enum Class`() {
         assertThat(
             LottoPrize.FIFTH.apply {
-                Triple(
+                Pair(
                     getMatchNumbers(),
-                    getPrice(),
-                    LottoPrize.getLottoMessage(this)
+                    getPrice()
                 )
             }
-        ).isEqualTo(Triple(3, 5_000, "3개 일치 (5,000원) -"))
+        ).isEqualTo(Pair(3, 5_000))
         assertThat(
             LottoPrize.FOURTH.apply {
-                Triple(
+                Pair(
                     getMatchNumbers(),
-                    getPrice(),
-                    LottoPrize.getLottoMessage(this)
+                    getPrice()
                 )
             }
-        ).isEqualTo(Triple(4, 50_000, "4개 일치 (50,000원) -"))
+        ).isEqualTo(Pair(4, 50_000))
         assertThat(
             LottoPrize.THIRD.apply {
-                Triple(
+                Pair(
                     getMatchNumbers(),
-                    getPrice(),
-                    LottoPrize.getLottoMessage(this)
+                    getPrice()
                 )
             }
-        ).isEqualTo(Triple(5, 1_500_000, "5개 일치 (1,500,000원) -"))
+        ).isEqualTo(Pair(5, 1_500_000))
         assertThat(
             LottoPrize.SECOND.apply {
-                Triple(
+                Pair(
                     getMatchNumbers(),
-                    getPrice(),
-                    LottoPrize.getLottoMessage(this)
+                    getPrice()
                 )
             }
-        ).isEqualTo(Triple(5, 30_000_000, "5개 일치, 보너스 볼 일치 (30,000,000원) -"))
+        ).isEqualTo(Pair(5, 30_000_000))
         assertThat(
             LottoPrize.FIRST.apply {
-                Triple(
+                Pair(
                     getMatchNumbers(),
-                    getPrice(),
-                    LottoPrize.getLottoMessage(this)
+                    getPrice()
                 )
             }
-        ).isEqualTo(Triple(6, 2_000_000_000, "6개 일치 (2,000,000,000원) -"))
+        ).isEqualTo(Pair(6, 2_000_000_000))
     }
 }

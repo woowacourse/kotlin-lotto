@@ -1,27 +1,21 @@
 package lotto.model
 
-import lotto.util.LottoRule
+class Lotto(private val lottoNumber: LottoNumber) {
 
-class Lotto(private val numbers: Set<Int>) {
-    init {
-        require(numbers.size == LottoRule.LOTTO_LEN)
-        require(numbers.all { it in LottoRule.LOTTO_NUM_RANGE })
-    }
-
-    fun getNumbers(): Set<Int> {
-        return numbers
+    fun getLottoNumber(): Set<Int> {
+        return lottoNumber.getNumbers()
     }
 
     fun matchCount(winningNumber: WinningNumber): Int {
         return winningNumber
             .getWinning()
-            .getNumbers()
-            .intersect(numbers)
+            .getLottoNumber()
+            .intersect(getLottoNumber())
             .size
     }
 
     fun matchBonusNumber(winningNumber: WinningNumber): Boolean {
-        return numbers.contains(winningNumber.getBonusNumber())
+        return lottoNumber.getNumbers().contains(winningNumber.getBonusNumber())
     }
 
     fun findRanking(winningNumber: WinningNumber): LottoPrize {
@@ -33,4 +27,10 @@ class Lotto(private val numbers: Set<Int>) {
     }
 
     private fun checkSecond(rank: LottoPrize, matchBonus: Boolean) = rank == LottoPrize.THIRD && matchBonus
+
+    companion object {
+        const val LOTTO_LEN = 6
+        const val LOTTO_PRICE = 1000.0
+        val LOTTO_NUM_RANGE = (1..45)
+    }
 }
