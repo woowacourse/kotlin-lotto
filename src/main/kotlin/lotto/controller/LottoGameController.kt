@@ -24,9 +24,8 @@ class LottoGameController {
         val manualLottoBuyCount = InputView.readManualLottoBuyCount()
         val manualLottoMachine = ManualLottoMachine(manualLottoBuyCount, lottoBuyBudget)
 
-        val manualLottobuyNumbers = InputView.readManualLottoBuyNumbers(manualLottoBuyCount)
-        val manualBuyedLottos = manualLottoMachine.createLottosFrom(manualLottobuyNumbers)
-        lottoBuyBudget.subtractLottoBuyPrice(lottoBuyBudget.lottoPrice * manualLottoBuyCount)
+        val manualLottoBuyNumbers = InputView.readManualLottoBuyNumbers(manualLottoBuyCount)
+        val manualBuyedLottos = manualLottoMachine.createLottosFrom(manualLottoBuyNumbers)
         val autoBuyedLottos = AutoLottoMachine.createLottos(lottoBuyBudget, RandomLottoNumbersGenerator)
 
         OutputView.printLottos(manualBuyedLottos, autoBuyedLottos)

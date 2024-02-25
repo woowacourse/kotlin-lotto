@@ -8,7 +8,7 @@ class LottoBuyBudget(lottoBuyPrice: Int, val lottoPrice: Int = Lotto.LOTTO_PRICE
         require(lottoBuyPrice >= lottoPrice) { PRICE_ERROR_MESSAGE }
     }
 
-    fun getLottoTotalBuyCount() = lottoBuyPrice / lottoPrice
+    fun getTotalLottoBuyCount() = lottoBuyPrice / lottoPrice
 
     fun subtractLottoBuyPrice(minus: Int) {
         lottoBuyPrice -= minus
