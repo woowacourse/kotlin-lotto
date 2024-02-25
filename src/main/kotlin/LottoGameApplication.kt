@@ -1,6 +1,6 @@
 import controller.LottoGameController
 import model.AutoLottoGenerator
-import model.LottoGameManager
+import model.RandomLottoGameManager
 import util.ExceptionHandlerImpl
 import view.ConsoleLottoGameInputView
 import view.ConsoleLottoGameOutputView
@@ -10,6 +10,6 @@ fun main() {
         ConsoleLottoGameInputView(),
         ConsoleLottoGameOutputView(),
         ExceptionHandlerImpl(),
-        LottoGameManager(AutoLottoGenerator()),
+        RandomLottoGameManager(AutoLottoGenerator()),
     ).startLottoGame()
 }

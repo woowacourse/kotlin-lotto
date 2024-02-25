@@ -13,7 +13,7 @@ class LottoGameController(
     private val lottoGameInputView: LottoGameInputView,
     private val lottoGameOutputView: LottoGameOutputView,
     private val exceptionHandler: ExceptionHandler,
-    private val lottoGameManager: LottoGameManager,
+    private val randomLottoGameManager: LottoGameManager,
 ) {
     fun startLottoGame() {
         val purchaseExpense: Int = getPurchaseExpense()
@@ -28,20 +28,20 @@ class LottoGameController(
 
     private fun purchaseLottie(purchaseExpense: Int): List<Lotto> =
         exceptionHandler.handleInputValue {
-            val lotteries = lottoGameManager.generateLotteries(purchaseExpense)
+            val lotteries = randomLottoGameManager.generateLotteries(purchaseExpense)
             lotteries.also(lottoGameOutputView::showPurchasedLottie)
         }
 
     private fun getWinningLotto(): Lotto =
         exceptionHandler.handleInputValue {
             val winningNumbers = lottoGameInputView.inputWinningNumbers()
-            lottoGameManager.generateWinningLotto(winningNumbers)
+            randomLottoGameManager.generateWinningLotto(winningNumbers)
         }
 
     private fun createBonusLottoNumber(winningLotto: Lotto): LottoNumber =
         exceptionHandler.handleInputValue {
             val bonusNumber = lottoGameInputView.inputBonusNumber()
-            lottoGameManager.generateBonusLottoNumber(bonusNumber, winningLotto)
+            randomLottoGameManager.generateBonusLottoNumber(bonusNumber, winningLotto)
         }
 
     private fun displayLottoResult(
