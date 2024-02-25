@@ -6,6 +6,7 @@ object AutoLottoMachine {
         lottoNumbersGenerator: LottoNumbersGenerator,
     ): List<Lotto> {
         val count = lottoBuyBudget.getTotalLottoBuyCount()
+        lottoBuyBudget.subtractLottoBuyPrice(lottoBuyBudget.lottoPrice * count)
         return List(count) { createLotto(lottoNumbersGenerator) }
     }
 

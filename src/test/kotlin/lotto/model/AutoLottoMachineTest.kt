@@ -25,4 +25,11 @@ class AutoLottoMachineTest {
         val buyedLottos = AutoLottoMachine.createLottos(LottoBuyBudget(10000, 1000), fixedLottoNumbersGenerator)
         assertThat(buyedLottos.size).isEqualTo(10)
     }
+
+    @Test
+    fun `현재 로또 예산(LottoBuyBudget)으로 살 수 있는 만큼 로또를 생성한다 그 후에는 LottoBuyBudget의 LottoBuyPrice은 0이 된다`() {
+        val lottoBuyBudget = LottoBuyBudget(10000, 1000)
+        AutoLottoMachine.createLottos(lottoBuyBudget, fixedLottoNumbersGenerator)
+        assertThat(lottoBuyBudget.lottoBuyPrice).isEqualTo(0)
+    }
 }
