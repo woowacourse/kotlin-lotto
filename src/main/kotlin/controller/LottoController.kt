@@ -1,6 +1,5 @@
 package controller
 
-import model.Buyer
 import model.Lotto
 import model.LottoGenerator
 import model.LottoPrize
@@ -8,33 +7,35 @@ import model.Lottos
 import model.WinningLotto
 import model.WinningStatistic
 import model.WinningStatistics
+import util.Constant
 import view.InputView
 import view.OutputView
 
 class LottoController {
-    private lateinit var winningStatistics: WinningStatistics
-    private lateinit var buyer: Buyer
-
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
-        buyer = Buyer(purchaseAmount)
-        val lottos = publishLottos()
+        val lottos = publishLottos(purchaseAmount)
         val winningLotto = drawWinningLotto()
-        winningStatistics = makeWinningStatics(lottos, winningLotto)
-        displayWinningStatistics(purchaseAmount)
+        val winningStatistics = analyzeWinningStatics(lottos, winningLotto)
+
+        displayPurchaseResults(winningStatistics, purchaseAmount)
     }
 
-    private fun publishLottos(): Lottos {
-        val lottos = Lottos(List(buyer.numberOfLotto) { LottoGenerator.generateLotto() })
-        buyer.buyLottos(lottos)
-        displayPurchaseResult()
+    private fun publishLottos(purchaseAmount: Int): Lottos {
+        val numberOfLotto = calculateNumberOfLotto(purchaseAmount)
+        val lottos = Lottos(List(numberOfLotto) { LottoGenerator.generateLotto() })
+        displayPurchaseResult(lottos)
 
         return lottos
     }
 
-    private fun displayPurchaseResult() {
-        OutputView.outputNumberOfLotto(buyer.numberOfLotto)
-        OutputView.outputLottos(buyer.lottos)
+    private fun calculateNumberOfLotto(purchaseAmount: Int): Int {
+        return purchaseAmount / Constant.PURCHASE_AMOUNT_UNIT
+    }
+
+    private fun displayPurchaseResult(lottos: Lottos) {
+        OutputView.outputNumberOfLotto(lottos.publishedLottos.size)
+        OutputView.outputLottos(lottos)
     }
 
     private fun drawWinningLotto(): WinningLotto {
@@ -44,7 +45,7 @@ class LottoController {
         return WinningLotto(Lotto(winningNumbers), bonusNumber)
     }
 
-    private fun makeWinningStatics(
+    private fun analyzeWinningStatics(
         lottos: Lottos,
         winningLotto: WinningLotto,
     ): WinningStatistics {
@@ -71,12 +72,12 @@ class LottoController {
         return LottoPrize.getLottoPrize(countOfMatch, bonusMatched)
     }
 
-    private fun displayWinningStatistics(purchaseAmount: Int) {
+    private fun displayPurchaseResults(
+        winningStatistics: WinningStatistics,
+        purchaseAmount: Int,
+    ) {
         OutputView.outputWinningStatistics(winningStatistics)
-        displayRateOfReturn(purchaseAmount)
-    }
 
-    private fun displayRateOfReturn(purchaseAmount: Int) {
         val rateOfReturn = winningStatistics.calculateRateOfReturn(purchaseAmount)
         OutputView.outputRateOfReturn(rateOfReturn)
     }
