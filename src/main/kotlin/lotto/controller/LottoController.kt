@@ -1,11 +1,11 @@
 package lotto.controller
 
 import lotto.domain.Cashier
-import lotto.domain.LottoDrawingMachine
 import lotto.domain.MarginCalculator
 import lotto.domain.RandomLottoGenerator
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
+import lotto.domain.model.LottoDrawingResult.Companion.toLottoDrawingResult
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.Money
 import lotto.domain.model.WinningLotto
@@ -14,15 +14,15 @@ import lotto.view.OutputView
 
 class LottoController(
     private val cashier: Cashier,
-    private val randomLottoGenerator: RandomLottoGenerator,
-    private val lottoDrawingMachine: LottoDrawingMachine
+    private val randomLottoGenerator: RandomLottoGenerator
 ) {
 
     fun start() {
         val money = getValidMoney()
         val quantity = getLottoQuantity(money)
         val lottoTickets = makeLottoTicket(quantity)
-        val result = drawLotto(lottoTickets)
+        val winningLotto = getWinningLotto()
+        val result = getLottoDrawingResult(lottoTickets, winningLotto)
         showResult(result, money)
     }
 
@@ -49,12 +49,10 @@ class LottoController(
         return lottoTickets
     }
 
-    private fun drawLotto(lottoTickets: List<Lotto>): LottoDrawingResult {
-        val winningLotto = getValidLotto()
-        val winningNumber = getValidWinningLotto(winningLotto)
-        val result = lottoDrawingMachine.countRank(lottoTickets, winningNumber)
-        OutputView.printLottoResult(result)
-        return result
+    private fun getWinningLotto(): WinningLotto {
+        val winningNumber = getValidLotto()
+        val bonusNumber = getValidBonusNumber()
+        return WinningLotto(winningNumber, bonusNumber)
     }
 
     private fun getValidLotto(): Lotto {
@@ -66,18 +64,20 @@ class LottoController(
         }
     }
 
-    private fun getValidWinningLotto(winningLotto: Lotto): WinningLotto {
+    private fun getValidBonusNumber(): LottoNumber {
         return try {
-            val bonusNumber = getBonusNumber()
-            WinningLotto(winningLotto, bonusNumber)
+            return LottoNumber(InputView.readBonusNumber())
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getValidWinningLotto(winningLotto)
+            getValidBonusNumber()
         }
     }
 
-    private fun getBonusNumber(): LottoNumber {
-        return LottoNumber(InputView.readBonusNumber())
+    private fun getLottoDrawingResult(lottoTickets: List<Lotto>, winningLotto: WinningLotto): LottoDrawingResult {
+        val ranks = lottoTickets.map { targetLotto -> winningLotto.getRank(targetLotto) }
+        val lottoResult = ranks.toLottoDrawingResult()
+        OutputView.printLottoResult(lottoResult)
+        return lottoResult
     }
 
     private fun showResult(result: LottoDrawingResult, money: Money) {
