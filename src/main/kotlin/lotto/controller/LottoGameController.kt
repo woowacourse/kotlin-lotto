@@ -29,7 +29,7 @@ class LottoGameController {
         val autoBuyedLottos = AutoLottoMachine.createLottos(lottoBuyBudget, RandomLottoNumbersGenerator)
 
         OutputView.printLottos(manualBuyedLottos, autoBuyedLottos)
-        return autoBuyedLottos
+        return manualBuyedLottos + autoBuyedLottos
     }
 
     private fun createLottoWinningBundle(): LottoWinningBundle {
