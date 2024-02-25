@@ -9,8 +9,8 @@ class WinningStatistics(private val results: List<WinningStatistic>) {
     private fun calculateTotalWinningAmount(): Int {
         var totalWinningAmount = 0
         results.forEach { winningStatistic ->
-            val winningMoney = winningStatistic.result.first.winningAmount
-            val count = winningStatistic.result.second
+            val winningMoney = winningStatistic.getResult().first.getWinningAmount()
+            val count = winningStatistic.getResult().second
             totalWinningAmount += winningMoney * count
         }
 

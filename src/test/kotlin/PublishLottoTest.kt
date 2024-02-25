@@ -12,7 +12,7 @@ class PublishLottoTest {
     @BeforeEach
     fun setUp() {
         lotto = LottoGenerator.generateLotto()
-        lottoNumbers = lotto.numbers
+        lottoNumbers = lotto.getNumbers()
     }
 
     @Test

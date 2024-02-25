@@ -1,40 +1,28 @@
 package controller
 
 import model.Lotto
-import model.LottoGenerator
 import model.LottoPrize
 import model.Lottos
 import model.WinningLotto
 import model.WinningStatistic
 import model.WinningStatistics
-import util.Constant
 import view.InputView
 import view.OutputView
 
 class LottoController {
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
-        val lottos = publishLottos(purchaseAmount)
+        val lottos = Lottos(purchaseAmount)
+        displayPurchaseResult(lottos)
+
         val winningLotto = drawWinningLotto()
         val winningStatistics = analyzeWinningStatics(lottos, winningLotto)
 
         displayPurchaseResults(winningStatistics, purchaseAmount)
     }
 
-    private fun publishLottos(purchaseAmount: Int): Lottos {
-        val numberOfLotto = calculateNumberOfLotto(purchaseAmount)
-        val lottos = Lottos(List(numberOfLotto) { LottoGenerator.generateLotto() })
-        displayPurchaseResult(lottos)
-
-        return lottos
-    }
-
-    private fun calculateNumberOfLotto(purchaseAmount: Int): Int {
-        return purchaseAmount / Constant.PURCHASE_AMOUNT_UNIT
-    }
-
     private fun displayPurchaseResult(lottos: Lottos) {
-        OutputView.outputNumberOfLotto(lottos.publishedLottos.size)
+        OutputView.outputNumberOfLotto(lottos.getLottos().size)
         OutputView.outputLottos(lottos)
     }
 
@@ -53,9 +41,9 @@ class LottoController {
             MutableList(6) {
                 WinningStatistic(Pair(LottoPrize.getLottoPrizeByOrdinal(it), 0))
             }
-        repeat(lottos.publishedLottos.size) { index ->
-            val lottoPrize = judgeLottoPrize(lottos.publishedLottos[index], winningLotto)
-            val currentCount = results[lottoPrize.ordinal].result.second
+        repeat(lottos.getLottos().size) { index ->
+            val lottoPrize = judgeLottoPrize(lottos.getLottos()[index], winningLotto)
+            val currentCount = results[lottoPrize.ordinal].getResult().second
             results[lottoPrize.ordinal] = WinningStatistic(Pair(lottoPrize, currentCount + 1))
         }
 
