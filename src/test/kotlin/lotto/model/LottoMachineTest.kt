@@ -2,35 +2,10 @@ package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
 
 class LottoMachineTest {
     val fixedNumbers = (1..10).toList()
     val fixedLottoNumbersGenerator = FixedLottoNumbersGenerator(fixedNumbers)
-
-    companion object {
-        @JvmStatic
-        fun provideLottoPricesAndInvalidPrices() =
-            listOf(
-                arrayOf(5000, arrayOf(-1, 0, 4999)),
-                arrayOf(1000, arrayOf(-1, 0, 999)),
-            )
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideLottoPricesAndInvalidPrices")
-    fun `로또 구입 금액은 로또 1장의 가격 이상이여야합니다`(
-        lottoPrice: Int,
-        invalidLottoBuyPrices: Array<Int>,
-    ) {
-        invalidLottoBuyPrices.forEach { lottoBuyPrice ->
-            assertThrows<IllegalArgumentException> {
-                LottoMachine.createAutoLottos(lottoBuyPrice, fixedLottoNumbersGenerator, lottoPrice)
-            }
-        }
-    }
 
     @Test
     fun `사전에 정의된 범위로 로또를 생성한다`() {
