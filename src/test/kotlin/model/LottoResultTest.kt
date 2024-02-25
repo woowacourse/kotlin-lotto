@@ -2,6 +2,9 @@ package model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class LottoResultTest {
     private val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
@@ -19,9 +22,10 @@ class LottoResultTest {
     fun `특정 등수에 당첨됐는지 그 개수를 센다`() {
         val lottoCount = 4
         val userLottoIterator =
-            List(lottoCount) { LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)) }.iterator()
+            List(lottoCount) { winningTicket }.iterator()
+        val lottoPrice = LottoPurchase.PRICE_OF_LOTTO_TICKET
 
-        val lottoPurchase = LottoPurchase(4000) { userLottoIterator.next() }
+        val lottoPurchase = LottoPurchase(lottoCount * lottoPrice) { userLottoIterator.next() }
 
         val userTickets = lottoPurchase.makeUserTickets()
         val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
@@ -33,21 +37,47 @@ class LottoResultTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    @Test
-    fun `1등 로또 100개의 당첨금을 합산한다`() {
-        val lottoCount = 100
-        val userLottoIterator =
-            List(lottoCount) { LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)) }.iterator()
-        val lottoPrice = LottoPurchase.PRICE_OF_LOTTO_TICKET
-
-        val lottoPurchase = LottoPurchase(lottoPrice * lottoCount) { userLottoIterator.next() }
-
-        val userTickets = lottoPurchase.makeUserTickets()
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
-
-        val actual = lottoWinning.makeLottoResult().winningMoney
-        val expected = 200_000_000_000
-
+    @ParameterizedTest
+    @MethodSource
+    fun `당첨금을 합산한다`(
+        lottoResult: LottoResult,
+        expected: Long,
+    ) {
+        val actual = lottoResult.winningMoney
+        val expected = expected
         assertThat(actual).isEqualTo(expected)
+    }
+
+    companion object {
+        @JvmStatic
+        fun `당첨금을 합산한다`() =
+            listOf(
+                Arguments.of(
+                    LottoResult(
+                        mapOf(
+                            Rank.FIRST to 1,
+                            Rank.SECOND to 1,
+                            Rank.THIRD to 1,
+                            Rank.FOURTH to 1,
+                            Rank.FIFTH to 1,
+                            Rank.MISS to 1,
+                        ),
+                    ),
+                    2_031_555_000,
+                ),
+                Arguments.of(
+                    LottoResult(
+                        mapOf(
+                            Rank.FIRST to 100,
+                            Rank.SECOND to 0,
+                            Rank.THIRD to 0,
+                            Rank.FOURTH to 0,
+                            Rank.FIFTH to 0,
+                            Rank.MISS to 0,
+                        ),
+                    ),
+                    200_000_000_000,
+                ),
+            )
     }
 }
