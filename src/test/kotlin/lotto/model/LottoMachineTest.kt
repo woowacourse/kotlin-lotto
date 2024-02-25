@@ -23,11 +23,11 @@ class LottoMachineTest {
     @MethodSource("provideLottoPricesAndInvalidPrices")
     fun `구입 금액은 로또 1장의 가격 이상이여야합니다`(
         lottoPrice: Int,
-        invalidBuyPrices: Array<Int>,
+        invalidLottoBuyPrices: Array<Int>,
     ) {
-        invalidBuyPrices.forEach { price ->
+        invalidLottoBuyPrices.forEach { lottoBuyPrice ->
             assertThrows<IllegalArgumentException> {
-                LottoMachine.createLottos(price, fixedLottoNumbersGenerator, lottoPrice)
+                LottoMachine.createLottos(lottoBuyPrice, fixedLottoNumbersGenerator, lottoPrice)
             }
         }
     }
