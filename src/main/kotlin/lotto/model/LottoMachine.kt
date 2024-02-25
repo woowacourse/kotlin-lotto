@@ -2,11 +2,10 @@ package lotto.model
 
 object LottoMachine {
     fun createAutoLottos(
-        lottoBuyPrice: Int,
+        lottoBuyPrice: LottoBuyPrice,
         lottoNumbersGenerator: LottoNumbersGenerator,
-        lottoPrice: Int = Lotto.LOTTO_PRICE,
     ): List<Lotto> {
-        val count = lottoBuyPrice / lottoPrice
+        val count = lottoBuyPrice.getBuyCount()
         return List(count) { createAutoLotto(lottoNumbersGenerator) }
     }
 
