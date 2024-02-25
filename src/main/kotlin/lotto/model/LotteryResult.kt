@@ -7,7 +7,7 @@ class LotteryResult(private val winning: Lotto, private val bonusNumber: LottoNu
 
     fun generateWinningStatus(lottoTickets: List<Lotto>): Map<WinningRank, Int> =
         lottoTickets.map {
-            WinningRank.convert(
+            WinningRank.determineRank(
                 it.countMatchingNumbers(winning),
                 it.hasMatchingBonusNumbers(bonusNumber),
             )

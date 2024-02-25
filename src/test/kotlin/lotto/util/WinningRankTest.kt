@@ -21,6 +21,6 @@ class WinningRankTest {
         matchBonus: Boolean,
         result: WinningRank,
     ) {
-        assertThat(WinningRank.convert(matchCount, matchBonus)).isEqualTo(result)
+        assertThat(WinningRank.determineRank(matchCount, matchBonus)).isEqualTo(result)
     }
 }

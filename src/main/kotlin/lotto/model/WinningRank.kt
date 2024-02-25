@@ -9,7 +9,7 @@ enum class WinningRank(val countOfMatch: Int, val winningMoney: Long) {
     FIRST(6, 2_000_000_000), ;
 
     companion object {
-        fun convert(
+        fun determineRank(
             matchCount: Int,
             matchBonus: Boolean,
         ): WinningRank =
