@@ -8,7 +8,7 @@ value class LottoNumber(val number: Int) {
 
     constructor(number: Int, winningLotto: Lotto) : this(number) {
         val winningLottoNumbers = winningLotto.numbers.map { it.number }
-        check(number !in winningLottoNumbers) { EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT }
+        require(number !in winningLottoNumbers) { EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT }
     }
 
     companion object {
