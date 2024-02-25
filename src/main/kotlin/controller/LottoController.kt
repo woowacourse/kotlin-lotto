@@ -2,8 +2,8 @@ package controller
 
 import model.Buyer
 import model.Lotto
+import model.LottoGenerator
 import model.Lottos
-import model.NumberGenerator
 import model.Rank
 import model.WinningLotto
 import model.WinningStatistic
@@ -24,15 +24,8 @@ class LottoController {
         displayWinningStatistics(purchaseAmount)
     }
 
-    private fun generateLottoNumbers(): List<Int> {
-        val numberGenerator = NumberGenerator()
-        val randomNumbers = numberGenerator.makeRandomNumbers()
-
-        return numberGenerator.drawSixNumbers(randomNumbers)
-    }
-
     private fun publishLottos(): Lottos {
-        val lottos = Lottos(List(buyer.numberOfLotto) { Lotto(generateLottoNumbers()) })
+        val lottos = Lottos(List(buyer.numberOfLotto) { LottoGenerator.generateLotto() })
         buyer.buyLottos(lottos)
         displayPurchaseResult()
         return lottos
