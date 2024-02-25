@@ -2,14 +2,15 @@ package lotto.view
 
 import lotto.exception.Exceptions
 import lotto.model.LottoBundle
+import lotto.model.LottoManualPurchase
 import lotto.model.LottoResult
 
 object OutputView {
+    private const val PURCHASE_DESCRIPTION_MESSAGE = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
     private const val WINNING_STATISTICS_MESSAGE = "\n당첨 통계\n---------"
     private const val TOTAL_RETURN_MESSAGE = "총 수익률은 %.2f입니다."
 
     fun printLottoBundle(lottoBundle: LottoBundle) {
-        println(LOTTO_SIZE_MESSAGE.format(lottoBundle.lottos.size))
         println(lottoBundle)
         println()
     }
@@ -19,6 +20,11 @@ object OutputView {
         println(lottoResult)
         println(TOTAL_RETURN_MESSAGE.format(lottoResult.getProfitRate()))
     }
+
+    fun printLottoCount(
+        lottoPurchaseCount: LottoManualPurchase,
+        randomLottoCount: Int,
+    ) = println(PURCHASE_DESCRIPTION_MESSAGE.format(lottoPurchaseCount.count, randomLottoCount))
 
     fun printError(e: Throwable) {
         when (e) {
