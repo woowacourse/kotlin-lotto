@@ -7,14 +7,14 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class LottoNumberTest {
     @ParameterizedTest
-    @ValueSource(strings = ["0", "46", "a"])
-    fun `로또 번호는 1~45 사이의 자연수를 갖지 않으면 오류를 발생시킨다`(input: String) {
+    @ValueSource(ints = [0, 46, -1])
+    fun `로또 번호는 1~45 사이의 자연수를 갖지 않으면 오류를 발생시킨다`(input: Int) {
         assertThrows<IllegalArgumentException> { LottoNumber(input) }
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1", "45", "20"])
-    fun `로또 번호는 1~45 사이의 자연수를 갖는다`(input: String) {
+    @ValueSource(ints = [1, 45, 20])
+    fun `로또 번호는 1~45 사이의 자연수를 갖는다`(input: Int) {
         assertDoesNotThrow { LottoNumber(input) }
     }
 }

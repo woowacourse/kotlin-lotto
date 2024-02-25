@@ -14,33 +14,33 @@ class LottoTest {
     private val lotto =
         Lotto(
             setOf(
-                LottoNumber("1"),
-                LottoNumber("2"),
-                LottoNumber("3"),
-                LottoNumber("4"),
-                LottoNumber("5"),
-                LottoNumber("6"),
+                LottoNumber(1),
+                LottoNumber(2),
+                LottoNumber(3),
+                LottoNumber(4),
+                LottoNumber(5),
+                LottoNumber(6),
             ),
         )
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 2, 3, 4, 5", "1, 2, 3, 4, 5, 6, 7"])
     fun `로또 번호는 6개의 자연수를 갖지 않으면 오류를 발생시킨다`(input: String) {
-        val numbers = input.split(", ").map { LottoNumber(it) }.toSet()
+        val numbers = input.split(", ").map { LottoNumber(it.toInt()) }.toSet()
         assertThrows<IllegalArgumentException> { Lotto(numbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 1, 1, 2, 3, 4", "1, 2, 3, 4, 5, 1", "1, 1, 1, 1, 1, 1"])
     fun `로또 번호는 중복 번호가 포함될 경우 오류를 발생시킨다`(input: String) {
-        val numbers = input.split(", ").map { LottoNumber(it) }.toSet()
+        val numbers = input.split(", ").map { LottoNumber(it.toInt()) }.toSet()
         assertThrows<IllegalArgumentException> { Lotto(numbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 2, 3, 4, 5, 6", "40, 41, 42, 43, 44, 45", "7, 2, 3, 4, 5, 35"])
     fun `로또 번호는 6개의 서로 다른 자연수를 갖는다`(input: String) {
-        val numbers = input.split(", ").map { LottoNumber(it) }.toSet()
+        val numbers = input.split(", ").map { LottoNumber(it.toInt()) }.toSet()
         assertDoesNotThrow { Lotto(numbers) }
     }
 
@@ -54,7 +54,7 @@ class LottoTest {
         winning: String,
         expected: Int,
     ) {
-        val winningNumbers = winning.split(" ").map { LottoNumber(it) }.toSet()
+        val winningNumbers = winning.split(" ").map { LottoNumber(it.toInt()) }.toSet()
         val result = lotto.countMatchingNumbers(Lotto(winningNumbers))
         assertThat(result).isEqualTo(expected)
     }
