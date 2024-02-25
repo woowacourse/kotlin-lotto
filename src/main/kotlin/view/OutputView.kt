@@ -21,11 +21,12 @@ class OutputView {
 
     private fun showPurchasedLottery(lottery: Lottery) =
         println(
-            "$OPENING_SQUARE_BRACKET${
-                lottery.lotteryNumbers.joinToString(
-                    COMMA_WITH_SPACE,
-                ) { it.number.toString() }
-            }$CLOSING_SQUARE_BRACKET",
+            PRINT_LOTTERY_NUMBER_FORMAT
+                .format(
+                    lottery.lotteryNumbers.joinToString(
+                        COMMA_WITH_SPACE,
+                    ) { it.number.toString() },
+                ),
         )
 
     fun showWinningResult(winningResult: WinningResult) {
@@ -61,8 +62,7 @@ class OutputView {
         private val MONEY_FORMAT = DecimalFormat("(#,###원)")
         private const val GUIDE_PURCHASED = "%d개를 구매했습니다."
         private const val COMMA_WITH_SPACE = ", "
-        private const val OPENING_SQUARE_BRACKET = "["
-        private const val CLOSING_SQUARE_BRACKET = "]"
+        private const val PRINT_LOTTERY_NUMBER_FORMAT = "[%s]"
         private const val MATCH_NUMBERS = "%d개 일치"
         private const val BONUS_BALL_MATCH = ", 보너스 볼 일치"
         private const val EMPTY_LINE = ""
