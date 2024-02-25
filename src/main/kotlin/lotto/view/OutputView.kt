@@ -28,6 +28,8 @@ object OutputView {
             is Exceptions.InvalidPurchaseAmountException -> println(e.reason)
             is Exceptions.LottoNumberOutOfRangeException -> println(e.reason)
             is Exceptions.InvalidNumberException -> println(e.reason)
+            is Exceptions.ManualPurchaseCountNotNaturalNumberException -> println(e.reason)
+            is Exceptions.ManualPurchaseCountTooLargeException -> println(e.reason)
             else -> println(e.message)
         }
     }
