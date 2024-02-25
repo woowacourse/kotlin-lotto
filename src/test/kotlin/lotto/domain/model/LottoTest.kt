@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class LottoTest {
 
     @Test
-    fun `로또 번호가 고유한 6개일 때 예외를 던지지 않는다`() {
+    fun `로또 번호는 6개의 숫자를 가진다`() {
         val lottoNumbers = List(6) { LottoNumber(it + 1) }
         assertThat(lottoNumbers.size).isEqualTo(6)
     }
