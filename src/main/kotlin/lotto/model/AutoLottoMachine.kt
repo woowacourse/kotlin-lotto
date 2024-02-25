@@ -5,8 +5,8 @@ object AutoLottoMachine {
         lottoBuyBudget: LottoBuyBudget,
         lottoNumbersGenerator: LottoNumbersGenerator,
     ): List<Lotto> {
-        val count = lottoBuyBudget.getTotalLottoBuyCount()
-        lottoBuyBudget.subtractLottoBuyPrice(lottoBuyBudget.lottoPrice * count)
+        val count = lottoBuyBudget.getBuyableLottoCount()
+        lottoBuyBudget.subtractAvailableFunds(lottoBuyBudget.pricePerLotto * count)
         return List(count) { createLotto(lottoNumbersGenerator) }
     }
 

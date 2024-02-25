@@ -9,7 +9,7 @@ class AutoLottoMachineTest {
 
     @Test
     fun `사전에 정의된 범위로 로또를 생성한다`() {
-        val buyedLotto = AutoLottoMachine.createLottos(LottoBuyBudget(Lotto.LOTTO_PRICE), fixedLottoNumbersGenerator).first()
+        val buyedLotto = AutoLottoMachine.createLottos(LottoBuyBudget(Lotto.PRICE_PER_LOTTO), fixedLottoNumbersGenerator).first()
         val expectedLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         assertThat(buyedLotto).isEqualTo(expectedLotto)
     }
@@ -27,9 +27,9 @@ class AutoLottoMachineTest {
     }
 
     @Test
-    fun `현재 로또 예산(LottoBuyBudget)으로 살 수 있는 만큼 로또를 생성한다 그 후에는 LottoBuyBudget의 LottoBuyPrice은 0이 된다`() {
+    fun `현재 로또 예산으로 살 수 있는 만큼 로또를 생성한다 그 후 예산이 0이 된다`() {
         val lottoBuyBudget = LottoBuyBudget(10000, 1000)
         AutoLottoMachine.createLottos(lottoBuyBudget, fixedLottoNumbersGenerator)
-        assertThat(lottoBuyBudget.lottoBuyPrice).isEqualTo(0)
+        assertThat(lottoBuyBudget.availableFunds).isEqualTo(0)
     }
 }

@@ -1,17 +1,17 @@
 package lotto.model
 
-class LottoBuyBudget(lottoBuyPrice: Int, val lottoPrice: Int = Lotto.LOTTO_PRICE) {
-    var lottoBuyPrice = lottoBuyPrice
+class LottoBuyBudget(availableFunds: Int, val pricePerLotto: Int = Lotto.PRICE_PER_LOTTO) {
+    var availableFunds = availableFunds
         private set
 
     init {
-        require(lottoBuyPrice >= lottoPrice) { PRICE_ERROR_MESSAGE }
+        require(availableFunds >= pricePerLotto) { PRICE_ERROR_MESSAGE }
     }
 
-    fun getTotalLottoBuyCount() = lottoBuyPrice / lottoPrice
+    fun getBuyableLottoCount() = availableFunds / pricePerLotto
 
-    fun subtractLottoBuyPrice(minus: Int) {
-        lottoBuyPrice -= minus
+    fun subtractAvailableFunds(amountToSubtract: Int) {
+        availableFunds -= amountToSubtract
     }
 
     companion object {

@@ -7,6 +7,6 @@ data class LottoResult(val winningCountsByLottoRank: Map<LottoRank, Int>) {
                 rank.winningMoney * count
             }
         val totalCount = winningCountsByLottoRank.entries.sumOf { (_, count) -> count }
-        return totalProfit.toDouble() / (totalCount * Lotto.LOTTO_PRICE)
+        return totalProfit.toDouble() / (totalCount * Lotto.PRICE_PER_LOTTO)
     }
 }

@@ -31,7 +31,7 @@ class ManualLottoMachineTest {
     }
 
     @Test
-    fun `수동으로 입력된 숫자들로 로또가 생성되고 생섵된 로또의 가격이 LottoBuyBudget에서 차감된다`() {
+    fun `수동으로 입력된 숫자들로 로또가 생성되고 생성된 로또의 가격이 예산에서 차감된다`() {
         val lottoBuyBudget = LottoBuyBudget(20000, 1000)
         val manualLottoMachine = ManualLottoMachine(2, lottoBuyBudget)
         val manualInputNumbers =
@@ -48,6 +48,6 @@ class ManualLottoMachineTest {
                 Lotto.of(7, 8, 9, 10, 11, 12),
             ),
         )
-        Assertions.assertThat(lottoBuyBudget.lottoBuyPrice).isEqualTo(18000)
+        Assertions.assertThat(lottoBuyBudget.availableFunds).isEqualTo(18000)
     }
 }

@@ -3,7 +3,7 @@ package lotto.view
 object InputView {
     const val INVALID_INPUT = -1
 
-    fun reedLottoBuyPrice(): Int {
+    fun reedAvailableFunds(): Int {
         println("구입금액을 입력해 주세요.")
         val input = readlnOrNull().orEmpty()
         return input.toIntOrNull() ?: INVALID_INPUT
