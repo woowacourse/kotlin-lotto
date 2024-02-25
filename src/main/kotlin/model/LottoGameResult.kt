@@ -3,6 +3,8 @@ package model
 class LottoGameResult private constructor(
     val results: List<RankResult>,
 ) {
+    fun getWinningResult() = results.filterNot { it.rank == Rank.MISS }
+
     fun calculateEarningRate(purchaseExpense: Money): Double {
         val earning = results.sumOf { it.rank.winningMoney * it.count }
         val expense = purchaseExpense.amount

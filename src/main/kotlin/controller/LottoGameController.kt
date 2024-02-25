@@ -5,7 +5,6 @@ import model.LottoGameResult
 import model.LottoGenerator
 import model.LottoNumber
 import model.Money
-import model.Rank
 import view.LottoGameInputView
 import view.LottoGameOutputView
 
@@ -61,7 +60,7 @@ class LottoGameController(
         purchaseExpense: Int,
     ) {
         runCatching {
-            val rankResults = lottoGameResult.results.filterNot { it.rank == Rank.MISS } // business logic
+            val rankResults = lottoGameResult.getWinningResult()
             val earningRate = lottoGameResult.calculateEarningRate(Money(purchaseExpense))
             lottoGameOutputView.showGameResult(rankResults, earningRate)
         }.onFailure {
