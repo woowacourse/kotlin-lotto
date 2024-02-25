@@ -19,13 +19,13 @@ class ManualLottoMachineTest {
     @ParameterizedTest
     @MethodSource("provideLottoPricesAndInvalidPrices")
     fun `수동으로 구입하는 로또의 가격은 예산(구입 금액)이하다`(
-        lottoBuyCount: Int,
+        manualLottoBuyCount: Int,
         availableFunds: Array<Int>,
         pricePerLotto: Int,
     ) {
         availableFunds.forEach { availableFund ->
             assertThrows<IllegalArgumentException> {
-                ManualLottoMachine(lottoBuyCount, LottoBuyBudget(availableFund, pricePerLotto))
+                ManualLottoMachine(manualLottoBuyCount, LottoBuyBudget(availableFund, pricePerLotto))
             }
         }
     }

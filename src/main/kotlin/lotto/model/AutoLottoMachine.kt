@@ -5,9 +5,9 @@ object AutoLottoMachine {
         lottoBuyBudget: LottoBuyBudget,
         lottoNumbersGenerator: LottoNumbersGenerator,
     ): List<Lotto> {
-        val lottoBuyCount = lottoBuyBudget.getBuyableLottoCount()
-        lottoBuyBudget.subtractAvailableFunds(lottoBuyBudget.pricePerLotto * lottoBuyCount)
-        return List(lottoBuyCount) { createLotto(lottoNumbersGenerator) }
+        val autoLottoBuyCount = lottoBuyBudget.getBuyableLottoCount()
+        lottoBuyBudget.subtractAvailableFunds(lottoBuyBudget.pricePerLotto * autoLottoBuyCount)
+        return List(autoLottoBuyCount) { createLotto(lottoNumbersGenerator) }
     }
 
     private fun createLotto(lottoNumbersGenerator: LottoNumbersGenerator): Lotto = Lotto(lottoNumbersGenerator.generate())
