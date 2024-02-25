@@ -1,65 +1,67 @@
 package controller
 
-import domain.Cashier
-import domain.LottoDrawingMachine
-import domain.LottoGenerator
-import domain.MarginCalculator
-import domain.model.Lotto
+import domain.Lotto
+import domain.LottoMachine
+import domain.WinningLotto
 import domain.model.LottoDrawingResult
 import domain.model.LottoNumber
 import domain.model.Money
-import domain.model.WinningLotto
 import view.InputView
 import view.OutputView
 
 class LottoController(
-    private val cashier: Cashier,
-    private val lottoDrawingMachine: LottoDrawingMachine
+    private val inputView: InputView,
+    private val outputView: OutputView
 ) {
-
     fun start() {
-        val (money, quantity) = receiveMoney()
-        val lottoTickets = makeLottoTicket(quantity)
+        val lottoMachine = runLottoMachine()
+        val countOfTicket = getTicket(lottoMachine)
+        val lottoTickets = makeLottoTickets(countOfTicket)
         val result = drawLotto(lottoTickets)
-        showResult(result, money)
+        showResult(lottoMachine, result)
     }
 
-    private fun receiveMoney(): Pair<Money, Int> {
-        val money = getValidMoney()
-        val quantity = cashier.toTicketQuantity(money)
-        OutputView.printLottoQuantity(quantity)
-        return Pair(money, quantity)
-    }
-
-    private fun getValidMoney(): Money {
+    private fun runLottoMachine(): LottoMachine {
         return try {
-            Money(InputView.readPurchaseAmount())
+            val money = getMoney()
+            return LottoMachine(money)
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getValidMoney()
+            runLottoMachine()
         }
     }
 
-    private fun makeLottoTicket(quantity: Int): List<Lotto> {
-        val lottoTickets = List(quantity) {
-            val randomNumbers = LottoGenerator.makeRandomNumber()
-            LottoGenerator.makeLotto(randomNumbers)
+    private fun getMoney(): Money {
+        return try {
+            Money(inputView.readPurchaseAmount())
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            getMoney()
         }
-        OutputView.printLottoNumbers(lottoTickets)
+    }
+
+    private fun getTicket(lottoMachine: LottoMachine): Int {
+        val countOfTicket = lottoMachine.countTicket()
+        outputView.printNumberOfTicket(countOfTicket)
+        return countOfTicket
+    }
+
+    private fun makeLottoTickets(number: Int): List<Lotto> {
+        val lottoTickets = List(number) { Lotto.makeRandomLotto(1..45) }
+        outputView.printLottoNumbers(lottoTickets)
         return lottoTickets
     }
 
     private fun drawLotto(lottoTickets: List<Lotto>): LottoDrawingResult {
-        val winningLotto = getValidLotto()
-        val winningNumber = getValidWinningLotto(winningLotto)
-        val result = lottoDrawingMachine.countRank(lottoTickets, winningNumber)
-        OutputView.printLottoResult(result)
+        val winningLotto = getValidWinningLotto(getValidLotto())
+        val result = winningLotto.countRank(lottoTickets)
+        outputView.printLottoResult(result)
         return result
     }
 
     private fun getValidLotto(): Lotto {
         return try {
-            Lotto(InputView.readWinningNumbers().map { LottoNumber(it) })
+            Lotto(inputView.readWinningNumbers().map { LottoNumber(it) }.toSet())
         } catch (e: IllegalArgumentException) {
             println(e.message)
             getValidLotto()
@@ -77,12 +79,12 @@ class LottoController(
     }
 
     private fun getBonusNumber(): LottoNumber {
-        return LottoNumber(InputView.readBonusNumber())
+        return LottoNumber(inputView.readBonusNumber())
     }
 
-    private fun showResult(result: LottoDrawingResult, money: Money) {
-        val totalPrize = MarginCalculator.calculateTotalPrize(result)
-        val marginRate = MarginCalculator.calculateMarginRate(totalPrize, money)
-        OutputView.printMargin(marginRate)
+    private fun showResult(lottoMachine: LottoMachine, result: LottoDrawingResult) {
+        val totalPrize = lottoMachine.calculateTotalPrize(result)
+        val marginRate = lottoMachine.calculateMargin(totalPrize)
+        outputView.printMargin(marginRate)
     }
 }
