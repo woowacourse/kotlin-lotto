@@ -2,19 +2,13 @@ package util
 
 class ExceptionHandlerImpl : ExceptionHandler {
     override fun <T> handleInputValue(action: () -> T): T =
-        runCatching {
-            action()
-        }.onFailure {
+        runCatching(action).onFailure {
             println(it.message)
             return handleInputException(action, it) ?: return@onFailure
         }.getOrThrow()
 
     override fun handleOutputValue(action: () -> Unit) {
-        runCatching {
-            action()
-        }.onFailure {
-            handleOutputException(action, it)
-        }
+        runCatching(action).onFailure { handleOutputException(action, it) }
     }
 
     private fun <T, E> handleInputException(
