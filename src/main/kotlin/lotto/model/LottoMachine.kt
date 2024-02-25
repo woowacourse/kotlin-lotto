@@ -1,24 +1,41 @@
 package lotto.model
 
-import lotto.exception.ErrorCode.INVALID_PURCHASE_AMOUNT
-import lotto.exception.ErrorCode.PURCHASE_AMOUNT_NOT_NATURAL_NUMBER
+import lotto.exception.ErrorCode.MANUAL_PURCHASE_COUNT_TOO_LARGE
 import lotto.exception.ExceptionsHandler.handleValidation
 
-object LottoMachine {
-    private const val LOTTO_SIZE = 6
-    private val LOTTO_NUMBER_RANGE: IntRange = 1..45
-    const val MIN_PRICE = 1_000
+class LottoMachine(private val price: Price) {
+    fun getRandomLottoCount(lottoPurchaseCount: LottoManualPurchase): Int {
+        val randomLottoCount = price.getNumberOfLottoTickets() - lottoPurchaseCount.count
+        handleValidation(MANUAL_PURCHASE_COUNT_TOO_LARGE) { randomLottoCount >= 0 }
+        return randomLottoCount
+    }
 
-    fun createLottoBundle(price: String): LottoBundle {
-        handleValidation(PURCHASE_AMOUNT_NOT_NATURAL_NUMBER) { price.toIntOrNull() != null }
-        handleValidation(INVALID_PURCHASE_AMOUNT) { price.toIntOrNull()?.let { it >= MIN_PRICE } == true }
+    fun createLottoBundle(
+        lottoManualPurchaseNumbers: List<List<String>>,
+        lottoPurchaseCount: LottoManualPurchase,
+    ): LottoBundle {
+        val manualLottoBundle = createManualLottoBundle(lottoManualPurchaseNumbers)
+        val randomLottoBundle = createRandomLottoBundle(lottoPurchaseCount)
+        return manualLottoBundle.append(randomLottoBundle)
+    }
 
-        val lottos = List(getNumberOfLottoTickets(price)) { randomLotto() }
+    private fun createManualLottoBundle(lottoManualPurchaseNumbers: List<List<String>>) =
+        LottoBundle(
+            lottoManualPurchaseNumbers.map { lottoManualPurchaseNumber ->
+                Lotto(lottoManualPurchaseNumber.map { LottoNumber.from(it) }.toSet())
+            },
+        )
 
+    private fun createRandomLottoBundle(lottoPurchaseCount: LottoManualPurchase): LottoBundle {
+        val lottos = List(price.getNumberOfLottoTickets() - lottoPurchaseCount.count) { randomLotto() }
         return LottoBundle(lottos)
     }
 
     private fun randomLotto(): Lotto = Lotto(LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }.toSet())
 
-    fun getNumberOfLottoTickets(price: String): Int = price.toInt() / MIN_PRICE
+    companion object {
+        private const val LOTTO_SIZE = 6
+        private val LOTTO_NUMBER_RANGE: IntRange = 1..45
+        const val MIN_PRICE = 1_000
+    }
 }

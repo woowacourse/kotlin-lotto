@@ -1,22 +1,18 @@
 package lotto.model
 
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import lotto.exception.Exceptions.ManualPurchaseCountTooLargeException
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class LottoMachineTest {
     @ParameterizedTest
-    @CsvSource("-1", "한글")
-    fun `구입 금액은 자연수이면서 1000 이상이다`(price: String) {
-        assertThrows<IllegalArgumentException> {
-            LottoMachine.createLottoBundle(price)
-        }
-    }
+    @CsvSource("1000", "2000", "6000", "8000")
+    fun `구입할 수 있는 로또 개수보다 수동으로 구매할 로또 개수가 크면 ManualPurchaseCountTooLargeException 예외처리가 발생한다`(strMoney: String) {
+        val lottoMachine = LottoMachine(Price.from(strMoney))
 
-    @Test
-    fun `1000으로 1장의 티켓을 받는다`() {
-        assertThat(LottoMachine.getNumberOfLottoTickets("1000")).isEqualTo(1)
+        assertThrows<ManualPurchaseCountTooLargeException> {
+            lottoMachine.getRandomLottoCount(LottoManualPurchase(10))
+        }
     }
 }
