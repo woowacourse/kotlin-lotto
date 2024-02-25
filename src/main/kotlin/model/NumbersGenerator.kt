@@ -4,7 +4,7 @@ fun interface NumbersGenerator {
     fun generate(size: Int): List<Int>
 }
 
-class RandomNumberGenerator : NumbersGenerator {
+class RandomNumbersGenerator : NumbersGenerator {
     override fun generate(size: Int): List<Int> =
         (1..45)
             .shuffled()

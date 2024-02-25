@@ -6,7 +6,7 @@ fun interface LottoGenerator {
 
 class AutoLottoGenerator(
     private val price: Money = DEFAULT_LOTTO_PRICE,
-    private val numbersGenerator: NumbersGenerator = RandomNumberGenerator(),
+    private val numbersGenerator: NumbersGenerator = RandomNumbersGenerator(),
 ) : LottoGenerator {
     override fun generate(purchaseCost: Money): List<Lotto> {
         val count = purchaseCost / price
@@ -18,6 +18,6 @@ class AutoLottoGenerator(
 
     companion object {
         private val DEFAULT_LOTTO_PRICE = Money(1000)
-        private val LOTTO_NUMBER_SIZE = 6
+        private const val LOTTO_NUMBER_SIZE = 6
     }
 }

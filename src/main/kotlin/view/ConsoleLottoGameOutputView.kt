@@ -3,6 +3,7 @@ package view
 import model.Lotto
 import model.LottoGameResult
 import model.Rank
+import kotlin.math.floor
 
 class ConsoleLottoGameOutputView : LottoGameOutputView {
     override fun showPurchasedLottie(lottie: List<Lotto>) {
@@ -17,7 +18,7 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
     ) {
         println(MESSAGE_TITLE)
         showRankState(results)
-        showEarningRate(rate)
+        showEarningRate(truncateDecimal(rate))
     }
 
     private fun showRankState(results: List<LottoGameResult.RankResult>) {
@@ -50,7 +51,10 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
         return if (rankResult.rank == Rank.SECOND) MESSAGE_MATCH_BONUS_DESCRIPTION else EMPTY
     }
 
+    private fun truncateDecimal(earningRate: Double): Double = floor(earningRate * SCALE) / SCALE
+
     companion object {
+        private const val SCALE = 100
         private const val STANDARD_BREAK_EVEN_POINT = 1
         private const val MESSAGE_TITLE = "\n당첨 통계\n---------"
         private const val MESSAGE_PURCHASED_LOTTIE_COUNT = "%d개를 구매했습니다."

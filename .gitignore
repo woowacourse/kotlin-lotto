@@ -33,3 +33,4 @@ out/
 
 ### macOS ###
 .DS_Store
+ktlint.json
