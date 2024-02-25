@@ -11,7 +11,7 @@ class WinningLottoTest {
     fun setUp() {
         val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = 7
-        winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
     }
 
     @Test

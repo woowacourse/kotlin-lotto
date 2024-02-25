@@ -28,6 +28,7 @@ class LottoController {
         val lottos = Lottos(List(buyer.numberOfLotto) { LottoGenerator.generateLotto() })
         buyer.buyLottos(lottos)
         displayPurchaseResult()
+
         return lottos
     }
 
@@ -39,7 +40,8 @@ class LottoController {
     private fun drawWinningLotto(): WinningLotto {
         val winningNumbers = InputView.inputWinningNumbers()
         val bonusNumber = InputView.inputBonusNumber(winningNumbers)
-        return WinningLotto(winningNumbers, bonusNumber)
+
+        return WinningLotto(Lotto(winningNumbers), bonusNumber)
     }
 
     private fun makeWinningStatics(
@@ -65,6 +67,7 @@ class LottoController {
     ): Rank {
         val countOfMatch = winningLotto.calculateCountOfMatch(lotto)
         val bonusMatched = winningLotto.checkBonusNumberMatched(lotto)
+
         return Rank.getRank(countOfMatch, bonusMatched)
     }
 

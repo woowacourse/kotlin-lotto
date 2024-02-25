@@ -23,7 +23,7 @@ enum class Rank(val countOfMatch: Int, val winningAmount: Int) {
         }
 
         fun getRankByOrdinal(ordinal: Int): Rank {
-            return entries.get(ordinal)
+            return entries[ordinal]
         }
     }
 }
