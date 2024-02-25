@@ -2,7 +2,6 @@ package lotto.domain
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
-import lotto.domain.model.LottoNumber
 import lotto.domain.model.Rank
 import lotto.domain.model.WinningLotto
 
@@ -18,17 +17,9 @@ class LottoDrawingMachine {
     }
 
     private fun getRank(targetLotto: Lotto, winningLotto: WinningLotto): Rank {
-        val countOfMatch = matchCount(targetLotto, winningLotto.lotto)
-        val matchBonus = bonusCount(targetLotto, winningLotto.bonus)
+        val countOfMatch = targetLotto.getMatchCount(winningLotto.lotto)
+        val matchBonus = targetLotto.isContain(winningLotto.bonus)
         return Rank.valueOf(countOfMatch, matchBonus)
-    }
-
-    private fun matchCount(targetLotto: Lotto, winningLotto: Lotto): Int {
-        return (targetLotto.numbers.intersect(winningLotto.numbers.toSet())).size
-    }
-
-    private fun bonusCount(targetLotto: Lotto, bonusNumber: LottoNumber): Boolean {
-        return targetLotto.numbers.contains(bonusNumber)
     }
 
     companion object {
