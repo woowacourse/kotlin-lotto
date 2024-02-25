@@ -40,8 +40,7 @@ class LottoGameController(
     private fun createBonusLottoNumber(winningLotto: Lotto): LottoNumber =
         exceptionHandler.handleInputValue {
             val bonusNumber = lottoGameInputView.inputBonusNumber()
-            val bonusLottoNumber = LottoNumber(bonusNumber, winningLotto)
-            bonusLottoNumber
+            LottoNumber(bonusNumber, winningLotto)
         }
 
     private fun displayLottoResult(
