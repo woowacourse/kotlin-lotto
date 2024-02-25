@@ -34,20 +34,20 @@ class LottoMachineTest {
 
     @Test
     fun `사전에 정의된 범위로 로또를 생성한다`() {
-        val lotto = LottoMachine.createLottos(Lotto.LOTTO_PRICE, fixedLottoNumbersGenerator).first()
+        val buyedLotto = LottoMachine.createLottos(Lotto.LOTTO_PRICE, fixedLottoNumbersGenerator).first()
         val expectedLotto = Lotto.of(1, 2, 3, 4, 5, 6)
-        assertThat(lotto).isEqualTo(expectedLotto)
+        assertThat(buyedLotto).isEqualTo(expectedLotto)
     }
 
     @Test
     fun `로또 한장의 가격이 5,000원일 때 2만원을 투입하면 총 4장의 로또를 발급한다`() {
-        val lottos = LottoMachine.createLottos(20000, fixedLottoNumbersGenerator, 5000)
-        assertThat(lottos.size).isEqualTo(4)
+        val buyedLottos = LottoMachine.createLottos(20000, fixedLottoNumbersGenerator, 5000)
+        assertThat(buyedLottos.size).isEqualTo(4)
     }
 
     @Test
     fun `로또 한장의 가격이 1,000원일 때 1만원을 투입하면 총 10장의 로또를 발급한다`() {
-        val lottos = LottoMachine.createLottos(10000, fixedLottoNumbersGenerator, 1000)
-        assertThat(lottos.size).isEqualTo(10)
+        val buyedLottos = LottoMachine.createLottos(10000, fixedLottoNumbersGenerator, 1000)
+        assertThat(buyedLottos.size).isEqualTo(10)
     }
 }

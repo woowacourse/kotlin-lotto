@@ -10,17 +10,17 @@ import lotto.view.OutputView
 
 class LottoGameController {
     fun start() {
-        val lottos = buyLottos()
+        val buyedLottos = buyLottos()
         val lottoWinningBundle = createLottoWinningBundle()
-        val lottoResult = lottoWinningBundle.calculateResult(lottos)
+        val lottoResult = lottoWinningBundle.calculateResult(buyedLottos)
         OutputView.printResult(lottoResult)
     }
 
     private fun buyLottos(): List<Lotto> {
         val buyLottoPrice = InputView.reedBuyLottoPrice()
-        val lottos = LottoMachine.createLottos(buyLottoPrice, RandomLottoNumbersGenerator)
-        OutputView.printLottos(lottos)
-        return lottos
+        val buyedLottos = LottoMachine.createLottos(buyLottoPrice, RandomLottoNumbersGenerator)
+        OutputView.printLottos(buyedLottos)
+        return buyedLottos
     }
 
     private fun createLottoWinningBundle(): LottoWinningBundle {
