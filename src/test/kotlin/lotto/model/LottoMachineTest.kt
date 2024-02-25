@@ -21,33 +21,33 @@ class LottoMachineTest {
 
     @ParameterizedTest
     @MethodSource("provideLottoPricesAndInvalidPrices")
-    fun `구입 금액은 로또 1장의 가격 이상이여야합니다`(
+    fun `로또 구입 금액은 로또 1장의 가격 이상이여야합니다`(
         lottoPrice: Int,
         invalidLottoBuyPrices: Array<Int>,
     ) {
         invalidLottoBuyPrices.forEach { lottoBuyPrice ->
             assertThrows<IllegalArgumentException> {
-                LottoMachine.createLottos(lottoBuyPrice, fixedLottoNumbersGenerator, lottoPrice)
+                LottoMachine.createAutoLottos(lottoBuyPrice, fixedLottoNumbersGenerator, lottoPrice)
             }
         }
     }
 
     @Test
     fun `사전에 정의된 범위로 로또를 생성한다`() {
-        val buyedLotto = LottoMachine.createLottos(Lotto.LOTTO_PRICE, fixedLottoNumbersGenerator).first()
+        val buyedLotto = LottoMachine.createAutoLottos(Lotto.LOTTO_PRICE, fixedLottoNumbersGenerator).first()
         val expectedLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         assertThat(buyedLotto).isEqualTo(expectedLotto)
     }
 
     @Test
     fun `로또 한장의 가격이 5,000원일 때 2만원을 투입하면 총 4장의 로또를 발급한다`() {
-        val buyedLottos = LottoMachine.createLottos(20000, fixedLottoNumbersGenerator, 5000)
+        val buyedLottos = LottoMachine.createAutoLottos(20000, fixedLottoNumbersGenerator, 5000)
         assertThat(buyedLottos.size).isEqualTo(4)
     }
 
     @Test
     fun `로또 한장의 가격이 1,000원일 때 1만원을 투입하면 총 10장의 로또를 발급한다`() {
-        val buyedLottos = LottoMachine.createLottos(10000, fixedLottoNumbersGenerator, 1000)
+        val buyedLottos = LottoMachine.createAutoLottos(10000, fixedLottoNumbersGenerator, 1000)
         assertThat(buyedLottos.size).isEqualTo(10)
     }
 }
