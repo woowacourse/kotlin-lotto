@@ -1,11 +1,16 @@
 package model
 
-class WinningLotto(private val lotto: Lotto, private val bonusNumber: Int) {
+class WinningLotto(private val lotto: Lotto, private val bonusNumber: LottoNumber) {
     fun calculateCountOfMatch(lotto: Lotto): Int {
-        return this.lotto.getNumbers().intersect(lotto.getNumbers().toSet()).size
+        val winningNumbers = this.lotto.getNumbers().map { it.getNumber() }
+        val lottoNumbers = lotto.getNumbers().map { it.getNumber() }
+
+        return winningNumbers.intersect(lottoNumbers.toSet()).size
     }
 
     fun checkBonusNumberMatched(lotto: Lotto): Boolean {
-        return lotto.getNumbers().contains(bonusNumber)
+        val lottoNumbers = lotto.getNumbers().map { it.getNumber() }
+
+        return lottoNumbers.contains(bonusNumber.getNumber())
     }
 }

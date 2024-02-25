@@ -1,5 +1,6 @@
 package view
 
+import model.LottoNumber
 import util.InputValidator
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -19,7 +20,7 @@ object InputView {
         }
     }
 
-    fun inputWinningNumbers(): List<Int> {
+    fun inputWinningNumbers(): List<LottoNumber> {
         println()
         println("지난 주 당첨 번호를 입력해 주세요.")
         val winningNumbers = br.readLine()
@@ -32,7 +33,7 @@ object InputView {
         }
     }
 
-    fun inputBonusNumber(winningNumbers: List<Int>): Int {
+    fun inputBonusNumber(winningNumbers: List<LottoNumber>): LottoNumber {
         println()
         println("보너스 볼을 입력해 주세요.")
         val bonusNumber = br.readLine()

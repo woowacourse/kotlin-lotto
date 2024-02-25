@@ -8,7 +8,8 @@ object LottoGenerator {
             (Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE)
                 .shuffled()
                 .take(Constant.LOTTO_SIZE)
-                .sorted(),
+                .sorted()
+                .map { LottoNumber(it) },
         )
     }
 }

@@ -17,8 +17,7 @@ class LottoController {
 
         val winningLotto = drawWinningLotto()
         val winningStatistics = analyzeWinningStatics(lottos, winningLotto)
-
-        displayPurchaseResults(winningStatistics, purchaseAmount)
+        displayWinningStatistics(winningStatistics, purchaseAmount)
     }
 
     private fun displayPurchaseResult(lottos: Lottos) {
@@ -27,10 +26,10 @@ class LottoController {
     }
 
     private fun drawWinningLotto(): WinningLotto {
-        val winningNumbers = InputView.inputWinningNumbers()
-        val bonusNumber = InputView.inputBonusNumber(winningNumbers)
+        val lotto = InputView.inputWinningNumbers()
+        val bonusNumber = InputView.inputBonusNumber(lotto)
 
-        return WinningLotto(Lotto(winningNumbers), bonusNumber)
+        return WinningLotto(Lotto(lotto), bonusNumber)
     }
 
     private fun analyzeWinningStatics(
@@ -60,7 +59,7 @@ class LottoController {
         return LottoPrize.getLottoPrize(countOfMatch, bonusMatched)
     }
 
-    private fun displayPurchaseResults(
+    private fun displayWinningStatistics(
         winningStatistics: WinningStatistics,
         purchaseAmount: Int,
     ) {

@@ -8,7 +8,7 @@ class WinningStatistic(private val result: Pair<LottoPrize, Int>) {
         val count = result.second
         return "${lottoPrize.getCountOfMatch()}개 일치${
             ", 보너스 볼 일치"
-                .takeIf { result.first.ordinal == 1 } ?: " "
+                .takeIf { result.first == LottoPrize.SECOND } ?: " "
         }(${lottoPrize.getWinningAmount()}원)- ${count}개"
     }
 }

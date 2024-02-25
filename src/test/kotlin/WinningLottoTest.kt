@@ -1,4 +1,5 @@
 import model.Lotto
+import model.LottoNumber
 import model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -9,26 +10,60 @@ class WinningLottoTest {
 
     @BeforeEach
     fun setUp() {
-        val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
-        winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
+        val winningNumbers =
+            listOf(
+                LottoNumber(1),
+                LottoNumber(2),
+                LottoNumber(3),
+                LottoNumber(4),
+                LottoNumber(5),
+                LottoNumber(6),
+            )
+        val bonusNumber = LottoNumber(7)
+        winningLotto =
+            WinningLotto(
+                Lotto(
+                    winningNumbers,
+                ),
+                bonusNumber,
+            )
     }
 
     @Test
     fun `로또 번호 당첨 개수 일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8))
+        val lotto =
+            Lotto(
+                listOf(
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(6),
+                ),
+            )
 
-        val actual = winningLotto.calculateCountOfMatch(publishedLotto)
-        val expected = 5
+        val actual = winningLotto.calculateCountOfMatch(lotto)
+        val expected = 6
 
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
     fun `로또 번호 당첨 개수 불일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8))
+        val lotto =
+            Lotto(
+                listOf(
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(6),
+                ),
+            )
 
-        val actual = winningLotto.calculateCountOfMatch(publishedLotto)
+        val actual = winningLotto.calculateCountOfMatch(lotto)
         val expected = 3
 
         assertThat(actual).isNotEqualTo(expected)
@@ -36,9 +71,19 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호 일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 7))
+        val lotto =
+            Lotto(
+                listOf(
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(7),
+                ),
+            )
 
-        val actual = winningLotto.checkBonusNumberMatched(publishedLotto)
+        val actual = winningLotto.checkBonusNumberMatched(lotto)
         val expected = true
 
         assertThat(actual).isEqualTo(expected)
@@ -46,9 +91,19 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호 불일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8))
+        val lotto =
+            Lotto(
+                listOf(
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(6),
+                ),
+            )
 
-        val actual = winningLotto.checkBonusNumberMatched(publishedLotto)
+        val actual = winningLotto.checkBonusNumberMatched(lotto)
         val expected = false
 
         assertThat(actual).isEqualTo(expected)

@@ -3,11 +3,11 @@ package model
 import util.Constant
 
 class Lottos(private val purchaseAmount: Int) {
-    private val lottos: List<Lotto> = publishLotto()
+    private val lottos: List<Lotto> = publishLottos()
 
     fun getLottos(): List<Lotto> = lottos
 
-    private fun publishLotto(): List<Lotto> {
+    private fun publishLottos(): List<Lotto> {
         val numberOfLotto = calculateNumberOfLotto()
         return List(numberOfLotto) { LottoGenerator.generateLotto() }
     }
