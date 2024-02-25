@@ -61,7 +61,7 @@ class LottoController(
 
     private fun getValidLotto(): Lotto {
         return try {
-            Lotto(inputView.readWinningNumbers().map { LottoNumber(it) }.toSet())
+            Lotto(*inputView.readWinningNumbers().toIntArray())
         } catch (e: IllegalArgumentException) {
             println(e.message)
             getValidLotto()
