@@ -1,11 +1,11 @@
 package lotto.model
 
-class LottoBuyBudget(availableFunds: Int, val pricePerLotto: Int = Lotto.PRICE_PER_LOTTO) {
-    var availableFunds = availableFunds
+class LottoBuyBudget(availableFund: Int, val pricePerLotto: Int = Lotto.PRICE_PER_LOTTO) {
+    var availableFunds = availableFund
         private set
 
     init {
-        require(availableFunds >= pricePerLotto) { PRICE_ERROR_MESSAGE }
+        require(availableFund >= pricePerLotto) { PRICE_ERROR_MESSAGE }
     }
 
     fun getBuyableLottoCount() = availableFunds / pricePerLotto

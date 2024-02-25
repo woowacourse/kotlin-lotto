@@ -11,21 +11,21 @@ class ManualLottoMachineTest {
         @JvmStatic
         fun provideLottoPricesAndInvalidPrices() =
             listOf(
-                arrayOf(7, 5000, arrayOf(10000, 20000, 30000)),
-                arrayOf(3, 1000, arrayOf(1000, 1500, 2000)),
+                arrayOf(7, arrayOf(10000, 20000, 30000), 5000),
+                arrayOf(3, arrayOf(1000, 1500, 2000), 1000),
             )
     }
 
     @ParameterizedTest
     @MethodSource("provideLottoPricesAndInvalidPrices")
-    fun `수동으로 구입하는 로또의 가격은 로또 구입 가격이하다`(
-        buyCount: Int,
-        lottoPrice: Int,
-        buyPrices: Array<Int>,
+    fun `수동으로 구입하는 로또의 가격은 예산(구입 금액)이하다`(
+        lottoBuyCount: Int,
+        availableFunds: Array<Int>,
+        pricePerLotto: Int,
     ) {
-        buyPrices.forEach { buyPrice ->
+        availableFunds.forEach { availableFund ->
             assertThrows<IllegalArgumentException> {
-                ManualLottoMachine(buyCount, LottoBuyBudget(buyPrice, lottoPrice))
+                ManualLottoMachine(lottoBuyCount, LottoBuyBudget(availableFund, pricePerLotto))
             }
         }
     }

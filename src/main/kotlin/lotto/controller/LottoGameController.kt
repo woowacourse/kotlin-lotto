@@ -19,7 +19,7 @@ class LottoGameController {
     }
 
     private fun buyLottos(): List<Lotto> {
-        val lottoBuyBudget = LottoBuyBudget(InputView.reedAvailableFunds())
+        val lottoBuyBudget = LottoBuyBudget(InputView.readAvailableFund())
         val manualBuyedLottos = buyManualLottos(lottoBuyBudget)
         val autoBuyedLottos = buyAutoLottos(lottoBuyBudget)
         OutputView.printLottos(manualBuyedLottos, autoBuyedLottos)

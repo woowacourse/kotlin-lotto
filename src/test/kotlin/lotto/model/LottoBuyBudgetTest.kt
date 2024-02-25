@@ -9,20 +9,20 @@ class LottoBuyBudgetTest {
         @JvmStatic
         fun provideLottoPricesAndInvalidPrices() =
             listOf(
-                arrayOf(5000, arrayOf(-1, 0, 4999)),
-                arrayOf(1000, arrayOf(-1, 0, 999)),
+                arrayOf(arrayOf(-1, 0, 4999), 5000),
+                arrayOf(arrayOf(-1, 0, 999), 1000),
             )
     }
 
     @ParameterizedTest
     @MethodSource("provideLottoPricesAndInvalidPrices")
-    fun `로또 구입 금액은 로또 1장의 가격 이상이여야합니다`(
-        lottoPrice: Int,
-        buyPrices: Array<Int>,
+    fun `예산(구입 금액)은 로또 1장의 가격 이상이여야한다`(
+        availableFunds: Array<Int>,
+        pricePerLotto: Int,
     ) {
-        buyPrices.forEach { buyPrice ->
+        availableFunds.forEach { availableFund ->
             assertThrows<IllegalArgumentException> {
-                LottoBuyBudget(buyPrice, lottoPrice)
+                LottoBuyBudget(availableFund, pricePerLotto)
             }
         }
     }
