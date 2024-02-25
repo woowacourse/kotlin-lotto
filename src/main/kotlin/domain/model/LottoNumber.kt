@@ -3,7 +3,7 @@ package domain.model
 @JvmInline
 value class LottoNumber(val value: Int) {
     init {
-        require(value in MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER) { "당첨번호는 $MINIMUM_LOTTO_NUMBER ~ $MAXIMUM_LOTTO_NUMBER 사이의 정수여야 합니다." }
+        require(value in MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER) { "${value}는 $MINIMUM_LOTTO_NUMBER ~ $MAXIMUM_LOTTO_NUMBER 사이의 정수가 아닙니다." }
     }
 
     companion object {
