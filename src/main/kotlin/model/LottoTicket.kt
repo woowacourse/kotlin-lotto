@@ -3,6 +3,9 @@ package model
 class LottoTicket(
     private val lottoNumbers: List<LottoNumber>,
 ) {
+    val lottoNumberSorted by lazy {
+        lottoNumbers.sorted()
+    }
     private val lottoNumberSet = lottoNumbers.toSet()
 
     init {
@@ -12,8 +15,6 @@ class LottoTicket(
     infix fun intersect(other: LottoTicket) = other.lottoNumberSet intersect this.lottoNumberSet
 
     operator fun contains(lottoNumber: LottoNumber) = lottoNumber in lottoNumbers
-
-    fun toIntList() = lottoNumbers.map { it.num }
 
     companion object {
         const val SIZE = 6

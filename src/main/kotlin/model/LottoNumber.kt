@@ -1,7 +1,7 @@
 package model
 
 @JvmInline
-value class LottoNumber(val num: Int) : Comparable<LottoNumber> {
+value class LottoNumber(private val num: Int) : Comparable<LottoNumber> {
     init {
         require(num in RANGE)
     }
@@ -13,4 +13,6 @@ value class LottoNumber(val num: Int) : Comparable<LottoNumber> {
     }
 
     override fun compareTo(other: LottoNumber): Int = other.num - this.num
+
+    override fun toString(): String = num.toString()
 }
