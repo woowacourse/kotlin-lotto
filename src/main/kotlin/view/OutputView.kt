@@ -1,19 +1,19 @@
 package view
 
-import domain.model.Lotto
+import domain.Lotto
+import domain.Rank
 import domain.model.LottoDrawingResult
 import domain.model.Margin
-import domain.model.Rank
 
-object OutputView {
+class OutputView {
 
-    fun printLottoQuantity(quantity: Int) {
-        println("${quantity}개를 구매했습니다.")
+    fun printNumberOfTicket(number: Int) {
+        println("${number}개를 구매했습니다.")
     }
 
     fun printLottoNumbers(lottoTickets: List<Lotto>) {
-        lottoTickets.forEach {
-            println(it.numbers.map { it.value }.joinToString(prefix = "[", separator = ", ", postfix = "]"))
+        lottoTickets.forEach { lotto ->
+            println(lotto.numbers.map { it.value }.joinToString(prefix = "[", separator = ", ", postfix = "]"))
         }
     }
 
@@ -30,11 +30,11 @@ object OutputView {
     }
 
     fun printMargin(marginRate: Margin) {
-        print("총 수익률은 ${formatDouble(marginRate.rate)}입니다.")
+        print("총 수익률은 ${formatMargin(marginRate.rate)}입니다.")
         if (marginRate.rate < 1) print("(기준이 1이기 때문에 결과적으로 손해라는 의미임)")
     }
 
-    private fun formatDouble(value: Double): String {
+    private fun formatMargin(value: Double): String {
         return if (value % 1.0 == 0.0) {
             String.format("%.0f", value)
         } else {
