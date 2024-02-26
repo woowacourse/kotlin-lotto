@@ -27,7 +27,7 @@ class LottoController(
         val lottoStore = LottoStore.create(purchaseOrder, lottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
 
-        val winningStatistics = lottoStore.calculateWinningStatistics(winningLotto)
+        val winningStatistics = winningLotto.calculateWinningStatistics(lottoStore)
         OutputView.printWinningStatistics(winningStatistics)
 
         val profitRatio = winningStatistics.calculateProfitRatio(purchaseOrder)

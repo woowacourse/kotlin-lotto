@@ -32,7 +32,7 @@ class LottoStoreTest {
         val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
 
         // when
-        val actual = lottoStore.calculateWinningStatistics(winningLotto)
+        val actual = winningLotto.calculateWinningStatistics(lottoStore)
 
         // then
         Assertions.assertThat(actual[expected]).isEqualTo(5)
