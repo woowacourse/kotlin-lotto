@@ -13,8 +13,11 @@ class OutputView {
         println(MESSAGE_NUMBER_OF_MANUAL_LOTTOS)
     }
 
-    fun printNumberOfLottoMessage(numberOfLotto: Int) {
-        println("${numberOfLotto}${MESSAGE_LOTTO_COUNT_PURCHASED}")
+    fun printNumberOfLottoMessage(
+        numberOfManualLotto: Int,
+        numberOfAutoLotto: Int,
+    ) {
+        println("수동으로 ${numberOfManualLotto}장, 자동으로 ${numberOfAutoLotto}${MESSAGE_LOTTO_COUNT_PURCHASED}")
     }
 
     fun printLottoNumbers(lottos: Lottos) {
