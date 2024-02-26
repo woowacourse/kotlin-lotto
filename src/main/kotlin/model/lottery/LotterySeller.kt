@@ -1,6 +1,7 @@
 package model.lottery
 
 import model.Money
+import model.Quantity
 import java.text.DecimalFormat
 
 class LotterySeller(private val money: Money) {
@@ -10,7 +11,7 @@ class LotterySeller(private val money: Money) {
         require(money >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
     }
 
-    fun getLotteryCount(): Int = (money / PRICE).toInt()
+    fun getLotteryQuantity(): Quantity = Quantity((money / PRICE).toInt())
 
     companion object {
         private const val MIN_PRICE_AMOUNT = 1_000

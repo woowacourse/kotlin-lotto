@@ -1,6 +1,7 @@
 package model.lottery
 
 import model.Money
+import model.Quantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -12,7 +13,7 @@ class LotterySellerTest {
     @Test
     fun `로또 구매 수량을 알려준다`() {
         val lotterySeller = LotterySeller(Money.wons((3000)))
-        assertThat(lotterySeller.getLotteryCount()).isEqualTo(3)
+        assertThat(lotterySeller.getLotteryQuantity()).isEqualTo(Quantity(3))
     }
 
     @Test

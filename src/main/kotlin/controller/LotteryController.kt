@@ -32,9 +32,10 @@ class LotteryController(
     }
 
     private fun buyLotteries(purchaseAmount: Money): Lotteries {
-        val lotteriesCount = LotterySeller(purchaseAmount).getLotteryCount()
+        val lotteriesQuantity = LotterySeller(purchaseAmount).getLotteryQuantity()
         val manualLotteryQuantity = Quantity.from(inputView.readManualLotteryQuantity())
-        val lotteries = buyManualLotteries(manualLotteryQuantity) + buyRandomLotteries(lotteriesCount, manualLotteryQuantity)
+        val lotteries =
+            buyManualLotteries(manualLotteryQuantity) + buyRandomLotteries(lotteriesQuantity, manualLotteryQuantity)
 
         outputView.showPurchasedLotteries(lotteries)
         return lotteries
@@ -50,11 +51,11 @@ class LotteryController(
     }
 
     private fun buyRandomLotteries(
-        lotteriesCount: Int,
+        lotteriesQuantity: Quantity,
         manualLotteryQuantity: Quantity,
     ): Lotteries =
         Lotteries(
-            List(lotteriesCount - manualLotteryQuantity.count) {
+            List((lotteriesQuantity - manualLotteryQuantity).count) {
                 lotteryMachine.generateRandomLottery()
             },
         )
