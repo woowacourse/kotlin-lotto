@@ -1,4 +1,4 @@
-package lotto
+package lotto.service
 
 import lotto.constants.LottoPrize
 import lotto.model.Lotto
@@ -6,14 +6,12 @@ import lotto.model.LottoNumber
 import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
 import lotto.model.WinningLotto
-import lotto.service.LottoNumberGenerator
-import lotto.service.ResultCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class ServiceTest {
+class ResultCalculatorTest {
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")
     fun `로또 당첨 결과의 개수를 확인한다`(
