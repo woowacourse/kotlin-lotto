@@ -83,8 +83,8 @@ class LottoController(
         return LottoNumber(inputView.readBonusNumber())
     }
 
-    private fun showResult(lottoMachine: LottoMachine, result: LottoDrawingResult) {
-        val totalPrize = lottoMachine.calculateTotalPrize(result)
+    private fun showResult(lottoMachine: LottoMachine, lottoDrawingResult: LottoDrawingResult) {
+        val totalPrize = lottoDrawingResult.calculateTotalPrize()
         val marginRate = lottoMachine.calculateMargin(totalPrize)
         outputView.printMargin(marginRate)
     }
