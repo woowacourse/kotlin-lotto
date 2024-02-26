@@ -1,8 +1,8 @@
 package controller
 
+import model.AutoLottieGenerator
 import model.BonusLottoNumber
 import model.GeneralLottoNumber
-import model.LottieGenerator
 import model.Lotto
 import model.LottoGameResult
 import model.LottoNumber
@@ -15,7 +15,7 @@ import kotlin.math.floor
 class LottoGameController(
     private val lottoGameInputView: LottoGameInputView,
     private val lottoGameOutputView: LottoGameOutputView,
-    private val lottieGenerator: LottieGenerator,
+    private val lottieGenerator: AutoLottieGenerator,
 ) {
     fun startLottoGame() {
         val purchaseExpense: Money = createPurchaseExpense()
@@ -52,7 +52,8 @@ class LottoGameController(
     private fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber =
         runCatching {
             val bonusNumber = lottoGameInputView.inputBonusNumber()
-            val bonusLottoNumber: LottoNumber = BonusLottoNumber.of(GeneralLottoNumber(bonusNumber), winningLottoNumbers)
+            val bonusLottoNumber: LottoNumber =
+                BonusLottoNumber.of(GeneralLottoNumber(bonusNumber), winningLottoNumbers)
             bonusLottoNumber
         }.onFailure {
             if (it is IllegalArgumentException) {

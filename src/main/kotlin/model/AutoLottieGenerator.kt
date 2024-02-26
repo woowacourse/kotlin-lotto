@@ -1,13 +1,13 @@
 package model
 
-fun interface LottieGenerator {
+fun interface AutoLottieGenerator {
     fun generate(purchaseCost: Money): List<Lotto>
 }
 
-class AutoLottieGenerator(
+class DefaultAutoLottieGenerator(
     private val price: Money = DEFAULT_LOTTO_PRICE,
     private val numbersGenerator: NumbersGenerator = RandomNumberGenerator(),
-) : LottieGenerator {
+) : AutoLottieGenerator {
     override fun generate(purchaseCost: Money): List<Lotto> {
         val count = purchaseCost / price
         return List(count) {

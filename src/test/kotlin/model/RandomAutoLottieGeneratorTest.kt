@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class RandomLottieGeneratorTest {
+class RandomAutoLottieGeneratorTest {
     private lateinit var numbersGenerator: NumbersGenerator
 
     @BeforeEach
@@ -15,7 +15,7 @@ class RandomLottieGeneratorTest {
     @Test
     fun `Lotto 리스트를 생성한다`() {
         // given
-        val lottieGenerator: LottieGenerator = AutoLottieGenerator(numbersGenerator = numbersGenerator)
+        val lottieGenerator: AutoLottieGenerator = DefaultAutoLottieGenerator(numbersGenerator = numbersGenerator)
         val purchaseCost = Money(1000)
         val expectedLottie = listOf(Lotto(1, 2, 3, 4, 5, 6))
         // when
