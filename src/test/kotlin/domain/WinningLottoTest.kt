@@ -12,14 +12,15 @@ class WinningLottoTest {
         val lottoNumbers = listOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(1)
         val lottery = lottoNumbers.map { LottoNumber(it) }.toSet()
+        val lotto = Lotto(lottery)
 
         val exception = assertThrows<IllegalArgumentException> {
             WinningLotto(
-                Lotto(lottery),
+                lotto,
                 bonusNumber
             )
         }
 
-        assertThat(exception.message).isEqualTo("보너스 번호는 당첨번호와 중복되면 안됩니다.")
+        assertThat(exception.message).isEqualTo("보너스 번호인 ${bonusNumber}와 당첨번호인 ${lotto}는 중복되면 안됩니다.")
     }
 }

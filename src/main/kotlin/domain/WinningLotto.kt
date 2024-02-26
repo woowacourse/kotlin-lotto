@@ -5,7 +5,7 @@ import domain.model.LottoNumber
 
 data class WinningLotto(val lotto: Lotto, val bonus: LottoNumber) {
     init {
-        require(lotto.contains(bonus).not()) { "보너스 번호인 ${bonus}와 당첨번호인 ${lotto.numbers}는 중복되면 안됩니다." }
+        require(lotto.contains(bonus).not()) { "보너스 번호인 ${bonus.value}와 당첨번호인 ${lotto}는 중복되면 안됩니다." }
     }
 
     fun countRank(lottoTickets: List<Lotto>): LottoDrawingResult {
