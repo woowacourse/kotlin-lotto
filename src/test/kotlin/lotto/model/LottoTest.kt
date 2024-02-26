@@ -1,22 +1,14 @@
-package lotto
+package lotto.model
 
 import lotto.constants.LottoPrize
-import lotto.model.Lotto
-import lotto.model.LottoNumber
-import lotto.model.PurchaseInfo
-import lotto.model.WinningLotto
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.EmptySource
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.params.provider.ValueSource
 
-class ModelTest {
+class LottoTest {
     @ParameterizedTest
     @MethodSource("유효하지 않은 로또 번호 테스트 데이터")
     fun `로또 번호가 잘못된 경우 예외가 발생한다`(lottoNumbers: List<Int>) {
@@ -47,41 +39,7 @@ class ModelTest {
         val actual = lotto.compare(Lotto(otherLotto), LottoNumber(bonusNumber))
 
         // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @ParameterizedTest
-    @CsvSource("1000, 1", "10000, 10")
-    fun `구매할 수 있는 로또의 개수 계산한다`(
-        purchasePrice: String,
-        amount: Int,
-    ) {
-        val purchaseInfo =
-            PurchaseInfo(purchasePrice)
-        assertThat(purchaseInfo.amount).isEqualTo(amount)
-    }
-
-    @ParameterizedTest
-    @EmptySource
-    @ValueSource(strings = ["0", "-1000", "1000100", "1000abc", "2200000000"])
-    fun `로또의 구입 금액을 검증한다`(purchasePrice: String) {
-        assertThrows<IllegalArgumentException> {
-            PurchaseInfo(purchasePrice)
-        }
-    }
-
-    @Test
-    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
-            WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoNumber(6))
-        }
-    }
-
-    @Test
-    fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() {
-        assertDoesNotThrow {
-            WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoNumber(7))
-        }
+        Assertions.assertThat(actual).isEqualTo(expected)
     }
 
     companion object {
