@@ -20,7 +20,7 @@ class OutputView {
         }
     }
 
-    fun printWinningChart(rankMap: Map<Rank, Int>) {
+    fun printWinningChart(rankMap: Map<Rank?, Int>) {
         for (rank in listOf(FIFTH, FOURTH, THIRD, SECOND, FIRST)) {
             println(
                 MATCH_MESSAGE.format(

@@ -5,7 +5,7 @@ class LottoWinning(
     private val winningNumbers: List<LottoNumber>,
     private val bonusNumber: LottoNumber,
 ) {
-    fun makeRankMap(): Map<Rank, Int> {
+    fun makeRankMap(): Map<Rank?, Int> {
         val rankList = userTickets.map { it.getRank(winningNumbers, bonusNumber) }
         val rankMap = rankList.groupingBy { it }.eachCount().toMutableMap()
         // Map에 각각의 Rank가 없을 경우(null일 경우) 0으로 바꿔준다.
@@ -17,7 +17,7 @@ class LottoWinning(
 
     private fun calculateWinningPrize(): Int {
         val rankMap = makeRankMap()
-        val winningPrize = rankMap.map { it.key.winningMoney * it.value }.sum()
+        val winningPrize = rankMap.map { it.key!!.winningMoney * it.value }.sum()
         return winningPrize
     }
 

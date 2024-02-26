@@ -16,7 +16,7 @@ class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
     fun getRank(
         numbers: List<LottoNumber>,
         number: LottoNumber,
-    ): Rank {
+    ): Rank? {
         val countOfMatchWithWinningNumbers = countOfMatchWithNumbers(numbers)
         val isBonusInTicket = isNumInTicket(number)
         return Rank.decideRank(countOfMatchWithWinningNumbers, isBonusInTicket)
