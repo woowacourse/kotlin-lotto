@@ -5,11 +5,10 @@ import java.text.DecimalFormat
 
 class LotterySeller(private val money: Money) {
     init {
+        require(money % PRICE == Money.ZERO) { "1,000 원 단위로 입력하세요." }
         require(money <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
         require(money >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
     }
-
-    fun exchange(): Money = money % PRICE
 
     fun getLotteryCount(): Int = (money / PRICE).toInt()
 
