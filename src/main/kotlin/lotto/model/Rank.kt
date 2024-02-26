@@ -9,12 +9,13 @@ enum class Rank(val index: Int, val countOfMatch: Int, val winningMoney: Int) {
     MISS(5, 0, 0), ;
 
     companion object {
+        val bonusNeededRank = SECOND
+
         fun decideRank(
             countOfMatch: Int,
             matchBonus: Boolean,
         ): Rank? {
             val rankEntries = enumValues<Rank>()
-            val bonusNeededRank = SECOND
             if (countOfMatch == bonusNeededRank.countOfMatch) {
                 if (matchBonus) {
                     return bonusNeededRank
