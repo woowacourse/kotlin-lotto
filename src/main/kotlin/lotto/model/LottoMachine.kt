@@ -28,10 +28,8 @@ class LottoMachine(private val price: Price) {
             },
         )
 
-    private fun createRandomLottoBundle(lottoManualPurchaseCount: LottoManualPurchaseCount): LottoBundle {
-        val lottos = List(price.getNumberOfLottoTickets() - lottoManualPurchaseCount.count) { randomLotto() }
-        return LottoBundle(lottos)
-    }
+    private fun createRandomLottoBundle(lottoManualPurchaseCount: LottoManualPurchaseCount): LottoBundle =
+        LottoBundle(List(getRandomLottoCount(lottoManualPurchaseCount)) { randomLotto() })
 
     private fun randomLotto(): Lotto = Lotto(LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }.toSet())
 }
