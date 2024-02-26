@@ -6,6 +6,13 @@ import model.Rank
 import kotlin.math.floor
 
 class ConsoleLottoGameOutputView : LottoGameOutputView {
+    override fun showLottoCount(
+        countOfAuto: Int,
+        countOfManual: Int,
+    ) {
+        println(MESSAGE_PURCHASE_COUNT.format(countOfManual, countOfAuto))
+    }
+
     override fun showPurchasedLottie(lottie: List<Lotto>) {
         println(MESSAGE_PURCHASED_LOTTIE_COUNT.format(lottie.size))
         lottie.forEach { println(it.numbers.map { it.number }) }
@@ -56,6 +63,7 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
     companion object {
         private const val SCALE = 100
         private const val STANDARD_BREAK_EVEN_POINT = 1
+        private const val MESSAGE_PURCHASE_COUNT = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val MESSAGE_TITLE = "\n당첨 통계\n---------"
         private const val MESSAGE_PURCHASED_LOTTIE_COUNT = "%d개를 구매했습니다."
         private const val MESSAGE_EARNING_RATE = "총 수익률은 %.2f입니다."
