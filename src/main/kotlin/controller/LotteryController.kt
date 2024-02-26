@@ -36,7 +36,7 @@ class LotteryController(
             )
 
         val winningResult =
-            lotteryResultEvaluator.evaluate(lotteries, winningLottery.lottery, winningLottery.bonusNumber)
+            lotteryResultEvaluator.evaluate(lotteries, winningLottery)
         outputView.showWinningResult(winningResult)
 
         val totalPrizeCalculator = LotteryPrizeCalculator()
