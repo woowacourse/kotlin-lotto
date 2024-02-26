@@ -15,8 +15,9 @@ class Lotto(numbers: List<LottoNumber>) {
     fun isContain(number: LottoNumber): Boolean = numbers.contains(number)
 
     companion object {
-        fun List<Int>.toLotto(): Lotto =
-            this.take(LOTTO_NUMBER_SIZE).map { LottoNumber(it) }.run { Lotto(this) }
+        fun from(numbers: List<Int>): Lotto {
+            return Lotto(numbers = numbers.map { LottoNumber(it) })
+        }
 
         private const val LOTTO_NUMBER_SIZE = 6
         private const val NUMBER_SIZE_EXCEPTION_MESSAGE = "로또 번호는 ${LOTTO_NUMBER_SIZE}개여야 합니다."
