@@ -1,5 +1,6 @@
 package model.lottery
 
+import WinningLottery
 import model.PrizeCount
 import model.WinningRank
 import model.WinningResult

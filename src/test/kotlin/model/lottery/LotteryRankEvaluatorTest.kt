@@ -1,5 +1,6 @@
 package model.lottery
 
+import WinningLottery
 import model.WinningRank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

@@ -1,5 +1,6 @@
 package model.lottery
 
+import WinningLottery
 import model.WinningRank
 
 class LotteryRankEvaluator {
