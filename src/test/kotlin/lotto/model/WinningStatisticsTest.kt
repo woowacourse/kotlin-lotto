@@ -14,7 +14,7 @@ class WinningStatisticsTest {
         expected: String,
     ) {
         // given
-        val purchaseInfo = PurchaseInfo(lottoPrice)
+        val purchaseInfo = PurchaseOrder(lottoPrice)
         val winningStatistics = WinningStatistics(statistics)
 
         // when

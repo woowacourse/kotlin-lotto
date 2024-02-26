@@ -1,6 +1,6 @@
 package lotto.model
 
-class PurchaseInfo(val price: Int) {
+class PurchaseOrder(val price: Int) {
     val amount: Int
 
     init {

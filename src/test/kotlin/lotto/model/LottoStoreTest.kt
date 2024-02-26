@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource
 class LottoStoreTest {
     private val lottoStore =
         LottoStore.create(
-            PurchaseInfo(5000),
+            PurchaseOrder(5000),
             object : LottoNumberGenerator {
                 override fun generate() = listOf(1, 2, 3, 4, 5, 6)
             },

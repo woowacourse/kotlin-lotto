@@ -2,7 +2,7 @@ package lotto.controller
 
 import lotto.model.LottoNumberGenerator
 import lotto.model.LottoStore
-import lotto.model.PurchaseInfo
+import lotto.model.PurchaseOrder
 import lotto.model.WinningLotto
 import lotto.utils.retryWhileNoException
 import lotto.view.InputView
@@ -11,7 +11,7 @@ import lotto.view.OutputView
 class LottoController(
     private val lottoNumberGenerator: LottoNumberGenerator,
 ) {
-    private val purchaseInfo: PurchaseInfo by lazy { readPurchasePrice() }
+    private val purchaseOrder: PurchaseOrder by lazy { readPurchasePrice() }
     private val winningLotto: WinningLotto by lazy { readWinningLotto() }
 
     private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
@@ -24,13 +24,13 @@ class LottoController(
     }
 
     fun run() {
-        val lottoStore = LottoStore.create(purchaseInfo, lottoNumberGenerator)
+        val lottoStore = LottoStore.create(purchaseOrder, lottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
 
         val winningStatistics = lottoStore.calculateWinningStatistics(winningLotto)
         OutputView.printWinningStatistics(winningStatistics)
 
-        val profitRatio = winningStatistics.calculateProfitRatio(purchaseInfo)
+        val profitRatio = winningStatistics.calculateProfitRatio(purchaseOrder)
         OutputView.printProfitRatio(profitRatio)
     }
 }

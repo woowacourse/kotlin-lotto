@@ -16,7 +16,7 @@ class LottoStore private constructor(private val lottos: List<Lotto>) {
 
     companion object {
         fun create(
-            purchaseInfo: PurchaseInfo,
+            purchaseInfo: PurchaseOrder,
             lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator,
         ): LottoStore {
             val lottos = List(purchaseInfo.amount) { Lotto(lottoNumberGenerator.generate()) }

@@ -2,7 +2,7 @@ package lotto.view
 
 import lotto.model.Lotto
 import lotto.model.LottoNumber
-import lotto.model.PurchaseInfo
+import lotto.model.PurchaseOrder
 
 object InputView {
     private const val INPUT_PURCHASE_PRICE = "구입금액을 입력해 주세요."
@@ -11,11 +11,11 @@ object InputView {
     private const val LOTTO_NUMBER_DELIMITER = ", "
     private const val INVALID_DIGIT = "숫자만 입력해 주세요."
 
-    fun readPurchasePrice(): PurchaseInfo {
+    fun readPurchasePrice(): PurchaseOrder {
         println(INPUT_PURCHASE_PRICE)
         val inputPurchasePrice = readln()
         val purchasePrice = inputPurchasePrice.validateAndConvertDigit()
-        return PurchaseInfo(purchasePrice)
+        return PurchaseOrder(purchasePrice)
     }
 
     fun readWinningLottoNumbers(): Lotto {
