@@ -2,12 +2,14 @@ package controller
 
 import model.Buyer
 import model.Lotto
+import model.LottoNumber
 import model.Lottos
 import model.NumberGenerator
 import model.Rank
 import model.WinningLotto
 import model.WinningStatistic
 import model.WinningStatistics
+import util.Constant
 import view.InputView
 import view.OutputView
 
@@ -25,11 +27,11 @@ class LottoController {
         displayWinningStatistics(purchaseAmount)
     }
 
-    private fun generateLottoNumbers(): List<Int> {
+    private fun generateLottoNumbers(): List<LottoNumber> {
         val numberGenerator = NumberGenerator()
         val randomNumbers = numberGenerator.makeRandomNumbers()
 
-        return numberGenerator.drawSixNumbers(randomNumbers)
+        return numberGenerator.drawSixNumbers(randomNumbers).map { LottoNumber(it) }
     }
 
     private fun publishLottos(numberOfManualLotto: Int) {
@@ -69,7 +71,7 @@ class LottoController {
         winningLotto: WinningLotto,
     ): WinningStatistics {
         val results =
-            MutableList(6) {
+            MutableList(Constant.LOTTO_SIZE) {
                 WinningStatistic(Pair(Rank.getRankByOrdinal(it), 0))
             }
         repeat(lottos.publishedLottos.size) { index ->
