@@ -34,7 +34,7 @@ class LotteryController(
         val lotteries =
             Lotteries(
                 List(LotterySeller(purchaseAmount).getLotteryCount()) {
-                    lotteryMachine.generate()
+                    lotteryMachine.generateRandomLottery()
                 },
             )
         outputView.showPurchasedLotteries(lotteries)

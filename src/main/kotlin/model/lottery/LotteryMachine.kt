@@ -1,7 +1,7 @@
 package model.lottery
 
 class LotteryMachine {
-    fun generate(): Lottery =
+    fun generateRandomLottery(): Lottery =
         Lottery.of(
             *(MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER)
                 .shuffled()
@@ -9,6 +9,8 @@ class LotteryMachine {
                 .sorted()
                 .toIntArray(),
         )
+
+    fun generateManualLottery(inputNumbers: String): Lottery = Lottery.fromInput(inputNumbers)
 
     companion object {
         private const val MIN_LOTTERY_NUMBER = 1
