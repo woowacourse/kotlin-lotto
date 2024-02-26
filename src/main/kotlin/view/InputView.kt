@@ -3,6 +3,14 @@ package lotto.view
 class InputView {
     fun readPurchaseAmount(): String = validateNullInput(readlnOrNull())
 
+    fun readManualLottoNumber(numberOfManualLottos: Int): List<List<String>> {
+        val manualLottos = mutableListOf<List<String>>()
+        repeat(numberOfManualLottos) {
+            manualLottos.add(validateNullInput(readlnOrNull()).split(","))
+        }
+        return manualLottos
+    }
+
     fun readWinningNumbers(): List<String> = validateNullInput(readlnOrNull()).replace(" ", "").split(SPLIT_DELIMITER)
 
     fun readWinningBonusNumber(): Int {
