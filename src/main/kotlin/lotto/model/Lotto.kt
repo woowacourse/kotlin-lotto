@@ -6,15 +6,11 @@ class Lotto(numbers: Set<Int>) {
     private val numbers: Set<LottoNumber>
 
     init {
-        require(numbers.isValidSize() && numbers.isNotDuplicate()) {
+        require(numbers.size == LOTTO_SIZE) {
             INVALID_LOTTO_NUMBER
         }
         this.numbers = numbers.sorted().map { LottoNumber(it) }.toSet()
     }
-
-    private fun Set<Int>.isValidSize() = size == LOTTO_SIZE
-
-    private fun Set<Int>.isNotDuplicate() = distinct().size == LOTTO_SIZE
 
     fun compare(
         otherLotto: Lotto,
