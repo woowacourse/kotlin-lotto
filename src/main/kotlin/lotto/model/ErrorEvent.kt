@@ -1,24 +1,24 @@
 package lotto.model
 
-sealed class ErrorEvent(val message: String) {
+sealed interface ErrorEvent {
 
-    sealed class PurchaseEvent(val message: String) {
+    sealed class PurchaseEvent(val message: String) : ErrorEvent {
         data object InvalidDataType : PurchaseEvent(INVALID_DATA_TYPE)
         data object InvalidPrice : PurchaseEvent(INVALID_PRICE)
     }
 
-    sealed class LottoEvent(val message: String) {
+    sealed class LottoEvent(val message: String) : ErrorEvent {
         data object InvalidDataType : LottoEvent(INVALID_DATA_TYPE)
         data object InvalidNumRange : LottoEvent(INVALID_NUM_RANGE)
         data object InvalidNumCount : LottoEvent(INVALID_NUM_COUNT)
         data object InvalidDuplication : LottoEvent(INVALID_DUPLICATION)
     }
 
-    sealed class ManualEvent(val message: String) {
+    sealed class ManualEvent(val message: String) : ErrorEvent {
         data object InvalidManualCount : ManualEvent(INVALID_MANUAL_COUNT)
     }
 
-    sealed class BonusEvent(val message: String) {
+    sealed class BonusEvent(val message: String) : ErrorEvent {
         data object InvalidBonusDuplication : LottoEvent(INVALID_BONUS_DUPLICATION)
     }
 
