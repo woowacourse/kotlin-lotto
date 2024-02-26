@@ -15,28 +15,37 @@ import model.LottoNumber
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
     fun run() {
         val purchaseAmount = initPurchaseAmount()
-        val numberOfLottos = getNumberOfLotto(purchaseAmount)
-        val lottoStore = LottoStore(numberOfLottos, LottoNumberGenerator())
-        val lottos = initGenerateLottos(lottoStore)
+        val (numberOfManualLottos, numberOfAutoLottos) = getNumberOfLotto(purchaseAmount)
+        val lottos = initGenerateLottos(numberOfManualLottos, numberOfAutoLottos)
         val (winningNumbers, bonusNumber) = generateWinningNumbers()
         showLottoResult(lottos, winningNumbers, bonusNumber, purchaseAmount.money)
     }
 
     private fun initPurchaseAmount(): PurchaseAmount {
         outputView.printPurchaseAmountMessage()
-        return PurchaseAmount(inputView.readPurchaseAmount())
+        val purchaseAmount = inputView.readPurchaseAmount()
+        outputView.printNumberOfManualLottosMessage()
+        val numberOfManualLottos = inputView.readNumberOfManualLottos()
+        return PurchaseAmount(purchaseAmount, numberOfManualLottos)
     }
 
-    private fun getNumberOfLotto(purchaseAmount: PurchaseAmount): Int {
-        val numberOfLottos = purchaseAmount.getNumberOfLottos()
-        outputView.printNumberOfLottoMessage(numberOfLottos)
-        return numberOfLottos
+    private fun getNumberOfLotto(purchaseAmount: PurchaseAmount): Pair<Int, Int> {
+        val numberOfAutoLottos = purchaseAmount.getNumberOfAutoLottos()
+        val numberOfManualLottos = purchaseAmount.numberOfManualLottos
+        return Pair(numberOfManualLottos, numberOfAutoLottos)
     }
 
-    private fun initGenerateLottos(lottoStore: LottoStore): Lottos {
-        val lottos = lottoStore.generateLottos()
-        outputView.printLottoNumbers(lottos)
-        return lottos
+    private fun initGenerateLottos(
+        numberOfManualLottos: Int,
+        numberOfAutoLottos: Int,
+    ): Lottos {
+        val autoLottos = LottoStore.generateAutoLottos(numberOfAutoLottos, LottoNumberGenerator())
+        outputView.printEnterManualLottoNumberMessage()
+        val manualLottos = LottoStore.generateManualLottos(inputView.readManualLottoNumber(numberOfManualLottos))
+        val lottoBundle = Lottos(autoLottos.lottos + manualLottos.lottos)
+        outputView.printNumberOfLottoMessage(numberOfManualLottos, numberOfAutoLottos)
+        outputView.printLottoNumbers(lottoBundle)
+        return lottoBundle
     }
 
     private fun generateWinningNumbers(): Pair<Lotto, LottoNumber> {
