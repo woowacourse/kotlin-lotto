@@ -2,7 +2,7 @@ package lotto.model
 
 class LottoStore private constructor(val lottos: List<Lotto>) {
     companion object {
-        fun create(
+        fun buyLottos(
             purchaseInfo: PurchaseOrder,
             lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator,
         ): LottoStore {

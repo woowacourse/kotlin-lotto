@@ -24,7 +24,7 @@ class LottoController(
     }
 
     fun run() {
-        val lottoStore = LottoStore.create(purchaseOrder, lottoNumberGenerator)
+        val lottoStore = LottoStore.buyLottos(purchaseOrder, lottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
 
         val winningStatistics = winningLotto.calculateWinningStatistics(lottoStore)
