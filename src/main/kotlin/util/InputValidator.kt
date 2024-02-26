@@ -4,9 +4,10 @@ import model.LottoNumber
 
 object InputValidator {
     private const val INPUT_SEPARATOR = ','
+    private const val INVALID_INPUT = -1
 
     fun validatePurchaseAmount(input: String): Int {
-        val purchaseAmount = input.toIntOrNull() ?: 0
+        val purchaseAmount = input.toIntOrNull() ?: INVALID_INPUT
 
         validatePurchaseAmountRange(purchaseAmount)
         validatePurchaseAmountUnit(purchaseAmount)
@@ -18,7 +19,7 @@ object InputValidator {
         input: String,
         purchaseAmount: Int,
     ): Int {
-        val purchaseSizeOfManualLotto = input.toIntOrNull() ?: -1
+        val purchaseSizeOfManualLotto = input.toIntOrNull() ?: INVALID_INPUT
 
         validateMinimumPurchaseSizeOfManualLotto(purchaseSizeOfManualLotto)
         validatePurchaseSizeOfManualLottoExceedPurchaseAmount(purchaseSizeOfManualLotto, purchaseAmount)
@@ -52,7 +53,7 @@ object InputValidator {
     }
 
     private fun validatePublishedLotto(number: String): LottoNumber {
-        val validNumber = number.toIntOrNull() ?: 0
+        val validNumber = number.toIntOrNull() ?: INVALID_INPUT
         validateNumberRange(validNumber)
         return LottoNumber(validNumber)
     }
@@ -83,7 +84,7 @@ object InputValidator {
         input: String,
         winningNumbers: List<LottoNumber>,
     ): Int {
-        val bonusNumber = input.toIntOrNull() ?: 0
+        val bonusNumber = input.toIntOrNull() ?: INVALID_INPUT
         validateBonusNumberRange(bonusNumber)
         validateBonusNumberDuplicate(bonusNumber, winningNumbers)
         return bonusNumber
