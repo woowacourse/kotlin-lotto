@@ -14,6 +14,14 @@ object InputValidator {
         return purchaseAmount
     }
 
+    fun validateHandpickedNumber(input: String): Int {
+        val handpickedNumber = input.toIntOrNull() ?: 0
+
+        validateHandpickedNumberRange(handpickedNumber)
+
+        return handpickedNumber
+    }
+
     fun validateWinningNumbers(input: String): List<LottoNumber> {
         val winningNumbers =
             input.split(INPUT_SEPARATOR).map { winningNumber ->
@@ -35,6 +43,18 @@ object InputValidator {
         return bonusNumber
     }
 
+    private fun validatePurchaseAmountRange(purchaseAmount: Int) {
+        require(purchaseAmount >= Constant.PURCHASE_AMOUNT_UNIT) { InputException.INVALID_PURCHASE_AMOUNT_RANGE.getMessage() }
+    }
+
+    private fun validatePurchaseAmountUnit(purchaseAmount: Int) {
+        require(purchaseAmount % Constant.PURCHASE_AMOUNT_UNIT == 0) { InputException.INVALID_PURCHASE_AMOUNT_UNIT.getMessage() }
+    }
+
+    private fun validateHandpickedNumberRange(handpickedNumber: Int) {
+        require(handpickedNumber > 0) { InputException.INVALID_HANDPICKED_NUMBER_RANGE.getMessage() }
+    }
+
     private fun validateWinningNumber(winningNumber: String): LottoNumber {
         val validWinningNumber = LottoNumber(winningNumber.toIntOrNull() ?: 0)
         validateWinningNumberRange(validWinningNumber)
@@ -54,14 +74,6 @@ object InputValidator {
     private fun validateWinningNumbersDuplicate(winningNumbers: List<LottoNumber>) {
         val numbers = winningNumbers.map { it.getNumber() }
         require(numbers.toSet().size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_DUPLICATE.getMessage() }
-    }
-
-    private fun validatePurchaseAmountRange(purchaseAmount: Int) {
-        require(purchaseAmount >= Constant.PURCHASE_AMOUNT_UNIT) { InputException.INVALID_PURCHASE_AMOUNT_RANGE.getMessage() }
-    }
-
-    private fun validatePurchaseAmountUnit(purchaseAmount: Int) {
-        require(purchaseAmount % Constant.PURCHASE_AMOUNT_UNIT == 0) { InputException.INVALID_PURCHASE_AMOUNT_UNIT.getMessage() }
     }
 
     private fun validateBonusNumberRange(bonusNumber: LottoNumber) {

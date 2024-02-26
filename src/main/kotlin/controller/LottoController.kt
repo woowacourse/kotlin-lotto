@@ -12,6 +12,7 @@ import view.OutputView
 class LottoController {
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
+        val handpickedNumber = InputView.inputHandpickedNumber()
         val lottos = Lottos(purchaseAmount)
         displayPurchaseResult(lottos)
 

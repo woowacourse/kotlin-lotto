@@ -20,6 +20,19 @@ object InputView {
         }
     }
 
+    fun inputHandpickedNumber(): Int {
+        println()
+        println("수동으로 구매할 로또 수를 입력해 주세요.")
+        val handpickedNumber = br.readLine()
+
+        return try {
+            InputValidator.validateHandpickedNumber(handpickedNumber)
+        } catch (exception: IllegalArgumentException) {
+            println(exception.message)
+            inputHandpickedNumber()
+        }
+    }
+
     fun inputWinningNumbers(): List<LottoNumber> {
         println()
         println("지난 주 당첨 번호를 입력해 주세요.")
