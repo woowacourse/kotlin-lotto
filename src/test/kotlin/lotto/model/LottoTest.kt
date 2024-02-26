@@ -9,20 +9,20 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 
 class LottoTest {
-    private val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+    private val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 6))
 
     @ParameterizedTest
     @MethodSource("유효한 로또 번호 테스트 데이터")
     fun `6개의 로또 번호가 올바른 경우 예외가 발생하지 않는다`(lottoNumbers: List<Int>) =
         assertDoesNotThrow {
-            Lotto(lottoNumbers)
+            Lotto.create(lottoNumbers)
         }
 
     @ParameterizedTest
     @MethodSource("유효하지 않은 로또 번호 테스트 데이터")
     fun `6개의 로또 번호가 잘못된 경우 예외가 발생한다`(lottoNumbers: List<Int>) =
         assertThrows<IllegalArgumentException> {
-            Lotto(lottoNumbers)
+            Lotto.create(lottoNumbers)
         }
 
     @ParameterizedTest
@@ -32,7 +32,7 @@ class LottoTest {
         expected: Int,
     ) {
         // given
-        val otherLotto = Lotto(lottoNumbers)
+        val otherLotto = Lotto.create(lottoNumbers)
 
         // when
         val actual = lotto.getMatchingCount(otherLotto)

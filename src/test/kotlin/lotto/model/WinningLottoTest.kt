@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class WinningLottoTest {
-    private val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+    private val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 6))
 
     @Test
     fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() =
@@ -31,7 +31,7 @@ class WinningLottoTest {
         expected: LottoPrize,
     ) {
         // given
-        val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
+        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber(bonusNumber))
 
         // when
         val actual = winningLotto.getLottoPrize(lotto)

@@ -17,7 +17,7 @@ class LottoStoreTest {
 
     @Test
     fun `발행한 로또의 개수를 확인한다`() {
-        val actual = lottoStore.size
+        val actual = lottoStore.lottos.size
         Assertions.assertThat(actual).isEqualTo(5)
     }
 
@@ -29,7 +29,7 @@ class LottoStoreTest {
         expected: LottoPrize,
     ) {
         // given
-        val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
+        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber(bonusNumber))
 
         // when
         val actual = winningLotto.calculateWinningStatistics(lottoStore)
