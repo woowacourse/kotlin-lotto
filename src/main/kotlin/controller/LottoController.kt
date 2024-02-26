@@ -1,10 +1,6 @@
 package controller
 
-import model.LottoNumber
-import model.LottoPurchase
-import model.LottoResult
-import model.LottoTicket
-import model.LottoWinning
+import model.*
 import view.InputView
 import view.OutputView
 
@@ -22,7 +18,7 @@ class LottoController(
     }
 
     private fun purchaseLottoTickets(purchasePrice: Int): List<LottoTicket> {
-        val lottoPurchase = LottoPurchase(purchasePrice)
+        val lottoPurchase = LottoPurchase(purchasePrice, RandomLottoTicketGenerator)
         val lottoCount = lottoPurchase.lottoCount
         val lottoTickets = lottoPurchase.makeUserTickets()
         outputView.printLottoCount(lottoCount)

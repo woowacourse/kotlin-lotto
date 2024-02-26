@@ -9,18 +9,6 @@ class LottoPurchase(
     }
 
     val lottoCount = purchasePrice / PRICE_OF_LOTTO_TICKET
-    constructor(
-        purchasePrice: Int,
-    ) : this(
-        purchasePrice,
-        LottoTicketGenerator {
-            val lottoNumbers =
-                LottoNumber.RANGE.shuffled()
-                    .take(LottoTicket.SIZE)
-                    .map { LottoNumber(it) }
-            LottoTicket(lottoNumbers)
-        },
-    )
 
     fun makeUserTickets(): List<LottoTicket> {
         val userTickets: MutableList<LottoTicket> = mutableListOf()
