@@ -18,6 +18,17 @@ class MoneyTest {
         assertThat(count).isEqualTo(1)
     }
 
+    @Test
+    fun `Moneny 를 n 배로 곱하면, amount n배 인 Money가 된다`() {
+        // given
+        val times = 3
+        val expectedMoney = Money(3_000)
+        // when
+        val actualMoney = Money(1_000) * times
+        // then
+        assertThat(actualMoney).isEqualTo(expectedMoney)
+    }
+
     private companion object {
         const val MINUS_MONEY_AMOUNT = -1
         const val GENERAL_MONEY_AMOUNT = 1_000
