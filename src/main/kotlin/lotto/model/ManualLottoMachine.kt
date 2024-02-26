@@ -6,8 +6,9 @@ class ManualLottoMachine(private val manualLottoBuyCount: Int, private val lotto
     }
 
     fun createLottos(lottoNumbersGenerator: LottoNumbersGenerator): List<Lotto> {
-        lottoBuyBudget.subtractAvailableFunds(manualLottoBuyCount * lottoBuyBudget.pricePerLotto)
-        return lottoNumbersGenerator.generate(manualLottoBuyCount).map { Lotto(it) }
+        return lottoNumbersGenerator.generate(manualLottoBuyCount).map { Lotto(it) }.also {
+            lottoBuyBudget.subtractAvailableFunds(manualLottoBuyCount * lottoBuyBudget.pricePerLotto)
+        }
     }
 
     companion object {
