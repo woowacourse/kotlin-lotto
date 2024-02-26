@@ -28,18 +28,7 @@ class LottoMachineTest {
         val result = LottoMachine.issueTickets(count, numbersGenerator)
         assertThat(result.size).isEqualTo(count)
         result.forEach {
-            assertThat(it).isEqualTo(
-                Lotto(
-                    setOf(
-                        LottoNumber(1),
-                        LottoNumber(2),
-                        LottoNumber(3),
-                        LottoNumber(4),
-                        LottoNumber(5),
-                        LottoNumber(6),
-                    ),
-                ),
-            )
+            assertThat(it).isEqualTo(Lotto.of(1, 2, 3, 4, 5, 6))
         }
     }
 }
