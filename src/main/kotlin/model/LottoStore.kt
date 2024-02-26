@@ -17,7 +17,7 @@ class LottoStore {
         }
 
         fun generateManualLottos(manualLottos: List<List<String>>): Lottos {
-            val lottoBundle = manualLottos.map { Lotto(LottoNumbers(it.map { LottoNumber(it.toInt()) })) }
+            val lottoBundle = manualLottos.map { Lotto(LottoNumbers(it.sorted().map { LottoNumber(it.toInt()) })) }
             return Lottos(lottoBundle)
         }
     }
