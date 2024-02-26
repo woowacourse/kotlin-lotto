@@ -14,6 +14,8 @@ class LotteryController {
     fun start() {
         val amount = readAmount()
 
+        readManualCount()
+
         val ticket = issueTicket(amount)
         printTicketInfo(ticket)
 
@@ -26,6 +28,8 @@ class LotteryController {
     }
 
     private fun readAmount() = Amount.fromInput(InputView.readAmount())
+
+    private fun readManualCount() = InputView.readManualCount()
 
     private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(InputView.readBonus(), winningLottery)
 
