@@ -1,8 +1,5 @@
-package lotto
+package lotto.model
 
-import lotto.model.LottoPrize
-import lotto.model.PurchaseInfo
-import lotto.model.WinningStatistics
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

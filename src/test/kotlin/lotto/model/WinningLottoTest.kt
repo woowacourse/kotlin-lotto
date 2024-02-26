@@ -1,36 +1,31 @@
-package lotto
+package lotto.model
 
-import lotto.model.Lotto
-import lotto.model.LottoNumber
-import lotto.model.LottoNumberGenerator
-import lotto.model.LottoPrize
-import lotto.model.LottoStore
-import lotto.model.PurchaseInfo
-import lotto.model.WinningLotto
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class LottoStoreTest {
-    private val lottoStore =
-        LottoStore.create(
-            PurchaseInfo(5000),
-            object : LottoNumberGenerator {
-                override fun generate() = listOf(1, 2, 3, 4, 5, 6)
-            },
-        )
+class WinningLottoTest {
+    private val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
 
     @Test
-    fun `발행한 로또의 개수를 확인한다`() {
-        val actual = lottoStore.size
-        Assertions.assertThat(actual).isEqualTo(5)
-    }
+    fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() =
+        assertDoesNotThrow {
+            WinningLotto(lotto, LottoNumber(7))
+        }
+
+    @Test
+    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() =
+        assertThrows<IllegalArgumentException> {
+            WinningLotto(lotto, LottoNumber(6))
+        }
 
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")
-    fun `로또 당첨 결과의 개수를 확인한다`(
+    fun `로또의 당첨 결과를 확인한다`(
         winningLottoNumbers: List<Int>,
         bonusNumber: Int,
         expected: LottoPrize,
@@ -39,10 +34,10 @@ class LottoStoreTest {
         val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
 
         // when
-        val actual = lottoStore.calculateWinningStatistics(winningLotto)
+        val actual = winningLotto.getLottoPrize(lotto)
 
         // then
-        Assertions.assertThat(actual[expected]).isEqualTo(5)
+        Assertions.assertThat(actual).isEqualTo(expected)
     }
 
     companion object {
