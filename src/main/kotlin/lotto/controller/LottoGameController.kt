@@ -8,7 +8,7 @@ import lotto.model.LottoBundle
 import lotto.model.LottoMachine
 import lotto.model.LottoManualPurchase
 import lotto.model.LottoNumber
-import lotto.model.LottoResponse
+import lotto.model.MatchResultResponse
 import lotto.model.Price
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -18,8 +18,8 @@ class LottoGameController {
         var gameState: GameState = GameState.Play
 
         while (gameState == GameState.Play) {
-            getLottoBundleAndDrawResult().onSuccess { response ->
-                matchResult(response.lottoBundle, response.drawResult)
+            getMatchResult().onSuccess { response ->
+                calculateMatchResult(response)
                 gameState = GameState.End
             }.onFailure { e ->
                 OutputView.printError(e)
@@ -27,11 +27,11 @@ class LottoGameController {
         }
     }
 
-    private fun getLottoBundleAndDrawResult(): Result<LottoResponse> =
+    private fun getMatchResult(): Result<MatchResultResponse> =
         runCatching {
             val lottoBundle = buyLottoBundle()
             val drawResult = lottoDraw()
-            LottoResponse(lottoBundle, drawResult)
+            MatchResultResponse(lottoBundle, drawResult)
         }
 
     private fun buyLottoBundle(): LottoBundle {
@@ -66,11 +66,8 @@ class LottoGameController {
         return DrawResult(winningLotto, LottoNumber.from(bonusNumber))
     }
 
-    private fun matchResult(
-        lottoBundle: LottoBundle,
-        drawResult: DrawResult,
-    ) {
-        val lottoResult = LottoAnalyzer.calculateResult(lottoBundle, drawResult)
+    private fun calculateMatchResult(matchResultResponse: MatchResultResponse) {
+        val lottoResult = LottoAnalyzer.calculateResult(matchResultResponse)
         OutputView.printResult(lottoResult)
     }
 }

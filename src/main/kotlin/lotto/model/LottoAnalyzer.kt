@@ -1,14 +1,11 @@
 package lotto.model
 
 object LottoAnalyzer {
-    fun calculateResult(
-        lottoBundle: LottoBundle,
-        drawResult: DrawResult,
-    ): LottoResult {
+    fun calculateResult(matchResultResponse: MatchResultResponse): LottoResult {
         return LottoResult(
-            lottoBundle.lottos.map { lotto ->
-                val countOfMatch = lotto.getCountOfMatch(drawResult.winningLotto)
-                val matchBonus = drawResult.getMatchBonusNumber(lotto)
+            matchResultResponse.lottoBundle.lottos.map { lotto ->
+                val countOfMatch = lotto.getCountOfMatch(matchResultResponse.drawResult.winningLotto)
+                val matchBonus = matchResultResponse.drawResult.getMatchBonusNumber(lotto)
                 val rankState = RankState.valueOf(countOfMatch, matchBonus)
                 Rank.valueOf(countOfMatch, rankState)
             }.groupingBy { it }.eachCount(),
