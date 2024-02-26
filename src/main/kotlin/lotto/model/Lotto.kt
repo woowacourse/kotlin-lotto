@@ -2,19 +2,19 @@ package lotto.model
 
 import lotto.constants.LottoPrize
 
-class Lotto(numbers: List<Int>) {
-    private val numbers: List<LottoNumber>
+class Lotto(numbers: Set<Int>) {
+    private val numbers: Set<LottoNumber>
 
     init {
         require(numbers.isValidSize() && numbers.isNotDuplicate()) {
             INVALID_LOTTO_NUMBER
         }
-        this.numbers = numbers.sorted().map { LottoNumber(it) }
+        this.numbers = numbers.sorted().map { LottoNumber(it) }.toSet()
     }
 
-    private fun List<Int>.isValidSize() = size == LOTTO_SIZE
+    private fun Set<Int>.isValidSize() = size == LOTTO_SIZE
 
-    private fun List<Int>.isNotDuplicate() = distinct().size == LOTTO_SIZE
+    private fun Set<Int>.isNotDuplicate() = distinct().size == LOTTO_SIZE
 
     fun compare(
         otherLotto: Lotto,

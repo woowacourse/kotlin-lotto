@@ -22,7 +22,10 @@ object InputView {
         println(INPUT_WINNING_LOTTO_NUMBERS)
         val winningLottoNumbers = readln()
         validateDigit(winningLottoNumbers, INVALID_LOTTO_NUMBER)
-        return Lotto(winningLottoNumbers.split(LOTTO_NUMBER_DELIMITER).map { it.toInt() })
+
+        val splittedWinningNumbers = winningLottoNumbers.split(", ").map { it.toInt() }
+        validateNotDuplicate(splittedWinningNumbers)
+        return Lotto(splittedWinningNumbers.toSet())
     }
 
     fun readBonusNumber(): LottoNumber {
@@ -38,6 +41,11 @@ object InputView {
     ) = require(lottoNumbers.split(LOTTO_NUMBER_DELIMITER).all { isDigit(it) }) {
         errorMessage
     }
+
+    private fun validateNotDuplicate(winningLottoNumber: List<Int>) =
+        require(winningLottoNumber.toSet().size == winningLottoNumber.size) {
+            INVALID_LOTTO_NUMBER
+        }
 
     private fun isDigit(it: String) = it.toIntOrNull() != null
 }

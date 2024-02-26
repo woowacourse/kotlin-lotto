@@ -17,7 +17,7 @@ class ServiceTest {
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")
     fun `로또 당첨 결과의 개수를 확인한다`(
-        winningLottoNumbers: List<Int>,
+        winningLottoNumbers: Set<Int>,
         bonusNumber: Int,
         expected: LottoPrize,
     ) { // given
@@ -26,7 +26,7 @@ class ServiceTest {
             LottoStore(
                 purchaseInfo,
                 object : LottoNumberGenerator {
-                    override fun generate() = listOf(1, 2, 3, 4, 5, 6)
+                    override fun generate() = setOf(1, 2, 3, 4, 5, 6)
                 },
             )
         val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
@@ -60,12 +60,12 @@ class ServiceTest {
         @JvmStatic
         fun `로또 당첨 결과 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(1, 2, 3, 4, 5, 6), 7, LottoPrize.FIRST),
-                Arguments.of(listOf(1, 2, 3, 4, 5, 7), 6, LottoPrize.SECOND),
-                Arguments.of(listOf(1, 2, 3, 4, 5, 7), 8, LottoPrize.THIRD),
-                Arguments.of(listOf(1, 2, 3, 4, 7, 8), 9, LottoPrize.FOURTH),
-                Arguments.of(listOf(1, 2, 3, 7, 8, 9), 10, LottoPrize.FIFTH),
-                Arguments.of(listOf(10, 11, 12, 13, 14, 15), 16, LottoPrize.NOTHING),
+                Arguments.of(setOf(1, 2, 3, 4, 5, 6), 7, LottoPrize.FIRST),
+                Arguments.of(setOf(1, 2, 3, 4, 5, 7), 6, LottoPrize.SECOND),
+                Arguments.of(setOf(1, 2, 3, 4, 5, 7), 8, LottoPrize.THIRD),
+                Arguments.of(setOf(1, 2, 3, 4, 7, 8), 9, LottoPrize.FOURTH),
+                Arguments.of(setOf(1, 2, 3, 7, 8, 9), 10, LottoPrize.FIFTH),
+                Arguments.of(setOf(10, 11, 12, 13, 14, 15), 16, LottoPrize.NOTHING),
             )
 
         @JvmStatic
