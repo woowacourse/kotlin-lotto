@@ -1,7 +1,7 @@
 package model
 
-open class Lotto(val numbers: List<Int>) {
+open class Lotto(val numbers: List<LottoNumber>) {
     override fun toString(): String {
-        return numbers.sorted().joinToString(", ", "[", "]")
+        return numbers.map { it.number }.sorted().joinToString(", ", "[", "]")
     }
 }

@@ -1,4 +1,5 @@
 import model.Lotto
+import model.LottoNumber
 import model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -11,12 +12,12 @@ class WinningLottoTest {
     fun setUp() {
         val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = 7
-        winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        winningLotto = WinningLotto(winningNumbers.map { LottoNumber(it) }, bonusNumber)
     }
 
     @Test
     fun `로또 번호 당첨 개수 일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8))
+        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) })
 
         val actual = winningLotto.calculateCountOfMatch(publishedLotto)
         val expected = 5
@@ -26,7 +27,7 @@ class WinningLottoTest {
 
     @Test
     fun `로또 번호 당첨 개수 불일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8))
+        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) })
 
         val actual = winningLotto.calculateCountOfMatch(publishedLotto)
         val expected = 3
@@ -36,7 +37,7 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호 일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 7))
+        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) })
 
         val actual = winningLotto.checkBonusNumberMatched(publishedLotto)
         val expected = true
@@ -46,7 +47,7 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호 불일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8))
+        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) })
 
         val actual = winningLotto.checkBonusNumberMatched(publishedLotto)
         val expected = false

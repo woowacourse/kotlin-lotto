@@ -1,5 +1,7 @@
 package util
 
+import model.LottoNumber
+
 object InputValidator {
     private const val INPUT_SEPARATOR = ','
 
@@ -39,7 +41,7 @@ object InputValidator {
         }
     }
 
-    fun validatePublishedLottos(input: String): List<Int> {
+    fun validatePublishedLottos(input: String): List<LottoNumber> {
         val numbers =
             input.split(INPUT_SEPARATOR).map { number ->
                 validatePublishedLotto(number)
@@ -49,10 +51,10 @@ object InputValidator {
         return numbers
     }
 
-    private fun validatePublishedLotto(number: String): Int {
+    private fun validatePublishedLotto(number: String): LottoNumber {
         val validNumber = number.toIntOrNull() ?: 0
         validateNumberRange(validNumber)
-        return validNumber
+        return LottoNumber(validNumber)
     }
 
     private fun validateNumberRange(number: Int) {
@@ -61,11 +63,11 @@ object InputValidator {
         ) { InputException.INVALID_WINNING_NUMBER_RANGE.getMessage() }
     }
 
-    private fun validateNumbersSize(numbers: List<Int>) {
+    private fun validateNumbersSize(numbers: List<LottoNumber>) {
         require(numbers.size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_SIZE.getMessage() }
     }
 
-    private fun validateWinningNumbersDuplicate(winningNumbers: List<Int>) {
+    private fun validateWinningNumbersDuplicate(winningNumbers: List<LottoNumber>) {
         require(winningNumbers.toSet().size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_DUPLICATE.getMessage() }
     }
 
@@ -79,7 +81,7 @@ object InputValidator {
 
     fun validateBonusNumber(
         input: String,
-        winningNumbers: List<Int>,
+        winningNumbers: List<LottoNumber>,
     ): Int {
         val bonusNumber = input.toIntOrNull() ?: 0
         validateBonusNumberRange(bonusNumber)
@@ -95,8 +97,10 @@ object InputValidator {
 
     private fun validateBonusNumberDuplicate(
         bonusNumber: Int,
-        winningNumbers: List<Int>,
+        winningNumbers: List<LottoNumber>,
     ) {
-        require(!winningNumbers.contains(bonusNumber)) { InputException.INVALID_BONUS_NUMBER_DUPLICATE.getMessage() }
+        require(!winningNumbers.map { it.number }.contains(bonusNumber)) {
+            InputException.INVALID_BONUS_NUMBER_DUPLICATE.getMessage()
+        }
     }
 }
