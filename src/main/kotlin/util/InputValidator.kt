@@ -1,9 +1,7 @@
 package util
 
-import model.LottoNumber
-
 object InputValidator {
-    private const val INPUT_SEPARATOR = ", "
+    private const val INPUT_SEPARATOR = ','
 
     fun validatePurchaseAmount(input: String): Int {
         val purchaseAmount = input.toIntOrNull() ?: 0
@@ -14,15 +12,15 @@ object InputValidator {
         return purchaseAmount
     }
 
-    fun validateHandpickedNumber(input: String): Int {
-        val handpickedNumber = input.toIntOrNull() ?: 0
+    fun validateNumberOfHandpickedLotto(input: String): Int {
+        val numberOfHandpickedLotto = input.toIntOrNull() ?: -1
 
-        validateHandpickedNumberRange(handpickedNumber)
+        validateNumberOfHandpickedNumberLotto(numberOfHandpickedLotto)
 
-        return handpickedNumber
+        return numberOfHandpickedLotto
     }
 
-    fun validateHandpickedNumbers(input: String): List<LottoNumber> {
+    fun validateHandpickedNumbers(input: String): List<Int> {
         val handpickedNumbers =
             input.split(INPUT_SEPARATOR).map { handpickedNumber ->
                 validateNumber(handpickedNumber)
@@ -33,7 +31,7 @@ object InputValidator {
         return handpickedNumbers
     }
 
-    fun validateWinningNumbers(input: String): List<LottoNumber> {
+    fun validateWinningNumbers(input: String): List<Int> {
         val winningNumbers =
             input.split(INPUT_SEPARATOR).map { winningNumber ->
                 validateNumber(winningNumber)
@@ -46,9 +44,9 @@ object InputValidator {
 
     fun validateBonusNumber(
         input: String,
-        winningNumbers: List<LottoNumber>,
-    ): LottoNumber {
-        val bonusNumber = LottoNumber(input.toIntOrNull() ?: 0)
+        winningNumbers: List<Int>,
+    ): Int {
+        val bonusNumber = input.toIntOrNull() ?: 0
         validateBonusNumberRange(bonusNumber)
         validateBonusNumberDuplicate(bonusNumber, winningNumbers)
         return bonusNumber
@@ -62,43 +60,41 @@ object InputValidator {
         require(purchaseAmount % Constant.PURCHASE_AMOUNT_UNIT == 0) { InputException.INVALID_PURCHASE_AMOUNT_UNIT.getMessage() }
     }
 
-    private fun validateHandpickedNumberRange(handpickedNumber: Int) {
+    private fun validateNumberOfHandpickedNumberLotto(handpickedNumber: Int) {
         require(handpickedNumber >= 0) { InputException.INVALID_HANDPICKED_NUMBER_RANGE.getMessage() }
     }
 
-    private fun validateNumber(number: String): LottoNumber {
-        val validNumber = LottoNumber(number.toIntOrNull() ?: 0)
+    private fun validateNumber(number: String): Int {
+        val validNumber = number.trim().toIntOrNull() ?: 0
         validateWinningNumberRange(validNumber)
         return validNumber
     }
 
-    private fun validateWinningNumberRange(winningNumber: LottoNumber) {
-        require(winningNumber.getNumber() in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE) {
+    private fun validateWinningNumberRange(winningNumber: Int) {
+        require(winningNumber in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE) {
             InputException.INVALID_WINNING_NUMBER_RANGE.getMessage()
         }
     }
 
-    private fun validateNumbersSize(winningNumbers: List<LottoNumber>) {
+    private fun validateNumbersSize(winningNumbers: List<Int>) {
         require(winningNumbers.size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_SIZE.getMessage() }
     }
 
-    private fun validateNumbersDuplicate(winningNumbers: List<LottoNumber>) {
-        val numbers = winningNumbers.map { it.getNumber() }
-        require(numbers.toSet().size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_DUPLICATE.getMessage() }
+    private fun validateNumbersDuplicate(winningNumbers: List<Int>) {
+        require(winningNumbers.toSet().size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_DUPLICATE.getMessage() }
     }
 
-    private fun validateBonusNumberRange(bonusNumber: LottoNumber) {
-        require(bonusNumber.getNumber() in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE) {
+    private fun validateBonusNumberRange(bonusNumber: Int) {
+        require(bonusNumber in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE) {
             InputException.INVALID_BONUS_NUMBER_RANGE.getMessage()
         }
     }
 
     private fun validateBonusNumberDuplicate(
-        bonusNumber: LottoNumber,
-        winningNumbers: List<LottoNumber>,
+        bonusNumber: Int,
+        winningNumbers: List<Int>,
     ) {
-        val numbers = winningNumbers.map { it.getNumber() }
-        require(!numbers.contains(bonusNumber.getNumber())) {
+        require(!winningNumbers.contains(bonusNumber)) {
             InputException.INVALID_BONUS_NUMBER_DUPLICATE.getMessage()
         }
     }

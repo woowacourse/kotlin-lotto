@@ -1,4 +1,3 @@
-import model.LottoNumber
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -28,13 +27,13 @@ class InputTest {
     @ParameterizedTest
     @ValueSource(strings = ["1", "5", "10"])
     fun `올바른 수동으로 구매할 로또 수 입력`(handpickedNumber: String) {
-        assertDoesNotThrow { InputValidator.validateHandpickedNumber(handpickedNumber) }
+        assertDoesNotThrow { InputValidator.validateNumberOfHandpickedLotto(handpickedNumber) }
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["0", "-1", "one"])
+    @ValueSource(strings = ["-1", "one"])
     fun `수동으로 구매할 로또 수 입력 예외 처리 (0 이상의 숫자가 아닌 경우)`(handpickedNumber: String) {
-        assertThrows<IllegalArgumentException> { InputValidator.validateHandpickedNumber(handpickedNumber) }
+        assertThrows<IllegalArgumentException> { InputValidator.validateNumberOfHandpickedLotto(handpickedNumber) }
     }
 
     @ParameterizedTest
@@ -50,7 +49,7 @@ class InputTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["0,1,2,3,4,5", "-1,2,3,4,5,6", "1,2,3,4,5,46", " 1,2,3,4,5,6", "1,2,3,4,5,6 ", " ,2,3,4,5,6", "one,2,3,4,5,6"])
+    @ValueSource(strings = ["0,1,2,3,4,5", "-1,2,3,4,5,6", "1,2,3,4,5,46", " ,2,3,4,5,6", "one,2,3,4,5,6"])
     fun `로또 번호 입력 예외 처리 (로또 번호가 1~45사이의 숫자가 아닌 경우)`(numbers: String) {
         assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(numbers) }
     }
@@ -64,21 +63,21 @@ class InputTest {
     @ParameterizedTest
     @ValueSource(strings = ["7", "23", "45"])
     fun `올바른 보너스 번호 입력`(bonusNumber: String) {
-        val winningNumbers = List(Constant.LOTTO_SIZE) { LottoNumber(it + 1) }
+        val winningNumbers = List(Constant.LOTTO_SIZE) { it + 1 }
         assertDoesNotThrow { InputValidator.validateBonusNumber(bonusNumber, winningNumbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["-1", "0", "46", "one", " 1", "1 ", " ", ""])
     fun `보너스 번호 입력 예외 처리 (보너스 번호가 1~45사이의 숫자가 아닌 경우)`(bonusNumber: String) {
-        val winningNumbers = List(Constant.LOTTO_SIZE) { LottoNumber(it + 1) }
+        val winningNumbers = List(Constant.LOTTO_SIZE) { it + 1 }
         assertThrows<IllegalArgumentException> { InputValidator.validateBonusNumber(bonusNumber, winningNumbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1", "2", "3", "4", "5", "6"])
     fun `보너스 번호 입력 예외 처리 (보너스 번호가 당첨 숫자와 중복되는 경우)`(bonusNumber: String) {
-        val winningNumbers = List(Constant.LOTTO_SIZE) { LottoNumber(it + 1) }
+        val winningNumbers = List(Constant.LOTTO_SIZE) { it + 1 }
         assertThrows<IllegalArgumentException> { InputValidator.validateBonusNumber(bonusNumber, winningNumbers) }
     }
 }

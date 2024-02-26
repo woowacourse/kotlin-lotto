@@ -1,6 +1,7 @@
 package controller
 
 import model.Lotto
+import model.LottoNumber
 import model.LottoPrize
 import model.Lottos
 import model.WinningLotto
@@ -12,9 +13,9 @@ import view.OutputView
 class LottoController {
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
-        val handpickedNumber = InputView.inputHandpickedNumber()
-        val handpickedNumbers = InputView.inputHandpickedNumbers()
-        val lottos = Lottos(purchaseAmount)
+        val numberOfHandpickedNumber = InputView.inputNumberOfHandpickedLotto()
+        val handpickedNumbers = InputView.inputHandpickedLottosNumber(numberOfHandpickedNumber)
+        val lottos = Lottos(purchaseAmount, numberOfHandpickedNumber)
         displayPurchaseResult(lottos)
 
         val winningLotto = drawWinningLotto()
@@ -23,15 +24,17 @@ class LottoController {
     }
 
     private fun displayPurchaseResult(lottos: Lottos) {
-        OutputView.outputNumberOfLotto(lottos.getLottos().size)
+        val numberOfHandpickedLotto = lottos.getNumberOfHandpickedLotto()
+        val numberOfAutomaticLotto = lottos.getLottos().size - numberOfHandpickedLotto
+        OutputView.outputNumberOfLotto(numberOfHandpickedLotto, numberOfAutomaticLotto)
         OutputView.outputLottos(lottos)
     }
 
     private fun drawWinningLotto(): WinningLotto {
-        val lotto = InputView.inputWinningNumbers()
-        val bonusNumber = InputView.inputBonusNumber(lotto)
+        val lotto = Lotto(InputView.inputWinningNumbers().map { LottoNumber(it) })
+        val bonusNumber = LottoNumber(InputView.inputBonusNumber(lotto.getNumbers().map { it.getNumber() }))
 
-        return WinningLotto(Lotto(lotto), bonusNumber)
+        return WinningLotto(lotto, bonusNumber)
     }
 
     private fun analyzeWinningStatics(

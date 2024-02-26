@@ -4,8 +4,12 @@ import model.Lottos
 import model.WinningStatistics
 
 object OutputView {
-    fun outputNumberOfLotto(numberOfLotto: Int) {
-        println("${numberOfLotto}개를 구매했습니다.")
+    fun outputNumberOfLotto(
+        numberOfHandpickedLotto: Int,
+        numberOfAutomaticLotto: Int,
+    ) {
+        println()
+        println("수동으로 ${numberOfHandpickedLotto}장, 자동으로 ${numberOfAutomaticLotto}개를 구매했습니다.")
     }
 
     fun outputLottos(lottos: Lottos) {
