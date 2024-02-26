@@ -22,6 +22,10 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
     }
+    withType<JavaCompile> {
+        sourceCompatibility = JavaVersion.VERSION_17.toString()
+        targetCompatibility = JavaVersion.VERSION_17.toString()
+    }
     test {
         useJUnitPlatform()
     }
