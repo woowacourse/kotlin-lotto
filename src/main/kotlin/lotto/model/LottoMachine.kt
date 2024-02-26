@@ -2,6 +2,8 @@ package lotto.model
 
 import lotto.exception.ErrorCode.MANUAL_PURCHASE_COUNT_TOO_LARGE
 import lotto.exception.ExceptionsHandler.handleValidation
+import lotto.model.Lotto.Companion.LOTTO_SIZE
+import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_RANGE
 
 class LottoMachine(private val price: Price) {
     fun getRandomLottoCount(lottoPurchaseCount: LottoManualPurchase): Int {
@@ -32,10 +34,4 @@ class LottoMachine(private val price: Price) {
     }
 
     private fun randomLotto(): Lotto = Lotto(LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }.toSet())
-
-    companion object {
-        private const val LOTTO_SIZE = 6
-        private val LOTTO_NUMBER_RANGE: IntRange = 1..45
-        const val MIN_PRICE = 1_000
-    }
 }

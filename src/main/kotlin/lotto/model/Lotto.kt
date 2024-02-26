@@ -13,6 +13,6 @@ class Lotto(val lottoNumbers: Set<LottoNumber>) {
     fun getCountOfMatch(lotto: Lotto): Int = lottoNumbers.intersect(lotto.lottoNumbers.toSet()).size
 
     companion object {
-        private const val LOTTO_SIZE = 6
+        const val LOTTO_SIZE = 6
     }
 }
