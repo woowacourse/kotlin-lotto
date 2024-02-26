@@ -2,7 +2,7 @@ package controller
 import model.Money
 import model.lottery.Lotteries
 import model.lottery.Lottery
-import model.lottery.LotteryGenerator
+import model.lottery.LotteryMachine
 import model.lottery.LotteryNumber
 import model.lottery.LotteryResultEvaluator
 import model.lottery.LotterySeller
@@ -22,9 +22,9 @@ class LotteryController(
         val lotterySeller = LotterySeller(purchaseAmount)
         val lotteryCount = lotterySeller.getLotteryCount()
 
-        val lotteryGenerator = LotteryGenerator()
+        val lotteryMachine = LotteryMachine()
 
-        val lotteries = Lotteries(List(lotteryCount) { lotteryGenerator.generate() })
+        val lotteries = Lotteries(List(lotteryCount) { lotteryMachine.generate() })
         outputView.showPurchasedLotteries(lotteries)
 
         val winningNumbers = Lottery.fromInput(inputView.readWinningNumbers())

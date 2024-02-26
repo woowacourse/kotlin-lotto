@@ -1,6 +1,6 @@
 package model.lottery
 
-class LotteryGenerator {
+class LotteryMachine {
     fun generate(): Lottery =
         Lottery.of(
             *(MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER)
