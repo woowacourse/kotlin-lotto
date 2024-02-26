@@ -1,6 +1,5 @@
 package lotto.controller
 
-import lotto.constants.StringConstants
 import lotto.model.LottoStore
 import lotto.model.PurchaseInfo
 import lotto.model.WinningLotto
@@ -35,8 +34,12 @@ class LottoController {
         return try {
             action()
         } catch (e: IllegalArgumentException) {
-            println("${StringConstants.ERROR_MESSAGE} ${e.localizedMessage}")
+            println("$ERROR_MESSAGE ${e.localizedMessage}")
             action()
         }
+    }
+
+    companion object {
+        private const val ERROR_MESSAGE = "[ERROR]"
     }
 }

@@ -1,15 +1,19 @@
 package lotto.view
 
 import lotto.constants.LottoPrize
-import lotto.constants.StringConstants
-import lotto.constants.StringConstants.OUTPUT_PROFIT_RATIO
 import lotto.model.LottoStore
 
 object OutputView {
     private const val DEFAULT_MATCHING_COUNT = 0
+    private const val OUTPUT_PURCHASE_COUNT = "%d개를 구매했습니다."
+    private const val OUTPUT_MATCHING_COUNT = "%d개 일치 (%d원)- %d개"
+    private const val OUTPUT_MATCHING_COUNT_BONUS = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
+    private const val OUTPUT_WINNING_STATICS = "당첨 통계"
+    private const val OUTPUT_DIVIDER = "---------"
+    private const val OUTPUT_PROFIT_RATIO = "총 수익률은 %s입니다."
 
     fun printPurchaseLotto(lottoStore: LottoStore) {
-        println(StringConstants.OUTPUT_PURCHASE_COUNT.format(lottoStore.lottos.size))
+        println(OUTPUT_PURCHASE_COUNT.format(lottoStore.lottos.size))
         lottoStore.lottos.forEach { lotto ->
             println(lotto)
         }
@@ -20,8 +24,8 @@ object OutputView {
         prizeCount: Map<LottoPrize, Int>,
         profitRatio: Double,
     ) {
-        println(StringConstants.OUTPUT_WINNING_STATICS)
-        println(StringConstants.OUTPUT_DIVIDER)
+        println(OUTPUT_WINNING_STATICS)
+        println(OUTPUT_DIVIDER)
 
         LottoPrize.entries.forEach { lottoPrize ->
             if (lottoPrize == LottoPrize.NOTHING) return@forEach
@@ -36,14 +40,14 @@ object OutputView {
         matchingCount: Int,
     ): String {
         if (lottoPrize == LottoPrize.SECOND) {
-            return StringConstants.OUTPUT_MATCHING_COUNT_BONUS.format(
+            return OUTPUT_MATCHING_COUNT_BONUS.format(
                 lottoPrize.matchingCount,
                 lottoPrize.amount,
                 matchingCount,
             )
         }
 
-        return StringConstants.OUTPUT_MATCHING_COUNT.format(lottoPrize.matchingCount, lottoPrize.amount, matchingCount)
+        return OUTPUT_MATCHING_COUNT.format(lottoPrize.matchingCount, lottoPrize.amount, matchingCount)
     }
 
     private fun Double.provideTwoDecimal() = "%.2f".format(this)
