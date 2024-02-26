@@ -18,5 +18,10 @@ data class Lotto(val numbers: List<LottoNumber>) {
         private const val EXCEPTION_LOTTO_NUM_SIZE = "로또 숫자의 개수는 ${LOTTO_NUM_SIZE}만 가능합니다."
         private const val EXCEPTION_DUPLICATED_LOTTO_NUM = "로또 숫자는 중복되어서는 안됩니다."
         private const val EXCEPTION_SORTED_LOTTO_NUMS = "로또 숫자는 오름차순으로 정렬되어야합니다."
+
+        @JvmStatic
+        operator fun invoke(numbers: List<Int>): Lotto {
+            return Lotto(*numbers.toIntArray())
+        }
     }
 }
