@@ -3,6 +3,7 @@ package lotto.model
 class PurchaseAmount(val money: Int, val numberOfManualLottos: Int) {
     init {
         validateNumberRange(money)
+        require((money / PURCHASE_UNIT) > numberOfManualLottos) { ERROR_NOT_ENOUGH_MONEY_MESSAGE }
     }
 
     constructor(money: String, numberOfManualLottos: String) : this(
@@ -19,7 +20,8 @@ class PurchaseAmount(val money: Int, val numberOfManualLottos: Int) {
         private const val ERROR_INPUT_TYPE_MESSAGE = "${ERROR_PREFIX}숫자만 입력 가능합니다."
         private const val ERROR_NUMBER_RANGE_MESSAGE = "${ERROR_PREFIX}1000원 이상의 값만 입력 가능합니다."
         private const val PURCHASE_UNIT = 1000
-        private const val ERROR_MANUAL_NUMBER_RANGE_MESSAGE = "0이상의 수를 입력해주세요"
+        private const val ERROR_MANUAL_NUMBER_RANGE_MESSAGE = "${ERROR_PREFIX}0이상의 수를 입력해주세요"
+        private const val ERROR_NOT_ENOUGH_MONEY_MESSAGE = "${ERROR_PREFIX}금액이 부족합니다."
         private const val MINIMUM_MANUAL_NUMBER_RANGE = 0
 
         private fun validateInputMoney(inputMoney: String): Int {
