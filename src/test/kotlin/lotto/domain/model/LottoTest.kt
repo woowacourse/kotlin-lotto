@@ -37,7 +37,7 @@ class LottoTest {
     @DisplayName("getMatchCountTest 메서드 테스트")
     inner class GetMatchCountTest {
         @Test
-        fun `로또 번호가 6개 겹칠 때 적절한 수를 반환한다`() {
+        fun `로또 번호가 6개 겹칠 때 6을 반환한다`() {
             val targetLotto = Lotto(List(6) { LottoNumber(it + 1) })
             val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
             val actual = targetLotto.getMatchCount(winningLotto)
@@ -45,7 +45,7 @@ class LottoTest {
         }
 
         @Test
-        fun `로또 번호가 5개 겹칠 때 적절한 수를 반환한다`() {
+        fun `로또 번호가 5개 겹칠 때 5를 반환한다`() {
             val targetLotto = Lotto(List(6) { LottoNumber(it + 1) })
             val winningLotto = Lotto(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber(it) })
             val actual = targetLotto.getMatchCount(winningLotto)
@@ -53,7 +53,7 @@ class LottoTest {
         }
 
         @Test
-        fun `로또 번호가 4개 겹칠 때 적절한 수를 반환한다`() {
+        fun `로또 번호가 4개 겹칠 때 4를 반환한다`() {
             val targetLotto = Lotto(List(6) { LottoNumber(it + 1) })
             val winningLotto = Lotto(listOf(3, 4, 5, 6, 7, 8).map { LottoNumber(it) })
             val actual = targetLotto.getMatchCount(winningLotto)
@@ -61,7 +61,7 @@ class LottoTest {
         }
 
         @Test
-        fun `로또 번호가 3개 겹칠 때 적절한 수를 반환한다`() {
+        fun `로또 번호가 3개 겹칠 때 3을 반환한다`() {
             val targetLotto = Lotto(List(6) { LottoNumber(it + 1) })
             val winningLotto = Lotto(listOf(4, 5, 6, 7, 8, 9).map { LottoNumber(it) })
             val actual = targetLotto.getMatchCount(winningLotto)
@@ -69,7 +69,7 @@ class LottoTest {
         }
 
         @Test
-        fun `로또 번호가 2개 겹칠 때 적절한 수를 반환한다`() {
+        fun `로또 번호가 2개 겹칠 때 2를 반환한다`() {
             val targetLotto = Lotto(List(6) { LottoNumber(it + 1) })
             val winningLotto = Lotto(listOf(5, 6, 7, 8, 9, 10).map { LottoNumber(it) })
             val actual = targetLotto.getMatchCount(winningLotto)
@@ -77,7 +77,7 @@ class LottoTest {
         }
 
         @Test
-        fun `로또 번호가 1개 겹칠 때 적절한 수를 반환한다`() {
+        fun `로또 번호가 1개 겹칠 때 1을 반환한다`() {
             val targetLotto = Lotto(List(6) { LottoNumber(it + 1) })
             val winningLotto = Lotto(listOf(6, 7, 8, 9, 10, 11).map { LottoNumber(it) })
             val actual = targetLotto.getMatchCount(winningLotto)
@@ -85,7 +85,7 @@ class LottoTest {
         }
 
         @Test
-        fun `로또 번호가 0개 겹칠 때 적절한 수를 반환한다`() {
+        fun `로또 번호가 0개 겹칠 때 0을 반환한다`() {
             val targetLotto = Lotto(List(6) { LottoNumber(it + 1) })
             val winningLotto = Lotto(listOf(7, 8, 9, 10, 11, 12).map { LottoNumber(it) })
             val actual = targetLotto.getMatchCount(winningLotto)
