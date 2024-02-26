@@ -1,7 +1,5 @@
 package lotto.model
 
-import lotto.constants.LottoPrize
-
 class WinningLotto(
     private val lotto: Lotto,
     private val bonusNumber: LottoNumber,

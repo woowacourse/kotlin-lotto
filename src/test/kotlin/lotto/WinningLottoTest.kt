@@ -1,8 +1,8 @@
 package lotto
 
-import lotto.constants.LottoPrize
 import lotto.model.Lotto
 import lotto.model.LottoNumber
+import lotto.model.LottoPrize
 import lotto.model.WinningLotto
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

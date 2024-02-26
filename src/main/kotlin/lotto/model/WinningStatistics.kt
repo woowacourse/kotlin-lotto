@@ -1,7 +1,5 @@
 package lotto.model
 
-import lotto.constants.LottoPrize
-
 class WinningStatistics(private val statistics: Map<LottoPrize, Int>) {
     fun calculateProfitRatio(purchaseInfo: PurchaseInfo): ProfitRatio {
         val totalPrizeAmount =

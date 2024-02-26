@@ -1,4 +1,4 @@
-package lotto.constants
+package lotto.model
 
 enum class LottoPrize(val matchingCount: Int, val amount: Int) {
     NOTHING(0, 0),

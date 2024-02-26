@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.constants.LottoPrize
+import lotto.model.LottoPrize
 import lotto.model.LottoStore
 import lotto.model.ProfitRatio
 import lotto.model.WinningStatistics

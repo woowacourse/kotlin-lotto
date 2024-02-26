@@ -1,6 +1,6 @@
 package lotto
 
-import lotto.constants.LottoPrize
+import lotto.model.LottoPrize
 import lotto.model.PurchaseInfo
 import lotto.model.WinningStatistics
 import org.assertj.core.api.Assertions
