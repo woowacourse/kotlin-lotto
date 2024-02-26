@@ -1,7 +1,7 @@
 package model.lottery
 
 import WinningLottery
-import model.PrizeCount
+import model.Quantity
 import model.WinningRank
 import model.WinningResult
 
@@ -15,7 +15,7 @@ class LotteryResultEvaluator {
 
         lotteries.lotteries.forEach {
             val rank = lotteryRankEvaluator.evaluate(it, winningLottery)
-            winningResult[rank] = winningResult[rank]!! + PrizeCount(1)
+            winningResult[rank] = winningResult[rank]!! + Quantity(1)
         }
 
         return WinningResult(winningResult.toMap())
@@ -24,12 +24,12 @@ class LotteryResultEvaluator {
     companion object {
         private val DEFAULT_WINNING_RESULT =
             mutableMapOf(
-                WinningRank.FIRST to PrizeCount(0),
-                WinningRank.SECOND to PrizeCount(0),
-                WinningRank.THIRD to PrizeCount(0),
-                WinningRank.FOURTH to PrizeCount(0),
-                WinningRank.FIFTH to PrizeCount(0),
-                WinningRank.NONE to PrizeCount(0),
+                WinningRank.FIRST to Quantity(0),
+                WinningRank.SECOND to Quantity(0),
+                WinningRank.THIRD to Quantity(0),
+                WinningRank.FOURTH to Quantity(0),
+                WinningRank.FIFTH to Quantity(0),
+                WinningRank.NONE to Quantity(0),
             )
     }
 }

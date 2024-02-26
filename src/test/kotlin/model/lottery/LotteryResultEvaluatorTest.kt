@@ -1,7 +1,7 @@
 package model.lottery
 
 import WinningLottery
-import model.PrizeCount
+import model.Quantity
 import model.WinningRank
 import model.WinningResult
 import org.assertj.core.api.Assertions.assertThat
@@ -27,12 +27,12 @@ class LotteryResultEvaluatorTest {
         val expected =
             WinningResult(
                 mapOf(
-                    WinningRank.FIRST to PrizeCount(1),
-                    WinningRank.SECOND to PrizeCount(0),
-                    WinningRank.THIRD to PrizeCount(0),
-                    WinningRank.FOURTH to PrizeCount(0),
-                    WinningRank.FIFTH to PrizeCount(2),
-                    WinningRank.NONE to PrizeCount(0),
+                    WinningRank.FIRST to Quantity(1),
+                    WinningRank.SECOND to Quantity(0),
+                    WinningRank.THIRD to Quantity(0),
+                    WinningRank.FOURTH to Quantity(0),
+                    WinningRank.FIFTH to Quantity(2),
+                    WinningRank.NONE to Quantity(0),
                 ),
             )
 
