@@ -4,20 +4,23 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.CsvSource
 
 class ManualLottoMachineTest {
     @ParameterizedTest
-    @MethodSource("provideLottoPricesAndInvalidPrices")
-    fun `수동으로 구입하는 로또의 가격은 예산(구입 금액)이하다`(
+    @CsvSource(
+        "7, 10000, 5000",
+        "7, 20000, 5000",
+        "3, 1000, 1000",
+        "3, 2000, 1000",
+    )
+    fun `수동으로 구입하는 로또의 가격은 예산보다 높으면 안된다`(
         manualLottoBuyCount: Int,
-        availableFunds: Array<Int>,
+        availableFund: Int,
         pricePerLotto: Int,
     ) {
-        availableFunds.forEach { availableFund ->
-            assertThrows<IllegalArgumentException> {
-                ManualLottoMachine(manualLottoBuyCount, LottoBuyBudget(availableFund, pricePerLotto))
-            }
+        assertThrows<IllegalArgumentException> {
+            ManualLottoMachine(manualLottoBuyCount, LottoBuyBudget(availableFund, pricePerLotto))
         }
     }
 
@@ -46,14 +49,5 @@ class ManualLottoMachineTest {
             ),
         )
         Assertions.assertThat(lottoBuyBudget.availableFunds).isEqualTo(16000)
-    }
-
-    companion object {
-        @JvmStatic
-        fun provideLottoPricesAndInvalidPrices() =
-            listOf(
-                arrayOf(7, arrayOf(10000, 20000, 30000), 5000),
-                arrayOf(3, arrayOf(1000, 1500, 2000), 1000),
-            )
     }
 }
