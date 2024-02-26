@@ -1,6 +1,6 @@
 package model
 
-class LotteryPurchasePattern private constructor(val manualLottoCount: Int, val autoLottoCount: Int) {
+class LotteryPurchasePattern(val manualLottoCount: Int, val autoLottoCount: Int) {
     companion object {
         private const val LOTTERY_TICKET_PRICE = 1000
         const val EXCEPTION_INSUFFICIENT_FUNDS = "금액보다 구매하려는 갯수가 더 많습니다"
