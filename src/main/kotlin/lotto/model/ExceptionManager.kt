@@ -25,7 +25,6 @@ object ExceptionManager {
             is UserEvent.LottoEvent.InvalidDataType -> GameException(INVALID_DATA_TYPE, event)
             is UserEvent.LottoEvent.InvalidNumRange -> GameException(INVALID_NUM_RANGE, event)
             is UserEvent.LottoEvent.InvalidNumCount -> GameException(INVALID_NUM_COUNT, event)
-            is UserEvent.LottoEvent.InvalidDuplication -> GameException(INVALID_DUPLICATION, event)
             is UserEvent.LottoEvent.UnknownError -> GameException(UNKNOWN_ERROR,event)
         }
     }

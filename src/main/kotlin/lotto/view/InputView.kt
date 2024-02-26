@@ -16,7 +16,7 @@ fun inputCostMessage(): Int {
 
 fun inputWinNumbers(): LottoNumber {
     println(REQUEST_WINNING_NUM)
-    return inputWinning(readlnOrNull()) ?: inputWinNumbers()
+    return inputLottoNumbers(readlnOrNull()) ?: inputWinNumbers()
 }
 
 fun inputBonusNumber(): Int {

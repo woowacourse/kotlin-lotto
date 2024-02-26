@@ -1,3 +1,4 @@
+import lotto.model.BonusNumber
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.LottoPrize
@@ -13,11 +14,11 @@ class LottoGameTest {
     private val boomPrizeLotto = Lotto(LottoNumber(setOf(7, 9, 10, 11, 12, 13)))
     private val correctWinningNumber = WinningNumber(
         lotto = Lotto(LottoNumber(setOf(1, 2, 3, 4, 5, 6))),
-        bonusNumber = 7
+        bonusNumber = BonusNumber(7)
     )
     private val wrongWinningNumber = WinningNumber(
         lotto = Lotto(LottoNumber(setOf(1, 2, 3, 4, 5, 6))),
-        bonusNumber = 45
+        bonusNumber = BonusNumber(45)
     )
 
     @Test

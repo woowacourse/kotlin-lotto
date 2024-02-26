@@ -28,10 +28,6 @@ class UserEventTest {
         assertThat(
             ExceptionManager.getException(UserEvent.LottoEvent.InvalidNumCount)
         ).isEqualTo(ExceptionManager.INVALID_NUM_COUNT)
-
-        assertThat(
-            ExceptionManager.getException(UserEvent.LottoEvent.InvalidDuplication)
-        ).isEqualTo(ExceptionManager.INVALID_DUPLICATION)
     }
 
     @Test
