@@ -3,6 +3,10 @@ package lotto.view
 class InputView {
     fun readPurchaseAmount(): String = validateNullInput(readlnOrNull())
 
+    fun readNumberOfManualLottos(): String {
+        return validateNullInput(readlnOrNull())
+    }
+
     fun readManualLottoNumber(numberOfManualLottos: Int): List<List<String>> {
         val manualLottos = mutableListOf<List<String>>()
         repeat(numberOfManualLottos) {
