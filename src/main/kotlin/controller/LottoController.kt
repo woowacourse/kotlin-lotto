@@ -42,7 +42,7 @@ class LottoController {
             }
         repeat(lottos.getLottos().size) { index ->
             val lottoPrize = judgeLottoPrize(lottos.getLottos()[index], winningLotto)
-            val currentCount = results[lottoPrize.ordinal].getResult().second
+            val currentCount = results[lottoPrize.ordinal].getWinningStatistic().second
             results[lottoPrize.ordinal] = WinningStatistic(Pair(lottoPrize, currentCount + 1))
         }
 

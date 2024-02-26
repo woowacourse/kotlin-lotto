@@ -1,6 +1,6 @@
 package model
 
-class WinningStatistics(private val results: List<WinningStatistic>) {
+class WinningStatistics(private val winningStatistics: List<WinningStatistic>) {
     fun calculateRateOfReturn(purchaseAmount: Int): Double {
         val totalWinningAmount = calculateTotalWinningAmount()
         return totalWinningAmount.toDouble() / purchaseAmount
@@ -8,9 +8,9 @@ class WinningStatistics(private val results: List<WinningStatistic>) {
 
     private fun calculateTotalWinningAmount(): Int {
         var totalWinningAmount = 0
-        results.forEach { winningStatistic ->
-            val winningMoney = winningStatistic.getResult().first.getWinningAmount()
-            val count = winningStatistic.getResult().second
+        winningStatistics.forEach { winningStatistic ->
+            val winningMoney = winningStatistic.getWinningStatistic().first.getWinningAmount()
+            val count = winningStatistic.getWinningStatistic().second
             totalWinningAmount += winningMoney * count
         }
 
@@ -18,6 +18,6 @@ class WinningStatistics(private val results: List<WinningStatistic>) {
     }
 
     override fun toString(): String {
-        return results.subList(0, results.size - 1).reversed().joinToString("\n")
+        return winningStatistics.subList(0, winningStatistics.size - 1).reversed().joinToString("\n")
     }
 }
