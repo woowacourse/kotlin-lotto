@@ -18,7 +18,7 @@ class LottoGameController(
     private val lottoGenerator: LottoGenerator,
 ) {
     fun startLottoGame() {
-        val purchaseExpense: Int = getPurchaseExpense()
+        val purchaseExpense: Money = createPurchaseExpense()
         val lottie: List<Lotto> = purchaseLottie(purchaseExpense)
         val winningLotto = createWinningLotto()
         val bonusLottoNumber = createBonusLottoNumber(winningLotto.numbers)
@@ -26,19 +26,19 @@ class LottoGameController(
         displayLottoResult(lottoGameResult, purchaseExpense)
     }
 
-    private fun getPurchaseExpense(): Int =
+    private fun createPurchaseExpense(): Money =
         runCatching {
-            lottoGameInputView.inputPurchaseExpense()
+            Money(lottoGameInputView.inputPurchaseExpense())
         }.onFailure {
-            if (it is IllegalArgumentException) return getPurchaseExpense()
+            if (it is IllegalArgumentException) return createPurchaseExpense()
         }.getOrThrow()
 
-    private fun purchaseLottie(purchaseExpense: Int): List<Lotto> =
+    private fun purchaseLottie(expense: Money): List<Lotto> =
         runCatching {
-            lottoGenerator.generate(Money(purchaseExpense))
+            lottoGenerator.generate(expense)
                 .also(lottoGameOutputView::showPurchasedLottie)
         }.onFailure {
-            if (it is IllegalArgumentException) return purchaseLottie(purchaseExpense)
+            if (it is IllegalArgumentException) return purchaseLottie(expense)
         }.getOrThrow()
 
     private fun createWinningLotto(): Lotto =
@@ -62,11 +62,11 @@ class LottoGameController(
 
     private fun displayLottoResult(
         gameResult: LottoGameResult,
-        purchaseExpense: Int,
+        purchaseExpense: Money,
     ) {
         runCatching {
             val rankResults = gameResult.results.filterNot { it.rank == Rank.MISS }
-            val earningRate = gameResult.calculateEarningRate(Money(purchaseExpense))
+            val earningRate = gameResult.calculateEarningRate(purchaseExpense)
             lottoGameOutputView.showGameResult(rankResults, truncateDecimal(earningRate))
         }.onFailure {
             if (it is IllegalArgumentException) return displayLottoResult(gameResult, purchaseExpense)

@@ -9,7 +9,7 @@
 
 ## Controller
 - [ ] : 수동 구매할 로또 수  
-- [ ] : purchaseExpense Int -> Money로 수정
+- [x] : purchaseExpense Int -> Money로 수정
 ## Model
 - [ ] : LottoTest 많이 사용하고 있는 값이라면 상수화~ (코드 리뷰)
 - [ ] : 랜덤값도 테스트 해보자! (코드 리뷰)
