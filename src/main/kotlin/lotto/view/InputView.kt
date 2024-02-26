@@ -23,3 +23,16 @@ fun inputBonusNumber(): Int {
     println(REQUEST_BONUS_NUM)
     return inputBonus(readlnOrNull()) ?: inputBonusNumber()
 }
+
+fun inputManualNumber() {
+    println(REQUEST_MANUAL_NUM)
+    readlnOrNull()
+}
+
+fun inputManualLottoNumbers() {
+    println(REQUEST_LOTTO_NUM)
+}
+
+fun inputManualLottoNumber() {
+    readlnOrNull()
+}
