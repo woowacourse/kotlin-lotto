@@ -6,7 +6,7 @@ import model.WinningResult
 class LotteryPrizeCalculator {
     fun calculate(winningResult: WinningResult): Money =
         winningResult.result.entries.sumOf {
-            it.key.winningPrize * it.value.count
+            it.key.winningPrize * it.value
         }
 
     private inline fun <T> Iterable<T>.sumOf(selector: (T) -> Money): Money {

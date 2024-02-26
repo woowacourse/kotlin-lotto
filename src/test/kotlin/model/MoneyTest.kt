@@ -22,8 +22,8 @@ class MoneyTest {
     @Test
     fun `돈 객체 간의 곱셈 연산을 수행한다`() {
         val money1 = Money.wons(1_500)
-        val count = 4
-        assertThat(money1 * count).isEqualTo(Money.wons(6_000))
+        val quantity = Quantity(4)
+        assertThat(money1 * quantity).isEqualTo(Money.wons(6_000))
     }
 
     @Test

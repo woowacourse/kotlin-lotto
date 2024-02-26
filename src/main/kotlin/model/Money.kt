@@ -8,7 +8,7 @@ class Money private constructor(val amount: BigDecimal) : Comparable<Money> {
 
     operator fun minus(other: Money): Money = Money(this.amount.minus(other.amount))
 
-    operator fun times(count: Int): Money = Money(this.amount.times(count.toBigDecimal()))
+    operator fun times(quantity: Quantity): Money = Money(this.amount.times(quantity.count.toBigDecimal()))
 
     operator fun div(other: Money): Double = this.amount.divide(other.amount, 2, RoundingMode.HALF_UP).toDouble()
 
