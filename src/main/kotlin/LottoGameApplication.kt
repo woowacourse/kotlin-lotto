@@ -1,5 +1,4 @@
 import controller.LottoGameController
-import model.AutoLottieGenerator
 import model.DefaultAutoLottieGenerator
 import view.ConsoleLottoGameInputView
 import view.ConsoleLottoGameOutputView
