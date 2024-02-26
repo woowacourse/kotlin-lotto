@@ -1,5 +1,5 @@
 import controller.LottoGameController
-import model.AutoLottoGenerator
+import model.AutoLottieGenerator
 import view.ConsoleLottoGameInputView
 import view.ConsoleLottoGameOutputView
 
@@ -7,6 +7,6 @@ fun main() {
     LottoGameController(
         ConsoleLottoGameInputView(),
         ConsoleLottoGameOutputView(),
-        AutoLottoGenerator(),
+        AutoLottieGenerator(),
     ).startLottoGame()
 }
