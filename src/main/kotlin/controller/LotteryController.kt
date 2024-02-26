@@ -2,6 +2,7 @@ package controller
 
 import WinningLottery
 import model.Money
+import model.WinningResult
 import model.lottery.Lotteries
 import model.lottery.Lottery
 import model.lottery.LotteryMachine
@@ -23,25 +24,41 @@ class LotteryController(
 ) {
     fun start() {
         val purchaseAmount = Money.from(inputView.readPurchaseAmount())
-        val lotterySeller = LotterySeller(purchaseAmount)
-        val lotteryCount = lotterySeller.getLotteryCount()
+        val lotteries = buyLotteries(purchaseAmount)
 
-        val lotteries = Lotteries(List(lotteryCount) { lotteryMachine.generate() })
-        outputView.showPurchasedLotteries(lotteries)
+        val winningResult = calculateWinningResult(lotteries)
+        calculateProfitRate(winningResult, purchaseAmount)
+    }
 
-        val winningLottery =
-            WinningLottery(
-                Lottery.fromInput(inputView.readWinningNumbers()),
-                LotteryNumber.bonusNumber(inputView.readBonusNumber()),
+    private fun buyLotteries(purchaseAmount: Money): Lotteries {
+        val lotteries =
+            Lotteries(
+                List(LotterySeller(purchaseAmount).getLotteryCount()) {
+                    lotteryMachine.generate()
+                },
             )
+        outputView.showPurchasedLotteries(lotteries)
+        return lotteries
+    }
 
-        val winningResult =
-            lotteryResultEvaluator.evaluate(lotteries, winningLottery)
+    private fun calculateWinningResult(lotteries: Lotteries): WinningResult {
+        val winningLottery = readWinningLottery()
+        val winningResult = lotteryResultEvaluator.evaluate(lotteries, winningLottery)
         outputView.showWinningResult(winningResult)
+        return winningResult
+    }
 
-        val totalPrizeCalculator = LotteryPrizeCalculator()
-        val totalPrize = totalPrizeCalculator.calculate(winningResult)
+    private fun readWinningLottery(): WinningLottery =
+        WinningLottery(
+            Lottery.fromInput(inputView.readWinningNumbers()),
+            LotteryNumber.bonusNumber(inputView.readBonusNumber()),
+        )
 
+    private fun calculateProfitRate(
+        winningResult: WinningResult,
+        purchaseAmount: Money,
+    ) {
+        val totalPrize = LotteryPrizeCalculator().calculate(winningResult)
         val profitRate = profit.calculateRate(purchaseAmount, totalPrize)
         outputView.showProfitRate(profitRate, ProfitStatusDecider.decide(purchaseAmount, totalPrize))
     }
