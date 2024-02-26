@@ -18,7 +18,7 @@ class Controller {
     fun run() {
         val charge = inputCostMessage()
         val count = charge / Lotto.LOTTO_PRICE.toInt()
-        outputPurchaseCount(count)
+//        outputPurchaseCount(count)
         val lottos = Lottos(count)
         outputLottos(lottos.getLottos())
 
