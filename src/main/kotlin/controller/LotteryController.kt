@@ -2,6 +2,7 @@ package controller
 
 import WinningLottery
 import model.Money
+import model.Quantity
 import model.WinningResult
 import model.lottery.Lotteries
 import model.lottery.Lottery
@@ -31,15 +32,32 @@ class LotteryController(
     }
 
     private fun buyLotteries(purchaseAmount: Money): Lotteries {
-        val lotteries =
-            Lotteries(
-                List(LotterySeller(purchaseAmount).getLotteryCount()) {
-                    lotteryMachine.generateRandomLottery()
-                },
-            )
+        val lotteriesCount = LotterySeller(purchaseAmount).getLotteryCount()
+        val manualLotteryQuantity = Quantity.from(inputView.readManualLotteryQuantity())
+        val lotteries = buyManualLotteries(manualLotteryQuantity) + buyRandomLotteries(lotteriesCount, manualLotteryQuantity)
+
         outputView.showPurchasedLotteries(lotteries)
         return lotteries
     }
+
+    private fun buyManualLotteries(manualLotteryQuantity: Quantity): Lotteries {
+        if (manualLotteryQuantity.count > 0) {
+            return Lotteries(
+                inputView.readManualLottery(manualLotteryQuantity).map { lotteryMachine.generateManualLottery(it) },
+            )
+        }
+        return Lotteries(listOf())
+    }
+
+    private fun buyRandomLotteries(
+        lotteriesCount: Int,
+        manualLotteryQuantity: Quantity,
+    ): Lotteries =
+        Lotteries(
+            List(lotteriesCount - manualLotteryQuantity.count) {
+                lotteryMachine.generateRandomLottery()
+            },
+        )
 
     private fun calculateWinningResult(lotteries: Lotteries): WinningResult {
         val winningLottery = readWinningLottery()

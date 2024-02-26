@@ -1,19 +1,21 @@
 package view
 
+import model.Quantity
+
 class InputView {
     fun readPurchaseAmount(): String {
         println(GUIDE_INPUT_PURCHASE_AMOUNT)
         return readln()
     }
 
-    fun readManualLotteryCount(): String {
+    fun readManualLotteryQuantity(): String {
         println("수동으로 구매할 로또 수를 입력해 주세요.")
         return readln()
     }
 
-    fun readManualLottery(manualLotteryCount: Int): List<String> {
+    fun readManualLottery(manualLotteryCount: Quantity): List<String> {
         println("수동으로 구매할 번호를 입력해 주세요.")
-        return List(manualLotteryCount) { readln() }
+        return List(manualLotteryCount.count) { readln() }
     }
 
     fun readWinningNumbers(): String {
