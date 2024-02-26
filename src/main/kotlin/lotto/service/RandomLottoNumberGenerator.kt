@@ -7,6 +7,5 @@ import lotto.constants.LottoConstants.LOTTO_SIZE
 object RandomLottoNumberGenerator : LottoNumberGenerator {
     private val randomLottoNumbers = (LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER).toList()
 
-    override fun generate() =
-        randomLottoNumbers.shuffled().take(LOTTO_SIZE)
+    override fun generate() = randomLottoNumbers.shuffled().take(LOTTO_SIZE)
 }

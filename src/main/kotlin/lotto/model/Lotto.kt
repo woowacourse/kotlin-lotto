@@ -18,7 +18,10 @@ class Lotto(numbers: List<Int>) {
 
     private fun List<Int>.isNotDuplicate() = distinct().size == LOTTO_SIZE
 
-    fun compare(otherLotto: Lotto, bonusNumber: LottoNumber): LottoPrize {
+    fun compare(
+        otherLotto: Lotto,
+        bonusNumber: LottoNumber,
+    ): LottoPrize {
         val matchingCount = otherLotto.numbers.intersect(numbers).size
         val isMatchingBonus = contains(bonusNumber)
         return LottoPrize.getLottoPrize(matchingCount, isMatchingBonus)

@@ -16,7 +16,10 @@ object OutputView {
         println()
     }
 
-    fun printWinningStatistics(prizeCount: Map<LottoPrize, Int>, profitRatio: Double) {
+    fun printWinningStatistics(
+        prizeCount: Map<LottoPrize, Int>,
+        profitRatio: Double,
+    ) {
         println(StringConstants.OUTPUT_WINNING_STATICS)
         println(StringConstants.OUTPUT_DIVIDER)
 
@@ -28,12 +31,15 @@ object OutputView {
         println(OUTPUT_PROFIT_RATIO.format(profitRatio.provideTwoDecimal()))
     }
 
-    private fun provideMatchingMessage(lottoPrize: LottoPrize, matchingCount: Int): String {
+    private fun provideMatchingMessage(
+        lottoPrize: LottoPrize,
+        matchingCount: Int,
+    ): String {
         if (lottoPrize == LottoPrize.SECOND) {
             return StringConstants.OUTPUT_MATCHING_COUNT_BONUS.format(
                 lottoPrize.matchingCount,
                 lottoPrize.amount,
-                matchingCount
+                matchingCount,
             )
         }
 

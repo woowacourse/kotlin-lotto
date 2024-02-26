@@ -31,10 +31,12 @@ object InputView {
         return LottoNumber(bonusNumber.toInt())
     }
 
-    private fun validateDigit(lottoNumbers: String, errorMessage: String) =
-        require(lottoNumbers.split(LOTTO_NUMBER_DELIMITER).all { isDigit(it) }) {
-            errorMessage
-        }
+    private fun validateDigit(
+        lottoNumbers: String,
+        errorMessage: String,
+    ) = require(lottoNumbers.split(LOTTO_NUMBER_DELIMITER).all { isDigit(it) }) {
+        errorMessage
+    }
 
     private fun isDigit(it: String) = it.toIntOrNull() != null
 }
