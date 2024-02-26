@@ -5,7 +5,7 @@
 ## View
 - [x] : 수동으로 구매할 로또 수 입력 받기(input) - n
 - [x] : 수동으로 구매할 번호들을 입력(input) - List<List<Int>> 반환
-- [ ] : lotto 구매 구매 현황 수동 + 자동으로 수정 (output)
+- [x] : lotto 구매 구매 현황 수동 + 자동 현황 View 추가 (output)
 
 ## Controller
 - [ ] : 수동 구매할 로또 수  

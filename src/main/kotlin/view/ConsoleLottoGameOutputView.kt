@@ -11,6 +11,16 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
         println()
     }
 
+    override fun showPurchaseLotto(
+        manualLottie: List<Lotto>,
+        autoLottie: List<Lotto>,
+    ) {
+        println(MESSAGE_PURCHASED_AUTO_WITH_MANUAL_LOTTIE_COUNT.format(manualLottie.size, autoLottie.size))
+        manualLottie.forEach { println(it.numbers.map { it.number }) }
+        autoLottie.forEach { println(it.numbers.map { it.number }) }
+        println()
+    }
+
     override fun showGameResult(
         results: List<LottoGameResult.RankResult>,
         rate: Double,
@@ -54,6 +64,7 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
         private const val STANDARD_BREAK_EVEN_POINT = 1
         private const val MESSAGE_TITLE = "\n당첨 통계\n---------"
         private const val MESSAGE_PURCHASED_LOTTIE_COUNT = "%d개를 구매했습니다."
+        private const val MESSAGE_PURCHASED_AUTO_WITH_MANUAL_LOTTIE_COUNT = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val MESSAGE_EARNING_RATE = "총 수익률은 %.2f입니다."
         private const val MESSAGE_LOSS = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
         private const val MESSAGE_MATCH_BONUS_DESCRIPTION = "보너스 볼 일치"
