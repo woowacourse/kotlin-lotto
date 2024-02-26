@@ -22,14 +22,25 @@ object InputValidator {
         return handpickedNumber
     }
 
+    fun validateHandpickedNumbers(input: String): List<LottoNumber> {
+        val handpickedNumbers =
+            input.split(INPUT_SEPARATOR).map { handpickedNumber ->
+                validateNumber(handpickedNumber)
+            }
+
+        validateNumbersSize(handpickedNumbers)
+        validateNumbersDuplicate(handpickedNumbers)
+        return handpickedNumbers
+    }
+
     fun validateWinningNumbers(input: String): List<LottoNumber> {
         val winningNumbers =
             input.split(INPUT_SEPARATOR).map { winningNumber ->
-                validateWinningNumber(winningNumber)
+                validateNumber(winningNumber)
             }
 
-        validateWinningNumbersSize(winningNumbers)
-        validateWinningNumbersDuplicate(winningNumbers)
+        validateNumbersSize(winningNumbers)
+        validateNumbersDuplicate(winningNumbers)
         return winningNumbers
     }
 
@@ -52,13 +63,13 @@ object InputValidator {
     }
 
     private fun validateHandpickedNumberRange(handpickedNumber: Int) {
-        require(handpickedNumber > 0) { InputException.INVALID_HANDPICKED_NUMBER_RANGE.getMessage() }
+        require(handpickedNumber >= 0) { InputException.INVALID_HANDPICKED_NUMBER_RANGE.getMessage() }
     }
 
-    private fun validateWinningNumber(winningNumber: String): LottoNumber {
-        val validWinningNumber = LottoNumber(winningNumber.toIntOrNull() ?: 0)
-        validateWinningNumberRange(validWinningNumber)
-        return validWinningNumber
+    private fun validateNumber(number: String): LottoNumber {
+        val validNumber = LottoNumber(number.toIntOrNull() ?: 0)
+        validateWinningNumberRange(validNumber)
+        return validNumber
     }
 
     private fun validateWinningNumberRange(winningNumber: LottoNumber) {
@@ -67,11 +78,11 @@ object InputValidator {
         }
     }
 
-    private fun validateWinningNumbersSize(winningNumbers: List<LottoNumber>) {
+    private fun validateNumbersSize(winningNumbers: List<LottoNumber>) {
         require(winningNumbers.size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_SIZE.getMessage() }
     }
 
-    private fun validateWinningNumbersDuplicate(winningNumbers: List<LottoNumber>) {
+    private fun validateNumbersDuplicate(winningNumbers: List<LottoNumber>) {
         val numbers = winningNumbers.map { it.getNumber() }
         require(numbers.toSet().size == Constant.LOTTO_SIZE) { InputException.INVALID_WINNING_NUMBERS_DUPLICATE.getMessage() }
     }

@@ -33,32 +33,32 @@ class InputTest {
 
     @ParameterizedTest
     @ValueSource(strings = ["0", "-1", "one"])
-    fun `수동으로 구매할 로또 수 입력 예외 처리 (1 이상의 숫자가 아닌 경우)`(handpickedNumber: String) {
+    fun `수동으로 구매할 로또 수 입력 예외 처리 (0 이상의 숫자가 아닌 경우)`(handpickedNumber: String) {
         assertThrows<IllegalArgumentException> { InputValidator.validateHandpickedNumber(handpickedNumber) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 2, 3, 4, 5, 6", "23, 17, 42, 31, 29, 5"])
-    fun `올바른 당첨 번호 입력`(winningNumbers: String) {
+    fun `올바른 로또 번호 입력`(winningNumbers: String) {
         assertDoesNotThrow { InputValidator.validateWinningNumbers(winningNumbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 2, 3, 4, 5", "1, 2, 3, 4, 5, 6, 7"])
-    fun `당첨 번호 입력 예외 처리 (당첨 번호의 개수가 6개가 아닌 경우)`(winningNumbers: String) {
-        assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(winningNumbers) }
+    fun `로또 번호 입력 예외 처리 (로또 번호의 개수가 6개가 아닌 경우)`(numbers: String) {
+        assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(numbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["0,1,2,3,4,5", "-1,2,3,4,5,6", "1,2,3,4,5,46", " 1,2,3,4,5,6", "1,2,3,4,5,6 ", " ,2,3,4,5,6", "one,2,3,4,5,6"])
-    fun `당첨 번호 입력 예외 처리 (당첨 번호가 1~45사이의 숫자가 아닌 경우)`(winningNumbers: String) {
-        assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(winningNumbers) }
+    fun `로또 번호 입력 예외 처리 (로또 번호가 1~45사이의 숫자가 아닌 경우)`(numbers: String) {
+        assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(numbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1,2,3,4,5,5", "1,1,3,4,5,6"])
-    fun `당첨 번호 입력 예외 처리 (당첨 숫자가 중복되는 경우)`(winningNumbers: String) {
-        assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(winningNumbers) }
+    fun `로또 번호 입력 예외 처리 (로또 숫자가 중복되는 경우)`(numbers: String) {
+        assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(numbers) }
     }
 
     @ParameterizedTest
