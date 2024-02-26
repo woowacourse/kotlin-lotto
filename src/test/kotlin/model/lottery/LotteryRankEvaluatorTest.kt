@@ -2,7 +2,6 @@ package model.lottery
 
 import model.WinningRank
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class LotteryRankEvaluatorTest {
@@ -15,15 +14,5 @@ class LotteryRankEvaluatorTest {
 
         val winningResult = lotteryRankEvaluator.evaluate(lottery, winningLottery, bonusNumber)
         assertThat(winningResult).isEqualTo(WinningRank.SECOND)
-    }
-
-    @Test
-    fun `로또에 보너스번호가 있는지 여부를 알려준다`() {
-        val lotteryRankEvaluator = LotteryRankEvaluator()
-        val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
-        val winningLottery = Lottery.of(1, 2, 3, 4, 8, 9)
-
-        val bonusNumber = LotteryNumber.bonusNumber(winningLottery, "6")
-        assertTrue(lotteryRankEvaluator.bonusMatch(lottery, bonusNumber))
     }
 }

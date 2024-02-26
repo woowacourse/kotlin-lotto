@@ -9,7 +9,7 @@ class LotteryRankEvaluator {
         bonusNumber: LotteryNumber,
     ): WinningRank {
         val matchCount = LottoNumberComparator().compareNumbers(lottery, winningLottery)
-        val bonusMatch = bonusMatch(lottery, bonusNumber)
+        val bonusMatch = LottoBonusNumberChecker().containsBonusNumber(lottery, bonusNumber)
 
         return when {
             matchCount == WinningRank.FIRST.matchNumbers -> WinningRank.FIRST
@@ -20,10 +20,4 @@ class LotteryRankEvaluator {
             else -> WinningRank.NONE
         }
     }
-
-    // TODO: 클래스 분리를 고려해야 함.
-    fun bonusMatch(
-        lottery: Lottery,
-        bonusNumber: LotteryNumber,
-    ): Boolean = lottery.lotteryNumbers.any { it == bonusNumber }
 }
