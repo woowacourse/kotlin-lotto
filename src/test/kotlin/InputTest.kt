@@ -38,13 +38,13 @@ class InputTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1,2,3,4,5,6", "23,17,42,31,29,5"])
+    @ValueSource(strings = ["1, 2, 3, 4, 5, 6", "23, 17, 42, 31, 29, 5"])
     fun `올바른 당첨 번호 입력`(winningNumbers: String) {
         assertDoesNotThrow { InputValidator.validateWinningNumbers(winningNumbers) }
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1,2,3,4,5", "1,2,3,4,5,6,7"])
+    @ValueSource(strings = ["1, 2, 3, 4, 5", "1, 2, 3, 4, 5, 6, 7"])
     fun `당첨 번호 입력 예외 처리 (당첨 번호의 개수가 6개가 아닌 경우)`(winningNumbers: String) {
         assertThrows<IllegalArgumentException> { InputValidator.validateWinningNumbers(winningNumbers) }
     }

@@ -3,7 +3,7 @@ package util
 import model.LottoNumber
 
 object InputValidator {
-    private const val INPUT_SEPARATOR = ','
+    private const val INPUT_SEPARATOR = ", "
 
     fun validatePurchaseAmount(input: String): Int {
         val purchaseAmount = input.toIntOrNull() ?: 0
