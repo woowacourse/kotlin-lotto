@@ -1,5 +1,6 @@
 package controller
 
+import WinningLottery
 import model.Money
 import model.lottery.Lotteries
 import model.lottery.Lottery
@@ -28,10 +29,14 @@ class LotteryController(
         val lotteries = Lotteries(List(lotteryCount) { lotteryMachine.generate() })
         outputView.showPurchasedLotteries(lotteries)
 
-        val winningNumbers = Lottery.fromInput(inputView.readWinningNumbers())
-        val bonusNumber = LotteryNumber.bonusNumber(inputView.readBonusNumber())
+        val winningLottery =
+            WinningLottery(
+                Lottery.fromInput(inputView.readWinningNumbers()),
+                LotteryNumber.bonusNumber(inputView.readBonusNumber()),
+            )
 
-        val winningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
+        val winningResult =
+            lotteryResultEvaluator.evaluate(lotteries, winningLottery.lottery, winningLottery.bonusNumber)
         outputView.showWinningResult(winningResult)
 
         val totalPrizeCalculator = LotteryPrizeCalculator()
