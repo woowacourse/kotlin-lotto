@@ -33,7 +33,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
     }
 
     fun contains(number: LottoNumber): Boolean {
-        return numbers.contains(number)
+        return number in numbers
     }
 
     private fun checkSecond(
