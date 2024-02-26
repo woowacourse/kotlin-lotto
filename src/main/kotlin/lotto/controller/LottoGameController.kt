@@ -6,7 +6,7 @@ import lotto.model.Lotto
 import lotto.model.LottoAnalyzer
 import lotto.model.LottoBundle
 import lotto.model.LottoMachine
-import lotto.model.LottoManualPurchase
+import lotto.model.LottoManualPurchaseCount
 import lotto.model.LottoNumber
 import lotto.model.MatchResultResponse
 import lotto.model.Price
@@ -41,18 +41,18 @@ class LottoGameController {
         return createLottoBundle(lottoMachine)
     }
 
-    private fun getLottoManualPurchase(): LottoManualPurchase {
-        val lottoManualPurchaseCount = InputView.readLottoManualPurchaseCount()
-        return LottoManualPurchase.from(lottoManualPurchaseCount)
+    private fun getLottoManualPurchaseCount(): LottoManualPurchaseCount {
+        val count = InputView.readLottoManualPurchaseCount()
+        return LottoManualPurchaseCount.from(count)
     }
 
     private fun createLottoBundle(lottoMachine: LottoMachine): LottoBundle {
-        val lottoManualPurchase = getLottoManualPurchase()
-        val randomLottoCount = lottoMachine.getRandomLottoCount(lottoManualPurchase)
-        val lottoManualPurchaseNumbers = InputView.readLottoManualPurchaseNumbers(lottoManualPurchase)
-        val lottoBundle = lottoMachine.createLottoBundle(lottoManualPurchaseNumbers, lottoManualPurchase)
+        val lottoManualPurchaseCount = getLottoManualPurchaseCount()
+        val randomLottoCount = lottoMachine.getRandomLottoCount(lottoManualPurchaseCount)
+        val lottoManualPurchaseNumbers = InputView.readLottoManualPurchaseNumbers(lottoManualPurchaseCount)
+        val lottoBundle = lottoMachine.createLottoBundle(lottoManualPurchaseNumbers, lottoManualPurchaseCount)
 
-        OutputView.printLottoCount(lottoManualPurchase, randomLottoCount)
+        OutputView.printLottoCount(lottoManualPurchaseCount, randomLottoCount)
         OutputView.printLottoBundle(lottoBundle)
         return lottoBundle
     }

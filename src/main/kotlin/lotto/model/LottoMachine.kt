@@ -6,18 +6,18 @@ import lotto.model.Lotto.Companion.LOTTO_SIZE
 import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_RANGE
 
 class LottoMachine(private val price: Price) {
-    fun getRandomLottoCount(lottoPurchaseCount: LottoManualPurchase): Int {
-        val randomLottoCount = price.getNumberOfLottoTickets() - lottoPurchaseCount.count
+    fun getRandomLottoCount(lottoManualPurchaseCount: LottoManualPurchaseCount): Int {
+        val randomLottoCount = price.getNumberOfLottoTickets() - lottoManualPurchaseCount.count
         handleValidation(MANUAL_PURCHASE_COUNT_TOO_LARGE) { randomLottoCount >= 0 }
         return randomLottoCount
     }
 
     fun createLottoBundle(
         lottoManualPurchaseNumbers: List<List<String>>,
-        lottoPurchaseCount: LottoManualPurchase,
+        lottoManualPurchaseCount: LottoManualPurchaseCount,
     ): LottoBundle {
         val manualLottoBundle = createManualLottoBundle(lottoManualPurchaseNumbers)
-        val randomLottoBundle = createRandomLottoBundle(lottoPurchaseCount)
+        val randomLottoBundle = createRandomLottoBundle(lottoManualPurchaseCount)
         return manualLottoBundle.append(randomLottoBundle)
     }
 
@@ -28,8 +28,8 @@ class LottoMachine(private val price: Price) {
             },
         )
 
-    private fun createRandomLottoBundle(lottoPurchaseCount: LottoManualPurchase): LottoBundle {
-        val lottos = List(price.getNumberOfLottoTickets() - lottoPurchaseCount.count) { randomLotto() }
+    private fun createRandomLottoBundle(lottoManualPurchaseCount: LottoManualPurchaseCount): LottoBundle {
+        val lottos = List(price.getNumberOfLottoTickets() - lottoManualPurchaseCount.count) { randomLotto() }
         return LottoBundle(lottos)
     }
 

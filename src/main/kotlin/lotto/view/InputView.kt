@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.model.LottoManualPurchase
+import lotto.model.LottoManualPurchaseCount
 
 object InputView {
     private const val PURCHASE_AMOUNT_MESSAGE = "구입금액을 입력해 주세요."
@@ -19,9 +19,9 @@ object InputView {
         return readlnOrNull().orEmpty()
     }
 
-    fun readLottoManualPurchaseNumbers(lottoPurchaseCount: LottoManualPurchase): List<List<String>> {
+    fun readLottoManualPurchaseNumbers(lottoManualPurchaseCount: LottoManualPurchaseCount): List<List<String>> {
         println(LOTTO_MANUAL_PURCHASE_NUMBER_MESSAGE)
-        return List(lottoPurchaseCount.count) { readlnOrNull().orEmpty().split(",").map { it.trim() } }
+        return List(lottoManualPurchaseCount.count) { readlnOrNull().orEmpty().split(",").map { it.trim() } }
     }
 
     fun readWinningNumbers(): List<String> {

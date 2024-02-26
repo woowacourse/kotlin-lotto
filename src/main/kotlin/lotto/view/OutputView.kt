@@ -2,7 +2,7 @@ package lotto.view
 
 import lotto.exception.Exceptions
 import lotto.model.LottoBundle
-import lotto.model.LottoManualPurchase
+import lotto.model.LottoManualPurchaseCount
 import lotto.model.LottoResult
 
 object OutputView {
@@ -22,9 +22,9 @@ object OutputView {
     }
 
     fun printLottoCount(
-        lottoPurchaseCount: LottoManualPurchase,
+        lottoManualPurchaseCount: LottoManualPurchaseCount,
         randomLottoCount: Int,
-    ) = println(PURCHASE_DESCRIPTION_MESSAGE.format(lottoPurchaseCount.count, randomLottoCount))
+    ) = println(PURCHASE_DESCRIPTION_MESSAGE.format(lottoManualPurchaseCount.count, randomLottoCount))
 
     fun printError(e: Throwable) {
         when (e) {

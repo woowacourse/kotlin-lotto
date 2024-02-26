@@ -10,7 +10,7 @@ class LottoManualPurchaseTest {
     @CsvSource("asd", "한글")
     fun `로또 수동 구입 개수는 숫자여야 한다`(count: String) {
         assertThrows<ManualPurchaseCountNotNaturalNumberException> {
-            LottoManualPurchase.from(count)
+            LottoManualPurchaseCount.from(count)
         }
     }
 }
