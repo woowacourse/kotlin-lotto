@@ -7,6 +7,25 @@ class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
         require(lotteryNumbers.toSet().size == lotteryNumberCount) { ERROR_INVALID_LOTTERY_DUPLICATED }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Lottery
+
+        if (lotteryNumbers != other.lotteryNumbers) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return lotteryNumbers.hashCode()
+    }
+
+    override fun toString(): String {
+        return "Lottery(lotteryNumbers=$lotteryNumbers)"
+    }
+
     companion object {
         private const val LOTTERY_NUMBER_COUNT = 6
         private const val ERROR_INVALID_LOTTERY_NUMBER_COUNT = "로또 번호가 ${LOTTERY_NUMBER_COUNT}개가 아닙니다."
