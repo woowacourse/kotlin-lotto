@@ -1,6 +1,6 @@
 package lotto.model
 
-class PurchaseInfo(purchasePrice: String) {
+class PurchaseInfo(purchasePrice: String, private val lottoPrice: Int = LOTTO_PRICE) {
     val price: Int
     val amount: Int
 
@@ -9,14 +9,14 @@ class PurchaseInfo(purchasePrice: String) {
             INVALID_PURCHASE_PRICE
         }
         price = purchasePrice.toInt()
-        amount = price / LOTTO_PRICE
+        amount = price / lottoPrice
     }
 
     private fun String.isValidDigit() = toIntOrNull() != null
 
-    private fun String.isMoreThanMin() = toInt() >= LOTTO_PRICE
+    private fun String.isMoreThanMin() = toInt() >= lottoPrice
 
-    private fun String.divideByLottoPrice() = toInt() % LOTTO_PRICE == 0
+    private fun String.divideByLottoPrice() = toInt() % lottoPrice == 0
 
     companion object {
         private const val LOTTO_PRICE = 1000
