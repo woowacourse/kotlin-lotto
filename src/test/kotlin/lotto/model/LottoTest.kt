@@ -11,36 +11,24 @@ import org.junit.jupiter.params.provider.ValueSource
 import kotlin.IllegalArgumentException
 
 class LottoTest {
-    private val lotto =
-        Lotto(
-            setOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(6),
-            ),
-        )
-
     @ParameterizedTest
     @ValueSource(strings = ["1, 2, 3, 4, 5", "1, 2, 3, 4, 5, 6, 7"])
     fun `로또 번호는 6개의 자연수를 갖지 않으면 오류를 발생시킨다`(input: String) {
-        val numbers = input.split(", ").map { LottoNumber(it.toInt()) }.toSet()
+        val numbers = input.split(", ").map { LottoNumber.valueOf(it.toInt()) }.toSet()
         assertThrows<IllegalArgumentException> { Lotto(numbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 1, 1, 2, 3, 4", "1, 2, 3, 4, 5, 1", "1, 1, 1, 1, 1, 1"])
     fun `로또 번호는 중복 번호가 포함될 경우 오류를 발생시킨다`(input: String) {
-        val numbers = input.split(", ").map { LottoNumber(it.toInt()) }.toSet()
+        val numbers = input.split(", ").map { LottoNumber.valueOf(it.toInt()) }.toSet()
         assertThrows<IllegalArgumentException> { Lotto(numbers) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["1, 2, 3, 4, 5, 6", "40, 41, 42, 43, 44, 45", "7, 2, 3, 4, 5, 35"])
     fun `로또 번호는 6개의 서로 다른 자연수를 갖는다`(input: String) {
-        val numbers = input.split(", ").map { LottoNumber(it.toInt()) }.toSet()
+        val numbers = input.split(", ").map { LottoNumber.valueOf(it.toInt()) }.toSet()
         assertDoesNotThrow { Lotto(numbers) }
     }
 
@@ -54,7 +42,8 @@ class LottoTest {
         winning: String,
         expected: Int,
     ) {
-        val winningNumbers = winning.split(" ").map { LottoNumber(it.toInt()) }.toSet()
+        val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
+        val winningNumbers = winning.split(" ").map { LottoNumber.valueOf(it.toInt()) }.toSet()
         val result = lotto.countMatchingNumbers(Lotto(winningNumbers))
         assertThat(result).isEqualTo(expected)
     }
@@ -62,14 +51,16 @@ class LottoTest {
     @ParameterizedTest
     @ValueSource(ints = [1, 5, 6])
     fun `로또 번호에 보너스 번호가 포함되어 있으면 True를 반환한다`(bonusNumber: Int) {
-        val result = lotto.hasMatchingBonusNumbers(LottoNumber(bonusNumber))
+        val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
+        val result = lotto.hasMatchingBonusNumbers(LottoNumber.valueOf(bonusNumber))
         assertTrue(result)
     }
 
     @ParameterizedTest
     @ValueSource(ints = [7, 10, 45])
     fun `로또 번호에 보너스 번호가 포함되어 있지 않으면 False을 반환한다`(bonusNumber: Int) {
-        val result = lotto.hasMatchingBonusNumbers(LottoNumber(bonusNumber))
+        val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
+        val result = lotto.hasMatchingBonusNumbers(LottoNumber.valueOf(bonusNumber))
         assertFalse(result)
     }
 }

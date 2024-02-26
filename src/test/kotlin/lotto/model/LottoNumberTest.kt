@@ -9,12 +9,12 @@ class LottoNumberTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 46, -1])
     fun `로또 번호는 1~45 사이의 자연수를 갖지 않으면 오류를 발생시킨다`(input: Int) {
-        assertThrows<IllegalArgumentException> { LottoNumber(input) }
+        assertThrows<IllegalArgumentException> { LottoNumber.valueOf(input) }
     }
 
     @ParameterizedTest
     @ValueSource(ints = [1, 45, 20])
     fun `로또 번호는 1~45 사이의 자연수를 갖는다`(input: Int) {
-        assertDoesNotThrow { LottoNumber(input) }
+        assertDoesNotThrow { LottoNumber.valueOf(input) }
     }
 }
