@@ -1,7 +1,7 @@
 package model
 
 enum class WinningRank(
-    val matchNumbers: Int,
+    val numbersMatchCount: Int,
     val bonusNumberMatch: Boolean,
     val winningPrize: Money,
 ) {
@@ -13,4 +13,15 @@ enum class WinningRank(
 
     // NONE 의 matchNumbers 의 0은 편의상 적은 값으로 실제값과 다를 수 있음. (0,1,2 의 경우)
     NONE(0, false, Money.ZERO),
+    ;
+
+    companion object {
+        fun of(
+            numbersMatchCount: Int,
+            bonusNumberMatch: Boolean,
+        ) = values().find {
+            it.numbersMatchCount == numbersMatchCount &&
+                (it.bonusNumberMatch == bonusNumberMatch || it.bonusNumberMatch.not())
+        } ?: NONE
+    }
 }

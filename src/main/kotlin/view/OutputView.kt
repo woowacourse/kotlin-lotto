@@ -35,7 +35,7 @@ class OutputView {
 
     private fun printMatchStatus(result: Map.Entry<WinningRank, PrizeCount>) =
         println(
-            "${result.key.matchNumbers}개 일치 ${if (result.key.bonusNumberMatch) ", 보너스 볼 일치" else ""} ${
+            "${result.key.numbersMatchCount}개 일치 ${if (result.key.bonusNumberMatch) ", 보너스 볼 일치" else ""} ${
                 MONEY_FORMAT.format(
                     result.key.winningPrize.amount.toInt(),
                 )
