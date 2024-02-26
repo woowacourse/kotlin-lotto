@@ -3,8 +3,8 @@
 - [ ] : 입력한 금액, 자동 생성 숫자, 수동 생성 번호를 입력하도록 해야 한다.
 
 ## View
-- [ ] : 수동으로 구매할 로또 수 입력 받기(input) - n
-- [ ] : 수동으로 구매할 번호들을 입력(input) - 로또 수 만큼 repeat(n) 만큼 read 하고 List<List<Int>> 반환?
+- [x] : 수동으로 구매할 로또 수 입력 받기(input) - n
+- [x] : 수동으로 구매할 번호들을 입력(input) - List<List<Int>> 반환
 - [ ] : lotto 구매 구매 현황 수동 + 자동으로 수정 (output)
 
 ## Controller
