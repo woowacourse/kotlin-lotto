@@ -24,6 +24,6 @@ object OutputView {
     }
 
     fun outputRateOfReturn(rateOfReturn: Double) {
-        println("총 수익률은 ${(rateOfReturn * 100).toInt() / 100.0}입니다.(기준이 1이기 때문에 결과적으로 손해라는 의미임)")
+        println("총 수익률은 ${(rateOfReturn * 100).toInt() / 100.0}입니다.${"(기준이 1이기 때문에 결과적으로 손해라는 의미임)".takeIf { rateOfReturn < 1 } ?: ""}")
     }
 }

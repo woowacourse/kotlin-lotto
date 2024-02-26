@@ -13,9 +13,8 @@ import view.OutputView
 class LottoController {
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
-        val numberOfHandpickedNumber = InputView.inputNumberOfHandpickedLotto()
-        val handpickedNumbers = InputView.inputHandpickedLottosNumber(numberOfHandpickedNumber)
-        val lottos = Lottos(purchaseAmount, numberOfHandpickedNumber)
+        val handpickedLottos = publishHandpickedLottos()
+        val lottos = Lottos(purchaseAmount, handpickedLottos)
         displayPurchaseResult(lottos)
 
         val winningLotto = drawWinningLotto()
@@ -23,8 +22,20 @@ class LottoController {
         displayWinningStatistics(winningStatistics, purchaseAmount)
     }
 
+    private fun publishHandpickedLottos(): List<Lotto> {
+        val numberOfHandpickedNumber = InputView.inputNumberOfHandpickedLotto()
+        val handpickedLottosNumber = mutableListOf<List<Int>>()
+        if (numberOfHandpickedNumber != 0) {
+            handpickedLottosNumber.addAll(InputView.inputHandpickedLottosNumber(numberOfHandpickedNumber))
+        }
+
+        return handpickedLottosNumber.map { handpickedLottoNumber ->
+            Lotto(handpickedLottoNumber.map { LottoNumber(it) })
+        }
+    }
+
     private fun displayPurchaseResult(lottos: Lottos) {
-        val numberOfHandpickedLotto = lottos.getNumberOfHandpickedLotto()
+        val numberOfHandpickedLotto = lottos.getHandPickedLottos().size
         val numberOfAutomaticLotto = lottos.getLottos().size - numberOfHandpickedLotto
         OutputView.outputNumberOfLotto(numberOfHandpickedLotto, numberOfAutomaticLotto)
         OutputView.outputLottos(lottos)

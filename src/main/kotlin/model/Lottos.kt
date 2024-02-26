@@ -2,7 +2,7 @@ package model
 
 import util.Constant
 
-class Lottos(private val purchaseAmount: Int, private val numberOfHandpickedLotto: Int) {
+class Lottos(private val purchaseAmount: Int, private val handpickedLottos: List<Lotto>) {
     init {
         require(purchaseAmount % Constant.PURCHASE_AMOUNT_UNIT == 0)
     }
@@ -11,11 +11,12 @@ class Lottos(private val purchaseAmount: Int, private val numberOfHandpickedLott
 
     fun getLottos(): List<Lotto> = lottos
 
-    fun getNumberOfHandpickedLotto(): Int = numberOfHandpickedLotto
+    fun getHandPickedLottos(): List<Lotto> = handpickedLottos
 
     private fun publishLottos(): List<Lotto> {
         val numberOfLotto = calculateNumberOfLotto()
-        return List(numberOfLotto) { LottoGenerator.generateLotto() }
+        val automaticLottos = List(numberOfLotto - handpickedLottos.size) { LottoGenerator.generateLotto() }
+        return handpickedLottos + automaticLottos
     }
 
     private fun calculateNumberOfLotto(): Int {
