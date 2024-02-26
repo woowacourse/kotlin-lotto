@@ -13,23 +13,30 @@ class LottoMachine(private val price: Price) {
     }
 
     fun createLottoBundle(
-        lottoManualPurchaseNumbers: List<List<String>>,
+        manualPurchaseLottos: ManualPurchaseLottos,
         lottoManualPurchaseCount: LottoManualPurchaseCount,
     ): LottoBundle {
-        val manualLottoBundle = createManualLottoBundle(lottoManualPurchaseNumbers)
+        val manualLottoBundle = createManualLottoBundle(manualPurchaseLottos)
         val randomLottoBundle = createRandomLottoBundle(lottoManualPurchaseCount)
         return manualLottoBundle.append(randomLottoBundle)
     }
 
-    private fun createManualLottoBundle(lottoManualPurchaseNumbers: List<List<String>>) =
-        LottoBundle(
-            lottoManualPurchaseNumbers.map { lottoManualPurchaseNumber ->
-                Lotto(lottoManualPurchaseNumber.map { LottoNumber.from(it) }.toSet())
-            },
-        )
+    private fun createManualLottoBundle(manualPurchaseLottos: ManualPurchaseLottos): LottoBundle {
+        val lotts = manualPurchaseLottos.lottos.map { lottoNumbers -> createLotto(lottoNumbers) }
+        return LottoBundle(lotts)
+    }
 
-    private fun createRandomLottoBundle(lottoManualPurchaseCount: LottoManualPurchaseCount): LottoBundle =
-        LottoBundle(List(getRandomLottoCount(lottoManualPurchaseCount)) { randomLotto() })
+    private fun createRandomLottoBundle(lottoManualPurchaseCount: LottoManualPurchaseCount): LottoBundle {
+        val lottos = List(getRandomLottoCount(lottoManualPurchaseCount)) { createLotto() }
+        return LottoBundle(lottos)
+    }
 
-    private fun randomLotto(): Lotto = Lotto(LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }.toSet())
+    private fun createLotto(lottoNumbers: List<String>? = null): Lotto {
+        val numbers = lottoNumbers?.map { number -> LottoNumber.from(number) } ?: generateRandomLottoNumbers()
+        return Lotto(numbers.toSet())
+    }
+
+    private fun generateRandomLottoNumbers(): List<LottoNumber> {
+        return LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).map { LottoNumber(it) }
+    }
 }
