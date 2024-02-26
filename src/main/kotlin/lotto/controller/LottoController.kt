@@ -21,25 +21,10 @@ class LottoController {
         OutputView.printWinningStatistics(prizeCount, profitRatio)
     }
 
-    private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
+    private fun readPurchasePrice() = InputView.readPurchasePrice()
 
     private fun readWinningLotto(): WinningLotto {
-        val winningLottoNumbers = retryWhileNoException { InputView.readWinningLottoNumbers() }
-        return retryWhileNoException {
-            WinningLotto(winningLottoNumbers, InputView.readBonusNumber())
-        }
-    }
-
-    private fun <T> retryWhileNoException(action: () -> T): T {
-        return try {
-            action()
-        } catch (e: IllegalArgumentException) {
-            println("$ERROR_MESSAGE ${e.localizedMessage}")
-            action()
-        }
-    }
-
-    companion object {
-        private const val ERROR_MESSAGE = "[ERROR]"
+        val winningLottoNumbers = InputView.readWinningLottoNumbers()
+        return WinningLotto(winningLottoNumbers, InputView.readBonusNumber())
     }
 }
