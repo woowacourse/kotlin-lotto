@@ -50,11 +50,11 @@ class LottoGameController {
     private fun createLottoBundle(lottoMachine: LottoMachine): LottoBundle {
         val lottoManualPurchaseCount = getLottoManualPurchaseCount()
         val randomLottoCount = lottoMachine.getRandomLottoCount(lottoManualPurchaseCount)
-        val lottoManualPurchaseNumbers = InputView.readLottoManualPurchaseNumbers(lottoManualPurchaseCount)
+        val lottoManualPurchaseNumbers = InputView.readLottoManualPurchaseNumbers(lottoManualPurchaseCount.count)
         val lottoBundle = lottoMachine.createLottoBundle(ManualPurchaseLottos(lottoManualPurchaseNumbers), lottoManualPurchaseCount)
 
-        OutputView.printLottoCount(lottoManualPurchaseCount, randomLottoCount)
-        OutputView.printLottoBundle(lottoBundle)
+        OutputView.printLottoCount(lottoManualPurchaseCount.count, randomLottoCount)
+        OutputView.printLottoBundle(lottoBundle.toString())
         return lottoBundle
     }
 
@@ -69,6 +69,6 @@ class LottoGameController {
 
     private fun calculateMatchResult(matchResultResponse: MatchResultResponse) {
         val lottoResult = LottoAnalyzer.calculateResult(matchResultResponse)
-        OutputView.printResult(lottoResult)
+        OutputView.printResult(lottoResult.toString(), lottoResult.getProfitRate())
     }
 }
