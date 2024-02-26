@@ -9,21 +9,21 @@ const val WRONG_INPUT = "잘못 된 입력 값입니다."
 const val NEED_NUMBER = "로또 넘버는 숫자를 입력해야 합니다."
 
 object Verifier {
-    fun inputCharge(): Int {
+    fun inputCharge(userInput: String?): Int? {
         return try {
-            readlnOrNull()
+            userInput
                 ?.toIntOrNull()
                 ?: throw (IllegalArgumentException(WRONG_INPUT))
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            inputCharge()
+            null
         }
     }
 
-    fun inputWinning(): Lotto {
+    fun inputWinning(userInput: String?): Lotto? {
         return try {
             val inputNumbers =
-                readlnOrNull()
+                userInput
                     ?.split(SEPARATOR)
                     ?.map { it.trim().toIntOrNull() ?: throw IllegalArgumentException(NEED_NUMBER) }
                     ?.map { LottoNumber(it) } // 정수를 LottoNumber로 변환
@@ -35,17 +35,18 @@ object Verifier {
             Lotto(inputNumbers)
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            inputWinning()
+            null
         }
     }
 
-    fun inputBonusNumber(): Int {
+    fun inputBonusNumber(userInput: String?): Int? {
         return try {
-            readlnOrNull()?.toIntOrNull()
+            userInput
+                ?.toIntOrNull()
                 ?: throw (IllegalArgumentException(WRONG_INPUT))
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            inputBonusNumber()
+            null
         }
     }
 }
