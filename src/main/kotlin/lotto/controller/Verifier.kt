@@ -26,7 +26,7 @@ object Verifier {
                 userInput
                     ?.split(SEPARATOR)
                     ?.map { it.trim().toIntOrNull() ?: throw IllegalArgumentException(NEED_NUMBER) }
-                    ?.map { LottoNumber(it) } // 정수를 LottoNumber로 변환
+                    ?.map { LottoNumber.of(it) }
                     ?.toSet()
 
             if (inputNumbers?.size != LOTTO_LEN) {

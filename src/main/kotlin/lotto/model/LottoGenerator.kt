@@ -13,7 +13,7 @@ class LottoGenerator {
                 .LOTTO_NUM_RANGE
                 .shuffled()
                 .take(Constant.LOTTO_LEN)
-                .map { LottoNumber(it) }
+                .map { LottoNumber.of(it) }
                 .toSet()
         }
     }

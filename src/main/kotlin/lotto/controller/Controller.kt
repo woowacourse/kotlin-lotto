@@ -29,7 +29,7 @@ class Controller {
         val winning = readLottoNumber()
 
         insertBonusNumbers()
-        val bonusNumber = LottoNumber(readLottoBonusNumber())
+        val bonusNumber = LottoNumber.of(readLottoBonusNumber())
         val winningNumber = WinningNumber(lotto = winning, bonusNumber = bonusNumber)
         val prize = lottos.matchlottos(winningNumber)
         winningStatistics()
