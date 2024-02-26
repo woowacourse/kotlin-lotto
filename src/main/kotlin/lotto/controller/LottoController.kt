@@ -5,7 +5,6 @@ import lotto.domain.MarginCalculator
 import lotto.domain.RandomLottoGenerator
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
-import lotto.domain.model.LottoDrawingResult.Companion.toLottoDrawingResult
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.Money
 import lotto.domain.model.WinningLotto
@@ -28,7 +27,7 @@ class LottoController(
 
     private fun getValidMoney(): Money {
         return try {
-            Money(InputView.readPurchaseAmount())
+            Money(InputView.readPurchaseAmount(LOTTO_PRICE))
         } catch (e: IllegalArgumentException) {
             println(e.message)
             getValidMoney()
@@ -36,7 +35,7 @@ class LottoController(
     }
 
     private fun getLottoQuantity(money: Money): Int {
-        val quantity = cashier.toTicketQuantity(money)
+        val quantity = cashier.calculateQuantity(money, LOTTO_PRICE)
         OutputView.printLottoQuantity(quantity)
         return quantity
     }
@@ -75,7 +74,7 @@ class LottoController(
 
     private fun getLottoDrawingResult(lottoTickets: List<Lotto>, winningLotto: WinningLotto): LottoDrawingResult {
         val ranks = lottoTickets.map { targetLotto -> winningLotto.getRank(targetLotto) }
-        val lottoResult = ranks.toLottoDrawingResult()
+        val lottoResult = LottoDrawingResult.from(ranks)
         OutputView.printLottoResult(lottoResult)
         return lottoResult
     }
@@ -84,5 +83,9 @@ class LottoController(
         val totalPrize = MarginCalculator.calculateTotalPrize(result)
         val marginRate = MarginCalculator.calculateMarginRate(totalPrize, money)
         OutputView.printMargin(marginRate)
+    }
+
+    companion object {
+        const val LOTTO_PRICE = 1000
     }
 }

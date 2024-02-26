@@ -3,7 +3,6 @@ package lotto.domain
 import lotto.domain.model.LottoDrawingResult
 import lotto.domain.model.Margin
 import lotto.domain.model.Money
-import lotto.util.Constants.LOTTO_PRICE
 
 object MarginCalculator {
 
@@ -16,5 +15,5 @@ object MarginCalculator {
     }
 
     fun calculateMarginRate(winningPrize: Money, purchaseAmount: Money): Margin =
-        Margin(winningPrize.amount * LOTTO_PRICE / purchaseAmount.amount / LOTTO_PRICE.toDouble())
+        Margin((winningPrize.amount / purchaseAmount.amount.toDouble()))
 }

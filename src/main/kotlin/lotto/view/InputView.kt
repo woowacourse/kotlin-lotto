@@ -1,22 +1,18 @@
 package lotto.view
 
-import lotto.util.Constants.LOTTO_PRICE
-
 object InputView {
-
-    private const val LOTTO_PRIZE = 1000
     private const val MINIMUM_PURCHASE_AMOUNT = 0
     private const val WINNING_NUMBER_DELIMITER = ","
     private const val MINIMUM_VALUE_EXCEPTION_MESSAGE = "구입 금액은 ${MINIMUM_PURCHASE_AMOUNT}원 이상이어야 합니다."
-    private const val INVALID_UNIT_EXCEPTION_MESSAGE = "구입 금액은 ${LOTTO_PRIZE}원 단위여야 합니다."
+    private const val INVALID_UNIT_EXCEPTION_MESSAGE = "구입 금액은 %s원 단위여야 합니다."
     private const val INVALID_FORMAT_EXCEPTION_MESSAGE = "입력값은 정수여야 합니다."
 
-    fun readPurchaseAmount(): Long {
+    fun readPurchaseAmount(minPricePerUnit: Int): Long {
         return try {
             println("구입금액을 입력해 주세요.")
             val input = readln().toLong()
             require(input > 0L) { MINIMUM_VALUE_EXCEPTION_MESSAGE }
-            require(input % LOTTO_PRICE == 0L) { INVALID_UNIT_EXCEPTION_MESSAGE }
+            require(input % minPricePerUnit == 0L) { INVALID_UNIT_EXCEPTION_MESSAGE.format(minPricePerUnit) }
             input
         } catch (e: NumberFormatException) {
             throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)

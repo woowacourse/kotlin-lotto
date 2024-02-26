@@ -29,6 +29,6 @@ class MarginCalculatorTest {
         val winningPrize = Money(5000)
         val purchaseAmount = Money(14000)
         val actual = MarginCalculator.calculateMarginRate(winningPrize, purchaseAmount)
-        assertThat(actual).isEqualTo(Margin(0.357))
+        assertThat(actual).isEqualTo(Margin(0.35714285714285715))
     }
 }

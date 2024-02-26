@@ -1,8 +1,7 @@
 package lotto.domain
 
 import lotto.domain.model.Money
-import lotto.util.Constants.LOTTO_PRICE
 
 class Cashier {
-    fun toTicketQuantity(money: Money): Int = (money.amount / LOTTO_PRICE).toInt()
+    fun calculateQuantity(money: Money, pricePerUnit: Int): Int = (money.amount / pricePerUnit).toInt()
 }
