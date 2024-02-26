@@ -31,7 +31,7 @@ class LotteryNumberTest {
     }
 
     @Test
-    fun `당첨번호와 중복되지 않은 범위 내의 보너스 번호를 생성할 수 있다`() {
+    fun `당첨번호와 중복되지 않은 범위 내의 보너스 번호를 생성할 수 있다_리팩토링 이전`() {
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
         assertDoesNotThrow {
             LotteryNumber.bonusNumber(lottery, "7")
@@ -39,7 +39,7 @@ class LotteryNumberTest {
     }
 
     @Test
-    fun `보너스 번호가 당첨번호와 중복되면 예외를 던진다`() {
+    fun `보너스 번호가 당첨번호와 중복되면 예외를 던진다_리팩토링 이전`() {
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
         assertThrows<IllegalArgumentException> {
             LotteryNumber.bonusNumber(lottery, "6")
@@ -47,10 +47,26 @@ class LotteryNumberTest {
     }
 
     @Test
-    fun `보너스 번호가 1~45의 범위를 벗어나면 예외를 던진다`() {
+    fun `보너스 번호가 1~45의 범위를 벗어나면 예외를 던진다_리팩토링 이전`() {
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
         assertThrows<IllegalArgumentException> {
             LotteryNumber.bonusNumber(lottery, "46")
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["0", "46"])
+    fun `입력으로 받은 보너스 번호가 1~45의 범위를 벗어나면 예외를 던진다`(input: String) {
+        assertThrows<IllegalArgumentException> {
+            LotteryNumber.bonusNumber(input)
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["1", "22", "45"])
+    fun `입력으로 받은 보너스 번호가 1~45의 범위에 있으면 통과한다`(input: String) {
+        assertDoesNotThrow {
+            LotteryNumber.bonusNumber(input)
         }
     }
 }
