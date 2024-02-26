@@ -1,5 +1,6 @@
 package model.lottery
 
+import model.Quantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,6 +14,6 @@ class LottoNumberComparatorTest {
 
         val expectedMatchCount = 5
         val actualMatchCount = lottoNumberComparator.compareNumbers(lottery, winningLottery)
-        assertThat(actualMatchCount).isEqualTo(expectedMatchCount)
+        assertThat(actualMatchCount).isEqualTo(Quantity(expectedMatchCount))
     }
 }

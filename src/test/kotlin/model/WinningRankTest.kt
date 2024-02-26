@@ -9,7 +9,7 @@ class WinningRankTest {
         val expectedWinningRank = WinningRank.FIFTH
         val actualWinningRank =
             WinningRank.of(
-                numbersMatchCount = 3,
+                numbersMatchQuantity = Quantity(3),
                 bonusNumberMatch = true,
             )
 
