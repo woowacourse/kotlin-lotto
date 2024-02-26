@@ -1,7 +1,5 @@
 package lotto.model
 
-import lotto.constants.LottoPrize
-
 class Lotto(numbers: Set<Int>) {
     private val numbers: Set<LottoNumber>
 
