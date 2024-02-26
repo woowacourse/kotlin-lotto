@@ -29,6 +29,17 @@ class MoneyTest {
         assertThat(actualMoney).isEqualTo(expectedMoney)
     }
 
+    @Test
+    fun `amount 값이 크면 더 큰 Money 이다`() {
+        // given
+        val smallMoney = Money(2_000)
+        val bigMoney = Money(2_001)
+        // when
+        val actual = bigMoney > smallMoney
+        // then
+        assertThat(actual).isTrue()
+    }
+
     private companion object {
         const val MINUS_MONEY_AMOUNT = -1
         const val GENERAL_MONEY_AMOUNT = 1_000

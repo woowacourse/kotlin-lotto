@@ -14,6 +14,7 @@
 - [ ] : 테스트 코드 상수화 (코드 리뷰) - 일단 보류
 - [ ] : 랜덤값도 테스트 해보자! (코드 리뷰)
 - [x] : Money - times operator 함수 만들 도록 하자
+- [x] : Money - compareTo operator 함수 구현
 - [ ] : 수동 로또 생성기 추가 구현
 - [ ] : 수동 로또 만드는 부분 (구매 금액 >= 수동 로또 수 * 로또 가격) 누구에게 책임을 묻지? - 수동 로또 생성기가 하는게 맞음
 - [x] : 자동 로또 생성기 네이밍 변경 (LottieGenerator -> AutoLottieGenerator)
