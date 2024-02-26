@@ -6,17 +6,6 @@ data class LotteryNumber(val number: Int) {
     }
 
     companion object {
-        fun bonusNumber(
-            winningLottery: Lottery,
-            input: String,
-        ): LotteryNumber {
-            val number = input.toIntOrNull()
-            requireNotNull(number) { "숫자를 입력하세요" }
-            require(number in LOTTERY_NUMBER_RANGE) { ERROR_LOTTERY_OUT_OF_RANGE }
-            require(!winningLottery.lotteryNumbers.contains(LotteryNumber(number)))
-            return LotteryNumber(number)
-        }
-
         fun bonusNumber(input: String): LotteryNumber {
             val number = input.toIntOrNull()
             requireNotNull(number)

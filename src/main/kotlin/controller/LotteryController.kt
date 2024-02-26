@@ -29,7 +29,7 @@ class LotteryController(
         outputView.showPurchasedLotteries(lotteries)
 
         val winningNumbers = Lottery.fromInput(inputView.readWinningNumbers())
-        val bonusNumber = LotteryNumber.bonusNumber(winningNumbers, inputView.readBonusNumber())
+        val bonusNumber = LotteryNumber.bonusNumber(inputView.readBonusNumber())
 
         val winningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
         outputView.showWinningResult(winningResult)
