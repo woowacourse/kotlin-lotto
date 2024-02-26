@@ -13,7 +13,7 @@ enum class LottoPrize(val matchingCount: Int, val amount: Int) {
             matchingCount: Int,
             isMatchingBonus: Boolean,
         ): LottoPrize {
-            if (matchingCount == 5) {
+            if (matchingCount == SECOND.amount) {
                 return if (isMatchingBonus) {
                     SECOND
                 } else {
