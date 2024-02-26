@@ -15,7 +15,7 @@ object OutputView {
 
     fun printPurchaseLotto(lottoStore: LottoStore) {
         println(OUTPUT_PURCHASE_COUNT.format(lottoStore.lottos.size))
-        lottoStore.lottos.forEach { println(it) }
+        lottoStore.lottos.forEach { println(it.numbers.toString()) }
         println()
     }
 
@@ -49,5 +49,8 @@ object OutputView {
         )
     }
 
-    fun printProfitRatio(profitRatio: ProfitRatio) = println(OUTPUT_PROFIT_RATIO.format(profitRatio))
+    fun printProfitRatio(profitRatio: ProfitRatio) {
+        val outputProfitRatio = "%.2f".format(profitRatio.ratio)
+        println(OUTPUT_PROFIT_RATIO.format(outputProfitRatio))
+    }
 }

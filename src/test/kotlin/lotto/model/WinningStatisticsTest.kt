@@ -11,26 +11,26 @@ class WinningStatisticsTest {
     fun `로또 수익률을 계산한다`(
         lottoPrice: Int,
         statistics: Map<LottoPrize, Int>,
-        expected: String,
+        expected: Double,
     ) {
         // given
         val purchaseInfo = PurchaseOrder(lottoPrice)
         val winningStatistics = WinningStatistics(statistics)
 
         // when
-        val actual = winningStatistics.calculateProfitRatio(purchaseInfo)
+        val actual = winningStatistics.calculateProfitRatio(purchaseInfo).ratio
 
         // then
-        Assertions.assertThat(actual.toString()).isEqualTo(expected)
+        Assertions.assertThat(actual).isEqualTo(expected)
     }
 
     companion object {
         @JvmStatic
         fun `로또 수익률 계산 테스트 데이터`() =
             listOf(
-                Arguments.of("14000", mapOf(LottoPrize.FIFTH to 1), "0.35"),
-                Arguments.of("8000", mapOf(LottoPrize.FIFTH to 1), "0.62"),
-                Arguments.of("1000", mapOf(LottoPrize.FIRST to 1), "2000000.00"),
+                Arguments.of("14000", mapOf(LottoPrize.FIFTH to 1), 0.35),
+                Arguments.of("8000", mapOf(LottoPrize.FIFTH to 1), 0.62),
+                Arguments.of("1000", mapOf(LottoPrize.FIRST to 1), 2000000.00),
             )
     }
 }

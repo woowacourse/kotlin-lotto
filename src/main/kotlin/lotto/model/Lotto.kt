@@ -1,11 +1,9 @@
 package lotto.model
 
-class Lotto private constructor(private val numbers: List<LottoNumber>) {
+class Lotto private constructor(val numbers: List<LottoNumber>) {
     fun getMatchingCount(otherLotto: Lotto) = otherLotto.numbers.intersect(numbers).size
 
     fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
-
-    override fun toString() = numbers.toString()
 
     companion object {
         const val SIZE = 6

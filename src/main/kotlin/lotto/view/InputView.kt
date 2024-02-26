@@ -22,7 +22,7 @@ object InputView {
         println(INPUT_WINNING_LOTTO_NUMBERS)
         val inputWinningLottoNumbers = readln()
         val winningLottoNumbers = inputWinningLottoNumbers.validateAndConvertDigitList()
-        return Lotto(winningLottoNumbers)
+        return Lotto.create(winningLottoNumbers)
     }
 
     fun readBonusNumber(): LottoNumber {
