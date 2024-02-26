@@ -2,6 +2,7 @@ package controller
 
 import domain.Lotto
 import domain.LottoMachine
+import domain.MakeLottoStrategy
 import domain.WinningLotto
 import domain.model.LottoDrawingResult
 import domain.model.LottoNumber
@@ -47,7 +48,7 @@ class LottoController(
     }
 
     private fun makeLottoTickets(number: Int): List<Lotto> {
-        val lottoTickets = List(number) { Lotto.makeRandomLotto(1..45) }
+        val lottoTickets = List(number) { MakeLottoStrategy.MakeSortedRandomLotto(1..45).makeLotto() }
         outputView.printLottoNumbers(lottoTickets)
         return lottoTickets
     }
