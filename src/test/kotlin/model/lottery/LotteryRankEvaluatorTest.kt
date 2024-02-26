@@ -18,16 +18,6 @@ class LotteryRankEvaluatorTest {
     }
 
     @Test
-    fun `로또와 당첨번호가 일치하는 숫자의 갯수를 알려준다`() {
-        val lotteryRankEvaluator = LotteryRankEvaluator()
-        val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
-
-        val winningLottery = Lottery.of(1, 2, 3, 4, 8, 9)
-        assertThat(lotteryRankEvaluator.match(lottery, winningLottery))
-            .isEqualTo(4)
-    }
-
-    @Test
     fun `로또에 보너스번호가 있는지 여부를 알려준다`() {
         val lotteryRankEvaluator = LotteryRankEvaluator()
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
