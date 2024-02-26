@@ -5,9 +5,9 @@ class ManualLottoMachine(private val manualLottoBuyCount: Int, private val lotto
         require(manualLottoBuyCount <= lottoBuyBudget.getBuyableLottoCount()) { PRICE_ERROR_MESSAGE }
     }
 
-    fun createLottosFrom(manualInputNumbers: List<List<Int>>): List<Lotto> {
+    fun createLottos(lottoNumbersGenerator: LottoNumbersGenerator): List<Lotto> {
         lottoBuyBudget.subtractAvailableFunds(manualLottoBuyCount * lottoBuyBudget.pricePerLotto)
-        return manualInputNumbers.map { Lotto(it.map(LottoNumber::of)) }
+        return lottoNumbersGenerator.generate(manualLottoBuyCount).map { Lotto(it) }
     }
 
     companion object {
