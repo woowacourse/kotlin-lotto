@@ -14,11 +14,11 @@ class WinningStatisticsTest {
         expected: Double,
     ) {
         // given
-        val purchaseInfo = PurchaseOrder(lottoPrice)
+        val purchaseOrder = PurchaseOrder(lottoPrice)
         val winningStatistics = WinningStatistics(statistics)
 
         // when
-        val actual = winningStatistics.calculateProfitRatio(purchaseInfo).ratio
+        val actual = winningStatistics.calculateProfitRatio(purchaseOrder).ratio
 
         // then
         Assertions.assertThat(actual).isEqualTo(expected)

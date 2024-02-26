@@ -6,7 +6,6 @@ class WinningStatistics(private val statistics: Map<LottoPrize, Int>) {
             statistics
                 .map { (lottoPrize, count) -> lottoPrize.amount * count.toLong() }
                 .sum()
-
         return ProfitRatio(totalPrizeAmount.toDouble() / purchaseOrder.price)
     }
 
