@@ -3,6 +3,10 @@ package model
 import util.Constant
 
 class Lottos(private val purchaseAmount: Int) {
+    init {
+        require(purchaseAmount % Constant.PURCHASE_AMOUNT_UNIT == 0)
+    }
+
     private val lottos: List<Lotto> = publishLottos()
 
     fun getLottos(): List<Lotto> = lottos
