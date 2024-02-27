@@ -10,10 +10,12 @@ import model.profit.ProfitStatus
 import java.text.DecimalFormat
 
 class OutputView {
-    fun showPurchasedLotteries(lotteries: Lotteries) {
-        val amount = lotteries.lotteries.size
+    fun showLotteriesType(
+        manualLotteryQuantity: Quantity,
+        randomLotteryQuantity: Quantity,
+    ) = println("수동으로 ${manualLotteryQuantity.count}개, 자동으로 ${randomLotteryQuantity.count}개 구매했습니다")
 
-        println("${amount}개를 구매했습니다.")
+    fun showPurchasedLotteries(lotteries: Lotteries) {
         lotteries.lotteries.forEach { lottery ->
             showPurchasedLottery(lottery)
         }
