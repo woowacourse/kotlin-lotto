@@ -3,7 +3,6 @@ import model.lottery.LotteryMachine
 import model.lottery.LotteryResultEvaluator
 import model.lottery.LotterySeller
 import model.profit.Profit
-import model.profit.ProfitStatusDecider
 import view.InputView
 import view.OutputView
 
@@ -15,6 +14,5 @@ fun main() {
         LotteryMachine(),
         LotteryResultEvaluator(),
         Profit(),
-        ProfitStatusDecider(),
     ).start()
 }
