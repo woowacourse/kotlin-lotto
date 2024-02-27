@@ -1,7 +1,6 @@
 package lotto.controller
 
 import lotto.domain.Cashier
-import lotto.domain.MarginCalculator
 import lotto.domain.RandomLottoGenerator
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
@@ -17,13 +16,13 @@ class LottoController(
 ) {
 
     fun start() {
-        val money = getValidMoney()
-        val quantity = getLottoQuantity(money)
+        val purchaseMoney = getValidMoney()
+        val quantity = getLottoQuantity(purchaseMoney)
         val lottoTickets = makeLottoTicket(quantity)
         val winningLotto = getValidWinningLotto()
         val winningNumbers = getValidWinningNumbers(winningLotto)
         val result = getLottoDrawingResult(winningNumbers, lottoTickets)
-        showResult(result, money)
+        showResult(result, purchaseMoney)
     }
 
     private fun getValidMoney(): Money {
@@ -74,9 +73,8 @@ class LottoController(
         return lottoResult
     }
 
-    private fun showResult(result: LottoDrawingResult, money: Money) {
-        val totalPrize = result.calculateTotalPrize()
-        val marginRate = MarginCalculator.calculateMarginRate(totalPrize, money)
+    private fun showResult(result: LottoDrawingResult, purchaseMoney: Money) {
+        val marginRate = result.calculateMarginRate(purchaseMoney)
         OutputView.printMargin(marginRate)
     }
 
