@@ -24,11 +24,3 @@ fun inputBonusNumber(): Int {
     return inputBonus(readlnOrNull()) ?: inputBonusNumber()
 }
 
-fun inputManualNumber() {
-    println(REQUEST_MANUAL_NUM)
-    readlnOrNull()
-}
-
-fun inputManualLottoNumber() {
-    readlnOrNull()
-}
