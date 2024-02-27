@@ -1,8 +1,9 @@
 package controller
 
+import model.Count
 import model.Lotto
-import model.LottoGameManager
 import model.LottoGameResult
+import model.LottoGenerator
 import model.LottoNumber
 import model.Money
 import util.ExceptionHandler
@@ -13,10 +14,10 @@ class LottoGameController(
     private val lottoGameInputView: LottoGameInputView,
     private val lottoGameOutputView: LottoGameOutputView,
     private val exceptionHandler: ExceptionHandler,
-    private val randomLottoGameManager: LottoGameManager,
+    private val lottoGenerator: LottoGenerator,
 ) {
     fun startLottoGame() {
-        val purchaseExpense: Int = getPurchaseExpense()
+        val purchaseExpense: Money = getPurchaseExpense()
         val lottie: List<Lotto> = purchaseLottie(purchaseExpense)
         val winningLotto = getWinningLotto()
         val bonusLottoNumber = createBonusLottoNumber(winningLotto)
@@ -24,33 +25,29 @@ class LottoGameController(
         displayLottoResult(lottoGameResult, purchaseExpense)
     }
 
-    private fun getPurchaseExpense(): Int = exceptionHandler.handleInputValue(lottoGameInputView::inputPurchaseExpense)
+    private fun getPurchaseExpense(): Money = exceptionHandler.handleInputValue(lottoGameInputView::inputPurchaseExpense)
 
-    private fun purchaseLottie(purchaseExpense: Int): List<Lotto> =
+    private fun purchaseLottie(purchaseExpense: Money): List<Lotto> =
         exceptionHandler.handleInputValue {
-            val lotteries = randomLottoGameManager.generateLotteries(purchaseExpense)
+            val lotteries = lottoGenerator.generate(Count.fromMoney(purchaseExpense))
             lotteries.also(lottoGameOutputView::showPurchasedLottie)
         }
 
-    private fun getWinningLotto(): Lotto =
-        exceptionHandler.handleInputValue {
-            val winningNumbers = lottoGameInputView.inputWinningNumbers()
-            randomLottoGameManager.generateWinningLotto(winningNumbers)
-        }
+    private fun getWinningLotto(): Lotto = exceptionHandler.handleInputValue(lottoGameInputView::inputWinningNumbers)
 
     private fun createBonusLottoNumber(winningLotto: Lotto): LottoNumber =
         exceptionHandler.handleInputValue {
             val bonusNumber = lottoGameInputView.inputBonusNumber()
-            randomLottoGameManager.generateBonusLottoNumber(bonusNumber, winningLotto)
+            LottoNumber(bonusNumber, winningLotto)
         }
 
     private fun displayLottoResult(
         lottoGameResult: LottoGameResult,
-        purchaseExpense: Int,
+        purchaseExpense: Money,
     ) {
         exceptionHandler.handleOutputValue {
             val rankResults = lottoGameResult.getWinningResult()
-            val earningRate = lottoGameResult.calculateEarningRate(Money(purchaseExpense))
+            val earningRate = lottoGameResult.calculateEarningRate(purchaseExpense)
             lottoGameOutputView.showGameResult(rankResults, earningRate)
         }
     }
