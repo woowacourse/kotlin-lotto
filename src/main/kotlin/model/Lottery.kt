@@ -6,10 +6,6 @@ class Lottery(private val lotteryNumbers: List<LotteryNumber>) {
         require(validateDuplicate(lotteryNumbers)) { EXCEPTION_DUPLICATED_NUMBER }
     }
 
-    private fun validateCount(lotteryNumbers: List<LotteryNumber>) = lotteryNumbers.size == LOTTERY_COUNT
-
-    private fun validateDuplicate(lotteryNumbers: List<LotteryNumber>) = lotteryNumbers.size == lotteryNumbers.toSet().size
-
     fun getCountOfMatch(lottery: Lottery) = lotteryNumbers.intersect(lottery.lotteryNumbers).size
 
     fun hasLotteryNumber(lotteryNumber: LotteryNumber) = lotteryNumbers.contains(lotteryNumber)
@@ -17,6 +13,10 @@ class Lottery(private val lotteryNumbers: List<LotteryNumber>) {
     fun hasBonus(bonus: Bonus) = lotteryNumbers.contains(bonus.lotteryNumber)
 
     override fun toString() = "[${lotteryNumbers.map { it.number }.joinToString(", ")}]\n"
+
+    private fun validateCount(lotteryNumbers: List<LotteryNumber>) = lotteryNumbers.size == LOTTERY_COUNT
+
+    private fun validateDuplicate(lotteryNumbers: List<LotteryNumber>) = lotteryNumbers.size == lotteryNumbers.toSet().size
 
     companion object {
         private const val LOTTERY_COUNT = 6
