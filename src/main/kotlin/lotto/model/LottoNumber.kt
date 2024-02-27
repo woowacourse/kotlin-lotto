@@ -1,6 +1,6 @@
 package lotto.model
 
-data class LottoNumber(val number: Int) {
+class LottoNumber private constructor(private val number: Int) {
     override fun toString(): String = number.toString()
 
     companion object {
