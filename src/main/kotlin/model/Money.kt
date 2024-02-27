@@ -38,19 +38,19 @@ class Money private constructor(val amount: BigDecimal) : Comparable<Money> {
     companion object {
         val ZERO: Money = wons(0)
 
-        fun wons(amount: Long): Money = Money(BigDecimal.valueOf(amount))
-
         fun wons(amount: Int): Money = Money(BigDecimal(amount))
 
-        fun from(input: String): Money {
-            val amount = input.toIntOrNull()
-            requireNotNull(amount) { ERROR_INVALID_PURCHASE_AMOUNT }
-            require(amount >= 0) { ERROR_MINUS_PURCHASE_AMOUNT }
+        fun wons(amount: Long): Money = Money(BigDecimal.valueOf(amount))
 
-            return wons(amount)
+        fun from(input: String): Money {
+            val amount = input.toLongOrNull()
+            if (amount != null && amount >= 0) return wons(amount)
+            val bigAmount = BigDecimal(input)
+            require(bigAmount >= BigDecimal.ZERO) { ERROR_INVALID_PURCHASE_AMOUNT }
+
+            return Money(bigAmount)
         }
 
-        private const val ERROR_INVALID_PURCHASE_AMOUNT = "제대로 된 금액을 입력해야 합니다."
-        private const val ERROR_MINUS_PURCHASE_AMOUNT = "0 이상의 금액을 입력해야 합니다."
+        private const val ERROR_INVALID_PURCHASE_AMOUNT = "제대로 된 금액을 지불해야 합니다."
     }
 }
