@@ -12,10 +12,7 @@ class OutputView {
         println()
     }
 
-    fun printWinningStatistics(
-        prizeCount: Map<LottoPrize, Int>,
-        profitRatio: Double,
-    ) {
+    fun printWinningResult(prizeCount: Map<LottoPrize, Int>) {
         println(OUTPUT_WINNING_STATICS)
         println(OUTPUT_DIVIDER)
 
@@ -24,6 +21,9 @@ class OutputView {
             val matchingCount = prizeCount.getOrDefault(lottoPrize, DEFAULT_MATCHING_COUNT)
             println(provideMatchingMessage(lottoPrize, matchingCount))
         }
+    }
+
+    fun printWinningRatio(profitRatio: Double) {
         println(OUTPUT_PROFIT_RATIO.format(profitRatio.provideTwoDecimal()))
     }
 
