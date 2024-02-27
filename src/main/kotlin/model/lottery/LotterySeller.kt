@@ -4,7 +4,7 @@ import model.Money
 import model.Quantity
 import java.text.DecimalFormat
 
-class LotterySeller() {
+class LotterySeller {
     fun getLotteryQuantity(money: Money): Quantity {
         require(money % PRICE == Money.ZERO) { "1,000 원 단위로 입력하세요." }
         require(money in PRICE..MAX_PURCHASE_AMOUNT) { ERROR_PURCHASE_AMOUNT_OUT_OF_BOUNDS }
