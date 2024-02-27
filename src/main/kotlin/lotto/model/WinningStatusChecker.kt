@@ -13,7 +13,7 @@ class WinningStatusChecker(results: List<WinningRank>) {
 
     fun getEarningRate(): Double {
         val total: Long = status.entries.sumOf { it.key.winningMoney * it.value }
-        return (total / (status.values.sum() * LottoMachine.TICKET_PRICE).toDouble())
+        return (total / (status.values.sum() * NumberOfTickets.TICKET_PRICE).toDouble())
     }
 
     companion object {
