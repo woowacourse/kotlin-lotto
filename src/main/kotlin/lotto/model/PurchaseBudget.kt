@@ -1,12 +1,12 @@
 package lotto.model
 
-class Budget(
-    val totalBudget: Int,
+class PurchaseBudget(
+    val amount: Int,
     val pricePerManualLotto: Int = Lotto.PRICE_PER_LOTTO,
     val pricePerAutoLotto: Int = Lotto.PRICE_PER_LOTTO,
 ) {
     init {
-        require(totalBudget >= pricePerManualLotto || totalBudget >= pricePerAutoLotto) { PRICE_ERROR_MESSAGE }
+        require(amount >= pricePerManualLotto || amount >= pricePerAutoLotto) { PRICE_ERROR_MESSAGE }
     }
 
     companion object {

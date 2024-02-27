@@ -1,14 +1,14 @@
 package lotto.controller
 
-import lotto.model.Budget
-import lotto.model.FixedLottoNumbersGenerator
+import lotto.model.FixedLottosGenerator
 import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
-import lotto.model.LottoWinningBundle
+import lotto.model.PurchaseBudget
 import lotto.model.PurchaseDetails
-import lotto.model.RandomLottoNumbersGenerator
+import lotto.model.RandomLottosGenerator
+import lotto.model.WinningBundle
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -16,16 +16,16 @@ class GameController {
     fun start() {
         val purchaseDetails = createPurchaseDetails()
         val purchasedLottos = purchaseLottos(purchaseDetails)
-        val lottoWinningBundle = createLottoWinningBundle()
-        val lottoResult = lottoWinningBundle.calculateResult(purchasedLottos)
-        OutputView.printResult(lottoResult)
-        OutputView.printProfitRate(lottoResult, purchaseDetails)
+        val winningBundle = createWinningBundle()
+        val result = winningBundle.calculateResult(purchasedLottos)
+        OutputView.printResult(result)
+        OutputView.printProfitRate(result, purchaseDetails)
     }
 
     private fun createPurchaseDetails(): PurchaseDetails {
-        val budget = Budget(InputView.readTotalBudget())
+        val purchaseBudget = PurchaseBudget(InputView.readBudget())
         val manualPurchaseCount = InputView.readManualPurchaseCount()
-        return PurchaseDetails(budget, manualPurchaseCount)
+        return PurchaseDetails(purchaseBudget, manualPurchaseCount)
     }
 
     private fun purchaseLottos(purchaseDetails: PurchaseDetails): List<Lotto> {
@@ -35,21 +35,21 @@ class GameController {
         return manualPurchasedLottos + autoPurchasedLottos
     }
 
-    private fun purchaseManualLottos(purchasePlan: PurchaseDetails): List<Lotto> {
-        val manualLottoBuyNumbers = InputView.readManualPurchaseNumbers(purchasePlan.manualPurchaseCount)
-        val fixedLottoNumbersGenerator = FixedLottoNumbersGenerator(manualLottoBuyNumbers)
-        return LottoMachine.createLottos(purchasePlan.manualPurchaseCount, fixedLottoNumbersGenerator)
+    private fun purchaseManualLottos(purchaseDetails: PurchaseDetails): List<Lotto> {
+        val manualPurchaseNumbers = InputView.readManualPurchaseNumbers(purchaseDetails.manualPurchaseCount)
+        val fixedLottoNumbersGenerator = FixedLottosGenerator(manualPurchaseNumbers)
+        return LottoMachine.createLottos(purchaseDetails.manualPurchaseCount, fixedLottoNumbersGenerator)
     }
 
-    private fun purchaseAutoLottos(purchasePlan: PurchaseDetails): List<Lotto> {
-        return LottoMachine.createLottos(purchasePlan.autoPurchaseCount, RandomLottoNumbersGenerator)
+    private fun purchaseAutoLottos(purchaseDetails: PurchaseDetails): List<Lotto> {
+        return LottoMachine.createLottos(purchaseDetails.autoPurchaseCount, RandomLottosGenerator)
     }
 
-    private fun createLottoWinningBundle(): LottoWinningBundle {
-        val lottoWinningNumbers = InputView.readLottoWinningNumbers()
-        val winningLotto = Lotto(LottoNumbers(lottoWinningNumbers.map { LottoNumber.of(it) }))
-        val lottoBonusNumber = InputView.readLottoBonusNumber()
+    private fun createWinningBundle(): WinningBundle {
+        val winningNumbers = InputView.readWinningNumbers()
+        val winningLotto = Lotto(LottoNumbers(winningNumbers.map { LottoNumber.of(it) }))
+        val bonusLottoNumber = LottoNumber.of(InputView.readBonusNumber())
 
-        return LottoWinningBundle(winningLotto, LottoNumber.of(lottoBonusNumber))
+        return WinningBundle(winningLotto, bonusLottoNumber)
     }
 }

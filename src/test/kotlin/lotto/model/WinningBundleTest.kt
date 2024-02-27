@@ -6,14 +6,14 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class LottoWinningBundleTest {
+class WinningBundleTest {
     @ParameterizedTest
     @ValueSource(ints = [6, 1])
     fun `로또 게임에서 보너스 번호는 당첨 번호와 중복되면 안된다`(bonusNumber: Int) {
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
 
         assertThrows<IllegalArgumentException> {
-            LottoWinningBundle(winningLotto, LottoNumber.of(bonusNumber))
+            WinningBundle(winningLotto, LottoNumber.of(bonusNumber))
         }
     }
 
@@ -25,8 +25,8 @@ class LottoWinningBundleTest {
                 Lotto.of(1, 2, 3, 4, 5, 8),
             )
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 7)
-        val lottoWinningBundle = LottoWinningBundle(winningLotto, LottoNumber.of(8))
-        val lottoResult = lottoWinningBundle.calculateResult(purchasedLottos)
+        val winningBundle = WinningBundle(winningLotto, LottoNumber.of(8))
+        val lottoResult = winningBundle.calculateResult(purchasedLottos)
         assertThat(lottoResult.winningCountsByRank).isEqualTo(
             mapOf(
                 Rank.MISS to 0,
@@ -47,8 +47,8 @@ class LottoWinningBundleTest {
                 Lotto.of(1, 2, 3, 4, 7, 8),
             )
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
-        val lottoWinningBundle = LottoWinningBundle(winningLotto, LottoNumber.of(8))
-        val lottoResult = lottoWinningBundle.calculateResult(buyedLottos)
+        val winningBundle = WinningBundle(winningLotto, LottoNumber.of(8))
+        val lottoResult = winningBundle.calculateResult(buyedLottos)
         assertThat(lottoResult.winningCountsByRank).isEqualTo(
             mapOf(
                 Rank.MISS to 0,

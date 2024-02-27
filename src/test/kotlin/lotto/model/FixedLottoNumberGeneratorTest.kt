@@ -13,6 +13,6 @@ class FixedLottoNumberGeneratorTest {
                 listOf(13, 14, 15, 16, 17, 18),
             )
 
-        assertThrows<IllegalArgumentException> { FixedLottoNumbersGenerator(fixedNumbers) }
+        assertThrows<IllegalArgumentException> { FixedLottosGenerator(fixedNumbers) }
     }
 }

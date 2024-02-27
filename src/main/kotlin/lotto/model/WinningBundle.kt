@@ -1,6 +1,6 @@
 package lotto.model
 
-data class LottoWinningBundle(
+data class WinningBundle(
     val winningLotto: Lotto,
     val bonusLottoNumber: LottoNumber,
 ) {
@@ -9,14 +9,28 @@ data class LottoWinningBundle(
     }
 
     fun calculateResult(purchasedLottos: List<Lotto>): Result {
-        val result: MutableMap<Rank, Int> = Rank.entries.reversed().associateWith { 0 }.toMutableMap()
+        val result = createInitialRankCountMap()
         purchasedLottos.forEach { lotto ->
-            val countOfMatch = calculateCountOfMatch(lotto)
-            val matchBonus = calculateMatchBonus(lotto)
-            val rank = Rank.valueOf(countOfMatch, matchBonus)
-            result[rank] = result.getOrDefault(rank, 0) + 1
+            updateRankCount(result, lotto)
         }
         return Result(result)
+    }
+
+    private fun createInitialRankCountMap(): MutableMap<Rank, Int> {
+        return Rank.entries
+            .reversed()
+            .associateWith { 0 }
+            .toMutableMap()
+    }
+
+    private fun updateRankCount(
+        result: MutableMap<Rank, Int>,
+        lotto: Lotto,
+    ) {
+        val countOfMatch = calculateCountOfMatch(lotto)
+        val matchBonus = calculateMatchBonus(lotto)
+        val rank = Rank.valueOf(countOfMatch, matchBonus)
+        result[rank] = result.getOrDefault(rank, 0) + 1
     }
 
     private fun calculateCountOfMatch(lotto: Lotto): Int {

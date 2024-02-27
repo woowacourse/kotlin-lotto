@@ -1,23 +1,21 @@
 package lotto.model
 
 class PurchaseDetails(
-    private val budget: Budget,
+    private val purchaseBudget: PurchaseBudget,
     val manualPurchaseCount: Int,
     autoPurchaseCount: Int? = null,
 ) {
-    val autoPurchaseCount: Int =
-        autoPurchaseCount
-            ?: (calculateRemainingBudgetAfterManual() / budget.pricePerAutoLotto)
+    val autoPurchaseCount: Int = autoPurchaseCount ?: (calculateRemainingBudgetAfterManual() / purchaseBudget.pricePerAutoLotto)
 
     init {
-        require(budget.totalBudget >= calculateTotalPurchaseCost())
+        require(purchaseBudget.amount >= calculateTotalPurchaseCost())
     }
 
     fun calculateTotalPurchaseCost() = calculateManualPurchaseCost() + calculateAutoPurchaseCost()
 
-    private fun calculateManualPurchaseCost() = manualPurchaseCount * budget.pricePerManualLotto
+    private fun calculateManualPurchaseCost() = manualPurchaseCount * purchaseBudget.pricePerManualLotto
 
-    private fun calculateAutoPurchaseCost() = autoPurchaseCount * budget.pricePerAutoLotto
+    private fun calculateAutoPurchaseCost() = autoPurchaseCount * purchaseBudget.pricePerAutoLotto
 
-    private fun calculateRemainingBudgetAfterManual() = budget.totalBudget - calculateManualPurchaseCost()
+    private fun calculateRemainingBudgetAfterManual() = purchaseBudget.amount - calculateManualPurchaseCost()
 }

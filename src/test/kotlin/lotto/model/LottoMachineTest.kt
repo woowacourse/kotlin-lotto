@@ -12,7 +12,7 @@ class LottoMachineTest {
                 listOf(7, 8, 9, 10, 11, 12),
                 listOf(13, 14, 15, 16, 17, 18),
             )
-        val fixedLottoNumbersGenerator = FixedLottoNumbersGenerator(fixedNumbers)
+        val fixedLottoNumbersGenerator = FixedLottosGenerator(fixedNumbers)
         val purchasedLottos = LottoMachine.createLottos(3, fixedLottoNumbersGenerator)
         assertThat(purchasedLottos).isEqualTo(
             listOf(

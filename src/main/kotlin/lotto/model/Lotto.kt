@@ -7,7 +7,11 @@ data class Lotto(val lottoNumbers: LottoNumbers) {
 
     companion object {
         fun of(vararg numbers: Int): Lotto {
-            return Lotto(LottoNumbers(numbers.map(LottoNumber::of)))
+            return Lotto(
+                LottoNumbers(
+                    numbers.map(LottoNumber::of),
+                ),
+            )
         }
 
         private const val LOTTO_SIZE_ERROR_MESSAGE = "로또의 숫자들은 중복되지 않는 6개입니다."

@@ -12,8 +12,8 @@ class ResultTest {
                 Lotto.of(1, 2, 3, 4, 5, 8),
             )
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 7)
-        val lottoWinningBundle = LottoWinningBundle(winningLotto, LottoNumber.of(8))
-        val lottoResult = lottoWinningBundle.calculateResult(lottos)
+        val winningBundle = WinningBundle(winningLotto, LottoNumber.of(8))
+        val lottoResult = winningBundle.calculateResult(lottos)
 
         Assertions.assertThat(lottoResult.getProfitRate(2000)).isEqualTo(15750.0)
     }
