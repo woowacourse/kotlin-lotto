@@ -10,13 +10,8 @@ object LottoMachine {
     fun issueTickets(
         count: Int,
         lottoNumbersGenerator: NumbersGenerator,
-    ): List<Lotto> {
-        val tickets = mutableListOf<Lotto>()
-        repeat(count) {
-            tickets.add(
-                Lotto(lottoNumbersGenerator.generateNumbers().map { LottoNumber.valueOf(it) }.toSet()),
-            )
+    ): List<Lotto> =
+        List(count) {
+            Lotto(lottoNumbersGenerator.generateNumbers().map { LottoNumber.valueOf(it) }.toSet())
         }
-        return tickets
-    }
 }
