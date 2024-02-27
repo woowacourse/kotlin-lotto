@@ -2,10 +2,7 @@ package lotto.model
 
 import lotto.util.NumberGenerate
 
-class LottoMachine(
-    ticketCounts: NumberOfTickets,
-    manualCounts: NumberOfManual,
-) {
+class LottoMachine(ticketCounts: TicketCounts) {
     private val randomNumberGenerate =
         NumberGenerate { LottoNumber.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted() }
 

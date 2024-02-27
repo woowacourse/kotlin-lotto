@@ -10,8 +10,10 @@ class LottoMachineTest {
     fun `발행 개수 만큼 로또를 발행한다`(count: Int) {
         val lottoMachine =
             LottoMachine(
-                NumberOfTickets(count * NumberOfTickets.TICKET_PRICE),
-                NumberOfManual(0, count),
+                TicketCounts(
+                    NumberOfTickets(count * NumberOfTickets.TICKET_PRICE),
+                    NumberOfManual(0),
+                ),
             )
         val result = lottoMachine.issueTickets(count)
         assertThat(result.size).isEqualTo(count)
