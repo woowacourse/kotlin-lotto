@@ -1,13 +1,13 @@
 package model
 
-import util.Constant
+import util.LottoConstants
 
 class Buyer(private val purchaseAmount: Int) {
     val numberOfLotto: Int = calculateNumberOfLotto()
     var purchasedLotto: Lottos = Lottos(emptyList())
 
     fun calculateNumberOfLotto(): Int {
-        return purchaseAmount / Constant.PURCHASE_AMOUNT_UNIT
+        return purchaseAmount / LottoConstants.UNIT_PRICE
     }
 
     fun buyLottos(lottos: Lottos) {

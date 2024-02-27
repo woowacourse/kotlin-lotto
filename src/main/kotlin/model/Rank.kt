@@ -1,6 +1,6 @@
 package model
 
-import util.Constant
+import util.MoneyConstants
 
 private const val MATCH_COUNT_FIRST = 6
 private const val MATCH_COUNT_SECOND = 5
@@ -10,12 +10,12 @@ private const val MATCH_COUNT_FIFTH = 3
 private const val MATCH_COUNT_MISS = 0
 
 enum class Rank(val countOfMatch: Int, val winningAmount: Int) {
-    FIRST(MATCH_COUNT_FIRST, Constant.FIRST_RANK_WINNING_MONEY),
-    SECOND(MATCH_COUNT_SECOND, Constant.SECOND_RANK_WINNING_MONEY),
-    THIRD(MATCH_COUNT_THIRD, Constant.THIRD_RANK_WINNING_MONEY),
-    FOURTH(MATCH_COUNT_FOURTH, Constant.FOURTH_RANK_WINNING_MONEY),
-    FIFTH(MATCH_COUNT_FIFTH, Constant.FIFTH_RANK_WINNING_MONEY),
-    MISS(MATCH_COUNT_MISS, Constant.MISS_WINNING_MONEY),
+    FIRST(MATCH_COUNT_FIRST, MoneyConstants.FIRST_RANK_WINNING_MONEY),
+    SECOND(MATCH_COUNT_SECOND, MoneyConstants.SECOND_RANK_WINNING_MONEY),
+    THIRD(MATCH_COUNT_THIRD, MoneyConstants.THIRD_RANK_WINNING_MONEY),
+    FOURTH(MATCH_COUNT_FOURTH, MoneyConstants.FOURTH_RANK_WINNING_MONEY),
+    FIFTH(MATCH_COUNT_FIFTH, MoneyConstants.FIFTH_RANK_WINNING_MONEY),
+    MISS(MATCH_COUNT_MISS, MoneyConstants.MISS_WINNING_MONEY),
     ;
 
     companion object {

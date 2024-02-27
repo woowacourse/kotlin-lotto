@@ -9,7 +9,7 @@ import model.Rank
 import model.WinningLotto
 import model.WinningStatistic
 import model.WinningStatistics
-import util.Constant
+import util.LottoConstants
 import view.InputView
 import view.OutputView
 
@@ -35,7 +35,9 @@ class LottoController {
     }
 
     private fun publishLottos(numberOfManualLotto: Int) {
-        if (numberOfManualLotto > Constant.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) buyer.buyLottos(generateManualLottos(numberOfManualLotto))
+        if (numberOfManualLotto > LottoConstants.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) {
+            buyer.buyLottos(generateManualLottos(numberOfManualLotto))
+        }
         buyer.buyLottos(generateAutoLottos(numberOfManualLotto))
 
         displayPurchaseResult(numberOfManualLotto, buyer.numberOfLotto - numberOfManualLotto)
@@ -71,7 +73,7 @@ class LottoController {
         winningLotto: WinningLotto,
     ): WinningStatistics {
         val results =
-            MutableList(Constant.LOTTO_SIZE) {
+            MutableList(LottoConstants.SIZE) {
                 WinningStatistic(Pair(Rank.getRankByOrdinal(it), 0))
             }
         repeat(lottos.publishedLottos.size) { index ->
