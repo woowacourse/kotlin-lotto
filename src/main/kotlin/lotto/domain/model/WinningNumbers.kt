@@ -1,6 +1,6 @@
 package lotto.domain.model
 
-data class WinningLotto(val lotto: Lotto, val bonus: LottoNumber) {
+data class WinningNumbers(val lotto: Lotto, val bonus: LottoNumber) {
     init {
         require(lotto.numbers.contains(bonus).not()) { DUPLICATED_BONUS_NUMBER_EXCEPTION_MESSAGE }
     }

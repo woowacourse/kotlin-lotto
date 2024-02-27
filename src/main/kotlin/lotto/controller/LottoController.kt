@@ -7,7 +7,7 @@ import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.Money
-import lotto.domain.model.WinningLotto
+import lotto.domain.model.WinningNumbers
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -20,8 +20,9 @@ class LottoController(
         val money = getValidMoney()
         val quantity = getLottoQuantity(money)
         val lottoTickets = makeLottoTicket(quantity)
-        val winningLotto = getWinningLotto()
-        val result = getLottoDrawingResult(lottoTickets, winningLotto)
+        val winningLotto = getValidWinningLotto()
+        val winningNumbers = getValidWinningNumbers(winningLotto)
+        val result = getLottoDrawingResult(winningNumbers, lottoTickets)
         showResult(result, money)
     }
 
@@ -48,33 +49,27 @@ class LottoController(
         return lottoTickets
     }
 
-    private fun getWinningLotto(): WinningLotto {
-        val winningNumber = getValidLotto()
-        val bonusNumber = getValidBonusNumber()
-        return WinningLotto(winningNumber, bonusNumber)
-    }
-
-    private fun getValidLotto(): Lotto {
+    private fun getValidWinningLotto(): Lotto {
         return try {
             Lotto(InputView.readWinningNumbers().map { LottoNumber(it) })
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getValidLotto()
+            getValidWinningLotto()
         }
     }
 
-    private fun getValidBonusNumber(): LottoNumber {
+    private fun getValidWinningNumbers(winningLotto: Lotto): WinningNumbers {
         return try {
-            return LottoNumber(InputView.readBonusNumber())
+            val bonusNumber = LottoNumber(InputView.readBonusNumber())
+            WinningNumbers(winningLotto, bonusNumber)
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getValidBonusNumber()
+            getValidWinningNumbers(winningLotto)
         }
     }
 
-    private fun getLottoDrawingResult(lottoTickets: List<Lotto>, winningLotto: WinningLotto): LottoDrawingResult {
-        val ranks = lottoTickets.map { targetLotto -> winningLotto.getRank(targetLotto) }
-        val lottoResult = LottoDrawingResult.from(ranks)
+    private fun getLottoDrawingResult(winningLotto: WinningNumbers, lottoTickets: List<Lotto>): LottoDrawingResult {
+        val lottoResult = winningLotto.getResult(lottoTickets)
         OutputView.printLottoResult(lottoResult)
         return lottoResult
     }

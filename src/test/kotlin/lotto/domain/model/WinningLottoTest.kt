@@ -11,7 +11,7 @@ class WinningLottoTest {
     @Test
     fun `보너스 번호가 로또 번호와 중복될 때 예외를 던진다`() {
         val exception = assertThrows<IllegalArgumentException> {
-            WinningLotto(
+            WinningNumbers(
                 Lotto(List(6) { LottoNumber(it + 1) }),
                 LottoNumber(1)
             )
@@ -25,7 +25,7 @@ class WinningLottoTest {
 
         private val winningNumbers = Lotto(List(6) { LottoNumber(it + 1) })
         private val bonusNumber = LottoNumber(7)
-        private val winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        private val winningLotto = WinningNumbers(winningNumbers, bonusNumber)
 
         @Test
         fun `로또 번호가 6개 겹칠 때 getRank가 1등을 반환한다`() {
