@@ -1,6 +1,8 @@
 package lotto.model
 
-class LottoNumber(private val numbers: Set<Int>) {
+import java.util.TreeSet
+
+class LottoNumber(private val numbers: TreeSet<Int>) {
     init {
         if (numbers.size != Lotto.LOTTO_LEN)
             throw ExceptionManager.getException(UserEvent.LottoEvent.InvalidNumCount)
@@ -9,7 +11,7 @@ class LottoNumber(private val numbers: Set<Int>) {
 
     }
 
-    fun getNumbers(): Set<Int> {
+    fun getNumbers(): TreeSet<Int> {
         return numbers
     }
 }

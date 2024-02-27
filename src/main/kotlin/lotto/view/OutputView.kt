@@ -40,7 +40,7 @@ fun outputCalculationOfYield(prizeCalculate: Double) {
 }
 
 private fun outputLotto(lotto: Lotto) {
-    println(lotto.getLottoNumber().sorted())
+    println(lotto.getLottoNumber())
 }
 
 private fun getLottoMessage(prize: LottoPrize): String {
