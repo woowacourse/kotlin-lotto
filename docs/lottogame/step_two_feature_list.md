@@ -8,7 +8,7 @@
 - [x] : lotto 구매 구매 현황 수동 + 자동 현황 View 추가 (output)
 
 ## Controller
-- [ ] : 수동 구매할 로또 수  
+- [x] : 수동 구매할 로또 수  
 - [x] : purchaseExpense Int -> Money로 수정
 
 ## Model
@@ -17,10 +17,9 @@
 - [x] : Money - times operator 함수 만들 도록 하자
 - [x] : Money - compareTo operator 함수 구현
 - [X] : List<Int> -> Lotto 팩토리 메서드 함수 추가
-- [ ] : 수동 로또 생성기 추가 구현
-- [ ] : 수동 로또 만드는 부분 (구매 금액 >= 수동 로또 수 * 로또 가격) 누구에게 책임을 묻지? - 수동 로또 생성기가 하는게 맞음
+- [x] : 수동 로또 생성기 추가 구현
+- [ ] : Lotto Machine - (구매 금액 >= 수동 로또 수 * 로또 가격) 비교 기능 
 - [x] : 자동 로또 생성기 네이밍 변경 (LottieGenerator -> AutoLottieGenerator)
-- [x] : LottoCountCalculator 구현 - 돈(cost)으로 구매할 수 있는 로또 count 를 반환하는 객체
 
 # PR에 적을 질문 내용
 기존 코드를 고치기보다는 새로운 코드를 작성하여 리팩토링하는 방식으로 진행했습니다!
