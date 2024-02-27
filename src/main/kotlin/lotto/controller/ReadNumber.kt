@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.controller.Verifier.inputBonusNumber
 import lotto.controller.Verifier.inputCharge
+import lotto.controller.Verifier.inputHowManyManually
 import lotto.controller.Verifier.inputLottoNumber
 import lotto.controller.Verifier.inputWinning
 import lotto.model.Lotto
@@ -20,4 +21,8 @@ fun readLottoBonusNumber(): Int {
 
 fun readManualLottoNumber(): Lotto {
     return inputLottoNumber(readlnOrNull()) ?: readManualLottoNumber()
+}
+
+fun readHowManyManually(): Int {
+    return inputHowManyManually(readlnOrNull()) ?: readHowManyManually()
 }

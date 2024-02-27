@@ -62,4 +62,13 @@ object Verifier {
             null
         }
     }
+
+    fun inputHowManyManually(userInput: String?): Int? {
+        return try {
+            userInput?.toIntOrNull() ?: throw (IllegalArgumentException(WRONG_INPUT))
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            null
+        }
+    }
 }

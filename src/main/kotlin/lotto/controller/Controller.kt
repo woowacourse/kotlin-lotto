@@ -22,6 +22,7 @@ class Controller {
         insertCostMessage()
         val charge = readCharge()
         val count = (charge / LOTTO_PRICE).toInt()
+        readHowManyManually()
         readManualLottoNumber()
         purchaseCountMessage(count)
         val lottos = makeLottos(count)
