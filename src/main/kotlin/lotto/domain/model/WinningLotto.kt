@@ -11,6 +11,11 @@ data class WinningLotto(val lotto: Lotto, val bonus: LottoNumber) {
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 
+    fun getResult(lottoTickets: List<Lotto>): LottoDrawingResult {
+        val ranks = lottoTickets.map { getRank(it) }
+        return LottoDrawingResult(ranks.groupingBy { rank -> rank }.eachCount())
+    }
+
     companion object {
         private const val DUPLICATED_BONUS_NUMBER_EXCEPTION_MESSAGE = "보너스 번호는 당첨번호와 중복되면 안됩니다."
     }
