@@ -1,9 +1,7 @@
 package lotto.view
 
-import lotto.constants.GameConstant.SPLIT_DELIMITER
-
 class InputView {
-    fun readPurchaseAmount(): String = validateNullInput(readlnOrNull())
+    fun readPurchaseAmount(): Int = validateNullInput(readlnOrNull()).validateAndConvertDigit()
 
     fun readWinningNumbers(): List<Int> {
         val winningNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
@@ -24,6 +22,7 @@ class InputView {
     }
 
     companion object {
+        private const val SPLIT_DELIMITER = ","
         private const val ERROR_PREFIX = "[ERROR] "
         private const val ERROR_EMPTY_INPUT_MESSAGE = "${ERROR_PREFIX}입력값이 없습니다."
         private const val ERROR_INPUT_TYPE_MESSAGE = "${ERROR_PREFIX}숫자만 입력 가능합니다."

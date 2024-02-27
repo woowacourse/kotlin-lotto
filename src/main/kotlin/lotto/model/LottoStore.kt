@@ -1,9 +1,5 @@
 package lotto.model
 
-import lotto.constants.GameConstant.LOTTO_NUMBER_SIZE
-import lotto.constants.GameConstant.MAX_NUMBER
-import lotto.constants.GameConstant.MIN_NUMBER
-
 class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerator: NumberGenerator) {
     var lottos = Lottos()
         private set
@@ -21,5 +17,11 @@ class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerat
 
     fun getWinningResult(winningLotto: WinningLotto): Map<WinningRank, Int> {
         return lottos.winningResult(winningLotto)
+    }
+
+    companion object {
+        private const val LOTTO_NUMBER_SIZE = 6
+        private const val MIN_NUMBER = 1
+        private const val MAX_NUMBER = 45
     }
 }

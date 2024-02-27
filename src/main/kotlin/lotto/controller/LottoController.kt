@@ -1,7 +1,5 @@
 package lotto.controller
 
-import lotto.constants.GameConstant.DEFAULT_COUNT
-import lotto.constants.GameConstant.PURCHASE_UNIT
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.LottoNumberGenerator
@@ -16,24 +14,18 @@ import lotto.view.OutputView
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
     fun run() {
         val purchaseAmount = initPurchaseAmount()
-        val numberOfLottos = initBuyLotto(purchaseAmount)
-        val lottoStore = generateLotto(numberOfLottos)
+        val lottoStore = generateLottoStore(purchaseAmount.numberOfLottos)
         val winningNumbers = readWinningNumbers()
-        showLottoResult(lottoStore, winningNumbers, purchaseAmount)
+        showLottoResult(lottoStore, winningNumbers, purchaseAmount.lottoPurchaseAmount)
     }
 
-    private fun initPurchaseAmount(): Int {
+    private fun initPurchaseAmount(): PurchaseAmount {
         outputView.printPurchaseAmountMessage()
-        return PurchaseAmount().getAmount(inputView.readPurchaseAmount())
+        return PurchaseAmount(inputView.readPurchaseAmount(), PURCHASE_UNIT)
     }
 
-    private fun initBuyLotto(purchaseAmount: Int): Int {
-        val numberOfLottos = purchaseAmount / PURCHASE_UNIT
+    private fun generateLottoStore(numberOfLottos: Int): LottoStore {
         outputView.printNumberOfLottoMessage(numberOfLottos)
-        return numberOfLottos
-    }
-
-    private fun generateLotto(numberOfLottos: Int): LottoStore {
         val lottoStore = LottoStore(numberOfLottos, LottoNumberGenerator())
         outputView.printLottoNumbers(lottoStore.lottos)
         return lottoStore
@@ -63,5 +55,10 @@ class LottoController(private val inputView: InputView, private val outputView: 
         val profitAmount = WinningPrizeCalculator.calculateProfitAmount(rankCounts)
         val profitRate = WinningPrizeCalculator.calculateProfitRate(purchaseAmount, profitAmount)
         outputView.printProfitRateMessage(profitRate)
+    }
+
+    companion object {
+        const val PURCHASE_UNIT = 1000
+        private const val DEFAULT_COUNT = 0
     }
 }
