@@ -1,12 +1,12 @@
 package lotto.controller
 
-import lotto.model.AutoLottoMachine
 import lotto.model.FixedLottoNumbersGenerator
 import lotto.model.Lotto
-import lotto.model.LottoBuyBudget
+import lotto.model.LottoMachine
 import lotto.model.LottoNumber
+import lotto.model.LottoPurchaseBudget
+import lotto.model.LottoPurchasePlan
 import lotto.model.LottoWinningBundle
-import lotto.model.ManualLottoMachine
 import lotto.model.RandomLottoNumbersGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -20,23 +20,23 @@ class LottoGameController {
     }
 
     private fun buyLottos(): List<Lotto> {
-        val lottoBuyBudget = LottoBuyBudget(InputView.readAvailableFund())
-        val manualBuyedLottos = buyManualLottos(lottoBuyBudget)
-        val autoBuyedLottos = buyAutoLottos(lottoBuyBudget)
+        val lottoPurchaseBudget = LottoPurchaseBudget(InputView.readTotalBudget())
+        val lottoPurchasePlan = LottoPurchasePlan(lottoPurchaseBudget, InputView.readManualLottoBuyCount())
+
+        val manualBuyedLottos = buyManualLottos(lottoPurchasePlan)
+        val autoBuyedLottos = buyAutoLottos(lottoPurchasePlan)
         OutputView.printLottos(manualBuyedLottos, autoBuyedLottos)
         return manualBuyedLottos + autoBuyedLottos
     }
 
-    private fun buyManualLottos(lottoBuyBudget: LottoBuyBudget): List<Lotto> {
-        val manualLottoBuyCount = InputView.readManualLottoBuyCount()
-        val manualLottoMachine = ManualLottoMachine(manualLottoBuyCount, lottoBuyBudget)
-        val manualLottoBuyNumbers = InputView.readManualLottoBuyNumbers(manualLottoBuyCount)
+    private fun buyManualLottos(lottoPurchasePlan: LottoPurchasePlan): List<Lotto> {
+        val manualLottoBuyNumbers = InputView.readManualLottoBuyNumbers(lottoPurchasePlan.manualPurchaseCount)
         val fixedLottoNumbersGenerator = FixedLottoNumbersGenerator(manualLottoBuyNumbers)
-        return manualLottoMachine.createLottos(fixedLottoNumbersGenerator)
+        return LottoMachine.createLottos(lottoPurchasePlan.manualPurchaseCount, fixedLottoNumbersGenerator)
     }
 
-    private fun buyAutoLottos(lottoBuyBudget: LottoBuyBudget): List<Lotto> {
-        return AutoLottoMachine.createLottos(lottoBuyBudget, RandomLottoNumbersGenerator)
+    private fun buyAutoLottos(lottoPurchasePlan: LottoPurchasePlan): List<Lotto> {
+        return LottoMachine.createLottos(lottoPurchasePlan.autoPurchaseCount, RandomLottoNumbersGenerator)
     }
 
     private fun createLottoWinningBundle(): LottoWinningBundle {
