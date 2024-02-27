@@ -63,3 +63,21 @@ fun `Money는 음수일 수 없다`() {
 자주 반복되더라도 readable 하지 않다면 상수화하는 것을 꺼립니다.  
 
 이에 대한 리뷰어님의 의견을 듣고 싶습니다. 🙇‍
+
+## 구체 클래스에 대한 추상화에 대한 고찰..
+오늘 수업 시간에서도 배웠지만, 현 시점에서 객체 지향 프로그래밍에서 `확장성` 을 고려하지 않고 개발할 수 없습니다.  
+따라서, 보통 생성자를 경계를 두고 interface 나 abstract class 타입으로 받아 시스템을 유연하게 설계할 수 있도록 합니다.  
+```kotlin
+class LottoGameController(
+    private val inputView: LottoGameInputView = ConsoleLottoGameInputView(),
+    private val outputView: LottoGameOutputView = ConsoleLottoGameOutputView(),
+    private val lottieGenerator: AutoLottieGenerator = AutoLottieGenerator { ... },
+) 
+```
+그러나, 모든 구체 클래스를 interface 나 abstract class 를 상속하지 않는 이상 모든 확장에 대처할 수 없다고 생각합니다.  
+`변동 가능성이 높은` 것들을 위주로 추상화하고, `고정될 가능성이 높은` 것들은 구체 클래스로 구현하는 방식으로 개발을 하려 노력하지만
+그 기준을 판별하는 역량이 많이 부족하다고 생각합니다..  
+
+예시로, Lotto, LottoNumber, LottoGenerator 등등.. 모두 변동 가능성이 있는 것으로 판단이 되어 싹 다 추상화를 해야하나..? 라는 생각이 듭니다.  
+
+혹시, 이에 대한 역량을 기르기 위해 추천해주실 docs 나 책이 있을까요?! 
