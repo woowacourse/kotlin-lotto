@@ -52,14 +52,14 @@ class LotteryController(
 
     private fun calculateWinningResult(lotteries: Lotteries): WinningResult {
         val winningLottery = readWinningLottery()
-        val winningResult = lotteries.evaluate(winningLottery)
+        val winningResult = lotteries.evaluateWinning(winningLottery)
         outputView.showWinningResult(winningResult)
         return winningResult
     }
 
     private fun readWinningLottery(): WinningLottery =
         WinningLottery(
-            Lottery.fromInput(inputView.readWinningNumbers()),
+            Lottery.from(inputView.readWinningNumbers()),
             LotteryNumber.from(inputView.readBonusNumber()),
         )
 

@@ -39,7 +39,7 @@ class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
 
         fun of(vararg numbers: Int): Lottery = Lottery(numbers.map { LotteryNumber(it) }.toList())
 
-        fun fromInput(input: String): Lottery {
+        fun from(input: String): Lottery {
             require(input.isNotBlank()) { "공백을 입력하셨습니다." }
             val numbers = input.split(",").map { LotteryNumber(it.toInt()) }
             return Lottery(numbers)

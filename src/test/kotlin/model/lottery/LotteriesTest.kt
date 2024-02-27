@@ -75,7 +75,7 @@ class LotteriesTest {
                 ),
             )
 
-        val winningResult = lotteries.evaluate(winningLottery)
+        val winningResult = lotteries.evaluateWinning(winningLottery)
 
         assertThat(winningResult).isEqualTo(expected)
     }

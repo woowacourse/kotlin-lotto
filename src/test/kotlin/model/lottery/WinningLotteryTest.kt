@@ -37,7 +37,7 @@ class WinningLotteryTest {
             )
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
 
-        val winningRank = winningLottery.evaluate(lottery)
+        val winningRank = winningLottery.evaluateWinningRank(lottery)
         Assertions.assertThat(winningRank).isEqualTo(WinningRank.SECOND)
     }
 }

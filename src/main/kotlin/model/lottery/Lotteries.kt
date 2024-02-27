@@ -8,11 +8,11 @@ import model.winning.WinningResult
 data class Lotteries(val lotteries: List<Lottery>) {
     operator fun plus(other: Lotteries): Lotteries = Lotteries(this.lotteries + other.lotteries)
 
-    fun evaluate(winningLottery: WinningLottery): WinningResult {
+    fun evaluateWinning(winningLottery: WinningLottery): WinningResult {
         val winningResult = DEFAULT_WINNING_RESULT
 
         lotteries.forEach {
-            val rank = winningLottery.evaluate(it)
+            val rank = winningLottery.evaluateWinningRank(it)
             winningResult[rank] = winningResult[rank]!! + Quantity(1)
         }
 
