@@ -12,7 +12,7 @@ class LottoController(
 ) {
     fun run() {
         val purchaseOrder = readPurchasePrice()
-        val lottoStore = LottoStore.buyLottos(purchaseOrder, lottoNumberGenerator)
+        val lottoStore = LottoStore.buyLottos(listOf(), purchaseOrder, lottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
 
         val winningLotto = readWinningLotto()

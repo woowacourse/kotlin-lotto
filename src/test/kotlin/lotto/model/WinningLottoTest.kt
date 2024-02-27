@@ -51,6 +51,7 @@ class WinningLottoTest {
         val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber(bonusNumber))
         val lottoStore =
             LottoStore.buyLottos(
+                listOf(),
                 PurchaseOrder(5000),
                 object : LottoNumberGenerator {
                     override fun generate() = listOf(1, 2, 3, 4, 5, 6)
