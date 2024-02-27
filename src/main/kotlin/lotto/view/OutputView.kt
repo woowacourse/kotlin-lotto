@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.LottoPurchaseDetails
 import lotto.model.LottoRank
 import lotto.model.LottoResult
 
@@ -26,6 +27,19 @@ object OutputView {
                         " (${lottoRank.winningMoney}원) - ${count}개",
                 )
             }
-        println("총 수익률은 ${String.format("%.2f", lottoResult.getProfitRate())}입니다.")
+    }
+
+    fun printProfitRate(
+        lottoResult: LottoResult,
+        purchaseDetails: LottoPurchaseDetails,
+    ) {
+        println(
+            "총 수익률은 ${
+                String.format(
+                    "%.2f",
+                    lottoResult.getProfitRate(purchaseDetails.calculateTotalPurchaseCost()),
+                )
+            }입니다.",
+        )
     }
 }

@@ -8,9 +8,9 @@ data class LottoWinningBundle(
         require(bonusLottoNumber !in winningLotto.lottoNumbers.numbers) { BONUS_NUMBER_DUPLICATED_ERROR_MESSAGE }
     }
 
-    fun calculateResult(buyedLottos: List<Lotto>): LottoResult {
+    fun calculateResult(purchasedLottos: List<Lotto>): LottoResult {
         val result: MutableMap<LottoRank, Int> = LottoRank.entries.reversed().associateWith { 0 }.toMutableMap()
-        buyedLottos.forEach { lotto ->
+        purchasedLottos.forEach { lotto ->
             val countOfMatch = calculateCountOfMatch(lotto)
             val matchBonus = calculateMatchBonus(lotto)
             val lottoRank = LottoRank.valueOf(countOfMatch, matchBonus)
