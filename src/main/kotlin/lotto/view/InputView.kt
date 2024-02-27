@@ -3,6 +3,8 @@ package lotto.view
 class InputView {
     fun readPurchaseAmount(): Int = validateNullInput(readlnOrNull()).validateAndConvertDigit()
 
+    fun readManualLottoCount(): Int = validateNullInput(readlnOrNull()).validateAndConvertDigit()
+
     fun readWinningNumbers(): List<Int> {
         val winningNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
         return winningNumbers.split(SPLIT_DELIMITER).map { it.validateAndConvertDigit() }

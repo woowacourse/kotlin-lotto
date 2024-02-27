@@ -2,9 +2,9 @@ package lotto.model
 
 import lotto.controller.LottoController.Companion.PURCHASE_UNIT
 
-class PurchaseAmount(private val inputAmount: Int, private val ticketPrice: Int = PURCHASE_UNIT) {
-    val numberOfLottos = inputAmount / ticketPrice
-    val lottoPurchaseAmount = numberOfLottos * ticketPrice
+class PurchaseAmount(inputAmount: Int, private val ticketPrice: Int = PURCHASE_UNIT) {
+    val purchasableLottoCount = inputAmount / ticketPrice
+    val lottoPurchaseAmount = purchasableLottoCount * ticketPrice
 
     init {
         validateNumberRange(inputAmount)
