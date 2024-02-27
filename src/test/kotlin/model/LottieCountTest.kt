@@ -8,11 +8,12 @@ class LottieCountTest {
     @Test
     fun `buying 금액으로 구매할 로또의 개수를 반환해준다`() {
         // given
+        val lottoCount = 4
         val purchaseExpense = Money(3_000)
         val lottoPrice = Money(1_000)
         val expected = 3
         // when
-        val actual = purchaseExpense / lottoPrice
+        val actual = calculateLottoCount(lottoCount, lottoPrice, purchaseExpense)
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -25,7 +26,17 @@ class LottieCountTest {
         val lottoPrice = Money(1_000)
         // when
         assertThrows<IllegalArgumentException> {
-            if (lottoCount < purchaseExpense / lottoPrice) throw IllegalArgumentException()
+            calculateLottoCount(lottoCount, lottoPrice, purchaseExpense)
         }
+    }
+
+    fun calculateLottoCount(
+        lottieCountLimit: Int,
+        lottoPrice: Money,
+        purchaseExpense: Money,
+    ): Int {
+        val count = purchaseExpense / lottoPrice
+        if (lottieCountLimit < count) throw IllegalArgumentException()
+        return count
     }
 }
