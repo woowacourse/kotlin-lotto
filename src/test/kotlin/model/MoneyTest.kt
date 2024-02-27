@@ -1,5 +1,6 @@
 package model
 
+import model.profit.ProfitRate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -64,5 +65,18 @@ class MoneyTest {
         val money1 = Money.wons(1_500)
         val money2 = Money.wons(1_000)
         assertTrue(money1 > money2)
+    }
+
+    @Test
+    fun `구매 금액과 총 당첨 금액의 수익률을 계산한다`() {
+        // given
+        val purchaseAmount = Money.wons(5_000)
+        val totalWinningPrize = Money.wons(30_000_000)
+
+        // when
+        val result = purchaseAmount.calculateProfitRate(totalWinningPrize = totalWinningPrize)
+
+        // then
+        assertThat(result).isEqualTo(ProfitRate(6000.0))
     }
 }

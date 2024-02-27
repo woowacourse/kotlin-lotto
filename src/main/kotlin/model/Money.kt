@@ -1,5 +1,6 @@
 package model
 
+import model.profit.ProfitRate
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -15,6 +16,8 @@ class Money private constructor(val amount: BigDecimal) : Comparable<Money> {
     operator fun rem(other: Money): Money = Money(this.amount.rem(other.amount))
 
     override fun compareTo(other: Money): Int = (amount - other.amount).toInt()
+
+    fun calculateProfitRate(totalWinningPrize: Money): ProfitRate = ProfitRate(totalWinningPrize / this)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
