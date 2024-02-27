@@ -21,7 +21,7 @@ class Lotto private constructor(val numbers: List<LottoNumber>) {
         private const val INVALID_DUPLICATION = "중복되지 않는 로또 번호를 입력해 주세요."
 
         fun create(numbers: List<Int>): Lotto {
-            return Lotto(numbers.sorted().map { LottoNumber(it) })
+            return Lotto(numbers.sorted().map { LottoNumber.from(it) })
         }
     }
 }

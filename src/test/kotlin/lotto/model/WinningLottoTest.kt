@@ -14,13 +14,13 @@ class WinningLottoTest {
     @Test
     fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() =
         assertDoesNotThrow {
-            WinningLotto(lotto, LottoNumber(7))
+            WinningLotto(lotto, LottoNumber.from(7))
         }
 
     @Test
     fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() =
         assertThrows<IllegalArgumentException> {
-            WinningLotto(lotto, LottoNumber(6))
+            WinningLotto(lotto, LottoNumber.from(6))
         }
 
     @ParameterizedTest
@@ -31,7 +31,7 @@ class WinningLottoTest {
         expected: LottoPrize,
     ) {
         // given
-        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber(bonusNumber))
+        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber.from(bonusNumber))
 
         // when
         val actual = winningLotto.getLottoPrize(lotto)
@@ -48,7 +48,7 @@ class WinningLottoTest {
         expected: LottoPrize,
     ) {
         // given
-        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber(bonusNumber))
+        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber.from(bonusNumber))
         val lottoStore =
             LottoStore.buyLottos(
                 listOf(),

@@ -44,7 +44,7 @@ object InputView {
         println(INPUT_BONUS_NUMBER)
         val inputBonusNumber = readln()
         val bonusNumber = inputBonusNumber.validateAndConvertDigit()
-        return LottoNumber(bonusNumber)
+        return LottoNumber.from(bonusNumber)
     }
 
     private fun String.validateAndConvertDigitList(): List<Int> {

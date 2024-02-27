@@ -48,7 +48,7 @@ class LottoTest {
         expected: Boolean,
     ) {
         // given
-        val lottoNumber = LottoNumber(number)
+        val lottoNumber = LottoNumber.from(number)
 
         // when
         val actual = lotto.contains(lottoNumber)

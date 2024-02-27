@@ -30,7 +30,7 @@ class LottoStoreTest {
             )
 
         manualLottoStore.lottos.forEach { lotto ->
-            val actual = lotto.contains(LottoNumber(number))
+            val actual = lotto.contains(LottoNumber.from(number))
             assertThat(actual).isEqualTo(true)
         }
     }
@@ -39,7 +39,7 @@ class LottoStoreTest {
     @ValueSource(ints = [1, 2, 3, 4, 5, 6])
     fun `로또의 값을 임의로 지정해주면 지정한 로또 번호로 로또가 발행된다`(number: Int) {
         automaticLottoStore.lottos.forEach { lotto ->
-            val actual = lotto.contains(LottoNumber(number))
+            val actual = lotto.contains(LottoNumber.from(number))
             assertThat(actual).isEqualTo(true)
         }
     }
