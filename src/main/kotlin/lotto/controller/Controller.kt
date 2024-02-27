@@ -26,13 +26,15 @@ class Controller {
         val autoLottoCount = lottoCount - manualLottoCount
 
         outputNewLine()
-        inputManualLottoNumbers()
         val lottos = Lottos()
-        lottos.makeManualLottos(
-            List(manualLottoCount) {
-                inputLottoNumbers()
-            }
-        )
+        if (manualLottoCount > 0) {
+            inputManualLottoNumbers()
+            lottos.makeManualLottos(
+                List(manualLottoCount) {
+                    inputLottoNumbers()
+                }
+            )
+        }
         lottos.plusAutoLottos(autoLottoCount)
 
         outputPurchaseCount(manualLottoCount, autoLottoCount)
