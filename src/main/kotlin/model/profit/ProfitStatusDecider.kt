@@ -2,9 +2,7 @@ package model.profit
 
 import model.Money
 
-object ProfitStatusDecider {
-    private const val ERROR_UNEXPECTED = "예기치 못한 오류가 발생하였습니다."
-
+class ProfitStatusDecider {
     fun decide(
         purchaseAmount: Money,
         winningAmount: Money,
@@ -13,6 +11,6 @@ object ProfitStatusDecider {
             winningAmount > purchaseAmount -> ProfitStatus.GAIN
             winningAmount < purchaseAmount -> ProfitStatus.LOSS
             winningAmount == purchaseAmount -> ProfitStatus.EVEN
-            else -> throw IllegalStateException(ERROR_UNEXPECTED)
+            else -> throw IllegalStateException("예기치 못한 오류가 발생하였습니다.")
         }
 }

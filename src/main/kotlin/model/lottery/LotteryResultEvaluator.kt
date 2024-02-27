@@ -5,12 +5,11 @@ import model.Quantity
 import model.WinningRank
 import model.WinningResult
 
-class LotteryResultEvaluator {
+class LotteryResultEvaluator(private val lotteryRankEvaluator: LotteryRankEvaluator = LotteryRankEvaluator()) {
     fun evaluate(
         lotteries: Lotteries,
         winningLottery: WinningLottery,
     ): WinningResult {
-        val lotteryRankEvaluator = LotteryRankEvaluator()
         val winningResult = DEFAULT_WINNING_RESULT
 
         lotteries.lotteries.forEach {

@@ -17,11 +17,13 @@ import view.InputView
 import view.OutputView
 
 class LotteryController(
-    private val inputView: InputView = InputView(),
-    private val outputView: OutputView = OutputView(),
-    private val lotteryMachine: LotteryMachine = LotteryMachine(),
-    private val lotteryResultEvaluator: LotteryResultEvaluator = LotteryResultEvaluator(),
-    private val profit: Profit = Profit(),
+    private val inputView: InputView,
+    private val outputView: OutputView,
+    private val lotterySeller: LotterySeller,
+    private val lotteryMachine: LotteryMachine,
+    private val lotteryResultEvaluator: LotteryResultEvaluator,
+    private val profit: Profit,
+    private val profitStatusDecider: ProfitStatusDecider,
 ) {
     fun start() {
         val purchaseAmount = Money.from(inputView.readPurchaseAmount())
@@ -32,7 +34,7 @@ class LotteryController(
     }
 
     private fun buyLotteries(purchaseAmount: Money): Lotteries {
-        val lotteryQuantity = LotterySeller().getLotteryQuantity(purchaseAmount)
+        val lotteryQuantity = lotterySeller.getLotteryQuantity(purchaseAmount)
         val manualLotteryQuantity = Quantity.from(inputView.readManualLotteryQuantity())
         val randomLotteryQuantity = lotteryQuantity - manualLotteryQuantity
 
@@ -73,6 +75,6 @@ class LotteryController(
     ) {
         val totalPrize = LotteryPrizeCalculator().calculate(winningResult)
         val profitRate = profit.calculateRate(purchaseAmount, totalPrize)
-        outputView.showProfitRate(profitRate, ProfitStatusDecider.decide(purchaseAmount, totalPrize))
+        outputView.showProfitRate(profitRate, profitStatusDecider.decide(purchaseAmount, totalPrize))
     }
 }
