@@ -1,20 +1,15 @@
 package lotto.model
 
-import lotto.exception.ErrorCode.MANUAL_PURCHASE_COUNT_TOO_LARGE
-import lotto.exception.ExceptionsHandler.handleValidation
 import lotto.model.Lotto.Companion.LOTTO_SIZE
 import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_RANGE
 
-class LottoMachine(private val price: Price) {
-    fun getRandomLottoCount(lottoManualPurchaseCount: Int): Int {
-        val randomLottoCount = price.getNumberOfLottoTickets() - lottoManualPurchaseCount
-        handleValidation(MANUAL_PURCHASE_COUNT_TOO_LARGE) { randomLottoCount >= 0 }
-        return randomLottoCount
-    }
-
-    fun createLottoBundle(manualPurchaseLottos: ManualPurchaseLottos): LottoBundle {
+object LottoMachine {
+    fun createLottoBundle(
+        manualPurchaseLottos: ManualPurchaseLottos,
+        randomLottoCount: Int,
+    ): LottoBundle {
         val manualLottoBundle = createManualLottoBundle(manualPurchaseLottos)
-        val randomLottoBundle = createRandomLottoBundle(getRandomLottoCount(manualPurchaseLottos.lottos.size))
+        val randomLottoBundle = createRandomLottoBundle(randomLottoCount)
         return manualLottoBundle.append(randomLottoBundle)
     }
 

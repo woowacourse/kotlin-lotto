@@ -13,7 +13,9 @@ import lotto.model.Price
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class LottoGameController {
+class LottoGameController(
+    private var price: Price = Price(),
+) {
     fun start() {
         var gameState: GameState = GameState.Play
 
@@ -21,6 +23,7 @@ class LottoGameController {
             getMatchResult().onSuccess { matchResult ->
                 val lottoResult = matchResult.calculateResult()
                 OutputView.printResult(lottoResult.toString(), lottoResult.getProfitRate())
+                price = price.minusPrice()
                 gameState = GameState.End
             }.onFailure { e ->
                 OutputView.printError(e)
@@ -37,9 +40,8 @@ class LottoGameController {
 
     private fun buyLottoBundle(): LottoBundle {
         val money = InputView.readMoney()
-        val price = Price.from(money)
-        val lottoMachine = LottoMachine(price)
-        return createLottoBundle(lottoMachine)
+        price = price.plusPrice(money)
+        return createLottoBundle()
     }
 
     private fun getLottoManualPurchaseCount(): LottoManualPurchaseCount {
@@ -47,11 +49,12 @@ class LottoGameController {
         return LottoManualPurchaseCount.from(count)
     }
 
-    private fun createLottoBundle(lottoMachine: LottoMachine): LottoBundle {
+    private fun createLottoBundle(): LottoBundle {
         val lottoManualPurchaseCount = getLottoManualPurchaseCount()
-        val randomLottoCount = lottoMachine.getRandomLottoCount(lottoManualPurchaseCount.count)
+        val randomLottoCount = price.getRandomLottoCount(lottoManualPurchaseCount.count)
         val lottoManualPurchaseNumbers = InputView.readLottoManualPurchaseNumbers(lottoManualPurchaseCount.count)
-        val lottoBundle = lottoMachine.createLottoBundle(ManualPurchaseLottos(lottoManualPurchaseNumbers))
+        val lottoBundle =
+            LottoMachine.createLottoBundle(ManualPurchaseLottos(lottoManualPurchaseNumbers), randomLottoCount)
 
         OutputView.printLottoCount(lottoManualPurchaseCount.count, randomLottoCount)
         OutputView.printLottoBundle(lottoBundle.toString())
