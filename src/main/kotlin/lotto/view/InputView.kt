@@ -6,6 +6,7 @@ import lotto.model.LottoNumber
 object InputView {
     private const val INPUT_PURCHASE_PRICE = "구입금액을 입력해 주세요."
     private const val INPUT_MANUAL_LOTTO_SIZE = "수동으로 구매할 로또 수를 입력해 주세요."
+    private const val INPUT_MANUAL_LOTTOS = "수동으로 구매할 번호를 입력해 주세요."
     private const val INPUT_WINNING_LOTTO_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
     private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
     private const val LOTTO_NUMBER_DELIMITER = ", "
@@ -23,11 +24,20 @@ object InputView {
         return inputManualLottoSize.validateAndConvertDigit()
     }
 
+    fun readManualLottos(manualLottoSize: Int): List<Lotto> {
+        println(INPUT_MANUAL_LOTTOS)
+        return List(manualLottoSize) { readLottoNumbers() }
+    }
+
     fun readWinningLottoNumbers(): Lotto {
         println(INPUT_WINNING_LOTTO_NUMBERS)
-        val inputWinningLottoNumbers = readln()
-        val winningLottoNumbers = inputWinningLottoNumbers.validateAndConvertDigitList()
-        return Lotto.create(winningLottoNumbers)
+        return readLottoNumbers()
+    }
+
+    private fun readLottoNumbers(): Lotto {
+        val inputLottoNumbers = readln()
+        val lottoNumbers = inputLottoNumbers.validateAndConvertDigitList()
+        return Lotto.create(lottoNumbers)
     }
 
     fun readBonusNumber(): LottoNumber {
