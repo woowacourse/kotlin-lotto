@@ -3,13 +3,13 @@ package controller
 import WinningLottery
 import model.Money
 import model.Quantity
-import model.WinningResult
 import model.lottery.Lotteries
 import model.lottery.Lottery
 import model.lottery.LotteryMachine
 import model.lottery.LotteryNumber
 import model.lottery.LotterySeller
 import model.profit.ProfitStatus
+import model.winning.WinningResult
 import view.InputView
 import view.OutputView
 

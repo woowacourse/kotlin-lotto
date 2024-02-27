@@ -1,5 +1,6 @@
-package model
+package model.winning
 
+import model.Quantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

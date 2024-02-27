@@ -1,12 +1,12 @@
 package view
 
 import model.Quantity
-import model.WinningRank
-import model.WinningResult
 import model.lottery.Lotteries
 import model.lottery.Lottery
 import model.profit.ProfitRate
 import model.profit.ProfitStatus
+import model.winning.WinningRank
+import model.winning.WinningResult
 import java.text.DecimalFormat
 
 class OutputView {

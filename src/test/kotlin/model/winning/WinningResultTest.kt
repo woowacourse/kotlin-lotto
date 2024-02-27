@@ -1,5 +1,7 @@
-package model
+package model.winning
 
+import model.Money
+import model.Quantity
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

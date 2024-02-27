@@ -2,8 +2,8 @@ package model.lottery
 
 import WinningLottery
 import model.Quantity
-import model.WinningRank
-import model.WinningResult
+import model.winning.WinningRank
+import model.winning.WinningResult
 
 data class Lotteries(val lotteries: List<Lottery>) {
     operator fun plus(other: Lotteries): Lotteries = Lotteries(this.lotteries + other.lotteries)

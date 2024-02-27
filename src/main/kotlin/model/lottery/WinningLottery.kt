@@ -1,6 +1,6 @@
-import model.WinningRank
 import model.lottery.Lottery
 import model.lottery.LotteryNumber
+import model.winning.WinningRank
 
 data class WinningLottery(val lottery: Lottery, val bonusNumber: LotteryNumber) {
     init {

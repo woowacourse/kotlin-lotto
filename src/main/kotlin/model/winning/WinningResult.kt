@@ -1,4 +1,7 @@
-package model
+package model.winning
+
+import model.Money
+import model.Quantity
 
 data class WinningResult(val result: Map<WinningRank, Quantity>) {
     fun calculate(): Money =

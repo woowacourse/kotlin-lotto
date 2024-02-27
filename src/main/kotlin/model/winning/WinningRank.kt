@@ -1,4 +1,7 @@
-package model
+package model.winning
+
+import model.Money
+import model.Quantity
 
 enum class WinningRank(
     val numbersMatchQuantity: Quantity,
