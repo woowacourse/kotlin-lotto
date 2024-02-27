@@ -3,7 +3,7 @@ package lotto.model
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class FixedLottoNumberGeneratorTest {
+class FixedLottosGeneratorTest {
     @Test
     fun `구매할 로또는 중복이 허용되지 않습니다`() {
         val fixedNumbers =
