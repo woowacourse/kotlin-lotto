@@ -29,10 +29,6 @@ fun inputManualNumber() {
     readlnOrNull()
 }
 
-fun inputManualLottoNumbers() {
-    println(REQUEST_LOTTO_NUM)
-}
-
 fun inputManualLottoNumber() {
     readlnOrNull()
 }

@@ -27,8 +27,4 @@ class UserPrize(
     fun getUserPrize(): Map<LottoPrize, Int> {
         return matches
     }
-
-    fun getUserPrize(): Map<LottoPrize, Int> {
-        return matches
-    }
 }
