@@ -21,7 +21,7 @@ class UserPrize(
     }
 
     fun prizeRateCalculate(prize: Long, charge: Double): Double {
-        return prize / charge
+        return if (charge != 0.0) prize / charge else 0.0
     }
 
     fun getUserPrize(): Map<LottoPrize, Int> {
