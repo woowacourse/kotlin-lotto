@@ -2,9 +2,17 @@ package lotto.model
 
 import lotto.util.NumberGenerate
 
-class LottoMachine(ticketCounts: TicketCounts) {
+class LottoMachine(val ticketCounts: TicketCounts) {
     private val randomNumberGenerate =
         NumberGenerate { LottoNumber.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted() }
+
+    fun issueManualTickets(manualLotto: List<List<Int>>): List<Lotto> {
+        val tickets = mutableListOf<Lotto>()
+        repeat(ticketCounts.numberOfManual.counts) { idx ->
+            tickets.add(Lotto(manualLotto[idx].map { LottoNumber(it) }))
+        }
+        return tickets
+    }
 
     fun issueTickets(
         count: Int,
