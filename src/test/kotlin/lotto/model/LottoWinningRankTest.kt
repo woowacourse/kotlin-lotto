@@ -1,9 +1,9 @@
 package lotto.model
 
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-class LottoWinningTest {
+class LottoWinningRankTest {
     private var winningNumbers: List<LottoNumber> = listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }
 
     @Test
@@ -11,9 +11,9 @@ class LottoWinningTest {
         val userTicket = UserLottoTicket(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
-        val lottoWinning = LottoWinning(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinning.makeRankMap(userTickets)
-        assertThat(rankMap[Rank.FIRST]).isEqualTo(1)
+        val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
+        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        Assertions.assertThat(rankMap[Rank.FIRST]).isEqualTo(1)
     }
 
     @Test
@@ -21,9 +21,9 @@ class LottoWinningTest {
         val userTicket = UserLottoTicket(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) })
         val userTickets = listOf(userTicket)
         val bonusNumber = 7
-        val lottoWinning = LottoWinning(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinning.makeRankMap(userTickets)
-        assertThat(rankMap[Rank.SECOND]).isEqualTo(1)
+        val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
+        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        Assertions.assertThat(rankMap[Rank.SECOND]).isEqualTo(1)
     }
 
     @Test
@@ -31,9 +31,9 @@ class LottoWinningTest {
         val userTicket = UserLottoTicket(listOf(1, 2, 3, 4, 5, 44).map { LottoNumber(it) })
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
-        val lottoWinning = LottoWinning(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinning.makeRankMap(userTickets)
-        assertThat(rankMap[Rank.THIRD]).isEqualTo(1)
+        val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
+        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        Assertions.assertThat(rankMap[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
@@ -41,9 +41,9 @@ class LottoWinningTest {
         val userTicket = UserLottoTicket(listOf(1, 2, 3, 4, 43, 44).map { LottoNumber(it) })
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
-        val lottoWinning = LottoWinning(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinning.makeRankMap(userTickets)
-        assertThat(rankMap[Rank.FOURTH]).isEqualTo(1)
+        val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
+        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        Assertions.assertThat(rankMap[Rank.FOURTH]).isEqualTo(1)
     }
 
     @Test
@@ -51,8 +51,8 @@ class LottoWinningTest {
         val userTicket = UserLottoTicket(listOf(1, 2, 3, 42, 43, 44).map { LottoNumber(it) })
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
-        val lottoWinning = LottoWinning(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinning.makeRankMap(userTickets)
-        assertThat(rankMap[Rank.FIFTH]).isEqualTo(1)
+        val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
+        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        Assertions.assertThat(rankMap[Rank.FIFTH]).isEqualTo(1)
     }
 }
