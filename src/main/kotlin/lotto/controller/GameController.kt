@@ -37,8 +37,8 @@ class GameController {
 
     private fun purchaseManualLottos(purchaseDetails: PurchaseDetails): List<Lotto> {
         val manualPurchaseNumbers = InputView.readManualPurchaseNumbers(purchaseDetails.manualPurchaseCount)
-        val fixedLottoNumbersGenerator = FixedLottosGenerator(manualPurchaseNumbers)
-        return LottoMachine.createLottos(purchaseDetails.manualPurchaseCount, fixedLottoNumbersGenerator)
+        val fixedLottosGenerator = FixedLottosGenerator(manualPurchaseNumbers)
+        return LottoMachine.createLottos(purchaseDetails.manualPurchaseCount, fixedLottosGenerator)
     }
 
     private fun purchaseAutoLottos(purchaseDetails: PurchaseDetails): List<Lotto> {
