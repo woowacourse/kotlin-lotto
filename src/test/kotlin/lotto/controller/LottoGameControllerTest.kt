@@ -37,7 +37,7 @@ class LottoGameControllerTest {
                     NumberOfManual(0),
                 ),
             )
-        val lottoTickets = lottoMachine.issueTickets(3, customNumberGenerate)
+        val lottoTickets = lottoMachine.issueAutomaticTickets(3, customNumberGenerate)
         val lotteryResult =
             LotteryResult(
                 Lotto(winningInput.split(" ").map { LottoNumber(it.toInt()) }),
