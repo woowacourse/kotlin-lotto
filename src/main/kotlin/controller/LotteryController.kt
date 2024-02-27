@@ -17,6 +17,9 @@ class LotteryController {
 
         val manualLotteryCount = readManualLotteryCount(amount)
 
+        val manualLotteriesInput = readManualLotteries(manualLotteryCount)
+        val splitManualLotteries = splitManualLotteries(manualLotteriesInput)
+
         val ticket = issueTicket(amount)
         printTicketInfo(ticket)
 
@@ -38,6 +41,18 @@ class LotteryController {
         amount,
         lotteryTicketPrice,
     )
+
+    private fun readManualLotteries(manualLotteryCount: ManualLotteryCount) = InputView.readManualLotteries(manualLotteryCount)
+
+    private fun splitManualLotteries(input: List<String>): List<List<String>> {
+        val splitManualLotteries = InputView.splitManualLotteries(input)
+        val manualLotteries = mutableListOf<List<String>>()
+
+        splitManualLotteries.forEach {
+            manualLotteries.add(it)
+        }
+        return manualLotteries
+    }
 
     private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(InputView.readBonus(), winningLottery)
 
