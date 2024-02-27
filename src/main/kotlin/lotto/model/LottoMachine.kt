@@ -2,21 +2,12 @@ package lotto.model
 
 import lotto.util.NumberGenerate
 
-object LottoMachine {
-    const val TICKET_PRICE = 1_000
+class LottoMachine(
+    ticketCounts: NumberOfTickets,
+    manualCounts: NumberOfManual,
+) {
     private val randomNumberGenerate =
         NumberGenerate { LottoNumber.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted() }
-
-    fun getNumberOfTicket(cash: Int): Int = cash / TICKET_PRICE
-
-    fun getNumberOfManual(
-        manualCounts: Int,
-        numberOfTickets: Int,
-    ) {
-        require(
-            manualCounts <= numberOfTickets,
-        ) { "수동으로 발행할 로또 개수는 구매한 개수를 넘길 수 없습니다." }
-    }
 
     fun issueTickets(
         count: Int,
