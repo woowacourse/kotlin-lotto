@@ -30,12 +30,15 @@ object InputView {
         println(INPUT_PURCHASE_SIZE_OF_MANUAL_LOTTO)
         val numberOfManualLotto = br.readLine()
 
-        return try {
+        return runCatching {
             InputValidator.validatePurchaseSizeOfManualLotto(numberOfManualLotto, purchaseAmount)
-        } catch (exception: IllegalArgumentException) {
-            println(exception.message)
-            inputPurchaseSizeOfManualLotto(purchaseAmount)
-        }
+        }.fold(
+            onSuccess = { it },
+            onFailure = { exception ->
+                println(exception.message)
+                inputPurchaseSizeOfManualLotto(purchaseAmount)
+            },
+        )
     }
 
     fun inputGuideManualLottoNumbers() {
@@ -45,12 +48,15 @@ object InputView {
     fun inputManualLottos(): List<LottoNumber> {
         val manualLotto = br.readLine()
 
-        return try {
+        return runCatching {
             InputValidator.validatePublishedLottos(manualLotto)
-        } catch (exceptIon: IllegalArgumentException) {
-            println(exceptIon.message)
-            inputManualLottos()
-        }
+        }.fold(
+            onSuccess = { it },
+            onFailure = { exception ->
+                println(exception.message)
+                inputManualLottos()
+            },
+        )
     }
 
     fun inputWinningNumbers(): List<LottoNumber> {
