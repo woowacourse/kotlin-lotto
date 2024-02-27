@@ -7,6 +7,8 @@ import lotto.model.WinningNumber
 import lotto.view.calculationOfYield
 import lotto.view.insertBonusNumbers
 import lotto.view.insertCostMessage
+import lotto.view.insertManuallyLotto
+import lotto.view.insertManuallyLottoCount
 import lotto.view.insertWinNumbers
 import lotto.view.outputWinningNumber
 import lotto.view.purchaseCountMessage
@@ -22,7 +24,9 @@ class Controller {
         insertCostMessage()
         val charge = readCharge()
         val count = (charge / LOTTO_PRICE).toInt()
+        insertManuallyLottoCount()
         readHowManyManually()
+        insertManuallyLotto()
         readManualLottoNumber()
         purchaseCountMessage(count)
         val lottos = makeLottos(count)
