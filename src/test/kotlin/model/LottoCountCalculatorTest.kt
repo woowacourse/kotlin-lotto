@@ -29,32 +29,4 @@ class LottoCountCalculatorTest {
             LottoCountCalculator(lottoPrice).calculate(limit = lottoCount, cost = cost)
         }
     }
-
-    class LottoCountCalculator(private val lottoPrice: Money) {
-        fun calculate(
-            limit: LottoCount = LottoCount.MAX,
-            cost: Money,
-        ): LottoCount {
-            val count = LottoCount(cost / lottoPrice)
-            check(limit > count) { "count=$count 는 limit=$limit 보다 작아야합니다." }
-            return count
-        }
-    }
-
-    @JvmInline
-    value class LottoCount(val amount: Int) {
-        init {
-            require(amount > 0) { "amount 는 0보다 커야함" }
-        }
-
-        operator fun compareTo(o: LottoCount) = amount - o.amount
-
-        operator fun plus(o: LottoCount) = LottoCount(amount + o.amount)
-
-        operator fun minus(o: LottoCount) = LottoCount(amount - o.amount)
-
-        companion object {
-            val MAX = LottoCount(Int.MAX_VALUE)
-        }
-    }
 }
