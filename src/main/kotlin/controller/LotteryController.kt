@@ -9,7 +9,6 @@ import model.lottery.Lottery
 import model.lottery.LotteryMachine
 import model.lottery.LotteryNumber
 import model.lottery.LotteryPrizeCalculator
-import model.lottery.LotteryResultEvaluator
 import model.lottery.LotterySeller
 import model.profit.Profit
 import model.profit.ProfitStatus
@@ -21,7 +20,6 @@ class LotteryController(
     private val outputView: OutputView,
     private val lotterySeller: LotterySeller,
     private val lotteryMachine: LotteryMachine,
-    private val lotteryResultEvaluator: LotteryResultEvaluator,
     private val profit: Profit,
 ) {
     fun start() {
@@ -57,7 +55,7 @@ class LotteryController(
 
     private fun calculateWinningResult(lotteries: Lotteries): WinningResult {
         val winningLottery = readWinningLottery()
-        val winningResult = lotteryResultEvaluator.evaluate(lotteries, winningLottery)
+        val winningResult = lotteries.evaluate(winningLottery)
         outputView.showWinningResult(winningResult)
         return winningResult
     }

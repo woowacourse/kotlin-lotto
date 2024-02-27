@@ -1,6 +1,5 @@
 import controller.LotteryController
 import model.lottery.LotteryMachine
-import model.lottery.LotteryResultEvaluator
 import model.lottery.LotterySeller
 import model.profit.Profit
 import view.InputView
@@ -12,7 +11,6 @@ fun main() {
         OutputView(),
         LotterySeller(),
         LotteryMachine(),
-        LotteryResultEvaluator(),
         Profit(),
     ).start()
 }
