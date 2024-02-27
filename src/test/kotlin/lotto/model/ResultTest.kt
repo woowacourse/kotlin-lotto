@@ -15,6 +15,6 @@ class ResultTest {
         val winningBundle = WinningBundle(winningLotto, LottoNumber.of(8))
         val lottoResult = winningBundle.calculateResult(lottos)
 
-        Assertions.assertThat(lottoResult.getProfitRate(2000)).isEqualTo(15750.0)
+        Assertions.assertThat(lottoResult.calculateProfitRate(2000)).isEqualTo(15750.0)
     }
 }

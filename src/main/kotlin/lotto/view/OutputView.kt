@@ -37,7 +37,7 @@ object OutputView {
             "총 수익률은 ${
                 String.format(
                     "%.2f",
-                    result.getProfitRate(purchaseDetails.calculateTotalPurchaseCost()),
+                    result.calculateProfitRate(purchaseDetails.calculateTotalPurchaseCost()),
                 )
             }입니다.",
         )
