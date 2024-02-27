@@ -20,14 +20,13 @@ class Controller {
 
     fun run() {
         insertCostMessage()
-
         val charge = readCharge()
         val count = (charge / LOTTO_PRICE).toInt()
+        readManualLottoNumber()
         purchaseCountMessage(count)
         val lottos = makeLottos(count)
         insertWinNumbers()
         val winning = readLottoNumber()
-
         insertBonusNumbers()
         val bonusNumber = LottoNumber.of(readLottoBonusNumber())
         val winningNumber = WinningNumber(lotto = winning, bonusNumber = bonusNumber)

@@ -11,9 +11,7 @@ const val NEED_NUMBER = "로또 넘버는 숫자를 입력해야 합니다."
 object Verifier {
     fun inputCharge(userInput: String?): Int? {
         return try {
-            userInput
-                ?.toIntOrNull()
-                ?: throw (IllegalArgumentException(WRONG_INPUT))
+            userInput?.toIntOrNull() ?: throw (IllegalArgumentException(WRONG_INPUT))
         } catch (e: IllegalArgumentException) {
             println(e.message)
             null
@@ -26,8 +24,7 @@ object Verifier {
                 userInput
                     ?.split(SEPARATOR)
                     ?.map { it.trim().toIntOrNull() ?: throw IllegalArgumentException(NEED_NUMBER) }
-                    ?.map { LottoNumber.of(it) }
-                    ?.toSet()
+                    ?.map { LottoNumber.of(it) }?.toSet()
 
             if (inputNumbers?.size != LOTTO_LEN) {
                 throw IllegalArgumentException("정확히 ${LOTTO_LEN}개의 숫자를 입력해야 합니다.")
@@ -41,9 +38,25 @@ object Verifier {
 
     fun inputBonusNumber(userInput: String?): Int? {
         return try {
-            userInput
-                ?.toIntOrNull()
-                ?: throw (IllegalArgumentException(WRONG_INPUT))
+            userInput?.toIntOrNull() ?: throw (IllegalArgumentException(WRONG_INPUT))
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            null
+        }
+    }
+
+    fun inputLottoNumber(userInput: String?): Lotto? {
+        return try {
+            val inputNumbers =
+                userInput
+                    ?.split(SEPARATOR)
+                    ?.map { it.trim().toIntOrNull() ?: throw IllegalArgumentException(NEED_NUMBER) }
+                    ?.map { LottoNumber.of(it) }?.toSet()
+
+            if (inputNumbers?.size != LOTTO_LEN) {
+                throw IllegalArgumentException("정확히 ${LOTTO_LEN}개의 숫자를 입력해야 합니다.")
+            }
+            Lotto(inputNumbers)
         } catch (e: IllegalArgumentException) {
             println(e.message)
             null
