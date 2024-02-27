@@ -34,7 +34,7 @@ class LotteryNumberTest {
     @ValueSource(strings = ["0", "46"])
     fun `입력으로 받은 보너스 번호가 1~45의 범위를 벗어나면 예외를 던진다`(input: String) {
         assertThrows<IllegalArgumentException> {
-            LotteryNumber.bonusNumber(input)
+            LotteryNumber.from(input)
         }
     }
 
@@ -42,7 +42,7 @@ class LotteryNumberTest {
     @ValueSource(strings = ["1", "22", "45"])
     fun `입력으로 받은 보너스 번호가 1~45의 범위에 있으면 통과한다`(input: String) {
         assertDoesNotThrow {
-            LotteryNumber.bonusNumber(input)
+            LotteryNumber.from(input)
         }
     }
 }

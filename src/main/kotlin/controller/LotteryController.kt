@@ -66,7 +66,7 @@ class LotteryController(
     private fun readWinningLottery(): WinningLottery =
         WinningLottery(
             Lottery.fromInput(inputView.readWinningNumbers()),
-            LotteryNumber.bonusNumber(inputView.readBonusNumber()),
+            LotteryNumber.from(inputView.readBonusNumber()),
         )
 
     private fun calculateProfitRate(
