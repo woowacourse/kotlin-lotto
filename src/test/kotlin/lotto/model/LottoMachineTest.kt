@@ -1,6 +1,7 @@
 package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -20,5 +21,15 @@ class LottoMachineTest {
     fun `발행 개수 만큼 로또를 발행한다`(count: Int) {
         val result = LottoMachine.issueTickets(count)
         assertThat(result.size).isEqualTo(count)
+    }
+
+    @ParameterizedTest
+    @CsvSource("1000:2", "3000:5", "10000:11", delimiter = ':')
+    fun `수동으로 발행할 로또의 개수는 구매한 로또 개수를 넘길 수 없다`(
+        purchaseAmounts: Int,
+        manualCounts: Int,
+    ) {
+        val numberOfTickets = LottoMachine.getNumberOfTicket(purchaseAmounts)
+        assertThrows<IllegalArgumentException> { LottoMachine.getNumberOfManual(manualCounts, numberOfTickets) }
     }
 }
