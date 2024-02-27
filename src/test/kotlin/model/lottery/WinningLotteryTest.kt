@@ -1,6 +1,8 @@
 package model.lottery
 
 import WinningLottery
+import model.WinningRank
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -24,5 +26,18 @@ class WinningLotteryTest {
                 LotteryNumber(13),
             )
         }
+    }
+
+    @Test
+    fun `로또 번호와 당첨번호, 보너스 번호를 비교하여 당첨 결과를 알려준다`() {
+        val winningLottery =
+            WinningLottery(
+                Lottery.of(1, 2, 3, 4, 5, 7),
+                LotteryNumber(6),
+            )
+        val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
+
+        val winningRank = winningLottery.evaluate(lottery)
+        Assertions.assertThat(winningRank).isEqualTo(WinningRank.SECOND)
     }
 }
