@@ -4,7 +4,7 @@ import model.LottoNumber
 
 object InputValidator {
     private const val INPUT_SEPARATOR = ','
-    private const val INVALID_INPUT = -1
+    private const val INVALID_INPUT = 0
 
     fun validatePurchaseAmount(input: String): Int {
         val purchaseAmount = input.toIntOrNull() ?: INVALID_INPUT
@@ -28,7 +28,7 @@ object InputValidator {
     }
 
     private fun validateMinimumPurchaseSizeOfManualLotto(purchaseSizeOfManualLotto: Int) {
-        require(purchaseSizeOfManualLotto > LottoConstants.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) {
+        require(purchaseSizeOfManualLotto >= LottoConstants.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) {
             InputException.INVALID_PURCHASE_SIZE_OF_MANUAL_LOTTO.getMessage()
         }
     }
