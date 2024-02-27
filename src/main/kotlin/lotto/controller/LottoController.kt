@@ -2,6 +2,8 @@ package lotto.controller
 
 import lotto.constants.GameConstant.DEFAULT_COUNT
 import lotto.constants.GameConstant.PURCHASE_UNIT
+import lotto.model.Lotto
+import lotto.model.LottoNumber
 import lotto.model.LottoNumberGenerator
 import lotto.model.LottoStore
 import lotto.model.PurchaseAmount
@@ -10,8 +12,6 @@ import lotto.model.WinningPrizeCalculator
 import lotto.model.WinningRank
 import lotto.view.InputView
 import lotto.view.OutputView
-import model.Lotto
-import model.LottoNumber
 
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
     fun run() {

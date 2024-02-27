@@ -9,7 +9,7 @@ class OutputView {
     }
 
     fun printNumberOfLottoMessage(numberOfLotto: Int) {
-        println("${numberOfLotto}${MESSAGE_LOTTO_COUNT_PURCHASED}")
+        println("${numberOfLotto}$MESSAGE_LOTTO_COUNT_PURCHASED")
     }
 
     fun printLottoNumbers(lottos: Lottos) {
@@ -39,7 +39,7 @@ class OutputView {
     }
 
     fun printProfitRateMessage(profitRate: Double) {
-        println("${MESSAGE_PROFIT_RATE_START}${String.format("%.2f", profitRate)}${MESSAGE_PROFIT_RATE_END}")
+        println("$MESSAGE_PROFIT_RATE_START${String.format("%.2f", profitRate)}$MESSAGE_PROFIT_RATE_END")
     }
 
     companion object {

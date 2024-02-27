@@ -1,8 +1,5 @@
 package lotto.model
 
-import model.Lotto
-import model.LottoNumber
-
 class WinningLotto(val winningNumbers: Lotto, val bonusNumber: LottoNumber) {
     init {
         require(bonusNumber !in winningNumbers.numbers) {

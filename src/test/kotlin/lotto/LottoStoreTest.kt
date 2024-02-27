@@ -1,10 +1,10 @@
 package lotto
 
+import lotto.model.Lotto
+import lotto.model.LottoNumber
 import lotto.model.LottoStore
 import lotto.model.WinningLotto
 import lotto.model.WinningRank
-import model.Lotto
-import model.LottoNumber
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

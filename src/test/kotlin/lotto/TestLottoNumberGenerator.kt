@@ -1,7 +1,7 @@
 package lotto
 
+import lotto.model.Lotto
 import lotto.model.NumberGenerator
-import model.Lotto
 
 class TestLottoNumberGenerator : NumberGenerator {
     override fun generate(

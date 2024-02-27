@@ -1,7 +1,5 @@
 package lotto.model
 
-import model.Lotto
-
 class LottoNumberGenerator : NumberGenerator {
     override fun generate(
         size: Int,

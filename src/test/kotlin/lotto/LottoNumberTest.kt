@@ -1,6 +1,6 @@
 package lotto
 
-import model.LottoNumber
+import lotto.model.LottoNumber
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
