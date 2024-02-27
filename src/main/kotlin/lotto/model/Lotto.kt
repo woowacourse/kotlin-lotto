@@ -9,7 +9,7 @@ data class Lotto(val numbers: Set<LottoNumber>) {
 
     fun hasMatchingBonusNumbers(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
 
-    override fun toString(): String = numbers.toList().sortedBy { it.number }.toString()
+    override fun toString(): String = numbers.toString()
 
     companion object {
         const val NUMBER_COUNT = 6

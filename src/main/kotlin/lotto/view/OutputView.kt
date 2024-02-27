@@ -10,7 +10,7 @@ object OutputView {
     }
 
     fun printLottoTickets(lottoTickets: List<Lotto>) {
-        lottoTickets.forEach { println(it) }
+        lottoTickets.forEach { println(it.numbers.toList().sortedBy { it.toString().toInt() }) }
         println()
     }
 
