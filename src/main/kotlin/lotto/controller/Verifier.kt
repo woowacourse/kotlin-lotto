@@ -6,6 +6,7 @@ import lotto.model.GameException
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.UserEvent
+import java.util.TreeSet
 
 private const val SEPARATOR = ","
 
@@ -72,7 +73,7 @@ object Verifier {
         lottoNumbers: Set<Int>
     ): UserEvent.LottoEvent {
         return runCatching {
-            val lotto = Lotto(lottoNumber = LottoNumber(lottoNumbers))
+            val lotto = Lotto(lottoNumber = LottoNumber(TreeSet(lottoNumbers)))
             UserEvent.LottoEvent.Success(lotto = lotto)
         }.getOrElse { exception ->
             when (exception) {
