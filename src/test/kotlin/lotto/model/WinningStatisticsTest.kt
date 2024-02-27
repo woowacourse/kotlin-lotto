@@ -9,16 +9,15 @@ class WinningStatisticsTest {
     @ParameterizedTest
     @MethodSource("로또 수익률 계산 테스트 데이터")
     fun `로또 수익률을 계산한다`(
-        lottoPrice: Int,
+        purchasePrice: Int,
         statistics: Map<LottoPrize, Int>,
         expected: Double,
     ) {
         // given
-        val purchaseOrder = PurchaseOrder(lottoPrice)
         val winningStatistics = WinningStatistics(statistics)
 
         // when
-        val actual = winningStatistics.calculateProfitRatio(purchaseOrder).ratio
+        val actual = winningStatistics.calculateProfitRatio(purchasePrice).ratio
 
         // then
         Assertions.assertThat(actual).isEqualTo(expected)

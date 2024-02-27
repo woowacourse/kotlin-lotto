@@ -30,7 +30,7 @@ class LottoController(
         val winningStatistics = winningLotto.calculateWinningStatistics(lottoStore)
         OutputView.printWinningStatistics(winningStatistics)
 
-        val profitRatio = winningStatistics.calculateProfitRatio(purchaseOrder)
+        val profitRatio = winningStatistics.calculateProfitRatio(purchaseOrder.price)
         OutputView.printProfitRatio(profitRatio)
     }
 }
