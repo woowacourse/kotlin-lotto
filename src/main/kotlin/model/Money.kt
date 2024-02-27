@@ -11,6 +11,10 @@ value class Money(val amount: Int) {
         return amount / other.amount
     }
 
+    operator fun plus(other: Money): Money = Money(amount + other.amount)
+
+    operator fun minus(other: Money): Money = Money(amount - other.amount)
+
     operator fun times(number: Int): Money = Money(amount * number)
 
     operator fun compareTo(other: Money) = amount - other.amount
