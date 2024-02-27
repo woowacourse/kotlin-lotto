@@ -18,4 +18,24 @@ class LottoMachineTest {
         val result = lottoMachine.issueTickets(count)
         assertThat(result.size).isEqualTo(count)
     }
+
+    @ParameterizedTest
+    @CsvSource("1", "2", "3")
+    fun `수동 발행 개수 만큼 수동으로 로또를 발행한다`(manualCount: Int) {
+        val manualLotto =
+            listOf(
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(1, 2, 3, 4, 5, 6),
+            )
+        val lottoMachine =
+            LottoMachine(
+                TicketCounts(
+                    NumberOfTickets(manualCount * NumberOfTickets.TICKET_PRICE),
+                    NumberOfManual(manualCount),
+                ),
+            )
+        val result = lottoMachine.issueManualTickets(manualLotto.take(manualCount))
+        assertThat(result.size).isEqualTo(manualCount)
+    }
 }
