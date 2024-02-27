@@ -13,7 +13,7 @@ object OutputView {
         println("\n수동으로 ${manualBuyedLottos.size}장, 자동으로 ${autoBuyedLottos.size}개를 구매했습니다.")
         val totalBuyedLottos = manualBuyedLottos + autoBuyedLottos
         totalBuyedLottos.forEach { lotto ->
-            println(lotto.lottoNumbers)
+            println(lotto.lottoNumbers.numbers)
         }
         println()
     }
