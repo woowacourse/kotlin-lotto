@@ -3,7 +3,7 @@ package lotto.model
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-class LottoResultTest {
+class ResultTest {
     @Test
     fun `2개의 로또를 구매했을 때, 2등과 3등이 된다면 수익률은 15750 이다`() {
         val lottos =

@@ -1,13 +1,13 @@
 package lotto.controller
 
+import lotto.model.Budget
 import lotto.model.FixedLottoNumbersGenerator
 import lotto.model.Lotto
-import lotto.model.LottoBudget
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
-import lotto.model.LottoPurchaseDetails
 import lotto.model.LottoWinningBundle
+import lotto.model.PurchaseDetails
 import lotto.model.RandomLottoNumbersGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -22,26 +22,26 @@ class GameController {
         OutputView.printProfitRate(lottoResult, purchaseDetails)
     }
 
-    private fun createPurchaseDetails(): LottoPurchaseDetails {
-        val lottoBudget = LottoBudget(InputView.readTotalBudget())
+    private fun createPurchaseDetails(): PurchaseDetails {
+        val budget = Budget(InputView.readTotalBudget())
         val manualPurchaseCount = InputView.readManualPurchaseCount()
-        return LottoPurchaseDetails(lottoBudget, manualPurchaseCount)
+        return PurchaseDetails(budget, manualPurchaseCount)
     }
 
-    private fun purchaseLottos(purchaseDetails: LottoPurchaseDetails): List<Lotto> {
+    private fun purchaseLottos(purchaseDetails: PurchaseDetails): List<Lotto> {
         val manualPurchasedLottos = purchaseManualLottos(purchaseDetails)
         val autoPurchasedLottos = purchaseAutoLottos(purchaseDetails)
         OutputView.printLottos(manualPurchasedLottos, autoPurchasedLottos)
         return manualPurchasedLottos + autoPurchasedLottos
     }
 
-    private fun purchaseManualLottos(purchasePlan: LottoPurchaseDetails): List<Lotto> {
+    private fun purchaseManualLottos(purchasePlan: PurchaseDetails): List<Lotto> {
         val manualLottoBuyNumbers = InputView.readManualPurchaseNumbers(purchasePlan.manualPurchaseCount)
         val fixedLottoNumbersGenerator = FixedLottoNumbersGenerator(manualLottoBuyNumbers)
         return LottoMachine.createLottos(purchasePlan.manualPurchaseCount, fixedLottoNumbersGenerator)
     }
 
-    private fun purchaseAutoLottos(purchasePlan: LottoPurchaseDetails): List<Lotto> {
+    private fun purchaseAutoLottos(purchasePlan: PurchaseDetails): List<Lotto> {
         return LottoMachine.createLottos(purchasePlan.autoPurchaseCount, RandomLottoNumbersGenerator)
     }
 

@@ -1,9 +1,9 @@
 package lotto.model
 
-data class LottoResult(val winningCountsByLottoRank: Map<LottoRank, Int>) {
+data class Result(val winningCountsByRank: Map<Rank, Int>) {
     fun getProfitRate(totalPurchaseCost: Int): Double {
         val totalProfit =
-            winningCountsByLottoRank.entries.sumOf { (rank, count) ->
+            winningCountsByRank.entries.sumOf { (rank, count) ->
                 rank.winningMoney * count
             }
         return totalProfit.toDouble() / totalPurchaseCost

@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoBudget(
+class Budget(
     val totalBudget: Int,
     val pricePerManualLotto: Int = Lotto.PRICE_PER_LOTTO,
     val pricePerAutoLotto: Int = Lotto.PRICE_PER_LOTTO,

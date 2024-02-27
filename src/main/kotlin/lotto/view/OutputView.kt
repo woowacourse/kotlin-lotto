@@ -1,9 +1,9 @@
 package lotto.view
 
 import lotto.model.Lotto
-import lotto.model.LottoPurchaseDetails
-import lotto.model.LottoRank
-import lotto.model.LottoResult
+import lotto.model.PurchaseDetails
+import lotto.model.Rank
+import lotto.model.Result
 
 object OutputView {
     fun printLottos(
@@ -18,9 +18,9 @@ object OutputView {
         println()
     }
 
-    fun printResult(lottoResult: LottoResult) {
+    fun printResult(result: Result) {
         println("\n당첨 통계\n---------")
-        lottoResult.winningCountsByLottoRank.filterNot { it.key == LottoRank.MISS }
+        result.winningCountsByRank.filterNot { it.key == Rank.MISS }
             .forEach { (lottoRank, count) ->
                 println(
                     "${lottoRank.countOfMatch}개 일치${if (lottoRank.matchBonus == true) ", 보너스 볼 일치" else ""}" +
@@ -30,14 +30,14 @@ object OutputView {
     }
 
     fun printProfitRate(
-        lottoResult: LottoResult,
-        purchaseDetails: LottoPurchaseDetails,
+        result: Result,
+        purchaseDetails: PurchaseDetails,
     ) {
         println(
             "총 수익률은 ${
                 String.format(
                     "%.2f",
-                    lottoResult.getProfitRate(purchaseDetails.calculateTotalPurchaseCost()),
+                    result.getProfitRate(purchaseDetails.calculateTotalPurchaseCost()),
                 )
             }입니다.",
         )
