@@ -18,7 +18,8 @@
 - [x] : Money - compareTo operator 함수 구현
 - [X] : List<Int> -> Lotto 팩토리 메서드 함수 추가
 - [x] : 수동 로또 생성기 추가 구현
-- [ ] : Lotto Machine - (구매 금액 >= 수동 로또 수 * 로또 가격) 비교 기능 
+- [x] : Lotto Machine - (구매 금액 >= 수동 로또 수 * 로또 가격) 비교 기능
+- [x] : Lotto Machine - 수동 로또, 자동 로또 생성 책임
 - [x] : 자동 로또 생성기 네이밍 변경 (LottieGenerator -> AutoLottieGenerator)
 
 # PR에 적을 질문 내용
