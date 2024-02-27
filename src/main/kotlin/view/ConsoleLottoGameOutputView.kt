@@ -63,7 +63,7 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
     companion object {
         private const val SCALE = 100
         private const val STANDARD_BREAK_EVEN_POINT = 1
-        private const val MESSAGE_PURCHASE_COUNT = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
+        private const val MESSAGE_PURCHASE_COUNT = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val MESSAGE_TITLE = "\n당첨 통계\n---------"
         private const val MESSAGE_PURCHASED_LOTTIE_COUNT = "%d개를 구매했습니다."
         private const val MESSAGE_EARNING_RATE = "총 수익률은 %.2f입니다."
