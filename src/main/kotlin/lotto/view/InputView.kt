@@ -8,14 +8,14 @@ object InputView {
         return readlnOrNull()?.toIntOrNull() ?: INVALID_INPUT
     }
 
-    fun readManualLottoBuyCount(): Int {
+    fun readManualPurchaseCount(): Int {
         println("\n수동으로 구매할 로또 수를 입력해 주세요.")
         return readlnOrNull()?.toIntOrNull() ?: INVALID_INPUT
     }
 
-    fun readManualLottoBuyNumbers(manualLottoBuyCount: Int): List<List<Int>> {
+    fun readManualPurchaseNumbers(manualPurchaseCount: Int): List<List<Int>> {
         println("\n수동으로 구매할 번호를 입력해 주세요.")
-        return List(manualLottoBuyCount) {
+        return List(manualPurchaseCount) {
             val input = readlnOrNull().orEmpty()
             input.split(",").map { it.trim().toIntOrNull() ?: INVALID_INPUT }
         }

@@ -5,7 +5,7 @@ data class LottoWinningBundle(
     val bonusLottoNumber: LottoNumber,
 ) {
     init {
-        require(bonusLottoNumber !in winningLotto.lottoNumbers) { BONUS_NUMBER_DUPLICATED_ERROR_MESSAGE }
+        require(bonusLottoNumber !in winningLotto.lottoNumbers.numbers) { BONUS_NUMBER_DUPLICATED_ERROR_MESSAGE }
     }
 
     fun calculateResult(buyedLottos: List<Lotto>): LottoResult {
@@ -20,11 +20,11 @@ data class LottoWinningBundle(
     }
 
     private fun calculateCountOfMatch(lotto: Lotto): Int {
-        return lotto.lottoNumbers.intersect(winningLotto.lottoNumbers.toSet()).size
+        return lotto.lottoNumbers.numbers.intersect(winningLotto.lottoNumbers.numbers.toSet()).size
     }
 
     private fun calculateMatchBonus(lotto: Lotto): Boolean {
-        return bonusLottoNumber in lotto.lottoNumbers
+        return bonusLottoNumber in lotto.lottoNumbers.numbers
     }
 
     companion object {

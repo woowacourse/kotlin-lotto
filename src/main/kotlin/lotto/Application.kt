@@ -1,8 +1,8 @@
 package lotto
 
-import lotto.controller.LottoGameController
+import lotto.controller.GameController
 
 fun main() {
-    val lottoGameController = LottoGameController()
-    lottoGameController.start()
+    val gameController = GameController()
+    gameController.start()
 }

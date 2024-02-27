@@ -5,6 +5,7 @@ object LottoMachine {
         numberOfLottos: Int,
         lottoNumbersGenerator: LottoNumbersGenerator,
     ): List<Lotto> {
-        return lottoNumbersGenerator.generate(numberOfLottos).map { Lotto(it) }
+        return lottoNumbersGenerator.generate(numberOfLottos)
+            .map { Lotto(LottoNumbers(it)) }
     }
 }

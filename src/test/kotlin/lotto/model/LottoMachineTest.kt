@@ -9,6 +9,6 @@ class LottoMachineTest {
         val fixedNumbers = (1..24 step 6).map { (it..it + 5).toList() }
         val fixedLottoNumbersGenerator = FixedLottoNumbersGenerator(fixedNumbers)
         val maualPurchasedLottos = LottoMachine.createLottos(4, fixedLottoNumbersGenerator)
-        assertThat(maualPurchasedLottos).isEqualTo(fixedNumbers.map { Lotto(it.map(LottoNumber::of)) })
+        assertThat(maualPurchasedLottos).isEqualTo(fixedNumbers.map { Lotto(LottoNumbers(it.map(LottoNumber::of))) })
     }
 }
