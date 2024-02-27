@@ -1,10 +1,7 @@
 import controller.LotteryController
 import model.lottery.LotteryMachine
-import model.lottery.LotteryRankEvaluator
 import model.lottery.LotteryResultEvaluator
 import model.lottery.LotterySeller
-import model.lottery.LottoBonusNumberChecker
-import model.lottery.LottoNumberComparator
 import model.profit.Profit
 import model.profit.ProfitStatusDecider
 import view.InputView
@@ -16,7 +13,7 @@ fun main() {
         OutputView(),
         LotterySeller(),
         LotteryMachine(),
-        LotteryResultEvaluator(LotteryRankEvaluator(LottoNumberComparator(), LottoBonusNumberChecker())),
+        LotteryResultEvaluator(),
         Profit(),
         ProfitStatusDecider(),
     ).start()
