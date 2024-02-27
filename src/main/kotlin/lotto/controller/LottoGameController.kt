@@ -14,11 +14,10 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoGameController(
+    private var gameState: GameState = GameState.Play,
     private var price: Price = Price(),
 ) {
     fun start() {
-        var gameState: GameState = GameState.Play
-
         while (gameState == GameState.Play) {
             getMatchResult().onSuccess { matchResult ->
                 val lottoResult = matchResult.calculateResult()
