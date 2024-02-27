@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.model.LottoNumberGenerator
 import lotto.model.LottoStore
+import lotto.model.PurchaseOrder
 import lotto.model.WinningLotto
 import lotto.utils.retryWhileNoException
 import lotto.view.InputView
@@ -11,7 +12,10 @@ class LottoController(
     private val lottoNumberGenerator: LottoNumberGenerator,
 ) {
     fun run() {
-        val purchaseOrder = readPurchasePrice()
+        val purchasePrice = readPurchasePrice()
+        val manualLottoSize = readManualLottoSize()
+        val purchaseOrder = PurchaseOrder(purchasePrice, manualLottoSize)
+
         val lottoStore = LottoStore.buyLottos(listOf(), purchaseOrder, lottoNumberGenerator)
         OutputView.printPurchaseLotto(lottoStore)
 
@@ -24,6 +28,8 @@ class LottoController(
     }
 
     private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
+
+    private fun readManualLottoSize() = retryWhileNoException { InputView.readManualLottoSize() }
 
     private fun readWinningLotto(): WinningLotto {
         val winningLottoNumbers = retryWhileNoException { InputView.readWinningLottoNumbers() }

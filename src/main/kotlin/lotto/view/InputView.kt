@@ -2,20 +2,25 @@ package lotto.view
 
 import lotto.model.Lotto
 import lotto.model.LottoNumber
-import lotto.model.PurchaseOrder
 
 object InputView {
     private const val INPUT_PURCHASE_PRICE = "구입금액을 입력해 주세요."
+    private const val INPUT_MANUAL_LOTTO_SIZE = "수동으로 구매할 로또 수를 입력해 주세요."
     private const val INPUT_WINNING_LOTTO_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
     private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
     private const val LOTTO_NUMBER_DELIMITER = ", "
     private const val INVALID_DIGIT = "숫자만 입력해 주세요."
 
-    fun readPurchasePrice(): PurchaseOrder {
+    fun readPurchasePrice(): Int {
         println(INPUT_PURCHASE_PRICE)
         val inputPurchasePrice = readln()
-        val purchasePrice = inputPurchasePrice.validateAndConvertDigit()
-        return PurchaseOrder(purchasePrice)
+        return inputPurchasePrice.validateAndConvertDigit()
+    }
+
+    fun readManualLottoSize(): Int {
+        println(INPUT_MANUAL_LOTTO_SIZE)
+        val inputManualLottoSize = readln()
+        return inputManualLottoSize.validateAndConvertDigit()
     }
 
     fun readWinningLottoNumbers(): Lotto {
