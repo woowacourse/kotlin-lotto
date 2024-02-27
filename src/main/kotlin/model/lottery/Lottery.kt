@@ -1,11 +1,17 @@
 package model.lottery
 
+import model.Quantity
+
 class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
     init {
         val lotteryNumberCount = lotteryNumbers.size
         require(lotteryNumberCount == LOTTERY_NUMBER_COUNT) { ERROR_INVALID_LOTTERY_NUMBER_COUNT }
         require(lotteryNumbers.toSet().size == lotteryNumberCount) { ERROR_INVALID_LOTTERY_DUPLICATED }
     }
+
+    fun compareLottery(other: Lottery): Quantity = Quantity(lotteryNumbers.count { it in other.lotteryNumbers })
+
+    fun contains(number: LotteryNumber): Boolean = lotteryNumbers.any { it == number }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
