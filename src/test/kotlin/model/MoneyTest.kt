@@ -19,6 +19,13 @@ class MoneyTest {
     }
 
     @Test
+    fun `Money 의 amount가 0일 때, Money로 나누면 예외 발생`() {
+        assertThrows<IllegalArgumentException> {
+            Money(GENERAL_MONEY_AMOUNT) / Money(0)
+        }
+    }
+
+    @Test
     fun `Moneny 를 n 배로 곱하면, amount n배 인 Money가 된다`() {
         // given
         val times = 3
