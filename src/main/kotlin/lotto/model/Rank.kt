@@ -6,7 +6,8 @@ enum class Rank(val index: Int, val countOfMatch: Int, val winningMoney: Int) {
     THIRD(2, 5, 1_500_000),
     FOURTH(3, 4, 50_000),
     FIFTH(4, 3, 5_000),
-    MISS(5, 0, 0), ;
+    SIXTH(5, 2, 1_000),
+    MISS(6, 0, 0), ;
 
     companion object {
         val bonusNeededRank = SECOND

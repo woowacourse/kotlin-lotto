@@ -1,11 +1,6 @@
 package lotto.view
 
 import lotto.model.Rank
-import lotto.model.Rank.FIFTH
-import lotto.model.Rank.FIRST
-import lotto.model.Rank.FOURTH
-import lotto.model.Rank.SECOND
-import lotto.model.Rank.THIRD
 import lotto.model.UserLottoTicket
 
 class OutputView {
@@ -21,7 +16,8 @@ class OutputView {
     }
 
     fun printWinningChart(rankMap: Map<Rank, Int>) {
-        for (rank in listOf(FIFTH, FOURTH, THIRD, SECOND, FIRST)) {
+        val rankList = Rank.entries.take(Rank.entries.size - 1).reversed()
+        for (rank in rankList) {
             println(
                 MATCH_MESSAGE.format(
                     rank.countOfMatch,
