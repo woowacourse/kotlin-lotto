@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.model.Lotto
 import lotto.model.LottoGenerator
 import lotto.model.LottoNumber
 import lotto.model.Lottos
@@ -23,13 +24,18 @@ class Controller {
     fun run() {
         insertCostMessage()
         val charge = readCharge()
-        val count = (charge / LOTTO_PRICE).toInt()
         insertManuallyLottoCount()
-        readHowManyManually()
+        val manualCount = readHowManyManually()
+        val autocount = (charge / LOTTO_PRICE).toInt() - manualCount
         insertManuallyLotto()
-        readManualLottoNumber()
-        purchaseCountMessage(count)
-        val lottos = makeLottos(count)
+        val manualLottos =
+            makeManualLottos(
+                List(manualCount) {
+                    readManualLottoNumber()
+                },
+            )
+        purchaseCountMessage(manualCount, autocount)
+        val lottos = makeLottos(autocount)
         insertWinNumbers()
         val winning = readLottoNumber()
         insertBonusNumbers()
@@ -49,5 +55,10 @@ class Controller {
                 lotto
             },
         )
+    }
+
+    private fun makeManualLottos(lottos: List<Lotto>): Lottos {
+        lottos.forEach { showLotto(it) }
+        return Lottos(lottos)
     }
 }
