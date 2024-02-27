@@ -54,7 +54,6 @@ object ExceptionManager {
     const val INVALID_PRICE = "구입 금액이 올바르지 않습니다."
     val INVALID_NUM_RANGE = "${Lotto.LOTTO_NUM_RANGE.first}~${Lotto.LOTTO_NUM_RANGE.last} 사이의 숫자를 입력해야 합니다."
     const val INVALID_NUM_COUNT = "총 ${Lotto.LOTTO_LEN}개의 숫자가 입력되어야 합니다."
-    const val INVALID_DUPLICATION = "중복 된 숫자가 없어야 합니다."
     const val INVALID_MANUAL_COUNT = "구입 금액에 맞는 수를 입력해야 합니다."
     const val INVALID_BONUS_DUPLICATION = "로또 번호와 중복 된 숫자가 없어야 합니다."
 }

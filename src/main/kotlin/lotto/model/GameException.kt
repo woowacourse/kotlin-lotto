@@ -1,6 +1,6 @@
 package lotto.model
 
-open class GameException(
+class GameException(
     message: String,
     val event: UserEvent
 ) : Exception(message)
