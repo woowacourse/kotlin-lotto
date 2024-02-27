@@ -49,10 +49,9 @@ class LottoGameController {
 
     private fun createLottoBundle(lottoMachine: LottoMachine): LottoBundle {
         val lottoManualPurchaseCount = getLottoManualPurchaseCount()
-        val randomLottoCount = lottoMachine.getRandomLottoCount(lottoManualPurchaseCount)
+        val randomLottoCount = lottoMachine.getRandomLottoCount(lottoManualPurchaseCount.count)
         val lottoManualPurchaseNumbers = InputView.readLottoManualPurchaseNumbers(lottoManualPurchaseCount.count)
-        val lottoBundle =
-            lottoMachine.createLottoBundle(ManualPurchaseLottos(lottoManualPurchaseNumbers), lottoManualPurchaseCount)
+        val lottoBundle = lottoMachine.createLottoBundle(ManualPurchaseLottos(lottoManualPurchaseNumbers))
 
         OutputView.printLottoCount(lottoManualPurchaseCount.count, randomLottoCount)
         OutputView.printLottoBundle(lottoBundle.toString())

@@ -12,7 +12,7 @@ class LottoMachineTest {
         val lottoMachine = LottoMachine(Price.from(strMoney))
 
         assertThrows<ManualPurchaseCountTooLargeException> {
-            lottoMachine.getRandomLottoCount(LottoManualPurchaseCount(10))
+            lottoMachine.getRandomLottoCount(10)
         }
     }
 }
