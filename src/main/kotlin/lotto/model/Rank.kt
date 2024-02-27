@@ -17,13 +17,12 @@ enum class Rank(val index: Int, val countOfMatch: Int, val winningMoney: Int) {
             matchBonus: Boolean,
         ): Rank {
             val rankEntries = enumValues<Rank>()
-            if (countOfMatch == bonusNeededRank.countOfMatch) {
-                if (matchBonus) {
-                    return bonusNeededRank
-                }
-                return rankEntries[bonusNeededRank.index + 1]
+            return when (countOfMatch) {
+                bonusNeededRank.countOfMatch ->
+                    if (matchBonus) bonusNeededRank else rankEntries[bonusNeededRank.index + 1]
+
+                else -> entries.find { it.countOfMatch == countOfMatch } ?: MISS
             }
-            return entries.find { it.countOfMatch == countOfMatch } ?: MISS
         }
     }
 }
