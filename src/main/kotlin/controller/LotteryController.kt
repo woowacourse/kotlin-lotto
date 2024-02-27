@@ -32,7 +32,7 @@ class LotteryController(
     }
 
     private fun buyLotteries(purchaseAmount: Money): Lotteries {
-        val lotteryQuantity = LotterySeller(purchaseAmount).getLotteryQuantity()
+        val lotteryQuantity = LotterySeller().getLotteryQuantity(purchaseAmount)
         val manualLotteryQuantity = Quantity.from(inputView.readManualLotteryQuantity())
         val randomLotteryQuantity = lotteryQuantity - manualLotteryQuantity
 

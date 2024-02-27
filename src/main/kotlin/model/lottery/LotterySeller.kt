@@ -4,14 +4,13 @@ import model.Money
 import model.Quantity
 import java.text.DecimalFormat
 
-class LotterySeller(private val money: Money) {
-    init {
+class LotterySeller() {
+    fun getLotteryQuantity(money: Money): Quantity {
         require(money % PRICE == Money.ZERO) { "1,000 원 단위로 입력하세요." }
         require(money <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
         require(money >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
+        return Quantity((money / PRICE).toInt())
     }
-
-    fun getLotteryQuantity(): Quantity = Quantity((money / PRICE).toInt())
 
     companion object {
         private const val MIN_PRICE_AMOUNT = 1_000
