@@ -43,8 +43,8 @@ class LottoGameController(
 
     private fun createWinningLotto(): Lotto =
         runCatching {
-            val winningNumbers = inputView.inputWinningNumbers()
-            Lotto(*(winningNumbers.toIntArray()))
+            val winningNumbers: List<Int> = inputView.inputWinningNumbers()
+            Lotto(winningNumbers)
         }.onFailure {
             if (it is IllegalArgumentException) return createWinningLotto()
         }.getOrThrow()
