@@ -1,6 +1,7 @@
 package lotto
 
 import lotto.model.Lottos
+import lotto.model.WinningLotto
 import lotto.model.WinningRank
 import model.Lotto
 import model.LottoNumber
@@ -28,8 +29,10 @@ class LottosTest {
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
         assertThat(
             lottos.winningResult(
-                setUpLotto(1, 2, 3, 4, 5, 6),
-                LottoNumber(10),
+                WinningLotto(
+                    setUpLotto(1, 2, 3, 4, 5, 6),
+                    LottoNumber(10),
+                ),
             ),
         ).isEqualTo(mapOf(WinningRank.FIRST to 1))
     }
@@ -40,8 +43,10 @@ class LottosTest {
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
         assertThat(
             lottos.winningResult(
-                setUpLotto(1, 2, 3, 4, 5, 7),
-                LottoNumber(6),
+                WinningLotto(
+                    setUpLotto(1, 2, 3, 4, 5, 7),
+                    LottoNumber(6),
+                ),
             ),
         ).isEqualTo(mapOf(WinningRank.SECOND to 1))
     }
@@ -52,8 +57,10 @@ class LottosTest {
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
         assertThat(
             lottos.winningResult(
-                setUpLotto(1, 2, 3, 4, 5, 7),
-                LottoNumber(10),
+                WinningLotto(
+                    setUpLotto(1, 2, 3, 4, 5, 7),
+                    LottoNumber(10),
+                ),
             ),
         ).isEqualTo(mapOf(WinningRank.THIRD to 1))
     }
@@ -64,8 +71,10 @@ class LottosTest {
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
         assertThat(
             lottos.winningResult(
-                setUpLotto(1, 2, 3, 4, 15, 25),
-                LottoNumber(10),
+                WinningLotto(
+                    setUpLotto(1, 2, 3, 4, 15, 25),
+                    LottoNumber(10),
+                ),
             ),
         ).isEqualTo(mapOf(WinningRank.FOURTH to 1))
     }
@@ -76,8 +85,10 @@ class LottosTest {
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
         assertThat(
             lottos.winningResult(
-                setUpLotto(1, 2, 3, 14, 15, 17),
-                LottoNumber(40),
+                WinningLotto(
+                    setUpLotto(1, 2, 3, 14, 15, 17),
+                    LottoNumber(40),
+                ),
             ),
         ).isEqualTo(mapOf(WinningRank.FIFTH to 1))
     }
@@ -88,8 +99,10 @@ class LottosTest {
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
         assertThat(
             lottos.winningResult(
-                setUpLotto(11, 22, 33, 34, 35, 37),
-                LottoNumber(17),
+                WinningLotto(
+                    setUpLotto(11, 22, 33, 34, 35, 37),
+                    LottoNumber(17),
+                ),
             ),
         ).isEqualTo(mapOf(WinningRank.NONE to 1))
     }

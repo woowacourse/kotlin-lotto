@@ -1,21 +1,26 @@
 package lotto.view
 
+import lotto.constants.GameConstant.SPLIT_DELIMITER
+
 class InputView {
     fun readPurchaseAmount(): String = validateNullInput(readlnOrNull())
 
-    fun readWinningNumbers(): String = validateNullInput(readlnOrNull()).replace(" ", "")
+    fun readWinningNumbers(): List<Int> {
+        val winningNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
+        return winningNumbers.split(SPLIT_DELIMITER).map { it.validateAndConvertDigit() }
+    }
 
     fun readWinningBonusNumber(): Int {
         val bonusNumber = validateNullInput(readlnOrNull())
-        try {
-            return bonusNumber.toInt()
-        } catch (e: NumberFormatException) {
-            throw IllegalArgumentException(ERROR_INPUT_TYPE_MESSAGE)
-        }
+        return bonusNumber.validateAndConvertDigit()
     }
 
     private fun validateNullInput(input: String?): String {
         return input ?: throw IllegalArgumentException(ERROR_EMPTY_INPUT_MESSAGE)
+    }
+
+    private fun String.validateAndConvertDigit(): Int {
+        return toIntOrNull() ?: throw IllegalArgumentException(ERROR_INPUT_TYPE_MESSAGE)
     }
 
     companion object {

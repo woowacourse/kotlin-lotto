@@ -5,7 +5,7 @@ import lotto.constants.GameConstant.PURCHASE_UNIT
 import lotto.model.LottoNumberGenerator
 import lotto.model.LottoStore
 import lotto.model.PurchaseAmount
-import lotto.model.WinningNumbersGenerator
+import lotto.model.WinningLotto
 import lotto.model.WinningPrizeCalculator
 import lotto.model.WinningRank
 import lotto.view.InputView
@@ -18,8 +18,8 @@ class LottoController(private val inputView: InputView, private val outputView: 
         val purchaseAmount = initPurchaseAmount()
         val numberOfLottos = initBuyLotto(purchaseAmount)
         val lottoStore = generateLotto(numberOfLottos)
-        val (winningNumbers, bonusNumber) = generateWinningNumbers()
-        showLottoResult(lottoStore, winningNumbers, bonusNumber, purchaseAmount)
+        val winningNumbers = readWinningNumbers()
+        showLottoResult(lottoStore, winningNumbers, purchaseAmount)
     }
 
     private fun initPurchaseAmount(): Int {
@@ -39,24 +39,21 @@ class LottoController(private val inputView: InputView, private val outputView: 
         return lottoStore
     }
 
-    private fun generateWinningNumbers(): Pair<Lotto, LottoNumber> {
+    private fun readWinningNumbers(): WinningLotto {
         outputView.printWinningNumbersMessage()
-        val input = inputView.readWinningNumbers()
-        val winningNumbersGenerator = WinningNumbersGenerator()
-        val winningLotto = winningNumbersGenerator.generateWinningNumbers(input)
+        val winningLotto = Lotto.lottoNumbersOf(inputView.readWinningNumbers())
 
         outputView.printBonusNumberMessage()
         val bonusNumber = LottoNumber(inputView.readWinningBonusNumber())
-        return Pair(winningLotto, bonusNumber)
+        return WinningLotto(winningLotto, bonusNumber)
     }
 
     private fun showLottoResult(
         lottoStore: LottoStore,
-        winningNumbers: Lotto,
-        bonusNumber: LottoNumber,
+        winningLotto: WinningLotto,
         purchaseAmount: Int,
     ) {
-        val rankCounts = lottoStore.getWinningResult(winningNumbers, bonusNumber)
+        val rankCounts = lottoStore.getWinningResult(winningLotto)
 
         WinningRank.entries.forEach { rank ->
             if (rank != WinningRank.NONE) {

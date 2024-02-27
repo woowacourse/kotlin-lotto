@@ -1,6 +1,7 @@
 package lotto
 
 import lotto.model.LottoStore
+import lotto.model.WinningLotto
 import lotto.model.WinningRank
 import model.Lotto
 import model.LottoNumber
@@ -15,8 +16,9 @@ class LottoStoreTest {
         val lottoStore = LottoStore(3, TestLottoNumberGenerator())
         val winningNumbers = setUpLotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(7)
+        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
         Assertions.assertThat(
-            lottoStore.getWinningResult(winningNumbers, bonusNumber),
+            lottoStore.getWinningResult(winningLotto),
         ).isEqualTo(
             mapOf(
                 WinningRank.FIRST to 3,

@@ -3,8 +3,6 @@ package lotto.model
 import lotto.constants.GameConstant.LOTTO_NUMBER_SIZE
 import lotto.constants.GameConstant.MAX_NUMBER
 import lotto.constants.GameConstant.MIN_NUMBER
-import model.Lotto
-import model.LottoNumber
 
 class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerator: NumberGenerator) {
     var lottos = Lottos()
@@ -21,10 +19,7 @@ class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerat
         }
     }
 
-    fun getWinningResult(
-        winningNumbers: Lotto,
-        bonusNumber: LottoNumber,
-    ): Map<WinningRank, Int> {
-        return lottos.winningResult(winningNumbers, bonusNumber)
+    fun getWinningResult(winningLotto: WinningLotto): Map<WinningRank, Int> {
+        return lottos.winningResult(winningLotto)
     }
 }
