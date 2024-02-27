@@ -1,11 +1,13 @@
 package lotto.model
 
 object RandomLottoNumbersGenerator : LottoNumbersGenerator {
-    override fun generate(numberOfLottos: Int): List<List<LottoNumber>> =
+    override fun generate(numberOfLottos: Int): List<LottoNumbers> =
         List(numberOfLottos) {
-            LottoNumber.LOTTO_NUMBER_RANGE.shuffled()
-                .take(Lotto.LOTTO_SIZE)
-                .sorted()
-                .map { LottoNumber.of(it) }
+            LottoNumbers(
+                LottoNumber.LOTTO_NUMBER_RANGE.shuffled()
+                    .take(Lotto.LOTTO_SIZE)
+                    .sorted()
+                    .map { LottoNumber.of(it) },
+            )
         }
 }
