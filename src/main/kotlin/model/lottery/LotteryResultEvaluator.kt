@@ -5,7 +5,7 @@ import model.Quantity
 import model.WinningRank
 import model.WinningResult
 
-class LotteryResultEvaluator(private val lotteryRankEvaluator: LotteryRankEvaluator = LotteryRankEvaluator()) {
+class LotteryResultEvaluator {
     fun evaluate(
         lotteries: Lotteries,
         winningLottery: WinningLottery,
@@ -13,7 +13,7 @@ class LotteryResultEvaluator(private val lotteryRankEvaluator: LotteryRankEvalua
         val winningResult = DEFAULT_WINNING_RESULT
 
         lotteries.lotteries.forEach {
-            val rank = lotteryRankEvaluator.evaluate(it, winningLottery)
+            val rank = winningLottery.evaluate(it)
             winningResult[rank] = winningResult[rank]!! + Quantity(1)
         }
 
