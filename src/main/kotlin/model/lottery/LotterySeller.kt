@@ -7,8 +7,7 @@ import java.text.DecimalFormat
 class LotterySeller() {
     fun getLotteryQuantity(money: Money): Quantity {
         require(money % PRICE == Money.ZERO) { "1,000 원 단위로 입력하세요." }
-        require(money <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
-        require(money >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
+        require(money in PRICE..MAX_PURCHASE_AMOUNT) { ERROR_PURCHASE_AMOUNT_OUT_OF_BOUNDS }
         return Quantity((money / PRICE).toInt())
     }
 
@@ -21,7 +20,7 @@ class LotterySeller() {
         private val PRICE = Money.wons(MIN_PRICE_AMOUNT)
         private val MAX_PURCHASE_AMOUNT = Money.wons(MAX_PRICE_AMOUNT)
 
-        private val ERROR_EXCEED_MAX_PURCHASE_AMOUNT = "${decimalFormat.format(MAX_PRICE_AMOUNT)}원 이하로만 구매가 가능합니다."
-        private val ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT = "${decimalFormat.format(MIN_PRICE_AMOUNT)}원 이상의 금액을 지불해야 합니다."
+        private val ERROR_PURCHASE_AMOUNT_OUT_OF_BOUNDS =
+            "${decimalFormat.format(MIN_PRICE_AMOUNT)}원 이상, ${decimalFormat.format(MAX_PRICE_AMOUNT)}원 이하로만 구매가 가능합니다."
     }
 }
