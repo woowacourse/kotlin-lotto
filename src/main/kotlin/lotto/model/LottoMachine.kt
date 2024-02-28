@@ -12,7 +12,7 @@ class LottoMachine(val ticketCounts: TicketCounts) {
             tickets.addAll(manualLotto)
         }
         tickets.addAll(
-            issueAutomaticTickets(ticketCounts.numberOfTickets.counts - ticketCounts.numberOfManual.counts),
+            issueAutomaticTickets(ticketCounts.getAutomaticTicketCounts()),
         )
         return tickets
     }
