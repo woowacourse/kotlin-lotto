@@ -20,13 +20,23 @@ object OutputView {
 
     fun printResult(result: Result) {
         println("\n당첨 통계\n---------")
-        result.winningCountsByRank.filterNot { it.key == Rank.MISS }
-            .forEach { (lottoRank, count) ->
-                println(
-                    "${lottoRank.countOfMatch}개 일치${if (lottoRank.matchBonus == true) ", 보너스 볼 일치" else ""}" +
-                        " (${lottoRank.winningMoney}원) - ${count}개",
-                )
+        Rank.entries
+            .reversed()
+            .filterNot { it == Rank.MISS }
+            .forEach { rank ->
+                val count = result.getWinningCountByRank(rank)
+                printRankResult(rank, count)
             }
+    }
+
+    private fun printRankResult(
+        rank: Rank,
+        count: Int,
+    ) {
+        println(
+            "${rank.countOfMatch}개 일치${if (rank.matchBonus == true) ", 보너스 볼 일치" else ""}" +
+                " (${rank.winningMoney}원) - ${count}개",
+        )
     }
 
     fun printProfitRate(

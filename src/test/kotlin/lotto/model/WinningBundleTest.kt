@@ -26,37 +26,33 @@ class WinningBundleTest {
             )
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 7)
         val winningBundle = WinningBundle(winningLotto, LottoNumber.of(8))
-        val lottoResult = winningBundle.calculateResult(purchasedLottos)
-        assertThat(lottoResult.winningCountsByRank).isEqualTo(
-            mapOf(
-                Rank.MISS to 0,
-                Rank.FIFTH to 0,
-                Rank.FOURTH to 0,
-                Rank.THIRD to 1,
-                Rank.SECOND to 1,
-                Rank.FIRST to 0,
+        val result = winningBundle.calculateResult(purchasedLottos)
+        assertThat(result).isEqualTo(
+            Result(
+                mutableMapOf(
+                    Rank.THIRD to 1,
+                    Rank.SECOND to 1,
+                ),
             ),
         )
     }
 
     @Test
     fun `6개의 당첨 번호가 일치하면 1등이고, 4개의 당첨번호가 일치하면 4등이다`() {
-        val buyedLottos =
+        val purchasedLottos =
             listOf(
                 Lotto.of(1, 2, 3, 4, 5, 6),
                 Lotto.of(1, 2, 3, 4, 7, 8),
             )
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val winningBundle = WinningBundle(winningLotto, LottoNumber.of(8))
-        val lottoResult = winningBundle.calculateResult(buyedLottos)
-        assertThat(lottoResult.winningCountsByRank).isEqualTo(
-            mapOf(
-                Rank.MISS to 0,
-                Rank.FIFTH to 0,
-                Rank.FOURTH to 1,
-                Rank.THIRD to 0,
-                Rank.SECOND to 0,
-                Rank.FIRST to 1,
+        val result = winningBundle.calculateResult(purchasedLottos)
+        assertThat(result).isEqualTo(
+            Result(
+                mutableMapOf(
+                    Rank.FIRST to 1,
+                    Rank.FOURTH to 1,
+                ),
             ),
         )
     }

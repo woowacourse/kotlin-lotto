@@ -9,28 +9,21 @@ data class WinningBundle(
     }
 
     fun calculateResult(purchasedLottos: List<Lotto>): Result {
-        val result = createInitialRankCountMap()
+        val result = Result()
         purchasedLottos.forEach { lotto ->
-            updateRankCount(result, lotto)
+            updateResultWithLotto(lotto, result)
         }
-        return Result(result)
+        return result
     }
 
-    private fun createInitialRankCountMap(): MutableMap<Rank, Int> {
-        return Rank.entries
-            .reversed()
-            .associateWith { 0 }
-            .toMutableMap()
-    }
-
-    private fun updateRankCount(
-        result: MutableMap<Rank, Int>,
+    private fun updateResultWithLotto(
         lotto: Lotto,
+        result: Result,
     ) {
         val countOfMatch = calculateCountOfMatch(lotto)
         val matchBonus = calculateMatchBonus(lotto)
         val rank = Rank.valueOf(countOfMatch, matchBonus)
-        result[rank] = result.getOrDefault(rank, 0) + 1
+        result.incrementRankCount(rank)
     }
 
     private fun calculateCountOfMatch(lotto: Lotto): Int {
