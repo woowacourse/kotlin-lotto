@@ -14,12 +14,15 @@ class LottoGameController {
         val numberOfTotalTickets = LottoMachine.getNumberOfTicket(purchaseAmount)
 
         val numberOfManualTickets = InputView.getNumberOfManualLotto()
-        val lottoTickets = LottoMachine.issueTickets(numberOfTotalTickets, LottoNumbersGenerator)
+        val manualLottoNumbers = InputView.getManualLottoNumbers(numberOfManualTickets)
+
+        val autoLottoTickets =
+            LottoMachine.issueTickets(numberOfTotalTickets - numberOfManualTickets, LottoNumbersGenerator)
 
         OutputView.printNumberOfTicket(numberOfTotalTickets)
-        OutputView.printLottoTickets(lottoTickets)
+        OutputView.printLottoTickets(autoLottoTickets)
 
-        makeResult(lottoTickets)
+        makeResult(autoLottoTickets)
     }
 
     private fun makeResult(lottoTickets: List<Lotto>) {

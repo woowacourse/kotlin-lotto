@@ -29,4 +29,13 @@ object InputView {
         println("수동으로 구매할 로또 수를 입력해 주세요.")
         return readln().toInt()
     }
+
+    fun getManualLottoNumbers(count: Int): List<Set<Int>> {
+        println("수동으로 구매할 번호를 입력해 주세요.")
+        return List(count) {
+            val input = readln().split(",")
+            input.forEach { ValidationUtils.validateLottoNumber(it.trim()) }
+            input.map { it.trim().toInt() }.toSet()
+        }
+    }
 }
