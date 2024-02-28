@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.model.FixedLottosGenerator
 import lotto.model.Lotto
-import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
 import lotto.model.PurchaseBudget
@@ -38,11 +37,11 @@ class GameController {
     private fun purchaseManualLottos(purchaseDetails: PurchaseDetails): List<Lotto> {
         val manualPurchaseNumbers = InputView.readManualPurchaseNumbers(purchaseDetails.manualPurchaseCount)
         val fixedLottosGenerator = FixedLottosGenerator(manualPurchaseNumbers)
-        return LottoMachine.createLottos(purchaseDetails.manualPurchaseCount, fixedLottosGenerator)
+        return fixedLottosGenerator.generate(purchaseDetails.manualPurchaseCount)
     }
 
     private fun purchaseAutoLottos(purchaseDetails: PurchaseDetails): List<Lotto> {
-        return LottoMachine.createLottos(purchaseDetails.autoPurchaseCount, RandomLottosGenerator)
+        return RandomLottosGenerator.generate(purchaseDetails.autoPurchaseCount)
     }
 
     private fun createWinningBundle(): WinningBundle {
