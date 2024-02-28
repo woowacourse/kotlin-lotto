@@ -12,7 +12,7 @@ class FixedLottosGenerator(private val fixedNumbers: List<List<Int>>) : LottosGe
 
     private fun generateLottoNumbers(numbers: List<Int>) =
         LottoNumbers(
-            numbers.map { number -> generateLottoNumber(number) },
+            numbers.sorted().map { number -> generateLottoNumber(number) },
         )
 
     private fun generateLottoNumber(number: Int) = LottoNumber.of(number)
