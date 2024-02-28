@@ -9,7 +9,7 @@ class LottoStoreTest {
     private val automaticLottos =
         LottoStore.buyAutoMaticLottos(
             PurchaseOrder(5000),
-            object : LottoNumberGenerator {
+            object : LottoMachine {
                 override fun generate() = listOf(1, 2, 3, 4, 5, 6)
             },
         )

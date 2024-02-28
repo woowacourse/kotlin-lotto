@@ -3,10 +3,10 @@ package lotto.model
 object LottoStore {
     fun buyAutoMaticLottos(
         purchaseOrder: PurchaseOrder,
-        lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator,
+        lottoMachine: LottoMachine,
     ): List<Lotto> {
         val automaticLottoSize = purchaseOrder.getAutomaticLottoSize()
-        return List(automaticLottoSize) { Lotto.create(lottoNumberGenerator.generate()) }
+        return List(automaticLottoSize) { Lotto.create(lottoMachine.generate()) }
     }
 
     fun combineLottos(

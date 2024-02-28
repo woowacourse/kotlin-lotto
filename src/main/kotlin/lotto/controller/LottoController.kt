@@ -1,7 +1,7 @@
 package lotto.controller
 
 import lotto.model.Lotto
-import lotto.model.LottoNumberGenerator
+import lotto.model.LottoMachine
 import lotto.model.LottoStore
 import lotto.model.ProfitRatio
 import lotto.model.PurchaseOrder
@@ -12,7 +12,7 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
-    private val lottoNumberGenerator: LottoNumberGenerator,
+    private val lottoMachine: LottoMachine,
 ) {
     fun run() {
         val purchaseOrder = readPurchaseOrder()
@@ -33,7 +33,7 @@ class LottoController(
 
     private fun initializePurchaseLottos(purchaseOrder: PurchaseOrder): List<Lotto> {
         val manualLottos = readManualLottos(purchaseOrder.manualLottoSize)
-        val automaticLottos = LottoStore.buyAutoMaticLottos(purchaseOrder, lottoNumberGenerator)
+        val automaticLottos = LottoStore.buyAutoMaticLottos(purchaseOrder, lottoMachine)
         return LottoStore.combineLottos(manualLottos, automaticLottos).also {
             OutputView.printPurchaseLotto(it)
         }
