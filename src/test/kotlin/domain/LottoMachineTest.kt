@@ -20,9 +20,10 @@ class LottoMachineTest {
     @Test
     fun `구입 금액 대비 수익 금액의 비율을 구한다`() {
         val actual = 0.357
-        val winningPrize = Money(5000)
+        val winningPrize = Money(5_000)
+        val money = Money(14_000)
 
-        val expected = LottoMachine(Money(14000)).calculateMargin(winningPrize)
+        val expected = LottoMachine(money).calculateMargin(winningPrize)
 
         assertThat(expected).isEqualTo(Margin(actual))
     }
