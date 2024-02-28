@@ -3,8 +3,9 @@ package model
 class LotteryPurchasePattern(val manualLottoCount: Int, val autoLottoCount: Int) {
     companion object {
         private const val LOTTERY_TICKET_PRICE = 1000
-        private const val EXCEPTION_INSUFFICIENT_FUNDS = "금액보다 구매하려는 갯수가 더 많습니다"
-        private const val EXCEPTION_IS_NOT_POSITIVE = "0 이상의 수를 입력하셔야 합니다"
+        const val EXCEPTION_IS_NOT_NUMBER = "숫자만 입력하셔야 합니다"
+        const val EXCEPTION_INSUFFICIENT_FUNDS = "금액보다 구매하려는 갯수가 더 많습니다"
+        const val EXCEPTION_IS_NOT_POSITIVE = "0 이상의 수를 입력하셔야 합니다"
 
         fun ofManual(
             amount: Amount,
@@ -18,7 +19,7 @@ class LotteryPurchasePattern(val manualLottoCount: Int, val autoLottoCount: Int)
         }
 
         private fun String.toInt(): Int {
-            return this.toIntOrNull() ?: throw IllegalArgumentException(Amount.EXCEPTION_IS_NOT_NUMBER)
+            return this.toIntOrNull() ?: throw IllegalArgumentException(EXCEPTION_IS_NOT_NUMBER)
         }
 
         private fun Int.validatePositive(): Int {
