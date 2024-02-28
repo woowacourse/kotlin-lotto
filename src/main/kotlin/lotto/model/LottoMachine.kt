@@ -7,11 +7,14 @@ object LottoMachine {
 
     fun getNumberOfTicket(cash: Int): Int = cash / TICKET_PRICE
 
-    fun issueTickets(
+    fun issueAutoTickets(
         count: Int,
         lottoNumbersGenerator: NumbersGenerator,
     ): List<Lotto> =
         List(count) {
             Lotto(lottoNumbersGenerator.generateNumbers().map { LottoNumber.valueOf(it) }.toSet())
         }
+
+    fun issueManualTickets(numbers: List<Set<Int>>): List<Lotto> =
+        numbers.map { number -> Lotto(number.map { LottoNumber.valueOf(it) }.toSet()) }
 }

@@ -15,9 +15,10 @@ class LottoGameController {
 
         val numberOfManualTickets = InputView.getNumberOfManualLotto()
         val manualLottoNumbers = InputView.getManualLottoNumbers(numberOfManualTickets)
+        val manualLottoTickets = LottoMachine.issueManualTickets(manualLottoNumbers)
 
         val autoLottoTickets =
-            LottoMachine.issueTickets(numberOfTotalTickets - numberOfManualTickets, LottoNumbersGenerator)
+            LottoMachine.issueAutoTickets(numberOfTotalTickets - numberOfManualTickets, LottoNumbersGenerator)
 
         OutputView.printNumberOfTicket(numberOfTotalTickets)
         OutputView.printLottoTickets(autoLottoTickets)
