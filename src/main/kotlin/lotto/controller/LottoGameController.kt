@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.model.Lotto
 import lotto.model.LottoCount
 import lotto.model.LottoMachine
+import lotto.model.LottoNumber
 import lotto.model.PurchaseAmount
 import lotto.model.WinningLotto
 import lotto.model.WinningStatus
@@ -44,16 +45,23 @@ class LottoGameController {
 
     private fun generateManualLotto(numberOfManualTickets: Int): List<Lotto> {
         val manualLottoNumbers = InputView.getManualLottoNumbers(numberOfManualTickets)
-        return LottoMachine.issueManualTickets(manualLottoNumbers)
+        return runCatching { LottoMachine.issueManualTickets(manualLottoNumbers) }.getOrNull() ?: generateManualLotto(numberOfManualTickets)
     }
 
     private fun generateAutoLotto(numberOfAutoTickets: Int): List<Lotto> {
         return LottoMachine.issueAutoTickets(numberOfAutoTickets, LottoNumbersGenerator)
     }
 
+    private fun getWinningLotto(): Lotto {
+        val winningNumbers = InputView.getWinningNumbers().mapNotNull { LottoNumber.valueOf(it) }.toSet()
+        val winningLotto = runCatching { Lotto(winningNumbers) }.getOrNull()
+        return winningLotto ?: getWinningLotto()
+    }
+
+    private fun getBonusNumber(): LottoNumber = LottoNumber.valueOf(InputView.getBonusNumber()) ?: getBonusNumber()
+
     private fun makeResult(lottoTickets: List<Lotto>): WinningStatus {
-        val lotteryResult =
-            WinningLotto(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
+        val lotteryResult = WinningLotto(getWinningLotto(), getBonusNumber())
         return WinningStatus(lotteryResult.generateWinningStatus(lottoTickets))
     }
 }

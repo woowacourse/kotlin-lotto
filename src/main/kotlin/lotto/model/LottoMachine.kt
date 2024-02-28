@@ -8,9 +8,9 @@ object LottoMachine {
         lottoNumbersGenerator: NumbersGenerator,
     ): List<Lotto> =
         List(count) {
-            Lotto(lottoNumbersGenerator.generateNumbers().map { LottoNumber.valueOf(it) }.toSet())
+            Lotto(lottoNumbersGenerator.generateNumbers().mapNotNull { LottoNumber.valueOf(it) }.toSet())
         }
 
     fun issueManualTickets(numbers: List<Set<Int>>): List<Lotto> =
-        numbers.map { number -> Lotto(number.map { LottoNumber.valueOf(it) }.toSet()) }
+        numbers.map { number -> Lotto(number.mapNotNull { LottoNumber.valueOf(it) }.toSet()) }
 }
