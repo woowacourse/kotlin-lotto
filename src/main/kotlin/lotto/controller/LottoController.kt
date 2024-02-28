@@ -15,11 +15,12 @@ class LottoController(
     fun run() {
         val purchaseOrder = readPurchaseOrder()
         val manualLottos = readManualLottos(purchaseOrder.manualLottoSize)
-        val lottoStore = LottoStore.buyLottos(manualLottos, purchaseOrder, lottoNumberGenerator)
-        OutputView.printPurchaseLotto(lottoStore)
+        val automaticLottos = LottoStore.buyAutoMaticLottos(purchaseOrder, lottoNumberGenerator)
+        val lottos = LottoStore.combineLottos(manualLottos, automaticLottos)
+        OutputView.printPurchaseLotto(lottos)
 
         val winningLotto = readWinningLotto()
-        val winningStatistics = winningLotto.calculateWinningStatistics(lottoStore)
+        val winningStatistics = winningLotto.calculateWinningStatistics(lottos)
         OutputView.printWinningStatistics(winningStatistics)
 
         val profitRatio = winningStatistics.calculateProfitRatio(purchaseOrder.price)

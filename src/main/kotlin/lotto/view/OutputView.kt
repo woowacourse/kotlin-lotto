@@ -1,7 +1,7 @@
 package lotto.view
 
+import lotto.model.Lotto
 import lotto.model.LottoPrize
-import lotto.model.LottoStore
 import lotto.model.ProfitRatio
 import lotto.model.WinningStatistics
 
@@ -13,9 +13,9 @@ object OutputView {
     private const val OUTPUT_DIVIDER = "---------"
     private const val OUTPUT_PROFIT_RATIO = "총 수익률은 %s입니다."
 
-    fun printPurchaseLotto(lottoStore: LottoStore) {
-        println(OUTPUT_PURCHASE_COUNT.format(lottoStore.lottos.size))
-        lottoStore.lottos.forEach { println(it.numbers.toString()) }
+    fun printPurchaseLotto(lottos: List<Lotto>) {
+        println(OUTPUT_PURCHASE_COUNT.format(lottos.size))
+        lottos.forEach { println(it.numbers.toString()) }
         println()
     }
 

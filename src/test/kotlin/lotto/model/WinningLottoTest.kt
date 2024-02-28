@@ -49,17 +49,10 @@ class WinningLottoTest {
     ) {
         // given
         val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber.from(bonusNumber))
-        val lottoStore =
-            LottoStore.buyLottos(
-                listOf(),
-                PurchaseOrder(5000),
-                object : LottoNumberGenerator {
-                    override fun generate() = listOf(1, 2, 3, 4, 5, 6)
-                },
-            )
+        val lottos = List(5) { Lotto.create(listOf(1, 2, 3, 4, 5, 6)) }
 
         // when
-        val actual = winningLotto.calculateWinningStatistics(lottoStore)
+        val actual = winningLotto.calculateWinningStatistics(lottos)
 
         // then
         Assertions.assertThat(actual[expected]).isEqualTo(5)

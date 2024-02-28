@@ -8,10 +8,9 @@ class WinningLotto(
         require(!lotto.contains(bonusNumber)) { INVALID_DUPLICATE_BONUS_NUMBER }
     }
 
-    fun calculateWinningStatistics(lottoStore: LottoStore): WinningStatistics {
+    fun calculateWinningStatistics(lottos: List<Lotto>): WinningStatistics {
         val statistics =
-            lottoStore
-                .lottos
+            lottos
                 .map { getLottoPrize(it) }
                 .groupBy { it }
                 .mapValues { it.value.size }
