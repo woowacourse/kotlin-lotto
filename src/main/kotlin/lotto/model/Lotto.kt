@@ -14,12 +14,6 @@ data class Lotto(val numbers: Set<LottoNumber>) {
     companion object {
         const val NUMBER_COUNT = 6
 
-        fun of(vararg numbers: Int): Lotto? {
-            val lottoNumbers = numbers.map { LottoNumber.valueOf(it) }
-            if (lottoNumbers.all { it != null }) {
-                return Lotto(lottoNumbers.mapNotNull { it }.toSet())
-            }
-            return null
-        }
+        fun of(vararg numbers: Int): Lotto = Lotto(numbers.map { LottoNumber.valueOf(it) }.filterNotNull().toSet())
     }
 }

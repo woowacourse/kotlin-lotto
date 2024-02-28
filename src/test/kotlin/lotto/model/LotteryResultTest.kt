@@ -11,7 +11,7 @@ class LotteryResultTest {
         val mine = listOf(Lotto.of(1, 2, 3, 4, 5, 6), Lotto.of(1, 2, 3, 4, 5, 7))
 
         val expected = mapOf(WinningRank.FIRST to 1, WinningRank.SECOND to 1)
-        val actual = WinningLotto(winningNumbers, bonusNumber).generateWinningStatus(mine)
+        val actual = WinningLotto(winningNumbers, bonusNumber!!).generateWinningStatus(mine)
         assertThat(actual).isEqualTo(expected)
     }
 }
