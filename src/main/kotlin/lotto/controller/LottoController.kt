@@ -13,10 +13,12 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
+    private val lottoStore = LottoStore(LottoNumberGenerator())
+
     fun run() {
         val purchaseAmount = initPurchaseAmount()
-        val totalLottoCount = initManualLottoCount(purchaseAmount.purchasableLottoCount)
-        val lottoStore = generateLottoStore(totalLottoCount.autoLottoCount)
+        val lottoCount = initManualLottoCount(purchaseAmount.purchasableLottoCount)
+        generateLottos(lottoCount)
         val winningLotto = readWinningLotto()
         showLottoResult(lottoStore, winningLotto, purchaseAmount.lottoPurchaseAmount)
     }
@@ -26,17 +28,20 @@ class LottoController(private val inputView: InputView, private val outputView: 
         return PurchaseAmount(inputView.readPurchaseAmount(), PURCHASE_UNIT)
     }
 
-    private fun initManualLottoCount(purchaseAmount: Int): LottoCount {
+    private fun initManualLottoCount(purchasableLottoCount: Int): LottoCount {
         outputView.printManualLottoCountMessage()
         val manualLottoCount = inputView.readManualLottoCount()
-        return LottoCount(purchaseAmount, manualLottoCount)
+        return LottoCount(purchasableLottoCount, manualLottoCount)
     }
 
-    private fun generateLottoStore(numberOfLottos: Int): LottoStore {
-        outputView.printNumberOfLottoMessage(numberOfLottos)
-        val lottoStore = LottoStore(numberOfLottos, LottoNumberGenerator())
+    private fun generateLottos(lottoCount: LottoCount) {
+        outputView.printManualLottoNumbersMessage()
+        repeat(lottoCount.manualLottoCount) {
+            lottoStore.generateManualLottos(Lotto.lottoNumbersOf(inputView.readManualLottoNumbers()))
+        }
+        lottoStore.generateAutoLottos(lottoCount.autoLottoCount)
+        outputView.printTotalLottoCountMessage(lottoCount.manualLottoCount, lottoCount.autoLottoCount)
         outputView.printLottoNumbers(lottoStore.lottos)
-        return lottoStore
     }
 
     private fun readWinningLotto(): WinningLotto {

@@ -1,15 +1,15 @@
 package lotto.model
 
-class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerator: NumberGenerator) {
+class LottoStore(private val lottoNumberGenerator: NumberGenerator) {
     var lottos = Lottos()
         private set
 
-    init {
-        generateLottos()
+    fun generateManualLottos(manualLottos: Lotto) {
+        lottos.add(manualLottos)
     }
 
-    private fun generateLottos() {
-        repeat(numberOfLottos) {
+    fun generateAutoLottos(autoLottoCount: Int) {
+        repeat(autoLottoCount) {
             val lotto = lottoNumberGenerator.generate(LOTTO_NUMBER_SIZE, MIN_NUMBER, MAX_NUMBER)
             lottos.add(lotto)
         }

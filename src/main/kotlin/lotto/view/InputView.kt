@@ -5,6 +5,11 @@ class InputView {
 
     fun readManualLottoCount(): Int = validateNullInput(readlnOrNull()).validateAndConvertDigit()
 
+    fun readManualLottoNumbers(): List<Int> {
+        val manualLottoNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
+        return manualLottoNumbers.split(SPLIT_DELIMITER).map { it.validateAndConvertDigit() }
+    }
+
     fun readWinningNumbers(): List<Int> {
         val winningNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
         return winningNumbers.split(SPLIT_DELIMITER).map { it.validateAndConvertDigit() }
