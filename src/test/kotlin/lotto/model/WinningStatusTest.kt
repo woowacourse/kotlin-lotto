@@ -21,6 +21,6 @@ class WinningStatusTest {
 
     @Test
     fun `당첨 결과에 따른 총 수익금을 계산하여 반환한다`() {
-        assertThat(winningStatus.getEarningRate()).isEqualTo(800_002.0)
+        assertThat(winningStatus.getEarningRate(5000)).isEqualTo(800_002.0)
     }
 }
