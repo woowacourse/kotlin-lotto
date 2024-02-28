@@ -1,6 +1,9 @@
 package model
 
-class Lottery(private val lotteryNumbers: Set<LotteryNumber>) {
+class Lottery(
+    private val lotteryNumbers: Set<LotteryNumber>,
+    val isManual: Boolean = true,
+) {
     init {
         require(validateDuplicate(lotteryNumbers)) { EXCEPTION_DUPLICATED_NUMBER }
     }

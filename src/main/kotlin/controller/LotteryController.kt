@@ -7,7 +7,8 @@ import model.Lottery
 import model.LotteryStore
 import model.ManualLotteryCount
 import model.WinningResult
-import utils.RandomTicketGenerationStrategy
+import utils.ManualLotteriesGenerationStrategy
+import utils.RandomLotteriesGenerationStrategy
 import view.InputView
 import view.OutputView
 
@@ -20,7 +21,10 @@ class LotteryController {
         val manualLotteriesInput = readManualLotteries(manualLotteryCount)
         val splitManualLotteries = splitManualLotteries(manualLotteriesInput)
 
-        val ticket = issueTicket(amount)
+        val manualLotteries = issueManualLotteries(splitManualLotteries)
+        val autoLotteries = issueAutoLotteries(amount, manualLotteryCount)
+
+        val ticket = issueTicket(manualLotteries, autoLotteries, amount)
         printTicketInfo(ticket)
 
         val winningLottoInput = readWinningLotto()
@@ -60,9 +64,19 @@ class LotteryController {
 
     private fun splitWinningLotto(input: String) = Lottery.fromInput(InputView.splitWinningLotto(input))
 
-    private fun issueTicket(amount: Amount): Ticket {
-        return LotteryStore(RandomTicketGenerationStrategy(amount)).issueTicket()
-    }
+    private fun issueManualLotteries(manualLotteries: List<List<String>>): List<Lottery> =
+        LotteryStore.issueLotteries(ManualLotteriesGenerationStrategy(manualLotteries))
+
+    private fun issueAutoLotteries(
+        amount: Amount,
+        manualLotteryCount: ManualLotteryCount,
+    ): List<Lottery> = LotteryStore.issueLotteries(RandomLotteriesGenerationStrategy(amount, manualLotteryCount))
+
+    private fun issueTicket(
+        manualLotteries: List<Lottery>,
+        autoLotteries: List<Lottery>,
+        amount: Amount,
+    ): Ticket = LotteryStore.issueTicket(manualLotteries, autoLotteries, amount)
 
     private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)
 
