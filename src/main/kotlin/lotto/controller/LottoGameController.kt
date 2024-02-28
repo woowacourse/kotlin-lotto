@@ -22,7 +22,7 @@ class LottoGameController {
             LottoMachine.issueAutoTickets(numberOfAutoTickets, LottoNumbersGenerator)
 
         val totalLottoTickets = manualLottoTickets.plus(autoLottoTickets)
-        OutputView.printNumberOfTicket(numberOfTotalTickets)
+        OutputView.printNumberOfTicket(numberOfManualTickets, numberOfAutoTickets)
         OutputView.printLottoTickets(totalLottoTickets)
 
         makeResult(totalLottoTickets)
