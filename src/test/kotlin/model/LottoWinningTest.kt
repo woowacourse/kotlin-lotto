@@ -28,8 +28,8 @@ class LottoWinningTest {
         val bonusNumber = LottoNumber(7)
 
         val userTickets = lottoPurchase.makeUserTickets()
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
-        val winningChart = lottoWinning.makeLottoResult()
+        val lottoWinning = LottoWinning(winningTicket, bonusNumber)
+        val winningChart = lottoWinning.makeLottoResult(userTickets)
 
         val actual =
             Rank.entries.map {

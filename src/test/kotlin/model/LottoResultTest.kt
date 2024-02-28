@@ -28,8 +28,8 @@ class LottoResultTest {
         val lottoPurchase = LottoPurchase(lottoCount * lottoPrice) { userLottoIterator.next() }
 
         val userTickets = lottoPurchase.makeUserTickets()
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
-        val lottoResult = lottoWinning.makeLottoResult()
+        val lottoWinning = LottoWinning(winningTicket, bonusNumber)
+        val lottoResult = lottoWinning.makeLottoResult(userTickets)
 
         val actual = lottoResult.getNum(Rank.FIRST)
         val expected = 4
