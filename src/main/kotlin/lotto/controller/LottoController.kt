@@ -17,8 +17,8 @@ class LottoController(private val inputView: InputView, private val outputView: 
         val purchaseAmount = initPurchaseAmount()
         val totalLottoCount = initManualLottoCount(purchaseAmount.purchasableLottoCount)
         val lottoStore = generateLottoStore(totalLottoCount.autoLottoCount)
-        val winningNumbers = readWinningNumbers()
-        showLottoResult(lottoStore, winningNumbers, purchaseAmount.lottoPurchaseAmount)
+        val winningLotto = readWinningLotto()
+        showLottoResult(lottoStore, winningLotto, purchaseAmount.lottoPurchaseAmount)
     }
 
     private fun initPurchaseAmount(): PurchaseAmount {
@@ -39,7 +39,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
         return lottoStore
     }
 
-    private fun readWinningNumbers(): WinningLotto {
+    private fun readWinningLotto(): WinningLotto {
         outputView.printWinningNumbersMessage()
         val winningLotto = Lotto.lottoNumbersOf(inputView.readWinningNumbers())
 
