@@ -1,7 +1,10 @@
 package model
 
+import util.Constant
+
 class WinningStatistics(private val winningStatistics: List<WinningStatistic>) {
-    fun calculateRateOfReturn(purchaseAmount: Int): Double {
+    fun calculateRateOfReturn(numberOfLotto: Int): Double {
+        val purchaseAmount = numberOfLotto * Constant.PURCHASE_AMOUNT_UNIT
         val totalWinningAmount = calculateTotalWinningAmount()
         return totalWinningAmount.toDouble() / purchaseAmount
     }
@@ -13,7 +16,6 @@ class WinningStatistics(private val winningStatistics: List<WinningStatistic>) {
             val count = winningStatistic.getWinningStatistic().second
             totalWinningAmount += winningMoney * count
         }
-
         return totalWinningAmount
     }
 

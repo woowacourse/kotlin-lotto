@@ -5,18 +5,16 @@ object InputValidator {
 
     fun validatePurchaseAmount(input: String): Int {
         val purchaseAmount = input.toIntOrNull() ?: 0
-
         validatePurchaseAmountRange(purchaseAmount)
-        validatePurchaseAmountUnit(purchaseAmount)
-
         return purchaseAmount
     }
 
-    fun validateNumberOfHandpickedLotto(input: String): Int {
+    fun validateNumberOfHandpickedLotto(
+        input: String,
+        numberOfLotto: Int,
+    ): Int {
         val numberOfHandpickedLotto = input.toIntOrNull() ?: -1
-
-        validateNumberOfHandpickedNumberLotto(numberOfHandpickedLotto)
-
+        validateNumberOfHandpickedNumberLottoRange(numberOfHandpickedLotto, numberOfLotto)
         return numberOfHandpickedLotto
     }
 
@@ -25,7 +23,6 @@ object InputValidator {
             input.split(INPUT_SEPARATOR).map { handpickedNumber ->
                 validateNumber(handpickedNumber)
             }
-
         validateNumbersSize(handpickedNumbers)
         validateNumbersDuplicate(handpickedNumbers)
         return handpickedNumbers
@@ -36,7 +33,6 @@ object InputValidator {
             input.split(INPUT_SEPARATOR).map { winningNumber ->
                 validateNumber(winningNumber)
             }
-
         validateNumbersSize(winningNumbers)
         validateNumbersDuplicate(winningNumbers)
         return winningNumbers
@@ -56,12 +52,11 @@ object InputValidator {
         require(purchaseAmount >= Constant.PURCHASE_AMOUNT_UNIT) { InputException.INVALID_PURCHASE_AMOUNT_RANGE.getMessage() }
     }
 
-    private fun validatePurchaseAmountUnit(purchaseAmount: Int) {
-        require(purchaseAmount % Constant.PURCHASE_AMOUNT_UNIT == 0) { InputException.INVALID_PURCHASE_AMOUNT_UNIT.getMessage() }
-    }
-
-    private fun validateNumberOfHandpickedNumberLotto(handpickedNumber: Int) {
-        require(handpickedNumber >= 0) { InputException.INVALID_HANDPICKED_NUMBER_RANGE.getMessage() }
+    private fun validateNumberOfHandpickedNumberLottoRange(
+        handpickedNumber: Int,
+        numberOfLotto: Int,
+    ) {
+        require(handpickedNumber in 0..numberOfLotto) { InputException.INVALID_HANDPICKED_NUMBER_RANGE.getMessage() }
     }
 
     private fun validateNumber(number: String): Int {

@@ -19,21 +19,15 @@ class InputTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1100", "1010", "1001"])
-    fun `구입금액 입력 예외 처리 (구입 금액이 1,000원으로 나누어 떨어지지 않는 경우)`(purchaseAmount: String) {
-        assertThrows<IllegalArgumentException> { InputValidator.validatePurchaseAmount(purchaseAmount) }
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = ["1", "5", "10"])
     fun `올바른 수동으로 구매할 로또 수 입력`(handpickedNumber: String) {
-        assertDoesNotThrow { InputValidator.validateNumberOfHandpickedLotto(handpickedNumber) }
+        assertDoesNotThrow { InputValidator.validateNumberOfHandpickedLotto(handpickedNumber, 100) }
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["-1", "one"])
-    fun `수동으로 구매할 로또 수 입력 예외 처리 (0 이상의 숫자가 아닌 경우)`(handpickedNumber: String) {
-        assertThrows<IllegalArgumentException> { InputValidator.validateNumberOfHandpickedLotto(handpickedNumber) }
+    @ValueSource(strings = ["-1", "100", "one"])
+    fun `수동으로 구매할 로또 수 입력 예외 처리 (구매할 로또 수 보다 크거나 숫자가 아닌 경우)`(handpickedNumber: String) {
+        assertThrows<IllegalArgumentException> { InputValidator.validateNumberOfHandpickedLotto(handpickedNumber, 10) }
     }
 
     @ParameterizedTest

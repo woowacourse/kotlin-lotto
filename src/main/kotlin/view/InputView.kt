@@ -15,7 +15,6 @@ object InputView {
     fun inputPurchaseAmount(): Int {
         println(INPUT_PURCHASE_AMOUNT)
         val purchaseAmount = br.readLine()
-
         return try {
             InputValidator.validatePurchaseAmount(purchaseAmount)
         } catch (exception: IllegalArgumentException) {
@@ -24,16 +23,15 @@ object InputView {
         }
     }
 
-    fun inputNumberOfHandpickedLotto(): Int {
+    fun inputNumberOfHandpickedLotto(numberOfLotto: Int): Int {
         println()
         println(INPUT_NUMBER_OF_HANDPICKED_LOTTO)
         val numberOfHandpickedLotto = br.readLine()
-
         return try {
-            InputValidator.validateNumberOfHandpickedLotto(numberOfHandpickedLotto)
+            InputValidator.validateNumberOfHandpickedLotto(numberOfHandpickedLotto, numberOfLotto)
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
-            inputNumberOfHandpickedLotto()
+            inputNumberOfHandpickedLotto(numberOfLotto)
         }
     }
 
@@ -44,7 +42,6 @@ object InputView {
         repeat(numberOfHandpickedNumber) {
             handpickedLottosNumber.add(inputHandpickedNumbers())
         }
-
         return handpickedLottosNumber
     }
 
@@ -52,7 +49,6 @@ object InputView {
         println()
         println(INPUT_WINNING_NUMBERS)
         val winningNumbers = br.readLine()
-
         return try {
             InputValidator.validateWinningNumbers(winningNumbers)
         } catch (exception: IllegalArgumentException) {
@@ -65,7 +61,6 @@ object InputView {
         println()
         println(INPUT_BONUS_NUMBER)
         val bonusNumber = br.readLine()
-
         return try {
             InputValidator.validateBonusNumber(bonusNumber, winningNumbers)
         } catch (exception: IllegalArgumentException) {
@@ -76,7 +71,6 @@ object InputView {
 
     private fun inputHandpickedNumbers(): List<Int> {
         val handpickedNumbers = br.readLine()
-
         return try {
             InputValidator.validateHandpickedNumbers(handpickedNumbers)
         } catch (exception: IllegalArgumentException) {
