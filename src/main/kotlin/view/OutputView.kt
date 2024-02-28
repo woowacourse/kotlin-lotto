@@ -29,4 +29,8 @@ object OutputView {
         }
         println("총 수익률은 ${winningResult.roi} 입니다.")
     }
+
+    fun printErrorMessage(t: Throwable) {
+        println(t.message)
+    }
 }

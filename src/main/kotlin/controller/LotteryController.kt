@@ -14,9 +14,9 @@ import view.OutputView
 
 class LotteryController {
     fun start() {
-        val amount = readAmount()
+        val amount = retryUntilSuccess { readAmount() }
 
-        val manualLotteryCount = readManualLotteryCount(amount)
+        val manualLotteryCount = retryUntilSuccess { readManualLotteryCount(amount) }
 
         val manualLotteriesInput = readManualLotteries(manualLotteryCount)
         val splitManualLotteries = splitManualLotteries(manualLotteriesInput)
@@ -27,9 +27,9 @@ class LotteryController {
         val ticket = issueTicket(manualLotteries, autoLotteries, amount)
         printTicketInfo(ticket)
 
-        val winningLottoInput = readWinningLotto()
+        val winningLottoInput = retryUntilSuccess { readWinningLotto() }
         val winningLotto = splitWinningLotto(winningLottoInput)
-        val bonus = readBonus(winningLotto)
+        val bonus = retryUntilSuccess { readBonus(winningLotto) }
 
         val winningResult = getWinningResult(ticket, winningLotto, bonus)
         printWinningResult(winningResult)
@@ -87,6 +87,14 @@ class LotteryController {
         winningLottery: Lottery,
         bonus: Bonus,
     ) = WinningResult.of(ticket, winningLottery, bonus)
+
+    private fun <T> retryUntilSuccess(action: () -> T): T =
+        runCatching {
+            action()
+        }.getOrElse {
+            OutputView.printErrorMessage(it)
+            retryUntilSuccess(action)
+        }
 
     companion object {
         private const val LOTTO_TICKET_PRICE = 1000
