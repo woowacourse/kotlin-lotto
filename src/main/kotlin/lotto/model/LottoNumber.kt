@@ -1,8 +1,6 @@
 package lotto.model
 
 class LottoNumber private constructor(val value: Int) {
-    init {
-    }
 
     companion object {
         private const val MINIMUM_LOTTO_NUMBER = 1
