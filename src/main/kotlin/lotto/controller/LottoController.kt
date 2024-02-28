@@ -12,6 +12,8 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 object LottoController {
+    private const val DEFAULT_COUNT = 0
+
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
         val numberOfLotto = calculateNumberOfLotto(purchaseAmount)
@@ -19,7 +21,7 @@ object LottoController {
         val lottos = Lottos()
         lottos.publishLottos(numberOfLotto, handpickedLottos)
         displayPurchaseResult(lottos, handpickedLottos.size)
-        val winningLotto = drawWinningLotto()
+        val winningLotto = generateWinningLotto()
         val winningStatistics = analyzeWinningStatics(lottos, winningLotto)
         displayWinningStatistics(winningStatistics, lottos.getLottos().size)
     }
@@ -30,9 +32,9 @@ object LottoController {
 
     private fun publishHandpickedLottos(numberOfLotto: Int): List<Lotto> {
         val numberOfHandpickedNumber = InputView.inputNumberOfHandpickedLotto(numberOfLotto)
-        val handpickedLottosNumber = mutableListOf<List<Int>>()
-        if (numberOfHandpickedNumber != 0) {
-            handpickedLottosNumber.addAll(InputView.inputHandpickedLottosNumber(numberOfHandpickedNumber))
+        var handpickedLottosNumber = listOf<List<Int>>()
+        if (numberOfHandpickedNumber != DEFAULT_COUNT) {
+            handpickedLottosNumber = InputView.inputHandpickedLottosNumber(numberOfHandpickedNumber)
         }
         return handpickedLottosNumber.map { handpickedLottoNumber ->
             Lotto(handpickedLottoNumber.map { LottoNumber(it) })
@@ -48,7 +50,7 @@ object LottoController {
         OutputView.outputLottos(lottos)
     }
 
-    private fun drawWinningLotto(): WinningLotto {
+    private fun generateWinningLotto(): WinningLotto {
         val lotto = Lotto(InputView.inputWinningNumbers().map { LottoNumber(it) })
         val bonusNumber = LottoNumber(InputView.inputBonusNumber(lotto.getNumbers().map { it.getNumber() }))
         return WinningLotto(lotto, bonusNumber)
@@ -58,16 +60,20 @@ object LottoController {
         lottos: Lottos,
         winningLotto: WinningLotto,
     ): WinningStatistics {
-        val results =
-            MutableList(6) {
-                WinningStatistic(Pair(LottoPrize.getLottoPrizeByOrdinal(it), 0))
-            }
-        repeat(lottos.getLottos().size) { index ->
-            val lottoPrize = judgeLottoPrize(lottos.getLottos()[index], winningLotto)
-            val currentCount = results[lottoPrize.ordinal].getWinningStatistic().second
-            results[lottoPrize.ordinal] = WinningStatistic(Pair(lottoPrize, currentCount + 1))
+        val results = mutableMapOf<LottoPrize, Int>()
+        for (prize in LottoPrize.entries) {
+            results[prize] = DEFAULT_COUNT
         }
-        return WinningStatistics(results)
+        lottos.getLottos().forEach { lotto ->
+            val lottoPrize = judgeLottoPrize(lotto, winningLotto)
+            results[lottoPrize] = results.getValue(lottoPrize) + 1
+        }
+
+        return WinningStatistics(
+            results.entries.map { (prize, count) ->
+                WinningStatistic(Pair(prize, count))
+            },
+        )
     }
 
     private fun judgeLottoPrize(
