@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class WinningLotto(private val lotto: Lotto, private val bonusNumber: LottoNumber) {
     fun calculateCountOfMatch(lotto: Lotto): Int {

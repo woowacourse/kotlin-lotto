@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class Lottos {
     private var lottos: List<Lotto> = listOf()

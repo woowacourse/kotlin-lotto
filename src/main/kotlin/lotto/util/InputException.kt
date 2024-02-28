@@ -1,4 +1,4 @@
-package util
+package lotto.util
 
 enum class InputException(private val message: String) {
     INVALID_PURCHASE_AMOUNT_RANGE("구입 금액이 1,000원 이상의 숫자가 아닌 경우 예외 처리한다."),

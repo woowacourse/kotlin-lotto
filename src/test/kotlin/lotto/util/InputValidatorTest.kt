@@ -1,11 +1,11 @@
+package lotto.util
+
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import util.Constant
-import util.InputValidator
 
-class InputTest {
+class InputValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = ["8000", "1000", "15000"])
     fun `올바른 구입금액 입력`(purchaseAmount: String) {

@@ -1,7 +1,7 @@
-package view
+package lotto.view
 
-import model.Lottos
-import model.WinningStatistics
+import lotto.model.Lottos
+import lotto.model.WinningStatistics
 
 object OutputView {
     private const val NUMBER_OF_LOTTO = "수동으로 %d장, 자동으로 %d개를 구매했습니다."

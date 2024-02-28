@@ -1,15 +1,15 @@
-package controller
+package lotto.controller
 
-import model.Lotto
-import model.LottoNumber
-import model.LottoPrize
-import model.Lottos
-import model.WinningLotto
-import model.WinningStatistic
-import model.WinningStatistics
-import util.Constant
-import view.InputView
-import view.OutputView
+import lotto.model.Lotto
+import lotto.model.LottoNumber
+import lotto.model.LottoPrize
+import lotto.model.Lottos
+import lotto.model.WinningLotto
+import lotto.model.WinningStatistic
+import lotto.model.WinningStatistics
+import lotto.util.Constant
+import lotto.view.InputView
+import lotto.view.OutputView
 
 object LottoController {
     fun run() {

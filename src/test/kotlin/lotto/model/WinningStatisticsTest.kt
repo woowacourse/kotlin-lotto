@@ -1,6 +1,5 @@
-import model.LottoPrize
-import model.WinningStatistic
-import model.WinningStatistics
+package lotto.model
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

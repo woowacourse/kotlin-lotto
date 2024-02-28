@@ -1,4 +1,4 @@
-package util
+package lotto.util
 
 object InputValidator {
     private const val INPUT_SEPARATOR = ','

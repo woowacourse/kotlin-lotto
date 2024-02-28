@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class WinningStatistic(private val winningStatistic: Pair<LottoPrize, Int>) {
     private val lottoPrize = winningStatistic.first

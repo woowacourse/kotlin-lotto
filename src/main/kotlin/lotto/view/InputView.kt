@@ -1,6 +1,6 @@
-package view
+package lotto.view
 
-import util.InputValidator
+import lotto.util.InputValidator
 import java.io.BufferedReader
 import java.io.InputStreamReader
 

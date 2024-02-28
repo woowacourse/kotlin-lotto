@@ -1,6 +1,6 @@
-package model
+package lotto.model
 
-import util.Constant
+import lotto.util.Constant
 
 object LottoGenerator {
     fun generateLotto(): Lotto {

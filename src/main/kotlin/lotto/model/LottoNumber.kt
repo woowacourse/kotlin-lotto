@@ -1,6 +1,6 @@
-package model
+package lotto.model
 
-import util.Constant
+import lotto.util.Constant
 
 class LottoNumber(private val number: Int) {
     init {

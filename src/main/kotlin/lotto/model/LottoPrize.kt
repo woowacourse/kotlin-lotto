@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 enum class LottoPrize(private val countOfMatch: Int, private val winningAmount: Int) {
     FIRST(6, 2_000_000_000),

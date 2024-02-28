@@ -1,6 +1,6 @@
-package model
+package lotto.model
 
-import util.Constant
+import lotto.util.Constant
 
 class WinningStatistics(private val winningStatistics: List<WinningStatistic>) {
     fun calculateRateOfReturn(numberOfLotto: Int): Double {
