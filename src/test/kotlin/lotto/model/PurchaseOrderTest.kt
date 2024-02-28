@@ -21,16 +21,6 @@ class PurchaseOrderTest {
     }
 
     @ParameterizedTest
-    @CsvSource("1000, 1", "10000, 10")
-    fun `구매할 수 있는 로또의 개수를 계산한다`(
-        purchasePrice: Int,
-        expected: Int,
-    ) {
-        val actual = PurchaseOrder(purchasePrice).amount
-        Assertions.assertThat(actual).isEqualTo(expected)
-    }
-
-    @ParameterizedTest
     @CsvSource("1000, 0", "1000, 1", "10000, 5", "3000, 2")
     fun `수동 로또의 개수가 올바른 경우 예외가 발생하지 않는다`(
         purchasePrice: Int,
@@ -46,5 +36,16 @@ class PurchaseOrderTest {
         manualLottoSize: Int,
     ) {
         assertThrows<IllegalArgumentException> { PurchaseOrder(purchasePrice, manualLottoSize) }
+    }
+
+    @ParameterizedTest
+    @CsvSource("1000, 0, 1", "10000, 5, 5", "14000, 3, 11")
+    fun `수동 로또 개수의 나머지를 자동 로또의 개수로 저장한다`(
+        purchasePrice: Int,
+        manualLottoSize: Int,
+        expected: Int,
+    ) {
+        val actual = PurchaseOrder(purchasePrice, manualLottoSize).automaticLottoSize
+        Assertions.assertThat(actual).isEqualTo(expected)
     }
 }
