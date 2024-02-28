@@ -2,7 +2,7 @@ package lotto.model
 
 class Lotto(val numbers: Set<LottoNumber>) {
 
-    constructor(vararg numbers: Int) : this(numbers.sorted().map { LottoNumber(it) }.toSet())
+    constructor(vararg numbers: Int) : this(numbers.sorted().map { LottoNumber.from(it) }.toSet())
 
     init {
         require(numbers.size == LOTTO_SIZE) { "입력된 로또 숫자는 ${numbers.size}개입니다. 로또 숫자는 고유한 ${LOTTO_SIZE}개여야 합니다." }

@@ -80,7 +80,7 @@ class LottoController(
     }
 
     private fun getBonusNumber(): LottoNumber {
-        return LottoNumber(inputView.readBonusNumber())
+        return LottoNumber.from(inputView.readBonusNumber())
     }
 
     private fun showResult(lottoMachine: LottoMachine, lottoDrawingResult: LottoDrawingResult) {

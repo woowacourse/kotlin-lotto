@@ -7,7 +7,7 @@ sealed class MakeLottoStrategy {
     class MakeSortedRandomLotto(private val range: IntRange) : MakeLottoStrategy() {
         override fun makeLotto(): Lotto {
             val randomNumbers = (range).shuffled().take(LOTTO_SIZE).sorted()
-            val lottoNumbers = randomNumbers.map { LottoNumber(it) }.toSet()
+            val lottoNumbers = randomNumbers.map { LottoNumber.from(it) }.toSet()
             return Lotto(lottoNumbers)
         }
     }
