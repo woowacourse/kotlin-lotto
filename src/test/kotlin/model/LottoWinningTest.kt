@@ -14,22 +14,20 @@ class LottoWinningTest {
 
     @Test
     fun `등수 통계 테스트`() {
-        val userLottoIterator =
-            listOf(
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 7)),
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 8)),
-                LottoTicket.from(listOf(1, 2, 3, 4, 9, 8)),
-                LottoTicket.from(listOf(1, 2, 3, 10, 9, 8)),
-                LottoTicket.from(listOf(43, 12, 36, 41, 25, 7)),
-            ).iterator()
-        val lottoPurchase = LottoPurchase(6000) { userLottoIterator.next() }
+        val lottoTicketList = listOf(
+            LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
+            LottoTicket.from(listOf(1, 2, 3, 4, 5, 7)),
+            LottoTicket.from(listOf(1, 2, 3, 4, 5, 8)),
+            LottoTicket.from(listOf(1, 2, 3, 4, 9, 8)),
+            LottoTicket.from(listOf(1, 2, 3, 10, 9, 8)),
+            LottoTicket.from(listOf(43, 12, 36, 41, 25, 7)),
+        )
+
         val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber(7)
-
-        val userTickets = lottoPurchase.makeUserTickets()
         val lottoWinning = LottoWinning(winningTicket, bonusNumber)
-        val winningChart = lottoWinning.makeLottoResult(userTickets)
+
+        val winningChart = lottoWinning.makeLottoResult(lottoTicketList)
 
         val actual =
             Rank.entries.map {
@@ -45,18 +43,5 @@ class LottoWinningTest {
                 Rank.MISS to 1,
             )
         assertThat(actual).isEqualTo(expected)
-    }
-
-    companion object {
-        @JvmStatic
-        fun generateArgumentRankTest() =
-            listOf(
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)) to Rank.FIRST,
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 7)) to Rank.SECOND,
-                LottoTicket.from(listOf(1, 2, 3, 4, 5, 8)) to Rank.THIRD,
-                LottoTicket.from(listOf(1, 2, 3, 4, 44, 45)) to Rank.FOURTH,
-                LottoTicket.from(listOf(1, 2, 3, 43, 44, 45)) to Rank.FIFTH,
-                LottoTicket.from(listOf(10, 11, 12, 13, 14, 15)) to Rank.MISS,
-            )
     }
 }
