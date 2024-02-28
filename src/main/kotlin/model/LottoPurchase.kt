@@ -1,15 +1,8 @@
 package model
 
-class LottoPurchase(
-    purchasePrice: Int,
-) {
-    init {
-        require(purchasePrice >= 0)
-    }
+class LottoPurchase(private val priceOfLotto: Int) {
 
-    val lottoCount = purchasePrice / PRICE_OF_LOTTO_TICKET
-
-    companion object {
-        const val PRICE_OF_LOTTO_TICKET = 1000
+    fun calculateLottoCount(purchasePrice: Int): Int {
+        return purchasePrice / priceOfLotto
     }
 }

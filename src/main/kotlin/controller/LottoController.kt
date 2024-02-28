@@ -21,7 +21,8 @@ class LottoController(
     private fun getLottoCount(
         purchasePrice: Int,
     ): Int {
-        val lottoCount = LottoPurchase(purchasePrice).lottoCount
+        val lottoPurchase = LottoPurchase(1000)
+        val lottoCount = lottoPurchase.calculateLottoCount(purchasePrice)
         outputView.printLottoCount(lottoCount)
         return lottoCount
     }
