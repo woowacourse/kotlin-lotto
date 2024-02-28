@@ -2,10 +2,10 @@ package lotto.model
 
 object LottoStore {
     fun buyAutoMaticLottos(
-        purchaseOrder: PurchaseOrder,
+        automaticLottoSize: Int,
         lottoMachine: LottoMachine,
     ): List<Lotto> {
-        return List(purchaseOrder.automaticLottoSize) { Lotto.create(lottoMachine.generate()) }
+        return List(automaticLottoSize) { Lotto.create(lottoMachine.generate()) }
     }
 
     fun combineLottos(

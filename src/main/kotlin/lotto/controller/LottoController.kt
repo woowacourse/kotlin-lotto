@@ -33,7 +33,7 @@ class LottoController(
 
     private fun initializePurchaseLottos(purchaseOrder: PurchaseOrder): List<Lotto> {
         val manualLottos = readManualLottos(purchaseOrder.manualLottoSize)
-        val automaticLottos = LottoStore.buyAutoMaticLottos(purchaseOrder, lottoMachine)
+        val automaticLottos = LottoStore.buyAutoMaticLottos(purchaseOrder.automaticLottoSize, lottoMachine)
         return LottoStore.combineLottos(manualLottos, automaticLottos).also {
             OutputView.printPurchaseLotto(purchaseOrder, it)
         }
