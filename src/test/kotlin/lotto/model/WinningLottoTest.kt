@@ -25,23 +25,6 @@ class WinningLottoTest {
 
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")
-    fun `로또의 당첨 결과를 확인한다`(
-        winningLottoNumbers: List<Int>,
-        bonusNumber: Int,
-        expected: LottoPrize,
-    ) {
-        // given
-        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber.from(bonusNumber))
-
-        // when
-        val actual = winningLotto.getLottoPrize(lotto)
-
-        // then
-        Assertions.assertThat(actual).isEqualTo(expected)
-    }
-
-    @ParameterizedTest
-    @MethodSource("로또 당첨 결과 테스트 데이터")
     fun `로또 당첨 결과의 개수를 확인한다`(
         winningLottoNumbers: List<Int>,
         bonusNumber: Int,

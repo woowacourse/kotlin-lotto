@@ -17,7 +17,7 @@ class WinningLotto(
         return WinningStatistics(statistics)
     }
 
-    fun getLottoPrize(otherLotto: Lotto): LottoPrize {
+    private fun getLottoPrize(otherLotto: Lotto): LottoPrize {
         val matchingCount = otherLotto.getMatchingCount(lotto)
         val isMatchingBonus = otherLotto.contains(bonusNumber)
         return LottoPrize.valueOf(matchingCount, isMatchingBonus)
