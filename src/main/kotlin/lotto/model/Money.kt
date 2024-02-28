@@ -6,7 +6,7 @@ data class Money(val amount: Long) {
     }
 
     fun calculateMargin(prize: Money): Margin {
-        return Margin(prize.amount * 1000 / amount / 1000.toDouble())
+        return Margin(prize.amount * LOTTO_PRICE / amount / LOTTO_PRICE.toDouble())
     }
 
     operator fun compareTo(other: Money): Int {
@@ -15,5 +15,6 @@ data class Money(val amount: Long) {
 
     companion object {
         private const val MINIMUM_AMOUNT = 0L
+        private const val LOTTO_PRICE = 1000L
     }
 }
