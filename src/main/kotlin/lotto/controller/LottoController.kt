@@ -39,8 +39,8 @@ class LottoController(
         }
     }
 
-    private fun readManualLottos(manualLottoSize: Int): List<Lotto> {
-        return retryWhileNoException { InputView.readManualLottos(manualLottoSize) }
+    private fun readManualLottos(manualAmount: Int): List<Lotto> {
+        return retryWhileNoException { InputView.readManualLottos(manualAmount) }
     }
 
     private fun readWinningLotto(): WinningLotto {

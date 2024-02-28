@@ -4,21 +4,20 @@ class PurchaseOrder(
     val price: Int,
     val manualLottoSize: Int = 0,
 ) {
-    val amount: Int
+    val automaticLottoSize: Int
 
     init {
         require(price.divideByLottoPrice() && price.isMoreThanMin()) { INVALID_DIVIDE_LOTTO_PRICE }
-        amount = price / Lotto.PRICE
-        require(manualLottoSize.isPurchaseManual()) { INVALID_MANUAL_LOTTO_SIZE.format(amount) }
+        val totalLottoSize = price / Lotto.PRICE
+        require(manualLottoSize.isPurchaseManual(totalLottoSize)) { INVALID_MANUAL_LOTTO_SIZE.format(totalLottoSize) }
+        automaticLottoSize = totalLottoSize - manualLottoSize
     }
 
     private fun Int.divideByLottoPrice() = this % Lotto.PRICE == 0
 
     private fun Int.isMoreThanMin() = this >= Lotto.PRICE
 
-    private fun Int.isPurchaseManual() = this in MIN_MANUAL_SIZE..amount
-
-    fun getAutomaticLottoSize() = amount - manualLottoSize
+    private fun Int.isPurchaseManual(totalLottoSize: Int) = this in MIN_MANUAL_SIZE..totalLottoSize
 
     companion object {
         private const val MIN_MANUAL_SIZE = 0

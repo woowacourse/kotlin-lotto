@@ -5,8 +5,7 @@ object LottoStore {
         purchaseOrder: PurchaseOrder,
         lottoMachine: LottoMachine,
     ): List<Lotto> {
-        val automaticLottoSize = purchaseOrder.getAutomaticLottoSize()
-        return List(automaticLottoSize) { Lotto.create(lottoMachine.generate()) }
+        return List(purchaseOrder.automaticLottoSize) { Lotto.create(lottoMachine.generate()) }
     }
 
     fun combineLottos(

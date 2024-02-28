@@ -19,7 +19,7 @@ object OutputView {
         lottos: List<Lotto>,
     ) {
         lineBreak()
-        println(OUTPUT_PURCHASE_COUNT.format(purchaseOrder.manualLottoSize, purchaseOrder.getAutomaticLottoSize()))
+        println(OUTPUT_PURCHASE_COUNT.format(purchaseOrder.manualLottoSize, purchaseOrder.automaticLottoSize))
         lottos.forEach { println(it.numbers.toString()) }
         lineBreak()
     }
