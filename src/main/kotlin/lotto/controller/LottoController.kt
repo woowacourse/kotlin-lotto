@@ -70,8 +70,8 @@ object LottoController {
         }
 
         return WinningStatistics(
-            results.entries.map { (prize, count) ->
-                WinningStatistic(Pair(prize, count))
+            results.entries.map { (lottoPrize, count) ->
+                WinningStatistic(lottoPrize, count)
             },
         )
     }

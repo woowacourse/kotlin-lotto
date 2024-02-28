@@ -14,8 +14,8 @@ class WinningStatistics(private val winningStatistics: List<WinningStatistic>) {
     private fun calculateTotalWinningAmount(): Int {
         var totalWinningAmount = 0
         winningStatistics.forEach { winningStatistic ->
-            val winningMoney = winningStatistic.getWinningStatistic().first.getWinningAmount()
-            val count = winningStatistic.getWinningStatistic().second
+            val winningMoney = winningStatistic.getLottoPrize().getWinningAmount()
+            val count = winningStatistic.getCount()
             totalWinningAmount += winningMoney * count
         }
         return totalWinningAmount

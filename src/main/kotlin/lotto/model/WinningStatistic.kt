@@ -1,15 +1,14 @@
 package lotto.model
 
-class WinningStatistic(private val winningStatistic: Pair<LottoPrize, Int>) {
-    private val lottoPrize = winningStatistic.first
-    private val count = winningStatistic.second
-
+class WinningStatistic(private val lottoPrize: LottoPrize, private val count: Int) {
     init {
         require(lottoPrize.ordinal in LOTTO_PRIZE_MIN_ORDINAL..LOTTO_PRIZE_MAX_ORDINAL)
         require(count >= DEFAULT_COUNT)
     }
 
-    fun getWinningStatistic(): Pair<LottoPrize, Int> = winningStatistic
+    fun getLottoPrize(): LottoPrize = lottoPrize
+
+    fun getCount(): Int = count
 
     override fun toString(): String {
         return "${COUNT_OF_MATCH.format(lottoPrize.getCountOfMatch())}${
