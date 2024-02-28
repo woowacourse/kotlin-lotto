@@ -16,13 +16,14 @@ class LottoGameTest {
 
     @Test
     fun `보너스 매치`() {
-        assertThat(secondPrizeLotto.matchBonusNumber(winningNumberCorrect)).isTrue()
+        // 보너스 번호 매치 로직을 WinningNumber 객체로 이동
+        assertThat(winningNumberCorrect.matchBonusNumber(secondPrizeLotto)).isTrue()
     }
 
     @Test
     fun `당첨 계산`() {
-        assertThat(firstPrizeLotto.matchCount(winningNumberCorrect)).isEqualTo(6)
-        assertThat(firstPrizeLotto.matchCount(winningNumberWrong)).isEqualTo(6)
+        assertThat(winningNumberCorrect.matchCount(firstPrizeLotto)).isEqualTo(6)
+        assertThat(winningNumberWrong.matchCount(firstPrizeLotto)).isEqualTo(6)
     }
 
     @Test
