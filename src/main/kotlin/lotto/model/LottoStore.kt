@@ -4,8 +4,11 @@ class LottoStore(private val lottoNumberGenerator: NumberGenerator) {
     var lottos = Lottos()
         private set
 
-    fun generateManualLottos(manualLottos: Lotto) {
-        lottos.add(manualLottos)
+    fun generateManualLottos(manualLottoNumbers: List<List<String>>) {
+        manualLottoNumbers.forEach { lottoNumbers ->
+            val lotto = Lotto.lottoNumberOf(lottoNumbers)
+            lottos.add(lotto)
+        }
     }
 
     fun generateAutoLottos(autoLottoCount: Int) {

@@ -2,7 +2,7 @@ package lotto.model
 
 class WinningLotto(val winningNumbers: Lotto, val bonusNumber: LottoNumber) {
     init {
-        require(bonusNumber !in winningNumbers.numbers) {
+        require(!winningNumbers.getMatchBonus(bonusNumber)) {
             ERROR_BONUS_DUPLICATE
         }
     }

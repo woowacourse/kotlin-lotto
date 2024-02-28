@@ -20,7 +20,7 @@ class OutputView {
         manualLottoCount: Int,
         autoLottoCount: Int,
     ) {
-        println("수동으로 ${manualLottoCount}장, 자동으로 ${autoLottoCount}개를 구매했습니다.")
+        println("\n수동으로 ${manualLottoCount}장, 자동으로 ${autoLottoCount}개를 구매했습니다.")
     }
 
     fun printLottoNumbers(lottos: Lottos) {

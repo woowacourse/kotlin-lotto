@@ -5,9 +5,14 @@ class InputView {
 
     fun readManualLottoCount(): Int = validateNullInput(readlnOrNull()).validateAndConvertDigit()
 
-    fun readManualLottoNumbers(): List<Int> {
-        val manualLottoNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
-        return manualLottoNumbers.split(SPLIT_DELIMITER).map { it.validateAndConvertDigit() }
+    fun readManualLottoNumbers(manualLottoCount: Int): List<List<String>> {
+        val manualLotto: MutableList<List<String>> = mutableListOf()
+        repeat(manualLottoCount) {
+            val manualLottod =
+                validateNullInput(readlnOrNull()).replace(" ", "").split(SPLIT_DELIMITER).map(String::trim)
+            manualLotto.add(manualLottod)
+        }
+        return manualLotto
     }
 
     fun readWinningNumbers(): List<Int> {
