@@ -19,14 +19,21 @@ object OutputView {
     }
 
     fun outputLottos(lottos: Lottos) {
-        println(lottos)
+        lottos.getLottos().forEach { lotto ->
+            println(lotto.getNumbers())
+        }
     }
 
     fun outputWinningStatistics(winningStatistics: WinningStatistics) {
         println()
         println(WINNING_STATISTICS)
         println(DIVIDING_LINE)
-        println(winningStatistics)
+        winningStatistics.getWinningStatistics()
+            .dropLast(1)
+            .reversed()
+            .forEach { winningStatistic ->
+                println(winningStatistic)
+            }
     }
 
     fun outputRateOfReturn(rateOfReturn: Double) {

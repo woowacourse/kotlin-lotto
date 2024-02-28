@@ -8,9 +8,4 @@ class Lotto(private val numbers: List<LottoNumber>) {
     }
 
     fun getNumbers(): List<LottoNumber> = numbers
-
-    override fun toString(): String {
-        val numbers = numbers.map { it.getNumber() }
-        return numbers.joinToString(", ", "[", "]")
-    }
 }

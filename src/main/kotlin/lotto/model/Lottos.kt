@@ -12,8 +12,4 @@ class Lottos {
     }
 
     fun getLottos(): List<Lotto> = lottos
-
-    override fun toString(): String {
-        return lottos.joinToString("\n")
-    }
 }

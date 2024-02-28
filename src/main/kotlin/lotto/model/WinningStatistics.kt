@@ -9,6 +9,8 @@ class WinningStatistics(private val winningStatistics: List<WinningStatistic>) {
         return totalWinningAmount.toDouble() / purchaseAmount
     }
 
+    fun getWinningStatistics(): List<WinningStatistic> = winningStatistics
+
     private fun calculateTotalWinningAmount(): Int {
         var totalWinningAmount = 0
         winningStatistics.forEach { winningStatistic ->
@@ -17,9 +19,5 @@ class WinningStatistics(private val winningStatistics: List<WinningStatistic>) {
             totalWinningAmount += winningMoney * count
         }
         return totalWinningAmount
-    }
-
-    override fun toString(): String {
-        return winningStatistics.subList(0, winningStatistics.size - 1).reversed().joinToString("\n")
     }
 }
