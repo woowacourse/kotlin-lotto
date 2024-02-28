@@ -13,15 +13,25 @@ import lotto.view.OutputView
 
 class LottoGameController {
     fun run() {
-        val purchaseAmount = InputView.getPurchaseAmount()
-        val ticketCounts = TicketCounts(NumberOfTickets(purchaseAmount), NumberOfManual(0))
-        val lottoMachine = LottoMachine(ticketCounts)
-        val lottoTickets = lottoMachine.issueAutomaticTickets(ticketCounts.numberOfTickets.counts)
+        val lottoTickets = getLottoTickets()
 
-        OutputView.printNumberOfTicket(ticketCounts.numberOfTickets.counts)
+        OutputView.printNumberOfTicket(lottoTickets.size)
         OutputView.printLottoTickets(lottoTickets)
 
         makeResult(lottoTickets)
+    }
+
+    private fun getLottoTickets(): List<Lotto> {
+        val purchaseAmount = InputView.getPurchaseAmount()
+        val getManualCounts = InputView.getManualTicketCounts()
+        val ticketCounts = TicketCounts(NumberOfTickets(purchaseAmount), NumberOfManual(getManualCounts))
+        val lottoMachine = LottoMachine(ticketCounts)
+        var manualLotto = listOf<Lotto>()
+        if (lottoMachine.ticketCounts.numberOfManual.counts != NumberOfManual.MIN_NUMBER_OF_MANUAL) {
+            manualLotto = InputView.getManualLotto(ticketCounts.numberOfManual.counts)
+        }
+
+        return lottoMachine.issueTickets(manualLotto)
     }
 
     private fun makeResult(lottoTickets: List<Lotto>) {
