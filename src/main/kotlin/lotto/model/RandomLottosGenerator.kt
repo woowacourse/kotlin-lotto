@@ -14,7 +14,7 @@ object RandomLottosGenerator : LottosGenerator {
     private fun generateRandomNumbers() =
         LottoNumber.LOTTO_NUMBER_RANGE
             .shuffled()
-            .take(Lotto.LOTTO_SIZE)
+            .take(LottoNumbers.LOTTO_NUMBERS_SIZE)
             .sorted()
 
     private fun generateLottoNumber(number: Int) = LottoNumber.of(number)
