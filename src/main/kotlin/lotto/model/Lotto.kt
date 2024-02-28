@@ -18,9 +18,5 @@ class Lotto(val numbers: Set<LottoNumber>) {
 
     companion object {
         const val LOTTO_SIZE = 6
-
-        fun makeLotto(makeLottoStrategy: MakeLottoStrategy): Lotto {
-            return makeLottoStrategy.makeLotto()
-        }
     }
 }

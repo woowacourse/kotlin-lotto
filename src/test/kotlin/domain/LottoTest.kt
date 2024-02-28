@@ -29,21 +29,4 @@ class LottoTest {
 
         assertThat(exception.message).isEqualTo("입력된 로또 숫자는 5개입니다. 로또 숫자는 고유한 6개여야 합니다.")
     }
-
-    @Test
-    fun `로또 숫자 개수가 6개인지 확인한다`() {
-        val lottoSize = 6
-
-        val expected = Lotto.makeLotto(makeLottoStrategy).numbers.size
-
-        assertThat(expected).isEqualTo(lottoSize)
-    }
-
-    @Test
-    fun `결과 로또가 오름차순인지 확인한다`() {
-        val expected = Lotto.makeLotto(makeLottoStrategy).numbers
-        val actual = expected.sortedBy { it.value }.toSet()
-
-        assertThat(expected).isEqualTo(actual)
-    }
 }
