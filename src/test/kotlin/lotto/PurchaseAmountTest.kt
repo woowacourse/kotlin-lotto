@@ -9,11 +9,11 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class PurchaseAmountTest {
     private val purchaseUnit = 1000
-    private val smallPurchaseAmount = purchaseUnit - 1
+    private val smallPurchaseAmount = "999"
 
     @ParameterizedTest
-    @ValueSource(ints = [-1000, 0, 100, 999])
-    fun `구입금액이 1000이상이 아닌경우 예외가 발생한다`(invalidAmount: Int) {
+    @ValueSource(strings = ["-1000", "0", "100", "999"])
+    fun `구입금액이 1000이상이 아닌경우 예외가 발생한다`(invalidAmount: String) {
         assertThrows<IllegalArgumentException> { PurchaseAmount(invalidAmount, purchaseUnit) }
     }
 
@@ -24,6 +24,6 @@ class PurchaseAmountTest {
 
     @Test
     fun `구입금액이 purchaseUnit이상인 경우 예외가 발생하지 않는다`() {
-        assertDoesNotThrow { PurchaseAmount(purchaseUnit, purchaseUnit) }
+        assertDoesNotThrow { PurchaseAmount(purchaseUnit.toString(), purchaseUnit) }
     }
 }

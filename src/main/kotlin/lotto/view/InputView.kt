@@ -1,9 +1,9 @@
 package lotto.view
 
 class InputView {
-    fun readPurchaseAmount(): Int = validateNullInput(readlnOrNull()).validateAndConvertDigit()
+    fun readPurchaseAmount(): String = validateNullInput(readlnOrNull())
 
-    fun readManualLottoCount(): Int = validateNullInput(readlnOrNull()).validateAndConvertDigit()
+    fun readManualLottoCount(): String = validateNullInput(readlnOrNull())
 
     fun readManualLottoNumbers(manualLottoCount: Int): List<List<String>> {
         val manualLotto: MutableList<List<String>> = mutableListOf()
@@ -15,28 +15,20 @@ class InputView {
         return manualLotto
     }
 
-    fun readWinningNumbers(): List<Int> {
+    fun readWinningNumbers(): List<String> {
         val winningNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
-        return winningNumbers.split(SPLIT_DELIMITER).map { it.validateAndConvertDigit() }
+        return winningNumbers.split(SPLIT_DELIMITER).map { it }
     }
 
-    fun readWinningBonusNumber(): Int {
-        val bonusNumber = validateNullInput(readlnOrNull())
-        return bonusNumber.validateAndConvertDigit()
-    }
+    fun readWinningBonusNumber(): String = validateNullInput(readlnOrNull())
 
     private fun validateNullInput(input: String?): String {
         return input ?: throw IllegalArgumentException(ERROR_EMPTY_INPUT_MESSAGE)
-    }
-
-    private fun String.validateAndConvertDigit(): Int {
-        return toIntOrNull() ?: throw IllegalArgumentException(ERROR_INPUT_TYPE_MESSAGE)
     }
 
     companion object {
         private const val SPLIT_DELIMITER = ","
         private const val ERROR_PREFIX = "[ERROR] "
         private const val ERROR_EMPTY_INPUT_MESSAGE = "${ERROR_PREFIX}입력값이 없습니다."
-        private const val ERROR_INPUT_TYPE_MESSAGE = "${ERROR_PREFIX}숫자만 입력 가능합니다."
     }
 }

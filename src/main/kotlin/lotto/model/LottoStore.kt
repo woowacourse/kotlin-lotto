@@ -6,7 +6,7 @@ class LottoStore(private val lottoNumberGenerator: NumberGenerator) {
 
     fun generateManualLottos(manualLottoNumbers: List<List<String>>) {
         manualLottoNumbers.forEach { lottoNumbers ->
-            val lotto = Lotto.lottoNumberOf(lottoNumbers)
+            val lotto = Lotto.lottoNumbersOf(lottoNumbers)
             lottos.add(lotto)
         }
     }
