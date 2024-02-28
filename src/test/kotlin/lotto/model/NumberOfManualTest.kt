@@ -14,12 +14,12 @@ class NumberOfManualTest {
     }
 
     @ParameterizedTest
-    @CsvSource("2:1", "5:3", "11:10", delimiter = ':')
+    @CsvSource("2:1000", "5:3000", "11:10000", delimiter = ':')
     fun `수동으로 발행할 로또의 개수는 구매한 로또 개수를 넘길 수 없다`(
         manualCounts: Int,
-        totalCounts: Int,
+        cash: Int,
     ) {
-        val numberOfTickets = NumberOfTickets(totalCounts)
+        val numberOfTickets = NumberOfTickets(cash)
         val numberOfManual = NumberOfManual(manualCounts)
         assertThrows<IllegalArgumentException> { TicketCounts(numberOfTickets, numberOfManual) }
     }
