@@ -1,5 +1,7 @@
 package lotto.model
 
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -11,5 +13,12 @@ class LottoNumberTest {
         assertThrows<IllegalArgumentException> {
             LottoNumber.of(number)
         }
+    }
+
+    @Test
+    fun `캐싱된 LottoNumber을 반환하므로, 숫자가 같은 LottoNumber은 동등하다`() {
+        val lottoNumber = LottoNumber.of(5)
+        val lottoNumber2 = LottoNumber.of(5)
+        assertThat(lottoNumber == lottoNumber2).isTrue()
     }
 }
