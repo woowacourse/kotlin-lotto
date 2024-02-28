@@ -12,16 +12,14 @@ class WinningLottoTest {
     private val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 6))
 
     @Test
-    fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() =
-        assertDoesNotThrow {
-            WinningLotto(lotto, LottoNumber.from(7))
-        }
+    fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() {
+        assertDoesNotThrow { WinningLotto(lotto, LottoNumber.from(7)) }
+    }
 
     @Test
-    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() =
-        assertThrows<IllegalArgumentException> {
-            WinningLotto(lotto, LottoNumber.from(6))
-        }
+    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> { WinningLotto(lotto, LottoNumber.from(6)) }
+    }
 
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")

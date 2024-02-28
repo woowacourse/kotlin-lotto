@@ -13,17 +13,15 @@ class LottoTest {
 
     @ParameterizedTest
     @MethodSource("유효한 로또 번호 테스트 데이터")
-    fun `6개의 로또 번호가 올바른 경우 예외가 발생하지 않는다`(lottoNumbers: List<Int>) =
-        assertDoesNotThrow {
-            Lotto.create(lottoNumbers)
-        }
+    fun `6개의 로또 번호가 올바른 경우 예외가 발생하지 않는다`(lottoNumbers: List<Int>) {
+        assertDoesNotThrow { Lotto.create(lottoNumbers) }
+    }
 
     @ParameterizedTest
     @MethodSource("유효하지 않은 로또 번호 테스트 데이터")
-    fun `6개의 로또 번호가 잘못된 경우 예외가 발생한다`(lottoNumbers: List<Int>) =
-        assertThrows<IllegalArgumentException> {
-            Lotto.create(lottoNumbers)
-        }
+    fun `6개의 로또 번호가 잘못된 경우 예외가 발생한다`(lottoNumbers: List<Int>) {
+        assertThrows<IllegalArgumentException> { Lotto.create(lottoNumbers) }
+    }
 
     @ParameterizedTest
     @MethodSource("동일한 로또 번호 개수 테스트 데이터")
