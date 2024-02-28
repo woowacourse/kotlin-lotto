@@ -36,7 +36,14 @@ class LotteryController {
         amount: Amount,
         lotteryPurchasePattern: LotteryPurchasePattern,
     ): Ticket {
-        val manualLotteryCandidates = readManualLotteryCandidates(lotteryPurchasePattern)
+        var manualLotteryCandidates = listOf<String>()
+
+        if (lotteryPurchasePattern.manualLottoCount > 0) {
+            manualLotteryCandidates =
+                readManualLotteryCandidates(
+                    lotteryPurchasePattern,
+                )
+        }
 
         return LotteryStore().setStrategy(
             MixedTicketGenerationStrategy(
