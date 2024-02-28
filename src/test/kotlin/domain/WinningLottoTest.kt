@@ -9,18 +9,16 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호가 로또 번호와 중복될 때 예외를 던진다`() {
-        val lottoNumbers = listOf(1, 2, 3, 4, 5, 6)
+        val lottery = Lotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(1)
-        val lottery = lottoNumbers.map { LottoNumber(it) }.toSet()
-        val lotto = Lotto(lottery)
 
         val exception = assertThrows<IllegalArgumentException> {
             WinningLotto(
-                lotto,
+                lottery,
                 bonusNumber
             )
         }
 
-        assertThat(exception.message).isEqualTo("보너스 번호인 ${bonusNumber}와 당첨번호인 ${lotto}는 중복되면 안됩니다.")
+        assertThat(exception.message).isEqualTo("보너스 번호인 ${bonusNumber}와 당첨번호인 ${lottery}는 중복되면 안됩니다.")
     }
 }
