@@ -11,7 +11,7 @@ import util.Constant
 import view.InputView
 import view.OutputView
 
-class LottoController {
+object LottoController {
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
         val numberOfLotto = calculateNumberOfLotto(purchaseAmount)
