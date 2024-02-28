@@ -4,7 +4,6 @@ import lotto.model.Lotto
 import lotto.model.LottoDrawingResult
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
-import lotto.model.MakeLottoStrategy
 import lotto.model.Money
 import lotto.model.WinningLotto
 import lotto.view.InputView
@@ -15,17 +14,19 @@ class LottoController(
     private val outputView: OutputView
 ) {
     fun start() {
-        val lottoMachine = runLottoMachine()
-        val countOfTicket = getTicket(lottoMachine)
-        val lottoTickets = makeLottoTickets(countOfTicket)
-        val result = drawLotto(lottoTickets)
-        showResult(lottoMachine, result)
+        val (lottoMachine, money) = runLottoMachine()
+        makeLottoes(lottoMachine)
+        val result = drawLotto(lottoMachine.lottoes)
+        showResult(money, result)
     }
 
-    private fun runLottoMachine(): LottoMachine {
+    private fun runLottoMachine(): Pair<LottoMachine, Money> {
         return try {
-            val money = getMoney()
-            return LottoMachine(money)
+            val money: Money = getMoney()
+            val manualLottoAmount = getManualLottoAmount()
+            val lottoMachine = LottoMachine(money, manualLottoAmount)
+
+            return lottoMachine to money
         } catch (e: IllegalArgumentException) {
             println(e.message)
             runLottoMachine()
@@ -41,16 +42,22 @@ class LottoController(
         }
     }
 
-    private fun getTicket(lottoMachine: LottoMachine): Int {
-        val countOfTicket = lottoMachine.countTicket()
-        outputView.printNumberOfTicket(countOfTicket)
-        return countOfTicket
+    private fun getManualLottoAmount(): Int {
+        return try {
+            inputView.readManualLottoAmount()
+        } catch (e: IllegalArgumentException) {
+            getManualLottoAmount()
+        }
     }
 
-    private fun makeLottoTickets(number: Int): List<Lotto> {
-        val lottoTickets = List(number) { MakeLottoStrategy.MakeSortedRandomLotto(1..45).makeLotto() }
-        outputView.printLottoNumbers(lottoTickets)
-        return lottoTickets
+    private fun makeLottoes(lottoMachine: LottoMachine) {
+        if (lottoMachine.manual > 0) {
+            println("\n수동으로 구매할 번호를 입력해 주세요.")
+            repeat(lottoMachine.manual.toInt()) {
+                lottoMachine.makeManualLotto(Lotto(inputView.readManualLottos()))
+            }
+        }
+        lottoMachine.makeRandomLotto()
     }
 
     private fun drawLotto(lottoTickets: List<Lotto>): LottoDrawingResult {
@@ -83,9 +90,9 @@ class LottoController(
         return LottoNumber.from(inputView.readBonusNumber())
     }
 
-    private fun showResult(lottoMachine: LottoMachine, lottoDrawingResult: LottoDrawingResult) {
+    private fun showResult(money: Money, lottoDrawingResult: LottoDrawingResult) {
         val totalPrize = lottoDrawingResult.calculateTotalPrize()
-        val marginRate = lottoMachine.calculateMargin(totalPrize)
+        val marginRate = money.calculateMargin(totalPrize)
         outputView.printMargin(marginRate)
     }
 }
