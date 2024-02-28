@@ -5,12 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class LottoWinningTest {
-    private lateinit var winningTicket: LottoTicket
-
-    @BeforeEach
-    fun setup() {
-        winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
-    }
 
     @Test
     fun `등수 통계 테스트`() {
@@ -24,7 +18,7 @@ class LottoWinningTest {
         )
 
         val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber(7)
+        val bonusNumber = LottoNumber.of(7)
         val lottoWinning = LottoWinning(winningTicket, bonusNumber)
 
         val winningChart = lottoWinning.makeLottoResult(lottoTicketList)

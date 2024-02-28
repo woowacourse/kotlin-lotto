@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource
 
 class LottoResultTest {
     private val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
-    private val bonusNumber = LottoNumber(7)
+    private val bonusNumber = LottoNumber.of(7)
 
     @Test
     fun `특정 등수에 당첨되지 않았을 경우 0으로 센다`() {

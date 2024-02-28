@@ -5,7 +5,7 @@ object RandomLottoTicketGenerator : LottoTicketGenerator {
         val lottoNumbers =
             LottoNumber.RANGE.shuffled()
                 .take(LottoTicket.SIZE)
-                .map { LottoNumber(it) }
+                .map { LottoNumber.of(it) }
         return LottoTicket(lottoNumbers)
     }
 }

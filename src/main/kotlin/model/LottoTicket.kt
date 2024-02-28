@@ -19,6 +19,6 @@ class LottoTicket(
     companion object {
         const val SIZE = 6
 
-        fun from(intList: List<Int>) = LottoTicket(intList.map { LottoNumber(it) })
+        fun from(intList: List<Int>) = LottoTicket(intList.map { LottoNumber.of(it) })
     }
 }

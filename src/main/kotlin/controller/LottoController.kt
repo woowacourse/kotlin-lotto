@@ -35,8 +35,8 @@ class LottoController(
     }
 
     private fun makeLottoWinning(): LottoWinning {
-        val winningTicket = LottoTicket(inputView.getWinningTicket().map { LottoNumber(it) })
-        val bonusNumber = LottoNumber(inputView.getBonusNumber())
+        val winningTicket = LottoTicket(inputView.getWinningTicket().map { LottoNumber.of(it) })
+        val bonusNumber = LottoNumber.of(inputView.getBonusNumber())
         return LottoWinning(winningTicket, bonusNumber)
     }
 
