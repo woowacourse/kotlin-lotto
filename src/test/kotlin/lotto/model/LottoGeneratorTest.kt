@@ -19,7 +19,7 @@ class LottoGeneratorTest {
     fun `로또 번호가 1에서 45사이의 숫자인지 확인`() {
         assertThat(
             lottoNumbers.all { number ->
-                number.getNumber() in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE
+                number.getNumber() in Constant.MIN_LOTTO_NUMBER_RANGE..Constant.MAX_LOTTO_NUMBER_RANGE
             },
         ).isTrue
     }

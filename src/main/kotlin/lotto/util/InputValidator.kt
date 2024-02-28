@@ -2,9 +2,12 @@ package lotto.util
 
 object InputValidator {
     private const val INPUT_SEPARATOR = ','
+    private const val NOT_INT_INPUT = 0
+    private const val NOT_INT_INPUT_FOR_NUMBER_OF_HANDPICKED_LOTTO = -1
+    private const val MIN_HANDPICKED_LOTTO_RANGE = 0
 
     fun validatePurchaseAmount(input: String): Int {
-        val purchaseAmount = input.toIntOrNull() ?: 0
+        val purchaseAmount = input.toIntOrNull() ?: NOT_INT_INPUT
         validatePurchaseAmountRange(purchaseAmount)
         return purchaseAmount
     }
@@ -13,7 +16,7 @@ object InputValidator {
         input: String,
         numberOfLotto: Int,
     ): Int {
-        val numberOfHandpickedLotto = input.toIntOrNull() ?: -1
+        val numberOfHandpickedLotto = input.toIntOrNull() ?: NOT_INT_INPUT_FOR_NUMBER_OF_HANDPICKED_LOTTO
         validateNumberOfHandpickedNumberLottoRange(numberOfHandpickedLotto, numberOfLotto)
         return numberOfHandpickedLotto
     }
@@ -42,7 +45,7 @@ object InputValidator {
         input: String,
         winningNumbers: List<Int>,
     ): Int {
-        val bonusNumber = input.toIntOrNull() ?: 0
+        val bonusNumber = input.toIntOrNull() ?: NOT_INT_INPUT
         validateBonusNumberRange(bonusNumber)
         validateBonusNumberDuplicate(bonusNumber, winningNumbers)
         return bonusNumber
@@ -56,17 +59,19 @@ object InputValidator {
         handpickedNumber: Int,
         numberOfLotto: Int,
     ) {
-        require(handpickedNumber in 0..numberOfLotto) { InputException.INVALID_HANDPICKED_NUMBER_RANGE.getMessage() }
+        require(handpickedNumber in MIN_HANDPICKED_LOTTO_RANGE..numberOfLotto) {
+            InputException.INVALID_HANDPICKED_NUMBER_RANGE.getMessage()
+        }
     }
 
     private fun validateNumber(number: String): Int {
-        val validNumber = number.trim().toIntOrNull() ?: 0
+        val validNumber = number.trim().toIntOrNull() ?: NOT_INT_INPUT
         validateWinningNumberRange(validNumber)
         return validNumber
     }
 
     private fun validateWinningNumberRange(winningNumber: Int) {
-        require(winningNumber in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE) {
+        require(winningNumber in Constant.MIN_LOTTO_NUMBER_RANGE..Constant.MAX_LOTTO_NUMBER_RANGE) {
             InputException.INVALID_WINNING_NUMBER_RANGE.getMessage()
         }
     }
@@ -80,7 +85,7 @@ object InputValidator {
     }
 
     private fun validateBonusNumberRange(bonusNumber: Int) {
-        require(bonusNumber in Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE) {
+        require(bonusNumber in Constant.MIN_LOTTO_NUMBER_RANGE..Constant.MAX_LOTTO_NUMBER_RANGE) {
             InputException.INVALID_BONUS_NUMBER_RANGE.getMessage()
         }
     }

@@ -5,7 +5,7 @@ import lotto.util.Constant
 object LottoGenerator {
     fun generateLotto(): Lotto {
         return Lotto(
-            (Constant.LOTTO_START_RANGE..Constant.LOTTO_END_RANGE)
+            (Constant.MIN_LOTTO_NUMBER_RANGE..Constant.MAX_LOTTO_NUMBER_RANGE)
                 .shuffled()
                 .take(Constant.LOTTO_SIZE)
                 .sorted()
