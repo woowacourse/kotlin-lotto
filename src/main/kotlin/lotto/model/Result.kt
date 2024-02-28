@@ -1,8 +1,11 @@
 package lotto.model
 
 data class Result(private val winningCountsByRank: MutableMap<Rank, Int> = mutableMapOf()) {
-    fun incrementRankCount(rank: Rank) {
-        winningCountsByRank[rank] = winningCountsByRank.getOrDefault(rank, 0) + 1
+    fun incrementRankCount(
+        rank: Rank,
+        value: Int = 1,
+    ) {
+        winningCountsByRank[rank] = winningCountsByRank.getOrDefault(rank, 0) + value
     }
 
     fun getWinningCountByRank(rank: Rank): Int {

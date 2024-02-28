@@ -8,12 +8,19 @@ data class WinningBundle(
         require(bonusLottoNumber !in winningLotto.lottoNumbers.numbers) { BONUS_NUMBER_DUPLICATED_ERROR_MESSAGE }
     }
 
-    fun calculateResult(purchasedLottos: List<Lotto>): Result {
+    fun calculateResult(lottos: List<Lotto>): Result {
         val result = Result()
-        purchasedLottos.forEach { lotto ->
+        updateResultWithLottos(result, lottos)
+        return result
+    }
+
+    private fun updateResultWithLottos(
+        result: Result,
+        lottos: List<Lotto>,
+    ) {
+        lottos.forEach { lotto ->
             updateResultWithLotto(lotto, result)
         }
-        return result
     }
 
     private fun updateResultWithLotto(
