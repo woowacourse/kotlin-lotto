@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.model.Lotto
+import lotto.model.LottoCount
 import lotto.model.LottoMachine
 import lotto.model.PurchaseAmount
 import lotto.model.WinningLotto
@@ -12,8 +13,10 @@ import lotto.view.OutputView
 class LottoGameController {
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val totalLottoTickets = generateLotto(purchaseAmount)
-        OutputView.printNumberOfTicket(purchaseAmount.numberOfManualTickets, purchaseAmount.getNumberOfAutoTickets())
+        val lottoCount = getLottoCount(purchaseAmount)
+        val totalLottoTickets = generateLottoTickets(lottoCount)
+
+        OutputView.printNumberOfTicket(lottoCount.numberOfManualLotto, lottoCount.getNumberOfAutoTickets())
         OutputView.printLottoTickets(totalLottoTickets)
 
         val winningStatus = makeResult(totalLottoTickets)
@@ -23,13 +26,19 @@ class LottoGameController {
 
     private fun getPurchaseAmount(): PurchaseAmount {
         val purchaseAmount = InputView.getPurchaseAmount()
-        val numberOfManualTickets = InputView.getNumberOfManualLotto()
-        return PurchaseAmount(purchaseAmount, numberOfManualTickets)
+        return PurchaseAmount.from(purchaseAmount) ?: getPurchaseAmount()
     }
 
-    private fun generateLotto(purchaseAmount: PurchaseAmount): List<Lotto> {
-        val manualLottoTickets = generateManualLotto(purchaseAmount.numberOfManualTickets)
-        val autoLottoTickets = generateAutoLotto(purchaseAmount.getNumberOfAutoTickets())
+    private fun getLottoCount(purchaseAmount: PurchaseAmount): LottoCount {
+        val totalLottoCount = purchaseAmount.getTotalNumberOfLotto()
+        val manualLottoCount = InputView.getNumberOfManualLotto()
+        return LottoCount.from(totalLottoCount, manualLottoCount) ?: getLottoCount(purchaseAmount)
+    }
+
+    private fun generateLottoTickets(lottoCount: LottoCount): List<Lotto> {
+        val manualLottoTickets =
+            if (lottoCount.numberOfManualLotto > 0) generateManualLotto(lottoCount.numberOfManualLotto) else emptyList()
+        val autoLottoTickets = generateAutoLotto(lottoCount.getNumberOfAutoTickets())
         return manualLottoTickets.plus(autoLottoTickets)
     }
 
