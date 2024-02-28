@@ -10,11 +10,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
     }
 
     fun matchCount(winningNumber: WinningNumber): Int {
-        return winningNumber
-            .getWinning()
-            .numbers
-            .intersect(numbers)
-            .size
+        return winningNumber.getWinning().numbers.intersect(numbers).size
     }
 
     fun matchBonusNumber(winningNumber: WinningNumber): Boolean {
@@ -23,9 +19,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
 
     fun findRanking(winningNumber: WinningNumber): LottoPrize {
         var rank =
-            LottoPrize.entries.find {
-                it.getMatchNumbers() == matchCount(winningNumber)
-            } ?: LottoPrize.BOOM
+            LottoPrize.entries.find { it.getMatchNumbers() == matchCount(winningNumber) } ?: LottoPrize.BOOM
         if (checkSecond(rank, matchBonusNumber(winningNumber))) {
             rank = LottoPrize.SECOND
         }
