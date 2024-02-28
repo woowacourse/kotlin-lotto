@@ -3,7 +3,7 @@ package model
 import entity.Ticket
 import utils.LotteriesGenerationStrategy
 
-object LotteryStore {
+object LotteryMachine {
     fun issueLotteries(lotteriesGenerationStrategy: LotteriesGenerationStrategy): List<Lottery> {
         return lotteriesGenerationStrategy.issueLotteries()
     }

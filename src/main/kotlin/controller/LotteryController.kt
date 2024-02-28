@@ -4,7 +4,7 @@ import entity.Ticket
 import model.Amount
 import model.Bonus
 import model.Lottery
-import model.LotteryStore
+import model.LotteryMachine
 import model.ManualLotteryCount
 import model.WinningResult
 import utils.ManualLotteriesGenerationStrategy
@@ -65,18 +65,18 @@ class LotteryController {
     private fun splitWinningLotto(input: String) = Lottery.fromInput(InputView.splitWinningLotto(input))
 
     private fun issueManualLotteries(manualLotteries: List<List<String>>): List<Lottery> =
-        LotteryStore.issueLotteries(ManualLotteriesGenerationStrategy(manualLotteries))
+        LotteryMachine.issueLotteries(ManualLotteriesGenerationStrategy(manualLotteries))
 
     private fun issueAutoLotteries(
         amount: Amount,
         manualLotteryCount: ManualLotteryCount,
-    ): List<Lottery> = LotteryStore.issueLotteries(RandomLotteriesGenerationStrategy(amount, manualLotteryCount))
+    ): List<Lottery> = LotteryMachine.issueLotteries(RandomLotteriesGenerationStrategy(amount, manualLotteryCount))
 
     private fun issueTicket(
         manualLotteries: List<Lottery>,
         autoLotteries: List<Lottery>,
         amount: Amount,
-    ): Ticket = LotteryStore.issueTicket(manualLotteries, autoLotteries, amount)
+    ): Ticket = LotteryMachine.issueTicket(manualLotteries, autoLotteries, amount)
 
     private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)
 

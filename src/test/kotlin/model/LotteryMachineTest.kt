@@ -8,7 +8,7 @@ import utils.ExplicitLotteriesGenerationStrategy
 import utils.ManualLotteriesGenerationStrategy
 import utils.RandomLotteriesGenerationStrategy
 
-class LotteryStoreTest {
+class LotteryMachineTest {
     @Test
     fun `수동 로또가 구매한 갯수만큼 발행에 성공`() {
         val manualInput =
@@ -20,7 +20,7 @@ class LotteryStoreTest {
 
         val manualLotteryCount = ManualLotteryCount(3)
 
-        val manualLotteries = LotteryStore.issueLotteries(ManualLotteriesGenerationStrategy(manualInput))
+        val manualLotteries = LotteryMachine.issueLotteries(ManualLotteriesGenerationStrategy(manualInput))
 
         assertThat(manualLotteries.size).isEqualTo(manualLotteryCount.count)
     }
@@ -34,7 +34,7 @@ class LotteryStoreTest {
         val amount = Amount(money)
         val manualLotteryCount = ManualLotteryCount(count)
 
-        val autoLotteries = LotteryStore.issueLotteries(RandomLotteriesGenerationStrategy(amount, manualLotteryCount))
+        val autoLotteries = LotteryMachine.issueLotteries(RandomLotteriesGenerationStrategy(amount, manualLotteryCount))
 
         val expectedAutoLotteryCount = amount.money / 1000 - manualLotteryCount.count
         assertThat(autoLotteries.size).isEqualTo(expectedAutoLotteryCount)
@@ -49,7 +49,7 @@ class LotteryStoreTest {
             )
         val explicitLotteries = explicitNumbers.map { Lottery.fromSet(it) }.toList()
 
-        val autoLotteries = LotteryStore.issueLotteries(ExplicitLotteriesGenerationStrategy(explicitNumbers))
+        val autoLotteries = LotteryMachine.issueLotteries(ExplicitLotteriesGenerationStrategy(explicitNumbers))
 
         autoLotteries.forEachIndexed { index, userLotto ->
             assertThat(userLotto.getCountOfMatch(explicitLotteries[index])).isEqualTo(6)

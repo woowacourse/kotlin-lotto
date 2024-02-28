@@ -25,13 +25,13 @@ class WinningResultTest {
                 setOf(10, 11, 12, 13, 14, 15),
             )
 
-        val manualLotteries = LotteryStore.issueLotteries(ManualLotteriesGenerationStrategy(manualInput))
-        val autoLotteries = LotteryStore.issueLotteries(ExplicitLotteriesGenerationStrategy(autoInput))
+        val manualLotteries = LotteryMachine.issueLotteries(ManualLotteriesGenerationStrategy(manualInput))
+        val autoLotteries = LotteryMachine.issueLotteries(ExplicitLotteriesGenerationStrategy(autoInput))
 
         val amount = Amount(6000)
 
         val ticket =
-            LotteryStore.issueTicket(manualLotteries, autoLotteries, amount)
+            LotteryMachine.issueTicket(manualLotteries, autoLotteries, amount)
 
         val winningResult = WinningResult.of(ticket, winningLottery, bonus)
 
