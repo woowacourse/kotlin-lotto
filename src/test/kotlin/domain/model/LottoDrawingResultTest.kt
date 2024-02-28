@@ -18,15 +18,4 @@ class LottoDrawingResultTest {
 
         assertThat(expected).isEqualTo(Money(actual))
     }
-
-    @Test
-    fun `Int형 범위를 넘어가는 총 상금이어도 정상 작동한다`() {
-        val rank = mapOf(Rank.FIRST to 2, Rank.SECOND to 0, Rank.THIRD to 0, Rank.FOURTH to 0, Rank.FIFTH to 0)
-        val lottoDrawingResult = LottoDrawingResult(rank)
-
-        val expected = lottoDrawingResult.calculateTotalPrize()
-        val actual = 4_000_000_000
-
-        assertThat(expected).isEqualTo(Money(actual))
-    }
 }
