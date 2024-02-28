@@ -14,12 +14,7 @@ class WinningLottoTest {
         val lottery = Lotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber.from(1)
 
-        val exception = assertThrows<IllegalArgumentException> {
-            WinningLotto(
-                lottery,
-                bonusNumber
-            )
-        }
+        val exception = assertThrows<IllegalArgumentException> { WinningLotto(lottery, bonusNumber) }
 
         assertThat(exception.message).isEqualTo("보너스 번호인 1와 당첨번호인 1, 2, 3, 4, 5, 6는 중복되면 안됩니다.")
     }

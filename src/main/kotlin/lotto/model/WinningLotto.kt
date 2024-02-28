@@ -9,17 +9,11 @@ data class WinningLotto(val lotto: Lotto, val bonus: LottoNumber) {
         val rankCountMap = Rank.entries.associateWith { DEFAULT_COUNT }.toMutableMap()
 
         lottoTickets.forEach { targetLotto ->
-            val rank = findRank(targetLotto)
+            val rank = targetLotto.findRank(lotto, bonus)
             rankCountMap[rank] = rankCountMap.getOrDefault(rank, DEFAULT_COUNT) + COUNT_STEP
         }
 
         return LottoDrawingResult(rankCountMap)
-    }
-
-    private fun findRank(targetLotto: Lotto): Rank {
-        val countOfMatch = (targetLotto.numbers intersect lotto.numbers).size
-        val matchBonus = targetLotto.contains(bonus)
-        return Rank.valueOf(countOfMatch, matchBonus)
     }
 
     companion object {
