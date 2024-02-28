@@ -1,6 +1,4 @@
-package domain
-
-import domain.model.LottoNumber
+package lotto.model
 
 sealed class MakeLottoStrategy {
 

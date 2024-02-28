@@ -1,7 +1,8 @@
 package domain
 
-import domain.model.Margin
-import domain.model.Money
+import lotto.model.LottoMachine
+import lotto.model.Margin
+import lotto.model.Money
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

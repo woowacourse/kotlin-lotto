@@ -1,9 +1,9 @@
-package view
+package lotto.view
 
-import domain.Lotto
-import domain.Rank
-import domain.model.LottoDrawingResult
-import domain.model.Margin
+import lotto.model.Lotto
+import lotto.model.Rank
+import lotto.model.LottoDrawingResult
+import lotto.model.Margin
 
 class OutputView {
 

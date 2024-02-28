@@ -1,7 +1,4 @@
-package domain
-
-import domain.model.Margin
-import domain.model.Money
+package lotto.model
 
 class LottoMachine(
     private val money: Money

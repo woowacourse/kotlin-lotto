@@ -1,7 +1,4 @@
-package domain
-
-import domain.model.LottoDrawingResult
-import domain.model.LottoNumber
+package lotto.model
 
 data class WinningLotto(val lotto: Lotto, val bonus: LottoNumber) {
     init {

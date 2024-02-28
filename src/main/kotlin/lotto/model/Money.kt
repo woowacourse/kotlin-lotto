@@ -1,4 +1,4 @@
-package domain.model
+package lotto.model
 
 data class Money(val amount: Long) {
     init {

@@ -1,6 +1,4 @@
-package domain.model
-
-import domain.Rank
+package lotto.model
 
 data class LottoDrawingResult(val statistics: Map<Rank, Int>) {
 

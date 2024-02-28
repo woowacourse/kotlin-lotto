@@ -1,6 +1,8 @@
 package domain.model
 
-import domain.Rank
+import lotto.model.Rank
+import lotto.model.LottoDrawingResult
+import lotto.model.Money
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

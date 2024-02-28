@@ -1,14 +1,14 @@
-package controller
+package lotto.controller
 
-import domain.Lotto
-import domain.LottoMachine
-import domain.MakeLottoStrategy
-import domain.WinningLotto
-import domain.model.LottoDrawingResult
-import domain.model.LottoNumber
-import domain.model.Money
-import view.InputView
-import view.OutputView
+import lotto.model.Lotto
+import lotto.model.LottoMachine
+import lotto.model.MakeLottoStrategy
+import lotto.model.WinningLotto
+import lotto.model.LottoDrawingResult
+import lotto.model.LottoNumber
+import lotto.model.Money
+import lotto.view.InputView
+import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView,
