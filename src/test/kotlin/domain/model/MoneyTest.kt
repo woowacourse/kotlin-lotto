@@ -12,6 +12,6 @@ class MoneyTest {
 
         val exception = assertThrows<IllegalArgumentException> { Money(amount) }
 
-        assertThat(exception.message).isEqualTo("-1원은 안됩니다. 0원 이상이어야 합니다.")
+        assertThat(exception.message).isEqualTo("${amount}원은 안됩니다. 0원 이상이어야 합니다.")
     }
 }

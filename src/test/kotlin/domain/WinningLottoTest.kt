@@ -21,6 +21,6 @@ class WinningLottoTest {
             )
         }
 
-        assertThat(exception.message).isEqualTo("보너스 번호인 ${bonusNumber}와 당첨번호인 ${lottery}는 중복되면 안됩니다.")
+        assertThat(exception.message).isEqualTo("보너스 번호인 1와 당첨번호인 1, 2, 3, 4, 5, 6는 중복되면 안됩니다.")
     }
 }
