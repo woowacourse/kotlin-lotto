@@ -13,7 +13,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
     }
 
     override fun toString(): String {
-        return numbers.map { it.value }.joinToString(", ")
+        return numbers.joinToString(", ") { "${it.value}" }
     }
 
     companion object {
