@@ -35,7 +35,7 @@ class LottoController(
         val manualLottos = readManualLottos(purchaseOrder.manualLottoSize)
         val automaticLottos = LottoStore.buyAutoMaticLottos(purchaseOrder, lottoMachine)
         return LottoStore.combineLottos(manualLottos, automaticLottos).also {
-            OutputView.printPurchaseLotto(it)
+            OutputView.printPurchaseLotto(purchaseOrder, it)
         }
     }
 

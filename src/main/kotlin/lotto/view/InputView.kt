@@ -19,12 +19,14 @@ object InputView {
     }
 
     fun readManualLottoSize(): Int {
+        lineBreak()
         println(INPUT_MANUAL_LOTTO_SIZE)
         val inputManualLottoSize = readln()
         return inputManualLottoSize.validateAndConvertDigit()
     }
 
     fun readManualLottos(manualLottoSize: Int): List<Lotto> {
+        lineBreak()
         println(INPUT_MANUAL_LOTTOS)
         return List(manualLottoSize) { readLottoNumbers() }
     }
@@ -54,4 +56,6 @@ object InputView {
     private fun String.validateAndConvertDigit(): Int {
         return toIntOrNull() ?: throw IllegalArgumentException(INVALID_DIGIT)
     }
+
+    private fun lineBreak() = println()
 }
