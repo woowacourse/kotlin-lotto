@@ -13,14 +13,14 @@ object InputView {
     }
 
     fun getManualTicketCounts(): Int {
-        println("수동으로 구매할 로또 수를 입력해 주세요.")
+        println("\n수동으로 구매할 로또 수를 입력해 주세요.")
         val input = readln()
         ValidationUtils.validateManualCounts(input)
         return input.toInt()
     }
 
     fun getManualLotto(count: Int): List<Lotto> {
-        println("수동으로 구매할 번호를 입력해 주세요.")
+        println("\n수동으로 구매할 번호를 입력해 주세요.")
         val manualLottoTickets = mutableListOf<Lotto>()
         repeat(count) {
             val input = readln()
