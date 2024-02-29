@@ -7,15 +7,16 @@ import org.junit.jupiter.params.provider.CsvSource
 class AutoLottoMachineTest {
     @ParameterizedTest
     @CsvSource(
-        "5000, 5",
-        "1000, 1",
-        "15000, 15",
+        "5000, 5, 2",
+        "7000, 7, 5",
+        "15000, 15, 10",
     )
-    fun `구입 금액 만큼의 개수만큼 로또를 산다`(
-        purchasedAmount: Int,
-        purchasedCount: Int,
+    fun `구입 금액에서 수동로또 개수를 뺀 만큼 자동로또를 산다`(
+        purchasedPrice: Int,
+        autoLottoCount: Int,
+        manualLottoCount: Int,
     ) {
-        val autoLottoMachine = AutoLottoMachine(purchasedAmount)
-        assertThat(autoLottoMachine.makeUserTickets().size).isEqualTo(purchasedCount)
+        val autoLottoMachine = AutoLottoMachine(purchasedPrice, manualLottoCount)
+        assertThat(autoLottoMachine.makeAutoTickets().size).isEqualTo(autoLottoCount - manualLottoCount)
     }
 }

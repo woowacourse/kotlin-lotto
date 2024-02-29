@@ -4,6 +4,7 @@ import lotto.model.AutoLottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoWinningPrize
 import lotto.model.LottoWinningRank
+import lotto.model.ManualLottoMachine
 import lotto.model.Rank
 import lotto.model.UserLottoTicket
 import lotto.view.InputView
@@ -14,22 +15,21 @@ class LottoController {
     private val outputView = OutputView()
 
     fun runLotto() {
-        val userTickets = makeUserLottoTickets()
-        printLottoTickets(userTickets)
+        val userTickets = purchaseLottoTickets()
         val rankMap = checkLottoWinning(userTickets)
         val lottoWinningPrize = LottoWinningPrize(rankMap)
         printLottoWinning(lottoWinningPrize, userTickets, rankMap)
     }
 
-    private fun makeUserLottoTickets(): List<UserLottoTicket> {
+    private fun purchaseLottoTickets(): List<UserLottoTicket> {
         val purchasePrice = inputView.getPurchasePrice()
-        val autoLottoMachine = AutoLottoMachine(purchasePrice)
-        return autoLottoMachine.makeUserTickets()
-    }
-
-    private fun printLottoTickets(userTickets: List<UserLottoTicket>) {
-        outputView.printLottoCount(userTickets.size)
-        outputView.printLottoTickets(userTickets)
+        val manualLottoNumbers = inputView.getManualLottoTickets()
+        val autoTickets = AutoLottoMachine(purchasePrice, manualLottoNumbers.size).makeAutoTickets()
+        val manualTickets = ManualLottoMachine(manualLottoNumbers).makeManualTickets()
+        val userTickets = autoTickets + manualTickets
+        outputView.printLottoCount(manualLottoNumbers.size, autoTickets.size)
+        outputView.printUserTickets(userTickets)
+        return userTickets
     }
 
     private fun checkLottoWinning(userTickets: List<UserLottoTicket>): Map<Rank, Int> {

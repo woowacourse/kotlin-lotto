@@ -1,8 +1,5 @@
 package lotto.view
 
-import lotto.model.LottoNumber
-import lotto.model.UserLottoTicket
-
 class InputView {
     fun getPurchasePrice(): Int {
         println(PURCHASE_AMOUNT_PROMPT_MESSAGE)
@@ -14,16 +11,13 @@ class InputView {
         return readln().toInt()
     }
 
-    fun getManualLottoTickets(): List<UserLottoTicket> {
+    fun getManualLottoTickets(): List<List<Int>> {
         val manualLottoCount = getManualLottoCount()
-        val manualLottoTickets: MutableList<UserLottoTicket> = mutableListOf()
+        val manualLottoTickets: MutableList<List<Int>> = mutableListOf()
         println(MANUAL_LOTTO_PROMPT_MESSAGE)
         repeat(manualLottoCount) {
             manualLottoTickets.add(
-                UserLottoTicket(
-                    readln().split(",").map { it.trim().toInt() }
-                        .map { LottoNumber.makeLottoNumber(it) },
-                ),
+                readln().split(",").map { it.trim() }.map { it.toInt() }.sorted(),
             )
         }
         return manualLottoTickets.toList()

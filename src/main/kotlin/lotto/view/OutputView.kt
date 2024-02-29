@@ -4,13 +4,16 @@ import lotto.model.Rank
 import lotto.model.UserLottoTicket
 
 class OutputView {
-    fun printLottoCount(lottoCount: Int) {
-        println(PURCHASE_MESSAGE.format(lottoCount))
+    fun printLottoCount(
+        manualLottoCount: Int,
+        autoLottoCount: Int,
+    ) {
+        println(PURCHASE_MESSAGE.format(manualLottoCount, autoLottoCount))
     }
 
-    fun printLottoTickets(userLottoTickets: List<UserLottoTicket>) {
-        val lottoTicketsInt = userLottoTickets.map { it.userLottoTicket.map { it.number } }
-        lottoTicketsInt.forEach {
+    fun printUserTickets(userTickets: List<UserLottoTicket>) {
+        val userTicketsInt = userTickets.map { it.userLottoTicket.map { it.number } }
+        userTicketsInt.forEach {
             println(it)
         }
     }
@@ -34,7 +37,7 @@ class OutputView {
     }
 
     companion object {
-        private const val PURCHASE_MESSAGE = "%d개를 구매했습니다."
+        private const val PURCHASE_MESSAGE = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val MATCH_MESSAGE = "%d개 일치%s (%d원) - %d개"
         private const val TOTAL_WINNING_RATE_MESSAGE = "총 수익률은 %.2f입니다."
     }
