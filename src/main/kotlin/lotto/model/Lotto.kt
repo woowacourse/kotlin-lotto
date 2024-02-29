@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 data class Lotto(val numbers: List<LottoNumber>) {
     init {

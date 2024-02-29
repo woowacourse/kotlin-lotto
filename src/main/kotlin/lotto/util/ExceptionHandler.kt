@@ -1,4 +1,4 @@
-package util
+package lotto.util
 
 class ExceptionHandler {
     fun <T> handleInputValue(action: () -> T): T =

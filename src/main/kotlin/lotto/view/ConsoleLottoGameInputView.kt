@@ -1,4 +1,4 @@
-package view
+package lotto.view
 
 class ConsoleLottoGameInputView : LottoGameInputView {
     override fun inputPurchaseExpense(): Int {

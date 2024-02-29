@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class LottoGameResult private constructor(
     val results: List<RankResult>,

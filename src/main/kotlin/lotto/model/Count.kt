@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 @JvmInline
 value class Count(val value: Int) {

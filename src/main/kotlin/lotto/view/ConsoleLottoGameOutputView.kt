@@ -1,8 +1,8 @@
-package view
+package lotto.view
 
-import model.Lotto
-import model.LottoGameResult
-import model.Rank
+import lotto.model.Lotto
+import lotto.model.LottoGameResult
+import lotto.model.Rank
 import kotlin.math.floor
 
 class ConsoleLottoGameOutputView : LottoGameOutputView {

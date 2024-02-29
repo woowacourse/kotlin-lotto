@@ -1,4 +1,4 @@
-package view
+package lotto.view
 
 interface LottoGameInputView {
     fun inputPurchaseExpense(): Int
