@@ -1,10 +1,10 @@
 package lotto.model
 
-object LottoAnalyzer {
-    fun calculateResult(
-        lottoBundle: LottoBundle,
-        drawResult: DrawResult,
-    ): LottoResult {
+class MatchResult(
+    private val lottoBundle: LottoBundle,
+    private val drawResult: DrawResult,
+) {
+    fun calculateResult(): LottoResult {
         return LottoResult(
             lottoBundle.lottos.map { lotto ->
                 val countOfMatch = lotto.getCountOfMatch(drawResult.winningLotto)

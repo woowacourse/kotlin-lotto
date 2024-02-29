@@ -1,23 +1,34 @@
 package lotto.model
 
+import lotto.model.Lotto.Companion.LOTTO_SIZE
+import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_RANGE
+
 object LottoMachine {
-    private const val LOTTO_SIZE = 6
-    private val LOTTO_NUMBER_RANGE: IntRange = 1..45
-    private const val MIN_PRICE = 1_000
+    fun createLottoBundle(
+        manualPurchaseLottos: ManualPurchaseLottos,
+        randomLottoCount: Int,
+    ): LottoBundle {
+        val manualLottoBundle = createManualLottoBundle(manualPurchaseLottos)
+        val randomLottoBundle = createRandomLottoBundle(randomLottoCount)
+        return manualLottoBundle.append(randomLottoBundle)
+    }
 
-    private const val PRICE_TYPE_ERROR_MESSAGE = "구입 금액은 자연수여야 합니다."
-    private const val PRICE_ERROR_MESSAGE = "구입 금액은 자연수이면서 1000 이상이여야 합니다."
+    private fun createManualLottoBundle(manualPurchaseLottos: ManualPurchaseLottos): LottoBundle {
+        val lotts = manualPurchaseLottos.lottos.map { lottoNumbers -> createLotto(lottoNumbers) }
+        return LottoBundle(lotts)
+    }
 
-    fun createLottoBundle(price: String): LottoBundle {
-        require(price.toIntOrNull() != null) { PRICE_TYPE_ERROR_MESSAGE }
-        require(price.toIntOrNull()?.let { it >= MIN_PRICE } == true) { PRICE_ERROR_MESSAGE }
-
-        val lottos = List(getNumberOfLottoTickets(price)) { randomLotto() }
-
+    private fun createRandomLottoBundle(randomLottoCount: Int): LottoBundle {
+        val lottos = List(randomLottoCount) { createLotto() }
         return LottoBundle(lottos)
     }
 
-    private fun randomLotto(): Lotto = Lotto(LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }.toSet())
+    private fun createLotto(lottoNumbers: List<String>? = null): Lotto {
+        val numbers = lottoNumbers?.map { number -> LottoNumber.from(number) } ?: generateRandomLottoNumbers()
+        return Lotto(numbers.toSet())
+    }
 
-    fun getNumberOfLottoTickets(price: String): Int = price.toInt() / MIN_PRICE
+    private fun generateRandomLottoNumbers(): List<LottoNumber> {
+        return LOTTO_NUMBER_RANGE.shuffled().take(LOTTO_SIZE).map { LottoNumber(it) }
+    }
 }
