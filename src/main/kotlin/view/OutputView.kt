@@ -49,13 +49,14 @@ class OutputView {
 
     private fun printMatchStatus(result: Map.Entry<WinningRank, Int>) =
         println(
-            "${MATCH_NUMBERS.format(result.key.matchNumbers)}${
-                if (result.key.bonusNumberMatch) BONUS_BALL_MATCH else EMPTY_LINE
-            } ${
+            MATCH_RESULT.format(
+                result.key.matchNumbers,
+                if (result.key.bonusNumberMatch) BONUS_BALL_MATCH else EMPTY_LINE,
                 MONEY_FORMAT.format(
                     result.key.winningPrize.amount.toInt(),
-                )
-            }$DASH ${result.value}$COUNT",
+                ),
+                result.value,
+            ),
         )
 
     fun showProfitRate(
@@ -71,10 +72,9 @@ class OutputView {
         private const val GUIDE_PURCHASED = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val COMMA_WITH_SPACE = ", "
         private const val PRINT_LOTTERY_NUMBER_FORMAT = "[%s]"
-        private const val MATCH_NUMBERS = "%d개 일치"
+        private const val MATCH_RESULT = "%d개 일치%s%s- %d개"
         private const val BONUS_BALL_MATCH = ", 보너스 볼 일치"
         private const val EMPTY_LINE = ""
-        private const val DASH = "-"
         private const val COUNT = "개"
         private const val PROFIT_RESULT_ANNOUNCEMENT = "총 수익률은 %.1f입니다.(기준이 1이기 때문에 결과적으로 %s이라는 의미임)"
 
