@@ -24,13 +24,11 @@ class LottoTest {
     }
 
     @Test
-    fun `당첨번호와 로또번호가 같을때 일등을 반환하는지`() {
+    fun `당첨번호와 로또번호가 같을때 당첨번호 사이즈를 반환하는지`() {
         val lotto = Lotto(1, 2, 3, 4, 5, 6)
-        val bonusNumber = LottoNumber.from(7)
         val targetLotto = Lotto(1, 2, 3, 4, 5, 6)
-        val expected = targetLotto.findRank(lotto, bonusNumber)
-        val actual = Rank.FIRST
+        val expected = targetLotto.countMatch(lotto)
 
-        assertThat(expected).isEqualTo(actual)
+        assertThat(expected).isEqualTo(6)
     }
 }
