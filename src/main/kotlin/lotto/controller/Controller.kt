@@ -5,6 +5,7 @@ import lotto.model.LottoGenerator
 import lotto.model.LottoNumber
 import lotto.model.Lottos
 import lotto.model.WinningNumber
+import lotto.util.Constant.LOTTO_PRICE
 import lotto.view.calculationOfYield
 import lotto.view.insertBonusNumbers
 import lotto.view.insertCostMessage
@@ -16,8 +17,6 @@ import lotto.view.printCombinedLottos
 import lotto.view.purchaseCountMessage
 import lotto.view.winningStatistics
 
-private const val LOTTO_PRICE = 1000.0
-
 class Controller {
     private val lottoGenerator = LottoGenerator()
 
@@ -25,7 +24,7 @@ class Controller {
         insertCostMessage()
         val charge = readCharge()
         insertManuallyLottoCount()
-        val manualCount = readHowManyManually()
+        val manualCount = readHowManyManually(charge)
         val autocount = (charge / LOTTO_PRICE).toInt() - manualCount
         insertManuallyLotto()
         val manualLottos = makeManualLottos(List(manualCount) { readManualLottoNumber() })

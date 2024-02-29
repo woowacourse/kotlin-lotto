@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.util.Constant.LOTTO_LEN
+import lotto.util.Constant.LOTTO_PRICE
 import lotto.util.Constant.SEPARATOR
 
 const val WRONG_INPUT = "잘못 된 입력 값입니다."
@@ -63,9 +64,17 @@ object Verifier {
         }
     }
 
-    fun inputHowManyManually(userInput: String?): Int? {
+    fun inputHowManyManually(
+        userInput: String?,
+        charge: Int,
+    ): Int? {
         return try {
-            userInput?.toIntOrNull() ?: throw (IllegalArgumentException(WRONG_INPUT))
+            val inputManuallyCount = userInput?.toIntOrNull() ?: throw (IllegalArgumentException(WRONG_INPUT))
+
+            if (inputManuallyCount * LOTTO_PRICE > charge) {
+                throw IllegalArgumentException("수동으로 구매할 로또 수는 구입금액을 넘을 수 없습니다.")
+            }
+            inputManuallyCount
         } catch (e: IllegalArgumentException) {
             println(e.message)
             null

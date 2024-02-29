@@ -46,7 +46,7 @@ fun printCombinedLottos(combinedLottos: Lottos) {
     combinedLottos.getLottos().forEach { lotto ->
         val numbersIntList = lotto.numbers.map { it.lottoNumber }
         println(
-            numbersIntList.joinToString(
+            numbersIntList.sorted().joinToString(
                 separator = SEPARATOR,
                 prefix = OPEN_BIG_BRACKET,
                 postfix = CLOSE_BIG_BRACKET,

@@ -23,6 +23,6 @@ fun readManualLottoNumber(): Lotto {
     return inputLottoNumber(readlnOrNull()) ?: readManualLottoNumber()
 }
 
-fun readHowManyManually(): Int {
-    return inputHowManyManually(readlnOrNull()) ?: readHowManyManually()
+fun readHowManyManually(charge: Int): Int {
+    return inputHowManyManually(readlnOrNull(), charge) ?: readHowManyManually(charge)
 }
