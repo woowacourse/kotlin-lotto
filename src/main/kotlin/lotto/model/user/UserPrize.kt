@@ -1,4 +1,6 @@
-package lotto.model
+package lotto.model.user
+
+import lotto.model.LottoPrize
 
 class UserPrize(
     private val matchResult: Map<LottoPrize, Int>

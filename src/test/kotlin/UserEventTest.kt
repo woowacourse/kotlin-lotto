@@ -1,5 +1,5 @@
 import lotto.model.ExceptionManager
-import lotto.model.UserEvent
+import lotto.model.user.UserEvent
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

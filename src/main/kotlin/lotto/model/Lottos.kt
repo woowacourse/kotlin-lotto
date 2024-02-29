@@ -1,5 +1,7 @@
 package lotto.model
 
+import lotto.model.user.UserPrize
+
 
 class Lottos {
     private var lottos: List<Lotto> = listOf()

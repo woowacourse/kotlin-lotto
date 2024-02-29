@@ -1,5 +1,7 @@
 package lotto.model
 
+import lotto.model.user.UserEvent
+
 object ExceptionManager {
     fun getException(event: UserEvent): GameException {
         return when (event) {

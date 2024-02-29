@@ -1,4 +1,7 @@
-package lotto.model
+package lotto.model.user
+
+import lotto.model.BonusNumber
+import lotto.model.Lotto
 
 sealed interface UserEvent {
 
