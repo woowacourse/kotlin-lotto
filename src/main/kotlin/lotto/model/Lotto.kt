@@ -12,11 +12,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
     fun findRanking(winningNumber: WinningNumber): LottoPrize {
         val matchCount = winningNumber.matchCount(this)
         val matchBonus = winningNumber.matchBonusNumber(this)
-        var rank = LottoPrize.entries.find { it.getMatchNumbers() == matchCount } ?: LottoPrize.BOOM
-        if (rank == LottoPrize.THIRD && matchBonus) {
-            rank = LottoPrize.SECOND
-        }
-        return rank
+        return LottoPrize.findRanking(matchCount, matchBonus)
     }
 
     fun contains(number: LottoNumber): Boolean {
