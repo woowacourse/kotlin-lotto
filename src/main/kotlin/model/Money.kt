@@ -54,6 +54,11 @@ class Money private constructor(val amount: BigDecimal) : Comparable<Money> {
             return Money(bigAmount)
         }
 
+        fun from(number: Long): Money {
+            require(number >= 0) { "지불 금액은 0 이상이어야 합니다." }
+            return wons(number)
+        }
+
         private const val ERROR_INVALID_PURCHASE_AMOUNT = "제대로 된 금액을 지불해야 합니다."
     }
 }

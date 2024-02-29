@@ -4,25 +4,39 @@ import model.profit.ProfitRate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
 
 class MoneyTest {
     @Test
-    fun `문자열로부터 돈을 생성한다(Int 보다 작은 단위)`() {
+    fun `문자열로부터 돈을 생성한다(Int 보다 작은 단위)_리팩토링 이전`() {
         val money = Money.from("1000000")
         assertThat(money).isEqualTo(Money.wons(1000000))
     }
 
     @Test
-    fun `문자열로부터 돈을 생성한다(Long 과 Int 사이 단위)`() {
+    fun `문자열로부터 돈을 생성한다(Long 과 Int 사이 단위)_리팩토링 이전`() {
         val money = Money.from("100000000000")
         assertThat(money).isEqualTo(Money.wons(100000000000))
     }
 
     @Test
-    fun `문자열로부터 돈을 생성한다(Long 보다 큰 단위)`() {
+    fun `문자열로부터 돈을 생성한다(Long 보다 큰 단위)_리팩토링 이전`() {
         val money = Money.from("1000000000000000000")
         assertThat(money.amount).isEqualTo(BigDecimal("1000000000000000000"))
+    }
+
+    @Test
+    fun `문자열로부터 돈을 생성한다(Long 보다 큰 단위)`() {
+        val money = Money.from(9223372036854775800)
+        assertThat(money).isEqualTo(Money.wons(9223372036854775800))
+    }
+
+    @Test
+    fun `문자열로부터 돈을 생성하면 예외를 던진다(Long 보다 큰 단위)`() {
+        assertThrows<IllegalArgumentException> {
+            Money.from(9223372036854775807 + 1) // 9223372036854775807 는 long 의 최대 값
+        }
     }
 
     @Test
