@@ -3,9 +3,11 @@ package view
 import model.Quantity
 
 class InputView {
-    fun readPurchaseAmount(): String {
+    fun readPurchaseAmount(): Long {
         println(GUIDE_INPUT_PURCHASE_AMOUNT)
-        return readln()
+        val number = readln().toLongOrNull()
+        requireNotNull(number)
+        return number
     }
 
     fun readManualLotteryQuantity(): String {
