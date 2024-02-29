@@ -12,13 +12,14 @@ class Kiosk(
 
     fun addDeposit(money: Money) {
         deposit += money.value
+        recordPurchase(money)
     }
 
     fun useDepositForLottoTickets() {
         deposit -= getNumberOfLottoTickets() * MIN_PRICE
     }
 
-    fun recordPurchase(money: Money) {
+    private fun recordPurchase(money: Money) {
         record.value.add(money)
     }
 

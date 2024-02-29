@@ -59,7 +59,6 @@ class LottoGameController(
         val strMoney = InputView.readMoney()
         val money = Money.from(strMoney)
         kiosk.addDeposit(money)
-        kiosk.recordPurchase(money)
         return createLottoBundle()
     }
 
