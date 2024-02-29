@@ -15,6 +15,7 @@ value class LottoNumber private constructor(private val num: Int) : Comparable<L
         private const val MAX = 45
         val RANGE = MIN..MAX
         private val cache = mutableMapOf<Int, LottoNumber>()
+
         fun of(num: Int) = cache.getOrPut(num) { LottoNumber(num) }
     }
 }

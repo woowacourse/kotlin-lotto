@@ -9,27 +9,25 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val purchasePrice = inputView.getPurchasePrice()
+        val purchasePrice = Money(inputView.getPurchasePrice())
         val lottoCount = getLottoCount(purchasePrice)
         val lottoTickets = makeRandomLottoTicket(lottoCount)
         val lottoWinning = makeLottoWinning()
         val lottoResult = lottoWinning.makeLottoResult(lottoTickets)
-        val profitRate = lottoResult.winningMoney.toFloat() / purchasePrice
+        val profitRate = lottoResult.winningMoney / purchasePrice
         printWinningResult(lottoResult, profitRate)
     }
 
-    private fun getLottoCount(
-        purchasePrice: Int,
-    ): Int {
-        val lottoPurchase = LottoPurchase(1000)
+    private fun getLottoCount(purchasePrice: Money): Int {
+        val lottoPurchase = LottoPurchase(Money(1000))
         val lottoCount = lottoPurchase.calculateLottoCount(purchasePrice)
         outputView.printLottoCount(lottoCount)
         return lottoCount
     }
 
     private fun makeRandomLottoTicket(count: Int): List<LottoTicket> {
-        val lottoFactory = LottoFactory(RandomLottoTicketGenerator)
-        val lottoTickets = lottoFactory.makeLottoTickets(count)
+        val lottoTicketFactory = LottoTicketFactory(RandomLottoTicketGenerator)
+        val lottoTickets = lottoTicketFactory.makeLottoTickets(count)
         outputView.printLottoTickets(lottoTickets)
         return lottoTickets
     }

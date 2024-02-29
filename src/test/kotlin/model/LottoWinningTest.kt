@@ -1,21 +1,20 @@
 package model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class LottoWinningTest {
-
     @Test
     fun `등수 통계 테스트`() {
-        val lottoTicketList = listOf(
-            LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
-            LottoTicket.from(listOf(1, 2, 3, 4, 5, 7)),
-            LottoTicket.from(listOf(1, 2, 3, 4, 5, 8)),
-            LottoTicket.from(listOf(1, 2, 3, 4, 9, 8)),
-            LottoTicket.from(listOf(1, 2, 3, 10, 9, 8)),
-            LottoTicket.from(listOf(43, 12, 36, 41, 25, 7)),
-        )
+        val lottoTicketList =
+            listOf(
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 6)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 7)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 5, 8)),
+                LottoTicket.from(listOf(1, 2, 3, 4, 9, 8)),
+                LottoTicket.from(listOf(1, 2, 3, 10, 9, 8)),
+                LottoTicket.from(listOf(43, 12, 36, 41, 25, 7)),
+            )
 
         val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber.of(7)

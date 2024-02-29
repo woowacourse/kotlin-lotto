@@ -1,8 +1,5 @@
 package model
 
-class LottoPurchase(private val priceOfLotto: Int) {
-
-    fun calculateLottoCount(purchasePrice: Int): Int {
-        return purchasePrice / priceOfLotto
-    }
+class LottoPurchase(private val priceOfLotto: Money) {
+    fun calculateLottoCount(purchasePrice: Money): Int = (purchasePrice / priceOfLotto).toInt()
 }

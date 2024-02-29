@@ -28,7 +28,7 @@ class ConsoleOutputView : OutputView {
 
     companion object {
         const val PURCHASE_MESSAGE = "%d개를 구매했습니다."
-        const val MATCH_MESSAGE = "%d개 일치%s (%d원) - %d개"
+        const val MATCH_MESSAGE = "%d개 일치%s (%s원) - %d개"
         const val BONUS_MESSAGE = ", 보너스 볼 일치"
         const val TOTAL_WINNING_RATE_MESSAGE = "총 수익률은 %.2f입니다."
     }

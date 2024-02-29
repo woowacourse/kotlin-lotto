@@ -1,9 +1,13 @@
 package view
 
+import model.LottoNumber
+import model.LottoTicket
+import model.Money
+
 interface InputView {
-    fun getPurchasePrice(): Int
+    fun getPurchasePrice(): Money
 
-    fun getWinningTicket(): List<Int>
+    fun getWinningTicket(): LottoTicket
 
-    fun getBonusNumber(): Int
+    fun getBonusNumber(): LottoNumber
 }

@@ -1,19 +1,30 @@
 package view
 
+import model.LottoNumber
+import model.LottoTicket
+import model.Money
+
 class ConsoleInputView : InputView {
-    override fun getPurchasePrice(): Int {
+    override fun getPurchasePrice(): Money {
         println(GET_PURCHASE_PRICE_MESSAGE)
-        return readln().toInt()
+        return Money(readln().toLong())
     }
 
-    override fun getWinningTicket(): List<Int> {
+    override fun getWinningTicket(): LottoTicket {
         println(GET_WINNING_TICKET_MESSAGE)
-        return readln().split(",").map { it.trim().toInt() }
+        return getLottoTicket()
     }
 
-    override fun getBonusNumber(): Int {
+    private fun getLottoTicket(): LottoTicket {
+        val numbers = readln()
+            .split(",")
+            .map { LottoNumber.of(it.trim().toInt()) }
+        return LottoTicket(numbers)
+    }
+
+    override fun getBonusNumber(): LottoNumber {
         println(GET_BONUS_NUMBER_MESSAGE)
-        return readln().toInt()
+        return LottoNumber.of(readln().toInt())
     }
 
     companion object {

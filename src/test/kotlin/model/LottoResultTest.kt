@@ -24,7 +24,7 @@ class LottoResultTest {
         val userLottoIterator =
             List(lottoCount) { winningTicket }.iterator()
 
-        val userTickets = LottoFactory { userLottoIterator.next() }.makeLottoTickets(lottoCount)
+        val userTickets = LottoTicketFactory { userLottoIterator.next() }.makeLottoTickets(lottoCount)
         val lottoWinning = LottoWinning(winningTicket, bonusNumber)
         val lottoResult = lottoWinning.makeLottoResult(userTickets)
 
@@ -38,7 +38,7 @@ class LottoResultTest {
     @MethodSource
     fun `당첨금을 합산한다`(
         lottoResult: LottoResult,
-        expected: Long,
+        expected: Money,
     ) {
         val actual = lottoResult.winningMoney
         val expected = expected
@@ -60,7 +60,7 @@ class LottoResultTest {
                             Rank.MISS to 1,
                         ),
                     ),
-                    2_031_555_000,
+                    Money(2_031_555_000),
                 ),
                 Arguments.of(
                     LottoResult(
@@ -73,7 +73,7 @@ class LottoResultTest {
                             Rank.MISS to 0,
                         ),
                     ),
-                    200_000_000_000,
+                    Money(200_000_000_000),
                 ),
             )
     }
