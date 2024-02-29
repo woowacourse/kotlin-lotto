@@ -1,6 +1,7 @@
 package lotto.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -14,7 +15,7 @@ class TicketTest {
         amount: Int,
     ) {
         val ticket = Ticket(purchasePrice, TICKET_PRICE)
-        Assertions.assertThat(ticket.amount).isEqualTo(amount)
+        assertThat(ticket.amount).isEqualTo(amount)
     }
 
     @ParameterizedTest
@@ -23,6 +24,13 @@ class TicketTest {
         assertThrows<IllegalArgumentException> {
             Ticket(purchasePrice, TICKET_PRICE)
         }
+    }
+
+    @Test
+    fun `수동으로 입력한 로또 번호를 포함하여 티켓을 발행한다`() {
+        val ticket = Ticket(2000, 1000)
+        val lottos = ticket.issueLottos(listOf(Lotto(setOf(1, 2, 3, 4, 5, 6))))
+        assertThat(lottos.size).isEqualTo(3)
     }
 
     companion object {

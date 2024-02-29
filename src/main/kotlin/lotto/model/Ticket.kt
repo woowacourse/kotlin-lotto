@@ -19,8 +19,13 @@ class Ticket(
         }
     }
 
-    fun issueLottos(lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator()): List<Lotto> {
-        return List(amount) { Lotto(lottoNumberGenerator.generate()) }
+    fun issueLottos(
+        manualLotto: List<Lotto> = emptyList(),
+        lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator(),
+    ): List<Lotto> {
+        val lottos = MutableList(amount) { Lotto(lottoNumberGenerator.generate()) }
+        lottos.addAll(manualLotto)
+        return lottos.toList()
     }
 
     companion object {
