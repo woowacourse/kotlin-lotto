@@ -10,14 +10,14 @@ class WinningLottoTest {
     @Test
     fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
         org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
-            WinningLotto(Lotto(setOf(1, 2, 3, 4, 5, 6)), LottoNumber(6))
+            WinningLotto(Lotto(winningLottoNumbers), LottoNumber(6))
         }
     }
 
     @Test
     fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() {
         org.junit.jupiter.api.assertDoesNotThrow {
-            WinningLotto(Lotto(setOf(1, 2, 3, 4, 5, 6)), LottoNumber(7))
+            WinningLotto(Lotto(winningLottoNumbers), LottoNumber(BONUS_NUMBER))
         }
     }
 
@@ -30,7 +30,7 @@ class WinningLottoTest {
     ) { // given
 
         val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
-        val lottos = listOf(Lotto(setOf(1, 2, 3, 4, 5, 6)))
+        val lottos = listOf(Lotto(winningLottoNumbers))
 
         // when
         val actual = winningLotto.calculatePrizeCount(lottos)
@@ -48,7 +48,7 @@ class WinningLottoTest {
         profitRatio: Double,
     ) {
         // given
-        val winningLotto = WinningLotto(Lotto(setOf(1, 2, 3, 4, 5, 6)), LottoNumber(7))
+        val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(BONUS_NUMBER))
         val lottos = listOf(Lotto(lottoNumbers))
 
         // when
@@ -59,6 +59,9 @@ class WinningLottoTest {
     }
 
     companion object {
+        private val winningLottoNumbers = setOf(1, 2, 3, 4, 5, 6)
+        private const val BONUS_NUMBER = 7
+
         @JvmStatic
         fun `로또 당첨 결과 테스트 데이터`() =
             listOf(

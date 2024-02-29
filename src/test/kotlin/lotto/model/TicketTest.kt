@@ -13,7 +13,7 @@ class TicketTest {
         purchasePrice: Int,
         amount: Int,
     ) {
-        val ticket = Ticket(purchasePrice, 1000)
+        val ticket = Ticket(purchasePrice, TICKET_PRICE)
         Assertions.assertThat(ticket.amount).isEqualTo(amount)
     }
 
