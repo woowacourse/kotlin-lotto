@@ -9,7 +9,7 @@ interface LottoGameOutputView {
         countOfManual: Int,
     )
 
-    fun showPurchasedLotteries(lottie: List<Lotto>)
+    fun showPurchasedLotteries(lotteries: List<Lotto>)
 
     fun showGameResult(
         results: List<LottoGameResult.RankResult>,

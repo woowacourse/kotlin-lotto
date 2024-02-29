@@ -11,12 +11,12 @@ class LottoGameResultTest {
     fun setUp() {
         val bonusNumber = LottoNumber(1)
         val winningLotto = Lotto(2, 3, 4, 5, 6, 7)
-        val derivedLottie = listOf(Lotto(2, 3, 4, 5, 6, 7), Lotto(6, 7, 8, 9, 10, 11))
+        val derivedLotteries = listOf(Lotto(2, 3, 4, 5, 6, 7), Lotto(6, 7, 8, 9, 10, 11))
         lottoGameResult =
             LottoGameResult(
                 bonusNumber = bonusNumber,
                 winningLotto = winningLotto,
-                purchasedLottie = derivedLottie,
+                purchasedLotteries = derivedLotteries,
             )
     }
 

@@ -24,9 +24,9 @@ class LottoGameResult private constructor(
         operator fun invoke(
             bonusNumber: LottoNumber,
             winningLotto: Lotto,
-            purchasedLottie: List<Lotto>,
+            purchasedLotteries: List<Lotto>,
         ): LottoGameResult {
-            val ranks = generateRanks(purchasedLottie, winningLotto, bonusNumber)
+            val ranks = generateRanks(purchasedLotteries, winningLotto, bonusNumber)
             val rankResults: List<RankResult> =
                 getRankMap().let { map ->
                     ranks.forEach { map.merge(it, COUNT_STEP, Int::plus) }
@@ -40,11 +40,11 @@ class LottoGameResult private constructor(
         private fun Map<Rank, Int>.toRankResults() = toList().map { (rank, count) -> RankResult(rank, count) }
 
         private fun generateRanks(
-            purchasedLottie: List<Lotto>,
+            purchasedLotteries: List<Lotto>,
             winningLotto: Lotto,
             bonusNumber: LottoNumber,
         ): List<Rank> =
-            purchasedLottie.map { lotto ->
+            purchasedLotteries.map { lotto ->
                 val matchCount = lotto.getMatchCount(winningLotto)
                 val hasBonusNumber = bonusNumber in lotto
                 Rank.valueOf(matchCount, hasBonusNumber)
