@@ -20,8 +20,12 @@ class UserPrize(
         }
     }
 
-    fun prizeRateCalculate(prize: Long, charge: Double): Double {
-        return if (charge != 0.0) prize / charge else 0.0
+    fun prizeRateCalculate(prize: Long, charge: Double): Double? {
+        return runCatching {
+            prize / charge
+        }.getOrElse {
+            null
+        }
     }
 
     fun getUserPrize(): Map<LottoPrize, Int> {

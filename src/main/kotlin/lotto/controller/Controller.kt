@@ -57,6 +57,8 @@ class Controller {
             prize = prize.prizeCalculate(),
             charge = charge.toDouble()
         )
-        outputCalculationOfYield(prizeCalculate)
+        prizeCalculate?.let {
+            outputCalculationOfYield(it)
+        }
     }
 }
