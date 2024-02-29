@@ -1,4 +1,4 @@
-package domain.model
+package model
 
 import lotto.model.Margin
 import lotto.model.Money

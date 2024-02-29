@@ -1,4 +1,4 @@
-package domain
+package model
 
 import lotto.model.Rank
 import org.assertj.core.api.Assertions.assertThat

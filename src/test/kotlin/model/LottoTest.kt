@@ -1,4 +1,4 @@
-package domain
+package model
 
 import lotto.model.Lotto
 import lotto.model.LottoNumber
