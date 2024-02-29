@@ -1,19 +1,15 @@
 package view
 
-import model.Count
-import model.Lotto
-import model.Money
-
 interface LottoGameInputView {
-    fun inputPurchaseExpense(): Money
+    fun inputPurchaseExpense(): Int
 
-    fun inputManualPurchaseCount(): Count
+    fun inputManualPurchaseCount(): Int
 
-    fun inputManualLotteries(count: Int): List<Lotto>
+    fun inputManualLotteryNumber(): List<Int>
 
-    fun inputLotteryNumbers(message: String): Lotto
+    fun inputLotteryNumbers(message: String): List<Int>
 
-    fun inputWinningNumbers(): Lotto
+    fun inputWinningNumbers(): List<Int>
 
     fun inputBonusNumber(): Int
 }

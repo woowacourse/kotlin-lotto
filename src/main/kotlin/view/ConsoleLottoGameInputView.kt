@@ -1,48 +1,33 @@
 package view
 
-import model.Count
-import model.Lotto
-import model.LottoNumber
-import model.Money
-
 class ConsoleLottoGameInputView : LottoGameInputView {
-    override fun inputPurchaseExpense(): Money {
+    override fun inputPurchaseExpense(): Int {
         println(MESSAGE_INPUT_PURCHASE_EXPENSE)
-        return Money(
-            readln().toIntOrNull()
-                ?: throw IllegalArgumentException(EXCEPTION_NULL.format(EXCEPTION_PURCHASE_EXPENSE)),
-        )
+        return readln().toIntOrNull()
+            ?: throw IllegalArgumentException(EXCEPTION_NULL.format(EXCEPTION_PURCHASE_EXPENSE))
     }
 
-    override fun inputManualPurchaseCount(): Count {
+    override fun inputManualPurchaseCount(): Int {
         println(MESSAGE_INPUT_MANUAL_COUNT)
-        return Count(
-            readln().toIntOrNull()
-                ?: throw IllegalArgumentException(EXCEPTION_NULL.format(EXCEPTION_MANUAL_LOTTO_COUNT)),
-        )
+        return readln().toIntOrNull()
+            ?: throw IllegalArgumentException(EXCEPTION_NULL.format(EXCEPTION_MANUAL_LOTTO_COUNT))
     }
 
-    override fun inputManualLotteries(count: Int): List<Lotto> {
+    override fun inputManualLotteryNumber(): List<Int> {
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBERS)
-        return mutableListOf<Lotto>().apply {
-            repeat(count) { add(inputLotteryNumbers(EXCEPTION_MANUAL_LOTTO_NUMBERS)) }
-        }.toList()
+        return inputLotteryNumbers(EXCEPTION_MANUAL_LOTTO_NUMBERS)
     }
 
-    override fun inputWinningNumbers(): Lotto {
+    override fun inputWinningNumbers(): List<Int> {
         println(MESSAGE_INPUT_WINNING_NUMBERS)
         return inputLotteryNumbers(EXCEPTION_WINNING_NUMBER)
     }
 
-    override fun inputLotteryNumbers(message: String): Lotto {
-        val numbers =
-            readln().split(DELIMITER).map {
-                LottoNumber(
-                    it.trim().toIntOrNull()
-                        ?: throw IllegalArgumentException(EXCEPTION_NULL.format(message)),
-                )
-            }
-        return Lotto(numbers)
+    override fun inputLotteryNumbers(message: String): List<Int> {
+        return readln().split(DELIMITER).map {
+            it.trim().toIntOrNull()
+                ?: throw IllegalArgumentException(EXCEPTION_NULL.format(message))
+        }
     }
 
     override fun inputBonusNumber(): Int {
