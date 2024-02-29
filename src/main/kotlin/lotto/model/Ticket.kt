@@ -9,10 +9,6 @@ class Ticket(
 ) {
     val amount = purchasePrice / lottoPrice
 
-    fun issueLottos(lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator()): List<Lotto> {
-        return List(amount) { Lotto(lottoNumberGenerator.generate()) }
-    }
-
     init {
         require(purchasePrice > MINIMUM_PRICE && lottoPrice > MINIMUM_PRICE) {
             INVALID_PRICE
@@ -21,6 +17,10 @@ class Ticket(
         require(purchasePrice % lottoPrice == 0) {
             INVALID_PURCHASE.format(lottoPrice)
         }
+    }
+
+    fun issueLottos(lottoNumberGenerator: LottoNumberGenerator = RandomLottoNumberGenerator()): List<Lotto> {
+        return List(amount) { Lotto(lottoNumberGenerator.generate()) }
     }
 
     companion object {
