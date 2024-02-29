@@ -11,9 +11,11 @@ class WinningLotto(val lotto: Lotto, val bonusNumber: LottoNumber) {
 
     fun calculatePrizeCount(lottos: List<Lotto>) =
         lottos
-            .map { it.compare(lotto, bonusNumber) }
+            .map { getPrizeType(it) }
             .groupBy { it }
             .mapValues { it.value.size }
+
+    private fun getPrizeType(it: Lotto) = it.compare(lotto, bonusNumber)
 
     fun calculateProfitRatio(
         lottos: List<Lotto>,
