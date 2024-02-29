@@ -7,7 +7,6 @@ import lotto.model.Lottos
 import lotto.model.WinningLotto
 import lotto.model.WinningStatistic
 import lotto.model.WinningStatistics
-import lotto.util.Constant
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -16,18 +15,20 @@ object LottoController {
 
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
-        val numberOfLotto = calculateNumberOfLotto(purchaseAmount)
-        val handpickedLottos = publishHandpickedLottos(numberOfLotto)
-        val lottos = Lottos()
-        lottos.publishLottos(numberOfLotto, handpickedLottos)
-        displayPurchaseResult(lottos, handpickedLottos.size)
+        val lottos = buyLottos(purchaseAmount)
         val winningLotto = generateWinningLotto()
         val winningStatistics = analyzeWinningStatics(lottos, winningLotto)
         displayWinningStatistics(winningStatistics, lottos.getLottos().size)
     }
 
-    private fun calculateNumberOfLotto(purchaseAmount: Int): Int {
-        return purchaseAmount / Constant.PURCHASE_AMOUNT_UNIT
+    private fun buyLottos(purchaseAmount: Int): Lottos {
+        val lottos = Lottos()
+        val numberOfLotto = lottos.calculateNumberOfLotto(purchaseAmount)
+        val handpickedLottos = publishHandpickedLottos(numberOfLotto)
+        lottos.publishLottos(numberOfLotto, handpickedLottos)
+        displayPurchaseResult(lottos, handpickedLottos.size)
+
+        return lottos
     }
 
     private fun publishHandpickedLottos(numberOfLotto: Int): List<Lotto> {
