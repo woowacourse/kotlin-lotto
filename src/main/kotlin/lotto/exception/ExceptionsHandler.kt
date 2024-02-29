@@ -24,6 +24,7 @@ object ExceptionsHandler {
             1005 -> Exceptions.InvalidNumberException(reason = reason)
             1006 -> Exceptions.ManualPurchaseCountNotNaturalNumberException(reason = reason)
             1007 -> Exceptions.ManualPurchaseCountTooLargeException(reason = reason)
+            1008 -> Exceptions.InsufficientDepositException(reason = reason)
             else -> null
         }
 }

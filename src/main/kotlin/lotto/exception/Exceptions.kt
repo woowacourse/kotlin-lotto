@@ -16,4 +16,6 @@ sealed class Exceptions : Throwable() {
     class ManualPurchaseCountNotNaturalNumberException(val reason: String) : Exceptions()
 
     class ManualPurchaseCountTooLargeException(val reason: String) : Exceptions()
+
+    class InsufficientDepositException(val reason: String) : Exceptions()
 }

@@ -1,5 +1,6 @@
 package lotto.model
 
+import lotto.exception.ErrorCode.INSUFFICIENT_DEPOSIT
 import lotto.exception.ErrorCode.INVALID_PURCHASE_AMOUNT
 import lotto.exception.ExceptionsHandler.handleValidation
 
@@ -10,6 +11,7 @@ data class Deposit(val money: Money = DEFAULT_MONEY) {
     }
 
     operator fun minus(other: Int): Deposit {
+        handleValidation(INSUFFICIENT_DEPOSIT) { money.value >= other }
         return copy(money = Money(money.value - other))
     }
 

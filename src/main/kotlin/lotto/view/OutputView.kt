@@ -36,6 +36,7 @@ object OutputView {
             is Exceptions.InvalidNumberException -> println(e.reason)
             is Exceptions.ManualPurchaseCountNotNaturalNumberException -> println(e.reason)
             is Exceptions.ManualPurchaseCountTooLargeException -> println(e.reason)
+            is Exceptions.InsufficientDepositException -> println(e.reason)
             else -> println(e.message)
         }
     }

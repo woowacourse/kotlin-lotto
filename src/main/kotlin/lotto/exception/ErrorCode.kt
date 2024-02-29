@@ -9,4 +9,5 @@ enum class ErrorCode(val status: Int, val reason: String) {
     INVALID_NUMBER_EXCEPTION(1005, "로또는 숫자여야만 합니다."),
     MANUAL_PURCHASE_COUNT_NOT_NATURAL_NUMBER(1006, "구입 개수는 숫자여야 합니다."),
     MANUAL_PURCHASE_COUNT_TOO_LARGE(1007, "구입할 수 있는 로또 개수보다 큽니다."),
+    INSUFFICIENT_DEPOSIT(1008, "구입 금액은 자연수이면서 1000 이상이여야 합니다."),
 }
