@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class LottoPurchaseTest {
+class AutoLottoMachineTest {
     @ParameterizedTest
     @CsvSource(
         "5000, 5",
@@ -15,7 +15,7 @@ class LottoPurchaseTest {
         purchasedAmount: Int,
         purchasedCount: Int,
     ) {
-        val lottoPurchase = LottoPurchase(purchasedAmount)
-        assertThat(lottoPurchase.makeUserTickets().size).isEqualTo(purchasedCount)
+        val autoLottoMachine = AutoLottoMachine(purchasedAmount)
+        assertThat(autoLottoMachine.makeUserTickets().size).isEqualTo(purchasedCount)
     }
 }

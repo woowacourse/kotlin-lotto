@@ -8,7 +8,7 @@ class LottoWinningPrize(private val rankMap: Map<Rank, Int>) {
 
     fun calculateWinningRate(ticketCount: Int): Float {
         val winningPrize = calculateWinningPrize()
-        val purchaseAmount = ticketCount * LottoPurchase.PRICE_OF_LOTTO_TICKET
+        val purchaseAmount = ticketCount * AutoLottoMachine.PRICE_OF_LOTTO_TICKET
         return winningPrize.toFloat() / purchaseAmount
     }
 }

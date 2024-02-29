@@ -3,7 +3,7 @@ package lotto.model
 import lotto.model.LottoNumber.Companion.MAX_LOTTO_NUMBER
 import lotto.model.LottoNumber.Companion.MIN_LOTTO_NUMBER
 
-class LottoPurchase(private val purchasePrice: Int) {
+class AutoLottoMachine(private val purchasePrice: Int) {
     private fun makeUserTicket(): UserLottoTicket {
         return UserLottoTicket(
             (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).shuffled().take(6).sorted()

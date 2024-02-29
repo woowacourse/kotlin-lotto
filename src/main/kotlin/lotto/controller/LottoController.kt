@@ -1,7 +1,7 @@
 package lotto.controller
 
+import lotto.model.AutoLottoMachine
 import lotto.model.LottoNumber
-import lotto.model.LottoPurchase
 import lotto.model.LottoWinningPrize
 import lotto.model.LottoWinningRank
 import lotto.model.Rank
@@ -23,8 +23,8 @@ class LottoController {
 
     private fun makeUserLottoTickets(): List<UserLottoTicket> {
         val purchasePrice = inputView.getPurchasePrice()
-        val lottoPurchase = LottoPurchase(purchasePrice)
-        return lottoPurchase.makeUserTickets()
+        val autoLottoMachine = AutoLottoMachine(purchasePrice)
+        return autoLottoMachine.makeUserTickets()
     }
 
     private fun printLottoTickets(userTickets: List<UserLottoTicket>) {
