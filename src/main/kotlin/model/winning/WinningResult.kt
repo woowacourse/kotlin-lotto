@@ -2,12 +2,18 @@ package model.winning
 
 import model.Money
 import model.Quantity
+import model.profit.ProfitRate
 
 data class WinningResult(val result: Map<WinningRank, Quantity>) {
     fun calculate(): Money =
         result.entries.sumOf {
             it.key.winningPrize * it.value
         }
+
+    fun calculateProfitRate(purchaseAmount: Money): ProfitRate {
+        val totalProfit = result.entries.sumOf { it.key.winningPrize * it.value }
+        return ProfitRate(totalProfit / purchaseAmount)
+    }
 }
 
 private inline fun <T> Iterable<T>.sumOf(selector: (T) -> Money): Money {
