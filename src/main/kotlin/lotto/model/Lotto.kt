@@ -16,7 +16,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
     }
 
     operator fun contains(number: LottoNumber): Boolean {
-        return numbers.any { it == number }
+        return numbers.contains(number)
     }
 
     override fun toString(): String {
