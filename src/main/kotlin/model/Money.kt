@@ -1,7 +1,5 @@
 package model
 
-import model.profit.ProfitRate
-
 class Money private constructor(val amount: Long) : Comparable<Money> {
     operator fun plus(other: Money): Money = Money(this.amount + other.amount)
 
@@ -14,8 +12,6 @@ class Money private constructor(val amount: Long) : Comparable<Money> {
     operator fun rem(other: Money): Money = Money(this.amount % other.amount)
 
     override fun compareTo(other: Money): Int = (amount - other.amount).toInt()
-
-    fun calculateProfitRate(totalWinningPrize: Money): ProfitRate = ProfitRate(totalWinningPrize / this)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

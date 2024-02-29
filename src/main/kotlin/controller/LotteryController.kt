@@ -8,7 +8,6 @@ import model.lottery.Lottery
 import model.lottery.LotteryMachine
 import model.lottery.LotteryNumber
 import model.lottery.LotterySeller
-import model.profit.ProfitStatus
 import model.winning.WinningResult
 import view.InputView
 import view.OutputView
@@ -67,8 +66,7 @@ class LotteryController(
         purchaseAmount: Money,
         winningResult: WinningResult,
     ) {
-        val totalPrize = winningResult.calculate()
-        val profitRate = purchaseAmount.calculateProfitRate(totalWinningPrize = totalPrize)
-        outputView.showProfitRate(profitRate, ProfitStatus.decide(purchaseAmount, totalPrize))
+        val profitRate = winningResult.calculateProfitRate(purchaseAmount)
+        outputView.showProfitRate(profitRate, profitRate.decideProfitStatus())
     }
 }

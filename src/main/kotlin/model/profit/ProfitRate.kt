@@ -5,6 +5,6 @@ data class ProfitRate(val rate: Double) {
         when {
             rate > 1.0 -> ProfitStatus.GAIN
             rate < 1.0 -> ProfitStatus.LOSS
-            else -> ProfitStatus.EVEN
+            else -> ProfitStatus.EVEN // rate == 1
         }
 }
