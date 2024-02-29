@@ -1,6 +1,5 @@
 package lotto.model
 
-import lotto.service.LottoNumberGenerator
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -29,22 +28,34 @@ class WinningLottoTest {
         bonusNumber: Int,
         expected: LottoPrize,
     ) { // given
-        val purchaseInfo = PurchaseInfo("5000")
-        val lottoStore =
-            LottoStore(
-                purchaseInfo,
-                object : LottoNumberGenerator {
-                    override fun generate() = setOf(1, 2, 3, 4, 5, 6)
-                },
-            )
+
         val winningLotto = WinningLotto(Lotto(winningLottoNumbers), LottoNumber(bonusNumber))
+        val lottos = listOf(Lotto(setOf(1, 2, 3, 4, 5, 6)))
 
         // when
-        val actual = winningLotto.calculatePrizeCount(lottoStore)
+        val actual = winningLotto.calculatePrizeCount(lottos)
 
         // then
         Assertions.assertThat(actual.keys.first()).isEqualTo(expected)
-        Assertions.assertThat(actual.values.first()).isEqualTo(purchaseInfo.amount)
+        Assertions.assertThat(actual.values.first()).isEqualTo(1)
+    }
+
+    @ParameterizedTest
+    @MethodSource("로또 수익률 계산 테스트 데이터")
+    fun `로또 수익률을 계산한다`(
+        lottoNumbers: Set<Int>,
+        purchasePrice: Int,
+        profitRatio: Double,
+    ) {
+        // given
+        val winningLotto = WinningLotto(Lotto(setOf(1, 2, 3, 4, 5, 6)), LottoNumber(7))
+        val lottos = listOf(Lotto(lottoNumbers))
+
+        // when
+        val actual = winningLotto.calculateProfitRatio(lottos, purchasePrice)
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(profitRatio)
     }
 
     companion object {
@@ -57,6 +68,14 @@ class WinningLottoTest {
                 Arguments.of(setOf(1, 2, 3, 4, 7, 8), 9, LottoPrize.FOURTH),
                 Arguments.of(setOf(1, 2, 3, 7, 8, 9), 10, LottoPrize.FIFTH),
                 Arguments.of(setOf(10, 11, 12, 13, 14, 15), 16, LottoPrize.NOTHING),
+            )
+
+        @JvmStatic
+        fun `로또 수익률 계산 테스트 데이터`() =
+            listOf(
+                Arguments.of(setOf(1, 2, 3, 7, 8, 9), 14000, 0.35),
+                Arguments.of(setOf(1, 2, 3, 7, 8, 9), 8000, 0.62),
+                Arguments.of(setOf(1, 2, 3, 4, 5, 6), 1000, 2_000_000),
             )
     }
 }

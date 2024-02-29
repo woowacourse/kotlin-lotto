@@ -1,12 +1,12 @@
 package lotto.view
 
+import lotto.model.Lotto
 import lotto.model.LottoPrize
-import lotto.model.LottoStore
 
 class OutputView {
-    fun printPurchaseLotto(lottoStore: LottoStore) {
-        println(OUTPUT_PURCHASE_COUNT.format(lottoStore.lottos.size))
-        lottoStore.lottos.forEach { lotto ->
+    fun printPurchaseLotto(lottos: List<Lotto>) {
+        println(OUTPUT_PURCHASE_COUNT.format(lottos.size))
+        lottos.forEach { lotto ->
             println(lotto)
         }
         println()
