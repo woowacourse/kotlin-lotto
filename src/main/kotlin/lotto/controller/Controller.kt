@@ -31,7 +31,7 @@ class Controller {
         val manualLottos = makeManualLottos(List(manualCount) { readManualLottoNumber() })
         purchaseCountMessage(manualCount, autocount)
         val lottos = makeLottos(autocount)
-        val combinedLottos = combineLottos(manualLottos, lottos)
+        val combinedLottos = lottos.combineLottos(manualLottos, lottos)
         printCombinedLottos(combinedLottos)
         insertWinNumbers()
         val winning = readLottoNumber()
@@ -56,12 +56,4 @@ class Controller {
     private fun makeManualLottos(lottos: List<Lotto>): Lottos {
         return Lottos(lottos)
     }
-}
-
-private fun combineLottos(
-    manualLottos: Lottos,
-    autoLottos: Lottos,
-): Lottos {
-    val combinedList = manualLottos.getLottos() + autoLottos.getLottos()
-    return Lottos(combinedList)
 }

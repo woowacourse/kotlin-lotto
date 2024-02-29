@@ -10,4 +10,12 @@ class Lottos(
     fun getLottos(): List<Lotto> {
         return lottos
     }
+
+    fun combineLottos(
+        manualLottos: Lottos,
+        autoLottos: Lottos,
+    ): Lottos {
+        val combinedList = manualLottos.getLottos() + autoLottos.getLottos()
+        return Lottos(combinedList)
+    }
 }
