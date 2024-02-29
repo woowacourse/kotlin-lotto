@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.model.Lotto
+import lotto.model.LottoGenerator
 import lotto.model.Lottos
 import lotto.model.WinningNumber
 import lotto.view.inputBonusNumber
@@ -29,13 +30,16 @@ class Controller {
         val lottos = Lottos()
         if (manualLottoCount > 0) {
             inputManualLottoNumbers()
-            lottos.makeManualLottos(
-                List(manualLottoCount) {
-                    inputLottoNumbers()
-                }
-            )
+            val manualLottos = List(manualLottoCount) {
+                inputLottoNumbers()
+            }
+            lottos.purchaseLottos(manualLottos)
         }
-        lottos.plusAutoLottos(autoLottoCount)
+
+        val autoLottos = List(autoLottoCount) {
+            LottoGenerator.generateLotto()
+        }
+        lottos.purchaseLottos(autoLottos)
 
         outputPurchaseCount(manualLottoCount, autoLottoCount)
         outputLottos(lottos.getLottos())

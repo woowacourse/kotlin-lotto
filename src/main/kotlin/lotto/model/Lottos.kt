@@ -1,13 +1,8 @@
 package lotto.model
 
-class Lottos(
-    private val lottoCount: Int
-) {
-    private var lottos: MutableList<Lotto> = mutableListOf()
 
-    init {
-        makeLottos()
-    }
+class Lottos {
+    private var lottos: List<Lotto> = listOf()
 
     fun matchLottos(
         winningNumber: WinningNumber,
@@ -25,10 +20,7 @@ class Lottos(
         return lottos
     }
 
-    private fun makeLottos() {
-        lottos = MutableList(lottoCount) {
-            val lotto = LottoGenerator.generateLotto()
-            lotto
-        }
+    fun purchaseLottos(purchasedLottos: List<Lotto>){
+        lottos = lottos.plus(purchasedLottos)
     }
 }
