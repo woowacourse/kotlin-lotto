@@ -23,6 +23,31 @@ class WinningStatisticsTest {
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 
+    @ParameterizedTest
+    @MethodSource("로또 순위 개수 테스트 데이터")
+    fun `로또 순위가 몇번 당첨되었는지 알려준다`(
+        lottoPrize: LottoPrize,
+        expected: Int,
+    ) {
+        // given
+        val winningStatistics =
+            WinningStatistics(
+                mapOf(
+                    LottoPrize.FIFTH to 1,
+                    LottoPrize.FOURTH to 2,
+                    LottoPrize.THIRD to 3,
+                    LottoPrize.SECOND to 4,
+                    LottoPrize.FIRST to 5,
+                ),
+            )
+
+        // when
+        val actual = winningStatistics.getPrizeCount(lottoPrize)
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
     companion object {
         @JvmStatic
         fun `로또 수익률 계산 테스트 데이터`() =
@@ -30,6 +55,16 @@ class WinningStatisticsTest {
                 Arguments.of("14000", mapOf(LottoPrize.FIFTH to 1), 0.35),
                 Arguments.of("8000", mapOf(LottoPrize.FIFTH to 1), 0.62),
                 Arguments.of("1000", mapOf(LottoPrize.FIRST to 1), 2000000.00),
+            )
+
+        @JvmStatic
+        fun `로또 순위 개수 테스트 데이터`() =
+            listOf(
+                Arguments.of(LottoPrize.FIFTH, 1),
+                Arguments.of(LottoPrize.FOURTH, 2),
+                Arguments.of(LottoPrize.THIRD, 3),
+                Arguments.of(LottoPrize.SECOND, 4),
+                Arguments.of(LottoPrize.FIRST, 5),
             )
     }
 }

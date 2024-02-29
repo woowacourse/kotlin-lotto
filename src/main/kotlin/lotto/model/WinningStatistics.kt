@@ -12,7 +12,7 @@ class WinningStatistics(private val statistics: Map<LottoPrize, Int>) {
             .sum()
     }
 
-    operator fun get(lottoPrize: LottoPrize): Int {
+    fun getPrizeCount(lottoPrize: LottoPrize): Int {
         return statistics.getOrDefault(lottoPrize, DEFAULT_LOTTO_PRIZE_COUNT)
     }
 

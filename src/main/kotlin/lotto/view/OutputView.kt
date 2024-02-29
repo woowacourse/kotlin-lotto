@@ -31,7 +31,7 @@ object OutputView {
 
         LottoPrize.entries.forEach { lottoPrize ->
             if (lottoPrize == LottoPrize.NOTHING) return@forEach
-            val winningCount = winningStatistics[lottoPrize]
+            val winningCount = winningStatistics.getPrizeCount(lottoPrize)
             println(getWinningCountMessage(lottoPrize, winningCount))
         }
     }

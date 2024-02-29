@@ -36,7 +36,7 @@ class WinningLottoTest {
         val actual = winningLotto.calculateWinningStatistics(lottos)
 
         // then
-        Assertions.assertThat(actual[expected]).isEqualTo(5)
+        Assertions.assertThat(actual.getPrizeCount(expected)).isEqualTo(5)
     }
 
     companion object {
