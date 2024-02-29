@@ -7,7 +7,7 @@ class LottoPurchase(private val purchasePrice: Int) {
     private fun makeUserTicket(): UserLottoTicket {
         return UserLottoTicket(
             (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).shuffled().take(6).sorted()
-                .map { LottoNumber(it) },
+                .map { LottoNumber.makeLottoNumber(it) },
         )
     }
 
