@@ -10,7 +10,7 @@ class LottoNumber(
             throw ExceptionManager.getException(UserEvent.LottoEvent.InvalidNumRange)
     }
 
-    fun getNumber(): Int{
+    fun getNumber(): Int {
         return number
     }
 }

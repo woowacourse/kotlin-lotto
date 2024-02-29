@@ -20,7 +20,7 @@ class Lottos {
         return lottos
     }
 
-    fun purchaseLottos(purchasedLottos: List<Lotto>){
+    fun purchaseLottos(purchasedLottos: List<Lotto>) {
         lottos = lottos.plus(purchasedLottos)
     }
 }

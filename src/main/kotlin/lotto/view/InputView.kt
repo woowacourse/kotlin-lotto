@@ -1,9 +1,9 @@
 package lotto.view
 
-import lotto.model.user.UserInputVerifier
 import lotto.model.BonusNumber
 import lotto.model.Lotto
 import lotto.model.user.UserEvent
+import lotto.model.user.UserInputVerifier
 
 private const val REQUEST_PURCHASE_PRICE = "구입금액을 입력해 주세요."
 private const val REQUEST_WINNING_NUM = "지난 주 당첨 번호를 입력해 주세요."

@@ -7,11 +7,10 @@ import lotto.model.WinningNumber
 import lotto.model.user.UserPrize
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.util.TreeSet
 
 class LottoGameTest {
     private val firstPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }))
-    private val secondPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) } ))
+    private val secondPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) }))
     private val thirdPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }))
     private val boomPrizeLotto = Lotto(LottoNumbers(setOf(7, 9, 10, 11, 12, 13).map { LottoNumber(it) }))
     private val correctWinningNumber = WinningNumber(
