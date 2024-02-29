@@ -1,31 +1,33 @@
 import lotto.model.BonusNumber
 import lotto.model.Lotto
 import lotto.model.LottoNumber
+import lotto.model.LottoNumbers
 import lotto.model.LottoPrize
-import lotto.model.UserPrize
 import lotto.model.WinningNumber
+import lotto.model.user.UserPrize
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.TreeSet
 
 class LottoGameTest {
-    private val firstPrizeLotto = Lotto(LottoNumber(TreeSet(setOf(1, 2, 3, 4, 5, 6))))
-    private val secondPrizeLotto = Lotto(LottoNumber(TreeSet(setOf(1, 2, 3, 4, 5, 7))))
-    private val thirdPrizeLotto = Lotto(LottoNumber(TreeSet(setOf(1, 2, 3, 4, 5, 8))))
-    private val boomPrizeLotto = Lotto(LottoNumber(TreeSet(setOf(7, 9, 10, 11, 12, 13))))
+    private val firstPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }))
+    private val secondPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) } ))
+    private val thirdPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }))
+    private val boomPrizeLotto = Lotto(LottoNumbers(setOf(7, 9, 10, 11, 12, 13).map { LottoNumber(it) }))
     private val correctWinningNumber = WinningNumber(
-        lotto = Lotto(LottoNumber(TreeSet(setOf(1, 2, 3, 4, 5, 6)))),
-        bonusNumber = BonusNumber(7)
+        lotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })),
+        bonusNumber = BonusNumber(LottoNumber(7))
     )
     private val wrongWinningNumber = WinningNumber(
-        lotto = Lotto(LottoNumber(TreeSet(setOf(1, 2, 3, 4, 5, 6)))),
-        bonusNumber = BonusNumber(45)
+        lotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })),
+        bonusNumber = BonusNumber(LottoNumber(45))
     )
 
     @Test
     fun `보너스 매치`() {
         assertThat(boomPrizeLotto.matchBonusNumber(correctWinningNumber)).isTrue()
     }
+
     @Test
     fun `당첨 계산`() {
         assertThat(firstPrizeLotto.matchCount(correctWinningNumber)).isEqualTo(6)

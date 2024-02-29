@@ -1,18 +1,17 @@
 package lotto.model
 
 object LottoGenerator {
-    private val lottos = Lotto.LOTTO_NUM_RANGE.toList()
+    private val lottos = Lotto.LOTTO_NUM_RANGE.map { LottoNumber(it) }
 
     fun generateLotto(): Lotto {
         return Lotto(
-            lottoNumber = LottoNumber(getLottoNumbers())
+            lottoNumbers = LottoNumbers(getLottoNumbers())
         )
     }
 
-    private fun getLottoNumbers(): Set<Int> {
+    private fun getLottoNumbers(): List<LottoNumber> {
         return lottos
             .shuffled()
             .take(Lotto.LOTTO_LEN)
-            .toSet()
     }
 }

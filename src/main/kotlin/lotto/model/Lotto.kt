@@ -1,9 +1,9 @@
 package lotto.model
 
-class Lotto(private val lottoNumber: LottoNumber) {
+class Lotto(private val lottoNumbers: LottoNumbers) {
 
     fun getLottoNumber(): Set<Int> {
-        return lottoNumber.getNumbers()
+        return lottoNumbers.getNumbers()
     }
 
     fun matchCount(winningNumber: WinningNumber): Int {
@@ -15,7 +15,7 @@ class Lotto(private val lottoNumber: LottoNumber) {
     }
 
     fun matchBonusNumber(winningNumber: WinningNumber): Boolean {
-        return lottoNumber.getNumbers().contains(winningNumber.getBonusNumber())
+        return lottoNumbers.getNumbers().contains(winningNumber.getBonusNumber())
     }
 
     fun findRanking(winningNumber: WinningNumber): LottoPrize {

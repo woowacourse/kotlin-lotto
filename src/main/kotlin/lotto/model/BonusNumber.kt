@@ -1,14 +1,10 @@
 package lotto.model
 
 class BonusNumber(
-    private val bonusNumber: Int
+    private val bonusNumber: LottoNumber
 ) {
-    init {
-        if (bonusNumber !in Lotto.LOTTO_NUM_RANGE)
-            throw ExceptionManager.getException(UserEvent.BonusEvent.InvalidNumRange)
-    }
 
-    fun getBonusNumber() : Int {
-        return bonusNumber
+    fun getBonusNumber(): Int {
+        return bonusNumber.getNumber()
     }
 }

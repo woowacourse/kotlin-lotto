@@ -1,20 +1,21 @@
-package lotto.controller
+package lotto.model.user
 
 import lotto.model.BonusNumber
 import lotto.model.ExceptionManager
 import lotto.model.GameException
 import lotto.model.Lotto
 import lotto.model.LottoNumber
-import lotto.model.UserEvent
-import java.util.TreeSet
+import lotto.model.LottoNumbers
 
 private const val SEPARATOR = ","
 
-object Verifier {
+object UserInputVerifier {
     fun inputCharge(userInput: String?): UserEvent.PurchaseEvent {
         return userInput?.toIntOrNull()
             ?.let { checkPurchasePrice(it) }
-            ?: UserEvent.PurchaseEvent.InvalidDataType
+            ?: UserEvent.PurchaseEvent.InvalidDataType.also {
+                println(ExceptionManager.getException(it).message)
+            }
     }
 
     fun inputManualCount(
@@ -25,17 +26,26 @@ object Verifier {
             ?.toIntOrNull()
             ?.let {
                 checkManualLottoCount(it, lottoCount)
-            } ?: UserEvent.ManualEvent.InvalidDataType
+            }
+            ?: UserEvent.ManualEvent.InvalidDataType.also {
+                println(ExceptionManager.getException(it).message)
+            }
     }
 
     fun inputLottoNumbers(userInput: String?): UserEvent.LottoEvent {
         return userInput?.split(SEPARATOR)
             ?.let { numbers ->
                 val lottoNumbers = numbers.map {
-                    it.toIntOrNull() ?: return UserEvent.LottoEvent.InvalidDataType
-                }.toSet()
+                    val number = it.toIntOrNull() ?: return UserEvent.LottoEvent.InvalidDataType.also { event ->
+                        println(ExceptionManager.getException(event).message)
+                    }
+                    LottoNumber(number)
+                }
                 checkLottoValid(lottoNumbers)
-            } ?: UserEvent.LottoEvent.InvalidNumCount
+            }
+            ?: UserEvent.LottoEvent.InvalidNumCount.also {
+                println(ExceptionManager.getException(it).message)
+            }
     }
 
     fun inputBonus(
@@ -64,18 +74,20 @@ object Verifier {
         return runCatching {
             if (input !in 0..lottoCount) throw ExceptionManager.getException(UserEvent.ManualEvent.InvalidManualCount)
             UserEvent.ManualEvent.Success(input)
-        }.getOrElse {
+        }.getOrElse { exception ->
+            println(exception.message)
             UserEvent.ManualEvent.InvalidManualCount
         }
     }
 
     private fun checkLottoValid(
-        lottoNumbers: Set<Int>
+        lottoNumbers: List<LottoNumber>
     ): UserEvent.LottoEvent {
         return runCatching {
-            val lotto = Lotto(lottoNumber = LottoNumber(TreeSet(lottoNumbers)))
+            val lotto = Lotto(lottoNumbers = LottoNumbers(lottoNumbers))
             UserEvent.LottoEvent.Success(lotto = lotto)
         }.getOrElse { exception ->
+            println(exception.message)
             when (exception) {
                 is GameException -> exception.event as UserEvent.LottoEvent
                 else -> UserEvent.LottoEvent.UnknownError
@@ -88,12 +100,14 @@ object Verifier {
         winningLotto: Lotto
     ): UserEvent.BonusEvent {
         return runCatching {
-            if (input in winningLotto.getLottoNumber())
+            val lottoNumber = LottoNumber(input)
+            if (lottoNumber.getNumber() in winningLotto.getLottoNumber())
                 throw ExceptionManager.getException(UserEvent.BonusEvent.InvalidBonusDuplication)
-            val bonusNumber = BonusNumber(input)
+            val bonusNumber = BonusNumber(lottoNumber)
             UserEvent.BonusEvent.Success(bonusNumber)
         }.getOrElse { exception ->
-            when(exception){
+            println(exception.message)
+            when (exception) {
                 is GameException -> exception.event as UserEvent.BonusEvent
                 else -> UserEvent.BonusEvent.UnknownError
             }
