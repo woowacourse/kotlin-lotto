@@ -9,7 +9,7 @@ data class WinningLottery(val lottery: Lottery, val bonusNumber: LotteryNumber) 
 
     fun evaluateWinningRank(lottery: Lottery): WinningRank {
         val matchCount = lottery.compareLottery(this.lottery)
-        val bonusMatch = lottery.contains(bonusNumber)
+        val bonusMatch = bonusNumber in lottery
         return WinningRank.of(matchCount, bonusMatch)
     }
 }

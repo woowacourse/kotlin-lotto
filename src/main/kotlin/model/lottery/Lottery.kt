@@ -11,7 +11,7 @@ class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
 
     fun compareLottery(other: Lottery): Quantity = Quantity(lotteryNumbers.count { it in other.lotteryNumbers })
 
-    fun contains(number: LotteryNumber): Boolean = lotteryNumbers.any { it == number }
+    operator fun contains(number: LotteryNumber): Boolean = lotteryNumbers.any { it == number }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

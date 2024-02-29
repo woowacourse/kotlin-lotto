@@ -2,7 +2,8 @@ package model.lottery
 
 import model.Quantity
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -48,13 +49,13 @@ class LotteryTest {
     fun `로또 번호가 보너스 번호를 포함한다면 참이다`() {
         val lottery = Lottery.of(4, 8, 12, 16, 20, 24)
         val bonusNumber = LotteryNumber(20)
-        Assertions.assertTrue(lottery.contains(bonusNumber))
+        assertTrue(bonusNumber in lottery)
     }
 
     @Test
     fun `로또 번호가 보너스 번호를 포함하지 않는다면 거짓이다`() {
         val lottery = Lottery.of(2, 4, 6, 8, 10, 12)
         val bonusNumber = LotteryNumber(21)
-        Assertions.assertFalse(lottery.contains(bonusNumber))
+        assertFalse(bonusNumber in lottery)
     }
 }
