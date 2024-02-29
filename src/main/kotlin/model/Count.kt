@@ -3,7 +3,7 @@ package model
 @JvmInline
 value class Count(val value: Int) {
     init {
-        require(value < 0) { EXCEPTION_NEGATIVE_COUNT }
+        require(value >= 0) { EXCEPTION_NEGATIVE_COUNT }
     }
 
     operator fun minus(other: Count): Count = Count(value - other.value)
@@ -14,11 +14,11 @@ value class Count(val value: Int) {
         private const val EXCEPTION_MANUAL_COUNT = "수동 로또 개수는 전체 로또 개수보다 적거나 같아야 합니다."
 
         fun ofManual(
-            manualCount: Count,
-            entireCount: Count,
+            manualCount: Int,
+            entireCount: Int,
         ): Count {
-            require(manualCount.value <= entireCount.value) { EXCEPTION_MANUAL_COUNT }
-            return manualCount
+            require(manualCount <= entireCount) { EXCEPTION_MANUAL_COUNT }
+            return Count(manualCount)
         }
 
         fun fromMoney(amount: Money): Count {

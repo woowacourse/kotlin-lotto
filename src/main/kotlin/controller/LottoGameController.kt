@@ -19,16 +19,14 @@ class LottoGameController(
     fun startLottoGame() {
         val purchaseExpense: Money = getPurchaseExpense()
         var availableCount = Count.fromMoney(purchaseExpense)
-        val manualCount = getManualCount()
-        val manualLotteries =
-            List(manualCount.value) {
-                Lotto(*lottoGameInputView.inputManualLotteryNumber().toIntArray())
-            }
+        val manualCount = getManualCount(availableCount.value)
+        val manualLotteries = lottoGameInputView.inputManualLotteryNumber(manualCount.value).map { Lotto(*it.toIntArray()) }
         availableCount -= manualCount
         val autoLotteries =
             List(availableCount.value) {
                 Lotto(*numbersGenerator.generate(6).toIntArray())
             }
+        lottoGameOutputView.showPurchasedLotteries(autoLotteries)
         val entireLotteries = manualLotteries + autoLotteries
 //        val lottie: List<Lotto> = purchaseLottie(purchaseExpense)
         val winningLotto = getWinningLotto()
@@ -45,7 +43,11 @@ class LottoGameController(
 //            lotteries.also(lottoGameOutputView::showPurchasedLottie)
 //        }
 
-    private fun getManualCount(): Count = Count(exceptionHandler.handleInputValue(lottoGameInputView::inputManualPurchaseCount))
+    private fun getManualCount(entireCount: Int): Count =
+        Count.ofManual(
+            exceptionHandler.handleInputValue(lottoGameInputView::inputManualPurchaseCount),
+            entireCount,
+        )
 
     private fun getWinningLotto(): Lotto = Lotto(*exceptionHandler.handleInputValue(lottoGameInputView::inputWinningNumbers).toIntArray())
 

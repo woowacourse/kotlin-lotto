@@ -13,9 +13,11 @@ class ConsoleLottoGameInputView : LottoGameInputView {
             ?: throw IllegalArgumentException(EXCEPTION_NULL.format(EXCEPTION_MANUAL_LOTTO_COUNT))
     }
 
-    override fun inputManualLotteryNumber(): List<Int> {
+    override fun inputManualLotteryNumber(count: Int): List<List<Int>> {
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBERS)
-        return inputLotteryNumbers(EXCEPTION_MANUAL_LOTTO_NUMBERS)
+        return List(count) {
+            inputLotteryNumbers(EXCEPTION_MANUAL_LOTTO_NUMBERS)
+        }
     }
 
     override fun inputWinningNumbers(): List<Int> {

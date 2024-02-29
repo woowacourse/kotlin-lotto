@@ -13,7 +13,7 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
         println(MESSAGE_PURCHASE_COUNT.format(countOfManual, countOfAuto))
     }
 
-    override fun showPurchasedLottie(lottie: List<Lotto>) {
+    override fun showPurchasedLotteries(lottie: List<Lotto>) {
         println(MESSAGE_PURCHASED_LOTTIE_COUNT.format(lottie.size))
         lottie.forEach { println(it.numbers.map { it.number }) }
         println()
