@@ -1,8 +1,8 @@
 package lottogame.model
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 
 class LottoCountTest {
     @Test
@@ -12,16 +12,18 @@ class LottoCountTest {
         val count = 1
         val cost = Money(1_000)
         // then
-        assertDoesNotThrow { LottoCount.of(count, lottoPrice, cost) }
+        assertDoesNotThrow { LottoCount.createOrNull(count, lottoPrice, cost) }
     }
 
     @Test
-    fun `lottoPrice * count 가 cost 보다 크면, 예외 발생`() {
+    fun `lottoPrice * count 가 cost 보다 크면, null 을 반환한다`() {
         // given
         val lottoPrice = Money(1_001)
         val count = 1
         val cost = Money(1_000)
+        // when
+        val lotto = LottoCount.createOrNull(count, lottoPrice, cost)
         // then
-        assertThrows<IllegalStateException> { LottoCount.of(count, lottoPrice, cost) }
+        assertThat(lotto).isNull()
     }
 }

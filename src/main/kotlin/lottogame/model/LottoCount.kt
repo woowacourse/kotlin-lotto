@@ -11,13 +11,14 @@ value class LottoCount private constructor(val amount: Int) {
         private const val EXCEPTION_COUNT_CALCULATE = "lottoPrice * count = %s 는 cost = %s 보다 클 수 없다 "
 
         @JvmStatic
-        fun of(
+        fun createOrNull(
             count: Int,
             lottoPrice: Money,
             cost: Money,
-        ): LottoCount {
+        ): LottoCount? {
             val totalLottiePrice = lottoPrice * count
-            check(cost >= (totalLottiePrice)) { EXCEPTION_COUNT_CALCULATE.format(totalLottiePrice, cost) }
+            val isCostInsufficient = cost < totalLottiePrice
+            if (isCostInsufficient) return null
             return LottoCount(cost / totalLottiePrice)
         }
     }

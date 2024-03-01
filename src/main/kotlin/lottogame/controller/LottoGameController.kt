@@ -28,16 +28,12 @@ class LottoGameController(
         displayLottoResult(lottoGameResult, buyingCost)
     }
 
-    private fun determineManualLottoCount(cost: Money): LottoCount {
-        return runCatching {
-            LottoCount.of(
-                count = inputView.inputManualLottoCount(),
-                lottoPrice = LOTTO_PRICE,
-                cost = cost,
-            )
-        }.onFailure {
-            if (it is IllegalArgumentException) return determineManualLottoCount(cost)
-        }.getOrThrow()
+    private tailrec fun determineManualLottoCount(cost: Money): LottoCount {
+        return LottoCount.createOrNull(
+            count = inputView.inputManualLottoCount(),
+            lottoPrice = LOTTO_PRICE,
+            cost = cost,
+        ) ?: determineManualLottoCount(cost)
     }
 
     private fun buyLottie(
