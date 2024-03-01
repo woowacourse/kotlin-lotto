@@ -1,15 +1,15 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.LottoCount
 import lotto.model.LottoPrize
-import lotto.model.PurchaseCountInfo
 
 class OutputView {
     fun printPurchaseLotto(
-        purchaseCountInfo: PurchaseCountInfo,
+        lottoCount: LottoCount,
         lottos: List<Lotto>,
     ) {
-        println("수동으로 ${purchaseCountInfo.manualCount}장, 자동으로 ${purchaseCountInfo.autoCount}장 구매했습니다.")
+        println("수동으로 ${lottoCount.manualCount}장, 자동으로 ${lottoCount.autoCount}장 구매했습니다.")
         lottos.forEach { lotto ->
             println(lotto)
         }
