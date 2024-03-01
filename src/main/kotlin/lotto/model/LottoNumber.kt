@@ -1,17 +1,17 @@
 package lotto.model
 
-data class LottoNumber(val number: Int) {
+@JvmInline
+value class LottoNumber(val number: Int) {
     init {
         require(number in LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER) {
-            INVALID_LOTTO_NUMBER_RANGE.format(LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER)
+            "${LOTTO_MIN_NUMBER}부터 ${LOTTO_MAX_NUMBER}사이의 숫자를 입력해 주세요."
         }
     }
 
-    override fun toString() = number.toString()
+    override fun toString(): String = number.toString()
 
     companion object {
-        private const val LOTTO_MIN_NUMBER = 1
-        private const val LOTTO_MAX_NUMBER = 45
-        private const val INVALID_LOTTO_NUMBER_RANGE = "%d부터 %d 사이의 숫자를 입력해 주세요."
+        private const val LOTTO_MIN_NUMBER: Int = 1
+        private const val LOTTO_MAX_NUMBER: Int = 45
     }
 }
