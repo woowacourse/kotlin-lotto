@@ -1,15 +1,15 @@
 package lotto.view
 
 interface LottoGameInputView {
-    fun inputPurchaseExpense(): Int
+    fun inputPurchaseExpense(): Int?
 
-    fun inputManualPurchaseCount(): Int
+    fun inputManualPurchaseCount(): Int?
 
-    fun inputManualLotteryNumber(count: Int): List<List<Int>>
+    fun inputManualLotteryNumber(count: Int): List<List<Int>>?
 
-    fun inputLotteryNumbers(message: String): List<Int>
+    fun inputLotteryNumbers(): List<Int>?
 
-    fun inputWinningNumbers(): List<Int>
+    fun inputWinningNumbers(): List<Int>?
 
-    fun inputBonusNumber(): Int
+    fun inputBonusNumber(): Int?
 }
