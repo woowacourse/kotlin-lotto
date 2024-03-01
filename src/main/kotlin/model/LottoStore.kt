@@ -1,7 +1,6 @@
 package lotto.model
 
 import model.Lotto
-import model.LottoNumber
 
 class LottoStore {
     companion object {
@@ -16,9 +15,7 @@ class LottoStore {
             return Lottos(lottoBundle)
         }
 
-        fun generateManualLottos(manualLottos: List<List<String>>): Lottos {
-            val lottoBundle =
-                manualLottos.map { Lotto(LottoNumbers(it.map { LottoNumber(it.toInt()) }.sortedBy { it.number })) }
+        fun generateManualLottos(lottoBundle: List<Lotto>): Lottos {
             return Lottos(lottoBundle)
         }
     }

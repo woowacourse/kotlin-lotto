@@ -41,8 +41,11 @@ class LottoController(private val inputView: InputView, private val outputView: 
     ): Lottos {
         val autoLottos = LottoStore.generateAutoLottos(numberOfAutoLottos, LottoNumberGenerator())
         outputView.printEnterManualLottoNumberMessage()
-        val manualLottos = LottoStore.generateManualLottos(inputView.readManualLottoNumber(numberOfManualLottos))
-        val lottoBundle = Lottos(autoLottos.lottos + manualLottos.lottos)
+        val manualLottos =
+            inputView.readManualLottoNumber(numberOfManualLottos)
+                .map { Lotto(LottoNumbers(it.map { LottoNumber(it.toInt()) }.sortedBy { it.number })) }
+        val manualLottoBundle = LottoStore.generateManualLottos(manualLottos)
+        val lottoBundle = Lottos(autoLottos.lottos + manualLottoBundle.lottos)
         outputView.printNumberOfLottoMessage(numberOfManualLottos, numberOfAutoLottos)
         outputView.printLottoNumbers(lottoBundle)
         return lottoBundle

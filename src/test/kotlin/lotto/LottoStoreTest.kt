@@ -26,7 +26,7 @@ class LottoStoreTest {
         val winningNumbers = setUpLotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(7)
         Assertions.assertThat(
-            LottoStore.generateManualLottos(listOf(listOf("1", "2", "3", "4", "5", "7")))
+            LottoStore.generateManualLottos(listOf(Lotto(LottoNumbers.lottoNumbersOf(1, 2, 3, 4, 5, 7))))
                 .winningResult(winningNumbers, bonusNumber),
         ).isEqualTo(mapOf(WinningRank.SECOND to 1))
     }
@@ -35,7 +35,7 @@ class LottoStoreTest {
     fun `자동 + 수동 로또 결과 테스트`() {
         val winningNumbers = setUpLotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(7)
-        val manualLottos = LottoStore.generateManualLottos(listOf(listOf("1", "2", "3", "4", "5", "7")))
+        val manualLottos = LottoStore.generateManualLottos(listOf(Lotto(LottoNumbers.lottoNumbersOf(1, 2, 3, 4, 5, 7))))
         val autoLottos = LottoStore.generateAutoLottos(3, TestLottoNumberGenerator())
         val lottoBundle = Lottos(manualLottos.lottos + autoLottos.lottos)
         Assertions.assertThat(
