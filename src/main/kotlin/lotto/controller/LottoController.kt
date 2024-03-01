@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.model.PurchaseCountInfo
 import lotto.model.Ticket
 import lotto.model.WinningLotto
 import lotto.view.InputView
@@ -11,18 +12,23 @@ class LottoController(
 ) {
     fun run() {
         val ticket = issueTicket()
-        val lottos = ticket.issueLottos()
-        outputView.printPurchaseLotto(lottos)
+        val manualLottoNumbers = inputView.readManualLottoNumbers(ticket.purchaseCountInfo.manualCount)
+        val lottos = ticket.issueLottos(manualLottoNumbers)
+        outputView.printPurchaseLotto(ticket.purchaseCountInfo, lottos)
 
         val winningLotto = readWinningLotto()
 
         outputView.printWinningResult(winningLotto.calculatePrizeCount(lottos))
-        outputView.printWinningRatio(winningLotto.calculateProfitRatio(lottos, ticket.purchasePrice))
+        outputView.printWinningRatio(winningLotto.calculateProfitRatio(lottos, ticket.purchaseCountInfo.purchasePrice))
     }
 
     private fun issueTicket(): Ticket {
         val purchasePrice = inputView.readPurchasePrice()
-        return Ticket(purchasePrice, 1_000)
+        val manualLottoCount = inputView.readManualLottoCount()
+
+        val purchaseCountInfo = PurchaseCountInfo(purchasePrice, 1_000, manualLottoCount)
+
+        return Ticket(purchaseCountInfo)
     }
 
     private fun readWinningLotto(): WinningLotto {
