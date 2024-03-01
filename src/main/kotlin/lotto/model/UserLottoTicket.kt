@@ -1,6 +1,7 @@
 package lotto.model
 
-class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
+@JvmInline
+value class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
     init {
         require(userLottoTicket.size == LOTTO_TICKET_SIZE)
     }
