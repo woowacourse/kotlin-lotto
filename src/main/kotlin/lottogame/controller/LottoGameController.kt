@@ -65,13 +65,9 @@ class LottoGameController(
         gameResult: LottoGameResult,
         purchaseExpense: Money,
     ) {
-        runCatching {
-            val rankResults = gameResult.results.filterNot { it.rank == Rank.MISS }
-            val earningRate = gameResult.calculateEarningRate(purchaseExpense)
-            outputView.showGameResult(rankResults, truncateDecimal(earningRate))
-        }.onFailure {
-            if (it is IllegalArgumentException) return displayLottoResult(gameResult, purchaseExpense)
-        }
+        val rankResults = gameResult.results.filterNot { it.rank == Rank.MISS }
+        val earningRate = gameResult.calculateEarningRate(purchaseExpense)
+        outputView.showGameResult(rankResults, truncateDecimal(earningRate))
     }
 
     private fun truncateDecimal(earningRate: Double): Double = floor(earningRate * SCALE) / SCALE

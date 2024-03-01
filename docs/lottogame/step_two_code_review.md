@@ -6,7 +6,7 @@
 
 ## Error  
 
-- [ ] : 에러 처리 리팩토링
+- [x] : 에러 처리 리팩토링
 
 ## Domain  
 - [x] : DefaultManualLottieGeneratorTest.kt 테스트명 네이밍 수정  
