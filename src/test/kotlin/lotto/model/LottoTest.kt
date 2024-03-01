@@ -1,8 +1,6 @@
 package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -46,7 +44,7 @@ class LottoTest {
     fun `로또 번호에 보너스 번호가 포함되어 있으면 True를 반환한다`(bonusNumber: Int) {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val result = lotto.hasMatchingBonusNumbers(LottoNumber.valueOf(bonusNumber)!!)
-        assertTrue(result)
+        assertThat(result).isTrue()
     }
 
     @ParameterizedTest
@@ -54,6 +52,6 @@ class LottoTest {
     fun `로또 번호에 보너스 번호가 포함되어 있지 않으면 False을 반환한다`(bonusNumber: Int) {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val result = lotto.hasMatchingBonusNumbers(LottoNumber.valueOf(bonusNumber)!!)
-        assertFalse(result)
+        assertThat(result).isFalse()
     }
 }
