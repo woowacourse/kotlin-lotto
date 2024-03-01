@@ -4,7 +4,7 @@ class ManualLottoMachine(private val manualLottoNumbers: List<List<Int>>) {
     fun makeManualTickets(): List<UserLottoTicket> {
         val manualLottoTickets =
             manualLottoNumbers.map {
-                UserLottoTicket(it.map { LottoNumber.makeLottoNumber(it) })
+                UserLottoTicket(it.sorted().map { LottoNumber.makeLottoNumber(it) })
             }
         return manualLottoTickets
     }

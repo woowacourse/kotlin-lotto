@@ -16,7 +16,7 @@ class InputView {
         println(MANUAL_LOTTO_PROMPT_MESSAGE)
         val manualLottoTickets =
             List(manualLottoCount) {
-                readln().split(",").map { it.trim() }.map { it.toInt() }.sorted()
+                readln().split(",").map { it.trim() }.map { it.toInt() }
             }
         return manualLottoTickets
     }
