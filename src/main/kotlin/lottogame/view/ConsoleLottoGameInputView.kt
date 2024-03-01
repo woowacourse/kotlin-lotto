@@ -1,5 +1,6 @@
 package lottogame.view
 
+import lottogame.model.Count
 import lottogame.model.LottoNumber
 import lottogame.model.Money
 import lottogame.model.generator.GeneralLottoNumber
@@ -10,9 +11,10 @@ class ConsoleLottoGameInputView : LottoGameInputView {
         return readln().toIntOrNull()?.let(::Money) ?: inputPurchaseExpense()
     }
 
-    override tailrec fun inputManualLottoCount(): Int {
+    override tailrec fun inputManualLottoCount(): Count {
         println(MESSAGE_INPUT_MANUAL_LOTTO_COUNT)
-        return readln().toIntOrNull() ?: inputManualLottoCount()
+        val count = readln().toIntOrNull() ?: return inputManualLottoCount()
+        return Count.createOrNull(count) ?: inputManualLottoCount()
     }
 
     override tailrec fun inputManualLottoNumbers(size: Int): List<List<LottoNumber>> {

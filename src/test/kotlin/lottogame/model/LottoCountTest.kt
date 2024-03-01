@@ -9,7 +9,7 @@ class LottoCountTest {
     fun `lottoPrice * count 가 cost 이하면, LottoCount 생성`() {
         // given
         val lottoPrice = Money(1_000)
-        val count = 1
+        val count = Count(1)
         val cost = Money(1_000)
         // then
         assertDoesNotThrow { LottoCount.createOrNull(count, lottoPrice, cost) }
@@ -19,7 +19,7 @@ class LottoCountTest {
     fun `lottoPrice * count 가 cost 보다 크면, null 을 반환한다`() {
         // given
         val lottoPrice = Money(1_001)
-        val count = 1
+        val count = Count(1)
         val cost = Money(1_000)
         // when
         val lotto = LottoCount.createOrNull(count, lottoPrice, cost)
