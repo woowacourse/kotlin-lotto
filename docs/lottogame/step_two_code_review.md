@@ -9,7 +9,7 @@
 - [ ] : 에러 처리 리팩토링
 
 ## Domain  
-- [ ] : DefaultManualLottieGeneratorTest.kt 테스트명 네이밍 수정  
+- [x] : DefaultManualLottieGeneratorTest.kt 테스트명 네이밍 수정  
 - [ ] : 스스로 기준을 정해서 랜덤 테스트 해보기!
 - [x] : LottoCount 에러 메세지 상수화하기
 
