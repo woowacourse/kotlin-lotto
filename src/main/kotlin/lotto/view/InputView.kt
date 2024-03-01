@@ -21,6 +21,19 @@ class InputView {
             manualLottoCount.toInt()
         }
 
+    fun readManualLottoNumbers(manualCount: Int): List<Lotto> =
+        retryWhileNoException {
+            println(INPUT_MANUAL_LOTTO_NUMBERS)
+            List(manualCount) { createLotto() }
+        }
+
+    private fun createLotto(): Lotto {
+        val lotto = readln()
+        validateDigit(lotto, "숫자를 중복하여 입력할 수 없습니다.")
+
+        return Lotto(lotto.split(LOTTO_NUMBER_DELIMITER).map { it.toInt() })
+    }
+
     fun readWinningLottoNumbers(): Lotto =
         retryWhileNoException {
             println(INPUT_WINNING_LOTTO_NUMBERS)
@@ -29,7 +42,7 @@ class InputView {
 
             val splittedWinningNumbers = winningLottoNumbers.split(LOTTO_NUMBER_DELIMITER).map { it.toInt() }
             validateNotDuplicate(splittedWinningNumbers)
-            Lotto(splittedWinningNumbers.toSet())
+            Lotto(splittedWinningNumbers)
         }
 
     fun readBonusNumber(): LottoNumber =
@@ -61,6 +74,7 @@ class InputView {
         private const val LOTTO_NUMBER_DELIMITER = ", "
         private const val INPUT_PURCHASE_PRICE = "구입금액을 입력해 주세요."
         private const val INPUT_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val INPUT_MANUAL_LOTTO_NUMBERS = "수동으로 구매할 번호를 입력해 주세요."
         private const val INPUT_WINNING_LOTTO_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
         private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
 
