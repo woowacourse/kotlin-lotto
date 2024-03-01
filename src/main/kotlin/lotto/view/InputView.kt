@@ -13,14 +13,12 @@ class InputView {
 
     fun getManualLottoTickets(): List<List<Int>> {
         val manualLottoCount = getManualLottoCount()
-        val manualLottoTickets: MutableList<List<Int>> = mutableListOf()
         println(MANUAL_LOTTO_PROMPT_MESSAGE)
-        repeat(manualLottoCount) {
-            manualLottoTickets.add(
-                readln().split(",").map { it.trim() }.map { it.toInt() }.sorted(),
-            )
-        }
-        return manualLottoTickets.toList()
+        val manualLottoTickets =
+            List(manualLottoCount) {
+                readln().split(",").map { it.trim() }.map { it.toInt() }.sorted()
+            }
+        return manualLottoTickets
     }
 
     fun getWinningTicket(): List<Int> {
