@@ -16,7 +16,7 @@ class LottoGameResult private constructor(
     )
 
     companion object {
-        operator fun invoke(
+        fun of(
             bonusNumber: LottoNumber,
             winningLotto: Lotto,
             purchasedLottie: List<Lotto>,
@@ -29,7 +29,12 @@ class LottoGameResult private constructor(
             return LottoGameResult(rankResults)
         }
 
-        private fun getRankMap(): MutableMap<Rank, Int> = Rank.entries.reversed().associateWith { 0 }.toMutableMap()
+        private fun getRankMap(): MutableMap<Rank, Int> {
+            return Rank.entries
+                .reversed()
+                .associateWith { 0 }
+                .toMutableMap()
+        }
 
         private fun Map<Rank, Int>.toRankResults() = toList().map { (rank, count) -> RankResult(rank, count) }
 

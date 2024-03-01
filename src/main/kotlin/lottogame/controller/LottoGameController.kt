@@ -24,7 +24,7 @@ class LottoGameController(
         val buyingLottie: List<Lotto> = buyLottie(lottoCount, buyingCost)
         val winningLotto: Lotto = Lotto(inputView.inputWinningNumbers())
         val bonusLottoNumber = createBonusLottoNumber(winningLotto.numbers)
-        val lottoGameResult = LottoGameResult(bonusLottoNumber, winningLotto, buyingLottie)
+        val lottoGameResult = LottoGameResult.of(bonusLottoNumber, winningLotto, buyingLottie)
         displayLottoResult(lottoGameResult, buyingCost)
     }
 

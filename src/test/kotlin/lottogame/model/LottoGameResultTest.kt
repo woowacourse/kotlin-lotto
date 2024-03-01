@@ -14,7 +14,7 @@ class LottoGameResultTest {
         val winningLotto = Lotto(2, 3, 4, 5, 6, 7)
         val derivedLottie = listOf(Lotto(2, 3, 4, 5, 6, 7), Lotto(6, 7, 8, 9, 10, 11))
         lottoGameResult =
-            LottoGameResult(
+            LottoGameResult.of(
                 bonusNumber = bonusNumber,
                 winningLotto = winningLotto,
                 purchasedLottie = derivedLottie,
