@@ -19,13 +19,10 @@ class MixedTicketGenerationStrategy(
         return Ticket(lotteries, amount, lotteryPurchasePattern)
     }
 
-    private fun generateRandomLotteries(): List<Lottery> {
-        val lotteries = mutableListOf<Lottery>()
-        repeat(lotteryPurchasePattern.autoLottoCount) {
-            lotteries.add(Lottery(RandomLotteryGenerator.generateNumbers()))
+    private fun generateRandomLotteries() =
+        List(lotteryPurchasePattern.autoLottoCount) {
+            Lottery(RandomLotteryGenerator.generateNumbers())
         }
-        return lotteries
-    }
 
     private fun generateExplicitLotteries(): List<Lottery> {
         return explicitLotteriesInput.map { Lottery.fromInput(it) }.toList()
