@@ -12,8 +12,8 @@ class LottoMachineTest {
     fun `발행 개수 만큼 로또를 발행한다`(count: Int) {
         val numbersGenerator =
             object : NumbersGenerator {
-                override fun generateNumbers(): List<Int> {
-                    return listOf(1, 2, 3, 4, 5, 6)
+                override fun generateNumbers(count: Int): List<Set<Int>> {
+                    return List(count) { setOf(1, 2, 3, 4, 5, 6) }
                 }
             }
         val result = LottoMachine.issueAutoTickets(count, numbersGenerator)
@@ -26,7 +26,7 @@ class LottoMachineTest {
     @Test
     fun `사용자가 입력한 번호를 토대로 로또를 발행한다`() {
         val input = listOf(setOf(1, 2, 3, 4, 5, 6), setOf(2, 3, 4, 5, 6, 7))
-        val result = LottoMachine.issueManualTickets(input)
+        val result = LottoMachine.issueTickets(input)
         val expected = listOf(Lotto(1, 2, 3, 4, 5, 6), Lotto(2, 3, 4, 5, 6, 7))
         assertThat(result).isEqualTo(expected)
     }

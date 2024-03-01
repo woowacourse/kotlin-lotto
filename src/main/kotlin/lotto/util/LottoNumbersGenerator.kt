@@ -4,5 +4,8 @@ import lotto.model.Lotto
 import lotto.model.LottoNumber
 
 object LottoNumbersGenerator : NumbersGenerator {
-    override fun generateNumbers(): List<Int> = LottoNumber.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT)
+    override fun generateNumbers(count: Int): List<Set<Int>> =
+        List(count) {
+            LottoNumber.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).toSet()
+        }
 }
