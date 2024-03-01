@@ -5,17 +5,17 @@ import lottogame.model.Money
 import lottogame.model.generator.GeneralLottoNumber
 
 class ConsoleLottoGameInputView : LottoGameInputView {
-    override fun inputPurchaseExpense(): Money {
+    override tailrec fun inputPurchaseExpense(): Money {
         println(MESSAGE_INPUT_PURCHASE_EXPENSE)
         return readln().toIntOrNull()?.let(::Money) ?: inputPurchaseExpense()
     }
 
-    override fun inputManualLottoCount(): Int {
+    override tailrec fun inputManualLottoCount(): Int {
         println(MESSAGE_INPUT_MANUAL_LOTTO_COUNT)
         return readln().toIntOrNull() ?: inputManualLottoCount()
     }
 
-    override fun inputManualLottoNumbers(size: Int): List<List<LottoNumber>> {
+    override tailrec fun inputManualLottoNumbers(size: Int): List<List<LottoNumber>> {
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBERS)
         return List(size) {
             readln().split(DELIMITER).map {
@@ -24,7 +24,7 @@ class ConsoleLottoGameInputView : LottoGameInputView {
         }
     }
 
-    override fun inputWinningNumbers(): List<LottoNumber> {
+    override tailrec fun inputWinningNumbers(): List<LottoNumber> {
         println(MESSAGE_INPUT_WINNING_NUMBERS)
         val winningNumbers =
             readln().split(DELIMITER).map {
@@ -33,9 +33,9 @@ class ConsoleLottoGameInputView : LottoGameInputView {
         return winningNumbers
     }
 
-    override fun inputBonusNumber(): Int {
+    override tailrec fun inputBonusNumber(): Int {
         println(MESSAGE_INPUT_BONUS_NUMBER)
-        return readln().toIntOrNull() ?: return inputBonusNumber()
+        return readln().toIntOrNull() ?: inputBonusNumber()
     }
 
     companion object {
