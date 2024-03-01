@@ -1,6 +1,7 @@
 package lottogame.model.generator
 
 import lottogame.model.Lotto
+import lottogame.model.LottoNumber
 import lottogame.model.Money
 
 class DefaultLottoMachine(
@@ -11,7 +12,7 @@ class DefaultLottoMachine(
         return autoLottieGenerator.generate(cost)
     }
 
-    override fun generateManualLottie(lottieNumbers: List<List<Int>>): List<Lotto> {
+    override fun generateManualLottie(lottieNumbers: List<List<LottoNumber>>): List<Lotto> {
         return manualLottieGenerator.generate(lottieNumbers)
     }
 }
@@ -19,5 +20,5 @@ class DefaultLottoMachine(
 interface LottoMachine {
     fun generateAutoLottie(cost: Money): List<Lotto>
 
-    fun generateManualLottie(lottieNumbers: List<List<Int>>): List<Lotto>
+    fun generateManualLottie(lottieNumbers: List<List<LottoNumber>>): List<Lotto>
 }

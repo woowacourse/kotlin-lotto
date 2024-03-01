@@ -2,7 +2,7 @@
 
 
 ## InputView
-- [ ] : InputView 에 간단한 mapping 작업에 대한 책임 추가
+- [x] : InputView 에 간단한 mapping 작업에 대한 책임 추가
 
 ## Error  
 

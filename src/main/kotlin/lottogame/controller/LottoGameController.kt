@@ -19,21 +19,14 @@ class LottoGameController(
     private val lottoMachine: LottoMachine,
 ) {
     fun startLottoGame() {
-        val buyingCost: Money = createBuyingCost()
+        val buyingCost: Money = inputView.inputPurchaseExpense()
         val lottoCount: LottoCount = determineManualLottoCount(buyingCost)
         val buyingLottie: List<Lotto> = buyLottie(lottoCount, buyingCost)
-        val winningLotto: Lotto = createWinningLotto()
+        val winningLotto: Lotto = Lotto(inputView.inputWinningNumbers())
         val bonusLottoNumber = createBonusLottoNumber(winningLotto.numbers)
         val lottoGameResult = LottoGameResult(bonusLottoNumber, winningLotto, buyingLottie)
         displayLottoResult(lottoGameResult, buyingCost)
     }
-
-    private fun createBuyingCost(): Money =
-        runCatching {
-            Money(inputView.inputPurchaseExpense())
-        }.onFailure {
-            if (it is IllegalArgumentException) return createBuyingCost()
-        }.getOrThrow()
 
     private fun determineManualLottoCount(cost: Money): LottoCount {
         return runCatching {
@@ -43,7 +36,6 @@ class LottoGameController(
                 cost = cost,
             )
         }.onFailure {
-            if (it is IllegalStateException) return determineManualLottoCount(cost)
             if (it is IllegalArgumentException) return determineManualLottoCount(cost)
         }.getOrThrow()
     }
@@ -72,14 +64,6 @@ class LottoGameController(
             lottoMachine.generateAutoLottie(cost)
         }.onFailure {
             if (it is IllegalArgumentException) return buyAutoLottie(cost)
-        }.getOrThrow()
-
-    private fun createWinningLotto(): Lotto =
-        runCatching {
-            val winningNumbers: List<Int> = inputView.inputWinningNumbers()
-            Lotto(winningNumbers)
-        }.onFailure {
-            if (it is IllegalArgumentException) return createWinningLotto()
         }.getOrThrow()
 
     private fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber =
