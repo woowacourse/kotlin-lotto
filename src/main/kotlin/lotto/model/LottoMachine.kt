@@ -1,7 +1,7 @@
 package lotto.model
 
 class LottoMachine(expense: Money) {
-    var availableCount: Count = Count.fromMoney(expense)
+    var availableCount: Count = Count.from(expense)
         private set
 
     private val _currentLotteries: MutableList<Lotto> = mutableListOf()
@@ -13,14 +13,14 @@ class LottoMachine(expense: Money) {
     lateinit var winningLotto: Lotto
         private set
 
-    fun addManualLotteries(lotteryNumbers: List<List<Int>>) {
-        val manualLotteries = lotteryNumbers.map { generateLotto(it) }
+    fun addManualLotteries(lottoNumbers: List<List<Int>>) {
+        val manualLotteries = lottoNumbers.map { generateLotto(it) }
         addLotteries(manualLotteries)
-        availableCount -= Count(lotteryNumbers.size)
+        availableCount -= Count(lottoNumbers.size)
     }
 
-    fun addAutoLotteries(lotteryNumbers: List<List<Int>>) {
-        val autoLotteries = lotteryNumbers.map { generateLotto(it) }
+    fun addAutoLotteries(lottoNumbers: List<List<Int>>) {
+        val autoLotteries = lottoNumbers.map { generateLotto(it) }
         addLotteries(autoLotteries)
         _autoLotteries += autoLotteries
     }

@@ -36,7 +36,7 @@ class LottoGameController(
     private fun getManualCount(): Count =
         ExceptionHandler.handleInputValue {
             val manualCount = lottoGameInputView.inputManualPurchaseCount()
-            Count.ofManual(manualCount, lottoMachine.availableCount.value)
+            Count.of(manualCount, lottoMachine.availableCount.value)
         }
 
     private fun generateManualLotteries(manualCount: Int) {
@@ -46,8 +46,8 @@ class LottoGameController(
     }
 
     private fun generateAutoLotteries() {
-        val autoLotteryNumbers = List(lottoMachine.availableCount.value) { numbersGenerator.generate() }
-        lottoMachine.addAutoLotteries(autoLotteryNumbers)
+        val autoLottoNumbers = List(lottoMachine.availableCount.value) { numbersGenerator.generate() }
+        lottoMachine.addAutoLotteries(autoLottoNumbers)
     }
 
     private fun showPurchaseResult(

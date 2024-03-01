@@ -13,7 +13,7 @@ value class Count(val value: Int) {
         private const val EXCEPTION_NEGATIVE_COUNT = "로또 개수로 음수를 입력할 수 없습니다."
         private const val EXCEPTION_MANUAL_COUNT = "수동 로또 개수는 전체 로또 개수보다 적거나 같아야 합니다."
 
-        fun ofManual(
+        fun of(
             manualCount: Int,
             entireCount: Int,
         ): Count {
@@ -21,7 +21,7 @@ value class Count(val value: Int) {
             return Count(manualCount)
         }
 
-        fun fromMoney(amount: Money): Count {
+        fun from(amount: Money): Count {
             val availableCount: Int = amount / DEFAULT_LOTTO_PRICE
             return Count(availableCount)
         }
