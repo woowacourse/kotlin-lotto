@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Rank
+import lotto.model.RankMap
 import lotto.model.UserLottoTicket
 
 class OutputView {
@@ -18,7 +19,7 @@ class OutputView {
         }
     }
 
-    fun printWinningChart(rankMap: Map<Rank, Int>) {
+    fun printWinningChart(rankMap: RankMap) {
         val rankList = Rank.entries.take(Rank.entries.size - 1).reversed()
         for (rank in rankList) {
             println(
@@ -26,7 +27,7 @@ class OutputView {
                     rank.countOfMatch,
                     if (rank in Rank.bonusNeededRanks) ", 보너스 볼 일치" else "",
                     rank.winningMoney,
-                    rankMap[rank],
+                    rankMap.ranks[rank],
                 ),
             )
         }

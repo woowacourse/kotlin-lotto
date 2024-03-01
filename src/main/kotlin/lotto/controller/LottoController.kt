@@ -6,7 +6,7 @@ import lotto.model.LottoNumber.Companion.MAX_LOTTO_NUMBER
 import lotto.model.LottoNumber.Companion.MIN_LOTTO_NUMBER
 import lotto.model.LottoWinningPrize
 import lotto.model.LottoWinningRank
-import lotto.model.Rank
+import lotto.model.RankMap
 import lotto.model.UserLottoTicket
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -35,7 +35,7 @@ class LottoController {
         printLottoWinning(lottoWinningPrize, userTickets, rankMap)
     }
 
-    private fun checkLottoWinning(userTickets: List<UserLottoTicket>): Map<Rank, Int> {
+    private fun checkLottoWinning(userTickets: List<UserLottoTicket>): RankMap {
         val winningNumbers = inputView.getWinningTicket().map { LottoNumber(it) }
         val bonusNumber = inputView.getBonusNumber()
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
@@ -45,7 +45,7 @@ class LottoController {
     private fun printLottoWinning(
         lottoWinningPrize: LottoWinningPrize,
         userTickets: List<UserLottoTicket>,
-        rankMap: Map<Rank, Int>,
+        rankMap: RankMap,
     ) {
         val winningRate = lottoWinningPrize.calculateWinningRate(userTickets.size)
         outputView.printWinningChart(rankMap)

@@ -1,8 +1,8 @@
 package lotto.model
 
-class LottoWinningPrize(private val rankMap: Map<Rank, Int>) {
+class LottoWinningPrize(private val rankMap: RankMap) {
     private fun calculateWinningPrize(): Int {
-        val winningPrize = rankMap.map { it.key.winningMoney * it.value }.sum()
+        val winningPrize = rankMap.ranks.map { it.key.winningMoney * it.value }.sum()
         return winningPrize
     }
 

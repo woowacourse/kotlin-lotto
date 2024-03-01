@@ -13,7 +13,7 @@ class LottoWinningRankTest {
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
         val rankMap = lottoWinningRank.makeRankMap(userTickets)
-        Assertions.assertThat(rankMap[Rank.FIRST]).isEqualTo(1)
+        Assertions.assertThat(rankMap.ranks[Rank.FIRST]).isEqualTo(1)
     }
 
     @Test
@@ -23,7 +23,7 @@ class LottoWinningRankTest {
         val bonusNumber = 7
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
         val rankMap = lottoWinningRank.makeRankMap(userTickets)
-        Assertions.assertThat(rankMap[Rank.SECOND]).isEqualTo(1)
+        Assertions.assertThat(rankMap.ranks[Rank.SECOND]).isEqualTo(1)
     }
 
     @Test
@@ -33,7 +33,7 @@ class LottoWinningRankTest {
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
         val rankMap = lottoWinningRank.makeRankMap(userTickets)
-        Assertions.assertThat(rankMap[Rank.THIRD]).isEqualTo(1)
+        Assertions.assertThat(rankMap.ranks[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
@@ -43,7 +43,7 @@ class LottoWinningRankTest {
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
         val rankMap = lottoWinningRank.makeRankMap(userTickets)
-        Assertions.assertThat(rankMap[Rank.FOURTH]).isEqualTo(1)
+        Assertions.assertThat(rankMap.ranks[Rank.FOURTH]).isEqualTo(1)
     }
 
     @Test
@@ -53,6 +53,6 @@ class LottoWinningRankTest {
         val bonusNumber = 44
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
         val rankMap = lottoWinningRank.makeRankMap(userTickets)
-        Assertions.assertThat(rankMap[Rank.FIFTH]).isEqualTo(1)
+        Assertions.assertThat(rankMap.ranks[Rank.FIFTH]).isEqualTo(1)
     }
 }
