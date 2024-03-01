@@ -37,13 +37,16 @@ class LottoGameController(
         manualCount: Count,
         autoLotteries: List<Lotto>,
     ) {
-        lottoGameOutputView.showLottoCount(availableCount.value, manualCount.value)
-        lottoGameOutputView.showPurchasedLotteries(autoLotteries)
+        lottoGameOutputView.run {
+            showLottoCount(availableCount.value, manualCount.value)
+            showPurchasedLotteries(autoLotteries)
+        }
     }
 
-    private fun getAutoLotteries(availableCount: Count) = List(availableCount.value) { Lotto(*numbersGenerator.generate().toIntArray()) }
+    private fun getAutoLotteries(availableCount: Count): List<Lotto> =
+        List(availableCount.value) { Lotto(*numbersGenerator.generate().toIntArray()) }
 
-    private fun getManualLotteries(manualCount: Count) =
+    private fun getManualLotteries(manualCount: Count): List<Lotto> =
         exceptionHandler.handleInputValue {
             lottoGameInputView.inputManualLotteryNumber(manualCount.value).map { Lotto(*it.toIntArray()) }
         }

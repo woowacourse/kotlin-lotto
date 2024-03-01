@@ -25,7 +25,7 @@
 - [x] 수익률 소수점 이하 2자리수까지 버림
 - [x] RankResults 에서 Missing 필터링
 - [x] 보너스 번호가 당첨 번호 중에 하나 일 때 예외 발생 
-- [x] IllegalArgumentException, IllegalStateException 발생 시 재 입력 받기
+- [x] IllegalArgumentException 발생 시 재 입력 받기
 
 ### 도메인
 - [x] 로또 숫자는 1 ~ 45이다.
@@ -41,7 +41,5 @@
 - [x] 당첨 순위 별 로또 개수를 산출한다. 
 - [x] 수익률을 계산하고, 손익 여부를 판단한다.
 - [x] 로또의 개수는 음수가 될 수 없다.
-
-## 질문 목록
-- RandomLottoGenerator 에서 price 를 생성자에서 받을 것인가, generate() 파라미터로 받을 것인가??
-(저희는 lotto 가격을 결정하는 주체가 RandomLottoGenerator 라고 생각하기 때문에 생성자에 위치했습니다.)
+- [x] 주어진 기회 수를 표현하는 원시값은 음수가 될 수 없다.
+- [x] 수동 로또 장수는 전체 기회 수를 초과할 수 없다.
