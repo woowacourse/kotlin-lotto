@@ -29,7 +29,7 @@ class TicketTest {
     @Test
     fun `수동으로 입력한 로또 번호를 포함하여 티켓을 발행한다`() {
         val ticket = Ticket(2000, 1000)
-        val lottos = ticket.issueLottos(listOf(Lotto(setOf(1, 2, 3, 4, 5, 6))))
+        val lottos = ticket.issueLottos(listOf(Lotto(listOf(1, 2, 3, 4, 5, 6))))
         assertThat(lottos.size).isEqualTo(3)
     }
 

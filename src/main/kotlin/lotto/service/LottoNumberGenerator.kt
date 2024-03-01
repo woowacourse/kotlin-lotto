@@ -1,5 +1,5 @@
 package lotto.service
 
 interface LottoNumberGenerator {
-    fun generate(): Set<Int>
+    fun generate(): List<Int>
 }

@@ -1,14 +1,13 @@
 package lotto.model
 
-class Lotto(numbers: Set<Int>) {
-    private val numbers: Set<LottoNumber>
-
+class Lotto(private val numbers: Set<LottoNumber>) {
     init {
         require(numbers.size == LOTTO_SIZE) {
             INVALID_LOTTO_NUMBER
         }
-        this.numbers = numbers.sorted().map { LottoNumber(it) }.toSet()
     }
+
+    constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) }.toSet())
 
     fun compare(
         otherLotto: Lotto,
