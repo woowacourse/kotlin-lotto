@@ -49,6 +49,13 @@ class LottoMachineTest {
         assertThat(lottoMachine.currentLotteries).isEqualTo(expectedCurrentLotteries)
     }
 
+    @Test
+    fun `우승 로또 정수 리스트로 우승 로또 객체를 설정할 수 있다`() {
+        val winningNumbers = listOf(1, 2, 3, 4, 5, 9)
+        lottoMachine.setWinningLotto(winningNumbers)
+        assertThat(lottoMachine.winningLotto).isEqualTo(Lotto(1, 2, 3, 4, 5, 9))
+    }
+
     companion object {
         private lateinit var lottoMachine: LottoMachine
 

@@ -39,6 +39,20 @@ class LottoGameResultTest {
     }
 
     @Test
+    fun `로또 게임에 대한 결과로, MISS에 해당하는 결과는 제공하지 않는다`() {
+        val actualResult = lottoGameResult.getWinningResult()
+        val expectedResult =
+            listOf(
+                LottoGameResult.RankResult(Rank.FIFTH, 0),
+                LottoGameResult.RankResult(Rank.FOURTH, 0),
+                LottoGameResult.RankResult(Rank.THIRD, 0),
+                LottoGameResult.RankResult(Rank.SECOND, 0),
+                LottoGameResult.RankResult(Rank.FIRST, 1),
+            )
+        assertThat(actualResult).isEqualTo(expectedResult)
+    }
+
+    @Test
     fun `로또 게임에 대한 수익률을 계산한다`() {
         // given : 준비물(객체를 만들기 위한 초기값들. 매개변수)
         val expense = Money(2000)
