@@ -7,7 +7,7 @@ class LottoCountInputView {
     fun readLottoCount(): LottoCount {
         val purchasePrice = readPurchasePrice()
         val manualLottoCount = readManualLottoCount()
-        return LottoCount(purchasePrice, 1000, manualLottoCount)
+        return LottoCount(purchasePrice, LOTTO_PRICE, manualLottoCount)
     }
 
     private fun readPurchasePrice(): Int =
@@ -34,5 +34,6 @@ class LottoCountInputView {
 
     companion object {
         private const val MINIMUM_DIGIT = 0
+        private const val LOTTO_PRICE = 1000
     }
 }
