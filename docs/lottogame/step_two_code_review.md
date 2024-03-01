@@ -10,14 +10,14 @@
 
 ## Domain  
 - [x] : DefaultManualLottieGeneratorTest.kt 테스트명 네이밍 수정  
-- [ ] : 스스로 기준을 정해서 랜덤 테스트 해보기!
+- [x] : 스스로 기준을 정해서 랜덤 테스트 해보기!
 - [x] : LottoCount 에러 메세지 상수화하기
 - [x] : LottoCount 팩토리 메서드 함수 nullable 하게 수정
 - [x] : LottoResult sealed class 적용 ( manual lotto 생성할 때 사용)  
 - [x] : Count value class 추가
 ## Comment 달 것!
 
-## 1) Readable 한 코드 
+##  Readable 한 코드 
 > 오둥이가 생각하시는 readble 한 코드는 어떤것인지 궁금합니다!!🤔  
 
 저는 작성한 코드의 의도가 클러이언트에게 쉽게 잘 전달되는 코드가 readble 한 코드라 생각합니다!  
