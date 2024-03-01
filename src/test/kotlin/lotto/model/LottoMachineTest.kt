@@ -9,18 +9,17 @@ import org.junit.jupiter.params.provider.CsvSource
 class LottoMachineTest {
     @ParameterizedTest
     @CsvSource("1", "2", "3", "10")
-    fun `발행 개수 만큼 로또를 발행한다`(count: Int) {
+    fun `자동으로 번호를 생성하여 원하는 개수만큼 로또를 발행한다`(count: Int) {
         val numbersGenerator =
             object : NumbersGenerator {
                 override fun generateNumbers(count: Int): List<Set<Int>> {
                     return List(count) { setOf(1, 2, 3, 4, 5, 6) }
                 }
             }
-        val result = LottoMachine.issueAutoTickets(count, numbersGenerator)
-        assertThat(result.size).isEqualTo(count)
-        result.forEach {
-            assertThat(it).isEqualTo(Lotto(1, 2, 3, 4, 5, 6))
-        }
+        val result = LottoMachine.issueTickets(numbersGenerator.generateNumbers(count))
+        val expected = List(count) { Lotto(1, 2, 3, 4, 5, 6) }
+
+        assertThat(result).isEqualTo(expected)
     }
 
     @Test
