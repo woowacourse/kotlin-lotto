@@ -23,5 +23,11 @@ value class Money(val amount: Int) {
         private const val MIN_MONEY = 0
         private const val EXCEPTION_MONEY_RANGE = "Money는 $MIN_MONEY 이상 이여야한다."
         private const val EXCEPTION_ZERO_DIVIDE = "0으로 나눌 수 없다"
+
+        @JvmStatic
+        fun createOrNull(amount: Int): Money? {
+            if (amount < MIN_MONEY) return null
+            return Money(amount)
+        }
     }
 }
