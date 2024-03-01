@@ -3,7 +3,7 @@ package lotto.model
 import lotto.service.LottoNumberGenerator
 import lotto.service.RandomLottoNumberGenerator
 
-class Ticket(
+class LottoMachine(
     val lottoCount: LottoCount,
 ) {
     fun issueLottos(

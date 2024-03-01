@@ -2,7 +2,7 @@ package lotto.controller
 
 import lotto.model.Lotto
 import lotto.model.LottoCount
-import lotto.model.Ticket
+import lotto.model.LottoMachine
 import lotto.view.LottoCountInputView
 import lotto.view.ManualLottoInputView
 import lotto.view.OutputView
@@ -16,10 +16,10 @@ class LottoController(
 ) {
     fun run() {
         val lottoCount = lottoCountInputView.readLottoCount()
-        val ticket = Ticket(lottoCount)
+        val lottoMachine = LottoMachine(lottoCount)
 
         val manualLottoNumbers = manualLottoInputView.readManualLottoNumbers(lottoCount.manualCount)
-        val lottos = ticket.issueLottos(manualLottoNumbers)
+        val lottos = lottoMachine.issueLottos(manualLottoNumbers)
         outputView.printPurchaseLotto(lottoCount, lottos)
 
         printResult(lottos, lottoCount)
