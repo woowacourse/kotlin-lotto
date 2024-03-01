@@ -1,6 +1,6 @@
 package lotto.util
 
-class ExceptionHandler {
+object ExceptionHandler {
     fun <T> handleInputValue(action: () -> T): T =
         runCatching(action).onFailure {
             println(it.message)
