@@ -9,11 +9,11 @@ import lottogame.view.ConsoleLottoGameOutputView
 
 fun main() {
     Thread.setDefaultUncaughtExceptionHandler { _, exception ->
-        LottoGameController(
-            ConsoleLottoGameInputView(),
-            ConsoleLottoGameOutputView(),
-            DefaultLottoMachine(DefaultAutoLottieGenerator(), DefaultManualLottieGenerator()),
-        ).startLottoGame()
         exception.printStackTrace()
     }
+    LottoGameController(
+        ConsoleLottoGameInputView(),
+        ConsoleLottoGameOutputView(),
+        DefaultLottoMachine(DefaultAutoLottieGenerator(), DefaultManualLottieGenerator()),
+    ).startLottoGame()
 }
