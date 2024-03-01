@@ -22,8 +22,21 @@ data class Lotto(val numbers: List<LottoNumber>) {
         private const val EXCEPTION_SORTED_LOTTO_NUMS = "로또 숫자는 오름차순으로 정렬되어야합니다."
 
         @JvmStatic
-        operator fun invoke(numbers: List<Int>): Lotto {
-            return Lotto(*numbers.toIntArray())
+        fun createLottoResult(lottoNumbers: List<LottoNumber>): LottoResult {
+            if (lottoNumbers.size != LOTTO_NUM_SIZE) return LottoResult.InvalidNumberSize
+            if (lottoNumbers.distinct().size != LOTTO_NUM_SIZE) return LottoResult.InvalidDuplicateNumber
+            if (lottoNumbers.sortedBy { it.number } != lottoNumbers.toList()) return LottoResult.InvalidSort
+            return LottoResult.Success(Lotto(lottoNumbers))
         }
     }
+}
+
+sealed interface LottoResult {
+    data class Success(val lotto: Lotto) : LottoResult
+
+    data object InvalidNumberSize : LottoResult
+
+    data object InvalidDuplicateNumber : LottoResult
+
+    data object InvalidSort : LottoResult
 }

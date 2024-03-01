@@ -5,6 +5,7 @@ import lottogame.model.Lotto
 import lottogame.model.LottoCount
 import lottogame.model.LottoGameResult
 import lottogame.model.LottoNumber
+import lottogame.model.LottoResult
 import lottogame.model.Money
 import lottogame.model.Rank
 import lottogame.model.generator.GeneralLottoNumber
@@ -42,25 +43,17 @@ class LottoGameController(
     ): List<Lotto> {
         val manualLottie = buyManualLottie(count = manualLottoCount)
         val restCost = buyingCost - LOTTO_PRICE * manualLottoCount.amount
-        val autoLottie = buyAutoLottie(restCost)
+        val autoLottie = lottoMachine.generateAutoLottie(restCost)
         outputView.showPurchaseLotto(manualLottie, autoLottie)
         return manualLottie + autoLottie
     }
 
-    private fun buyManualLottie(count: LottoCount): List<Lotto> =
-        runCatching {
-            val manualLottie = inputView.inputManualLottoNumbers(count.amount)
-            lottoMachine.generateManualLottie(manualLottie)
-        }.onFailure {
-            if (it is IllegalArgumentException) return buyManualLottie(count)
-        }.getOrThrow()
-
-    private fun buyAutoLottie(cost: Money): List<Lotto> =
-        runCatching {
-            lottoMachine.generateAutoLottie(cost)
-        }.onFailure {
-            if (it is IllegalArgumentException) return buyAutoLottie(cost)
-        }.getOrThrow()
+    private tailrec fun buyManualLottie(count: LottoCount): List<Lotto> {
+        val manualLottie = inputView.inputManualLottoNumbers(count.amount)
+        val lottieResult = lottoMachine.generateManualLottie(manualLottie)
+        if (lottieResult.any { it !is LottoResult.Success }) return buyManualLottie(count)
+        return lottieResult.map { (it as LottoResult.Success).lotto }
+    }
 
     private tailrec fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber {
         val bonusNumber = inputView.inputBonusNumber()

@@ -13,6 +13,7 @@
 - [ ] : 스스로 기준을 정해서 랜덤 테스트 해보기!
 - [x] : LottoCount 에러 메세지 상수화하기
 - [x] : LottoCount 팩토리 메서드 함수 nullable 하게 수정
+- [x] : LottoResult sealed class 적용 ( manual lotto 생성할 때 사용)  
 ## Comment 달 것!
 
 ## 1) Readable 한 코드 
