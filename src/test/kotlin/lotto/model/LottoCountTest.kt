@@ -4,9 +4,20 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class LottoCountTest {
+    @ParameterizedTest
+    @CsvSource("1000,1", "10000,10")
+    fun `자동으로 발행할 수 있는 로또의 개수 계산한다`(
+        purchasePrice: Int,
+        amount: Int,
+    ) {
+        val lottoCount = LottoCount(purchasePrice, LOTTO_PRICE, 0)
+        assertThat(lottoCount.autoCount).isEqualTo(amount)
+    }
+
     @Test
     fun `구입 금액과 수동으로 구매할 로또 개수에 따라 자동으로 구매할 로또 개수를 구한다`() {
         val lottoCount = LottoCount(14000, LOTTO_PRICE, MANUAL_COUNT)
