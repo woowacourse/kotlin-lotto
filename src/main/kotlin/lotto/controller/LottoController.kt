@@ -1,10 +1,11 @@
 package lotto.controller
 
-import lotto.model.AutoLottoMachine
+import lotto.model.LottoMachine
 import lotto.model.LottoNumber
+import lotto.model.LottoNumber.Companion.MAX_LOTTO_NUMBER
+import lotto.model.LottoNumber.Companion.MIN_LOTTO_NUMBER
 import lotto.model.LottoWinningPrize
 import lotto.model.LottoWinningRank
-import lotto.model.ManualLottoMachine
 import lotto.model.Rank
 import lotto.model.UserLottoTicket
 import lotto.view.InputView
@@ -15,21 +16,23 @@ class LottoController {
     private val outputView = OutputView()
 
     fun runLotto() {
-        val userTickets = purchaseLottoTickets()
-        val rankMap = checkLottoWinning(userTickets)
-        val lottoWinningPrize = LottoWinningPrize(rankMap)
-        printLottoWinning(lottoWinningPrize, userTickets, rankMap)
-    }
-
-    private fun purchaseLottoTickets(): List<UserLottoTicket> {
         val purchasePrice = inputView.getPurchasePrice()
         val manualLottoNumbers = inputView.getManualLottoTickets()
-        val autoTickets = AutoLottoMachine(purchasePrice, manualLottoNumbers.size).makeAutoTickets()
-        val manualTickets = ManualLottoMachine(manualLottoNumbers).makeManualTickets()
+        val randomNumbers =
+            List(purchasePrice / 1000 - manualLottoNumbers.size) {
+                (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).shuffled().take(6)
+            }
+        val lottoMachine = LottoMachine()
+        val autoTickets = lottoMachine.make(randomNumbers)
+        val manualTickets = lottoMachine.make(manualLottoNumbers)
+
         val userTickets = manualTickets + autoTickets
         outputView.printLottoCount(manualLottoNumbers.size, autoTickets.size)
         outputView.printUserTickets(userTickets)
-        return userTickets
+
+        val rankMap = checkLottoWinning(userTickets)
+        val lottoWinningPrize = LottoWinningPrize(rankMap)
+        printLottoWinning(lottoWinningPrize, userTickets, rankMap)
     }
 
     private fun checkLottoWinning(userTickets: List<UserLottoTicket>): Map<Rank, Int> {
