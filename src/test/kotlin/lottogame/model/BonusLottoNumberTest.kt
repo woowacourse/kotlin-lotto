@@ -1,8 +1,8 @@
 package lottogame.model
 
 import lottogame.model.generator.GeneralLottoNumber
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class BonusLottoNumberTest {
     @Test
@@ -18,9 +18,9 @@ class BonusLottoNumberTest {
                 GeneralLottoNumber(5),
                 GeneralLottoNumber(6),
             )
+        // then
+        val bonusNumber = BonusLottoNumber.createOrNull(lottoNumber, winningLotto)
         // when
-        assertThrows<IllegalArgumentException> {
-            BonusLottoNumber.of(lottoNumber, winningLotto)
-        }
+        assertThat(bonusNumber).isNull()
     }
 }

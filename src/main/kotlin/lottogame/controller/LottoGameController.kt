@@ -62,13 +62,11 @@ class LottoGameController(
             if (it is IllegalArgumentException) return buyAutoLottie(cost)
         }.getOrThrow()
 
-    private fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber =
-        runCatching {
-            val bonusNumber = inputView.inputBonusNumber()
-            BonusLottoNumber.of(GeneralLottoNumber(bonusNumber), winningLottoNumbers)
-        }.onFailure {
-            if (it is IllegalArgumentException) return createBonusLottoNumber(winningLottoNumbers)
-        }.getOrThrow()
+    private tailrec fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber {
+        val bonusNumber = inputView.inputBonusNumber()
+        return BonusLottoNumber.createOrNull(GeneralLottoNumber(bonusNumber), winningLottoNumbers)
+            ?: createBonusLottoNumber(winningLottoNumbers)
+    }
 
     private fun displayLottoResult(
         gameResult: LottoGameResult,
