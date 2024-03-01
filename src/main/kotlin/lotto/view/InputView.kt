@@ -11,7 +11,7 @@ class InputView {
             val purchasePrice = readln()
             validateDigit(purchasePrice, INVALID_PURCHASE_PRICE)
             purchasePrice.toInt()
-        }
+        }.also { println() }
 
     fun readManualLottoCount(): Int =
         retryWhileNoException {
@@ -19,13 +19,13 @@ class InputView {
             val manualLottoCount = readln()
             isPositiveDigit(manualLottoCount)
             manualLottoCount.toInt()
-        }
+        }.also { println() }
 
     fun readManualLottoNumbers(manualCount: Int): List<Lotto> =
         retryWhileNoException {
             println(INPUT_MANUAL_LOTTO_NUMBERS)
             List(manualCount) { createLotto() }
-        }
+        }.also { println() }
 
     private fun createLotto(): Lotto {
         val lotto = readln()
@@ -51,7 +51,7 @@ class InputView {
             val bonusNumber = readln()
             validateDigit(bonusNumber, INVALID_BONUS_NUMBER)
             LottoNumber(bonusNumber.toInt())
-        }
+        }.also { println() }
 
     private fun validateDigit(
         lottoNumbers: String,
