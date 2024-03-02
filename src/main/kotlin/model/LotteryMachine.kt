@@ -2,6 +2,7 @@ package model
 
 import entity.Ticket
 import utils.LotteriesGenerationStrategy
+import utils.ManualLotteriesGenerationStrategy
 
 object LotteryMachine {
     fun issueLotteries(lotteriesGenerationStrategy: LotteriesGenerationStrategy): List<Lottery> {
@@ -9,10 +10,12 @@ object LotteryMachine {
     }
 
     fun issueTicket(
-        manualLotteries: List<Lottery>,
-        autoLotteries: List<Lottery>,
+        manualLotteriesInput: List<List<String>>,
+        strategyForAuto: LotteriesGenerationStrategy,
         purchaseInformation: PurchaseInformation,
     ): Ticket {
+        val manualLotteries = issueLotteries(ManualLotteriesGenerationStrategy(manualLotteriesInput))
+        val autoLotteries = issueLotteries(strategyForAuto)
         val userLotteries = mutableListOf<Lottery>()
 
         userLotteries.addAll(manualLotteries)

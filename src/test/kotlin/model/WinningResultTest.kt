@@ -4,7 +4,6 @@ import model.WinningResult.Companion.round
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import utils.ExplicitLotteriesGenerationStrategy
-import utils.ManualLotteriesGenerationStrategy
 
 class WinningResultTest {
     @Test
@@ -25,13 +24,10 @@ class WinningResultTest {
                 setOf(10, 11, 12, 13, 14, 15),
             )
 
-        val manualLotteries = LotteryMachine.issueLotteries(ManualLotteriesGenerationStrategy(manualInput))
-        val autoLotteries = LotteryMachine.issueLotteries(ExplicitLotteriesGenerationStrategy(autoInput))
-
         val purchaseInformation = PurchaseInformation(Amount(6000), ManualLotteryCount(manualInput.size))
 
         val ticket =
-            LotteryMachine.issueTicket(manualLotteries, autoLotteries, purchaseInformation)
+            LotteryMachine.issueTicket(manualInput, ExplicitLotteriesGenerationStrategy(autoInput), purchaseInformation)
 
         val winningResult = WinningResult.of(ticket, winningLottery, bonus)
 
