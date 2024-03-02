@@ -16,10 +16,10 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int, private val isBonu
             countOfMatch: Int,
             matchBonus: Boolean,
         ): Rank {
-            return when {
-                countOfMatch == SECOND.countOfMatch && matchBonus -> SECOND
-                else -> entries.find { countOfMatch == it.countOfMatch } ?: MISS
+            if (countOfMatch == SECOND.countOfMatch && matchBonus) {
+                return SECOND
             }
+            return entries.find { countOfMatch == it.countOfMatch } ?: MISS
         }
     }
 }
