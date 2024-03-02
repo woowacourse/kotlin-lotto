@@ -1,8 +1,5 @@
 package lotto.view
 
-import lotto.model.Lotto
-import lotto.model.LottoNumber
-
 object InputView {
     private const val INPUT_PURCHASE_PRICE = "구입금액을 입력해 주세요."
     private const val INPUT_MANUAL_LOTTO_SIZE = "수동으로 구매할 로또 수를 입력해 주세요."
@@ -25,28 +22,26 @@ object InputView {
         return inputManualLottoSize.validateAndConvertDigit()
     }
 
-    fun readManualLottos(manualLottoSize: Int): List<Lotto> {
+    fun readManualLottos(manualLottoSize: Int): List<List<Int>> {
         lineBreak()
         println(INPUT_MANUAL_LOTTOS)
         return List(manualLottoSize) { readLottoNumbers() }
     }
 
-    fun readWinningLottoNumbers(): Lotto {
+    fun readWinningLottoNumbers(): List<Int> {
         println(INPUT_WINNING_LOTTO_NUMBERS)
         return readLottoNumbers()
     }
 
-    private fun readLottoNumbers(): Lotto {
+    private fun readLottoNumbers(): List<Int> {
         val inputLottoNumbers = readln()
-        val lottoNumbers = inputLottoNumbers.validateAndConvertDigitList()
-        return Lotto.create(lottoNumbers)
+        return inputLottoNumbers.validateAndConvertDigitList()
     }
 
-    fun readBonusNumber(): LottoNumber {
+    fun readBonusNumber(): Int {
         println(INPUT_BONUS_NUMBER)
         val inputBonusNumber = readln()
-        val bonusNumber = inputBonusNumber.validateAndConvertDigit()
-        return LottoNumber.from(bonusNumber)
+        return inputBonusNumber.validateAndConvertDigit()
     }
 
     private fun String.validateAndConvertDigitList(): List<Int> {

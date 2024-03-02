@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class LottoStoreTest {
     private val automaticLottos =
-        LottoStore.buyAutoMaticLottos(
+        LottoStore.buyLottos(
             5,
             object : LottoMachine {
                 override fun generate() = listOf(1, 2, 3, 4, 5, 6)
