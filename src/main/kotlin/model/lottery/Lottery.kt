@@ -42,8 +42,6 @@ class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
 
         fun fromRandom(): Lottery = of(*LOTTERY_NUMBER_RANGE.shuffled().take(LOTTERY_NUMBER_COUNT).sorted().toIntArray())
 
-        fun fromManual(vararg numbers: Int): Lottery = of(*numbers)
-
         fun from(input: String): Lottery {
             require(input.isNotBlank()) { "공백을 입력하셨습니다." }
             val numbers = input.split(",").map { LotteryNumber(it.toInt()) }
