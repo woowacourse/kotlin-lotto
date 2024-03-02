@@ -1,3 +1,4 @@
 package lotto.model
 
-data class Margin(val rate: Double)
+@JvmInline
+value class Margin(val rate: Double)
