@@ -26,12 +26,11 @@ class LottoGameController {
         val getManualCounts = InputView.getManualTicketCounts()
         val ticketCounts = TicketCounts(NumberOfTickets(purchaseAmount), NumberOfManual(getManualCounts))
         val lottoMachine = LottoMachine(ticketCounts)
-        var manualLotto = listOf<Lotto>()
-        if (lottoMachine.ticketCounts.numberOfManual.counts != NumberOfManual.MIN_NUMBER_OF_MANUAL) {
-            manualLotto = InputView.getManualLotto(ticketCounts.numberOfManual.counts)
+        return if (lottoMachine.ticketCounts.numberOfManual.counts != NumberOfManual.MIN_NUMBER_OF_MANUAL) {
+            lottoMachine.issueTickets(InputView.getManualLotto(ticketCounts.numberOfManual.counts))
+        } else {
+            lottoMachine.issueTickets()
         }
-
-        return lottoMachine.issueTickets(manualLotto)
     }
 
     private fun makeResult(lottoTickets: List<Lotto>) {
