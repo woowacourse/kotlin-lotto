@@ -7,7 +7,6 @@ import lotto.model.LottoNumberGenerator
 import lotto.model.LottoStore
 import lotto.model.PurchaseAmount
 import lotto.model.WinningLotto
-import lotto.model.WinningPrizeCalculator
 import lotto.model.WinningRank
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -61,14 +60,15 @@ class LottoController(private val inputView: InputView, private val outputView: 
         winningLotto: WinningLotto,
         purchaseAmount: Int,
     ) {
-        val rankCounts = lottoStore.getWinningResult(winningLotto)
+        val rankCounts = winningLotto.getWinningResult(lottoStore.lottos)
 
         WinningRank.entries.forEach { rank ->
             if (rank != WinningRank.NONE) {
                 outputView.printRankStatistics(rank, rankCounts[rank] ?: DEFAULT_COUNT)
             }
         }
-        val profitRate = WinningPrizeCalculator.calculateProfitRate(purchaseAmount, rankCounts)
+
+        val profitRate = lottoStore.calculateProfitRate(purchaseAmount, rankCounts)
         outputView.printProfitRateMessage(profitRate)
     }
 

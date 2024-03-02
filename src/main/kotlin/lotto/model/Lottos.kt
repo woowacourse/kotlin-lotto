@@ -5,16 +5,7 @@ class Lottos(val lottos: MutableList<Lotto> = mutableListOf()) {
         lottos.add(lotto)
     }
 
-    fun winningResult(winningLotto: WinningLotto): Map<WinningRank, Int> {
-        val winningResult =
-            lottos.groupBy { lotto ->
-                val matchCount = lotto.getMatchCount(winningLotto.winningNumbers)
-                val matchBonus = lotto.getMatchBonus(winningLotto.bonusNumber)
-                WinningRank.findByMatchCount(matchCount, matchBonus)
-            }.mapValues { (_, value) -> value.size }
-
-        return winningResult
-    }
+    fun getLottos(): List<Lotto> = lottos
 
     fun printLottoNumbers(): List<String> {
         return lottos.map { lotto ->

@@ -1,10 +1,20 @@
 package lotto.model
 
-class WinningLotto(val winningNumbers: Lotto, val bonusNumber: LottoNumber) {
+class WinningLotto(private val winningNumbers: Lotto, private val bonusNumber: LottoNumber) {
     init {
         require(!winningNumbers.getMatchBonus(bonusNumber)) {
             ERROR_BONUS_DUPLICATE
         }
+    }
+
+    fun getWinningResult(lottos: Lottos): Map<WinningRank, Int> {
+        val winningResult =
+            lottos.getLottos().groupBy { lotto ->
+                val matchCount = lotto.getMatchCount(winningNumbers)
+                val matchBonus = lotto.getMatchBonus(bonusNumber)
+                WinningRank.findByMatchCount(matchCount, matchBonus)
+            }.mapValues { (_, value) -> value.size }
+        return winningResult
     }
 
     companion object {
