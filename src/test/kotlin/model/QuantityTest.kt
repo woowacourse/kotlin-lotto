@@ -14,7 +14,7 @@ class QuantityTest {
 
     @Test
     fun `수량끼리 더한다`() {
-        var quantity = Quantity()
+        var quantity = Quantity(0)
         quantity += Quantity(1)
         assertThat(quantity).isEqualTo(Quantity(1))
     }
@@ -24,11 +24,5 @@ class QuantityTest {
         var quantity = Quantity(10)
         quantity -= Quantity(3)
         assertThat(quantity).isEqualTo(Quantity(7))
-    }
-
-    @Test
-    fun `문자열로부터 수량을 만든다`() {
-        val quantity = Quantity.from("20")
-        assertThat(quantity.count).isEqualTo(20)
     }
 }
