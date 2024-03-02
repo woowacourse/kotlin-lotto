@@ -1,7 +1,4 @@
-package entity
-
-import model.Lottery
-import model.PurchaseInformation
+package model
 
 data class Ticket(
     val userLotteries: List<Lottery>,

@@ -1,7 +1,5 @@
 package model
 
-import entity.Ticket
-
 class WinningResult(val stats: Map<Rank, Int>, val roi: Double) {
     companion object {
         private const val DECIMALS = 2

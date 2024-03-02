@@ -1,6 +1,5 @@
 package model
 
-import entity.Ticket
 import utils.LotteriesGenerationStrategy
 import utils.ManualLotteriesGenerationStrategy
 

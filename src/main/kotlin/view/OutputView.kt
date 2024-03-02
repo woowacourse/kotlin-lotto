@@ -1,7 +1,7 @@
 package view
 
-import entity.Ticket
 import model.Rank
+import model.Ticket
 import model.WinningResult
 
 object OutputView {

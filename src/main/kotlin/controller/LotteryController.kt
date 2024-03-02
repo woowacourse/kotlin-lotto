@@ -1,12 +1,12 @@
 package controller
 
-import entity.Ticket
 import model.Amount
 import model.Bonus
 import model.Lottery
 import model.LotteryMachine
 import model.ManualLotteryCount
 import model.PurchaseInformation
+import model.Ticket
 import model.WinningResult
 import utils.RandomLotteriesGenerationStrategy
 import view.InputView
