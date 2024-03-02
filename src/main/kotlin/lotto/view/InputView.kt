@@ -1,6 +1,5 @@
 package lotto.view
 
-import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.util.ValidationUtils
 
@@ -19,12 +18,13 @@ object InputView {
         return input.toInt()
     }
 
-    fun getManualLotto(count: Int): List<Lotto> {
+    fun getManualLotto(count: Int): List<String> {
         println("\n수동으로 구매할 번호를 입력해 주세요.")
-        val manualLottoTickets = mutableListOf<Lotto>()
+        val manualLottoTickets = mutableListOf<String>()
         repeat(count) {
             val input = readln()
-            manualLottoTickets.add(Lotto(input.split(",").map { LottoNumber(it.trim()) }))
+            input.split(",").map { it.trim() }.forEach { ValidationUtils.validateIfInteger(it) }
+            manualLottoTickets.add(input)
         }
         return manualLottoTickets
     }
