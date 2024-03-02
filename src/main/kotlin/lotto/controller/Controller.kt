@@ -1,6 +1,5 @@
 package lotto.controller
 
-import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.Lottos
 import lotto.model.RandomLottoNumberGenerator
@@ -56,7 +55,7 @@ class Controller {
         val manualCount = readHowManyManually(charge)
         val autocount = (charge / LOTTO_PRICE).toInt() - manualCount
         insertManuallyLotto()
-        val manualLottos = makeManualLottos(List(manualCount) { readManualLottoNumber() })
+        val manualLottos = Lottos((List(manualCount) { readManualLottoNumber() }))
         return Triple(manualCount, autocount, manualLottos)
     }
 
@@ -82,9 +81,5 @@ class Controller {
                 lotto
             },
         )
-    }
-
-    private fun makeManualLottos(lottos: List<Lotto>): Lottos {
-        return Lottos(lottos)
     }
 }

@@ -1,9 +1,9 @@
 package lotto.model
 
 enum class LottoPrize(
-    private val matchNumbers: Int,
-    private val price: Int,
-    private val requiresBonus: Boolean = false,
+    val matchNumbers: Int,
+    val price: Int,
+    val requiresBonus: Boolean = false,
 ) {
     BOOM(0, 0),
     FIFTH(3, 5_000),
@@ -25,8 +25,4 @@ enum class LottoPrize(
             return entries.find { it.matchNumbers == matchCount && (!it.requiresBonus || !matchBonus) } ?: BOOM
         }
     }
-
-    fun getMatchNumbers(): Int = matchNumbers
-
-    fun getPrice(): Int = price
 }
