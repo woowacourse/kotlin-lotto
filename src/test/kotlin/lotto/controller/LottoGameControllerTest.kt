@@ -4,7 +4,7 @@ import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.WinningLotto
-import lotto.model.WinningRank
+import lotto.model.WinningResult
 import lotto.util.NumberGenerate
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
@@ -35,15 +35,9 @@ class LottoGameControllerTest {
                 LottoNumber(bonusNumber),
             )
         val expectedResult = resultInput.split(" ")
-        val actualResult =
-            lottoTickets.map {
-                WinningRank.convert(
-                    it.checkWinningNumbers(winningLotto.winning),
-                    it.checkBonusNumbers(winningLotto.bonusNumber),
-                )
-            }
+        val actualResult = WinningResult.create(winningLotto, lottoTickets)
 
-        for (idx in actualResult.indices)
-            Assertions.assertThat(actualResult[idx].name).isEqualTo(expectedResult[idx])
+        for (idx in actualResult.result.indices)
+            Assertions.assertThat(actualResult.result[idx].name).isEqualTo(expectedResult[idx])
     }
 }

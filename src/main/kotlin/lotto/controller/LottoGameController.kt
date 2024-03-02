@@ -4,7 +4,7 @@ import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.NumberOfManual
 import lotto.model.WinningLotto
-import lotto.model.WinningRank
+import lotto.model.WinningResult
 import lotto.model.WinningStatusChecker
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -34,15 +34,8 @@ class LottoGameController {
 
     private fun makeResult(lottoTickets: List<Lotto>) {
         val winningLotto = WinningLotto(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
-        val winningResult =
-            lottoTickets
-                .map {
-                    WinningRank.convert(
-                        it.checkWinningNumbers(winningLotto.winning),
-                        it.checkBonusNumbers(winningLotto.bonusNumber),
-                    )
-                }
-        val winningStatusChecker = WinningStatusChecker(winningResult)
+        val winningResult = WinningResult.create(winningLotto, lottoTickets)
+        val winningStatusChecker = WinningStatusChecker(winningResult.result)
 
         OutputView.printWinningStatus(winningStatusChecker)
         OutputView.printEarningRate(winningStatusChecker.getEarningRate())
