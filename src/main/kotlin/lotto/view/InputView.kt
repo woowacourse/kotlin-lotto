@@ -1,7 +1,5 @@
 package lotto.view
 
-import lotto.util.ValidationUtils
-
 object InputView {
     private const val INVALID_INPUT_VALUE = -1
 
@@ -14,7 +12,6 @@ object InputView {
     fun getWinningNumbers(): Set<Int> {
         println("지난 주 당첨 번호를 입력해 주세요.")
         val input = readln()
-        input.split(",").forEach { ValidationUtils.validateLottoNumber(it.trim()) }
         return input.split(",").map { it.trim().toIntOrNull() ?: INVALID_INPUT_VALUE }.toSet()
     }
 
@@ -33,7 +30,6 @@ object InputView {
         println("수동으로 구매할 번호를 입력해 주세요.")
         return List(count) {
             val input = readln().split(",")
-            input.forEach { ValidationUtils.validateLottoNumber(it.trim()) }
             input.map { it.trim().toIntOrNull() ?: INVALID_INPUT_VALUE }.toSet()
         }
     }
