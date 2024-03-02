@@ -22,41 +22,69 @@ class LottoController(
     }
 
     private fun runLottoMachine(): LottoMachine {
-        return try {
-            val amount = inputView.readPurchaseAmount()
+        return runCatching {
+            val amount = getPurchaseAmount()
             val manualLottoAmount = getManualLottoAmount()
 
-            return LottoMachine(amount, manualLottoAmount)
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
+            LottoMachine(amount, manualLottoAmount)
+        }.getOrElse {
+            println(it.message)
             runLottoMachine()
         }
     }
 
+    private fun getPurchaseAmount(): Int {
+        return inputView.readPurchaseAmount() ?: run {
+            println(INVALID_FORMAT_EXCEPTION_MESSAGE)
+            getPurchaseAmount()
+        }
+    }
+
     private fun getManualLottoAmount(): Int {
-        return try {
-            inputView.readManualLottoAmount()
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
+        return inputView.readManualLottoAmount() ?: run {
+            println(INVALID_FORMAT_EXCEPTION_MESSAGE)
             getManualLottoAmount()
         }
     }
 
     private fun makeLottoes(lottoMachine: LottoMachine): List<Lotto> {
-        val lottoes: MutableList<Lotto> = mutableListOf()
-        if (lottoMachine.manual > 0) {
-            println("\n수동으로 구매할 번호를 입력해 주세요.")
-        }
-        repeat(lottoMachine.manual) { lottoes.add(Lotto.makeLotto(MakeManualLotto(inputView.readManualLottos()))) }
-        repeat(lottoMachine.auto) { lottoes.add(Lotto.makeLotto(MakeRandomLotto())) }
+        val lottoes = makeManualLotto(lottoMachine.manual) + makeAutoLotto(lottoMachine.auto)
 
         outputView.printLottoNumbers(lottoMachine, lottoes)
 
         return lottoes
     }
 
+    private fun makeManualLotto(countOfManual: Int): List<Lotto> {
+        if (countOfManual > 0) {
+            println("\n수동으로 구매할 번호를 입력해 주세요.")
+        }
+
+        return runCatching {
+            List(countOfManual) {
+                val manualLotto = inputView.readManualLottos().map {
+                    it.trim().toIntOrNull() ?: throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)
+                }
+
+                Lotto.makeLotto(MakeManualLotto(manualLotto))
+            }
+        }.getOrElse {
+            println(it.message)
+            makeManualLotto(countOfManual)
+        }
+    }
+
+    private fun makeAutoLotto(countOfAuto: Int): List<Lotto> {
+        return runCatching {
+            List(countOfAuto) { Lotto.makeLotto(MakeRandomLotto()) }
+        }.getOrElse {
+            println(it.message)
+            makeAutoLotto(countOfAuto)
+        }
+    }
+
     private fun drawLotto(lottoTickets: List<Lotto>): LottoDrawingResult {
-        val winningLotto = getValidWinningLotto(getValidLotto())
+        val winningLotto = getValidWinningLotto()
         val lottoDrawingResult = LottoDrawingResult()
 
         lottoDrawingResult.countRank(lottoTickets, winningLotto)
@@ -65,30 +93,48 @@ class LottoController(
         return lottoDrawingResult
     }
 
-    private fun getValidLotto(): Lotto {
-        return try {
-            Lotto(inputView.readWinningNumbers())
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
-            getValidLotto()
-        }
-    }
-
-    private fun getValidWinningLotto(winningLotto: Lotto): WinningLotto {
-        return try {
+    private fun getValidWinningLotto(): WinningLotto {
+        return runCatching {
+            val winningNumbers = getWinningNumbers()
             val bonusNumber = getBonusNumber()
-            WinningLotto(winningLotto, bonusNumber)
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
-            getValidWinningLotto(winningLotto)
+            WinningLotto(winningNumbers, bonusNumber)
+        }.getOrElse {
+            println(it.message)
+            getValidWinningLotto()
         }
     }
 
-    private fun getBonusNumber(): LottoNumber = LottoNumber.from(inputView.readBonusNumber())
+    private fun getWinningNumbers(): Lotto {
+        return runCatching {
+            val winningNumbers = inputView.readWinningNumbers().map {
+                it.trim().toIntOrNull() ?: run {
+                    throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)
+                }
+            }
+
+            Lotto(winningNumbers)
+        }.getOrElse {
+            println(it.message)
+            getWinningNumbers()
+        }
+    }
+
+    private fun getBonusNumber(): LottoNumber {
+        val bonusNumber = inputView.readBonusNumber() ?: run {
+            println(INVALID_FORMAT_EXCEPTION_MESSAGE)
+            return getBonusNumber()
+        }
+
+        return LottoNumber.from(bonusNumber)
+    }
 
     private fun showResult(lottoMachine: LottoMachine, lottoDrawingResult: LottoDrawingResult) {
         val totalPrize = lottoDrawingResult.calculateTotalPrize()
         val marginRate = lottoMachine.calculateMargin(totalPrize)
         outputView.printMargin(marginRate)
+    }
+
+    companion object {
+        private const val INVALID_FORMAT_EXCEPTION_MESSAGE = "입력값은 정수여야 합니다."
     }
 }
