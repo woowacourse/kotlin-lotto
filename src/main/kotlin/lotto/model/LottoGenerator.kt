@@ -9,9 +9,10 @@ object LottoGenerator {
         )
     }
 
-    private fun getLottoNumbers(): List<LottoNumber> {
+    private fun getLottoNumbers(): Set<LottoNumber> {
         return lottos
             .shuffled()
             .take(Lotto.LOTTO_LEN)
+            .toSet()
     }
 }
