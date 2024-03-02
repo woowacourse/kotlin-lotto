@@ -22,7 +22,7 @@ class LottoGameController {
 
         val winningStatus = makeResult(totalLottoTickets)
         OutputView.printWinningStatus(winningStatus)
-        OutputView.printEarningRate(winningStatus.getEarningRate(purchaseAmount.money))
+        OutputView.printEarningRate(winningStatus.getEarningRate(purchaseAmount))
     }
 
     private fun getPurchaseAmount(): PurchaseAmount {
