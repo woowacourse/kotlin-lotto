@@ -1,6 +1,5 @@
 package model.lottery
 
-import WinningLottery
 import model.winning.WinningRank
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -13,7 +12,7 @@ class WinningLotteryTest {
         assertThrows<IllegalArgumentException> {
             WinningLottery(
                 Lottery.of(1, 3, 5, 7, 9, 11),
-                LotteryNumber(11),
+                LotteryNumber.of(11),
             )
         }
     }
@@ -23,7 +22,7 @@ class WinningLotteryTest {
         assertDoesNotThrow {
             WinningLottery(
                 Lottery.of(1, 3, 5, 7, 9, 11),
-                LotteryNumber(13),
+                LotteryNumber.of(13),
             )
         }
     }
@@ -33,7 +32,7 @@ class WinningLotteryTest {
         val winningLottery =
             WinningLottery(
                 Lottery.of(1, 2, 3, 4, 5, 7),
-                LotteryNumber(6),
+                LotteryNumber.of(6),
             )
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
 

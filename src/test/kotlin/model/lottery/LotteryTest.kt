@@ -19,14 +19,14 @@ class LotteryTest {
     @Test
     fun `로또 번호가 보너스 번호를 포함하지 않는다면 보너스 매치가 거짓이다`() {
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
-        val bonusNumber = LotteryNumber(21)
+        val bonusNumber = LotteryNumber.of(21)
         assertFalse(bonusNumber in lottery)
     }
 
     @Test
     fun `로또 번호가 보너스 번호를 포함하면 보너스 매치가 참이다`() {
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
-        val bonusNumber = LotteryNumber(21)
+        val bonusNumber = LotteryNumber.of(21)
         assertFalse(bonusNumber in lottery)
     }
 }

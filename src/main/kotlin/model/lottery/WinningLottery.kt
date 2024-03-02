@@ -1,5 +1,5 @@
-import model.lottery.Lottery
-import model.lottery.LotteryNumber
+package model.lottery
+
 import model.winning.WinningRank
 
 data class WinningLottery(val lottery: Lottery, val bonusNumber: LotteryNumber) {

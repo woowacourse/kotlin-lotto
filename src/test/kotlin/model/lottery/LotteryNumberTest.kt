@@ -2,7 +2,6 @@ package model.lottery
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -12,14 +11,14 @@ import org.junit.jupiter.params.provider.ValueSource
 class LotteryNumberTest {
     @Test
     fun `로또 번호 한개를 저장한다`() {
-        val lotteryNumber = LotteryNumber(1)
+        val lotteryNumber = LotteryNumber.of(1)
         assertThat(lotteryNumber.number).isEqualTo(1)
     }
 
     @ParameterizedTest
     @ValueSource(ints = [1, 2, 44, 45])
     fun `1 이상 45 이하의 숫자여야 한다`(number: Int) {
-        val lotteryNumber = LotteryNumber(number)
+        val lotteryNumber = LotteryNumber.of(number)
         assertTrue(lotteryNumber.number in 1..45)
     }
 
@@ -27,7 +26,7 @@ class LotteryNumberTest {
     @ValueSource(ints = [-1, 0, 46])
     fun `1 이상 45 이하의 숫자가 아니라면 예외를 발생시킨다_리팩토링 이전`(number: Int) {
         assertThrows<IllegalArgumentException> {
-            LotteryNumber(number)
+            LotteryNumber.of(number)
         }
     }
 
@@ -50,12 +49,7 @@ class LotteryNumberTest {
     @ParameterizedTest
     @ValueSource(ints = [1, 3])
     fun `수동으로 1 ~ 45 사이의 로또 번호를 생성한다`(input: Int) {
-        val lotteryNumber = LotteryNumber.fromManual(input)
+        val lotteryNumber = LotteryNumber.of(input)
         assertThat(lotteryNumber.number).isEqualTo(input)
-    }
-
-    @RepeatedTest(1000)
-    fun `자동으로 1~45 사이의 로또 번호를 생성한다`() {
-        assertDoesNotThrow { LotteryNumber.fromRandom() }
     }
 }

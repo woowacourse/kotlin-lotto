@@ -1,6 +1,5 @@
 package model.lottery
 
-import WinningLottery
 import model.Quantity
 import model.winning.WinningRank
 import model.winning.WinningResult
@@ -61,7 +60,7 @@ class LotteriesTest {
         val winningLottery =
             WinningLottery(
                 Lottery.of(4, 5, 6, 10, 11, 12),
-                LotteryNumber(7),
+                LotteryNumber.of(7),
             )
         val expected =
             WinningResult(

@@ -1,12 +1,12 @@
 package controller
 
-import WinningLottery
 import model.Money
 import model.Quantity
 import model.lottery.Lotteries
 import model.lottery.Lottery
 import model.lottery.LotteryNumber
 import model.lottery.LotterySeller
+import model.lottery.WinningLottery
 import model.winning.WinningResult
 import view.InputView
 import view.OutputView

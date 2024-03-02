@@ -1,11 +1,27 @@
 package model.lottery
 
-import kotlin.random.Random
-import kotlin.random.nextInt
-
-data class LotteryNumber(val number: Int) {
+class LotteryNumber private constructor(val number: Int) {
     init {
         require(number in LOTTERY_NUMBER_RANGE) { ERROR_LOTTERY_OUT_OF_RANGE }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as LotteryNumber
+
+        if (number != other.number) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return number
+    }
+
+    override fun toString(): String {
+        return "LotteryNumber(number=$number)"
     }
 
     companion object {
@@ -16,10 +32,7 @@ data class LotteryNumber(val number: Int) {
         private val NUMBERS: Map<Int, LotteryNumber> =
             LOTTERY_NUMBER_RANGE.associateWith(::LotteryNumber)
 
-        fun fromRandom(): LotteryNumber =
-            NUMBERS[Random.nextInt(LOTTERY_NUMBER_RANGE)] ?: throw IllegalArgumentException(ERROR_LOTTERY_OUT_OF_RANGE)
-
-        fun fromManual(input: Int): LotteryNumber = NUMBERS[input] ?: throw IllegalArgumentException(ERROR_LOTTERY_OUT_OF_RANGE)
+        fun of(input: Int): LotteryNumber = NUMBERS[input] ?: throw IllegalArgumentException(ERROR_LOTTERY_OUT_OF_RANGE)
 
         fun from(input: String): LotteryNumber {
             val number = input.toIntOrNull()
