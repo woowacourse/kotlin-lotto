@@ -11,6 +11,7 @@ object OutputView {
         "\n" +
             "당첨 통계\n" +
             "-----------"
+    private const val LOTTERY_ROI = "총 수익률은 %.2f 입니다"
 
     fun printTicketInfo(ticket: Ticket) {
         val userLotteries = ticket.userLotteries
@@ -27,7 +28,7 @@ object OutputView {
         Rank.entries.filter { it != Rank.MISS }.forEach {
             println("${it.getMessage()} - ${winningResult.stats[it] ?: 0}개")
         }
-        println("총 수익률은 ${winningResult.roi} 입니다.")
+        println(LOTTERY_ROI.format(winningResult.roi))
     }
 
     fun printErrorMessage(t: Throwable) {
