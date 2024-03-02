@@ -10,12 +10,8 @@ class RandomLotteriesGenerationStrategy(
     private val lottoTicketPrice: Int = 1_000,
     private val randomLottoNumberGenerator: LotteryNumberGenerator = RandomLotteryNumberGenerator,
 ) : LotteriesGenerationStrategy {
-    override fun issueLotteries(): List<Lottery> {
-        val lotteries = mutableListOf<Lottery>()
-
-        repeat(amount.money / lottoTicketPrice - manualLotteryCount.count) {
-            lotteries.add(Lottery(randomLottoNumberGenerator.generateNumbers(), false))
+    override fun issueLotteries() =
+        List(amount.money / lottoTicketPrice - manualLotteryCount.count) {
+            Lottery(randomLottoNumberGenerator.generateNumbers(), false)
         }
-        return lotteries
-    }
 }
