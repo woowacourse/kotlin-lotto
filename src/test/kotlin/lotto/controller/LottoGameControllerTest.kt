@@ -27,7 +27,7 @@ class LottoGameControllerTest {
         bonusNumber: Int,
         resultInput: String,
     ) {
-        val lottoMachine = LottoMachine.getMachineWithCounts(3, 0)
+        val lottoMachine = LottoMachine.createWithCounts(3, 0)
         val lottoTickets = lottoMachine.issueAutomaticTickets(3, customNumberGenerate)
         val winningLotto =
             WinningLotto(

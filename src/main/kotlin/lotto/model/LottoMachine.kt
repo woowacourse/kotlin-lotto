@@ -51,7 +51,7 @@ class LottoMachine(val ticketCounts: TicketCounts) {
             )
         }
 
-        fun getMachineWithCounts(
+        fun createWithCounts(
             totalCount: Int,
             manualCount: Int,
         ): LottoMachine {

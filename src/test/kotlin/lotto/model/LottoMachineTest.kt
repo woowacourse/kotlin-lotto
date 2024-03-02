@@ -15,7 +15,7 @@ class LottoMachineTest {
     @ParameterizedTest
     @CsvSource("1", "2", "3", "10")
     fun `발행 개수 만큼 로또를 발행한다`(count: Int) {
-        val lottoMachine = LottoMachine.getMachineWithCounts(count, 0)
+        val lottoMachine = LottoMachine.createWithCounts(count, 0)
         val result = lottoMachine.issueAutomaticTickets(count)
         assertThat(result.size).isEqualTo(count)
     }
@@ -23,7 +23,7 @@ class LottoMachineTest {
     @ParameterizedTest
     @CsvSource("1", "2", "3")
     fun `수동 발행 개수 만큼 수동으로 로또를 발행한다`(manualCount: Int) {
-        val lottoMachine = LottoMachine.getMachineWithCounts(manualCount, manualCount)
+        val lottoMachine = LottoMachine.createWithCounts(manualCount, manualCount)
         val result = lottoMachine.issueManualTickets(userManualLotto.take(manualCount))
         assertThat(result.size).isEqualTo(manualCount)
     }
@@ -34,7 +34,7 @@ class LottoMachineTest {
         manualCount: Int,
         totalCount: Int,
     ) {
-        val lottoMachine = LottoMachine.getMachineWithCounts(totalCount, manualCount)
+        val lottoMachine = LottoMachine.createWithCounts(totalCount, manualCount)
         val manual = lottoMachine.issueManualTickets(userManualLotto.take(manualCount))
         val automatic =
             lottoMachine.issueAutomaticTickets(lottoMachine.ticketCounts.getAutomaticTicketCounts())
@@ -46,7 +46,7 @@ class LottoMachineTest {
     @CsvSource("2", "5", "10")
     fun `수동 발행 개수가 0개라면 모든 로또를 자동으로 발행한다`(count: Int) {
         val manualCount = 0
-        val lottoMachine = LottoMachine.getMachineWithCounts(count, manualCount)
+        val lottoMachine = LottoMachine.createWithCounts(count, manualCount)
         val result = lottoMachine.issueTickets()
         assertThat(result.size).isEqualTo(count)
     }
