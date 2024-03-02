@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.model.LottoCountCalculator
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoNumber.Companion.MAX_LOTTO_NUMBER
@@ -14,12 +15,14 @@ import lotto.view.OutputView
 class LottoController {
     private val inputView = InputView()
     private val outputView = OutputView()
+    private val lottoCountCalculator = LottoCountCalculator()
 
     fun runLotto() {
         val purchasePrice = inputView.getPurchasePrice()
         val manualLottoNumbers = inputView.getManualLottoTickets()
+        val autoLottoCount = lottoCountCalculator.calculate(purchasePrice, manualLottoNumbers)
         val randomNumbers =
-            List(purchasePrice / 1000 - manualLottoNumbers.size) {
+            List(autoLottoCount) {
                 (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).shuffled().take(6)
             }
         val lottoMachine = LottoMachine()
