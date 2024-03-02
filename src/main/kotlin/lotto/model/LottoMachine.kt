@@ -39,6 +39,18 @@ class LottoMachine(val ticketCounts: TicketCounts) {
     }
 
     companion object {
+        fun create(
+            cash: Int,
+            manualCount: Int,
+        ): LottoMachine {
+            return LottoMachine(
+                TicketCounts(
+                    NumberOfTickets(cash),
+                    NumberOfManual(manualCount),
+                ),
+            )
+        }
+
         fun getMachineWithCounts(
             totalCount: Int,
             manualCount: Int,
