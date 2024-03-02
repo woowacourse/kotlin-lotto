@@ -13,14 +13,12 @@ class LottoMachine(expense: Money) {
     lateinit var winningLotto: Lotto
         private set
 
-    fun addManualLotteries(lottoNumbers: List<List<Int>>) {
-        val manualLotteries = lottoNumbers.map { generateLotto(it) }
+    fun addManualLotteries(manualLotteries: List<Lotto>) {
         addLotteries(manualLotteries)
-        availableCount -= Count(lottoNumbers.size)
+        availableCount -= Count(manualLotteries.size)
     }
 
-    fun addAutoLotteries(lottoNumbers: List<List<Int>>) {
-        val autoLotteries = lottoNumbers.map { generateLotto(it) }
+    fun addAutoLotteries(autoLotteries: List<Lotto>) {
         addLotteries(autoLotteries)
         _autoLotteries += autoLotteries
     }
@@ -32,6 +30,4 @@ class LottoMachine(expense: Money) {
     private fun addLotteries(lotteries: List<Lotto>) {
         _currentLotteries += lotteries
     }
-
-    private fun generateLotto(numbers: List<Int>): Lotto = Lotto(*numbers.toIntArray())
 }

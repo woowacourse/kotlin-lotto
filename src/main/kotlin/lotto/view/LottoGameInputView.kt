@@ -5,7 +5,7 @@ interface LottoGameInputView {
 
     fun inputManualPurchaseCount(): Int?
 
-    fun inputManualLotteryNumber(count: Int): List<List<Int>>?
+    fun displayManualNumberInputMessage()
 
     fun inputLotteryNumbers(): List<Int>?
 

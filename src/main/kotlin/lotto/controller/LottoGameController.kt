@@ -1,12 +1,13 @@
 package lotto.controller
 
+import lotto.model.AutoLotteriesGenerator
 import lotto.model.Count
 import lotto.model.Lotto
 import lotto.model.LottoGameResult
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
+import lotto.model.ManualLotteriesGenerator
 import lotto.model.Money
-import lotto.model.NumbersGenerator
 import lotto.util.ExceptionHandler
 import lotto.view.LottoGameInputView
 import lotto.view.LottoGameOutputView
@@ -14,7 +15,6 @@ import lotto.view.LottoGameOutputView
 class LottoGameController(
     private val lottoGameInputView: LottoGameInputView,
     private val lottoGameOutputView: LottoGameOutputView,
-    private val numbersGenerator: NumbersGenerator,
 ) {
     private lateinit var lottoMachine: LottoMachine
 
@@ -22,7 +22,7 @@ class LottoGameController(
         val purchaseExpense: Money = getPurchaseExpense()
         lottoMachine = LottoMachine(purchaseExpense)
         val manualCount = getManualCount()
-        generateManualLotteries(manualCount.value)
+        generateManualLotteries(manualCount)
         generateAutoLotteries()
         showPurchaseResult(lottoMachine.availableCount, manualCount, lottoMachine.autoLotteries)
         generateWinningLotto()
@@ -44,18 +44,20 @@ class LottoGameController(
             } ?: getManualCount()
         }
 
-    private fun generateManualLotteries(manualCount: Int) {
+    private fun generateManualLotteries(manualCount: Count) =
         ExceptionHandler.handleInputValue {
-            lottoGameInputView.inputManualLotteryNumber(manualCount)?.let {
-                lottoMachine.addManualLotteries(it)
-            } ?: generateManualLotteries(manualCount)
+            lottoGameInputView.displayManualNumberInputMessage()
+            lottoMachine.addManualLotteries(ManualLotteriesGenerator(manualCount, ::getManualLottoNumbers).generate())
         }
-    }
 
     private fun generateAutoLotteries() {
-        val autoLottoNumbers = List(lottoMachine.availableCount.value) { numbersGenerator.generate() }
-        lottoMachine.addAutoLotteries(autoLottoNumbers)
+        lottoMachine.addAutoLotteries(AutoLotteriesGenerator(lottoMachine.availableCount).generate())
     }
+
+    private fun getManualLottoNumbers(): List<Int> =
+        ExceptionHandler.handleInputValue {
+            lottoGameInputView.inputLotteryNumbers() ?: getManualLottoNumbers()
+        }
 
     private fun showPurchaseResult(
         availableCount: Count,

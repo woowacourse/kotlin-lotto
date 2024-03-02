@@ -11,11 +11,8 @@ class ConsoleLottoGameInputView : LottoGameInputView {
         return readln().toIntOrNull()
     }
 
-    override fun inputManualLotteryNumber(count: Int): List<List<Int>>? {
+    override fun displayManualNumberInputMessage() {
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBERS)
-        return List(count) {
-            inputLotteryNumbers() ?: return null
-        }
     }
 
     override fun inputWinningNumbers(): List<Int>? {
