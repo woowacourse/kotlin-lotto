@@ -18,8 +18,8 @@ class LotteryController {
         val ticket = generateTicket(purchaseInformation)
         printTicketInfo(ticket)
 
-        val (winningLotto, bonus) = getWinningLotteryAndBonus()
-        val winningResult = getWinningResult(ticket, winningLotto, bonus)
+        val (winningLottery, bonus) = getWinningLotteryAndBonus()
+        val winningResult = getWinningResult(ticket, winningLottery, bonus)
         printWinningResult(winningResult)
     }
 
@@ -37,17 +37,17 @@ class LotteryController {
     }
 
     private fun getWinningLotteryAndBonus(): Pair<Lottery, Bonus> {
-        val winningLotto = retryUntilSuccess { readWinningLotto() }
-        val bonus = retryUntilSuccess { readBonus(winningLotto) }
+        val winningLottery = retryUntilSuccess { readWinningLottery() }
+        val bonus = retryUntilSuccess { readBonus(winningLottery) }
 
-        return Pair(winningLotto, bonus)
+        return Pair(winningLottery, bonus)
     }
 
     private fun readAmount() = Amount.fromInput(InputView.readAmount())
 
     private fun readManualLotteryCount(
         amount: Amount,
-        lotteryTicketPrice: Int = LOTTO_TICKET_PRICE,
+        lotteryTicketPrice: Int = LOTTERY_TICKET_PRICE,
     ) = ManualLotteryCount.fromInput(
         InputView.readManualCount(),
         amount,
@@ -58,7 +58,7 @@ class LotteryController {
 
     private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(InputView.readBonus(), winningLottery)
 
-    private fun readWinningLotto() = Lottery.fromInput(InputView.readWinningLotto())
+    private fun readWinningLottery() = Lottery.fromInput(InputView.readWinningLottery())
 
     private fun issueTicket(
         manualLotteries: List<List<String>>,
@@ -85,6 +85,6 @@ class LotteryController {
         }
 
     companion object {
-        private const val LOTTO_TICKET_PRICE = 1000
+        private const val LOTTERY_TICKET_PRICE = 1000
     }
 }

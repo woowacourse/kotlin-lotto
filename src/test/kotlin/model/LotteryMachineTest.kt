@@ -55,8 +55,8 @@ class LotteryMachineTest {
 
         val autoLotteries = LotteryMachine.issueLotteries(ExplicitLotteriesGenerationStrategy(explicitNumbers))
 
-        autoLotteries.forEachIndexed { index, userLotto ->
-            assertThat(userLotto.getCountOfMatch(explicitLotteries[index])).isEqualTo(6)
+        autoLotteries.forEachIndexed { index, userLottery ->
+            assertThat(userLottery.getCountOfMatch(explicitLotteries[index])).isEqualTo(6)
         }
     }
 }

@@ -9,18 +9,18 @@ class ManualLotteryCount(val count: Int) {
 
         private fun Int.validatePurchaseBound(
             amount: Amount,
-            lottoTicketPrice: Int,
+            lotteryTicketPrice: Int,
         ): Int {
-            require(this <= amount.money / lottoTicketPrice) { EXCEPTION_INSUFFICIENT_MONEY }
+            require(this <= amount.money / lotteryTicketPrice) { EXCEPTION_INSUFFICIENT_MONEY }
             return this
         }
 
         fun fromInput(
             input: String,
             amount: Amount,
-            lottoTicketPrice: Int,
+            lotteryTicketPrice: Int,
         ): ManualLotteryCount {
-            val count = input.toInt().validatePurchaseBound(amount, lottoTicketPrice)
+            val count = input.toInt().validatePurchaseBound(amount, lotteryTicketPrice)
             return ManualLotteryCount(count)
         }
     }

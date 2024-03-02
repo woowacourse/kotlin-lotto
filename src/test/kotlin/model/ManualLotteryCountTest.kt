@@ -13,7 +13,7 @@ class ManualLotteryCountTest {
     ) {
         val amount = Amount.fromInput(money)
         assertThatThrownBy {
-            ManualLotteryCount.fromInput(input, amount, LOTTO_TICKET_PRICE)
+            ManualLotteryCount.fromInput(input, amount, LOTTERY_TICKET_PRICE)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("숫자만 입력하셔야 합니다")
     }
@@ -26,12 +26,12 @@ class ManualLotteryCountTest {
     ) {
         val amount = Amount.fromInput(money)
         assertThatThrownBy {
-            ManualLotteryCount.fromInput(input, amount, LOTTO_TICKET_PRICE)
+            ManualLotteryCount.fromInput(input, amount, LOTTERY_TICKET_PRICE)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("금액이 부족합니다")
     }
 
     companion object {
-        private const val LOTTO_TICKET_PRICE = 1000
+        private const val LOTTERY_TICKET_PRICE = 1000
     }
 }
