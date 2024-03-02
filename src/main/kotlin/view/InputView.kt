@@ -21,12 +21,11 @@ object InputView {
     }
 
     fun readManualLotteries(manualLotteryCount: ManualLotteryCount): List<List<String>> {
-        val manualLotteriesInput = mutableListOf<String>()
-
         println(HEADER_READ_MANUAL_LOTTERIES)
-        repeat(manualLotteryCount.count) {
-            manualLotteriesInput.add(readln())
-        }
+        val manualLotteriesInput =
+            List(manualLotteryCount.count) {
+                readln()
+            }
 
         return splitManualLotteries(manualLotteriesInput)
     }
