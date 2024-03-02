@@ -34,12 +34,6 @@ class LotteryNumber private constructor(val number: Int) {
 
         fun of(input: Int): LotteryNumber = NUMBERS[input] ?: throw IllegalArgumentException(ERROR_LOTTERY_OUT_OF_RANGE)
 
-        fun from(input: String): LotteryNumber {
-            val number = input.toIntOrNull()
-            requireNotNull(number)
-            return NUMBERS[number] ?: throw IllegalArgumentException(ERROR_LOTTERY_OUT_OF_RANGE)
-        }
-
         private const val ERROR_LOTTERY_OUT_OF_RANGE = "로또 번호는 $MIN_LOTTERY_NUMBER 이상 $MAX_LOTTERY_NUMBER 이하의 숫자여야 합니다."
     }
 }
