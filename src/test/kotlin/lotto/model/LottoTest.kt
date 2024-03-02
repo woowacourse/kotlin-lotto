@@ -43,7 +43,7 @@ class LottoTest {
     @ValueSource(ints = [1, 5, 6])
     fun `로또 번호에 보너스 번호가 포함되어 있으면 True를 반환한다`(bonusNumber: Int) {
         val lotto = Lotto(1, 2, 3, 4, 5, 6)
-        val result = lotto.hasMatchingBonusNumbers(LottoNumber.valueOf(bonusNumber)!!)
+        val result = LottoNumber.valueOf(bonusNumber) in lotto
         assertThat(result).isTrue()
     }
 
@@ -51,7 +51,7 @@ class LottoTest {
     @ValueSource(ints = [7, 10, 45])
     fun `로또 번호에 보너스 번호가 포함되어 있지 않으면 False을 반환한다`(bonusNumber: Int) {
         val lotto = Lotto(1, 2, 3, 4, 5, 6)
-        val result = lotto.hasMatchingBonusNumbers(LottoNumber.valueOf(bonusNumber)!!)
+        val result = LottoNumber.valueOf(bonusNumber) in lotto
         assertThat(result).isFalse()
     }
 }
