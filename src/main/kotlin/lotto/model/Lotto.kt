@@ -2,7 +2,7 @@ package lotto.model
 
 data class Lotto(val numbers: Set<LottoNumber>) {
     init {
-        require(numbers.size == NUMBER_COUNT) { "로또 번호는 중복되지 않는 6개의 수로 구성되어야 합니다." }
+        require(numbers.size == NUMBER_COUNT) { "로또 번호는 중복되지 않는 6개의 수로 구성되어야 합니다. 현재 입력값 : ${numbers.joinToString(", ")}}" }
     }
 
     constructor(vararg numbers: Int) : this(numbers.map { LottoNumber.valueOf(it) }.filterNotNull().toSet())
