@@ -36,12 +36,22 @@ class LotteryController {
         return issueTicket(manualLotteries, RandomLotteriesGenerationStrategy(purchaseInformation), purchaseInformation)
     }
 
+    private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)
+
     private fun getWinningLotteryAndBonus(): Pair<Lottery, Bonus> {
         val winningLottery = retryUntilSuccess { readWinningLottery() }
         val bonus = retryUntilSuccess { readBonus(winningLottery) }
 
         return Pair(winningLottery, bonus)
     }
+
+    private fun getWinningResult(
+        ticket: Ticket,
+        winningLottery: Lottery,
+        bonus: Bonus,
+    ) = WinningResult.of(ticket, winningLottery, bonus)
+
+    private fun printWinningResult(winningResult: WinningResult) = OutputView.printWinningResult(winningResult)
 
     private fun readAmount() = Amount.fromInput(InputView.readAmount())
 
@@ -56,25 +66,15 @@ class LotteryController {
 
     private fun readManualLotteries(manualLotteryCount: ManualLotteryCount) = InputView.readManualLotteries(manualLotteryCount)
 
-    private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(InputView.readBonus(), winningLottery)
-
-    private fun readWinningLottery() = Lottery.fromInput(InputView.readWinningLottery())
-
     private fun issueTicket(
         manualLotteries: List<List<String>>,
         strategyForAuto: RandomLotteriesGenerationStrategy,
         purchaseInformation: PurchaseInformation,
     ): Ticket = LotteryMachine.issueTicket(manualLotteries, strategyForAuto, purchaseInformation)
 
-    private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)
+    private fun readWinningLottery() = Lottery.fromInput(InputView.readWinningLottery())
 
-    private fun printWinningResult(winningResult: WinningResult) = OutputView.printWinningResult(winningResult)
-
-    private fun getWinningResult(
-        ticket: Ticket,
-        winningLottery: Lottery,
-        bonus: Bonus,
-    ) = WinningResult.of(ticket, winningLottery, bonus)
+    private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(InputView.readBonus(), winningLottery)
 
     private fun <T> retryUntilSuccess(action: () -> T): T =
         runCatching {
