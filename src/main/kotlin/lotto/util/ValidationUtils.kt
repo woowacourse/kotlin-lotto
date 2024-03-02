@@ -8,4 +8,8 @@ object ValidationUtils {
     fun validateManualCounts(input: String) {
         requireNotNull(input.toIntOrNull()) { "수동으로 발행할 개수를 숫자로 입력해 주세요." }
     }
+
+    fun validateIfInteger(input: String) {
+        requireNotNull(input.toIntOrNull()) { "로또 번호는 숫자로 입력해 주세요." }
+    }
 }
