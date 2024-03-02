@@ -27,7 +27,7 @@ class LottoGameController {
 
     private fun getPurchaseAmount(): PurchaseAmount {
         val purchaseAmount = InputView.getPurchaseAmount()
-        return PurchaseAmount.from(purchaseAmount) ?: getPurchaseAmount()
+        return runCatching { PurchaseAmount(purchaseAmount) }.getOrNull() ?: getPurchaseAmount()
     }
 
     private fun getLottoCount(purchaseAmount: PurchaseAmount): LottoCount {
