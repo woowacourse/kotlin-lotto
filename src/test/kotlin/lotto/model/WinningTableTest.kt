@@ -7,7 +7,7 @@ import lotto.model.Rank.SECOND
 import lotto.model.Rank.SIXTH
 import lotto.model.Rank.THIRD
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.assertDoesNotThrow
 
 class WinningTableTest {
     @Test
@@ -21,7 +21,7 @@ class WinningTableTest {
                 FIFTH to 0,
                 SIXTH to 0,
             )
-        assertThrows<IllegalArgumentException> {
+        assertDoesNotThrow {
             WinningTable(ranks)
         }
     }

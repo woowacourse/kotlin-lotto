@@ -5,7 +5,6 @@ import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoNumber.Companion.MAX_LOTTO_NUMBER
 import lotto.model.LottoNumber.Companion.MIN_LOTTO_NUMBER
-import lotto.model.LottoWinningPrize
 import lotto.model.LottoWinningRank
 import lotto.model.UserLottoTicket
 import lotto.model.WinningTable
@@ -33,9 +32,8 @@ class LottoController {
         outputView.printLottoCount(manualLottoNumbers.size, autoTickets.size)
         outputView.printUserTickets(userTickets)
 
-        val rankMap = checkLottoWinning(userTickets)
-        val lottoWinningPrize = LottoWinningPrize(rankMap)
-        printLottoWinning(lottoWinningPrize, userTickets, rankMap)
+        val winningTable = checkLottoWinning(userTickets)
+        printLottoWinning(userTickets, winningTable)
     }
 
     private fun checkLottoWinning(userTickets: List<UserLottoTicket>): WinningTable {
@@ -46,11 +44,10 @@ class LottoController {
     }
 
     private fun printLottoWinning(
-        lottoWinningPrize: LottoWinningPrize,
         userTickets: List<UserLottoTicket>,
         winningTable: WinningTable,
     ) {
-        val winningRate = lottoWinningPrize.calculateWinningRate(userTickets.size)
+        val winningRate = winningTable.calculateWinningRate(userTickets.size)
         outputView.printWinningChart(winningTable)
         outputView.printWinningRate(winningRate)
     }
