@@ -13,6 +13,6 @@ object RandomLotteryNumberGenerator : LotteryNumberGenerator {
             .take(LOTTERY_COUNT)
             .sorted()
             .map {
-                LotteryNumber(it)
+                LotteryNumber.from(it)
             }.toSet()
 }

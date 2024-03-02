@@ -16,7 +16,7 @@ class Lottery(
 
     fun hasBonus(bonus: Bonus) = lotteryNumbers.contains(bonus.lotteryNumber)
 
-    fun toString(delimiter: String) = lotteryNumbers.map { it.number }.joinToString(delimiter)
+    fun toString(delimiter: String) = lotteryNumbers.joinToString(delimiter) { it.toString() }
 
     companion object {
         private const val LOTTERY_COUNT = 6
@@ -29,7 +29,7 @@ class Lottery(
         }
 
         fun fromSet(numbers: Set<Int>): Lottery {
-            val lotteryNumbers = numbers.map { LotteryNumber(it) }.toSet()
+            val lotteryNumbers = numbers.map { LotteryNumber.from(it) }.toSet()
             return Lottery(lotteryNumbers)
         }
 
