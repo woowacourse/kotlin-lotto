@@ -1,14 +1,14 @@
 package lotto.view
 
-import lotto.model.winning.BonusNumber
 import lotto.model.Lotto
-import lotto.model.user.UserInputVerifier
 import lotto.model.LottoEvent
 import lotto.model.manual.ManualEvent
 import lotto.model.manual.ManualNumber
+import lotto.model.user.UserInputVerifier
 import lotto.model.wallet.Wallet
 import lotto.model.wallet.WalletEvent
 import lotto.model.winning.BonusEvent
+import lotto.model.winning.BonusNumber
 
 private const val REQUEST_PURCHASE_PRICE = "구입금액을 입력해 주세요."
 private const val REQUEST_WINNING_NUM = "지난 주 당첨 번호를 입력해 주세요."

@@ -4,7 +4,7 @@ import lotto.model.user.UserException
 import lotto.model.user.UserException.LottoException
 
 sealed interface LottoEvent {
-    data class Success(val lotto: Lotto): LottoEvent
+    data class Success(val lotto: Lotto) : LottoEvent
     data object InvalidDataType : LottoEvent
     data object InvalidNumRange : LottoEvent
     data object InvalidDuplication : LottoEvent
@@ -13,13 +13,13 @@ sealed interface LottoEvent {
 
     companion object {
         fun checkLotto(event: LottoEvent): LottoException {
-            return when(event){
-                is Success -> LottoException(UserException.SUCCESS,event)
-                is InvalidDataType -> LottoException(UserException.INVALID_DATA_TYPE,event)
-                is InvalidNumRange -> LottoException(INVALID_NUM_RANGE,event)
-                is InvalidDuplication -> LottoException(INVALID_DUPLICATION,event)
-                is InvalidNumCount -> LottoException(INVALID_NUM_COUNT,event)
-                is UnknownError -> LottoException(UserException.UNKNOWN_ERROR,event)
+            return when (event) {
+                is Success -> LottoException(UserException.SUCCESS, event)
+                is InvalidDataType -> LottoException(UserException.INVALID_DATA_TYPE, event)
+                is InvalidNumRange -> LottoException(INVALID_NUM_RANGE, event)
+                is InvalidDuplication -> LottoException(INVALID_DUPLICATION, event)
+                is InvalidNumCount -> LottoException(INVALID_NUM_COUNT, event)
+                is UnknownError -> LottoException(UserException.UNKNOWN_ERROR, event)
             }
         }
 

@@ -1,10 +1,10 @@
-import lotto.model.winning.BonusNumber
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
 import lotto.model.LottoPrize
-import lotto.model.winning.WinningNumber
 import lotto.model.user.UserPrize
+import lotto.model.winning.BonusNumber
+import lotto.model.winning.WinningNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

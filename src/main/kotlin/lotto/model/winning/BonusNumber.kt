@@ -1,9 +1,9 @@
 package lotto.model.winning
 
-import lotto.model.user.UserException
 import lotto.model.Lotto
 import lotto.model.LottoEvent
 import lotto.model.LottoNumber
+import lotto.model.user.UserException
 
 class BonusNumber(
     private val bonusNumber: LottoNumber
@@ -33,6 +33,7 @@ class BonusNumber(
                             else -> BonusEvent.UnknownError
                         }
                     }
+
                     else -> BonusEvent.UnknownError
                 }
             }

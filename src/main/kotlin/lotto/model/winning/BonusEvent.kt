@@ -1,8 +1,8 @@
 package lotto.model.winning
 
+import lotto.model.LottoEvent
 import lotto.model.user.UserException
 import lotto.model.user.UserException.BonusException
-import lotto.model.LottoEvent
 
 sealed interface BonusEvent {
     data class Success(val bonusNumber: BonusNumber) : BonusEvent

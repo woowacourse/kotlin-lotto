@@ -2,7 +2,6 @@ package lotto.model.user
 
 import lotto.model.Lotto
 import lotto.model.LottoEvent
-import lotto.model.LottoNumber
 import lotto.model.manual.ManualEvent
 import lotto.model.manual.ManualNumber
 import lotto.model.wallet.Wallet

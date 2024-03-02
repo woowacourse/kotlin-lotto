@@ -1,7 +1,7 @@
-import lotto.model.user.UserException
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
+import lotto.model.user.UserException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

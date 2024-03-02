@@ -7,7 +7,7 @@ import lotto.model.winning.BonusEvent
 
 sealed class UserException(
     message: String
-) : Exception(message){
+) : Exception(message) {
 
     class WalletException(
         message: String,
@@ -17,17 +17,17 @@ sealed class UserException(
     class LottoException(
         message: String,
         val lottoEvent: LottoEvent
-    ): UserException(message)
+    ) : UserException(message)
 
     class BonusException(
         message: String,
         val bonusEvent: BonusEvent
-    ): UserException(message)
+    ) : UserException(message)
 
     class ManualException(
         message: String,
         val manualEvent: ManualEvent
-    ): UserException(message)
+    ) : UserException(message)
 
     companion object {
         const val SUCCESS = ""

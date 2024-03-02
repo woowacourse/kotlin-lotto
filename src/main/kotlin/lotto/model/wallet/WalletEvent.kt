@@ -12,10 +12,10 @@ sealed interface WalletEvent {
     companion object {
         fun checkWallet(event: WalletEvent): WalletException {
             return when (event) {
-                is Success -> WalletException(UserException.SUCCESS,event)
-                is InvalidDataType -> WalletException(UserException.INVALID_DATA_TYPE,event)
-                is InvalidPrice -> WalletException(INVALID_PRICE,event)
-                is UnknownError -> WalletException(UserException.UNKNOWN_ERROR,event)
+                is Success -> WalletException(UserException.SUCCESS, event)
+                is InvalidDataType -> WalletException(UserException.INVALID_DATA_TYPE, event)
+                is InvalidPrice -> WalletException(INVALID_PRICE, event)
+                is UnknownError -> WalletException(UserException.UNKNOWN_ERROR, event)
             }
         }
 

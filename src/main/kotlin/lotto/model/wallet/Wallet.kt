@@ -1,7 +1,7 @@
 package lotto.model.wallet
 
-import lotto.model.user.UserException
 import lotto.model.Lotto
+import lotto.model.user.UserException
 
 class Wallet(private val price: Int) {
 
@@ -19,7 +19,7 @@ class Wallet(private val price: Int) {
                 if (price == 0 || price < Lotto.LOTTO_PRICE) throw WalletEvent.checkWallet(WalletEvent.InvalidPrice)
                 WalletEvent.Success(Wallet(price))
             }.getOrElse { exception ->
-                when(exception){
+                when (exception) {
                     is UserException.WalletException -> exception.walletEvent
                     else -> WalletEvent.UnknownError
                 }
