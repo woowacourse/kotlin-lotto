@@ -1,9 +1,9 @@
 package lotto.controller
 
-import lotto.model.LotteryResult
 import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
+import lotto.model.WinningLotto
 import lotto.model.WinningRank
 import lotto.util.NumberGenerate
 import org.assertj.core.api.Assertions
@@ -29,8 +29,8 @@ class LottoGameControllerTest {
     ) {
         val lottoMachine = LottoMachine.getMachineWithCounts(3, 0)
         val lottoTickets = lottoMachine.issueAutomaticTickets(3, customNumberGenerate)
-        val lotteryResult =
-            LotteryResult(
+        val winningLotto =
+            WinningLotto(
                 Lotto(winningInput.split(" ").map { LottoNumber(it.toInt()) }),
                 LottoNumber(bonusNumber),
             )
@@ -38,8 +38,8 @@ class LottoGameControllerTest {
         val actualResult =
             lottoTickets.map {
                 WinningRank.convert(
-                    it.checkWinningNumbers(lotteryResult.winning),
-                    it.checkBonusNumbers(lotteryResult.bonusNumber),
+                    it.checkWinningNumbers(winningLotto.winning),
+                    it.checkBonusNumbers(winningLotto.bonusNumber),
                 )
             }
 
