@@ -18,4 +18,14 @@ class WinningLottoTest {
 
         assertThat(exception.message).isEqualTo("보너스 번호인 1와 당첨번호인 1, 2, 3, 4, 5, 6는 중복되면 안됩니다.")
     }
+
+    @Test
+    fun `구매한 로또가 보너스 번호를 포함할떄 true를 반환하는지`() {
+        val lottery = Lotto(1, 2, 3, 4, 5, 6)
+        val bonusNumber = LottoNumber.from(7)
+        val winningLotto = WinningLotto(lottery, bonusNumber)
+        val targetLotto = Lotto(1, 2, 3, 4, 5, 7)
+
+        assertThat(winningLotto.matchBonus(targetLotto)).isTrue()
+    }
 }

@@ -1,8 +1,10 @@
 package model
 
+import lotto.model.Lotto
 import lotto.model.LottoDrawingResult
-import lotto.model.Money
-import lotto.model.Rank
+import lotto.model.LottoNumber
+import lotto.model.Prize
+import lotto.model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,12 +12,14 @@ class LottoDrawingResultTest {
 
     @Test
     fun `로또 결과에 대한 총 상금을 구한다`() {
-        val rank = mapOf(Rank.FIRST to 0, Rank.SECOND to 0, Rank.THIRD to 1, Rank.FOURTH to 0, Rank.FIFTH to 0)
-        val lottoDrawingResult = LottoDrawingResult(rank)
+        val lottoDrawingResult = LottoDrawingResult()
+        val lottoes = listOf(Lotto(1, 2, 3, 4, 5, 6))
+        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(7))
 
-        val expected = lottoDrawingResult.calculateTotalPrize()
-        val actual = 1_500_000L
+        lottoDrawingResult.countRank(lottoes, winningLotto)
+        val actual = lottoDrawingResult.calculateTotalPrize()
+        val expected = Prize(2_000_000_000)
 
-        assertThat(expected).isEqualTo(Money(actual))
+        assertThat(actual).isEqualTo(expected)
     }
 }
