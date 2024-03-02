@@ -48,12 +48,13 @@ class OutputView {
         profitRate: ProfitRate,
         profitStatus: ProfitStatus,
     ) {
-        print("총 수익률은 ${profitRate.rate}입니다.")
+        print("총 수익률은 ${PROFIT_RATE_FORMAT.format(profitRate.rate)}입니다.")
         println("(기준이 1이기 때문에 결과적으로 ${profitStatus.status}이라는 의미임)")
     }
 
     companion object {
         private val MONEY_FORMAT = DecimalFormat("(#,###원)")
+        private val PROFIT_RATE_FORMAT = DecimalFormat("#.##")
 
         private val HEADER_WINNING_RESULT =
             """당첨 통계
