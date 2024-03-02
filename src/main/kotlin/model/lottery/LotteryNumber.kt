@@ -11,7 +11,7 @@ data class LotteryNumber(val number: Int) {
     companion object {
         private const val MIN_LOTTERY_NUMBER = 1
         private const val MAX_LOTTERY_NUMBER = 45
-        private val LOTTERY_NUMBER_RANGE: IntRange = MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER
+        val LOTTERY_NUMBER_RANGE: IntRange = MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER
 
         private val NUMBERS: Map<Int, LotteryNumber> =
             LOTTERY_NUMBER_RANGE.associateWith(::LotteryNumber)
