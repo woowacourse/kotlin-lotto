@@ -1,9 +1,11 @@
 package lotto.model
 
-class Lotto(val numbers: Set<LottoNumber>) {
+import java.util.*
 
-    constructor(vararg numbers: Int) : this(numbers.sorted().map { LottoNumber.from(it) }.toSet())
-    constructor(numbers: List<Int>) : this(numbers.sorted().map { LottoNumber.from(it) }.toSet())
+data class Lotto(val numbers: TreeSet<LottoNumber>) {
+
+    constructor(vararg numbers: Int) : this(TreeSet(numbers.map { LottoNumber.from(it) }))
+    constructor(numbers: List<Int>) : this(TreeSet(numbers.map { LottoNumber.from(it) }))
 
     init {
         require(numbers.size == LOTTO_SIZE) { "입력된 로또 숫자는 ${numbers.size}개입니다. 로또 숫자는 고유한 ${LOTTO_SIZE}개여야 합니다." }
@@ -11,15 +13,13 @@ class Lotto(val numbers: Set<LottoNumber>) {
 
     fun countMatch(lotto: Lotto): Int = (lotto.numbers intersect numbers).size
 
-    operator fun contains(number: LottoNumber): Boolean {
-        return numbers.contains(number)
-    }
+    operator fun contains(number: LottoNumber): Boolean = numbers.contains(number)
 
-    override fun toString(): String {
-        return numbers.joinToString(", ") { "${it.value}" }
-    }
+    override fun toString(): String = numbers.joinToString(", ") { "${it.value}" }
 
     companion object {
         const val LOTTO_SIZE = 6
+
+        fun makeLotto(makeLottoStrategy: MakeLottoStrategy): Lotto = makeLottoStrategy.makeLotto()
     }
 }
