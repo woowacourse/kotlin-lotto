@@ -37,4 +37,20 @@ class LottoMachine(val ticketCounts: TicketCounts) {
         }
         return tickets
     }
+
+    companion object {
+        fun getMachineWithCounts(
+            totalCount: Int,
+            manualCount: Int,
+        ): LottoMachine {
+            return LottoMachine(
+                TicketCounts(
+                    NumberOfTickets(
+                        totalCount * NumberOfTickets.TICKET_PRICE,
+                    ),
+                    NumberOfManual(manualCount),
+                ),
+            )
+        }
+    }
 }
