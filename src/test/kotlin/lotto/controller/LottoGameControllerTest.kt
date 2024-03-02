@@ -4,9 +4,6 @@ import lotto.model.LotteryResult
 import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
-import lotto.model.NumberOfManual
-import lotto.model.NumberOfTickets
-import lotto.model.TicketCounts
 import lotto.model.WinningRank
 import lotto.util.NumberGenerate
 import org.assertj.core.api.Assertions
@@ -30,13 +27,7 @@ class LottoGameControllerTest {
         bonusNumber: Int,
         resultInput: String,
     ) {
-        val lottoMachine =
-            LottoMachine(
-                TicketCounts(
-                    NumberOfTickets(3_000),
-                    NumberOfManual(0),
-                ),
-            )
+        val lottoMachine = LottoMachine.getMachineWithCounts(3, 0)
         val lottoTickets = lottoMachine.issueAutomaticTickets(3, customNumberGenerate)
         val lotteryResult =
             LotteryResult(
