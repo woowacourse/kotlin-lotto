@@ -17,10 +17,13 @@ class LottoController(
     fun run() {
         val purchaseOrder = readPurchaseOrder()
         val lottos = initializePurchaseLottos(purchaseOrder)
+        OutputView.printPurchaseLotto(purchaseOrder, lottos)
         val winningLotto = readWinningLotto()
 
         val winningStatistics = getWinningStatistics(lottos, winningLotto)
-        getProfitRatio(winningStatistics, purchaseOrder)
+        OutputView.printWinningStatistics(winningStatistics)
+        val profitRatio = getProfitRatio(winningStatistics, purchaseOrder)
+        OutputView.printProfitRatio(profitRatio)
     }
 
     private fun readPurchaseOrder(): PurchaseOrder {
@@ -34,9 +37,7 @@ class LottoController(
     private fun initializePurchaseLottos(purchaseOrder: PurchaseOrder): List<Lotto> {
         val manualLottos = readManualLottos(purchaseOrder.manualLottoSize)
         val automaticLottos = LottoStore.buyAutoMaticLottos(purchaseOrder.automaticLottoSize, lottoMachine)
-        return (manualLottos + automaticLottos).also {
-            OutputView.printPurchaseLotto(purchaseOrder, it)
-        }
+        return manualLottos + automaticLottos
     }
 
     private fun readManualLottos(manualAmount: Int): List<Lotto> {
@@ -54,17 +55,13 @@ class LottoController(
         lottos: List<Lotto>,
         winningLotto: WinningLotto,
     ): WinningStatistics {
-        return winningLotto.calculateWinningStatistics(lottos).also {
-            OutputView.printWinningStatistics(it)
-        }
+        return winningLotto.calculateWinningStatistics(lottos)
     }
 
     private fun getProfitRatio(
         winningStatistics: WinningStatistics,
         purchaseOrder: PurchaseOrder,
     ): ProfitRatio {
-        return winningStatistics.calculateProfitRatio(purchaseOrder.price).also {
-            OutputView.printProfitRatio(it)
-        }
+        return winningStatistics.calculateProfitRatio(purchaseOrder.price)
     }
 }
