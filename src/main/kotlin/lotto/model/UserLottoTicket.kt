@@ -3,7 +3,12 @@ package lotto.model
 @JvmInline
 value class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
     init {
-        require(userLottoTicket.size == LOTTO_TICKET_SIZE)
+        require(userLottoTicket.size == LOTTO_TICKET_SIZE) {
+            "[ERROR] 개수가 틀림"
+        }
+        require(userLottoTicket.map { it.number }.distinct().size == LOTTO_TICKET_SIZE) {
+            "[ERROR] 중복이 있음"
+        }
     }
 
     private fun countOfMatchWithNumbers(numbers: List<LottoNumber>): Int {

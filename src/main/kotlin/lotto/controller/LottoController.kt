@@ -1,11 +1,10 @@
 package lotto.controller
 
+import lotto.model.AutoLottoMachine
 import lotto.model.LottoCountCalculator
-import lotto.model.LottoMachine
 import lotto.model.LottoNumber
-import lotto.model.LottoNumber.Companion.MAX_LOTTO_NUMBER
-import lotto.model.LottoNumber.Companion.MIN_LOTTO_NUMBER
 import lotto.model.LottoWinningRank
+import lotto.model.ManualLottoMachine
 import lotto.model.UserLottoTicket
 import lotto.model.WinningTable
 import lotto.view.InputView
@@ -14,22 +13,22 @@ import lotto.view.OutputView
 class LottoController {
     private val inputView = InputView()
     private val outputView = OutputView()
-    private val lottoCountCalculator = LottoCountCalculator()
 
     fun runLotto() {
         val purchasePrice = inputView.getPurchasePrice()
-        val manualLottoNumbers = inputView.getManualLottoTickets()
-        val autoLottoCount = lottoCountCalculator.calculate(purchasePrice, manualLottoNumbers)
-        val randomNumbers =
-            List(autoLottoCount) {
-                (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).shuffled().take(6)
-            }
-        val lottoMachine = LottoMachine()
-        val autoTickets = lottoMachine.make(randomNumbers)
-        val manualTickets = lottoMachine.make(manualLottoNumbers)
+        val manualLottoCount = inputView.getManualLottoCount()
+        val manualLottoNumbers = inputView.getManualLottoTickets(manualLottoCount)
+        val lottoCountCalculator = LottoCountCalculator(purchasePrice, manualLottoNumbers)
+        val autoLottoCount = lottoCountCalculator.calculate()
+
+        val autoLottoMachine = AutoLottoMachine(autoLottoCount)
+        val autoTickets = autoLottoMachine.make()
+
+        val manualLottoMachine = ManualLottoMachine(manualLottoNumbers)
+        val manualTickets = manualLottoMachine.make()
 
         val userTickets = manualTickets + autoTickets
-        outputView.printLottoCount(manualLottoNumbers.size, autoTickets.size)
+        outputView.printLottoCount(manualLottoCount, autoLottoCount)
         outputView.printUserTickets(userTickets)
 
         val winningTable = checkLottoWinning(userTickets)

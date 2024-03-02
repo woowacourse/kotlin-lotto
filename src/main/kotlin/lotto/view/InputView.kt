@@ -6,16 +6,15 @@ class InputView {
         return readln().toInt()
     }
 
-    private fun getManualLottoCount(): Int {
+    fun getManualLottoCount(): Int {
         println(MANUAL_LOTTO_CNT_PROMPT_MESSAGE)
         return readln().toInt()
     }
 
-    fun getManualLottoTickets(): List<List<Int>> {
-        val manualLottoCount = getManualLottoCount()
+    fun getManualLottoTickets(count: Int): List<List<Int>> {
         println(MANUAL_LOTTO_PROMPT_MESSAGE)
         val manualLottoTickets =
-            List(manualLottoCount) {
+            List(count) {
                 readln().split(",").map { it.trim() }.map { it.toInt() }
             }
         return manualLottoTickets
