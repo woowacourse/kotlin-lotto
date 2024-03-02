@@ -37,19 +37,10 @@ class LottoGameController {
     }
 
     private fun generateLottoTickets(lottoCount: LottoCount): List<Lotto> {
-        val manualLottoTickets =
-            if (lottoCount.numberOfManualLotto > 0) generateManualLotto(lottoCount.numberOfManualLotto) else emptyList()
-        val autoLottoTickets = generateAutoLotto(lottoCount.getNumberOfAutoTickets())
-        return manualLottoTickets.plus(autoLottoTickets)
-    }
-
-    private fun generateManualLotto(numberOfManualTickets: Int): List<Lotto> {
-        val manualLottoNumbers = InputView.getManualLottoNumbers(numberOfManualTickets)
-        return runCatching { LottoMachine.issueTickets(manualLottoNumbers) }.getOrNull() ?: generateManualLotto(numberOfManualTickets)
-    }
-
-    private fun generateAutoLotto(numberOfAutoTickets: Int): List<Lotto> {
-        return LottoMachine.issueTickets(LottoNumbersGenerator.generateNumbers(numberOfAutoTickets))
+        val manualNumbers = InputView.getManualLottoNumbers(lottoCount.numberOfManualLotto)
+        return runCatching {
+            LottoMachine.issueLotto(lottoCount, manualNumbers, LottoNumbersGenerator)
+        }.getOrNull() ?: generateLottoTickets(lottoCount)
     }
 
     private fun getWinningLotto(): Lotto {
