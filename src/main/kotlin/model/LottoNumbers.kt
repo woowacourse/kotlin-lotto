@@ -11,7 +11,7 @@ data class LottoNumbers(val numbers: Set<LottoNumber>) {
         private const val ERROR_LOTTO_DUPLICATE = "로또 번호는 중복될 수 없습니다."
 
         fun lottoNumbersOf(vararg numbers: Int): LottoNumbers {
-            val lottoNumbers = numbers.map { LottoNumber(it) }
+            val lottoNumbers = numbers.map { LottoNumber.from(it) }
             validateLottoNumbers(lottoNumbers)
             return LottoNumbers(lottoNumbers.toSet())
         }

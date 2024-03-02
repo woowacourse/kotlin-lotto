@@ -43,7 +43,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
         outputView.printEnterManualLottoNumberMessage()
         val manualLottos =
             inputView.readManualLottoNumber(numberOfManualLottos)
-                .map { Lotto(LottoNumbers(it.map { LottoNumber(it.toInt()) }.sortedBy { it.number })) }
+                .map { Lotto(LottoNumbers(it.map { LottoNumber.from(it.toInt()) }.sortedBy { it.number })) }
         val manualLottoBundle = LottoStore.generateManualLottos(manualLottos)
         val lottoBundle = Lottos(autoLottos.lottos + manualLottoBundle.lottos)
         outputView.printNumberOfLottoMessage(numberOfManualLottos, numberOfAutoLottos)
