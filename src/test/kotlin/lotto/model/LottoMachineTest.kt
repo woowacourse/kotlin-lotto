@@ -5,6 +5,13 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class LottoMachineTest {
+    private val userManualLotto =
+        listOf(
+            "1, 2, 3, 4, 5, 6",
+            "2, 3, 4, 5, 6, 7",
+            "3, 4, 5, 6, 7, 8",
+        )
+
     @ParameterizedTest
     @CsvSource("1", "2", "3", "10")
     fun `발행 개수 만큼 로또를 발행한다`(count: Int) {
@@ -29,8 +36,7 @@ class LottoMachineTest {
                     NumberOfManual(manualCount),
                 ),
             )
-        val userManualLotto = lottoMachine.issueAutomaticTickets(manualCount)
-        val result = lottoMachine.issueTickets(userManualLotto)
+        val result = lottoMachine.issueManualTickets(userManualLotto.take(manualCount))
         assertThat(result.size).isEqualTo(manualCount)
     }
 
