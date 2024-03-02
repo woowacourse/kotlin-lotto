@@ -19,9 +19,8 @@ class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
         fun of(vararg numbers: Int): Lottery = Lottery(numbers.map { LotteryNumber(it) }.toList())
 
         fun fromInput(input: String): Lottery {
-            require(input.isNotEmpty()) { ERROR_BLANK_INPUT }
-            require(!input.contains(" ")) { ERROR_BLANK_INPUT }
-            val numbers = input.split(COMMA).map { LotteryNumber(it.toInt()) }
+            require(input.replace(" ", "").isNotEmpty()) { ERROR_BLANK_INPUT }
+            val numbers = input.replace(" ", "").split(COMMA).map { LotteryNumber(it.toInt()) }
             return Lottery(numbers)
         }
     }

@@ -6,6 +6,13 @@ class InputView {
         return readln()
     }
 
+    fun readManualLotteryCount(): String {
+        println(GUIDE_INPUT_MANUAL_PURCHASE_COUNT)
+        return readln()
+    }
+
+    fun readManualLottery(): String = readln()
+
     fun readWinningNumbers(): String {
         println(GUIDE_INPUT_WINNING_NUMBERS)
         return readln()
@@ -18,6 +25,7 @@ class InputView {
 
     companion object {
         private const val GUIDE_INPUT_PURCHASE_AMOUNT = "구입 금액을 입력해주세요."
+        private const val GUIDE_INPUT_MANUAL_PURCHASE_COUNT = "\n수동으로 구매할 로또 수를 입력해 주세요."
         private const val GUIDE_INPUT_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
         private const val GUIDE_INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
     }

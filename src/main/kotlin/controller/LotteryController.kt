@@ -1,11 +1,11 @@
 package controller
 
+import model.Count
 import model.Lotteries
 import model.Lottery
 import model.LotteryGenerator
 import model.LotteryNumber
 import model.LotteryResultEvaluator
-import model.LotterySeller
 import model.Money
 import model.Profit
 import model.ProfitRate
@@ -24,30 +24,30 @@ class LotteryController(
     private val lotteryGenerator = LotteryGenerator()
 
     fun start() {
-        val purchaseAmount = Money.from(inputView.readPurchaseAmount())
-        val lotteries = lotterySellingService(purchaseAmount)
+        runCatching {
+            val purchaseAmount = Money.from(inputView.readPurchaseAmount())
+            val lotteries = lotterySellingService(purchaseAmount)
 
-        val winningNumbers = Lottery.fromInput(inputView.readWinningNumbers())
-        val bonusNumber = LotteryNumber.bonusNumber(winningNumbers, inputView.readBonusNumber())
+            val winningNumbers = Lottery.fromInput(inputView.readWinningNumbers())
+            val bonusNumber = LotteryNumber.bonusNumber(winningNumbers, inputView.readBonusNumber())
 
-        showResultService(lotteries, winningNumbers, bonusNumber, purchaseAmount)
+            showResultService(lotteries, winningNumbers, bonusNumber, purchaseAmount)
+        }.onFailure { exception -> println(exception.message) }
     }
 
     private fun lotterySellingService(purchaseAmount: Money): Lotteries {
-        val lotterySeller = LotterySeller(purchaseAmount)
-        val lotteryCount = lotterySeller.getLotteryCount()
+        val manualCount = Count.from(inputView.readManualLotteryCount())
+        outputView.showManualLottoInputGuide()
+        val manualLotteries = Lotteries(List(manualCount.amount) { Lottery.fromInput(readln()) })
 
-        val lotteries = getLotteries(lotteryCount)
-        outputView.showPurchasedLotteries(lotteries)
+        val autoCount = manualCount.getAutoCount(purchaseAmount)
+        val autoLotteries = getLotteries(autoCount)
+
+        val lotteries = Lotteries.of(manualLotteries, autoLotteries)
+        outputView.showPurchasedLotteries(lotteries, manualCount)
 
         return lotteries
     }
-
-    private fun getWinningResult(
-        lotteries: Lotteries,
-        winningNumbers: Lottery,
-        bonusNumber: LotteryNumber,
-    ): WinningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
 
     private fun getLotteries(lotteryCount: Int): Lotteries = Lotteries(List(lotteryCount) { lotteryGenerator.generate() })
 
@@ -63,6 +63,12 @@ class LotteryController(
         val totalPrize = getTotalPrize(winningResult)
         showRateResult(purchaseAmount, totalPrize)
     }
+
+    private fun getWinningResult(
+        lotteries: Lotteries,
+        winningNumbers: Lottery,
+        bonusNumber: LotteryNumber,
+    ): WinningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
 
     private fun getTotalPrize(winningResult: WinningResult): Money {
         var totalPrize = Money(BigDecimal(0))

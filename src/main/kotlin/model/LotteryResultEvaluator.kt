@@ -11,7 +11,8 @@ class LotteryResultEvaluator {
 
         lotteries.lotteries.forEach {
             val rank = lotteryRankEvaluator.evaluate(it, winningLottery, bonusNumber)
-            winningResult[rank] = winningResult[rank]!! + PLUS_WINNING_COUNT
+            // winningResult[rank] = winningResult[rank]!! + PLUS_WINNING_COUNT
+            winningResult[rank] = winningResult.getOrDefault(key = rank, defaultValue = 0) + PLUS_WINNING_COUNT
         }
 
         return WinningResult(winningResult.toMap())
