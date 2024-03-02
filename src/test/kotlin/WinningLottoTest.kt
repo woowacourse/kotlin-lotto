@@ -11,7 +11,7 @@ class WinningLottoTest {
     @BeforeEach
     fun setUp() {
         val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
+        val bonusNumber = LottoNumber.from("7")
         winningLotto = WinningLotto(winningNumbers.map { LottoNumber(it) }, bonusNumber)
     }
 

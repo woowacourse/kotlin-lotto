@@ -5,6 +5,10 @@ private const val START = "["
 private const val END = "]"
 
 class Lotto(val numbers: List<LottoNumber>) {
+    init {
+        require(numbers.toSet().size == 6)
+    }
+
     override fun toString(): String {
         return numbers.map { it.number }.sorted().joinToString(DEFAULT_SEPARATOR, START, END)
     }

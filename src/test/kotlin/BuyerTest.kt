@@ -7,10 +7,10 @@ class BuyerTest {
     @ParameterizedTest
     @CsvSource("8000,8", "1000,1", "15000,15")
     fun `구매 금액 1000원당, 로또를 1장씩 구매할 수 있다`(
-        purchaseAmount: Int,
+        purchaseAmount: String,
         numberOfLotto: Int,
     ) {
-        val buyer = Buyer(purchaseAmount)
+        val buyer = Buyer.from(purchaseAmount)
         val actual = buyer.calculateNumberOfLotto()
 
         assertThat(actual).isEqualTo(numberOfLotto)

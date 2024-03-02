@@ -4,6 +4,7 @@ import model.Buyer
 import model.Lotto
 import model.LottoNumber
 import model.Lottos
+import model.ManualLottoPurchaseCount
 import model.NumberGenerator
 import model.Rank
 import model.WinningLotto
@@ -16,12 +17,13 @@ import view.OutputView
 class LottoController {
     fun run() {
         val purchaseAmount = InputView.inputPurchaseAmount()
-        val buyer = Buyer(purchaseAmount)
-        val numberOfManualLotto = InputView.inputPurchaseSizeOfManualLotto(purchaseAmount)
-        val userLotto = publishLottos(numberOfManualLotto, buyer)
+        val money = Buyer.from(purchaseAmount)
+        val purchaseSizeOfManualLotto = InputView.inputPurchaseSizeOfManualLotto()
+        val manualLottoCount = ManualLottoPurchaseCount.from(purchaseSizeOfManualLotto, money.purchaseAmount)
+        val userLotto = publishLottos(manualLottoCount, money)
         val winningLotto = drawWinningLotto()
-        val winningStatistics = makeWinningStatics(Lottos(userLotto), winningLotto)
-        displayWinningStatistics(purchaseAmount, winningStatistics)
+        val winningStatistics = makeWinningStatics(userLotto, winningLotto)
+        displayWinningStatistics(money.numberOfLotto, winningStatistics)
     }
 
     private fun generateLottoNumbers(): List<LottoNumber> {
@@ -32,27 +34,25 @@ class LottoController {
     }
 
     private fun publishLottos(
-        numberOfManualLotto: Int,
-        buyer: Buyer,
-    ): List<Lotto> {
-        val manualLottos = generateManualLottos(numberOfManualLotto)
-        val autoLottos = generateAutoLottos(buyer.numberOfLotto - numberOfManualLotto)
+        numberOfManualLotto: ManualLottoPurchaseCount,
+        money: Buyer,
+    ): Lottos {
+        val manual = InputView.inputManualLottos(numberOfManualLotto.count)
+        val manualLottos = Lottos(manual.map { generateManualLotto(it) })
+        val autoLottos = Lottos(List(money.numberOfLotto - manualLottos.publishedLottos.size) { generateAutoLotto() })
+
         displayPurchaseResult(manualLottos, autoLottos)
 
-        return autoLottos.publishedLottos + manualLottos.publishedLottos
+        return Lottos(manualLottos.publishedLottos + autoLottos.publishedLottos)
     }
 
-    private fun generateManualLottos(numberOfManualLotto: Int): Lottos {
-        if (numberOfManualLotto > LottoConstants.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) {
-            InputView.inputGuideManualLottoNumbers()
-        }
-        val manualLottos = Lottos(List(numberOfManualLotto) { Lotto(InputView.inputManualLottos()) })
-        return manualLottos
+    private fun generateManualLotto(manual: List<String>): Lotto {
+        return Lotto(manual.map { LottoNumber.from(it) })
     }
 
-    private fun generateAutoLottos(autoLottoCount: Int): Lottos {
-        val autoLottos = Lottos(List(autoLottoCount) { Lotto(generateLottoNumbers()) })
-        return autoLottos
+    private fun generateAutoLotto(): Lotto {
+        val autoLotto = Lotto(generateLottoNumbers())
+        return autoLotto
     }
 
     private fun displayPurchaseResult(
@@ -65,8 +65,9 @@ class LottoController {
     }
 
     private fun drawWinningLotto(): WinningLotto {
-        val winningNumbers = InputView.inputWinningNumbers()
-        val bonusNumber = InputView.inputBonusNumber(winningNumbers)
+        val inputWinningNumbers = InputView.inputWinningNumbers()
+        val winningNumbers = inputWinningNumbers.map { LottoNumber.from(it) }
+        val bonusNumber = LottoNumber.from(InputView.inputBonusNumber())
         return WinningLotto(winningNumbers, bonusNumber)
     }
 

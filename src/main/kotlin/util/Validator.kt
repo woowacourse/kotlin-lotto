@@ -2,7 +2,7 @@ package util
 
 import model.LottoNumber
 
-object InputValidator {
+object Validator {
     private const val INPUT_SEPARATOR = ','
     private const val INVALID_INPUT = 0
 
@@ -29,7 +29,7 @@ object InputValidator {
 
     private fun validateMinimumPurchaseSizeOfManualLotto(purchaseSizeOfManualLotto: Int) {
         require(purchaseSizeOfManualLotto >= LottoConstants.MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO) {
-            InputException.INVALID_PURCHASE_SIZE_OF_MANUAL_LOTTO.getMessage()
+            ErrorCode.INVALID_PURCHASE_SIZE_OF_MANUAL_LOTTO.getMessage()
         }
     }
 
@@ -38,7 +38,7 @@ object InputValidator {
         purchaseAmount: Int,
     ) {
         require(purchaseSizeOfManualLotto * LottoConstants.UNIT_PRICE <= purchaseAmount) {
-            InputException.INVALID_PURCHASE_SIZE_OF_MANUAL_LOTTO_AMOUNT.getMessage()
+            ErrorCode.INVALID_PURCHASE_SIZE_OF_MANUAL_LOTTO_AMOUNT.getMessage()
         }
     }
 
@@ -61,23 +61,23 @@ object InputValidator {
     private fun validateNumberRange(number: Int) {
         require(
             number in LottoConstants.START_RANGE..LottoConstants.END_RANGE,
-        ) { InputException.INVALID_WINNING_NUMBER_RANGE.getMessage() }
+        ) { ErrorCode.INVALID_WINNING_NUMBER_RANGE.getMessage() }
     }
 
     private fun validateNumbersSize(numbers: List<LottoNumber>) {
-        require(numbers.size == LottoConstants.SIZE) { InputException.INVALID_WINNING_NUMBERS_SIZE.getMessage() }
+        require(numbers.size == LottoConstants.SIZE) { ErrorCode.INVALID_WINNING_NUMBERS_SIZE.getMessage() }
     }
 
     private fun validateWinningNumbersDuplicate(winningNumbers: List<LottoNumber>) {
-        require(winningNumbers.toSet().size == LottoConstants.SIZE) { InputException.INVALID_WINNING_NUMBERS_DUPLICATE.getMessage() }
+        require(winningNumbers.toSet().size == LottoConstants.SIZE) { ErrorCode.INVALID_WINNING_NUMBERS_DUPLICATE.getMessage() }
     }
 
     private fun validatePurchaseAmountRange(purchaseAmount: Int) {
-        require(purchaseAmount >= LottoConstants.UNIT_PRICE) { InputException.INVALID_PURCHASE_AMOUNT_RANGE.getMessage() }
+        require(purchaseAmount >= LottoConstants.UNIT_PRICE) { ErrorCode.INVALID_PURCHASE_AMOUNT_RANGE.getMessage() }
     }
 
     private fun validatePurchaseAmountUnit(purchaseAmount: Int) {
-        require(purchaseAmount % LottoConstants.UNIT_PRICE == 0) { InputException.INVALID_PURCHASE_AMOUNT_UNIT.getMessage() }
+        require(purchaseAmount % LottoConstants.UNIT_PRICE == 0) { ErrorCode.INVALID_PURCHASE_AMOUNT_UNIT.getMessage() }
     }
 
     fun validateBonusNumber(
@@ -93,7 +93,7 @@ object InputValidator {
     private fun validateBonusNumberRange(bonusNumber: Int) {
         require(
             bonusNumber in LottoConstants.START_RANGE..LottoConstants.END_RANGE,
-        ) { InputException.INVALID_BONUS_NUMBER_RANGE.getMessage() }
+        ) { ErrorCode.INVALID_BONUS_NUMBER_RANGE.getMessage() }
     }
 
     private fun validateBonusNumberDuplicate(
@@ -101,7 +101,7 @@ object InputValidator {
         winningNumbers: List<LottoNumber>,
     ) {
         require(!winningNumbers.map { it.number }.contains(bonusNumber)) {
-            InputException.INVALID_BONUS_NUMBER_DUPLICATE.getMessage()
+            ErrorCode.INVALID_BONUS_NUMBER_DUPLICATE.getMessage()
         }
     }
 }
