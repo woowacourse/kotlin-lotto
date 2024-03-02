@@ -1,5 +1,8 @@
 package lotto.model
 
+import lotto.model.user.UserException
+import lotto.model.winning.WinningNumber
+
 class Lotto(private val lottoNumbers: LottoNumbers) {
 
     fun getLottoNumber(): Set<Int> {
@@ -29,6 +32,20 @@ class Lotto(private val lottoNumbers: LottoNumbers) {
     private fun checkSecond(rank: LottoPrize, matchBonus: Boolean) = rank == LottoPrize.THIRD && matchBonus
 
     companion object {
+
+        fun checkLottoValid(numbers: List<String>): LottoEvent {
+            return runCatching {
+                val lottoNumbers = LottoNumbers.checkNumbersValid(numbers)
+                val lotto = Lotto(lottoNumbers = LottoNumbers(lottoNumbers))
+                LottoEvent.Success(lotto = lotto)
+            }.getOrElse { exception ->
+                when (exception) {
+                    is UserException.LottoException -> exception.lottoEvent
+                    else -> LottoEvent.UnknownError
+                }
+            }
+        }
+
         const val LOTTO_LEN = 6
         const val LOTTO_PRICE = 1000.0
         val LOTTO_NUM_RANGE = (1..45)

@@ -1,6 +1,7 @@
 package lotto.model
 
 import lotto.model.user.UserPrize
+import lotto.model.winning.WinningNumber
 
 
 class Lottos {
