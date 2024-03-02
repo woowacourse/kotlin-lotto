@@ -39,12 +39,12 @@ object InputView {
         return manualLotteries
     }
 
-    fun readWinningLotto(): String {
+    fun readWinningLotto(): List<String> {
         println(HEADER_READ_WINNING_NUMBERS)
-        return readln()
+        return splitWinningLotto(readln())
     }
 
-    fun splitWinningLotto(input: String): List<String> = input.split(LOTTERY_DELIMITER)
+    private fun splitWinningLotto(input: String): List<String> = input.split(LOTTERY_DELIMITER)
 
     fun readBonus(): String {
         println(HEADER_READ_BONUS)

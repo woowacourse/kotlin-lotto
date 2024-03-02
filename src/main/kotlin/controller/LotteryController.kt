@@ -24,8 +24,7 @@ class LotteryController {
         val ticket = issueTicket(manualLotteries, RandomLotteriesGenerationStrategy(purchaseInformation), purchaseInformation)
         printTicketInfo(ticket)
 
-        val winningLottoInput = retryUntilSuccess { readWinningLotto() }
-        val winningLotto = splitWinningLotto(winningLottoInput)
+        val winningLotto = retryUntilSuccess { readWinningLotto() }
         val bonus = retryUntilSuccess { readBonus(winningLotto) }
 
         val winningResult = getWinningResult(ticket, winningLotto, bonus)
@@ -47,9 +46,7 @@ class LotteryController {
 
     private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(InputView.readBonus(), winningLottery)
 
-    private fun readWinningLotto() = InputView.readWinningLotto()
-
-    private fun splitWinningLotto(input: String) = Lottery.fromInput(InputView.splitWinningLotto(input))
+    private fun readWinningLotto() = Lottery.fromInput(InputView.readWinningLotto())
 
     private fun issueTicket(
         manualLotteries: List<List<String>>,
