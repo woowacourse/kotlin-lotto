@@ -20,7 +20,8 @@ class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
 
         fun fromInput(input: String): Lottery {
             require(input.replace(" ", "").isNotEmpty()) { ERROR_BLANK_INPUT }
-            val numbers = input.replace(" ", "").split(COMMA).map { LotteryNumber(it.toInt()) }
+            val sortedNumbers = input.replace(" ", "").split(COMMA).map { it.toInt() }.sorted()
+            val numbers = sortedNumbers.map { LotteryNumber(it) }
             return Lottery(numbers)
         }
     }
