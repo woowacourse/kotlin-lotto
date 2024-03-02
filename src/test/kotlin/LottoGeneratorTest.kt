@@ -1,23 +1,17 @@
 import lotto.model.LottoGenerator
-import lotto.util.Constant
-import org.junit.jupiter.api.Assertions.assertTrue
+import lotto.model.LottoNumber
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class LottoGeneratorTest {
     @Test
-    fun `generateLotto returns a Lotto with valid numbers`() {
-        val lottoGenerator = LottoGenerator()
+    fun `generateLotto returns expected Lotto for test environment`() {
+        val testNumberGenerator = TestLottoNumberGenerator()
+        val lottoGenerator = LottoGenerator(testNumberGenerator)
+        val expectedNumbers = setOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) }.toSet()
+
         val lotto = lottoGenerator.generateLotto()
 
-        // 번호 개수 검사
-        assertTrue(lotto.numbers.size == Constant.LOTTO_LEN, "Lotto should contain ${Constant.LOTTO_LEN} numbers")
-
-        // 번호 범위 검사
-        lotto.numbers.forEach {
-            assertTrue(it.lottoNumber in Constant.LOTTO_NUM_RANGE, "Lotto number should be within the valid range")
-        }
-
-        // 고유성 검사
-        assertTrue(lotto.numbers.size == lotto.numbers.distinctBy { it.lottoNumber }.size, "Lotto numbers should be unique")
+        assertEquals(expectedNumbers, lotto.numbers, "Generated Lotto numbers should match the expected numbers")
     }
 }

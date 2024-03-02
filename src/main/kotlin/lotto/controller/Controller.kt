@@ -1,9 +1,9 @@
 package lotto.controller
 
 import lotto.model.Lotto
-import lotto.model.LottoGenerator
 import lotto.model.LottoNumber
 import lotto.model.Lottos
+import lotto.model.RandomLottoNumberGenerator
 import lotto.model.UserPrize
 import lotto.model.WinningNumber
 import lotto.util.Constant.LOTTO_PRICE
@@ -19,7 +19,7 @@ import lotto.view.purchaseCountMessage
 import lotto.view.winningStatistics
 
 class Controller {
-    private val lottoGenerator = LottoGenerator()
+    private val lottoGenerator = RandomLottoNumberGenerator()
 
     fun run() {
         val charge = enterPurchaseAmount()
@@ -78,7 +78,7 @@ class Controller {
     private fun makeLottos(count: Int): Lottos {
         return Lottos(
             List(count) {
-                val lotto = lottoGenerator.generateLotto()
+                val lotto = lottoGenerator.generateNumbers()
                 lotto
             },
         )
