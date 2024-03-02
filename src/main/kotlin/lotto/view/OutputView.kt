@@ -25,7 +25,7 @@ class OutputView {
             println(
                 MATCH_MESSAGE.format(
                     rank.countOfMatch,
-                    if (rank in Rank.bonusNeededRanks) ", 보너스 볼 일치" else "",
+                    if (rank.matchBonus == true) ", 보너스 볼 일치" else "",
                     rank.winningMoney,
                     rankMap.ranks[rank],
                 ),
