@@ -18,11 +18,13 @@ data class Money(val amount: BigDecimal) : Comparable<Money> {
     override fun compareTo(other: Money): Int = (amount - other.amount).toInt()
 
     companion object {
-        fun from(input: String): Money {
+        fun from(input: String): Money? {
             val amount = input.toIntOrNull()
-            requireNotNull(amount) { ERROR_INVALID_PURCHASE_AMOUNT }
-            require(amount <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
-            require(amount >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
+            if (amount == null || amount !in PRICE..MAX_PRICE_AMOUNT) return null
+
+            // requireNotNull(amount) { ERROR_INVALID_PURCHASE_AMOUNT }
+            // require(amount <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
+            // require(amount >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
 
             val purchasableAmount = amount - (amount % 1000)
 
