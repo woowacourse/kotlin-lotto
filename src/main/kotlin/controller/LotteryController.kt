@@ -14,21 +14,33 @@ import view.OutputView
 
 class LotteryController {
     fun start() {
-        val amount = retryUntilSuccess { readAmount() }
-
-        val manualLotteryCount = retryUntilSuccess { readManualLotteryCount(amount) }
-        val purchaseInformation = PurchaseInformation(amount, manualLotteryCount)
-
-        val manualLotteries = readManualLotteries(manualLotteryCount)
-
-        val ticket = issueTicket(manualLotteries, RandomLotteriesGenerationStrategy(purchaseInformation), purchaseInformation)
+        val purchaseInformation = getPurchaseInformation()
+        val ticket = generateTicket(purchaseInformation)
         printTicketInfo(ticket)
 
+        val (winningLotto, bonus) = getWinningLotteryAndBonus()
+        val winningResult = getWinningResult(ticket, winningLotto, bonus)
+        printWinningResult(winningResult)
+    }
+
+    private fun getPurchaseInformation(): PurchaseInformation {
+        val amount = retryUntilSuccess { readAmount() }
+        val manualLotteryCount = retryUntilSuccess { readManualLotteryCount(amount) }
+
+        return PurchaseInformation(amount, manualLotteryCount)
+    }
+
+    private fun generateTicket(purchaseInformation: PurchaseInformation): Ticket {
+        val manualLotteries = readManualLotteries(purchaseInformation.manualLotteryCount)
+
+        return issueTicket(manualLotteries, RandomLotteriesGenerationStrategy(purchaseInformation), purchaseInformation)
+    }
+
+    private fun getWinningLotteryAndBonus(): Pair<Lottery, Bonus> {
         val winningLotto = retryUntilSuccess { readWinningLotto() }
         val bonus = retryUntilSuccess { readBonus(winningLotto) }
 
-        val winningResult = getWinningResult(ticket, winningLotto, bonus)
-        printWinningResult(winningResult)
+        return Pair(winningLotto, bonus)
     }
 
     private fun readAmount() = Amount.fromInput(InputView.readAmount())
