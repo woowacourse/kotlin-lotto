@@ -16,10 +16,9 @@ object LotteryMachine {
     ): Ticket {
         val manualLotteries = issueLotteries(ManualLotteriesGenerationStrategy(manualLotteriesInput))
         val autoLotteries = issueLotteries(strategyForAuto)
-        val userLotteries = mutableListOf<Lottery>()
 
-        userLotteries.addAll(manualLotteries)
-        userLotteries.addAll(autoLotteries)
+        val userLotteries = manualLotteries + autoLotteries
+
         return Ticket(userLotteries, purchaseInformation)
     }
 }
