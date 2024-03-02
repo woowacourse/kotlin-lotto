@@ -1,10 +1,10 @@
 package lotto.view
 
 class InputView {
-    fun readPurchaseAmount(): Long {
+    fun readPurchaseAmount(): Int {
         return try {
             println("구입금액을 입력해 주세요.")
-            readln().toLong()
+            readln().toInt()
         } catch (e: NumberFormatException) {
             throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)
         }
