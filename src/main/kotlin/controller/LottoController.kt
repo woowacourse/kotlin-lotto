@@ -27,6 +27,7 @@ class LottoController(private var gameState: GameState = GameState.Play) {
 
     private fun play() {
         playLotto().onSuccess {
+            gameState = GameState.End
         }.onFailure { e ->
             println(e.message)
         }
@@ -43,7 +44,6 @@ class LottoController(private var gameState: GameState = GameState.Play) {
 
             val winningStatistics = makeWinningStatics(userLotto, winningLotto)
             displayWinningStatistics(money.numberOfLotto, winningStatistics)
-            gameState = GameState.End
         }
 
     private fun generateLottoNumbers(): List<LottoNumber> {
