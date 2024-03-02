@@ -9,7 +9,7 @@ class LotteryGeneratorTest {
     @RepeatedTest(1_000)
     fun `6자리의 중복되지 않은 번호의 로또를 생성한다`() {
         assertDoesNotThrow {
-            println(lotteryGenerator.generate())
+            println(lotteryGenerator.autoGenerate())
         }
     }
 }
