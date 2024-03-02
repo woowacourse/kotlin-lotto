@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test
 class LottoWinningPrizeTest {
     @Test
     fun `1등 당첨되면 1등상금만큼의 수익률을 얻는다`() {
-        val rankMap =
-            RankMap(
+        val winningTable =
+            WinningTable(
                 mapOf(
                     FIRST to 1,
                     SECOND to 0,
@@ -27,7 +27,7 @@ class LottoWinningPrizeTest {
             )
         val ticketCount = 1
         val purchaseAmount = ticketCount * LottoMachine.PRICE_OF_LOTTO_TICKET
-        val lottoWinningPrize = LottoWinningPrize(rankMap)
+        val lottoWinningPrize = LottoWinningPrize(winningTable)
         val winningRate = lottoWinningPrize.calculateWinningRate(ticketCount)
         assertThat(winningRate).isEqualTo(
             FIRST.winningMoney.toFloat() / purchaseAmount,

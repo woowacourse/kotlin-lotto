@@ -9,7 +9,7 @@ import lotto.model.Rank.THIRD
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class RankMapTest {
+class WinningTableTest {
     @Test
     fun `RankMap의 value에 null이 없다`() {
         val ranks =
@@ -22,7 +22,7 @@ class RankMapTest {
                 SIXTH to 0,
             )
         assertThrows<IllegalArgumentException> {
-            RankMap(ranks)
+            WinningTable(ranks)
         }
     }
 }
