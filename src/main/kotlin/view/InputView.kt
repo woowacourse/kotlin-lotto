@@ -20,17 +20,18 @@ object InputView {
         return readln()
     }
 
-    fun readManualLotteries(manualLotteryCount: ManualLotteryCount): List<String> {
+    fun readManualLotteries(manualLotteryCount: ManualLotteryCount): List<List<String>> {
         val manualLotteriesInput = mutableListOf<String>()
 
         println(HEADER_READ_MANUAL_LOTTERIES)
         repeat(manualLotteryCount.count) {
             manualLotteriesInput.add(readln())
         }
-        return manualLotteriesInput
+
+        return splitManualLotteries(manualLotteriesInput)
     }
 
-    fun splitManualLotteries(input: List<String>): List<List<String>> {
+    private fun splitManualLotteries(input: List<String>): List<List<String>> {
         val manualLotteries = mutableListOf<List<String>>()
 
         input.forEach {
