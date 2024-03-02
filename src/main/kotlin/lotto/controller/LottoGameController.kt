@@ -52,7 +52,7 @@ class LottoGameController {
     private fun getBonusNumber(): LottoNumber = LottoNumber.valueOf(InputView.getBonusNumber()) ?: getBonusNumber()
 
     private fun makeResult(lottoTickets: List<Lotto>): WinningStatus {
-        val lotteryResult = WinningLotto(getWinningLotto(), getBonusNumber())
-        return WinningStatus(lotteryResult.generateWinningStatus(lottoTickets))
+        val winningLotto = WinningLotto(getWinningLotto(), getBonusNumber())
+        return winningLotto.generateWinningStatus(lottoTickets)
     }
 }
