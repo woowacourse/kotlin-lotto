@@ -3,8 +3,6 @@ package lotto.controller
 import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.NumberOfManual
-import lotto.model.NumberOfTickets
-import lotto.model.TicketCounts
 import lotto.model.WinningLotto
 import lotto.model.WinningRank
 import lotto.model.WinningStatusChecker
@@ -22,12 +20,13 @@ class LottoGameController {
     }
 
     private fun getLottoTickets(): List<Lotto> {
-        val purchaseAmount = InputView.getPurchaseAmount()
-        val getManualCounts = InputView.getManualTicketCounts()
-        val ticketCounts = TicketCounts(NumberOfTickets(purchaseAmount), NumberOfManual(getManualCounts))
-        val lottoMachine = LottoMachine(ticketCounts)
+        val lottoMachine =
+            LottoMachine.create(
+                InputView.getPurchaseAmount(),
+                InputView.getManualTicketCounts(),
+            )
         return if (lottoMachine.ticketCounts.numberOfManual.counts != NumberOfManual.MIN_NUMBER_OF_MANUAL) {
-            lottoMachine.issueTickets(InputView.getManualLotto(ticketCounts.numberOfManual.counts))
+            lottoMachine.issueTickets(InputView.getManualLotto(lottoMachine.ticketCounts.numberOfManual.counts))
         } else {
             lottoMachine.issueTickets()
         }
