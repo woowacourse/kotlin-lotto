@@ -1,6 +1,7 @@
 package controller
 
 import model.Buyer
+import model.GameState
 import model.Lotto
 import model.LottoNumber
 import model.Lottos
@@ -14,17 +15,36 @@ import util.LottoConstants
 import view.InputView
 import view.OutputView
 
-class LottoController {
+class LottoController(private var gameState: GameState = GameState.Play) {
     fun run() {
-        val purchaseAmount = InputView.inputPurchaseAmount()
-        val money = Buyer.from(purchaseAmount)
-        val purchaseSizeOfManualLotto = InputView.inputPurchaseSizeOfManualLotto()
-        val manualLottoCount = ManualLottoPurchaseCount.from(purchaseSizeOfManualLotto, money.purchaseAmount)
-        val userLotto = publishLottos(manualLottoCount, money)
-        val winningLotto = drawWinningLotto()
-        val winningStatistics = makeWinningStatics(userLotto, winningLotto)
-        displayWinningStatistics(money.numberOfLotto, winningStatistics)
+        while (true) {
+            when (gameState) {
+                GameState.Play -> play()
+                GameState.End -> break
+            }
+        }
     }
+
+    private fun play() {
+        playLotto().onSuccess {
+        }.onFailure { e ->
+            println(e.message)
+        }
+    }
+
+    private fun playLotto() =
+        runCatching {
+            val purchaseAmount = InputView.inputPurchaseAmount()
+            val money = Buyer.from(purchaseAmount)
+            val purchaseSizeOfManualLotto = InputView.inputPurchaseSizeOfManualLotto()
+            val manualLottoCount = ManualLottoPurchaseCount.from(purchaseSizeOfManualLotto, money.numberOfLotto)
+            val userLotto = publishLottos(manualLottoCount, money)
+            val winningLotto = drawWinningLotto()
+
+            val winningStatistics = makeWinningStatics(userLotto, winningLotto)
+            displayWinningStatistics(money.numberOfLotto, winningStatistics)
+            gameState = GameState.End
+        }
 
     private fun generateLottoNumbers(): List<LottoNumber> {
         val numberGenerator = NumberGenerator()

@@ -1,9 +1,14 @@
 package model
 
+import exception.ErrorCode
+import exception.ExceptionHandler.handleException
+import util.LottoConstants
+
 class WinningLotto(private val winningNumbers: List<LottoNumber>, private val bonusNumber: LottoNumber) {
     init {
-        require(winningNumbers.toSet().size == 6)
-        require(!winningNumbers.contains(bonusNumber))
+        handleException(ErrorCode.INVALID_WINNING_NUMBERS_SIZE) { winningNumbers.size == LottoConstants.SIZE }
+        handleException(ErrorCode.INVALID_WINNING_NUMBERS_DUPLICATE) { winningNumbers.toSet().size == LottoConstants.SIZE }
+        handleException(ErrorCode.INVALID_BONUS_NUMBER_DUPLICATE) { !winningNumbers.contains(bonusNumber) }
     }
 
     fun calculateCountOfMatch(lotto: Lotto): Int {

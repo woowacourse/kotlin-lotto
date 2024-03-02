@@ -1,7 +1,8 @@
 package model
 
+import exception.ErrorCode
+import exception.ExceptionHandler.handleException
 import util.LottoConstants
-import util.Validator
 
 class Buyer private constructor(val purchaseAmount: Int) {
     val numberOfLotto: Int = calculateNumberOfLotto()
@@ -12,7 +13,10 @@ class Buyer private constructor(val purchaseAmount: Int) {
 
     companion object {
         fun from(purchaseAmount: String): Buyer {
-            Validator.validatePurchaseAmount(purchaseAmount)
+            handleException(ErrorCode.INVALID_PURCHASE_AMOUNT_RANGE) { purchaseAmount.toIntOrNull() != null }
+            handleException(ErrorCode.INVALID_PURCHASE_AMOUNT_RANGE) { purchaseAmount.toInt() >= LottoConstants.UNIT_PRICE }
+            handleException(ErrorCode.INVALID_PURCHASE_AMOUNT_UNIT) { purchaseAmount.toInt() / LottoConstants.UNIT_PRICE != 0 }
+
             return Buyer(purchaseAmount.toInt())
         }
     }
