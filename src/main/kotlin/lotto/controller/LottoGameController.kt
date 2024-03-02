@@ -26,10 +26,7 @@ class LottoGameController(
         generateAutoLotteries()
         showPurchaseResult(lottoMachine.availableCount, manualCount, lottoMachine.autoLotteries)
         generateWinningLotto()
-        val bonusLottoNumber = getBonusLottoNumber()
-        val lottoGameResult =
-            LottoGameResult(bonusLottoNumber, lottoMachine.winningLotto, lottoMachine.currentLotteries)
-        showLottoGameResult(lottoGameResult, purchaseExpense)
+        showLottoGameResult(purchaseExpense)
     }
 
     private fun getPurchaseExpense(): Money =
@@ -78,21 +75,21 @@ class LottoGameController(
         }
     }
 
+    private fun showLottoGameResult(purchaseExpense: Money) {
+        ExceptionHandler.handleOutputValue {
+            val bonusLottoNumber = getBonusLottoNumber()
+            val lottoGameResult =
+                LottoGameResult(bonusLottoNumber, lottoMachine.winningLotto, lottoMachine.currentLotteries)
+            val rankResults = lottoGameResult.getWinningResult()
+            val earningRate = lottoGameResult.calculateEarningRate(purchaseExpense)
+            lottoGameOutputView.showGameResult(rankResults, earningRate)
+        }
+    }
+
     private fun getBonusLottoNumber(): LottoNumber =
         ExceptionHandler.handleInputValue {
             lottoGameInputView.inputBonusNumber()?.let {
                 LottoNumber(it, lottoMachine.winningLotto)
             } ?: getBonusLottoNumber()
         }
-
-    private fun showLottoGameResult(
-        lottoGameResult: LottoGameResult,
-        purchaseExpense: Money,
-    ) {
-        ExceptionHandler.handleOutputValue {
-            val rankResults = lottoGameResult.getWinningResult()
-            val earningRate = lottoGameResult.calculateEarningRate(purchaseExpense)
-            lottoGameOutputView.showGameResult(rankResults, earningRate)
-        }
-    }
 }
