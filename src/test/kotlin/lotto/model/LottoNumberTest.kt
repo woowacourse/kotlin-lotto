@@ -1,6 +1,7 @@
 package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -25,7 +26,9 @@ class LottoNumberTest {
         val firstGenerated = LottoNumber.valueOf(1)
         val secondGenerated = LottoNumber.valueOf(1)
 
-        assertThat(firstGenerated).isEqualTo(secondGenerated)
-        assertThat(firstGenerated).isSameAs(secondGenerated)
+        assertAll(
+            { assertThat(firstGenerated).isEqualTo(secondGenerated) },
+            { assertThat(firstGenerated).isSameAs(secondGenerated) },
+        )
     }
 }
