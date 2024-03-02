@@ -1,12 +1,12 @@
 package model
 
+import model.generator.ExplicitLotteriesGenerationStrategy
+import model.generator.ManualLotteriesGenerationStrategy
+import model.generator.RandomLotteriesGenerationStrategy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import utils.ExplicitLotteriesGenerationStrategy
-import utils.ManualLotteriesGenerationStrategy
-import utils.RandomLotteriesGenerationStrategy
 
 class LotteryMachineTest {
     @Test

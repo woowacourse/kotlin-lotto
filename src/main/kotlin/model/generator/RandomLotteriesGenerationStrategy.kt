@@ -1,4 +1,4 @@
-package utils
+package model.generator
 
 import model.Lottery
 import model.PurchaseInformation

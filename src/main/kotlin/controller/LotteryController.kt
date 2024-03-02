@@ -8,7 +8,7 @@ import model.ManualLotteryCount
 import model.PurchaseInformation
 import model.Ticket
 import model.WinningResult
-import utils.RandomLotteriesGenerationStrategy
+import model.generator.RandomLotteriesGenerationStrategy
 import view.InputView
 import view.OutputView
 

@@ -1,9 +1,9 @@
 package model
 
 import model.WinningResult.Companion.round
+import model.generator.ExplicitLotteriesGenerationStrategy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import utils.ExplicitLotteriesGenerationStrategy
 
 class WinningResultTest {
     @Test

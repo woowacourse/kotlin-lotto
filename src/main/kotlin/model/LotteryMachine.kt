@@ -1,7 +1,7 @@
 package model
 
-import utils.LotteriesGenerationStrategy
-import utils.ManualLotteriesGenerationStrategy
+import model.generator.LotteriesGenerationStrategy
+import model.generator.ManualLotteriesGenerationStrategy
 
 object LotteryMachine {
     fun issueLotteries(lotteriesGenerationStrategy: LotteriesGenerationStrategy): List<Lottery> {
