@@ -9,9 +9,20 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val purchasePrice = Money(inputView.getPurchasePrice())
-        val lottoCount = getLottoCount(purchasePrice)
-        val lottoTickets = makeRandomLottoTicket(lottoCount)
+        val purchasePrice = inputView.getPurchasePrice()
+
+        val wholeLottoCount = getLottoCount(purchasePrice)
+
+        val manualLottoCount = inputView.getManualCount()
+        val manualLottoTicket = askUserForManualLottoTickets(manualLottoCount)
+
+        val autoLottoCount = wholeLottoCount - manualLottoCount
+        val autoLottoTicket = generateAutoLottoTickets(autoLottoCount)
+
+        outputView.printLottoCount(manualLottoCount, autoLottoCount)
+        val lottoTickets = manualLottoTicket + autoLottoTicket
+        outputView.printLottoTickets(lottoTickets)
+
         val lottoWinning = makeLottoWinning()
         val lottoResult = lottoWinning.makeLottoResult(lottoTickets)
         val profitRate = lottoResult.winningMoney / purchasePrice
@@ -21,20 +32,20 @@ class LottoController(
     private fun getLottoCount(purchasePrice: Money): Int {
         val lottoPurchase = LottoPurchase(Money(1000))
         val lottoCount = lottoPurchase.calculateLottoCount(purchasePrice)
-        outputView.printLottoCount(lottoCount)
         return lottoCount
     }
 
-    private fun makeRandomLottoTicket(count: Int): List<LottoTicket> {
+    private fun askUserForManualLottoTickets(count: Int): List<LottoTicket> =
+        inputView.getManualLottoTickets(count)
+
+    private fun generateAutoLottoTickets(count: Int): List<LottoTicket> {
         val lottoTicketFactory = LottoTicketFactory(RandomLottoTicketGenerator)
         val lottoTickets = lottoTicketFactory.makeLottoTickets(count)
-        outputView.printLottoTickets(lottoTickets)
         return lottoTickets
     }
-
     private fun makeLottoWinning(): LottoWinning {
-        val winningTicket = LottoTicket(inputView.getWinningTicket().map { LottoNumber.of(it) })
-        val bonusNumber = LottoNumber.of(inputView.getBonusNumber())
+        val winningTicket = inputView.getWinningTicket()
+        val bonusNumber = inputView.getBonusNumber()
         return LottoWinning(winningTicket, bonusNumber)
     }
 

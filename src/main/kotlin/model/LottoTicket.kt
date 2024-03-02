@@ -1,12 +1,9 @@
 package model
 
 class LottoTicket(
-    private val lottoNumbers: List<LottoNumber>,
+    lottoNumbers: List<LottoNumber>,
 ) {
-    val lottoNumberSorted by lazy {
-        lottoNumbers.sorted()
-    }
-    private val lottoNumberSet = lottoNumbers.toSet()
+    val lottoNumberSet = lottoNumbers.toSortedSet()
 
     init {
         require(lottoNumberSet.size == SIZE)

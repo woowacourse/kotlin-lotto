@@ -10,6 +10,16 @@ class ConsoleInputView : InputView {
         return Money(readln().toLong())
     }
 
+    override fun getManualCount(): Int {
+        println(GET_MANUAL_COUNT_MESSAGE)
+        return readln().toInt()
+    }
+
+    override fun getManualLottoTickets(count: Int): List<LottoTicket> {
+        println(GET_MANUAL_TICKET_MESSAGE)
+        return List(count) { getLottoTicket() }
+    }
+
     override fun getWinningTicket(): LottoTicket {
         println(GET_WINNING_TICKET_MESSAGE)
         return getLottoTicket()
@@ -31,5 +41,7 @@ class ConsoleInputView : InputView {
         private const val GET_PURCHASE_PRICE_MESSAGE = "구입금액을 입력해 주세요."
         private const val GET_WINNING_TICKET_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
         private const val GET_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
+        private const val GET_MANUAL_COUNT_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val GET_MANUAL_TICKET_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
     }
 }
