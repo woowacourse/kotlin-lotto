@@ -1,9 +1,14 @@
 package lotto.view
 
-import lotto.model.BonusNumber
+import lotto.model.winning.BonusNumber
 import lotto.model.Lotto
-import lotto.model.user.UserEvent
 import lotto.model.user.UserInputVerifier
+import lotto.model.LottoEvent
+import lotto.model.manual.ManualEvent
+import lotto.model.manual.ManualNumber
+import lotto.model.wallet.Wallet
+import lotto.model.wallet.WalletEvent
+import lotto.model.winning.BonusEvent
 
 private const val REQUEST_PURCHASE_PRICE = "구입금액을 입력해 주세요."
 private const val REQUEST_WINNING_NUM = "지난 주 당첨 번호를 입력해 주세요."
@@ -11,19 +16,25 @@ private const val REQUEST_BONUS_NUM = "보너스 볼을 입력해 주세요."
 private const val REQUEST_MANUAL_NUM = "수동으로 구매할 로또 수를 입력해 주세요."
 private const val REQUEST_LOTTO_NUM = "수동으로 구매할 번호를 입력해 주세요."
 
-fun inputCostMessage(): Int {
+fun inputCostMessage(): Wallet {
     println(REQUEST_PURCHASE_PRICE)
     return when (val event = UserInputVerifier.inputCharge(readlnOrNull())) {
-        is UserEvent.PurchaseEvent.Success -> event.price
-        else -> inputCostMessage()
+        is WalletEvent.Success -> event.wallet
+        else -> {
+            println(WalletEvent.checkWallet(event).message)
+            inputCostMessage()
+        }
     }
 }
 
-fun inputManualNumber(lottoCount: Int): Int {
+fun inputManualNumber(lottoCount: Int): ManualNumber {
     println(REQUEST_MANUAL_NUM)
     return when (val event = UserInputVerifier.inputManualCount(readlnOrNull(), lottoCount)) {
-        is UserEvent.ManualEvent.Success -> event.count
-        else -> inputManualNumber(lottoCount)
+        is ManualEvent.Success -> event.manualNumber
+        else -> {
+            println(ManualEvent.checkManual(event).message)
+            inputManualNumber(lottoCount)
+        }
     }
 }
 
@@ -37,16 +48,21 @@ fun inputWinningLottoNumbers() {
 
 fun inputLottoNumbers(): Lotto {
     return when (val event = UserInputVerifier.inputLottoNumbers(readlnOrNull())) {
-        is UserEvent.LottoEvent.Success -> event.lotto
-        else -> inputLottoNumbers()
+        is LottoEvent.Success -> event.lotto
+        else -> {
+            println(LottoEvent.checkLotto(event).message)
+            inputLottoNumbers()
+        }
     }
 }
 
 fun inputBonusNumber(winningLotto: Lotto): BonusNumber {
     println(REQUEST_BONUS_NUM)
     return when (val event = UserInputVerifier.inputBonus(readlnOrNull(), winningLotto)) {
-        is UserEvent.BonusEvent.Success -> event.bonusNumber
-        else -> inputBonusNumber(winningLotto)
+        is BonusEvent.Success -> event.bonusNumber
+        else -> {
+            println(BonusEvent.checkBonusEvent(event).message)
+            inputBonusNumber(winningLotto)
+        }
     }
 }
-

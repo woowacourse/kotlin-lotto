@@ -1,4 +1,6 @@
-package lotto.model
+package lotto.model.winning
+
+import lotto.model.Lotto
 
 class WinningNumber(
     private val lotto: Lotto,

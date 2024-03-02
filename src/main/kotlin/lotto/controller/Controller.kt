@@ -1,9 +1,8 @@
 package lotto.controller
 
-import lotto.model.Lotto
 import lotto.model.LottoGenerator
 import lotto.model.Lottos
-import lotto.model.WinningNumber
+import lotto.model.winning.WinningNumber
 import lotto.view.inputBonusNumber
 import lotto.view.inputCostMessage
 import lotto.view.inputLottoNumbers
@@ -20,17 +19,18 @@ import lotto.view.outputWinningStatistics
 class Controller {
 
     fun run() {
-        val charge = inputCostMessage()
-        val lottoCount = charge / Lotto.LOTTO_PRICE.toInt()
+        val wallet = inputCostMessage()
+        val lottoCount = wallet.getLottoCount()
 
-        val manualLottoCount = inputManualNumber(lottoCount)
-        val autoLottoCount = lottoCount - manualLottoCount
+        val manualNumber = inputManualNumber(lottoCount)
+        val manualCount = manualNumber.getNumber()
+        val autoLottoCount = lottoCount - manualCount
 
         outputNewLine()
         val lottos = Lottos()
-        if (manualLottoCount > 0) {
+        if (manualCount > 0) {
             inputManualLottoNumbers()
-            val manualLottos = List(manualLottoCount) {
+            val manualLottos = List(manualCount) {
                 inputLottoNumbers()
             }
             lottos.purchaseLottos(manualLottos)
@@ -41,7 +41,7 @@ class Controller {
         }
         lottos.purchaseLottos(autoLottos)
 
-        outputPurchaseCount(manualLottoCount, autoLottoCount)
+        outputPurchaseCount(manualCount, autoLottoCount)
         outputLottos(lottos.getLottos())
 
         outputNewLine()
@@ -59,7 +59,7 @@ class Controller {
         outputWinningNumber(prize.getUserPrize())
         val prizeCalculate = prize.prizeRateCalculate(
             prize = prize.prizeCalculate(),
-            charge = charge.toDouble()
+            charge = wallet.getPrice().toDouble()
         )
         prizeCalculate?.let {
             outputCalculationOfYield(it)

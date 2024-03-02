@@ -1,5 +1,8 @@
-import lotto.model.ExceptionManager
-import lotto.model.user.UserEvent
+import lotto.model.LottoEvent
+import lotto.model.manual.ManualEvent
+import lotto.model.user.UserException
+import lotto.model.wallet.WalletEvent
+import lotto.model.winning.BonusEvent
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -7,48 +10,52 @@ class UserEventTest {
     @Test
     fun `구매 오류 처리`() {
         assertThat(
-            ExceptionManager.getException(UserEvent.PurchaseEvent.InvalidDataType).message
-        ).isEqualTo(ExceptionManager.INVALID_DATA_TYPE)
+            WalletEvent.checkWallet(WalletEvent.InvalidDataType).message
+        ).isEqualTo(UserException.INVALID_DATA_TYPE)
 
         assertThat(
-            ExceptionManager.getException(UserEvent.PurchaseEvent.InvalidPrice).message
-        ).isEqualTo(ExceptionManager.INVALID_PRICE)
+            WalletEvent.checkWallet(WalletEvent.InvalidPrice).message
+        ).isEqualTo(WalletEvent.INVALID_PRICE)
     }
 
     @Test
     fun `로또 오류 처리`() {
         assertThat(
-            ExceptionManager.getException(UserEvent.LottoEvent.InvalidDataType).message
-        ).isEqualTo(ExceptionManager.INVALID_DATA_TYPE)
+            LottoEvent.checkLotto(LottoEvent.InvalidDataType).message
+        ).isEqualTo(UserException.INVALID_DATA_TYPE)
 
         assertThat(
-            ExceptionManager.getException(UserEvent.LottoEvent.InvalidNumRange).message
-        ).isEqualTo(ExceptionManager.INVALID_NUM_RANGE)
+            LottoEvent.checkLotto(LottoEvent.InvalidNumRange).message
+        ).isEqualTo(LottoEvent.INVALID_NUM_RANGE)
 
         assertThat(
-            ExceptionManager.getException(UserEvent.LottoEvent.InvalidNumCount).message
-        ).isEqualTo(ExceptionManager.INVALID_NUM_COUNT)
+            LottoEvent.checkLotto(LottoEvent.InvalidNumCount).message
+        ).isEqualTo(LottoEvent.INVALID_NUM_COUNT)
+
+        assertThat(
+            LottoEvent.checkLotto(LottoEvent.InvalidDuplication).message
+        ).isEqualTo(LottoEvent.INVALID_DUPLICATION)
     }
 
     @Test
     fun `수동 로또 오류 처리`() {
         assertThat(
-            ExceptionManager.getException(UserEvent.ManualEvent.InvalidManualCount).message
-        ).isEqualTo(ExceptionManager.INVALID_MANUAL_COUNT)
+            ManualEvent.checkManual(ManualEvent.InvalidManualCount).message
+        ).isEqualTo(ManualEvent.INVALID_MANUAL_COUNT)
     }
 
     @Test
     fun `보너스 입력 오류 처리`() {
         assertThat(
-            ExceptionManager.getException(UserEvent.BonusEvent.InvalidDataType).message
-        ).isEqualTo(ExceptionManager.INVALID_DATA_TYPE)
+            BonusEvent.checkBonusEvent(BonusEvent.InvalidDataType).message
+        ).isEqualTo(UserException.INVALID_DATA_TYPE)
 
         assertThat(
-            ExceptionManager.getException(UserEvent.BonusEvent.InvalidNumRange).message
-        ).isEqualTo(ExceptionManager.INVALID_NUM_RANGE)
+            BonusEvent.checkBonusEvent(BonusEvent.InvalidNumRange).message
+        ).isEqualTo(LottoEvent.INVALID_NUM_RANGE)
 
         assertThat(
-            ExceptionManager.getException(UserEvent.BonusEvent.InvalidBonusDuplication).message
-        ).isEqualTo(ExceptionManager.INVALID_BONUS_DUPLICATION)
+            BonusEvent.checkBonusEvent(BonusEvent.InvalidBonusDuplication).message
+        ).isEqualTo(BonusEvent.INVALID_BONUS_DUPLICATION)
     }
 }
