@@ -1,6 +1,6 @@
 package lotto.model
 
-class Lotto(val numbers: Set<LottoNumber>) {
+class Lotto private constructor(val numbers: Set<LottoNumber>) {
     init {
         require(numbers.isNotDuplicate()) { INVALID_DUPLICATION }
     }
