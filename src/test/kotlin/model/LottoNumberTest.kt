@@ -19,8 +19,9 @@ class LottoNumberTest {
 
     @Test
     fun `같은 값으로 LottoNumber를 생성했을 떄 같은 인스턴스인지`() {
+        val actual = LottoNumber.from(1)
         val expected = LottoNumber.from(1)
 
-        assertThat(expected).isSameAs(LottoNumber.from(1))
+        assertThat(actual).isSameAs(expected)
     }
 }

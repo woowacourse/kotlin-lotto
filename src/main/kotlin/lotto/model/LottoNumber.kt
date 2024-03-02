@@ -1,6 +1,8 @@
 package lotto.model
 
-class LottoNumber private constructor(val value: Int) {
+class LottoNumber private constructor(val value: Int) : Comparable<LottoNumber> {
+
+    override fun compareTo(other: LottoNumber): Int = this.value.compareTo(other.value)
 
     companion object {
         private const val MINIMUM_LOTTO_NUMBER = 1
