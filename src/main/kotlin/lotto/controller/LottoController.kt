@@ -68,8 +68,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
                 outputView.printRankStatistics(rank, rankCounts[rank] ?: DEFAULT_COUNT)
             }
         }
-        val profitAmount = WinningPrizeCalculator.calculateProfitAmount(rankCounts)
-        val profitRate = WinningPrizeCalculator.calculateProfitRate(purchaseAmount, profitAmount)
+        val profitRate = WinningPrizeCalculator.calculateProfitRate(purchaseAmount, rankCounts)
         outputView.printProfitRateMessage(profitRate)
     }
 
