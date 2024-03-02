@@ -3,7 +3,7 @@ package lotto.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class LotteryResultTest {
+class WinningLottoTest {
     @Test
     fun `내가 구매한 로또와 당첨 결과를 비교하여 당첨 현황을 반환한다`() {
         val winningNumbers = Lotto(1, 2, 3, 4, 5, 6)
