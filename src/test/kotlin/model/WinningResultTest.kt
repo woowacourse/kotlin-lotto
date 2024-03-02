@@ -28,15 +28,17 @@ class WinningResultTest {
         val manualLotteries = LotteryMachine.issueLotteries(ManualLotteriesGenerationStrategy(manualInput))
         val autoLotteries = LotteryMachine.issueLotteries(ExplicitLotteriesGenerationStrategy(autoInput))
 
-        val amount = Amount(6000)
+        val purchaseInformation = PurchaseInformation(Amount(6000), ManualLotteryCount(manualInput.size))
 
         val ticket =
-            LotteryMachine.issueTicket(manualLotteries, autoLotteries, amount)
+            LotteryMachine.issueTicket(manualLotteries, autoLotteries, purchaseInformation)
 
         val winningResult = WinningResult.of(ticket, winningLottery, bonus)
 
         val prizeMoney = Rank.FIRST.winningMoney + Rank.SECOND.winningMoney + Rank.THIRD.winningMoney + Rank.FIFTH.winningMoney
-        val expectedROI = (prizeMoney / amount.money.toDouble()).round(2)
+        val amount = purchaseInformation.amount.money
+
+        val expectedROI = (prizeMoney / amount.toDouble()).round(2)
 
         assertThat(winningResult.stats[Rank.FIRST]).isEqualTo(1)
         assertThat(winningResult.stats[Rank.SECOND]).isEqualTo(1)

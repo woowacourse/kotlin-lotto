@@ -43,12 +43,13 @@ class WinningResult(val stats: Map<Rank, Int>, val roi: Double) {
             stats: Map<Rank, Int>,
         ): Double {
             var prize = 0.0
+            val amount = ticket.purchaseInformation.amount.money
 
             stats.forEach {
                 prize += (it.key.winningMoney * it.value)
             }
 
-            return (prize / ticket.amount.money).round(DECIMALS)
+            return (prize / amount).round(DECIMALS)
         }
     }
 }

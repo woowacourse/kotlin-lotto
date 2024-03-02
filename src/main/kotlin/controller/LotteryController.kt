@@ -6,6 +6,7 @@ import model.Bonus
 import model.Lottery
 import model.LotteryMachine
 import model.ManualLotteryCount
+import model.PurchaseInformation
 import model.WinningResult
 import utils.ManualLotteriesGenerationStrategy
 import utils.RandomLotteriesGenerationStrategy
@@ -17,14 +18,15 @@ class LotteryController {
         val amount = retryUntilSuccess { readAmount() }
 
         val manualLotteryCount = retryUntilSuccess { readManualLotteryCount(amount) }
+        val purchaseInformation = PurchaseInformation(amount, manualLotteryCount)
 
         val manualLotteriesInput = readManualLotteries(manualLotteryCount)
         val splitManualLotteries = splitManualLotteries(manualLotteriesInput)
 
         val manualLotteries = issueManualLotteries(splitManualLotteries)
-        val autoLotteries = issueAutoLotteries(amount, manualLotteryCount)
+        val autoLotteries = issueAutoLotteries(purchaseInformation)
 
-        val ticket = issueTicket(manualLotteries, autoLotteries, amount)
+        val ticket = issueTicket(manualLotteries, autoLotteries, purchaseInformation)
         printTicketInfo(ticket)
 
         val winningLottoInput = retryUntilSuccess { readWinningLotto() }
@@ -67,16 +69,14 @@ class LotteryController {
     private fun issueManualLotteries(manualLotteries: List<List<String>>): List<Lottery> =
         LotteryMachine.issueLotteries(ManualLotteriesGenerationStrategy(manualLotteries))
 
-    private fun issueAutoLotteries(
-        amount: Amount,
-        manualLotteryCount: ManualLotteryCount,
-    ): List<Lottery> = LotteryMachine.issueLotteries(RandomLotteriesGenerationStrategy(amount, manualLotteryCount))
+    private fun issueAutoLotteries(purchaseInformation: PurchaseInformation): List<Lottery> =
+        LotteryMachine.issueLotteries(RandomLotteriesGenerationStrategy(purchaseInformation))
 
     private fun issueTicket(
         manualLotteries: List<Lottery>,
         autoLotteries: List<Lottery>,
-        amount: Amount,
-    ): Ticket = LotteryMachine.issueTicket(manualLotteries, autoLotteries, amount)
+        purchaseInformation: PurchaseInformation,
+    ): Ticket = LotteryMachine.issueTicket(manualLotteries, autoLotteries, purchaseInformation)
 
     private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)
 

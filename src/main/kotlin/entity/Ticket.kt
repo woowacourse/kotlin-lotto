@@ -1,9 +1,9 @@
 package entity
 
-import model.Amount
 import model.Lottery
+import model.PurchaseInformation
 
 data class Ticket(
     val userLotteries: List<Lottery>,
-    val amount: Amount,
+    val purchaseInformation: PurchaseInformation,
 )

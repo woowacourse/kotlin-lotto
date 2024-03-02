@@ -11,12 +11,12 @@ object LotteryMachine {
     fun issueTicket(
         manualLotteries: List<Lottery>,
         autoLotteries: List<Lottery>,
-        amount: Amount,
+        purchaseInformation: PurchaseInformation,
     ): Ticket {
         val userLotteries = mutableListOf<Lottery>()
 
         userLotteries.addAll(manualLotteries)
         userLotteries.addAll(autoLotteries)
-        return Ticket(userLotteries, amount)
+        return Ticket(userLotteries, purchaseInformation)
     }
 }

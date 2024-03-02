@@ -31,12 +31,16 @@ class LotteryMachineTest {
         money: Int,
         count: Int,
     ) {
-        val amount = Amount(money)
-        val manualLotteryCount = ManualLotteryCount(count)
+        val purchaseInformation = PurchaseInformation(Amount(money), ManualLotteryCount(count))
 
-        val autoLotteries = LotteryMachine.issueLotteries(RandomLotteriesGenerationStrategy(amount, manualLotteryCount))
+        val autoLotteries = LotteryMachine.issueLotteries(RandomLotteriesGenerationStrategy(purchaseInformation))
 
-        val expectedAutoLotteryCount = amount.money / 1000 - manualLotteryCount.count
+        val amount = purchaseInformation.amount.money
+        val manualLotteryCount = purchaseInformation.manualLotteryCount.count
+
+        val totalLotteryCount = amount / 1000
+
+        val expectedAutoLotteryCount = totalLotteryCount - manualLotteryCount
         assertThat(autoLotteries.size).isEqualTo(expectedAutoLotteryCount)
     }
 
