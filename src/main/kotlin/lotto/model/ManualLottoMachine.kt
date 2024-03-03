@@ -7,7 +7,7 @@ class ManualLottoMachine(private val numbers: List<List<Int>>) : LottoMachine {
     }
 
     override fun make(): List<UserLottoTicket> {
-        return numbers.map { UserLottoTicket(it.map { LottoNumber.makeLottoNumber(it) }) }
+        return numbers.map { UserLottoTicket.wrap(it.map { LottoNumber.makeLottoNumber(it) }) }
     }
 
     companion object {

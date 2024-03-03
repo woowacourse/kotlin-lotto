@@ -6,7 +6,7 @@ class AutoLottoMachine(private val count: Int) : LottoMachine {
     }
 
     private fun makeUserLottoTicket(): UserLottoTicket {
-        return UserLottoTicket(makeLottoNumbers())
+        return UserLottoTicket.wrap(makeLottoNumbers())
     }
 
     private fun makeLottoNumbers(): List<LottoNumber> {
@@ -17,6 +17,5 @@ class AutoLottoMachine(private val count: Int) : LottoMachine {
         return (LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER)
             .shuffled()
             .take(6)
-            .sorted()
     }
 }

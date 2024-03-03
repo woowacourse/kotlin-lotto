@@ -30,5 +30,10 @@ value class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
 
     companion object {
         private const val LOTTO_TICKET_SIZE = 6
+
+        fun wrap(lottoNumbers: List<LottoNumber>): UserLottoTicket {
+            val sortedLottoNumbers = lottoNumbers.sortedBy { it.number }
+            return UserLottoTicket(sortedLottoNumbers)
+        }
     }
 }
