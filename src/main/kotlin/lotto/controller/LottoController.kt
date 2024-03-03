@@ -64,6 +64,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
     ) {
         val rankCounts = winningLotto.getWinningResult(lottoStore.lottos)
 
+        outputView.printWinningStatisticsMessage()
         WinningRank.entries.forEach { rank ->
             if (rank != WinningRank.NONE) {
                 outputView.printRankStatistics(rank, rankCounts[rank] ?: DEFAULT_COUNT)
