@@ -17,20 +17,53 @@ class LottoController {
     fun runLotto() {
         val purchasePrice = inputView.getPurchasePrice()
         val manualLottoCount = inputView.getManualLottoCount()
-        val manualLottoNumbers = inputView.getManualLottoTickets(manualLottoCount)
-        val autoLottoCountCalculator = AutoLottoCountCalculator(purchasePrice, manualLottoCount)
-        val autoLottoCount = autoLottoCountCalculator.calculate()
-
-        val autoLottoMachine = AutoLottoMachine(autoLottoCount)
-        val autoTickets = autoLottoMachine.make()
-
-        val manualLottoMachine = ManualLottoMachine(manualLottoNumbers)
-        val manualTickets = manualLottoMachine.make()
-
-        val userTickets = manualTickets + autoTickets
+        val manualTickets = makeManualTikets(manualLottoCount)
+        val autoLottoCount = calculateAutoLottoCount(purchasePrice, manualLottoCount)
+        val userTickets = makeAutoLottoTickets(autoLottoCount, manualTickets)
         outputView.printLottoCount(manualLottoCount, autoLottoCount)
         outputView.printUserTickets(userTickets)
+        printLottoWinning(userTickets, purchasePrice)
+    }
 
+    private fun makeManualTikets(manualLottoCount: Int): List<UserLottoTicket> {
+        val manualLottoNumbers = inputView.getManualLottoTickets(manualLottoCount)
+        val manualLottoMachine = ManualLottoMachine(manualLottoNumbers)
+        val manualTickets = manualLottoMachine.make()
+        return manualTickets
+    }
+
+    private fun calculateAutoLottoCount(
+        purchasePrice: Int,
+        manualLottoCount: Int,
+    ): Int {
+        val autoLottoCountCalculator = AutoLottoCountCalculator(purchasePrice, manualLottoCount)
+        val autoLottoCount = autoLottoCountCalculator.calculate()
+        return autoLottoCount
+    }
+
+    private fun makeAutoLottoTickets(
+        autoLottoCount: Int,
+        manualTickets: List<UserLottoTicket>,
+    ): List<UserLottoTicket> {
+        val autoLottoMachine = AutoLottoMachine(autoLottoCount)
+        val autoTickets = autoLottoMachine.make()
+        val userTickets = manualTickets + autoTickets
+        return userTickets
+    }
+
+    private fun printLottoWinning(
+        purchasePrice: Int,
+        winningTable: WinningTable,
+    ) {
+        val winningRate = winningTable.calculateWinningRate(purchasePrice)
+        outputView.printWinningChart(winningTable)
+        outputView.printWinningRate(winningRate)
+    }
+
+    private fun printLottoWinning(
+        userTickets: List<UserLottoTicket>,
+        purchasePrice: Int,
+    ) {
         val winningTable = checkLottoWinning(userTickets)
         printLottoWinning(purchasePrice, winningTable)
     }
@@ -41,14 +74,5 @@ class LottoController {
         val lottoWinningRank =
             LottoWinningRank(winningNumbers, LottoNumber.of(bonusNumber))
         return lottoWinningRank.makeWinningTable(userTickets)
-    }
-
-    private fun printLottoWinning(
-        purchasePrice: Int,
-        winningTable: WinningTable,
-    ) {
-        val winningRate = winningTable.calculateWinningRate(purchasePrice)
-        outputView.printWinningChart(winningTable)
-        outputView.printWinningRate(winningRate)
     }
 }
