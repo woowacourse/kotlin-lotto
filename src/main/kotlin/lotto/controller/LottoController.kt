@@ -32,7 +32,7 @@ class LottoController {
         outputView.printUserTickets(userTickets)
 
         val winningTable = checkLottoWinning(userTickets)
-        printLottoWinning(userTickets, winningTable)
+        printLottoWinning(purchasePrice, winningTable)
     }
 
     private fun checkLottoWinning(userTickets: List<UserLottoTicket>): WinningTable {
@@ -43,10 +43,10 @@ class LottoController {
     }
 
     private fun printLottoWinning(
-        userTickets: List<UserLottoTicket>,
+        purchasePrice: Int,
         winningTable: WinningTable,
     ) {
-        val winningRate = winningTable.calculateWinningRate(userTickets.size)
+        val winningRate = winningTable.calculateWinningRate(purchasePrice)
         outputView.printWinningChart(winningTable)
         outputView.printWinningRate(winningRate)
     }

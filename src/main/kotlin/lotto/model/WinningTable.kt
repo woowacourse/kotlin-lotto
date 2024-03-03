@@ -12,9 +12,8 @@ class WinningTable(winnings: Map<Rank, Int>) {
         this.winnings = rankMap
     }
 
-    fun calculateWinningRate(ticketCount: Int): Float {
+    fun calculateWinningRate(purchasePrice: Int): Float {
         val winningPrize = winnings.map { it.key.winningMoney * it.value }.sum()
-        val purchaseAmount = ticketCount * AutoLottoCountCalculator.PRICE_OF_LOTTO_TICKET
-        return winningPrize.toFloat() / purchaseAmount
+        return winningPrize.toFloat() / purchasePrice
     }
 }
