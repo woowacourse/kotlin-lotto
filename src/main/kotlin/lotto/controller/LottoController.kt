@@ -39,7 +39,7 @@ class LottoController {
         val winningNumbers = inputView.getWinningTicket().map { LottoNumber(it) }
         val bonusNumber = inputView.getBonusNumber()
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        return lottoWinningRank.makeRankMap(userTickets)
+        return lottoWinningRank.makeWinningTable(userTickets)
     }
 
     private fun printLottoWinning(

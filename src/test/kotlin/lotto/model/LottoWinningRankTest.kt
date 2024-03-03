@@ -12,7 +12,7 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
         Assertions.assertThat(rankMap.winnings[Rank.FIRST]).isEqualTo(1)
     }
 
@@ -22,7 +22,7 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 7
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
         Assertions.assertThat(rankMap.winnings[Rank.SECOND]).isEqualTo(1)
     }
 
@@ -32,7 +32,7 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
         Assertions.assertThat(rankMap.winnings[Rank.THIRD]).isEqualTo(1)
     }
 
@@ -42,7 +42,7 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
         Assertions.assertThat(rankMap.winnings[Rank.FOURTH]).isEqualTo(1)
     }
 
@@ -52,7 +52,7 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 44
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeRankMap(userTickets)
+        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
         Assertions.assertThat(rankMap.winnings[Rank.FIFTH]).isEqualTo(1)
     }
 }
