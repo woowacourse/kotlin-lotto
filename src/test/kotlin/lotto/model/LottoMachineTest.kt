@@ -25,7 +25,7 @@ class LottoMachineTest {
     @ParameterizedTest
     @ValueSource(ints = [1, 2, 3, 4, 5, 6])
     fun `자동 로또의 번호를 임의로 지정해주면 해당 번호로 로또가 발행된다`(number: Int) {
-        assertThat(automaticLottos).allMatch { it.contains(LottoNumber.from(number)) }
+        assertThat(automaticLottos).allMatch { LottoNumber.from(number) in it }
     }
 
     @Test
@@ -37,7 +37,7 @@ class LottoMachineTest {
     @ParameterizedTest
     @ValueSource(ints = [1, 2, 3, 4, 5, 6])
     fun `수동 로또 번호를 임의로 지정해주면 해당 번호로 로또가 발행된다`(number: Int) {
-        assertThat(manualLottos).allMatch { it.contains(LottoNumber.from(number)) }
+        assertThat(manualLottos).allMatch { LottoNumber.from(number) in it }
     }
 
     @Test

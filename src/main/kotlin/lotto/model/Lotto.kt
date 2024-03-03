@@ -9,7 +9,7 @@ class Lotto private constructor(val numbers: Set<LottoNumber>) {
 
     fun getMatchingCount(otherLotto: Lotto) = otherLotto.numbers.intersect(numbers).size
 
-    fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
+    operator fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
 
     companion object {
         const val SIZE = 6

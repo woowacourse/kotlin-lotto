@@ -49,7 +49,7 @@ class LottoTest {
         val lottoNumber = LottoNumber.from(number)
 
         // when
-        val actual = lotto.contains(lottoNumber)
+        val actual = lottoNumber in lotto
 
         // then
         assertThat(actual).isEqualTo(expected)

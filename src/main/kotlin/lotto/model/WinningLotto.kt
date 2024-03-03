@@ -5,7 +5,7 @@ class WinningLotto(
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(!lotto.contains(bonusNumber)) { INVALID_DUPLICATE_BONUS_NUMBER }
+        require(bonusNumber !in lotto) { INVALID_DUPLICATE_BONUS_NUMBER }
     }
 
     fun calculateWinningStatistics(lottos: List<Lotto>): WinningStatistics {
@@ -19,7 +19,7 @@ class WinningLotto(
 
     private fun getLottoPrize(otherLotto: Lotto): LottoPrize {
         val matchingCount = otherLotto.getMatchingCount(lotto)
-        val isMatchingBonus = otherLotto.contains(bonusNumber)
+        val isMatchingBonus = bonusNumber in otherLotto
         return LottoPrize.valueOf(matchingCount, isMatchingBonus)
     }
 
