@@ -4,6 +4,9 @@ class LottoWinning(
     private val winningTicket: LottoTicket,
     private val bonusNumber: LottoNumber,
 ) {
+    init {
+        require(bonusNumber !in winningTicket)
+    }
     private fun getRankList(lottoTickets: List<LottoTicket>): List<Rank> =
         lottoTickets.map {
             val countOfMatch = countMatchNumber(it)
