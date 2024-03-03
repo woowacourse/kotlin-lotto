@@ -6,9 +6,9 @@ import model.Money
 
 class ConsoleInputView : InputView {
     override fun getPurchasePrice(): Money {
+        println(GET_PURCHASE_PRICE_MESSAGE)
         val money = readln().toLong()
         require(money > 0L)
-        println(GET_PURCHASE_PRICE_MESSAGE)
         return Money(money)
     }
 
