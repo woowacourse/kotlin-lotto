@@ -10,13 +10,13 @@ class LottoController(
 ) {
     fun run() {
         val purchasePrice = inputView.getPurchasePrice()
-
-        val wholeLottoCount = getLottoCount(purchasePrice)
+        val lottoCounter = LottoCounter(purchasePrice)
 
         val manualLottoCount = inputView.getManualCount()
-        val manualLottoTicket = askUserForManualLottoTickets(manualLottoCount)
+        lottoCounter.reduce(manualLottoCount)
+        val autoLottoCount = lottoCounter.remain
 
-        val autoLottoCount = wholeLottoCount - manualLottoCount
+        val manualLottoTicket = askUserForManualLottoTickets(manualLottoCount)
         val autoLottoTicket = generateAutoLottoTickets(autoLottoCount)
 
         outputView.printLottoCount(manualLottoCount, autoLottoCount)
@@ -29,20 +29,14 @@ class LottoController(
         printWinningResult(lottoResult, profitRate)
     }
 
-    private fun getLottoCount(purchasePrice: Money): Int {
-        val lottoPurchase = LottoPurchase(Money(1000))
-        val lottoCount = lottoPurchase.calculateLottoCount(purchasePrice)
-        return lottoCount
-    }
-
     private fun askUserForManualLottoTickets(count: Int): List<LottoTicket> =
         inputView.getManualLottoTickets(count)
 
     private fun generateAutoLottoTickets(count: Int): List<LottoTicket> {
         val lottoTicketFactory = LottoTicketFactory(RandomLottoTicketGenerator)
-        val lottoTickets = lottoTicketFactory.makeLottoTickets(count)
-        return lottoTickets
+        return lottoTicketFactory.makeLottoTickets(count)
     }
+
     private fun makeLottoWinning(): LottoWinning {
         val winningTicket = inputView.getWinningTicket()
         val bonusNumber = inputView.getBonusNumber()

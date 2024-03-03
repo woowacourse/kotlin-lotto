@@ -16,6 +16,8 @@ data class Money(private val money: Long) {
         return money.toFloat() / other.money
     }
 
+    operator fun rem(other: Money) = Money(money % other.money)
+
     override fun toString(): String = money.toString()
 }
 
