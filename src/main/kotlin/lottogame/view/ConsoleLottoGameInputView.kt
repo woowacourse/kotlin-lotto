@@ -19,6 +19,7 @@ class ConsoleLottoGameInputView : LottoGameInputView {
     }
 
     override tailrec fun inputManualLottoNumbers(size: Int): List<List<LottoNumber>> {
+        if (size <= 0) return emptyList()
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBERS)
         return List(size) {
             readln().split(DELIMITER).map {
