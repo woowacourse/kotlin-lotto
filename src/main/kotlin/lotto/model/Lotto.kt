@@ -1,9 +1,12 @@
 package lotto.model
 
-class Lotto(private val lottoNumber: LottoNumber) {
+import lotto.model.user.UserException
+import lotto.model.winning.WinningNumber
+
+class Lotto(private val lottoNumbers: LottoNumbers) {
 
     fun getLottoNumber(): Set<Int> {
-        return lottoNumber.getNumbers()
+        return lottoNumbers.getNumbers()
     }
 
     fun matchCount(winningNumber: WinningNumber): Int {
@@ -15,7 +18,7 @@ class Lotto(private val lottoNumber: LottoNumber) {
     }
 
     fun matchBonusNumber(winningNumber: WinningNumber): Boolean {
-        return lottoNumber.getNumbers().contains(winningNumber.getBonusNumber())
+        return lottoNumbers.getNumbers().contains(winningNumber.getBonusNumber())
     }
 
     fun findRanking(winningNumber: WinningNumber): LottoPrize {
@@ -29,6 +32,20 @@ class Lotto(private val lottoNumber: LottoNumber) {
     private fun checkSecond(rank: LottoPrize, matchBonus: Boolean) = rank == LottoPrize.THIRD && matchBonus
 
     companion object {
+
+        fun checkLottoValid(numbers: List<String>): LottoEvent {
+            return runCatching {
+                val lottoNumbers = LottoNumbers.checkNumbersValid(numbers)
+                val lotto = Lotto(lottoNumbers = LottoNumbers(lottoNumbers))
+                LottoEvent.Success(lotto = lotto)
+            }.getOrElse { exception ->
+                when (exception) {
+                    is UserException.LottoException -> exception.lottoEvent
+                    else -> LottoEvent.UnknownError
+                }
+            }
+        }
+
         const val LOTTO_LEN = 6
         const val LOTTO_PRICE = 1000.0
         val LOTTO_NUM_RANGE = (1..45)

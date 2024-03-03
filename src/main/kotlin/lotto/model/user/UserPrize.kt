@@ -1,4 +1,6 @@
-package lotto.model
+package lotto.model.user
+
+import lotto.model.LottoPrize
 
 class UserPrize(
     private val matchResult: Map<LottoPrize, Int>
@@ -20,8 +22,12 @@ class UserPrize(
         }
     }
 
-    fun prizeRateCalculate(prize: Long, charge: Double): Double {
-        return prize / charge
+    fun prizeRateCalculate(prize: Long, charge: Double): Double? {
+        return runCatching {
+            prize / charge
+        }.getOrElse {
+            null
+        }
     }
 
     fun getUserPrize(): Map<LottoPrize, Int> {

@@ -1,23 +1,25 @@
 import lotto.model.Lotto
 import lotto.model.LottoNumber
+import lotto.model.LottoNumbers
 import lotto.model.LottoPrize
-import lotto.model.UserPrize
-import lotto.model.WinningNumber
+import lotto.model.user.UserPrize
+import lotto.model.winning.BonusNumber
+import lotto.model.winning.WinningNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoGameTest {
-    private val firstPrizeLotto = Lotto(LottoNumber(setOf(1, 2, 3, 4, 5, 6)))
-    private val secondPrizeLotto = Lotto(LottoNumber(setOf(1, 2, 3, 4, 5, 7)))
-    private val thirdPrizeLotto = Lotto(LottoNumber(setOf(1, 2, 3, 4, 5, 8)))
-    private val boomPrizeLotto = Lotto(LottoNumber(setOf(7, 9, 10, 11, 12, 13)))
+    private val firstPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()))
+    private val secondPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) }.toSet()))
+    private val thirdPrizeLotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }.toSet()))
+    private val boomPrizeLotto = Lotto(LottoNumbers(setOf(7, 9, 10, 11, 12, 13).map { LottoNumber(it) }.toSet()))
     private val correctWinningNumber = WinningNumber(
-        lotto = Lotto(LottoNumber(setOf(1, 2, 3, 4, 5, 6))),
-        bonusNumber = 7
+        lotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet())),
+        bonusNumber = BonusNumber(LottoNumber(7))
     )
     private val wrongWinningNumber = WinningNumber(
-        lotto = Lotto(LottoNumber(setOf(1, 2, 3, 4, 5, 6))),
-        bonusNumber = 45
+        lotto = Lotto(LottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet())),
+        bonusNumber = BonusNumber(LottoNumber(45))
     )
 
     @Test

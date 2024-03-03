@@ -1,12 +1,20 @@
 package lotto.model
 
-class LottoNumber(private val numbers: Set<Int>) {
-    init {
-        require(numbers.size == Lotto.LOTTO_LEN)
-        require(numbers.all { it in Lotto.LOTTO_NUM_RANGE })
+class LottoNumber(
+    private val number: Int
+) {
+
+    fun getNumber(): Int {
+        return number
     }
 
-    fun getNumbers(): Set<Int> {
-        return numbers
+    companion object {
+        fun checkLottoNumberValid(input: String): Int {
+            return input.toIntOrNull()
+                ?.also {
+                    if (it !in Lotto.LOTTO_NUM_RANGE)
+                        throw LottoEvent.checkLotto(LottoEvent.InvalidNumRange)
+                } ?: throw LottoEvent.checkLotto(LottoEvent.InvalidDataType)
+        }
     }
 }
