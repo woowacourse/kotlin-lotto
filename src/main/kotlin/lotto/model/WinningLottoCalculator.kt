@@ -1,6 +1,6 @@
 package lotto.model
 
-class WinningLotto(private val winningNumbers: Lotto, private val bonusNumber: LottoNumber) {
+class WinningLottoCalculator(private val winningNumbers: Lotto, private val bonusNumber: LottoNumber) {
     init {
         require(!winningNumbers.getMatchBonus(bonusNumber)) {
             ERROR_BONUS_DUPLICATE
@@ -15,6 +15,19 @@ class WinningLotto(private val winningNumbers: Lotto, private val bonusNumber: L
                 WinningRank.findByMatchCount(matchCount, matchBonus)
             }.mapValues { (_, value) -> value.size }
         return winningResult
+    }
+
+    private fun calculateProfitAmount(winningResult: Map<WinningRank, Int>): Int =
+        winningResult.entries.sumOf {
+            it.key.prize * (it.value)
+        }.toInt()
+
+    fun calculateProfitRate(
+        purchaseAmount: Int,
+        winningResult: Map<WinningRank, Int>,
+    ): Double {
+        val profitAmount = calculateProfitAmount(winningResult)
+        return (profitAmount / purchaseAmount).toDouble()
     }
 
     companion object {

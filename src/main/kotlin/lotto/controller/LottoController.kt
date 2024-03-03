@@ -5,7 +5,7 @@ import lotto.model.LottoCount
 import lotto.model.LottoNumber
 import lotto.model.LottoStore
 import lotto.model.PurchaseAmount
-import lotto.model.WinningLotto
+import lotto.model.WinningLottoCalculator
 import lotto.model.WinningRank
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -19,7 +19,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
         generateLottos(lottoCount)
         showLottos(lottoCount)
         val winningLotto = readWinningLotto()
-        showLottoResult(lottoStore, winningLotto, purchaseAmount.lottoPurchaseAmount)
+        showWinningResult(winningLotto, purchaseAmount.lottoPurchaseAmount)
     }
 
     private fun initPurchaseAmount(): PurchaseAmount {
@@ -47,21 +47,20 @@ class LottoController(private val inputView: InputView, private val outputView: 
         outputView.printLottoNumbers(lottoStore)
     }
 
-    private fun readWinningLotto(): WinningLotto {
+    private fun readWinningLotto(): WinningLottoCalculator {
         outputView.printWinningNumbersMessage()
         val winningLotto = Lotto.lottoNumbersOf(inputView.readWinningNumbers())
 
         outputView.printBonusNumberMessage()
         val bonusNumber = LottoNumber.from(inputView.readWinningBonusNumber())
-        return WinningLotto(winningLotto, bonusNumber)
+        return WinningLottoCalculator(winningLotto, bonusNumber)
     }
 
-    private fun showLottoResult(
-        lottoStore: LottoStore,
-        winningLotto: WinningLotto,
+    private fun showWinningResult(
+        winningLottoCalculator: WinningLottoCalculator,
         purchaseAmount: Int,
     ) {
-        val rankCounts = winningLotto.getWinningResult(lottoStore.lottos)
+        val rankCounts = winningLottoCalculator.getWinningResult(lottoStore.lottos)
 
         outputView.printWinningStatisticsMessage()
         WinningRank.entries.forEach { rank ->
@@ -70,7 +69,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
             }
         }
 
-        val profitRate = lottoStore.calculateProfitRate(purchaseAmount, rankCounts)
+        val profitRate = winningLottoCalculator.calculateProfitRate(purchaseAmount, rankCounts)
         outputView.printProfitRateMessage(profitRate)
     }
 
