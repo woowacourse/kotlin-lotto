@@ -7,7 +7,7 @@ object InputView {
     private const val INPUT_WINNING_LOTTO_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
     private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
     private const val LOTTO_NUMBER_DELIMITER = ", "
-    private const val INVALID_DIGIT = "숫자만 입력해 주세요."
+    private const val INVALID_DIGIT = -1
 
     fun readPurchasePrice(): Int {
         println(INPUT_PURCHASE_PRICE)
@@ -49,7 +49,7 @@ object InputView {
     }
 
     private fun String.validateAndConvertDigit(): Int {
-        return toIntOrNull() ?: throw IllegalArgumentException(INVALID_DIGIT)
+        return toIntOrNull() ?: INVALID_DIGIT
     }
 
     private fun lineBreak() = println()

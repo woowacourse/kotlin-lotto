@@ -7,6 +7,6 @@ fun <T> retryWhileNoException(action: () -> T): T {
         action()
     } catch (e: IllegalArgumentException) {
         println("$ERROR_MESSAGE ${e.localizedMessage}")
-        action()
+        retryWhileNoException(action)
     }
 }
