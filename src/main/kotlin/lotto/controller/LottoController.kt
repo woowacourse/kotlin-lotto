@@ -1,7 +1,6 @@
 package lotto.controller
 
 import lotto.model.Buyer
-import lotto.model.GameState
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.Lottos
@@ -15,22 +14,9 @@ import lotto.util.LottoConstants
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class LottoController(private var gameState: GameState = GameState.Play) {
+class LottoController {
     fun run() {
-        while (true) {
-            when (gameState) {
-                GameState.Play -> play()
-                GameState.End -> break
-            }
-        }
-    }
-
-    private fun play() {
-        playLotto().onSuccess {
-            gameState = GameState.End
-        }.onFailure { e ->
-            println(e.message)
-        }
+        playLotto()
     }
 
     private fun playLotto() =
