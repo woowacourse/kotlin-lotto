@@ -1,10 +1,10 @@
 package lotto.controller
 
-import lotto.model.Buyer
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.Lottos
 import lotto.model.ManualLottoPurchaseCount
+import lotto.model.Money
 import lotto.model.NumberGenerator
 import lotto.model.Rank
 import lotto.model.WinningLotto
@@ -22,7 +22,7 @@ class LottoController {
     private fun playLotto() =
         runCatching {
             val purchaseAmount = InputView.inputPurchaseAmount()
-            val money = Buyer.from(purchaseAmount)
+            val money = Money.from(purchaseAmount)
             val purchaseSizeOfManualLotto = InputView.inputPurchaseSizeOfManualLotto()
             val manualLottoCount = ManualLottoPurchaseCount.from(purchaseSizeOfManualLotto, money.numberOfLotto)
             val userLotto = publishLottos(manualLottoCount, money)
@@ -32,16 +32,9 @@ class LottoController {
             displayWinningStatistics(money.numberOfLotto, winningStatistics)
         }
 
-    private fun generateLottoNumbers(): List<LottoNumber> {
-        val numberGenerator = NumberGenerator()
-        val randomNumbers = numberGenerator.makeRandomNumbers()
-
-        return numberGenerator.drawSixNumbers(randomNumbers).map { LottoNumber(it) }
-    }
-
     private fun publishLottos(
         numberOfManualLotto: ManualLottoPurchaseCount,
-        money: Buyer,
+        money: Money,
     ): Lottos {
         val manual = InputView.inputManualLottos(numberOfManualLotto.count)
         val manualLottos = Lottos(manual.map { generateManualLotto(it) })
@@ -57,8 +50,11 @@ class LottoController {
     }
 
     private fun generateAutoLotto(): Lotto {
-        val autoLotto = Lotto(generateLottoNumbers())
-        return autoLotto
+        return Lotto(generateLottoNumbers())
+    }
+
+    private fun generateLottoNumbers(): List<LottoNumber> {
+        return NumberGenerator().generateLottoNumbers().map { LottoNumber(it) }
     }
 
     private fun displayPurchaseResult(
