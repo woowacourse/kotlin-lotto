@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 @JvmInline
 value class LottoNumber private constructor(private val num: Int) : Comparable<LottoNumber> {

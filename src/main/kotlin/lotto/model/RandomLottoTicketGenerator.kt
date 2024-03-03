@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 object RandomLottoTicketGenerator : LottoTicketGenerator {
     override fun generate(): LottoTicket {

@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 data class Money(private val money: Long) {
     init {

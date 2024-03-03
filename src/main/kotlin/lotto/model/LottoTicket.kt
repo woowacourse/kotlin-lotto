@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class LottoTicket(
     lottoNumbers: List<LottoNumber>,

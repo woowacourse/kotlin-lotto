@@ -1,13 +1,13 @@
-package controller
+package lotto.controller
 
-import model.LottoCounter
-import model.LottoResult
-import model.LottoTicket
-import model.LottoTicketFactory
-import model.LottoWinning
-import model.RandomLottoTicketGenerator
-import view.InputView
-import view.OutputView
+import lotto.model.LottoCounter
+import lotto.model.LottoResult
+import lotto.model.LottoTicket
+import lotto.model.LottoTicketFactory
+import lotto.model.LottoWinning
+import lotto.model.RandomLottoTicketGenerator
+import lotto.view.InputView
+import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView,

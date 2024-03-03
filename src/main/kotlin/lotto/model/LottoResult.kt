@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class LottoResult(private val lottoResult: Map<Rank, Int>) {
     val winningMoney by lazy {

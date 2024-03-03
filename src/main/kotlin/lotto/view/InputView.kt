@@ -1,8 +1,8 @@
-package view
+package lotto.view
 
-import model.LottoNumber
-import model.LottoTicket
-import model.Money
+import lotto.model.LottoNumber
+import lotto.model.LottoTicket
+import lotto.model.Money
 
 interface InputView {
     fun getPurchasePrice(): Money

@@ -1,7 +1,7 @@
-package view
+package lotto.view
 
-import model.LottoResult
-import model.LottoTicket
+import lotto.model.LottoResult
+import lotto.model.LottoTicket
 
 interface OutputView {
     fun printLottoCount(

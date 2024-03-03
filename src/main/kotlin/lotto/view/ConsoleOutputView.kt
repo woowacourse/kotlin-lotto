@@ -1,8 +1,8 @@
-package view
+package lotto.view
 
-import model.LottoResult
-import model.LottoTicket
-import model.Rank
+import lotto.model.LottoResult
+import lotto.model.LottoTicket
+import lotto.model.Rank
 
 class ConsoleOutputView : OutputView {
     override fun printLottoCount(

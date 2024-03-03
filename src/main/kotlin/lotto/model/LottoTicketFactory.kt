@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class LottoTicketFactory(
     private val lottoTicketGenerator: LottoTicketGenerator,

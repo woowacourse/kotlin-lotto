@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 class LottoCounter(
     budget: Money,

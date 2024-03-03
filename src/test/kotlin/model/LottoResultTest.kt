@@ -1,5 +1,12 @@
 package model
 
+import lotto.model.LottoNumber
+import lotto.model.LottoResult
+import lotto.model.LottoTicket
+import lotto.model.LottoTicketFactory
+import lotto.model.LottoWinning
+import lotto.model.Money
+import lotto.model.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
