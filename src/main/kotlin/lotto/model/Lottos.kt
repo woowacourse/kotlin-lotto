@@ -5,7 +5,7 @@ class Lottos(val lottos: MutableList<Lotto> = mutableListOf()) {
         lottos.add(lotto)
     }
 
-    fun getLottos(): List<Lotto> = lottos
+    fun retrieveLottos(): List<Lotto> = lottos
 
     fun printLottoNumbers(): List<String> {
         return lottos.map { lotto ->

@@ -9,7 +9,7 @@ class WinningLotto(private val winningNumbers: Lotto, private val bonusNumber: L
 
     fun getWinningResult(lottos: Lottos): Map<WinningRank, Int> {
         val winningResult =
-            lottos.getLottos().groupBy { lotto ->
+            lottos.retrieveLottos().groupBy { lotto ->
                 val matchCount = lotto.getMatchCount(winningNumbers)
                 val matchBonus = lotto.getMatchBonus(bonusNumber)
                 WinningRank.findByMatchCount(matchCount, matchBonus)
