@@ -12,7 +12,7 @@ class LottoCountTest {
         val count = Count(1)
         val cost = Money(1_000)
         // then
-        assertDoesNotThrow { LottoCount.createOrNull(count, lottoPrice, cost) }
+        assertDoesNotThrow { LottoCount.ofNullable(count, lottoPrice, cost) }
     }
 
     @Test
@@ -22,7 +22,7 @@ class LottoCountTest {
         val count = Count(1)
         val cost = Money(1_000)
         // when
-        val lotto = LottoCount.createOrNull(count, lottoPrice, cost)
+        val lotto = LottoCount.ofNullable(count, lottoPrice, cost)
         // then
         assertThat(lotto).isNull()
     }

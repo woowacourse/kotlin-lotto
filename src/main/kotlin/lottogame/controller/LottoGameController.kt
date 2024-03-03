@@ -30,7 +30,7 @@ class LottoGameController(
     }
 
     private tailrec fun determineManualLottoCount(cost: Money): LottoCount {
-        return LottoCount.createOrNull(
+        return LottoCount.ofNullable(
             count = inputView.inputManualLottoCount(),
             lottoPrice = LOTTO_PRICE,
             cost = cost,
@@ -57,7 +57,7 @@ class LottoGameController(
 
     private tailrec fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber {
         val bonusNumber = inputView.inputBonusNumber()
-        return BonusLottoNumber.createOrNull(GeneralLottoNumber(bonusNumber), winningLottoNumbers)
+        return BonusLottoNumber.ofNullable(GeneralLottoNumber(bonusNumber), winningLottoNumbers)
             ?: createBonusLottoNumber(winningLottoNumbers)
     }
 

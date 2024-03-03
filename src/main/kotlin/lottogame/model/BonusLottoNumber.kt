@@ -6,7 +6,16 @@ value class BonusLottoNumber private constructor(private val lottoNumber: LottoN
         private const val EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT = "보너스 번호는 우승 로또 번호와 중복될 수 없습니다."
 
         @JvmStatic
-        fun createOrNull(
+        fun of(
+            lottoNumber: LottoNumber,
+            winningNumbers: List<LottoNumber>,
+        ): BonusLottoNumber {
+            require(lottoNumber in winningNumbers) { EXCEPTION_DUPLICATE_BONUS_NUMBER_FORMAT }
+            return BonusLottoNumber(lottoNumber)
+        }
+
+        @JvmStatic
+        fun ofNullable(
             lottoNumber: LottoNumber,
             winningNumbers: List<LottoNumber>,
         ): BonusLottoNumber? {

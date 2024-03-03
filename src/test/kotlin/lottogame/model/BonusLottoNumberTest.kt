@@ -19,7 +19,7 @@ class BonusLottoNumberTest {
                 GeneralLottoNumber(6),
             )
         // then
-        val bonusNumber = BonusLottoNumber.createOrNull(lottoNumber, winningLotto)
+        val bonusNumber = BonusLottoNumber.ofNullable(lottoNumber, winningLotto)
         // when
         assertThat(bonusNumber).isNull()
     }
