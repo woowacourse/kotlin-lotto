@@ -12,10 +12,12 @@ class WinningLotto(private val winningNumbers: List<LottoNumber>, private val bo
     }
 
     fun calculateCountOfMatch(lotto: Lotto): Int {
-        return winningNumbers.toSet().intersect(lotto.numbers).size
+        return winningNumbers.count { winningNumber ->
+            lotto.numbers.any { it.number == winningNumber.number }
+        }
     }
 
     fun checkBonusNumberMatched(lotto: Lotto): Boolean {
-        return lotto.numbers.any { it == bonusNumber }
+        return lotto.numbers.any { it.number == bonusNumber.number }
     }
 }

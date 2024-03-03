@@ -46,7 +46,7 @@ class LottoController {
     }
 
     private fun generateManualLotto(manual: List<String>): Lotto {
-        return Lotto(manual.map { LottoNumber.from(it) })
+        return Lotto(manual.map { LottoNumber(it.toIntOrNull() ?: 0) })
     }
 
     private fun generateAutoLotto(): Lotto {
@@ -66,8 +66,8 @@ class LottoController {
 
     private fun drawWinningLotto(): WinningLotto {
         val inputWinningNumbers = InputView.inputWinningNumbers()
-        val winningNumbers = inputWinningNumbers.map { LottoNumber.from(it) }
-        val bonusNumber = LottoNumber.from(InputView.inputBonusNumber())
+        val winningNumbers = inputWinningNumbers.map { LottoNumber(it.toIntOrNull() ?: 0) }
+        val bonusNumber = LottoNumber(InputView.inputBonusNumber().toIntOrNull() ?: 0)
         return WinningLotto(winningNumbers, bonusNumber)
     }
 

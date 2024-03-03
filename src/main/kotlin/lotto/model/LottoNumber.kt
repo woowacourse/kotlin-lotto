@@ -1,17 +1,16 @@
 package lotto.model
 
-import lotto.exception.ErrorCode
-import lotto.exception.ExceptionHandler.handleException
-import lotto.util.LottoConstants
-
-data class LottoNumber(val number: Int) {
-    companion object {
-        fun from(number: String): LottoNumber {
-            handleException(ErrorCode.INVALID_LOTTO_NUMBER) { number.toIntOrNull() != null }
-            handleException(ErrorCode.INVALID_LOTTO_NUMBER_RANGE) {
-                number.toIntOrNull() in LottoConstants.START_RANGE..LottoConstants.END_RANGE
-            }
-            return LottoNumber(number.toInt())
+class LottoNumber(val number: Int) {
+    init {
+        require(number in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER) {
+            IllegalArgumentException(INVALID_LOTTO_NUMBER_OUT_OF_RANGE)
         }
+    }
+
+    companion object {
+        private const val MIN_LOTTO_NUMBER = 1
+        private const val MAX_LOTTO_NUMBER = 45
+        const val INVALID_LOTTO_NUMBER_OUT_OF_RANGE =
+            ("로또 번호가 $MIN_LOTTO_NUMBER~$MAX_LOTTO_NUMBER 사이의 숫자가 아닌 경우 예외처리한다.")
     }
 }
