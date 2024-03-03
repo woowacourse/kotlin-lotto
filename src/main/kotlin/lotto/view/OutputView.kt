@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.model.Lottos
+import lotto.model.LottoStore
 import lotto.model.WinningRank
 
 class OutputView {
@@ -23,8 +23,8 @@ class OutputView {
         println("\n수동으로 ${manualLottoCount}장, 자동으로 ${autoLottoCount}개를 구매했습니다.")
     }
 
-    fun printLottoNumbers(lottos: Lottos) {
-        val lottoNumberStrings = lottos.printLottoNumbers()
+    fun printLottoNumbers(lottoStore: LottoStore) {
+        val lottoNumberStrings = lottoStore.showLottos()
         lottoNumberStrings.forEach { println(it) }
     }
 

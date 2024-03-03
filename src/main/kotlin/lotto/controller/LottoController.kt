@@ -44,7 +44,7 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     private fun showLottos(lottoCount: LottoCount) {
         outputView.printTotalLottoCountMessage(lottoCount.manualLottoCount, lottoCount.autoLottoCount)
-        outputView.printLottoNumbers(lottoStore.lottos)
+        outputView.printLottoNumbers(lottoStore)
     }
 
     private fun readWinningLotto(): WinningLotto {
