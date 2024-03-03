@@ -1,13 +1,20 @@
-package view
+package lotto.view
 
-import model.Lotto
-import model.LottoGameResult
-import model.Rank
+import lotto.model.Lotto
+import lotto.model.LottoGameResult
+import lotto.model.Rank
+import kotlin.math.floor
 
 class ConsoleLottoGameOutputView : LottoGameOutputView {
-    override fun showPurchasedLottie(lottie: List<Lotto>) {
-        println(MESSAGE_PURCHASED_LOTTIE_COUNT.format(lottie.size))
-        lottie.forEach { println(it.numbers.map { it.number }) }
+    override fun showLottoCount(
+        countOfAuto: Int,
+        countOfManual: Int,
+    ) {
+        println(MESSAGE_PURCHASE_COUNT.format(countOfManual, countOfAuto))
+    }
+
+    override fun showPurchasedLotteries(lotteries: List<Lotto>) {
+        lotteries.forEach { println(it.numbers.map { it.number }) }
         println()
     }
 
@@ -17,7 +24,7 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
     ) {
         println(MESSAGE_TITLE)
         showRankState(results)
-        showEarningRate(rate)
+        showEarningRate(truncateDecimal(rate))
     }
 
     private fun showRankState(results: List<LottoGameResult.RankResult>) {
@@ -50,10 +57,13 @@ class ConsoleLottoGameOutputView : LottoGameOutputView {
         return if (rankResult.rank == Rank.SECOND) MESSAGE_MATCH_BONUS_DESCRIPTION else EMPTY
     }
 
+    private fun truncateDecimal(earningRate: Double): Double = floor(earningRate * SCALE) / SCALE
+
     companion object {
+        private const val SCALE = 100
         private const val STANDARD_BREAK_EVEN_POINT = 1
+        private const val MESSAGE_PURCHASE_COUNT = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val MESSAGE_TITLE = "\n당첨 통계\n---------"
-        private const val MESSAGE_PURCHASED_LOTTIE_COUNT = "%d개를 구매했습니다."
         private const val MESSAGE_EARNING_RATE = "총 수익률은 %.2f입니다."
         private const val MESSAGE_LOSS = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
         private const val MESSAGE_MATCH_BONUS_DESCRIPTION = "보너스 볼 일치"

@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -11,12 +11,12 @@ class LottoGameResultTest {
     fun setUp() {
         val bonusNumber = LottoNumber(1)
         val winningLotto = Lotto(2, 3, 4, 5, 6, 7)
-        val derivedLottie = listOf(Lotto(2, 3, 4, 5, 6, 7), Lotto(6, 7, 8, 9, 10, 11))
+        val derivedLotteries = listOf(Lotto(2, 3, 4, 5, 6, 7), Lotto(6, 7, 8, 9, 10, 11))
         lottoGameResult =
             LottoGameResult(
                 bonusNumber = bonusNumber,
                 winningLotto = winningLotto,
-                purchasedLottie = derivedLottie,
+                purchasedLotteries = derivedLotteries,
             )
     }
 
@@ -39,10 +39,24 @@ class LottoGameResultTest {
     }
 
     @Test
+    fun `로또 게임에 대한 결과로, MISS에 해당하는 결과는 제공하지 않는다`() {
+        val actualResult = lottoGameResult.getWinningResult()
+        val expectedResult =
+            listOf(
+                LottoGameResult.RankResult(Rank.FIFTH, 0),
+                LottoGameResult.RankResult(Rank.FOURTH, 0),
+                LottoGameResult.RankResult(Rank.THIRD, 0),
+                LottoGameResult.RankResult(Rank.SECOND, 0),
+                LottoGameResult.RankResult(Rank.FIRST, 1),
+            )
+        assertThat(actualResult).isEqualTo(expectedResult)
+    }
+
+    @Test
     fun `로또 게임에 대한 수익률을 계산한다`() {
         // given : 준비물(객체를 만들기 위한 초기값들. 매개변수)
         val expense = Money(2000)
-        val expectedEarningRate = 2_000_000_000 / expense.amount.toDouble()
+        val expectedEarningRate = 1_000_000.00
         // when
         val actualRate = lottoGameResult.calculateEarningRate(expense)
         // then

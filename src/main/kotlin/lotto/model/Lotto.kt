@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 data class Lotto(val numbers: List<LottoNumber>) {
     init {
@@ -9,7 +9,7 @@ data class Lotto(val numbers: List<LottoNumber>) {
 
     constructor(vararg numbers: Int) : this(numbers.map { LottoNumber(it) })
 
-    fun getMatchCount(other: Lotto): Int = (other.numbers intersect numbers).size
+    fun getMatchCount(other: Lotto): Int = (other.numbers intersect numbers.toSet()).size
 
     operator fun contains(number: LottoNumber): Boolean = number in numbers
 

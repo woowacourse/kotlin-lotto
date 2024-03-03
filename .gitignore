@@ -33,3 +33,5 @@ out/
 
 ### macOS ###
 .DS_Store
+
+/src/test/kotlin/study
