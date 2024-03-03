@@ -16,7 +16,7 @@ class PublishLottoTest {
     @BeforeEach
     fun setUp() {
         lottoNumbers = numberGenerator.generateLottoNumbers().map { LottoNumber(it) }
-        lotto = Lotto(lottoNumbers)
+        lotto = Lotto(lottoNumbers.toSet())
     }
 
     @Test

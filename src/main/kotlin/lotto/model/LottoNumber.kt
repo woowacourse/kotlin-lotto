@@ -7,6 +7,10 @@ class LottoNumber(val number: Int) {
         }
     }
 
+    override fun toString(): String {
+        return number.toString()
+    }
+
     companion object {
         private const val MIN_LOTTO_NUMBER = 1
         private const val MAX_LOTTO_NUMBER = 45

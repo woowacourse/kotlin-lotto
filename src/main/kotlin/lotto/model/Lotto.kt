@@ -1,19 +1,17 @@
 package lotto.model
 
-import lotto.exception.ErrorCode
-import lotto.exception.ExceptionHandler.handleException
 import lotto.util.LottoConstants
 
-private const val DEFAULT_SEPARATOR = ", "
-private const val START = "["
-private const val END = "]"
-
-class Lotto(val numbers: List<LottoNumber>) {
+class Lotto(val numbers: Set<LottoNumber>) {
     init {
-        handleException(ErrorCode.INVALID_WINNING_NUMBERS_SIZE) { numbers.toSet().size == LottoConstants.SIZE }
+        require(numbers.size == LottoConstants.SIZE) {
+            IllegalArgumentException(INVALID_LOTTO_SIZE)
+        }
     }
 
-    override fun toString(): String {
-        return numbers.map { it.number }.sorted().joinToString(DEFAULT_SEPARATOR, START, END)
+    companion object {
+        private const val LOTTO_SIZE = 6
+        private const val INVALID_LOTTO_SIZE =
+            ("로또 번호의 개수가 ${LOTTO_SIZE}가 아니면 예외처리한다.")
     }
 }

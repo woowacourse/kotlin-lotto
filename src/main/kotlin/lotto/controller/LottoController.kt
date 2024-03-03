@@ -46,15 +46,15 @@ class LottoController {
     }
 
     private fun generateManualLotto(manual: List<String>): Lotto {
-        return Lotto(manual.map { LottoNumber(it.toIntOrNull() ?: 0) })
+        return Lotto(manual.map { LottoNumber(it.toIntOrNull() ?: 0) }.toSet())
     }
 
     private fun generateAutoLotto(): Lotto {
         return Lotto(generateLottoNumbers())
     }
 
-    private fun generateLottoNumbers(): List<LottoNumber> {
-        return NumberGenerator().generateLottoNumbers().map { LottoNumber(it) }
+    private fun generateLottoNumbers(): Set<LottoNumber> {
+        return NumberGenerator().generateLottoNumbers().map { LottoNumber(it) }.toSet()
     }
 
     private fun displayPurchaseResult(
