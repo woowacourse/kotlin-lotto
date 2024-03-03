@@ -18,7 +18,7 @@ class LottoController {
         val purchasePrice = inputView.getPurchasePrice()
         val manualLottoCount = inputView.getManualLottoCount()
         val manualLottoNumbers = inputView.getManualLottoTickets(manualLottoCount)
-        val lottoCountCalculator = LottoCountCalculator(purchasePrice, manualLottoNumbers)
+        val lottoCountCalculator = LottoCountCalculator(purchasePrice, manualLottoCount)
         val autoLottoCount = lottoCountCalculator.calculate()
 
         val autoLottoMachine = AutoLottoMachine(autoLottoCount)

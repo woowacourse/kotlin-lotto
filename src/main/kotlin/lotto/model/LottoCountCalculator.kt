@@ -2,10 +2,10 @@ package lotto.model
 
 class LottoCountCalculator(
     private val purchasePrice: Int,
-    private val manualLottoNumbers: List<List<Int>>,
+    private val manualLottoCount: Int,
 ) {
     fun calculate(): Int {
-        return purchasePrice / PRICE_OF_LOTTO_TICKET - manualLottoNumbers.size
+        return purchasePrice / PRICE_OF_LOTTO_TICKET - manualLottoCount
     }
 
     companion object {
