@@ -16,6 +16,6 @@ class LottoTicket(
     companion object {
         const val SIZE = 6
         private const val NUMBER_DUPLICATED_OR_INSUFFICIENT = "로또 번호가 모자라거나 중복됨."
-        fun from(intList: List<Int>) = LottoTicket(intList.map { LottoNumber.of(it) })
+        fun from(intLottoNumbers: List<Int>) = LottoTicket(intLottoNumbers.map { LottoNumber.of(it) })
     }
 }
