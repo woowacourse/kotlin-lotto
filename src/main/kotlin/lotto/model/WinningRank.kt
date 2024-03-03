@@ -1,4 +1,4 @@
-package lotto.util
+package lotto.model
 
 enum class WinningRank(val countOfMatch: Int, val winningMoney: Long) {
     MISS(0, 0),
@@ -20,10 +20,5 @@ enum class WinningRank(val countOfMatch: Int, val winningMoney: Long) {
                 FIFTH.countOfMatch -> FIFTH
                 else -> MISS
             }
-
-        fun formatByRank(winningRank: WinningRank): String {
-            if (winningRank == SECOND) return "${winningRank.countOfMatch}개 일치, 보너스 볼 일치(${winningRank.winningMoney}원)"
-            return "${winningRank.countOfMatch}개 일치 (${winningRank.winningMoney}원)"
-        }
     }
 }

@@ -1,38 +1,43 @@
 package lotto.controller
 
-import lotto.model.LotteryResult
 import lotto.model.Lotto
 import lotto.model.LottoMachine
+import lotto.model.NumberOfManual
+import lotto.model.WinningLotto
+import lotto.model.WinningResult
 import lotto.model.WinningStatusChecker
-import lotto.util.WinningRank
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoGameController {
     fun run() {
-        val purchaseAmount = InputView.getPurchaseAmount()
-        val numberOfTicket = LottoMachine.getNumberOfTicket(purchaseAmount)
-        val lottoTickets = LottoMachine.issueTickets(numberOfTicket)
+        val lottoTickets = getLottoTickets()
 
-        OutputView.printNumberOfTicket(numberOfTicket)
+        OutputView.printNumberOfTicket(lottoTickets.size)
         OutputView.printLottoTickets(lottoTickets)
 
         makeResult(lottoTickets)
     }
 
-    private fun makeResult(lottoTickets: List<Lotto>) {
-        val lotteryResult = LotteryResult(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
-        val winningResult =
-            lottoTickets
-                .map {
-                    WinningRank.convert(
-                        it.checkWinningNumbers(lotteryResult.winning),
-                        it.checkBonusNumbers(lotteryResult.bonusNumber),
-                    )
-                }
-        val winningStatusChecker = WinningStatusChecker(winningResult)
+    private fun getLottoTickets(): List<Lotto> {
+        val lottoMachine =
+            LottoMachine.create(
+                InputView.getPurchaseAmount(),
+                InputView.getManualTicketCounts(),
+            )
+        return if (lottoMachine.ticketCounts.numberOfManual.counts != NumberOfManual.MIN_NUMBER_OF_MANUAL) {
+            lottoMachine.issueTickets(InputView.getManualLotto(lottoMachine.ticketCounts.numberOfManual.counts))
+        } else {
+            lottoMachine.issueTickets()
+        }
+    }
 
-        OutputView.printWinningStatus(winningStatusChecker.toString())
+    private fun makeResult(lottoTickets: List<Lotto>) {
+        val winningLotto = WinningLotto(Lotto(InputView.getWinningNumbers()), InputView.getBonusNumber())
+        val winningResult = WinningResult.create(winningLotto, lottoTickets)
+        val winningStatusChecker = WinningStatusChecker(winningResult.result)
+
+        OutputView.printWinningStatus(winningStatusChecker)
         OutputView.printEarningRate(winningStatusChecker.getEarningRate())
     }
 }

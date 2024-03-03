@@ -1,17 +1,68 @@
 package lotto.model
 
-object LottoMachine {
-    const val TICKET_PRICE = 1_000
+import lotto.util.NumberGenerate
 
-    fun getNumberOfTicket(cash: Int): Int = cash / TICKET_PRICE
+class LottoMachine(val ticketCounts: TicketCounts) {
+    private val randomNumberGenerate =
+        NumberGenerate { LottoNumber.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted() }
 
-    fun issueTickets(count: Int): List<Lotto> {
+    fun issueTickets(manualLotto: List<String> = listOf()): List<Lotto> {
         val tickets = mutableListOf<Lotto>()
-        repeat(count) {
+        if (ticketCounts.numberOfManual.counts > NumberOfManual.MIN_NUMBER_OF_MANUAL) {
+            tickets.addAll(issueManualTickets(manualLotto))
+        }
+        tickets.addAll(issueAutomaticTickets(ticketCounts.getAutomaticTicketCounts()))
+        return tickets
+    }
+
+    fun issueManualTickets(manualLotto: List<String>): List<Lotto> {
+        val tickets = mutableListOf<Lotto>()
+        repeat(manualLotto.size) { idx ->
             tickets.add(
-                Lotto(Lotto.NUMBER_RANGE.shuffled().take(Lotto.NUMBER_COUNT).sorted().map { LottoNumber(it) }),
+                Lotto(manualLotto[idx].split(",").map { LottoNumber(it.trim()) }),
             )
         }
         return tickets
+    }
+
+    fun issueAutomaticTickets(
+        count: Int,
+        numberGenerate: NumberGenerate = randomNumberGenerate,
+    ): List<Lotto> {
+        val tickets = mutableListOf<Lotto>()
+        repeat(count) { idx ->
+            tickets.add(
+                Lotto(numberGenerate.get(idx).map { LottoNumber(it) }),
+            )
+        }
+        return tickets
+    }
+
+    companion object {
+        fun create(
+            cash: Int,
+            manualCount: Int,
+        ): LottoMachine {
+            return LottoMachine(
+                TicketCounts(
+                    NumberOfTickets(cash),
+                    NumberOfManual(manualCount),
+                ),
+            )
+        }
+
+        fun createWithCounts(
+            totalCount: Int,
+            manualCount: Int,
+        ): LottoMachine {
+            return LottoMachine(
+                TicketCounts(
+                    NumberOfTickets(
+                        totalCount * NumberOfTickets.TICKET_PRICE,
+                    ),
+                    NumberOfManual(manualCount),
+                ),
+            )
+        }
     }
 }

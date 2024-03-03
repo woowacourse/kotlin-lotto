@@ -24,17 +24,24 @@ class LottoTest {
         )
 
     @ParameterizedTest
-    @ValueSource(strings = ["1, 1, 1, 2, 3, 4", "1, 2, 3, 4, 5, 30, 1", "3, 4, 5, 30, 1"])
-    fun `로또 번호는 1~45 사이의 6개의 서로 다른 자연수를 갖지 않으면 오류를 발생시킨다`(input: String) {
+    @ValueSource(strings = ["1, 2, 3, 4, 5, 6", "40, 41, 42, 43, 44, 45", "7, 2, 3, 4, 5, 35"])
+    fun `로또 번호는 1~45 사이의 6개의 서로 다른 자연수를 갖는다`(input: String) {
+        val numbers = input.split(", ").map { LottoNumber(it) }
+        assertDoesNotThrow { Lotto(numbers) }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["1, 2, 3, 4", "1, 2, 3, 4, 5", "3, 4, 5, 30, 1, 7, 9"])
+    fun `로또 번호의 개수가 6개가 아닌 경우 오류를 발생시킨다`(input: String) {
         val numbers = input.split(", ").map { LottoNumber(it) }
         assertThrows<IllegalArgumentException> { Lotto(numbers) }
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1, 2, 3, 4, 5, 6", "40, 41, 42, 43, 44, 45", "7, 2, 3, 4, 5, 35"])
-    fun `로또 번호는 1~45 사이의 6개의 서로 다른 자연수를 갖는다`(input: String) {
+    @ValueSource(strings = ["1, 1, 1, 2, 3, 4", "1, 2, 3, 4, 5, 5", "3, 5, 9, 1, 5, 9"])
+    fun `로또 번호는 중복될 수 없다`(input: String) {
         val numbers = input.split(", ").map { LottoNumber(it) }
-        assertDoesNotThrow { Lotto(numbers) }
+        assertThrows<IllegalArgumentException> { Lotto(numbers) }
     }
 
     @ParameterizedTest
