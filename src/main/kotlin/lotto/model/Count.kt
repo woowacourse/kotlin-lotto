@@ -3,6 +3,6 @@ package lotto.model
 @JvmInline
 value class Count(val num: Int) {
     init {
-        require(num >= 0) { "[ERROR] 0이상이어야 함" }
+        require(num >= 0) { "[ERROR] 0이상의 정수이어야 함" }
     }
 }
