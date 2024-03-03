@@ -9,8 +9,10 @@ data class Money(private val money: Long) {
 
     operator fun times(other: Int) = Money(money * other)
 
-    operator fun div(other: Money): Float {
-        require(other.money != 0L)
+    operator fun div(other: Money): Float? {
+        if (other.money == 0L) {
+            return null
+        }
         return money.toFloat() / other.money
     }
 

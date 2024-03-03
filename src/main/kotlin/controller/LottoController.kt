@@ -25,7 +25,7 @@ class LottoController(
 
         val lottoWinning = makeLottoWinning()
         val lottoResult = lottoWinning.makeLottoResult(lottoTickets)
-        val profitRate = lottoResult.winningMoney / purchasePrice
+        val profitRate = lottoResult.winningMoney / purchasePrice ?: 0f
         printWinningResult(lottoResult, profitRate)
     }
 
