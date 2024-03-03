@@ -7,6 +7,8 @@ import model.lottery.Lottery
 import model.lottery.LotteryNumber
 import model.lottery.LotterySeller
 import model.lottery.WinningLottery
+import model.lottery.generator.ExplicitNumbersGenerator
+import model.lottery.generator.RandomNumbersGenerator
 import model.winning.WinningResult
 import view.InputView
 import view.OutputView
@@ -40,7 +42,7 @@ class LotteryController(
             inputView.guideManualLottery()
             return Lotteries(
                 List(manualLotteryQuantity.count) {
-                    Lottery.of(*inputView.readManualLottery().toIntArray())
+                    Lottery.of(ExplicitNumbersGenerator(inputView.readManualLottery()))
                 },
             )
         }
@@ -48,7 +50,7 @@ class LotteryController(
     }
 
     private fun buyRandomLotteries(randomLotteryQuantity: Quantity): Lotteries =
-        Lotteries(List(randomLotteryQuantity.count) { Lottery.fromRandom() })
+        Lotteries(List(randomLotteryQuantity.count) { Lottery.of(RandomNumbersGenerator) })
 
     private fun calculateWinningResult(lotteries: Lotteries): WinningResult {
         val winningLottery = readWinningLottery()
@@ -59,7 +61,7 @@ class LotteryController(
 
     private fun readWinningLottery(): WinningLottery =
         WinningLottery(
-            Lottery.of(*inputView.readWinningLottery().toIntArray()),
+            Lottery.of(ExplicitNumbersGenerator(inputView.readWinningLottery())),
             LotteryNumber.of(inputView.readBonusNumber()),
         )
 
