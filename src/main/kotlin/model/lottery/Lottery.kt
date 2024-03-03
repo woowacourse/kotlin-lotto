@@ -1,7 +1,7 @@
 package model.lottery
 
 import model.Quantity
-import model.lottery.generator.NumbersGenerator
+import model.lottery.strategy.NumbersStrategy
 
 class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
     init {
@@ -38,6 +38,6 @@ class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
         private const val ERROR_INVALID_LOTTERY_NUMBER_COUNT = "로또 번호가 ${LOTTERY_NUMBER_COUNT}개가 아닙니다."
         private const val ERROR_INVALID_LOTTERY_DUPLICATED = "로또에 중복된 번호가 있습니다."
 
-        fun of(numbersGenerator: NumbersGenerator): Lottery = Lottery(numbersGenerator.generate().map { LotteryNumber.of(it) })
+        fun of(numbersStrategy: NumbersStrategy): Lottery = Lottery(numbersStrategy.generate().map { LotteryNumber.of(it) })
     }
 }
