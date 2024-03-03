@@ -27,13 +27,13 @@ class LottosTest {
     fun `결과 계산 테스트 - 1등`() {
         val lottos = Lottos()
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
+        val winningLotto =
+            WinningLotto(
+                setUpLotto(1, 2, 3, 4, 5, 6),
+                LottoNumber(10),
+            )
         assertThat(
-            lottos.winningResult(
-                WinningLotto(
-                    setUpLotto(1, 2, 3, 4, 5, 6),
-                    LottoNumber(10),
-                ),
-            ),
+            winningLotto.getWinningResult(lottos),
         ).isEqualTo(mapOf(WinningRank.FIRST to 1))
     }
 
@@ -41,13 +41,13 @@ class LottosTest {
     fun `결과 계산 테스트 - 2등`() {
         val lottos = Lottos()
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
+        val winningLotto =
+            WinningLotto(
+                setUpLotto(1, 2, 3, 4, 5, 7),
+                LottoNumber(6),
+            )
         assertThat(
-            lottos.winningResult(
-                WinningLotto(
-                    setUpLotto(1, 2, 3, 4, 5, 7),
-                    LottoNumber(6),
-                ),
-            ),
+            winningLotto.getWinningResult(lottos),
         ).isEqualTo(mapOf(WinningRank.SECOND to 1))
     }
 
@@ -55,13 +55,13 @@ class LottosTest {
     fun `결과 계산 테스트 - 3등`() {
         val lottos = Lottos()
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
+        val winningLotto =
+            WinningLotto(
+                setUpLotto(1, 2, 3, 4, 5, 7),
+                LottoNumber(10),
+            )
         assertThat(
-            lottos.winningResult(
-                WinningLotto(
-                    setUpLotto(1, 2, 3, 4, 5, 7),
-                    LottoNumber(10),
-                ),
-            ),
+            winningLotto.getWinningResult(lottos),
         ).isEqualTo(mapOf(WinningRank.THIRD to 1))
     }
 
@@ -69,13 +69,13 @@ class LottosTest {
     fun `결과 계산 테스트 - 4등`() {
         val lottos = Lottos()
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
+        val winningLotto =
+            WinningLotto(
+                setUpLotto(1, 2, 3, 4, 15, 25),
+                LottoNumber(10),
+            )
         assertThat(
-            lottos.winningResult(
-                WinningLotto(
-                    setUpLotto(1, 2, 3, 4, 15, 25),
-                    LottoNumber(10),
-                ),
-            ),
+            winningLotto.getWinningResult(lottos),
         ).isEqualTo(mapOf(WinningRank.FOURTH to 1))
     }
 
@@ -83,13 +83,13 @@ class LottosTest {
     fun `결과 계산 테스트 - 5등`() {
         val lottos = Lottos()
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
+        val winningLotto =
+            WinningLotto(
+                setUpLotto(1, 2, 3, 14, 15, 17),
+                LottoNumber(40),
+            )
         assertThat(
-            lottos.winningResult(
-                WinningLotto(
-                    setUpLotto(1, 2, 3, 14, 15, 17),
-                    LottoNumber(40),
-                ),
-            ),
+            winningLotto.getWinningResult(lottos),
         ).isEqualTo(mapOf(WinningRank.FIFTH to 1))
     }
 
@@ -97,13 +97,13 @@ class LottosTest {
     fun `결과 계산 테스트 - 꽝`() {
         val lottos = Lottos()
         lottos.add(setUpLotto(1, 2, 3, 4, 5, 6))
+        val winningLotto =
+            WinningLotto(
+                setUpLotto(11, 22, 33, 34, 35, 37),
+                LottoNumber(40),
+            )
         assertThat(
-            lottos.winningResult(
-                WinningLotto(
-                    setUpLotto(11, 22, 33, 34, 35, 37),
-                    LottoNumber(17),
-                ),
-            ),
+            winningLotto.getWinningResult(lottos),
         ).isEqualTo(mapOf(WinningRank.NONE to 1))
     }
 }
