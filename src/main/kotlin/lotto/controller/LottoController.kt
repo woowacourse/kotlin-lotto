@@ -36,9 +36,10 @@ class LottoController {
     }
 
     private fun checkLottoWinning(userTickets: List<UserLottoTicket>): WinningTable {
-        val winningNumbers = inputView.getWinningTicket().map { LottoNumber(it) }
+        val winningNumbers = inputView.getWinningTicket().map { LottoNumber.of(it) }
         val bonusNumber = inputView.getBonusNumber()
-        val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
+        val lottoWinningRank =
+            LottoWinningRank(winningNumbers, LottoNumber.of(bonusNumber))
         return lottoWinningRank.makeWinningTable(userTickets)
     }
 

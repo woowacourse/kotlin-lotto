@@ -1,7 +1,7 @@
 package lotto.model
 
 @JvmInline
-value class LottoNumber(val number: Int) {
+value class LottoNumber private constructor(val number: Int) {
     init {
         require(number in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER)
     }
@@ -9,7 +9,7 @@ value class LottoNumber(val number: Int) {
     companion object {
         private val lottoNumbers: MutableMap<Int, LottoNumber> = mutableMapOf()
 
-        fun makeLottoNumber(realNum: Int): LottoNumber {
+        fun of(realNum: Int): LottoNumber {
             if (!lottoNumbers.contains(realNum)) {
                 lottoNumbers[realNum] = LottoNumber(realNum)
             }
