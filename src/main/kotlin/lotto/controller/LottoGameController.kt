@@ -27,29 +27,27 @@ class LottoGameController {
 
     private fun getPurchaseAmount(): PurchaseAmount {
         val purchaseAmount = InputView.getPurchaseAmount()
-        return runCatching { PurchaseAmount(purchaseAmount) }.getOrNull() ?: getPurchaseAmount()
+        return PurchaseAmount(purchaseAmount)
     }
 
     private fun getLottoCount(purchaseAmount: PurchaseAmount): LottoCount {
         val totalLottoCount = purchaseAmount.getTotalNumberOfLotto()
         val manualLottoCount = InputView.getNumberOfManualLotto()
-        return LottoCount.from(totalLottoCount, manualLottoCount) ?: getLottoCount(purchaseAmount)
+        return LottoCount(totalLottoCount, manualLottoCount)
     }
 
     private fun generateLottoTickets(lottoCount: LottoCount): List<Lotto> {
         val manualNumbers = InputView.getManualLottoNumbers(lottoCount.numberOfManualLotto)
-        return runCatching {
-            LottoMachine.issueLotto(lottoCount, manualNumbers, LottoNumbersGenerator)
-        }.getOrNull() ?: generateLottoTickets(lottoCount)
+        return LottoMachine.issueLotto(lottoCount, manualNumbers, LottoNumbersGenerator)
     }
 
     private fun getWinningLotto(): Lotto {
-        val winningNumbers = InputView.getWinningNumbers().mapNotNull { LottoNumber.valueOf(it) }.toSet()
-        val winningLotto = runCatching { Lotto(winningNumbers) }.getOrNull()
-        return winningLotto ?: getWinningLotto()
+        val numbers = InputView.getWinningNumbers()
+        val winningNumbers = numbers.map { LottoNumber.valueOf(it) }.toSet()
+        return Lotto(winningNumbers)
     }
 
-    private fun getBonusNumber(): LottoNumber = LottoNumber.valueOf(InputView.getBonusNumber()) ?: getBonusNumber()
+    private fun getBonusNumber(): LottoNumber = LottoNumber.valueOf(InputView.getBonusNumber())
 
     private fun makeResult(lottoTickets: List<Lotto>): WinningStatus {
         val winningLotto = WinningLotto(getWinningLotto(), getBonusNumber())

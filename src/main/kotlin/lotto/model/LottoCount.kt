@@ -8,16 +8,4 @@ data class LottoCount(val numberOfTotalLotto: Int, val numberOfManualLotto: Int)
     }
 
     fun getNumberOfAutoTickets(): Int = numberOfTotalLotto - numberOfManualLotto
-
-    companion object {
-        fun from(
-            numberOfTotalLotto: Int,
-            numberOfManualLotto: Int,
-        ): LottoCount? {
-            if (numberOfManualLotto > numberOfTotalLotto) {
-                return null
-            }
-            return LottoCount(numberOfTotalLotto, numberOfManualLotto)
-        }
-    }
 }
