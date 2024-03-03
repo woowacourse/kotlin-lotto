@@ -26,8 +26,8 @@ class WinningLottoCalculator(private val winningNumbers: Lotto, private val bonu
         purchaseAmount: Int,
         winningResult: Map<WinningRank, Int>,
     ): Double {
-        val profitAmount = calculateProfitAmount(winningResult)
-        return (profitAmount / purchaseAmount).toDouble()
+        val profitAmount = calculateProfitAmount(winningResult).toDouble()
+        return profitAmount / purchaseAmount.toDouble()
     }
 
     companion object {

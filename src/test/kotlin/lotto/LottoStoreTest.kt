@@ -20,9 +20,9 @@ class LottoStoreTest {
 
     @Test
     fun `자동 로또 결과 계산 테스트`() {
-        val lottoCount = 3
+        val autoLottoCount = 3
         val lottoStore = LottoStore()
-        lottoStore.generateAutoLottos(lottoCount)
+        lottoStore.generateLottos(emptyList(), autoLottoCount)
         val winningNumbers = setUpLotto("1", "2", "3", "4", "5", "6")
         val bonusNumber = LottoNumber(7)
         val winningLottoCalculator = WinningLottoCalculator(winningNumbers, bonusNumber)
@@ -30,19 +30,22 @@ class LottoStoreTest {
             winningLottoCalculator.getWinningResult(lottoStore.lottos),
         ).isEqualTo(
             mapOf(
-                WinningRank.FIRST to lottoCount,
+                WinningRank.FIRST to autoLottoCount,
             ),
         )
     }
 
     @Test
     fun `수동 로또 결과 계산 테스트`() {
-        val lottoCount = 3
+        val autoLottoCount = 0
         val lottoStore = LottoStore()
-        val lottos = listOf("1", "2", "3", "4", "5", "6")
-        lottoStore.generateManualLottos(lottos)
-        lottoStore.generateManualLottos(lottos)
-        lottoStore.generateManualLottos(lottos)
+        val manualLottos =
+            listOf(
+                setUpLotto("1", "2", "3", "4", "5", "6"),
+                setUpLotto("1", "2", "3", "4", "5", "6"),
+                setUpLotto("1", "2", "3", "4", "5", "6"),
+            )
+        lottoStore.generateLottos(manualLottos, autoLottoCount)
         val winningNumbers = setUpLotto("1", "2", "3", "4", "5", "6")
         val bonusNumber = LottoNumber(7)
         val winningLottoCalculator = WinningLottoCalculator(winningNumbers, bonusNumber)
@@ -50,7 +53,7 @@ class LottoStoreTest {
             winningLottoCalculator.getWinningResult(lottoStore.lottos),
         ).isEqualTo(
             mapOf(
-                WinningRank.FIRST to lottoCount,
+                WinningRank.FIRST to manualLottos.size,
             ),
         )
     }

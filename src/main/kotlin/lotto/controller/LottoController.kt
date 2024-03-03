@@ -35,11 +35,8 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     private fun generateLottos(lottoCount: LottoCount) {
         outputView.printManualLottoNumbersMessage()
-        repeat(lottoCount.manualLottoCount) {
-            val newManualLottoNumbers = inputView.readManualLottoNumbers()
-            lottoStore.generateManualLottos(newManualLottoNumbers)
-        }
-        lottoStore.generateAutoLottos(lottoCount.autoLottoCount)
+        val newManualLottoNumbers = inputView.readManualLottoNumbers(lottoCount.manualLottoCount)
+        lottoStore.generateLottos(newManualLottoNumbers, lottoCount.autoLottoCount)
     }
 
     private fun showLottos(lottoCount: LottoCount) {

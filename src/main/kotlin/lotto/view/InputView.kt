@@ -1,11 +1,21 @@
 package lotto.view
 
+import lotto.model.Lotto
+
 class InputView {
     fun readPurchaseAmount(): String = validateNullInput(readlnOrNull())
 
     fun readManualLottoCount(): String = validateNullInput(readlnOrNull())
 
-    fun readManualLottoNumbers(): List<String> = validateNullInput(readlnOrNull()).replace(" ", "").split(SPLIT_DELIMITER).map(String::trim)
+    fun readManualLottoNumbers(manualLottoCount: Int): List<Lotto> {
+        val manualLotto = mutableListOf<Lotto>()
+        repeat(manualLottoCount) {
+            val lottoNumbers =
+                validateNullInput(readlnOrNull()).replace(" ", "").split(SPLIT_DELIMITER).map(String::trim)
+            manualLotto.add(Lotto.lottoNumbersOf(lottoNumbers))
+        }
+        return manualLotto.toList()
+    }
 
     fun readWinningNumbers(): List<String> {
         val winningNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
