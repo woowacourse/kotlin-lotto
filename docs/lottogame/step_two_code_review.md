@@ -24,7 +24,7 @@
 - [x] : BonusNumber, Count createOrNull() 메서드 네이밍 -> ofNullable() 로 변경
 - [x] : Count 삭제, Count 책임 LottoCount 로 이동
 ## Test
-- [ ] : Test Fixture 적용하기
+- [x] : Test Fixture 적용하기
 
 # 코멘트 내용
 
