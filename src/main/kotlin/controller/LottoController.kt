@@ -21,7 +21,7 @@ class LottoController(
         lottoCounter.reduce(manualLottoCount)
         val autoLottoCount = lottoCounter.remain
 
-        val manualLottoTicket = askUserForManualLottoTickets(manualLottoCount)
+        val manualLottoTicket = generateManualLottoTickets(manualLottoCount)
         val autoLottoTicket = generateAutoLottoTickets(autoLottoCount)
 
         outputView.printLottoCount(manualLottoCount, autoLottoCount)
@@ -34,7 +34,11 @@ class LottoController(
         printWinningResult(lottoResult, profitRate)
     }
 
-    private fun askUserForManualLottoTickets(count: Int): List<LottoTicket> = inputView.getManualLottoTickets(count)
+    private fun generateManualLottoTickets(count: Int): List<LottoTicket> {
+        val ticketIterator = inputView.getManualLottoTickets(count).iterator()
+        val lottoTicketFactory = LottoTicketFactory { ticketIterator.next() }
+        return lottoTicketFactory.makeLottoTickets(count)
+    }
 
     private fun generateAutoLottoTickets(count: Int): List<LottoTicket> {
         val lottoTicketFactory = LottoTicketFactory(RandomLottoTicketGenerator)
