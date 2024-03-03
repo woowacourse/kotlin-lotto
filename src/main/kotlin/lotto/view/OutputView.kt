@@ -27,7 +27,7 @@ class OutputView {
                     rank.countOfMatch,
                     if (rank.matchBonus == true) ", 보너스 볼 일치" else "",
                     rank.winningMoney,
-                    winningTable.winnings[rank],
+                    winningTable.winnings[rank]!!.num,
                 ),
             )
         }
