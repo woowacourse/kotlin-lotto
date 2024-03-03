@@ -7,8 +7,8 @@ import lotto.domain.model.Rank
 
 object OutputView {
 
-    fun printLottoQuantity(quantity: Int) {
-        println("${quantity}개를 구매했습니다.")
+    fun printLottoQuantity(manualLottoQuantity: Int, autoLottoQuantity: Int) {
+        println("\n수동으로 ${manualLottoQuantity}장, 자동으로 ${autoLottoQuantity}개를 구매했습니다.")
     }
 
     fun printLottoNumbers(lottoTickets: List<Lotto>) {
