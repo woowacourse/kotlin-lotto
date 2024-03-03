@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoStore(private val lottoNumberGenerator: NumberGenerator) {
+class LottoStore() {
     var lottos = Lottos()
         private set
 
@@ -11,7 +11,7 @@ class LottoStore(private val lottoNumberGenerator: NumberGenerator) {
 
     fun generateAutoLottos(autoLottoCount: Int) {
         repeat(autoLottoCount) {
-            val lotto = lottoNumberGenerator.generate(LOTTO_NUMBER_SIZE, MIN_NUMBER, MAX_NUMBER)
+            val lotto = LottoNumberGeneratorManager.generate(LOTTO_NUMBER_SIZE, MIN_NUMBER, MAX_NUMBER)
             lottos.add(lotto)
         }
     }
