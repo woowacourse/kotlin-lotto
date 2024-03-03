@@ -12,5 +12,9 @@ data class LottoNumber(val lottoNumber: Int) {
             }
             return cache[lottoNumber] ?: throw IllegalArgumentException("Invalid Lotto Number")
         }
+
+        fun lottoNumberSetOf(vararg numbers: Int): Set<LottoNumber> {
+            return numbers.map { LottoNumber(it) }.toSet()
+        }
     }
 }

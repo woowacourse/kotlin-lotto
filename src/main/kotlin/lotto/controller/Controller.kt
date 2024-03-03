@@ -1,37 +1,74 @@
 package lotto.controller
 
-import lotto.model.LottoGenerator
 import lotto.model.LottoNumber
 import lotto.model.Lottos
+import lotto.model.RandomLottoNumberGenerator
+import lotto.model.UserPrize
 import lotto.model.WinningNumber
+import lotto.util.Constant.LOTTO_PRICE
 import lotto.view.calculationOfYield
 import lotto.view.insertBonusNumbers
 import lotto.view.insertCostMessage
+import lotto.view.insertManuallyLotto
+import lotto.view.insertManuallyLottoCount
 import lotto.view.insertWinNumbers
 import lotto.view.outputWinningNumber
+import lotto.view.printCombinedLottos
 import lotto.view.purchaseCountMessage
-import lotto.view.showLotto
 import lotto.view.winningStatistics
 
-private const val LOTTO_PRICE = 1000.0
-
 class Controller {
-    private val lottoGenerator = LottoGenerator()
+    private val lottoGenerator = RandomLottoNumberGenerator()
 
     fun run() {
-        insertCostMessage()
+        val charge = enterPurchaseAmount()
+        val (manualCount, autocount, manualLottos) = makeManuallyLotto(charge)
+        val combinedLottos = combineManualAndAutomaticLotto(manualCount, autocount, manualLottos)
+        val winningNumber = createWinningNumbers()
+        val prize = combinedLottos.matchlottos(winningNumber)
+        outputWinningStatistics(prize, charge)
+    }
 
-        val charge = readCharge()
-        val count = (charge / LOTTO_PRICE).toInt()
-        purchaseCountMessage(count)
-        val lottos = makeLottos(count)
+    private fun combineManualAndAutomaticLotto(
+        manualCount: Int,
+        autocount: Int,
+        manualLottos: Lottos,
+    ): Lottos {
+        purchaseCountMessage(manualCount, autocount)
+        val lottos = makeLottos(autocount)
+        val combinedLottos = lottos.combineLottos(manualLottos, lottos)
+        printCombinedLottos(combinedLottos)
+        return combinedLottos
+    }
+
+    private fun createWinningNumbers(): WinningNumber {
         insertWinNumbers()
         val winning = readLottoNumber()
-
         insertBonusNumbers()
         val bonusNumber = LottoNumber.of(readLottoBonusNumber())
         val winningNumber = WinningNumber(lotto = winning, bonusNumber = bonusNumber)
-        val prize = lottos.matchlottos(winningNumber)
+        return winningNumber
+    }
+
+    private fun makeManuallyLotto(charge: Int): Triple<Int, Int, Lottos> {
+        insertManuallyLottoCount()
+        val manualCount = readHowManyManually(charge)
+        val autocount = (charge / LOTTO_PRICE).toInt() - manualCount
+        insertManuallyLotto()
+        val manualLottos = Lottos((List(manualCount) { readManualLottoNumber() }))
+        return Triple(manualCount, autocount, manualLottos)
+    }
+
+    private fun enterPurchaseAmount(): Int {
+        insertCostMessage()
+        val charge = readCharge()
+        return charge
+    }
+
+    private fun outputWinningStatistics(
+        prize: UserPrize,
+        charge: Int,
+    ) {
         winningStatistics()
         outputWinningNumber(prize)
         calculationOfYield(prize, charge.toDouble())
@@ -40,8 +77,7 @@ class Controller {
     private fun makeLottos(count: Int): Lottos {
         return Lottos(
             List(count) {
-                val lotto = lottoGenerator.generateLotto()
-                showLotto(lotto)
+                val lotto = lottoGenerator.generateNumbers()
                 lotto
             },
         )

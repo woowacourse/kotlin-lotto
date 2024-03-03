@@ -10,11 +10,11 @@ class WinningNumber(
         }
     }
 
-    fun getWinning(): Lotto {
-        return lotto
+    fun matchCount(targetLotto: Lotto): Int {
+        return lotto.numbers.intersect(targetLotto.numbers).size
     }
 
-    fun getBonusNumber(): LottoNumber {
-        return bonusNumber
+    fun matchBonusNumber(targetLotto: Lotto): Boolean {
+        return targetLotto.numbers.contains(bonusNumber)
     }
 }

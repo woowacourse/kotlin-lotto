@@ -1,8 +1,9 @@
 package lotto.model
 
 enum class LottoPrize(
-    private val matchNumbers: Int,
-    private val price: Int,
+    val matchNumbers: Int,
+    val price: Int,
+    val requiresBonus: Boolean = false,
 ) {
     BOOM(0, 0),
     FIFTH(3, 5_000),
@@ -12,11 +13,16 @@ enum class LottoPrize(
     FIRST(6, 2_000_000_000),
     ;
 
-    fun getMatchNumbers(): Int {
-        return matchNumbers
-    }
-
-    fun getPrice(): Int {
-        return price
+    companion object {
+        fun findRanking(
+            matchCount: Int,
+            matchBonus: Boolean,
+        ): LottoPrize {
+            // SECOND 순위를 특별 처리
+            if (matchCount == 5 && matchBonus) {
+                return SECOND
+            }
+            return entries.find { it.matchNumbers == matchCount && (!it.requiresBonus || !matchBonus) } ?: BOOM
+        }
     }
 }

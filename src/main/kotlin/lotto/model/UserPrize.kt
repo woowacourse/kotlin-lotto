@@ -5,7 +5,7 @@ class UserPrize(
 ) {
     fun prizeCalculate(): Long {
         return matches.entries.sumOf {
-            (it.key.getPrice() * it.value).toLong()
+            (it.key.price * it.value).toLong()
         }
     }
 

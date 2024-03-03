@@ -1,20 +1,11 @@
 package lotto.model
 
-import lotto.util.Constant
-
-class LottoGenerator {
+class LottoGenerator(private val numberGenerator: LottoNumberGenerator) {
     fun generateLotto(): Lotto {
-        return Lotto(generateRandomLottoNumbers())
+        return numberGenerator.generateNumbers()
     }
+}
 
-    companion object {
-        private fun generateRandomLottoNumbers(): Set<LottoNumber> {
-            return Constant
-                .LOTTO_NUM_RANGE
-                .shuffled()
-                .take(Constant.LOTTO_LEN)
-                .map { LottoNumber.of(it) }
-                .toSet()
-        }
-    }
+interface LottoNumberGenerator {
+    fun generateNumbers(): Lotto
 }

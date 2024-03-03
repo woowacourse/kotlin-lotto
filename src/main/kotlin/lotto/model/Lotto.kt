@@ -9,35 +9,13 @@ class Lotto(val numbers: Set<LottoNumber>) {
         }
     }
 
-    fun matchCount(winningNumber: WinningNumber): Int {
-        return winningNumber
-            .getWinning()
-            .numbers
-            .intersect(numbers)
-            .size
-    }
-
-    fun matchBonusNumber(winningNumber: WinningNumber): Boolean {
-        return numbers.contains(winningNumber.getBonusNumber())
-    }
-
     fun findRanking(winningNumber: WinningNumber): LottoPrize {
-        var rank =
-            LottoPrize.entries.find {
-                it.getMatchNumbers() == matchCount(winningNumber)
-            } ?: LottoPrize.BOOM
-        if (checkSecond(rank, matchBonusNumber(winningNumber))) {
-            rank = LottoPrize.SECOND
-        }
-        return rank
+        val matchCount = winningNumber.matchCount(this)
+        val matchBonus = winningNumber.matchBonusNumber(this)
+        return LottoPrize.findRanking(matchCount, matchBonus)
     }
 
     fun contains(number: LottoNumber): Boolean {
         return number in numbers
     }
-
-    private fun checkSecond(
-        rank: LottoPrize,
-        matchBonus: Boolean,
-    ) = rank == LottoPrize.THIRD && matchBonus
 }
