@@ -1,6 +1,6 @@
 package model
 
-class LotteryPurchasePattern(val manualLottoCount: Int, val autoLottoCount: Int) {
+data class LotteryPurchasePattern(val manualLottoCount: Int, val autoLottoCount: Int) {
     companion object {
         private const val LOTTERY_TICKET_PRICE = 1000
         const val EXCEPTION_IS_NOT_NUMBER = "숫자만 입력하셔야 합니다"
