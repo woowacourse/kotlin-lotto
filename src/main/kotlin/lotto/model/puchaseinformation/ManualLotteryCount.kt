@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.puchaseinformation
 
 class ManualLotteryCount(val count: Int) {
     companion object {

@@ -1,8 +1,12 @@
 package lotto.model
 
-import lotto.model.generator.ExplicitLotteriesGenerationStrategy
-import lotto.model.generator.ManualLotteriesGenerationStrategy
-import lotto.model.generator.RandomLotteriesGenerationStrategy
+import lotto.model.lottery.Lottery
+import lotto.model.lottery.generator.ExplicitLotteriesGenerationStrategy
+import lotto.model.lottery.generator.ManualLotteriesGenerationStrategy
+import lotto.model.lottery.generator.RandomLotteriesGenerationStrategy
+import lotto.model.puchaseinformation.Amount
+import lotto.model.puchaseinformation.ManualLotteryCount
+import lotto.model.puchaseinformation.PurchaseInformation
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

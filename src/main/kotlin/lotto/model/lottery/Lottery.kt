@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.lottery
 
 class Lottery(
     private val lotteryNumbers: Set<LotteryNumber>,

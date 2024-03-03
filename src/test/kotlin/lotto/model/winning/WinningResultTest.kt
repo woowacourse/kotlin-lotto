@@ -1,7 +1,13 @@
-package lotto.model
+package lotto.model.winning
 
-import lotto.model.WinningResult.Companion.round
-import lotto.model.generator.ExplicitLotteriesGenerationStrategy
+import lotto.model.LotteryMachine
+import lotto.model.lottery.Bonus
+import lotto.model.lottery.Lottery
+import lotto.model.lottery.generator.ExplicitLotteriesGenerationStrategy
+import lotto.model.puchaseinformation.Amount
+import lotto.model.puchaseinformation.ManualLotteryCount
+import lotto.model.puchaseinformation.PurchaseInformation
+import lotto.model.winning.WinningResult.Companion.round
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

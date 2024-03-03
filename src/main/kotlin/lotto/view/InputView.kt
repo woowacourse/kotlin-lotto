@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.model.ManualLotteryCount
+import lotto.model.puchaseinformation.ManualLotteryCount
 
 object InputView {
     private const val HEADER_READ_AMOUNT = "구입금액을 입력해 주세요."

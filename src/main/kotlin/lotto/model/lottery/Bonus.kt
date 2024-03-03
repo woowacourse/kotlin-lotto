@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.lottery
 
 class Bonus(val lotteryNumber: LotteryNumber) {
     companion object {

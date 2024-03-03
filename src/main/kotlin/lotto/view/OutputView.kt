@@ -1,8 +1,8 @@
 package lotto.view
 
-import lotto.model.Rank
 import lotto.model.Ticket
-import lotto.model.WinningResult
+import lotto.model.winning.Rank
+import lotto.model.winning.WinningResult
 
 object OutputView {
     private const val LOTTERY_PURCHASED = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."

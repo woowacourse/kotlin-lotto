@@ -1,4 +1,8 @@
-package lotto.model
+package lotto.model.winning
+
+import lotto.model.Ticket
+import lotto.model.lottery.Bonus
+import lotto.model.lottery.Lottery
 
 class WinningResult(val stats: Map<Rank, Int>, val roi: Double) {
     companion object {

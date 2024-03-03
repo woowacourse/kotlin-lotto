@@ -1,7 +1,7 @@
-package lotto.model.generator
+package lotto.model.lottery.generator
 
-import lotto.model.Lottery
-import lotto.model.PurchaseInformation
+import lotto.model.lottery.Lottery
+import lotto.model.puchaseinformation.PurchaseInformation
 
 class RandomLotteriesGenerationStrategy(
     private val purchaseInformation: PurchaseInformation,

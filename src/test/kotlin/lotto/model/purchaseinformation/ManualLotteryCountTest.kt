@@ -1,5 +1,7 @@
-package lotto.model
+package lotto.model.purchaseinformation
 
+import lotto.model.puchaseinformation.Amount
+import lotto.model.puchaseinformation.ManualLotteryCount
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.params.ParameterizedTest

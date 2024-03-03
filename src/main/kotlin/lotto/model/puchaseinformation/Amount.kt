@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.puchaseinformation
 
 class Amount(val money: Int) {
     companion object {

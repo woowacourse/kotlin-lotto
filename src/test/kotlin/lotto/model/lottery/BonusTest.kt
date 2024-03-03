@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.lottery
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy

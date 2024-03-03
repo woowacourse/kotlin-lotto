@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.lottery
 
 import io.kotest.matchers.shouldBe
 import org.assertj.core.api.Assertions.assertThatThrownBy

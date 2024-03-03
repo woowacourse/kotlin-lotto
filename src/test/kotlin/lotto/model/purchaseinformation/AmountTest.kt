@@ -1,6 +1,7 @@
-package lotto.model
+package lotto.model.purchaseinformation
 
 import io.kotest.matchers.shouldBe
+import lotto.model.puchaseinformation.Amount
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.params.ParameterizedTest

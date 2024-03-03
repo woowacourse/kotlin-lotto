@@ -1,6 +1,6 @@
-package lotto.model.generator
+package lotto.model.lottery.generator
 
-import lotto.model.LotteryNumber
+import lotto.model.lottery.LotteryNumber
 
 object RandomLotteryNumberGenerator : LotteryNumberGenerator {
     private const val MIN_LOTTERY_NUMBER = 1

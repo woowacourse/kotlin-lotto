@@ -1,14 +1,14 @@
 package lotto.controller
 
-import lotto.model.Amount
-import lotto.model.Bonus
-import lotto.model.Lottery
 import lotto.model.LotteryMachine
-import lotto.model.ManualLotteryCount
-import lotto.model.PurchaseInformation
 import lotto.model.Ticket
-import lotto.model.WinningResult
-import lotto.model.generator.RandomLotteriesGenerationStrategy
+import lotto.model.lottery.Bonus
+import lotto.model.lottery.Lottery
+import lotto.model.lottery.generator.RandomLotteriesGenerationStrategy
+import lotto.model.puchaseinformation.Amount
+import lotto.model.puchaseinformation.ManualLotteryCount
+import lotto.model.puchaseinformation.PurchaseInformation
+import lotto.model.winning.WinningResult
 import lotto.view.InputView
 import lotto.view.OutputView
 

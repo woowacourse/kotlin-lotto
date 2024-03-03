@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.winning
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest

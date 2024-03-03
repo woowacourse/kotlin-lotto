@@ -1,7 +1,9 @@
 package lotto.model
 
-import lotto.model.generator.LotteriesGenerationStrategy
-import lotto.model.generator.ManualLotteriesGenerationStrategy
+import lotto.model.lottery.Lottery
+import lotto.model.lottery.generator.LotteriesGenerationStrategy
+import lotto.model.lottery.generator.ManualLotteriesGenerationStrategy
+import lotto.model.puchaseinformation.PurchaseInformation
 
 object LotteryMachine {
     fun issueLotteries(lotteriesGenerationStrategy: LotteriesGenerationStrategy): List<Lottery> {

@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.puchaseinformation
 
 data class PurchaseInformation(
     val amount: Amount,

@@ -1,6 +1,6 @@
-package lotto.model.generator
+package lotto.model.lottery.generator
 
-import lotto.model.Lottery
+import lotto.model.lottery.Lottery
 
 class ExplicitLotteriesGenerationStrategy(
     private val explicitLotteriesNumbers: List<Set<Int>>,

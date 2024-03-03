@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.model.lottery
 
 class LotteryNumber private constructor(private val number: Int) {
     override fun toString() = number.toString()
