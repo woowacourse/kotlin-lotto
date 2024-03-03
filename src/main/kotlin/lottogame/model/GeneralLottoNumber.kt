@@ -1,6 +1,4 @@
-package lottogame.model.generator
-
-import lottogame.model.LottoNumber
+package lottogame.model
 
 @JvmInline
 value class GeneralLottoNumber(override val number: Int) : LottoNumber {

@@ -1,7 +1,5 @@
 package lottogame.model
 
-import lottogame.model.generator.GeneralLottoNumber
-
 data class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == LOTTO_NUM_SIZE) { EXCEPTION_LOTTO_NUM_SIZE }

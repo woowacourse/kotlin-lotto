@@ -1,6 +1,7 @@
 package lottogame.controller
 
 import lottogame.model.BonusLottoNumber
+import lottogame.model.GeneralLottoNumber
 import lottogame.model.Lotto
 import lottogame.model.LottoCount
 import lottogame.model.LottoGameResult
@@ -8,7 +9,6 @@ import lottogame.model.LottoNumber
 import lottogame.model.LottoResult
 import lottogame.model.Money
 import lottogame.model.Rank
-import lottogame.model.generator.GeneralLottoNumber
 import lottogame.model.generator.LottoMachine
 import lottogame.view.LottoGameInputView
 import lottogame.view.LottoGameOutputView

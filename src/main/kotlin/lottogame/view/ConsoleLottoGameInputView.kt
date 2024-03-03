@@ -1,9 +1,9 @@
 package lottogame.view
 
+import lottogame.model.GeneralLottoNumber
 import lottogame.model.LottoCount
 import lottogame.model.LottoNumber
 import lottogame.model.Money
-import lottogame.model.generator.GeneralLottoNumber
 
 class ConsoleLottoGameInputView : LottoGameInputView {
     override tailrec fun inputPurchaseExpense(): Money {

@@ -1,5 +1,6 @@
 package lottogame.model.generator
 
+import lottogame.model.GeneralLottoNumber
 import lottogame.model.Lotto
 import lottogame.model.LottoResult
 import org.assertj.core.api.Assertions.assertThat
