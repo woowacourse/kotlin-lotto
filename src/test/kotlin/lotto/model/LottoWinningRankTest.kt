@@ -12,8 +12,8 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
-        Assertions.assertThat(rankMap.winnings[Rank.FIRST]).isEqualTo(1)
+        val winningTable = lottoWinningRank.makeWinningTable(userTickets)
+        Assertions.assertThat(winningTable.winnings[Rank.FIRST]!!.num).isEqualTo(1)
     }
 
     @Test
@@ -22,8 +22,8 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 7
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
-        Assertions.assertThat(rankMap.winnings[Rank.SECOND]).isEqualTo(1)
+        val winningTable = lottoWinningRank.makeWinningTable(userTickets)
+        Assertions.assertThat(winningTable.winnings[Rank.SECOND]!!.num).isEqualTo(1)
     }
 
     @Test
@@ -32,8 +32,8 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
-        Assertions.assertThat(rankMap.winnings[Rank.THIRD]).isEqualTo(1)
+        val winningTable = lottoWinningRank.makeWinningTable(userTickets)
+        Assertions.assertThat(winningTable.winnings[Rank.THIRD]!!.num).isEqualTo(1)
     }
 
     @Test
@@ -42,8 +42,8 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 45
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
-        Assertions.assertThat(rankMap.winnings[Rank.FOURTH]).isEqualTo(1)
+        val winningTable = lottoWinningRank.makeWinningTable(userTickets)
+        Assertions.assertThat(winningTable.winnings[Rank.FOURTH]!!.num).isEqualTo(1)
     }
 
     @Test
@@ -52,7 +52,7 @@ class LottoWinningRankTest {
         val userTickets = listOf(userTicket)
         val bonusNumber = 44
         val lottoWinningRank = LottoWinningRank(winningNumbers, LottoNumber(bonusNumber))
-        val rankMap = lottoWinningRank.makeWinningTable(userTickets)
-        Assertions.assertThat(rankMap.winnings[Rank.FIFTH]).isEqualTo(1)
+        val winningTable = lottoWinningRank.makeWinningTable(userTickets)
+        Assertions.assertThat(winningTable.winnings[Rank.FIFTH]!!.num).isEqualTo(1)
     }
 }
