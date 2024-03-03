@@ -5,6 +5,7 @@ import lotto.domain.RandomLottoGenerator
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
 import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoTickets
 import lotto.domain.model.Money
 import lotto.domain.model.WinningNumbers
 import lotto.view.InputView
@@ -20,15 +21,22 @@ class LottoController(
         val totalLottoQuantity = getLottoQuantity(purchaseMoney)
         val manualLottoQuantity = getManualLottoQuantity(totalLottoQuantity)
         val manualLottoTickets = getManualLottoTicket(manualLottoQuantity)
-        val autoLottoQuantity = totalLottoQuantity - manualLottoQuantity
-        val autoLottoTickets = makeAutoLottoTicket(autoLottoQuantity)
-        OutputView.printLottoQuantity(manualLottoQuantity, autoLottoQuantity)
-        OutputView.printLottoNumbers(manualLottoTickets)
-        OutputView.printLottoNumbers(autoLottoTickets)
+        val autoLottoTickets = makeAutoLottoTicket(totalLottoQuantity - manualLottoQuantity)
+        val totalLottoTickets = getTotalLottoTicket(manualLottoTickets, autoLottoTickets)
         val winningLotto = getValidWinningLotto()
         val winningNumbers = getValidWinningNumbers(winningLotto)
-        val result = getLottoDrawingResult(winningNumbers, autoLottoTickets)
+        val result = getLottoDrawingResult(winningNumbers, totalLottoTickets.tickets)
         showResult(result, purchaseMoney)
+    }
+
+    private fun getTotalLottoTicket(
+        manualLottoTickets: LottoTickets,
+        autoLottoTickets: LottoTickets
+    ): LottoTickets {
+        OutputView.printLottoQuantity(manualLottoTickets.size, autoLottoTickets.size)
+        val totalLottoTickets = manualLottoTickets.concat(autoLottoTickets)
+        OutputView.printLottoNumbers(totalLottoTickets.tickets)
+        return totalLottoTickets
     }
 
     private fun getValidMoney(): Money {
@@ -53,13 +61,13 @@ class LottoController(
         }
     }
 
-    private fun getManualLottoTicket(manualLottoQuantity: Int): List<Lotto> {
+    private fun getManualLottoTicket(manualLottoQuantity: Int): LottoTickets {
         println("\n수동으로 구매할 번호를 입력해 주세요.")
         val manualLottoTickets = mutableListOf<Lotto>()
         repeat(manualLottoQuantity) {
             manualLottoTickets.add(getValidManualLotto())
         }
-        return manualLottoTickets
+        return LottoTickets(manualLottoTickets)
     }
 
     private fun getValidManualLotto(): Lotto {
@@ -71,17 +79,17 @@ class LottoController(
         }
     }
 
-    private fun makeAutoLottoTicket(quantity: Int): List<Lotto> {
+    private fun makeAutoLottoTicket(quantity: Int): LottoTickets {
         val lottoTickets = List(quantity) {
             randomLottoGenerator.make(MINIMUM_LOTTO_NUMBER, MAXIMUM_LOTTO_NUMBER)
         }
-        return lottoTickets
+        return LottoTickets(lottoTickets)
     }
 
     private fun getValidWinningLotto(): Lotto {
         return try {
             println("\n지난 주 당첨 번호를 입력해 주세요.")
-            Lotto(InputView.readLottoNumbers().map { LottoNumber(it) })
+            Lotto.from(InputView.readLottoNumbers())
         } catch (e: IllegalArgumentException) {
             println(e.message)
             getValidWinningLotto()
