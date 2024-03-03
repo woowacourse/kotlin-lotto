@@ -6,7 +6,7 @@ class LottoTicket(
     val lottoNumberSet = lottoNumbers.toSortedSet()
 
     init {
-        require(lottoNumberSet.size == SIZE) { "로또 번호가 모자라거나 중복됨." }
+        require(lottoNumberSet.size == SIZE) { NUMBER_DUPLICATED_OR_INSUFFICIENT }
     }
 
     infix fun intersect(other: LottoTicket) = other.lottoNumberSet intersect this.lottoNumberSet
@@ -15,7 +15,7 @@ class LottoTicket(
 
     companion object {
         const val SIZE = 6
-
+        private const val NUMBER_DUPLICATED_OR_INSUFFICIENT = "로또 번호가 모자라거나 중복됨."
         fun from(intList: List<Int>) = LottoTicket(intList.map { LottoNumber.of(it) })
     }
 }

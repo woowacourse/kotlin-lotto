@@ -11,7 +11,7 @@ class LottoCounter(
     }
 
     fun reduce(count: Int) {
-        require(remain >= count) { "가지고 있는 돈보다 더 많이 살 수 없습니다." }
+        require(remain >= count) { LACK_OF_MONEY }
         remain -= count
     }
 
@@ -21,6 +21,7 @@ class LottoCounter(
     }
 
     companion object {
+        private const val LACK_OF_MONEY = "가지고 있는 돈보다 더 많이 살 수 없습니다."
         private val PRICE_OF_LOTTO = Money(1000)
     }
 }
