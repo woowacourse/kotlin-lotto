@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test
 class MoneyTest {
     @Test
     fun `Long 보다 작은 단위의 돈을 생성한다`() {
-        val money = Money.from(9223372036854775800)
-        assertThat(money).isEqualTo(Money.wons(9223372036854775800))
+        val money = Money.wons(9223372036854775800)
+        assertThat(money.amount).isEqualTo(9223372036854775800)
     }
 
     @Test

@@ -1,6 +1,10 @@
 package model
 
 class Money private constructor(val amount: Long) : Comparable<Money> {
+    init {
+        require(amount >= 0) { "${amount}를 지불하셨습니다. 지불 금액은 0 이상이어야 합니다." }
+    }
+
     operator fun plus(other: Money): Money = Money(this.amount + other.amount)
 
     operator fun minus(other: Money): Money = Money(this.amount - other.amount)
@@ -38,10 +42,5 @@ class Money private constructor(val amount: Long) : Comparable<Money> {
         fun wons(amount: Int): Money = Money(amount.toLong())
 
         fun wons(amount: Long): Money = Money(amount)
-
-        fun from(number: Long): Money {
-            require(number >= 0) { "${number}를 지불하셨습니다. 지불 금액은 0 이상이어야 합니다." }
-            return wons(number)
-        }
     }
 }

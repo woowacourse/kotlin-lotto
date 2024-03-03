@@ -19,7 +19,7 @@ class LotteryController(
     private val lotterySeller: LotterySeller,
 ) {
     fun start() {
-        val purchaseAmount = Money.from(inputView.readPurchaseAmount())
+        val purchaseAmount = Money.wons(inputView.readPurchaseAmount())
         val lotteries = buyLotteries(purchaseAmount)
 
         val winningResult = calculateWinningResult(lotteries)
