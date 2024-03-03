@@ -1,5 +1,6 @@
 package lottogame.model
 
+import lottogame.fixture.createLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -20,8 +21,7 @@ class LottoTest {
 
     @Test
     fun `로또 하나에 들어가는 숫자는 6개다`() {
-        val nums = intArrayOf(1, 2, 3, 4, 5, 6)
-        assertThat(nums).hasSize(6)
+        assertThat(createLotto().numbers).hasSize(6)
     }
 
     @Test
@@ -38,7 +38,7 @@ class LottoTest {
     @Test
     fun `로또는 해당 로또 넘버를 가지고 있는지 확인할 수 있다`() {
         // given
-        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val lotto = createLotto()
         val lottoNumber: LottoNumber = GeneralLottoNumber(1)
         val lottoNumber2: LottoNumber = GeneralLottoNumber(7)
         // when
@@ -54,8 +54,8 @@ class LottoTest {
     @Test
     fun `로또는 다른 로또와 일치하는 로또 넘버 개수를 반환할 수 있다`() {
         // given
-        val lotto = Lotto(1, 2, 3, 4, 5, 6)
-        val lotto2 = Lotto(2, 3, 4, 5, 6, 7)
+        val lotto = createLotto(1, 2, 3, 4, 5, 6)
+        val lotto2 = createLotto(2, 3, 4, 5, 6, 7)
         val expectedMatchedCount = 5
         // when
         val actualMatchedCount = lotto.getMatchCount(lotto2)
