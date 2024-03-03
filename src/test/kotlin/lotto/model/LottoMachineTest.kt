@@ -20,6 +20,7 @@ class LottoMachineTest {
 
         assertAll(
             { assertThat(result.size).isEqualTo(6) },
+            { assertThat(result.filter { it == Lotto(1, 2, 3, 4, 5, 6) }.size).isEqualTo(2) },
             { assertThat(result.filter { it == Lotto(7, 8, 9, 10, 11, 12) }.size).isEqualTo(4) },
         )
     }
