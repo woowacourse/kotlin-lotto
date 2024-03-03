@@ -5,7 +5,10 @@ import model.LottoTicket
 import model.Rank
 
 class ConsoleOutputView : OutputView {
-    override fun printLottoCount(manualCount: Int, autoCount: Int) {
+    override fun printLottoCount(
+        manualCount: Int,
+        autoCount: Int,
+    ) {
         println(LOTTO_COUNT_MESSAGE.format(manualCount, autoCount))
     }
 

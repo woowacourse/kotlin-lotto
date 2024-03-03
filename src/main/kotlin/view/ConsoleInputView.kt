@@ -28,9 +28,10 @@ class ConsoleInputView : InputView {
     }
 
     private fun getLottoTicket(): LottoTicket {
-        val numbers = readln()
-            .split(",")
-            .map { LottoNumber.of(it.trim().toInt()) }
+        val numbers =
+            readln()
+                .split(",")
+                .map { LottoNumber.of(it.trim().toInt()) }
         return LottoTicket(numbers)
     }
 

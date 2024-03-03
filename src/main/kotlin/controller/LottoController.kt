@@ -1,6 +1,11 @@
 package controller
 
-import model.*
+import model.LottoCounter
+import model.LottoResult
+import model.LottoTicket
+import model.LottoTicketFactory
+import model.LottoWinning
+import model.RandomLottoTicketGenerator
 import view.InputView
 import view.OutputView
 
@@ -29,8 +34,7 @@ class LottoController(
         printWinningResult(lottoResult, profitRate)
     }
 
-    private fun askUserForManualLottoTickets(count: Int): List<LottoTicket> =
-        inputView.getManualLottoTickets(count)
+    private fun askUserForManualLottoTickets(count: Int): List<LottoTicket> = inputView.getManualLottoTickets(count)
 
     private fun generateAutoLottoTickets(count: Int): List<LottoTicket> {
         val lottoTicketFactory = LottoTicketFactory(RandomLottoTicketGenerator)
