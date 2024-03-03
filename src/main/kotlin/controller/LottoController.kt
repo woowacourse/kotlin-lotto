@@ -5,6 +5,7 @@ import lotto.model.LottoNumbers
 import lotto.model.LottoStore
 import lotto.model.Lottos
 import lotto.model.PurchaseAmount
+import lotto.model.WinningNumbers
 import lotto.model.WinningPrizeCalculator
 import lotto.model.WinningRank
 import lotto.view.InputView
@@ -17,8 +18,8 @@ class LottoController(private val inputView: InputView, private val outputView: 
         val purchaseAmount = initPurchaseAmount()
         val (numberOfManualLottos, numberOfAutoLottos) = getNumberOfLotto(purchaseAmount)
         val lottos = initGenerateLottos(numberOfManualLottos, numberOfAutoLottos)
-        val (winningNumbers, bonusNumber) = generateWinningNumbers()
-        showLottoResult(lottos, winningNumbers, bonusNumber, purchaseAmount.money)
+        val winningNumbers = generateWinningNumbers()
+        showLottoResult(lottos, winningNumbers, purchaseAmount.money)
     }
 
     private fun initPurchaseAmount(): PurchaseAmount {
@@ -51,22 +52,20 @@ class LottoController(private val inputView: InputView, private val outputView: 
         return lottoBundle
     }
 
-    private fun generateWinningNumbers(): Pair<Lotto, LottoNumber> {
+    private fun generateWinningNumbers(): WinningNumbers {
         outputView.printWinningNumbersMessage()
-        val winningNumbers =
-            Lotto(LottoNumbers(inputView.readWinningNumbers().map { LottoNumber(it) }))
+        val winningLotto = inputView.readWinningNumbers()
         outputView.printBonusNumberMessage()
-        val bonusNumber = LottoNumber(inputView.readWinningBonusNumber())
-        return Pair(winningNumbers, bonusNumber)
+        val bonusNumber = inputView.readWinningBonusNumber()
+        return WinningNumbers.of(winningLotto, bonusNumber)
     }
 
     private fun showLottoResult(
         lottos: Lottos,
-        winningNumbers: Lotto,
-        bonusNumber: LottoNumber,
+        winningNumbers: WinningNumbers,
         purchaseAmount: Int,
     ) {
-        val rankCounts = lottos.winningResult(winningNumbers, bonusNumber)
+        val rankCounts = lottos.winningResult(winningNumbers)
         outputView.printWinningMessage()
         WinningRank.entries.forEach { rank ->
             if (rank != WinningRank.NONE) {
