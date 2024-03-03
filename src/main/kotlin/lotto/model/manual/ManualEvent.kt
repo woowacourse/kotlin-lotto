@@ -4,7 +4,7 @@ import lotto.model.user.UserException
 import lotto.model.user.UserException.ManualException
 
 sealed interface ManualEvent {
-    data class Success(val manualNumber: ManualNumber) : ManualEvent
+    data class Success(val manualLottoCount: ManualLottoCount) : ManualEvent
     data object InvalidDataType : ManualEvent
     data object InvalidManualCount : ManualEvent
     data object UnknownError : ManualEvent

@@ -3,7 +3,7 @@ package lotto.model.user
 import lotto.model.Lotto
 import lotto.model.LottoEvent
 import lotto.model.manual.ManualEvent
-import lotto.model.manual.ManualNumber
+import lotto.model.manual.ManualLottoCount
 import lotto.model.wallet.Wallet
 import lotto.model.wallet.WalletEvent
 import lotto.model.winning.BonusEvent
@@ -31,7 +31,7 @@ object UserInputVerifier {
         return userInput
             ?.toIntOrNull()
             ?.let {
-                ManualNumber.checkManualLottoCount(it, lottoCount)
+                ManualLottoCount.checkManualLottoCount(it, lottoCount)
             } ?: ManualEvent.InvalidDataType
     }
 

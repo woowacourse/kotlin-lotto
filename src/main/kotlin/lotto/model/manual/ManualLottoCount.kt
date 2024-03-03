@@ -2,12 +2,12 @@ package lotto.model.manual
 
 import lotto.model.user.UserException
 
-class ManualNumber(
-    private val number: Int
+class ManualLottoCount(
+    private val count: Int
 ) {
 
     fun getNumber(): Int {
-        return number
+        return count
     }
 
     companion object {
@@ -17,7 +17,7 @@ class ManualNumber(
         ): ManualEvent {
             return runCatching {
                 if (input !in 0..lottoCount) throw ManualEvent.checkManual(ManualEvent.InvalidManualCount)
-                ManualEvent.Success(ManualNumber(input))
+                ManualEvent.Success(ManualLottoCount(input))
             }.getOrElse { exception ->
                 when (exception) {
                     is UserException.ManualException -> exception.manualEvent

@@ -3,7 +3,7 @@ package lotto.view
 import lotto.model.Lotto
 import lotto.model.LottoEvent
 import lotto.model.manual.ManualEvent
-import lotto.model.manual.ManualNumber
+import lotto.model.manual.ManualLottoCount
 import lotto.model.user.UserInputVerifier
 import lotto.model.wallet.Wallet
 import lotto.model.wallet.WalletEvent
@@ -27,10 +27,10 @@ fun inputCostMessage(): Wallet {
     }
 }
 
-fun inputManualNumber(lottoCount: Int): ManualNumber {
+fun inputManualNumber(lottoCount: Int): ManualLottoCount {
     println(REQUEST_MANUAL_NUM)
     return when (val event = UserInputVerifier.inputManualCount(readlnOrNull(), lottoCount)) {
-        is ManualEvent.Success -> event.manualNumber
+        is ManualEvent.Success -> event.manualLottoCount
         else -> {
             println(ManualEvent.checkManual(event).message)
             inputManualNumber(lottoCount)
