@@ -8,19 +8,14 @@ import lotto.view.OutputView
 import lotto.view.PurchaseInfoInputView
 import lotto.view.WinningLottoInputView
 
-class LottoController(
-    private val purchaseInfoInputView: PurchaseInfoInputView = PurchaseInfoInputView(),
-    private val manualLottoInputView: ManualLottoInputView = ManualLottoInputView(),
-    private val winningLottoInputView: WinningLottoInputView = WinningLottoInputView(),
-    private val outputView: OutputView = OutputView(),
-) {
+class LottoController {
     fun run() {
-        val lottoCount = purchaseInfoInputView.readLottoCount()
+        val lottoCount = PurchaseInfoInputView.readLottoCount()
         val lottoMachine = LottoMachine(lottoCount)
 
-        val manualLottoNumbers = manualLottoInputView.readManualLottoNumbers(lottoCount.manualCount)
+        val manualLottoNumbers = ManualLottoInputView.readManualLottoNumbers(lottoCount.manualCount)
         val lottos = lottoMachine.issueLottos(manualLottoNumbers)
-        outputView.printPurchaseLotto(lottoCount, lottos)
+        OutputView.printPurchaseLotto(lottoCount, lottos)
 
         printResult(lottos, lottoCount)
     }
@@ -29,9 +24,9 @@ class LottoController(
         lottos: List<Lotto>,
         purchaseInfo: PurchaseInfo,
     ) {
-        val winningLotto = winningLottoInputView.readWinningLotto()
+        val winningLotto = WinningLottoInputView.readWinningLotto()
 
-        outputView.printWinningResult(winningLotto.calculatePrizeCount(lottos))
-        outputView.printWinningRatio(winningLotto.calculateProfitRatio(lottos, purchaseInfo.purchasePrice))
+        OutputView.printWinningResult(winningLotto.calculatePrizeCount(lottos))
+        OutputView.printWinningRatio(winningLotto.calculateProfitRatio(lottos, purchaseInfo.purchasePrice))
     }
 }

@@ -3,7 +3,10 @@ package lotto.view
 import lotto.model.Lotto
 import lotto.view.util.retryWhileNoException
 
-class ManualLottoInputView {
+object ManualLottoInputView {
+    private const val LOTTO_NUMBER_DELIMITER = ", "
+    private const val MINIMUM_DIGIT = 0
+
     fun readManualLottoNumbers(manualCount: Int): List<Lotto> =
         retryWhileNoException {
             println("수동으로 구매할 번호를 입력해 주세요.")
@@ -31,9 +34,4 @@ class ManualLottoInputView {
         require(winningLottoNumber.toSet().size == winningLottoNumber.size) {
             "올바른 로또 번호를 입력해 주세요."
         }
-
-    companion object {
-        private const val LOTTO_NUMBER_DELIMITER = ", "
-        private const val MINIMUM_DIGIT = 0
-    }
 }

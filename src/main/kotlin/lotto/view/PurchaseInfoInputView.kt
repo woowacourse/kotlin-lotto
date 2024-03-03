@@ -3,7 +3,10 @@ package lotto.view
 import lotto.model.PurchaseInfo
 import lotto.view.util.retryWhileNoException
 
-class PurchaseInfoInputView {
+object PurchaseInfoInputView {
+    private const val MINIMUM_DIGIT = 0
+    private const val LOTTO_PRICE = 1000
+
     fun readLottoCount(): PurchaseInfo {
         val purchasePrice = readPurchasePrice()
         val manualLottoCount = readManualLottoCount()
@@ -30,10 +33,5 @@ class PurchaseInfoInputView {
         require(it.toIntOrNull() != null && it.toInt() >= MINIMUM_DIGIT) {
             "올바른 금액을 입력해 주세요."
         }
-    }
-
-    companion object {
-        private const val MINIMUM_DIGIT = 0
-        private const val LOTTO_PRICE = 1000
     }
 }

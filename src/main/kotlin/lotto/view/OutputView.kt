@@ -4,7 +4,9 @@ import lotto.model.Lotto
 import lotto.model.LottoPrize
 import lotto.model.PurchaseInfo
 
-class OutputView {
+object OutputView {
+    private const val DEFAULT_MATCHING_COUNT = 0
+
     fun printPurchaseLotto(
         purchaseInfo: PurchaseInfo,
         lottos: List<Lotto>,
@@ -43,8 +45,4 @@ class OutputView {
     }
 
     private fun Double.provideTwoDecimal() = "%.2f".format(this)
-
-    companion object {
-        private const val DEFAULT_MATCHING_COUNT = 0
-    }
 }

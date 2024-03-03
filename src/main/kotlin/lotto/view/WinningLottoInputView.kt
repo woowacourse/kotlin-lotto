@@ -5,7 +5,10 @@ import lotto.model.LottoNumber
 import lotto.model.WinningLotto
 import lotto.view.util.retryWhileNoException
 
-class WinningLottoInputView {
+object WinningLottoInputView {
+    private const val LOTTO_NUMBER_DELIMITER = ", "
+    private const val MINIMUM_DIGIT = 0
+
     fun readWinningLotto(): WinningLotto {
         val winningLottoNumbers = readWinningLottoNumbers()
         val bonusNumber = readBonusNumber()
@@ -42,9 +45,4 @@ class WinningLottoInputView {
         require(winningLottoNumber.toSet().size == winningLottoNumber.size) {
             "올바른 로또 번호를 입력해 주세요."
         }
-
-    companion object {
-        private const val LOTTO_NUMBER_DELIMITER = ", "
-        private const val MINIMUM_DIGIT = 0
-    }
 }
