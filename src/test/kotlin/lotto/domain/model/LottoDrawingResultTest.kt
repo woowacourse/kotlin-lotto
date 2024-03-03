@@ -91,7 +91,7 @@ class LottoDrawingResultTest {
         }
 
         @Test
-        fun `각 랭크가 1개씩 존재할 때 총 상금으로 20억 455만 5천을 반환하는지 테스트`() {
+        fun `각 랭크가 1개씩 존재할 때 총 상금으로 2_031_555_000을 반환하는지 테스트`() {
             val drawingResult = LottoDrawingResult(
                 mapOf(
                     Rank.FIRST to 1,
