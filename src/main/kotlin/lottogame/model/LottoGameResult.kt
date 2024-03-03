@@ -16,6 +16,8 @@ class LottoGameResult private constructor(
     )
 
     companion object {
+        private const val INIT_RANK_COUNT = 0
+
         fun of(
             bonusNumber: LottoNumber,
             winningLotto: Lotto,
@@ -32,7 +34,7 @@ class LottoGameResult private constructor(
         private fun getRankMap(): MutableMap<Rank, Int> {
             return Rank.entries
                 .reversed()
-                .associateWith { 0 }
+                .associateWith { INIT_RANK_COUNT }
                 .toMutableMap()
         }
 

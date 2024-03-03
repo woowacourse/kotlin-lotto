@@ -19,7 +19,7 @@
 # 2차 피드백 후 수정 사항
 
 ## Domain
-- [ ] : LottoGameResult 매직 넘버 상수화
+- [x] : LottoGameResult 매직 넘버 상수화
 - [ ] : BonusNumber, Count 에 nullable 하지 않은 팩토리 메서드 함수 추가
 - [ ] : BonusNumber, Count createOrNull() 메서드 네이밍 -> ofNullable() 로 변경
 ## Test
