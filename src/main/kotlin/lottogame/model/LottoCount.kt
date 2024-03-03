@@ -12,13 +12,7 @@ value class LottoCount private constructor(val amount: Int) {
         private const val EXCEPTION_COUNT_CALCULATE = "lottoPrice * count = %s 는 cost = %s 보다 클 수 없다 "
 
         @JvmStatic
-        fun from(count: Int): LottoCount {
-            return LottoCount(count)
-        }
-
-        @JvmStatic
-        fun fromNullable(count: Int): LottoCount? {
-            if (count < MIN_COUNT) return null
+        fun of(count: Int): LottoCount {
             return LottoCount(count)
         }
 
@@ -28,11 +22,16 @@ value class LottoCount private constructor(val amount: Int) {
             lottoPrice: Money,
             cost: Money,
         ): LottoCount {
-            // 몫
             val limitCount = cost / lottoPrice
             val canBuyCount = count.amount <= limitCount
             check(canBuyCount) { EXCEPTION_COUNT_CALCULATE }
             return LottoCount(count.amount)
+        }
+
+        @JvmStatic
+        fun ofNullable(count: Int): LottoCount? {
+            if (count < MIN_COUNT) return null
+            return LottoCount(count)
         }
 
         @JvmStatic

@@ -10,16 +10,16 @@ class LottoCountTest {
     @Test
     fun `amount 가 0 미만이면, LottoCount 생성 불가능`() {
         assertAll(
-            { assertThat(LottoCount.fromNullable(MINUS)).isNull() },
-            { assertThrows<IllegalArgumentException> { LottoCount.from(MINUS) } },
+            { assertThat(LottoCount.ofNullable(MINUS)).isNull() },
+            { assertThrows<IllegalArgumentException> { LottoCount.of(MINUS) } },
         )
     }
 
     @Test
     fun `amount 가 0 이상 이면, LottoCount 생성`() {
         assertAll(
-            { assertThat(LottoCount.fromNullable(0)).isNotNull },
-            { assertDoesNotThrow { LottoCount.from(0) } },
+            { assertThat(LottoCount.ofNullable(0)).isNotNull },
+            { assertDoesNotThrow { LottoCount.of(0) } },
         )
     }
 
@@ -28,7 +28,7 @@ class LottoCountTest {
         // given
         val cost = Money(1_000)
         val lottoPrice = Money(1_000)
-        val count = LottoCount.from(1)
+        val count = LottoCount.of(1)
         // when
         val lotto = LottoCount.ofNullable(count, lottoPrice, cost)
         // then
@@ -40,7 +40,7 @@ class LottoCountTest {
         // given
         val cost = Money(1_000)
         val lottoPrice = Money(1_001)
-        val count = LottoCount.from(1)
+        val count = LottoCount.of(1)
         // when
         val lotto = LottoCount.ofNullable(count, lottoPrice, cost)
         // then
