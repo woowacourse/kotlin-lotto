@@ -1,5 +1,5 @@
 package lotto.model
 
 interface LottoMachine {
-    fun generate(): List<Int>
+    fun generate(lottoSize: Int): List<Lotto>
 }
