@@ -19,7 +19,7 @@ object OutputView {
 
     fun printLottoResult(lottoDrawingResult: LottoDrawingResult) {
         println("\n당첨 통계\n---------")
-        val resultWithoutMiss = lottoDrawingResult.statistics.filter { it.key != Rank.MISS }
+        val resultWithoutMiss = lottoDrawingResult.statisticsResult.filter { it.key != Rank.MISS }
         resultWithoutMiss.forEach { (rank, count) ->
             if (rank.isBonusMatch) {
                 println("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney}원)- ${count}개")
