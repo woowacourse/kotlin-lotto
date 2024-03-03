@@ -1,13 +1,13 @@
 package lottogame.view
 
-import lottogame.model.Count
+import lottogame.model.LottoCount
 import lottogame.model.LottoNumber
 import lottogame.model.Money
 
 interface LottoGameInputView {
     fun inputPurchaseExpense(): Money
 
-    fun inputManualLottoCount(): Count
+    fun inputManualLottoCount(): LottoCount
 
     fun inputManualLottoNumbers(size: Int): List<List<LottoNumber>>
 

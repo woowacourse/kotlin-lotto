@@ -22,6 +22,7 @@
 - [x] : LottoGameResult 매직 넘버 상수화
 - [x] : BonusNumber, Count 에 nullable 하지 않은 팩토리 메서드 함수 추가
 - [x] : BonusNumber, Count createOrNull() 메서드 네이밍 -> ofNullable() 로 변경
+- [x] : Count 삭제, Count 책임 LottoCount 로 이동
 ## Test
 - [ ] : Test Fixture 적용하기
 
