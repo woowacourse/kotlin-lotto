@@ -7,28 +7,28 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
-class LottoCountTest {
+class PurchaseInfoTest {
     @ParameterizedTest
     @CsvSource("1000,1", "10000,10")
     fun `자동으로 발행할 수 있는 로또의 개수 계산한다`(
         purchasePrice: Int,
         amount: Int,
     ) {
-        val lottoCount = LottoCount(purchasePrice, LOTTO_PRICE, 0)
-        assertThat(lottoCount.autoCount).isEqualTo(amount)
+        val purchaseInfo = PurchaseInfo(purchasePrice, LOTTO_PRICE, 0)
+        assertThat(purchaseInfo.autoCount).isEqualTo(amount)
     }
 
     @Test
     fun `구입 금액과 수동으로 구매할 로또 개수에 따라 자동으로 구매할 로또 개수를 구한다`() {
-        val lottoCount = LottoCount(14000, LOTTO_PRICE, MANUAL_COUNT)
-        assertThat(lottoCount.autoCount).isEqualTo(13)
+        val purchaseInfo = PurchaseInfo(14000, LOTTO_PRICE, MANUAL_COUNT)
+        assertThat(purchaseInfo.autoCount).isEqualTo(13)
     }
 
     @ParameterizedTest
     @ValueSource(ints = [-1000, 0, 1100])
     fun `잘못된 구입 금액을 입력할 경우 예외가 발생한다`(purchasePrice: Int) {
         assertThrows<IllegalArgumentException> {
-            LottoCount(purchasePrice, LOTTO_PRICE, MANUAL_COUNT)
+            PurchaseInfo(purchasePrice, LOTTO_PRICE, MANUAL_COUNT)
         }
     }
 
@@ -36,7 +36,7 @@ class LottoCountTest {
     @ValueSource(ints = [-1000, 0])
     fun `잘못된 로또 가격을 입력할 경우 예외가 발생한다`(lottoPrice: Int) {
         assertThrows<IllegalArgumentException> {
-            LottoCount(PURCHASE_PRICE, lottoPrice, MANUAL_COUNT)
+            PurchaseInfo(PURCHASE_PRICE, lottoPrice, MANUAL_COUNT)
         }
     }
 
@@ -44,7 +44,7 @@ class LottoCountTest {
     @ValueSource(ints = [-2, 11])
     fun `잘못된 수동 로또 구매 수를 입력할 경우 예외가 발생한다`(manualCount: Int) {
         assertThrows<IllegalArgumentException> {
-            LottoCount(PURCHASE_PRICE, LOTTO_PRICE, manualCount)
+            PurchaseInfo(PURCHASE_PRICE, LOTTO_PRICE, manualCount)
         }
     }
 

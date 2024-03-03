@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 class LottoMachineTest {
     @Test
     fun `수동으로 입력한 로또 번호를 포함하여 티켓을 발행한다`() {
-        val lottoCount = LottoCount(PURCHASE_PRICE, LOTTO_PRICE, 1)
-        val lottoMachine = LottoMachine(lottoCount)
+        val purchaseInfo = PurchaseInfo(PURCHASE_PRICE, LOTTO_PRICE, 1)
+        val lottoMachine = LottoMachine(purchaseInfo)
         val lottos = lottoMachine.issueLottos(listOf(MANUAL_LOTTOS))
         assertThat(lottos.size).isEqualTo(14)
         assertThat(lottos).contains(MANUAL_LOTTOS)

@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoCount(val purchasePrice: Int, val lottoPrice: Int, val manualCount: Int) {
+class PurchaseInfo(val purchasePrice: Int, val lottoPrice: Int, val manualCount: Int) {
     val autoCount: Int
 
     init {

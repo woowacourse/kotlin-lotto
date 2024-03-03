@@ -1,13 +1,13 @@
 package lotto.view
 
-import lotto.model.LottoCount
+import lotto.model.PurchaseInfo
 import lotto.view.util.retryWhileNoException
 
-class LottoCountInputView {
-    fun readLottoCount(): LottoCount {
+class PurchaseInfoInputView {
+    fun readLottoCount(): PurchaseInfo {
         val purchasePrice = readPurchasePrice()
         val manualLottoCount = readManualLottoCount()
-        return LottoCount(purchasePrice, LOTTO_PRICE, manualLottoCount)
+        return PurchaseInfo(purchasePrice, LOTTO_PRICE, manualLottoCount)
     }
 
     private fun readPurchasePrice(): Int =
