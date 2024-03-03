@@ -17,11 +17,12 @@ class LottoController(
 
     fun start() {
         val purchaseMoney = getValidMoney()
-        val quantity = getLottoQuantity(purchaseMoney)
-        val lottoTickets = makeLottoTicket(quantity)
+        val totalLottoQuantity = getLottoQuantity(purchaseMoney)
+        val manualLottoQuantity = getManualLottoQuantity(totalLottoQuantity)
+        val autoLottoTickets = makeLottoTicket(totalLottoQuantity - manualLottoQuantity)
         val winningLotto = getValidWinningLotto()
         val winningNumbers = getValidWinningNumbers(winningLotto)
-        val result = getLottoDrawingResult(winningNumbers, lottoTickets)
+        val result = getLottoDrawingResult(winningNumbers, autoLottoTickets)
         showResult(result, purchaseMoney)
     }
 
@@ -38,6 +39,15 @@ class LottoController(
         val quantity = cashier.calculateQuantity(money, LOTTO_PRICE)
         OutputView.printLottoQuantity(quantity)
         return quantity
+    }
+
+    private fun getManualLottoQuantity(quantity: Int): Int {
+        return try {
+            InputView.readPurchaseQuantity(quantity)
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            getManualLottoQuantity(quantity)
+        }
     }
 
     private fun makeLottoTicket(quantity: Int): List<Lotto> {
