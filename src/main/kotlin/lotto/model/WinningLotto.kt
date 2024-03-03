@@ -2,7 +2,7 @@ package lotto.model
 
 class WinningLotto(private val winning: Lotto, private val bonusNumber: LottoNumber) {
     init {
-        require(bonusNumber !in winning) { "보너스 숫자는 당첨 번호와 중복될 수 없습니다." }
+        require(bonusNumber !in winning) { "보너스 숫자는 당첨 번호와 중복될 수 없습니다. 현재 입력값 : $bonusNumber, 당첨 번호 : $winning" }
     }
 
     fun generateWinningStatus(lottoTickets: List<Lotto>): WinningStatus =
