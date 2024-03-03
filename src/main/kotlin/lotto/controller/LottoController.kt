@@ -42,7 +42,7 @@ class LottoController {
 
         displayPurchaseResult(manualLottos, autoLottos)
 
-        return Lottos(manualLottos.publishedLottos + autoLottos.publishedLottos)
+        return manualLottos + autoLottos
     }
 
     private fun generateManualLotto(manual: List<String>): Lotto {
@@ -61,9 +61,7 @@ class LottoController {
         manualLotto: Lottos,
         autoLotto: Lottos,
     ) {
-        OutputView.outputNumberOfLotto(manualLotto.publishedLottos.size, autoLotto.publishedLottos.size)
-        OutputView.outputLottos(manualLotto)
-        OutputView.outputLottos(autoLotto)
+        OutputView.outputShowLottos(manualLotto, autoLotto)
     }
 
     private fun drawWinningLotto(): WinningLotto {

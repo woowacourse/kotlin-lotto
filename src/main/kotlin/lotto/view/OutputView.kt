@@ -10,15 +10,13 @@ object OutputView {
     private const val RATE_OF_RETURN_MESSAGE = "총 수익률은 %.2f입니다."
     private const val RATE_OF_RETURN_THRESHOLD = 1
 
-    fun outputNumberOfLotto(
-        numberOfManualLotto: Int,
-        numberOfAutoLotto: Int,
+    fun outputShowLottos(
+        manualLottos: Lottos,
+        autoLottos: Lottos,
     ) {
-        println(PURCHASE.format(numberOfManualLotto, numberOfAutoLotto))
-    }
-
-    fun outputLottos(lottos: Lottos) {
-        println(lottos)
+        println(PURCHASE.format(manualLottos.publishedLottos.size, autoLottos.publishedLottos.size))
+        println(manualLottos)
+        println(autoLottos)
     }
 
     fun outputWinningStatistics(winningStatistics: WinningStatistics) {
