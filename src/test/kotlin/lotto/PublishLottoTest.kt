@@ -15,8 +15,7 @@ class PublishLottoTest {
 
     @BeforeEach
     fun setUp() {
-        val randomNumbers = numberGenerator.makeRandomNumbers()
-        lottoNumbers = numberGenerator.drawSixNumbers(randomNumbers).map { LottoNumber(it) }
+        lottoNumbers = numberGenerator.generateLottoNumbers().map { LottoNumber(it) }
         lotto = Lotto(lottoNumbers)
     }
 
