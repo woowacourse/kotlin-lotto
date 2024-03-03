@@ -11,7 +11,7 @@ class LottoCounter(
     }
 
     fun reduce(count: Int) {
-        require(remain >= count)
+        require(remain >= count) { "가지고 있는 돈보다 더 많이 살 수 없습니다." }
         remain -= count
     }
 
