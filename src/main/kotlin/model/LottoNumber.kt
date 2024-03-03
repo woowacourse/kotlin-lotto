@@ -3,7 +3,7 @@ package model
 @JvmInline
 value class LottoNumber private constructor(private val num: Int) : Comparable<LottoNumber> {
     init {
-        require(num in RANGE)
+        require(num in RANGE) { "로또 번호가 범위를 벗어남." }
     }
 
     override fun compareTo(other: LottoNumber): Int = this.num - other.num
