@@ -1,13 +1,13 @@
 package lotto.model
 
-import lotto.util.Validation
+import lotto.util.InputValidation
 
 object WinningPrizeCalculator {
     fun calculateProfitRate(
         purchaseAmount: Int,
         winningResult: Map<WinningRank, Int>,
     ): Double {
-        Validation.validateAmountRange(purchaseAmount)
+        InputValidation.validateAmountRange(purchaseAmount)
         val profitAmount = calculateProfitAmount(winningResult)
         return (profitAmount / purchaseAmount).toDouble()
     }

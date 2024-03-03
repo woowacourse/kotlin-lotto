@@ -1,10 +1,10 @@
 package lotto.model
 
-import lotto.util.Validation
+import lotto.util.InputValidation
 
 class PurchaseAmount(val money: Int, val numberOfManualLottos: Int) {
     init {
-        Validation.validateAmountRange(money)
+        InputValidation.validateAmountRange(money)
         require((money / PURCHASE_UNIT) > numberOfManualLottos) { ERROR_NOT_ENOUGH_MONEY_MESSAGE }
     }
 
@@ -25,13 +25,13 @@ class PurchaseAmount(val money: Int, val numberOfManualLottos: Int) {
         private const val MINIMUM_MANUAL_NUMBER_RANGE = 0
 
         private fun validateInputMoney(inputMoney: String): Int {
-            Validation.validateIsDigit(inputMoney)
-            Validation.validateAmountRange(inputMoney.toInt())
+            InputValidation.validateIsDigit(inputMoney)
+            InputValidation.validateAmountRange(inputMoney.toInt())
             return inputMoney.toInt()
         }
 
         private fun validateNumberOfManualLottos(numberOfManualLottos: String): Int {
-            Validation.validateIsDigit(numberOfManualLottos)
+            InputValidation.validateIsDigit(numberOfManualLottos)
             validateManualNumberRange(numberOfManualLottos.toInt())
             return numberOfManualLottos.toInt()
         }

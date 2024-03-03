@@ -1,6 +1,6 @@
 package model
 
-import lotto.util.Validation
+import lotto.util.InputValidation
 
 data class LottoNumber(val number: Int) {
     init {
@@ -22,7 +22,7 @@ data class LottoNumber(val number: Int) {
         }
 
         private fun validateIsDigit(number: String): Int {
-            Validation.validateIsDigit(number)
+            InputValidation.validateIsDigit(number)
             return number.toInt()
         }
     }
