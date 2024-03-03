@@ -3,7 +3,7 @@ package lotto.model.winning
 import lotto.model.LotteryMachine
 import lotto.model.lottery.Bonus
 import lotto.model.lottery.Lottery
-import lotto.model.lottery.generator.ExplicitLotteriesGenerationStrategy
+import lotto.model.lottery.strategy.ExplicitLotteriesGenerationStrategy
 import lotto.model.puchaseinformation.Amount
 import lotto.model.puchaseinformation.ManualLotteryCount
 import lotto.model.puchaseinformation.PurchaseInformation

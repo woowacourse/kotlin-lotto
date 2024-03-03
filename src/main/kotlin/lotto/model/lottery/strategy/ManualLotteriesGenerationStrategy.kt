@@ -1,4 +1,4 @@
-package lotto.model.lottery.generator
+package lotto.model.lottery.strategy
 
 import lotto.model.lottery.Lottery
 

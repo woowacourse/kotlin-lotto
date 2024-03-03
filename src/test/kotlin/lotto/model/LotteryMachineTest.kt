@@ -1,9 +1,9 @@
 package lotto.model
 
 import lotto.model.lottery.Lottery
-import lotto.model.lottery.generator.ExplicitLotteriesGenerationStrategy
-import lotto.model.lottery.generator.ManualLotteriesGenerationStrategy
-import lotto.model.lottery.generator.RandomLotteriesGenerationStrategy
+import lotto.model.lottery.strategy.ExplicitLotteriesGenerationStrategy
+import lotto.model.lottery.strategy.ManualLotteriesGenerationStrategy
+import lotto.model.lottery.strategy.RandomLotteriesGenerationStrategy
 import lotto.model.puchaseinformation.Amount
 import lotto.model.puchaseinformation.ManualLotteryCount
 import lotto.model.puchaseinformation.PurchaseInformation

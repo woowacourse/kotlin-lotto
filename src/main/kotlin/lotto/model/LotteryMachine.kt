@@ -1,8 +1,8 @@
 package lotto.model
 
 import lotto.model.lottery.Lottery
-import lotto.model.lottery.generator.LotteriesGenerationStrategy
-import lotto.model.lottery.generator.ManualLotteriesGenerationStrategy
+import lotto.model.lottery.strategy.LotteriesGenerationStrategy
+import lotto.model.lottery.strategy.ManualLotteriesGenerationStrategy
 import lotto.model.puchaseinformation.PurchaseInformation
 
 object LotteryMachine {

@@ -4,7 +4,7 @@ import lotto.model.LotteryMachine
 import lotto.model.Ticket
 import lotto.model.lottery.Bonus
 import lotto.model.lottery.Lottery
-import lotto.model.lottery.generator.RandomLotteriesGenerationStrategy
+import lotto.model.lottery.strategy.RandomLotteriesGenerationStrategy
 import lotto.model.puchaseinformation.Amount
 import lotto.model.puchaseinformation.ManualLotteryCount
 import lotto.model.puchaseinformation.PurchaseInformation
