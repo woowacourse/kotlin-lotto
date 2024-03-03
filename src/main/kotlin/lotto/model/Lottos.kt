@@ -6,10 +6,9 @@ class Lottos {
     private var lottos: List<Lotto> = listOf()
 
     fun publishLottos(
-        numberOfLotto: Int,
         handpickedLottos: List<Lotto>,
+        automaticLottos: List<Lotto>,
     ) {
-        val automaticLottos = List(numberOfLotto - handpickedLottos.size) { LottoGenerator.generateLotto() }
         lottos = (handpickedLottos + automaticLottos)
     }
 

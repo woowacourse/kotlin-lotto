@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class LottosTest {
     @Test
-    fun `수동 로또 발행 확인`() {
+    fun `로또 발행 확인`() {
         val lottos = Lottos()
         val handpickedLottos =
             listOf(
@@ -20,6 +20,9 @@ class LottosTest {
                         LottoNumber(6),
                     ),
                 ),
+            )
+        val automaticLottos =
+            listOf(
                 Lotto(
                     listOf(
                         LottoNumber(7),
@@ -31,16 +34,14 @@ class LottosTest {
                     ),
                 ),
             )
-        val numberOfLotto = 5
 
-        lottos.publishLottos(numberOfLotto, handpickedLottos)
+        lottos.publishLottos(handpickedLottos, automaticLottos)
 
-        assertThat(lottos.getLottos().containsAll(handpickedLottos)).isTrue
+        assertThat(lottos.getLottos().size).isEqualTo(2)
     }
 
     @Test
     fun `로또 발행수 계산 확인`() {
-        // Given
         val lottos = Lottos()
         val purchaseAmount = 1500
 
