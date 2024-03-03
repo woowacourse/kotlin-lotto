@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoCountCalculator(
+class AutoLottoCountCalculator(
     private val purchasePrice: Int,
     private val manualLottoCount: Int,
 ) {
