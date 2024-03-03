@@ -25,7 +25,7 @@ class LotteryController {
 
     private fun getPurchaseInformation(): PurchaseInformation {
         val amount = readAmount()
-        val manualLotteryCount = retryUntilSuccess { readManualLotteryCount(amount) }
+        val manualLotteryCount = readManualLotteryCount(amount)
 
         return PurchaseInformation(amount, manualLotteryCount)
     }
@@ -65,11 +65,19 @@ class LotteryController {
     private fun readManualLotteryCount(
         amount: Amount,
         lotteryTicketPrice: Int = LOTTERY_TICKET_PRICE,
-    ) = ManualLotteryCount.fromInput(
-        InputView.readManualCount(),
-        amount,
-        lotteryTicketPrice,
-    )
+    ): ManualLotteryCount {
+        while (true) {
+            val manualLotteryCount =
+                ManualLotteryCount.fromInput(
+                    InputView.readManualCount(),
+                    amount,
+                    lotteryTicketPrice,
+                )
+
+            if (manualLotteryCount != null) return manualLotteryCount
+            OutputView.printError(EXCEPTION_IS_NOT_NUMBER)
+        }
+    }
 
     private fun readManualLotteries(manualLotteryCount: ManualLotteryCount) = InputView.readManualLotteries(manualLotteryCount)
 

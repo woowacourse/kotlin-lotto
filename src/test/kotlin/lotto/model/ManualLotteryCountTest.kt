@@ -1,5 +1,6 @@
 package lotto.model
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -12,10 +13,10 @@ class ManualLotteryCountTest {
         money: String,
     ) {
         val amount = Amount.fromInput(money)
-        assertThatThrownBy {
-            ManualLotteryCount.fromInput(input, amount, LOTTERY_TICKET_PRICE)
-        }.isExactlyInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("숫자만 입력하셔야 합니다")
+
+        if (amount != null) {
+            assertThat(ManualLotteryCount.fromInput(input, amount, LOTTERY_TICKET_PRICE)).isNull()
+        }
     }
 
     @ParameterizedTest
@@ -25,10 +26,13 @@ class ManualLotteryCountTest {
         money: String,
     ) {
         val amount = Amount.fromInput(money)
-        assertThatThrownBy {
-            ManualLotteryCount.fromInput(input, amount, LOTTERY_TICKET_PRICE)
-        }.isExactlyInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("금액이 부족합니다")
+
+        if (amount != null) {
+            assertThatThrownBy {
+                ManualLotteryCount.fromInput(input, amount, LOTTERY_TICKET_PRICE)
+            }.isExactlyInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("금액이 부족합니다")
+        }
     }
 
     companion object {
