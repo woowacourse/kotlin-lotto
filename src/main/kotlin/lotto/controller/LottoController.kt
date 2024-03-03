@@ -42,7 +42,7 @@ class LottoController(
 
     private fun makeLottoTicket(quantity: Int): List<Lotto> {
         val lottoTickets = List(quantity) {
-            randomLottoGenerator.make()
+            randomLottoGenerator.make(MINIMUM_LOTTO_NUMBER, MAXIMUM_LOTTO_NUMBER)
         }
         OutputView.printLottoNumbers(lottoTickets)
         return lottoTickets
@@ -80,5 +80,7 @@ class LottoController(
 
     companion object {
         const val LOTTO_PRICE = 1000
+        const val MINIMUM_LOTTO_NUMBER = 1
+        const val MAXIMUM_LOTTO_NUMBER = 45
     }
 }

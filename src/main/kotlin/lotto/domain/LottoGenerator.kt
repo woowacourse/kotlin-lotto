@@ -3,5 +3,5 @@ package lotto.domain
 import lotto.domain.model.Lotto
 
 interface LottoGenerator {
-    fun make(): Lotto
+    fun make(minimumInclusive: Int, maximumInclusive: Int): Lotto
 }
