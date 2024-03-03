@@ -1,7 +1,7 @@
 package lotto.model
 
 @JvmInline
-value class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
+value class UserLottoTicket private constructor(val userLottoTicket: List<LottoNumber>) {
     init {
         require(userLottoTicket.size == LOTTO_TICKET_SIZE) {
             "[ERROR] 개수가 틀림"
@@ -31,7 +31,7 @@ value class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
     companion object {
         private const val LOTTO_TICKET_SIZE = 6
 
-        fun wrap(lottoNumbers: List<LottoNumber>): UserLottoTicket {
+        fun of(lottoNumbers: List<LottoNumber>): UserLottoTicket {
             val sortedLottoNumbers = lottoNumbers.sortedBy { it.number }
             return UserLottoTicket(sortedLottoNumbers)
         }

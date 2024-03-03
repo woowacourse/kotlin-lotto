@@ -6,11 +6,11 @@ class AutoLottoMachine(private val count: Int) : LottoMachine {
     }
 
     private fun makeUserLottoTicket(): UserLottoTicket {
-        return UserLottoTicket.wrap(makeLottoNumbers())
+        return UserLottoTicket.of(makeLottoNumbers())
     }
 
     private fun makeLottoNumbers(): List<LottoNumber> {
-        return makeRandomNumbers().map { LottoNumber.makeLottoNumber(it) }
+        return makeRandomNumbers().map { LottoNumber.of(it) }
     }
 
     private fun makeRandomNumbers(): List<Int> {
