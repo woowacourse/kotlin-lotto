@@ -1,6 +1,7 @@
 package lotto.model
 
 import io.kotest.matchers.shouldBe
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -18,11 +19,8 @@ class AmountTest {
 
     @ParameterizedTest
     @ValueSource(strings = ["hannah", "pangtae", "23pobi", "@-01af+"])
-    fun `금액이 숫자가 아니라면 예외 발생`(input: String) {
-        assertThatThrownBy {
-            Amount.fromInput(input)
-        }.isExactlyInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage(Amount.EXCEPTION_IS_NOT_NUMBER)
+    fun `금액이 숫자가 아니라면 null 반환`(input: String) {
+        assertThat(Amount.fromInput(input)).isNull()
     }
 
     @ParameterizedTest
@@ -31,6 +29,10 @@ class AmountTest {
         input: String,
         money: Int,
     ) {
-        money shouldBe Amount.fromInput(input).money
+        val amount = Amount.fromInput(input)
+
+        if (amount != null) {
+            money shouldBe amount.money
+        }
     }
 }

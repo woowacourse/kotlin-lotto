@@ -34,4 +34,8 @@ object OutputView {
     fun printErrorMessage(t: Throwable) {
         println(t.message)
     }
+
+    fun printError(message: String) {
+        println(message)
+    }
 }
