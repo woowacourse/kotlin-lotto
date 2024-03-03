@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.model.LottoGenerator
 import lotto.model.Lottos
+import lotto.model.wallet.Wallet
 import lotto.model.winning.WinningNumber
 import lotto.view.inputBonusNumber
 import lotto.view.inputCostMessage
@@ -17,9 +18,12 @@ import lotto.view.outputWinningNumber
 import lotto.view.outputWinningStatistics
 
 class Controller {
+    private lateinit var wallet: Wallet
+    private val lottos = Lottos()
+    private lateinit var winningNumber: WinningNumber
 
-    fun run() {
-        val wallet = inputCostMessage()
+    fun purchaseLottos() {
+        wallet = inputCostMessage()
         val lottoCount = wallet.getLottoCount()
 
         val manualNumber = inputManualNumber(lottoCount)
@@ -27,7 +31,6 @@ class Controller {
         val autoLottoCount = lottoCount - manualCount
 
         outputNewLine()
-        val lottos = Lottos()
         if (manualCount > 0) {
             inputManualLottoNumbers()
             val manualLottos = List(manualCount) {
@@ -43,17 +46,21 @@ class Controller {
 
         outputPurchaseCount(manualCount, autoLottoCount)
         outputLottos(lottos.getLottos())
+    }
 
+    fun enterWinningNumber() {
         outputNewLine()
         inputWinningLottoNumbers()
         val winningLottos = inputLottoNumbers()
         outputNewLine()
         val bonusNumber = inputBonusNumber(winningLottos)
-        val winningNumber = WinningNumber(
+        winningNumber = WinningNumber(
             lotto = winningLottos,
             bonusNumber = bonusNumber
         )
+    }
 
+    fun checkResult() {
         val prize = lottos.matchLottos(winningNumber)
         outputWinningStatistics()
         outputWinningNumber(prize.getUserPrize())
