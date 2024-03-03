@@ -1,6 +1,7 @@
 package lotto.model
 
-class LottoNumber private constructor(private val number: Int) {
+@JvmInline
+value class LottoNumber private constructor(private val number: Int) {
     init {
         require(number in NUMBER_RANGE) { "로또 번호의 범위는 1~45 사이의 자연수입니다." }
     }
