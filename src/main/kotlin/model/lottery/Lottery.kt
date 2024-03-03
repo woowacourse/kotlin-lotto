@@ -2,6 +2,7 @@ package model.lottery
 
 import model.Quantity
 import model.lottery.LotteryNumber.Companion.LOTTERY_NUMBER_RANGE
+import model.lottery.generator.NumbersGenerator
 
 class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
     init {
@@ -39,6 +40,8 @@ class Lottery private constructor(val lotteryNumbers: List<LotteryNumber>) {
         private const val ERROR_INVALID_LOTTERY_DUPLICATED = "로또에 중복된 번호가 있습니다."
 
         fun of(vararg numbers: Int): Lottery = Lottery(numbers.map { LotteryNumber.of(it) }.toList())
+
+        fun of(numbersGenerator: NumbersGenerator): Lottery = Lottery(numbersGenerator.generate().map { LotteryNumber.of(it) })
 
         fun fromRandom(): Lottery = of(*LOTTERY_NUMBER_RANGE.shuffled().take(LOTTERY_NUMBER_COUNT).sorted().toIntArray())
     }
