@@ -12,7 +12,10 @@ import lotto.model.generator.RandomLotteriesGenerationStrategy
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class LotteryController {
+class LotteryController(
+    private val inputView: InputView,
+    private val outputView: OutputView,
+) {
     fun start() {
         val purchaseInformation = getPurchaseInformation()
         val ticket = generateTicket(purchaseInformation)
@@ -36,7 +39,7 @@ class LotteryController {
         return issueTicket(manualLotteries, RandomLotteriesGenerationStrategy(purchaseInformation), purchaseInformation)
     }
 
-    private fun printTicketInfo(ticket: Ticket) = OutputView.printTicketInfo(ticket)
+    private fun printTicketInfo(ticket: Ticket) = outputView.printTicketInfo(ticket)
 
     private fun getWinningLotteryAndBonus(): Pair<Lottery, Bonus> {
         val winningLottery = retryUntilSuccess { readWinningLottery() }
@@ -51,14 +54,14 @@ class LotteryController {
         bonus: Bonus,
     ) = WinningResult.of(ticket, winningLottery, bonus)
 
-    private fun printWinningResult(winningResult: WinningResult) = OutputView.printWinningResult(winningResult)
+    private fun printWinningResult(winningResult: WinningResult) = outputView.printWinningResult(winningResult)
 
     private fun readAmount(): Amount {
         while (true) {
-            val amount = Amount.fromInput(InputView.readAmount())
+            val amount = Amount.fromInput(inputView.readAmount())
 
             if (amount != null) return amount
-            OutputView.printError(EXCEPTION_IS_NOT_NUMBER)
+            outputView.printError(EXCEPTION_IS_NOT_NUMBER)
         }
     }
 
@@ -69,7 +72,7 @@ class LotteryController {
         while (true) {
             val manualLotteryCount =
                 ManualLotteryCount.fromInput(
-                    InputView.readManualCount(),
+                    inputView.readManualCount(),
                     amount,
                     lotteryTicketPrice,
                 )
@@ -79,7 +82,7 @@ class LotteryController {
         }
     }
 
-    private fun readManualLotteries(manualLotteryCount: ManualLotteryCount) = InputView.readManualLotteries(manualLotteryCount)
+    private fun readManualLotteries(manualLotteryCount: ManualLotteryCount) = inputView.readManualLotteries(manualLotteryCount)
 
     private fun issueTicket(
         manualLotteries: List<List<String>>,
@@ -87,15 +90,15 @@ class LotteryController {
         purchaseInformation: PurchaseInformation,
     ): Ticket = LotteryMachine.issueTicket(manualLotteries, strategyForAuto, purchaseInformation)
 
-    private fun readWinningLottery() = Lottery.fromInput(InputView.readWinningLottery())
+    private fun readWinningLottery() = Lottery.fromInput(inputView.readWinningLottery())
 
-    private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(InputView.readBonus(), winningLottery)
+    private fun readBonus(winningLottery: Lottery) = Bonus.fromInput(inputView.readBonus(), winningLottery)
 
     private fun <T> retryUntilSuccess(action: () -> T): T =
         runCatching {
             action()
         }.getOrElse {
-            OutputView.printErrorMessage(it)
+            outputView.printErrorMessage(it)
             retryUntilSuccess(action)
         }
 
