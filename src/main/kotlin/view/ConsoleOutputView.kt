@@ -20,7 +20,7 @@ class ConsoleOutputView : OutputView {
 
     override fun printWinningChart(lottoResult: LottoResult) {
         Rank.entries.forEach {
-            val bonusMessage = if (it.isBonusNumberNecessary) BONUS_MESSAGE else ""
+            val bonusMessage = if (it.isBonusMatch == true) BONUS_MESSAGE else ""
             println(MATCH_MESSAGE.format(it.countOfMatch, bonusMessage, it.winningMoney, lottoResult.getNum(it)))
         }
     }

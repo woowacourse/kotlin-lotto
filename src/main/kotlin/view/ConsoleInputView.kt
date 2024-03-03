@@ -30,6 +30,7 @@ class ConsoleInputView : InputView {
     private fun getLottoTicket(): LottoTicket {
         val numbers =
             readln()
+                .trim()
                 .split(",")
                 .map { LottoNumber.of(it.trim().toInt()) }
         return LottoTicket(numbers)
