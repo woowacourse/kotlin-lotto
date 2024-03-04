@@ -27,7 +27,7 @@ class LotteryController(
     }
 
     private fun getPurchaseInformation(): PurchaseInformation {
-        val amount = readAmount()
+        val amount = retryUntilSuccess { readAmount() }
         val manualLotteryCount = readManualLotteryCount(amount)
 
         return PurchaseInformation(amount, manualLotteryCount)
