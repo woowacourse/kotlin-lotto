@@ -20,6 +20,15 @@ class WinningLottoTest {
     }
 
     @Test
+    fun `당첨번호와 로또 번호가 다 일치할 때 count 6을 반환하는지`() {
+        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), LottoNumber.from(7))
+        val targetLotto = Lotto(1, 2, 3, 4, 5, 6)
+        val result = winningLotto.countMatch(targetLotto)
+
+        assertThat(result).isEqualTo(6)
+    }
+
+    @Test
     fun `구매한 로또가 보너스 번호를 포함할떄 true를 반환하는지`() {
         val lottery = Lotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber.from(7)

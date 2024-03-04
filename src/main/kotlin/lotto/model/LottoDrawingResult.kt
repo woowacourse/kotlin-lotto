@@ -7,7 +7,7 @@ class LottoDrawingResult {
 
     fun countRank(lottoTickets: List<Lotto>, winningLotto: WinningLotto) {
         lottoTickets.forEach { targetLotto ->
-            val countOfMatch = targetLotto.countMatch(winningLotto.lotto)
+            val countOfMatch = winningLotto.countMatch(targetLotto)
             val matchBonus = winningLotto.matchBonus(targetLotto)
             val rank = Rank.valueOf(countOfMatch, matchBonus)
 
