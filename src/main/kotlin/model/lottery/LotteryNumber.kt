@@ -2,7 +2,7 @@ package model.lottery
 
 class LotteryNumber private constructor(val number: Int) {
     init {
-        require(number in LOTTERY_NUMBER_RANGE) { ERROR_LOTTERY_OUT_OF_RANGE }
+        require(number in LOTTERY_NUMBER_RANGE) { errorMessageLotteryOutOfRange(number) }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -32,8 +32,9 @@ class LotteryNumber private constructor(val number: Int) {
         private val NUMBERS: Map<Int, LotteryNumber> =
             LOTTERY_NUMBER_RANGE.associateWith(::LotteryNumber)
 
-        fun of(input: Int): LotteryNumber = NUMBERS[input] ?: throw IllegalArgumentException(ERROR_LOTTERY_OUT_OF_RANGE)
+        fun of(input: Int): LotteryNumber = NUMBERS[input] ?: throw IllegalArgumentException(errorMessageLotteryOutOfRange(input))
 
-        private const val ERROR_LOTTERY_OUT_OF_RANGE = "로또 번호는 $MIN_LOTTERY_NUMBER 이상 $MAX_LOTTERY_NUMBER 이하의 숫자여야 합니다."
+        private fun errorMessageLotteryOutOfRange(input: Int): String =
+            "$input 을 입력하셨습니다. 로또 번호는 $MIN_LOTTERY_NUMBER 이상 $MAX_LOTTERY_NUMBER 이하의 숫자여야 합니다."
     }
 }

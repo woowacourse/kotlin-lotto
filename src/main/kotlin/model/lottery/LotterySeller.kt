@@ -6,8 +6,11 @@ import java.text.DecimalFormat
 
 class LotterySeller {
     fun getLotteryQuantity(money: Money): Quantity {
-        require(money % PRICE == Money.ZERO) { "1,000 원 단위로 입력하세요." }
-        require(money in PRICE..MAX_PURCHASE_AMOUNT) { ERROR_PURCHASE_AMOUNT_OUT_OF_BOUNDS }
+        require(money % PRICE == Money.ZERO) { indicateErrorMoney(money) + "1,000 원 단위로 입력하세요." }
+        require(money in PRICE..MAX_PURCHASE_AMOUNT) {
+            indicateErrorMoney(money) +
+                "${decimalFormat.format(MIN_PRICE_AMOUNT)}원 이상, ${decimalFormat.format(MAX_PRICE_AMOUNT)}원 이하로만 구매가 가능합니다."
+        }
         return Quantity((money / PRICE).toInt())
     }
 
@@ -20,7 +23,6 @@ class LotterySeller {
         private val PRICE = Money.wons(MIN_PRICE_AMOUNT)
         private val MAX_PURCHASE_AMOUNT = Money.wons(MAX_PRICE_AMOUNT)
 
-        private val ERROR_PURCHASE_AMOUNT_OUT_OF_BOUNDS =
-            "${decimalFormat.format(MIN_PRICE_AMOUNT)}원 이상, ${decimalFormat.format(MAX_PRICE_AMOUNT)}원 이하로만 구매가 가능합니다."
+        private fun indicateErrorMoney(money: Money) = "${money.amount}를 입력하셨습니다. "
     }
 }
