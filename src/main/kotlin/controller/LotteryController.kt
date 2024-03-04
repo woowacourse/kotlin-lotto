@@ -1,5 +1,6 @@
 package controller
 
+import ExceptionHandler
 import model.Count
 import model.Lotteries
 import model.Lottery
@@ -34,11 +35,9 @@ class LotteryController(
     }
 
     private fun getPurchaseAmount(): Money {
-        var purchaseAmount: Money? = null
-        while (purchaseAmount == null) {
-            purchaseAmount = Money.from(inputView.readPurchaseAmount())
+        return ExceptionHandler.handleInputValue {
+            inputView.readPurchaseAmount()?.let { Money.from(it) } ?: getPurchaseAmount()
         }
-        return purchaseAmount
     }
 
     private fun lotterySellingService(purchaseAmount: Money): Lotteries {
@@ -50,11 +49,9 @@ class LotteryController(
     }
 
     private fun getCount(): Count {
-        var count: Count? = null
-        while (count == null) {
-            count = Count.from(inputView.readManualLotteryCount())
+        return ExceptionHandler.handleInputValue {
+            inputView.readManualLotteryCount()?.let { Count.from(it) } ?: getCount()
         }
-        return count
     }
 
     private fun getLotteries(
@@ -70,25 +67,30 @@ class LotteryController(
         return Lotteries.of(manualLotteries, autoLotteries)
     }
 
-    private fun getManualLotteries(count: Count): Lotteries =
-        Lotteries(List(count.amount) { lotteryGenerator.manualGenerate(inputView.readManualLottery()) })
+    private fun getManualLotteries(count: Count): Lotteries {
+        return Lotteries(lotteries = List(count.amount) { getLottery() })
+    }
+
+    private fun getLottery(): Lottery {
+        return ExceptionHandler.handleInputValue {
+            inputView.readManualLottery()?.let { lotteryGenerator.manualGenerate(it) } ?: getLottery()
+        }
+    }
 
     private fun getAutoLotteries(count: Count): Lotteries = Lotteries(List(count.amount) { lotteryGenerator.autoGenerate() })
 
     private fun getWinningNumbers(): Lottery {
-        var winningNumbers: Lottery? = null
-        while (winningNumbers == null) {
-            winningNumbers = Lottery.fromInput(inputView.readWinningNumbers())
+        return ExceptionHandler.handleInputValue {
+            inputView.readWinningNumbers()?.let { lotteryGenerator.manualGenerate(it) } ?: getLottery()
         }
-        return winningNumbers
     }
 
     private fun getBonusNumber(winningNumbers: Lottery): LotteryNumber {
-        var bonusNumber: LotteryNumber? = null
-        while (bonusNumber == null) {
-            bonusNumber = LotteryNumber.bonusNumber(winningNumbers, inputView.readBonusNumber())
+        return ExceptionHandler.handleInputValue {
+            inputView.readBonusNumber()?.let { LotteryNumber.bonusNumber(winningNumbers, it) } ?: getBonusNumber(
+                winningNumbers,
+            )
         }
-        return bonusNumber
     }
 
     private fun showResultService(
