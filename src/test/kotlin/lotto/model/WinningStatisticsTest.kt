@@ -1,8 +1,5 @@
-package lotto
+package lotto.model
 
-import lotto.model.Rank
-import lotto.model.WinningStatistic
-import lotto.model.WinningStatistics
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

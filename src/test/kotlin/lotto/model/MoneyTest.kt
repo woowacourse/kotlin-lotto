@@ -1,8 +1,7 @@
-package lotto
+package lotto.model
 
 import lotto.exception.ErrorCode
 import lotto.exception.Exceptions
-import lotto.model.Money
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

@@ -1,14 +1,11 @@
-package lotto
+package lotto.model
 
-import lotto.model.Lotto
-import lotto.model.LottoNumber
-import lotto.model.NumberGenerator
 import lotto.util.LottoConstants
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class PublishLottoTest {
+class NumberGeneratorTest {
     private lateinit var lottoNumbers: List<LottoNumber>
     private lateinit var lotto: Lotto
     private val numberGenerator = NumberGenerator()

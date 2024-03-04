@@ -1,8 +1,7 @@
-package lotto
+package lotto.model
 
 import lotto.exception.ErrorCode
 import lotto.exception.Exceptions
-import lotto.model.ManualLottoPurchaseCount
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

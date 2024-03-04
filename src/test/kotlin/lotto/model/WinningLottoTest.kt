@@ -1,8 +1,5 @@
-package lotto
+package lotto.model
 
-import lotto.model.Lotto
-import lotto.model.LottoNumber
-import lotto.model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
