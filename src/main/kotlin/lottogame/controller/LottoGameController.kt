@@ -65,10 +65,12 @@ class LottoGameController(
                 println(lottoResult.message)
                 onFailure()
             }
+
             is LottoResult.InvalidDuplicateNumber -> {
                 println(lottoResult.message)
                 onFailure()
             }
+
             is LottoResult.InvalidNumberSize -> {
                 println(lottoResult.message)
                 onFailure()
@@ -78,8 +80,9 @@ class LottoGameController(
 
     private tailrec fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber {
         val bonusNumber = inputView.inputBonusNumber()
-        return BonusLottoNumber.ofNullable(GeneralLottoNumber(bonusNumber), winningLottoNumbers)
-            ?: createBonusLottoNumber(winningLottoNumbers)
+        return runCatching { BonusLottoNumber(GeneralLottoNumber(bonusNumber), winningLottoNumbers) }
+            .onFailure { if (it is IllegalArgumentException) return createBonusLottoNumber(winningLottoNumbers) }
+            .getOrThrow()
     }
 
     private fun displayLottoResult(

@@ -1,8 +1,8 @@
 package lottogame.model
 
 import lottogame.fixture.createLottoNumbers
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class BonusLottoNumberTest {
     @Test
@@ -10,9 +10,9 @@ class BonusLottoNumberTest {
         // given
         val lottoNumber: LottoNumber = GeneralLottoNumber(6)
         val winningLotto: List<LottoNumber> = createLottoNumbers(1, 2, 3, 4, 5, 6)
-        // then
-        val bonusNumber = BonusLottoNumber.ofNullable(lottoNumber, winningLotto)
         // when
-        assertThat(bonusNumber).isNull()
+        assertThrows<IllegalArgumentException> {
+            BonusLottoNumber(lottoNumber, winningLotto)
+        }
     }
 }
