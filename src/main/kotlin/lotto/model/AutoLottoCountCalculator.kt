@@ -5,6 +5,7 @@ class AutoLottoCountCalculator(
     private val manualLottoCount: Int,
 ) {
     fun calculate(): Int {
+        require(purchasePrice / PRICE_OF_LOTTO_TICKET - manualLottoCount >= 0) { "자동로또개수 오류" }
         return purchasePrice / PRICE_OF_LOTTO_TICKET - manualLottoCount
     }
 
