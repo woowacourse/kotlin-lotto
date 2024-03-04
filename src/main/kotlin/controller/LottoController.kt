@@ -5,6 +5,7 @@ import lotto.model.LottoNumbers
 import lotto.model.LottoStore
 import lotto.model.Lottos
 import lotto.model.PurchaseAmount
+import lotto.model.WinningNumbers
 import lotto.model.WinningPrizeCalculator
 import lotto.model.WinningRank
 import lotto.view.InputView
@@ -15,54 +16,55 @@ import model.LottoNumber
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
     fun run() {
         val purchaseAmount = initPurchaseAmount()
-        val numberOfLottos = initBuyLotto(purchaseAmount)
-        val lottoStore = LottoStore(numberOfLottos, LottoNumberGenerator())
-        val lottos = initGenerateLottos(lottoStore)
-        val (winningNumbers, bonusNumber) = generateWinningNumbers()
-        showLottoResult(lottos, winningNumbers, bonusNumber, purchaseAmount.money)
+        val lottos = initGenerateLottos(purchaseAmount)
+        val winningNumbers = generateWinningNumbers()
+        showLottoResult(lottos, winningNumbers, purchaseAmount.money)
     }
 
     private fun initPurchaseAmount(): PurchaseAmount {
         outputView.printPurchaseAmountMessage()
-        return PurchaseAmount(inputView.readPurchaseAmount())
+        val purchaseAmount = inputView.readPurchaseAmount()
+        outputView.printNumberOfManualLottosMessage()
+        val numberOfManualLottos = inputView.readNumberOfManualLottos()
+        return PurchaseAmount(purchaseAmount, numberOfManualLottos)
     }
 
-    private fun initBuyLotto(purchaseAmount: PurchaseAmount): Int {
-        val numberOfLottos = purchaseAmount.getNumberOfLottos()
-        outputView.printNumberOfLottoMessage(numberOfLottos)
-        return numberOfLottos
+    private fun initGenerateLottos(purchaseAmount: PurchaseAmount): Lottos {
+        val numberOfAutoLottos = purchaseAmount.getNumberOfAutoLottos()
+        val numberOfManualLottos = purchaseAmount.numberOfManualLottos
+        val autoLottos = LottoStore.generateAutoLottos(numberOfAutoLottos, LottoNumberGenerator())
+        outputView.printEnterManualLottoNumberMessage()
+        val manualLottos =
+            inputView.readManualLottoNumber(numberOfManualLottos)
+                .map { Lotto(LottoNumbers(it.map { LottoNumber.from(it.toInt()) }.sortedBy { it.number })) }
+        val manualLottoBundle = LottoStore.generateManualLottos(manualLottos)
+        val lottoBundle = Lottos(autoLottos.lottos + manualLottoBundle.lottos)
+        outputView.printNumberOfLottoMessage(numberOfManualLottos, numberOfAutoLottos)
+        outputView.printLottoNumbers(lottoBundle)
+        return lottoBundle
     }
 
-    private fun initGenerateLottos(lottoStore: LottoStore): Lottos {
-        val lottos = lottoStore.generateLottos()
-        outputView.printLottoNumbers(lottos)
-        return lottos
-    }
-
-    private fun generateWinningNumbers(): Pair<Lotto, LottoNumber> {
+    private fun generateWinningNumbers(): WinningNumbers {
         outputView.printWinningNumbersMessage()
-        val winningNumbers =
-            Lotto(LottoNumbers(inputView.readWinningNumbers().map { LottoNumber(it.toInt()) }.toSet()))
+        val winningLotto = inputView.readWinningNumbers()
         outputView.printBonusNumberMessage()
-        val bonusNumber = LottoNumber(inputView.readWinningBonusNumber())
-        return Pair(winningNumbers, bonusNumber)
+        val bonusNumber = inputView.readWinningBonusNumber()
+        return WinningNumbers.of(winningLotto, bonusNumber)
     }
 
     private fun showLottoResult(
         lottos: Lottos,
-        winningNumbers: Lotto,
-        bonusNumber: LottoNumber,
+        winningNumbers: WinningNumbers,
         purchaseAmount: Int,
     ) {
-        val rankCounts = lottos.winningResult(winningNumbers, bonusNumber)
+        val rankCounts = lottos.winningResult(winningNumbers)
         outputView.printWinningMessage()
         WinningRank.entries.forEach { rank ->
             if (rank != WinningRank.NONE) {
                 outputView.printRankStatistics(rank, rankCounts[rank] ?: DEFAULT_COUNT)
             }
         }
-        val profitAmount = WinningPrizeCalculator.calculateProfitAmount(rankCounts)
-        val profitRate = WinningPrizeCalculator.calculateProfitRate(purchaseAmount, profitAmount)
+        val profitRate = WinningPrizeCalculator.calculateProfitRate(purchaseAmount, rankCounts)
         outputView.printProfitRateMessage(profitRate)
     }
 

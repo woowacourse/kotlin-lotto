@@ -2,12 +2,19 @@ package lotto.model
 
 import model.Lotto
 
-class LottoStore(private val numberOfLottos: Int, private val lottoNumberGenerator: NumberGenerator) {
-    fun generateLottos(): Lottos {
+object LottoStore {
+    fun generateAutoLottos(
+        numberOfAutoLottos: Int,
+        lottoNumberGenerator: NumberGenerator,
+    ): Lottos {
         val lottoBundle = mutableListOf<Lotto>()
-        repeat(numberOfLottos) {
+        repeat(numberOfAutoLottos) {
             lottoBundle.add(Lotto(lottoNumberGenerator.generate()))
         }
+        return Lottos(lottoBundle)
+    }
+
+    fun generateManualLottos(lottoBundle: List<Lotto>): Lottos {
         return Lottos(lottoBundle)
     }
 }
