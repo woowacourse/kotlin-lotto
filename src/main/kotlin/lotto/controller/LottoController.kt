@@ -1,36 +1,72 @@
 package lotto.controller
 
-import lotto.model.LottoNumberGenerator
-import lotto.model.LottoStore
+import lotto.model.Lotto
+import lotto.model.LottoMachine
+import lotto.model.LottoNumber
+import lotto.model.ManualLottoMachine
+import lotto.model.ProfitRatio
 import lotto.model.PurchaseOrder
 import lotto.model.WinningLotto
+import lotto.model.WinningStatistics
 import lotto.utils.retryWhileNoException
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
-    private val lottoNumberGenerator: LottoNumberGenerator,
+    private val automaticLottoMachine: LottoMachine,
 ) {
-    private val purchaseOrder: PurchaseOrder by lazy { readPurchasePrice() }
-    private val winningLotto: WinningLotto by lazy { readWinningLotto() }
+    fun run() {
+        val purchaseOrder = readPurchaseOrder()
+        val lottos = initializePurchaseLottos(purchaseOrder)
+        OutputView.printPurchaseLotto(purchaseOrder, lottos)
+        val winningLotto = readWinningLotto()
 
-    private fun readPurchasePrice() = retryWhileNoException { InputView.readPurchasePrice() }
+        val winningStatistics = getWinningStatistics(lottos, winningLotto)
+        OutputView.printWinningStatistics(winningStatistics)
+        val profitRatio = getProfitRatio(winningStatistics, purchaseOrder)
+        OutputView.printProfitRatio(profitRatio)
+    }
 
-    private fun readWinningLotto(): WinningLotto {
-        val winningLottoNumbers = retryWhileNoException { InputView.readWinningLottoNumbers() }
+    private fun readPurchaseOrder(): PurchaseOrder {
         return retryWhileNoException {
-            WinningLotto(winningLottoNumbers, InputView.readBonusNumber())
+            val purchasePrice = InputView.readPurchasePrice()
+            val manualLottoSize = InputView.readManualLottoSize()
+            PurchaseOrder(purchasePrice, manualLottoSize)
         }
     }
 
-    fun run() {
-        val lottoStore = LottoStore.buyLottos(purchaseOrder, lottoNumberGenerator)
-        OutputView.printPurchaseLotto(lottoStore)
+    private fun initializePurchaseLottos(purchaseOrder: PurchaseOrder): List<Lotto> {
+        return retryWhileNoException {
+            val inputManualLottos = readManualLottos(purchaseOrder.manualLottoSize)
+            val manualLottos = ManualLottoMachine(inputManualLottos).generate(purchaseOrder.manualLottoSize)
+            val automaticLottos = automaticLottoMachine.generate(purchaseOrder.automaticLottoSize)
+            manualLottos + automaticLottos
+        }
+    }
 
-        val winningStatistics = winningLotto.calculateWinningStatistics(lottoStore)
-        OutputView.printWinningStatistics(winningStatistics)
+    private fun readManualLottos(manualAmount: Int): List<List<Int>> {
+        return retryWhileNoException { InputView.readManualLottos(manualAmount) }
+    }
 
-        val profitRatio = winningStatistics.calculateProfitRatio(purchaseOrder)
-        OutputView.printProfitRatio(profitRatio)
+    private fun readWinningLotto(): WinningLotto {
+        return retryWhileNoException {
+            val winningLottoNumbers = InputView.readWinningLottoNumbers()
+            val bonusLottoNumber = InputView.readBonusNumber()
+            WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber.from(bonusLottoNumber))
+        }
+    }
+
+    private fun getWinningStatistics(
+        lottos: List<Lotto>,
+        winningLotto: WinningLotto,
+    ): WinningStatistics {
+        return winningLotto.calculateWinningStatistics(lottos)
+    }
+
+    private fun getProfitRatio(
+        winningStatistics: WinningStatistics,
+        purchaseOrder: PurchaseOrder,
+    ): ProfitRatio {
+        return winningStatistics.calculateProfitRatio(purchaseOrder.price)
     }
 }

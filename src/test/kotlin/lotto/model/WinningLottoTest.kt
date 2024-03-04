@@ -12,32 +12,13 @@ class WinningLottoTest {
     private val lotto = Lotto.create(listOf(1, 2, 3, 4, 5, 6))
 
     @Test
-    fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() =
-        assertDoesNotThrow {
-            WinningLotto(lotto, LottoNumber(7))
-        }
+    fun `당첨 번호와 보너스 번호가 중복되지 않으면 예외가 발생하지 않는다`() {
+        assertDoesNotThrow { WinningLotto(lotto, LottoNumber.from(7)) }
+    }
 
     @Test
-    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() =
-        assertThrows<IllegalArgumentException> {
-            WinningLotto(lotto, LottoNumber(6))
-        }
-
-    @ParameterizedTest
-    @MethodSource("로또 당첨 결과 테스트 데이터")
-    fun `로또의 당첨 결과를 확인한다`(
-        winningLottoNumbers: List<Int>,
-        bonusNumber: Int,
-        expected: LottoPrize,
-    ) {
-        // given
-        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber(bonusNumber))
-
-        // when
-        val actual = winningLotto.getLottoPrize(lotto)
-
-        // then
-        Assertions.assertThat(actual).isEqualTo(expected)
+    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> { WinningLotto(lotto, LottoNumber.from(6)) }
     }
 
     @ParameterizedTest
@@ -48,20 +29,14 @@ class WinningLottoTest {
         expected: LottoPrize,
     ) {
         // given
-        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber(bonusNumber))
-        val lottoStore =
-            LottoStore.buyLottos(
-                PurchaseOrder(5000),
-                object : LottoNumberGenerator {
-                    override fun generate() = listOf(1, 2, 3, 4, 5, 6)
-                },
-            )
+        val winningLotto = WinningLotto(Lotto.create(winningLottoNumbers), LottoNumber.from(bonusNumber))
+        val lottos = List(5) { Lotto.create(listOf(1, 2, 3, 4, 5, 6)) }
 
         // when
-        val actual = winningLotto.calculateWinningStatistics(lottoStore)
+        val actual = winningLotto.calculateWinningStatistics(lottos)
 
         // then
-        Assertions.assertThat(actual[expected]).isEqualTo(5)
+        Assertions.assertThat(actual.getPrizeCount(expected)).isEqualTo(5)
     }
 
     companion object {

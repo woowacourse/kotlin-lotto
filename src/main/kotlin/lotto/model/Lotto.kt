@@ -1,9 +1,15 @@
 package lotto.model
 
-class Lotto private constructor(val numbers: List<LottoNumber>) {
+class Lotto private constructor(val numbers: Set<LottoNumber>) {
+    init {
+        require(numbers.isNotDuplicate()) { INVALID_DUPLICATION }
+    }
+
+    private fun Set<LottoNumber>.isNotDuplicate() = size == SIZE
+
     fun getMatchingCount(otherLotto: Lotto) = otherLotto.numbers.intersect(numbers).size
 
-    fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
+    operator fun contains(lottoNumber: LottoNumber) = numbers.contains(lottoNumber)
 
     companion object {
         const val SIZE = 6
@@ -13,12 +19,9 @@ class Lotto private constructor(val numbers: List<LottoNumber>) {
 
         fun create(numbers: List<Int>): Lotto {
             require(numbers.isValidSize()) { INVALID_SIZE }
-            require(numbers.isNotDuplicate()) { INVALID_DUPLICATION }
-            return Lotto(numbers.sorted().map { LottoNumber(it) })
+            return Lotto(numbers.sorted().map { LottoNumber.from(it) }.toSet())
         }
 
         private fun List<Int>.isValidSize() = size == SIZE
-
-        private fun List<Int>.isNotDuplicate() = distinct().size == SIZE
     }
 }

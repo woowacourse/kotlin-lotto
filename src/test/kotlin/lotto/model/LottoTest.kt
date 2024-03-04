@@ -13,17 +13,15 @@ class LottoTest {
 
     @ParameterizedTest
     @MethodSource("유효한 로또 번호 테스트 데이터")
-    fun `6개의 로또 번호가 올바른 경우 예외가 발생하지 않는다`(lottoNumbers: List<Int>) =
-        assertDoesNotThrow {
-            Lotto.create(lottoNumbers)
-        }
+    fun `6개의 로또 번호가 올바른 경우 예외가 발생하지 않는다`(lottoNumbers: List<Int>) {
+        assertDoesNotThrow { Lotto.create(lottoNumbers) }
+    }
 
     @ParameterizedTest
     @MethodSource("유효하지 않은 로또 번호 테스트 데이터")
-    fun `6개의 로또 번호가 잘못된 경우 예외가 발생한다`(lottoNumbers: List<Int>) =
-        assertThrows<IllegalArgumentException> {
-            Lotto.create(lottoNumbers)
-        }
+    fun `6개의 로또 번호가 잘못된 경우 예외가 발생한다`(lottoNumbers: List<Int>) {
+        assertThrows<IllegalArgumentException> { Lotto.create(lottoNumbers) }
+    }
 
     @ParameterizedTest
     @MethodSource("동일한 로또 번호 개수 테스트 데이터")
@@ -48,10 +46,10 @@ class LottoTest {
         expected: Boolean,
     ) {
         // given
-        val lottoNumber = LottoNumber(number)
+        val lottoNumber = LottoNumber.from(number)
 
         // when
-        val actual = lotto.contains(lottoNumber)
+        val actual = lottoNumber in lotto
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -59,18 +57,19 @@ class LottoTest {
 
     companion object {
         @JvmStatic
+        fun `유효한 로또 번호 테스트 데이터`() =
+            listOf(
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6)),
+                Arguments.of(listOf(7, 8, 9, 10, 11, 12)),
+            )
+
+        @JvmStatic
         fun `유효하지 않은 로또 번호 테스트 데이터`() =
             listOf(
                 Arguments.of(listOf(1, 2, 3, 4, 5, 6, 7)),
                 Arguments.of(listOf(100, 200, 300, 400, 500, 600)),
                 Arguments.of(listOf(1, 2, 3, 4, 5, 5)),
-            )
-
-        @JvmStatic
-        fun `유효한 로또 번호 테스트 데이터`() =
-            listOf(
-                Arguments.of(listOf(1, 2, 3, 4, 5, 6)),
-                Arguments.of(listOf(7, 8, 9, 10, 11, 12)),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6, 6)),
             )
 
         @JvmStatic
