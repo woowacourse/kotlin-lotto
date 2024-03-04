@@ -1,9 +1,9 @@
 package model.lottery
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -24,8 +24,7 @@ class LotteryNumberTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 46])
     fun `1 이상 45 이하의 범위를 벗어나면 예외를 던진다`(input: Int) {
-        assertThrows<IllegalArgumentException> {
-            LotteryNumber.of(input)
-        }
+        assertThatThrownBy { LotteryNumber.of(input) }.isExactlyInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("$input 을 입력하셨습니다. 로또 번호는 1 이상 45 이하의 숫자여야 합니다.")
     }
 }

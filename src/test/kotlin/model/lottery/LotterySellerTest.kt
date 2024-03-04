@@ -3,9 +3,9 @@ package model.lottery
 import model.Money
 import model.Quantity
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -19,21 +19,17 @@ class LotterySellerTest {
 
     @Test
     fun `지불 금액이 1,000 원 단위가 아니면 예외를 던진다`() {
-        assertThrows<IllegalArgumentException> { lotterySeller.getLotteryQuantity(Money.wons(2400)) }
-    }
-
-    @Test
-    fun `천원 이하의 금액은 예외를 던진다`() {
-        assertThrows<IllegalArgumentException> {
-            lotterySeller.getLotteryQuantity(Money.wons(500))
-        }
+        val payAmount = Money.wons(2400)
+        assertThatThrownBy { lotterySeller.getLotteryQuantity(payAmount) }.isExactlyInstanceOf(
+            IllegalArgumentException::class.java,
+        ).hasMessage("2400를 입력하셨습니다. 1,000 원 단위로 입력하세요.")
     }
 
     @Test
     fun `100,000원 초과 구매시 예외를 던진다`() {
-        assertThrows<IllegalArgumentException> {
-            lotterySeller.getLotteryQuantity(Money.wons(500_000))
-        }
+        val payAmount = Money.wons(500_000)
+        assertThatThrownBy { lotterySeller.getLotteryQuantity(payAmount) }.isExactlyInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("500000를 입력하셨습니다. 1,000원 이상, 100,000원 이하로만 구매가 가능합니다.")
     }
 
     @ParameterizedTest

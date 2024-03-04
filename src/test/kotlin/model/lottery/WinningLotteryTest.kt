@@ -1,20 +1,17 @@
 package model.lottery
 
 import model.winning.WinningRank
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 
 class WinningLotteryTest {
     @Test
     fun `보너스 번호가 당첨 번호에 포함된다면 예외를 던진다`() {
-        assertThrows<IllegalArgumentException> {
-            WinningLottery(
-                Lottery.of(listOf(1, 5, 3, 7, 11, 9)),
-                LotteryNumber.of(11),
-            )
-        }
+        assertThatThrownBy { WinningLottery(Lottery.of(listOf(1, 5, 3, 7, 11, 9)), LotteryNumber.of(11)) }
+            .isExactlyInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("당첨 번호와 로또 번호가 중복되면 안됩니다.")
     }
 
     @Test
@@ -37,6 +34,6 @@ class WinningLotteryTest {
         val lottery = Lottery.of(listOf(4, 5, 6, 1, 2, 3))
 
         val winningRank = winningLottery.evaluateWinningRank(lottery)
-        Assertions.assertThat(winningRank).isEqualTo(WinningRank.SECOND)
+        assertThat(winningRank).isEqualTo(WinningRank.SECOND)
     }
 }
