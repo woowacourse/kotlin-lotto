@@ -18,11 +18,7 @@ class NumberGeneratorTest {
 
     @Test
     fun `로또 번호가 시작 범위에서 마지막 범위사이의 숫자인지 확인`() {
-        assertThat(
-            lottoNumbers.all {
-                it.number in LottoConstants.START_RANGE..LottoConstants.END_RANGE
-            },
-        ).isTrue
+        assertThat(lottoNumbers).allMatch { it.number in LottoConstants.START_RANGE..LottoConstants.END_RANGE }
     }
 
     @Test
