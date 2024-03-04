@@ -1,7 +1,7 @@
 package lotto.domain.model
 
 data class LottoDrawingResult(private val originStatistics: Map<Rank, Int>) {
-    val statisticsResult: Map<Rank, Int> =
+    val resultStatistics: Map<Rank, Int> =
         Rank.entries.associateWith { rank -> originStatistics.getOrDefault(rank, DEFAULT_COUNT) }
 
     fun calculateMarginRate(purchaseAmount: Money): Margin {
