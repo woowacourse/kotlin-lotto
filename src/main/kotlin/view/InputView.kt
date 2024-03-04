@@ -1,26 +1,34 @@
 package view
 
 class InputView {
-    fun readPurchaseAmount(): String {
+    fun readPurchaseAmount(): Int? {
         println(GUIDE_INPUT_PURCHASE_AMOUNT)
-        return readln()
+        return readln().toIntOrNull()
     }
 
-    fun readManualLotteryCount(): String {
+    fun readManualLotteryCount(): Int? {
         println(GUIDE_INPUT_MANUAL_PURCHASE_COUNT)
-        return readln()
+        return readln().toIntOrNull()
     }
 
-    fun readManualLottery(): String = readln()
+    fun readManualLottery(): List<Int>? {
+        return readln().split(",").map {
+            it.trim().toIntOrNull()
+                ?: return null
+        }
+    }
 
-    fun readWinningNumbers(): String {
+    fun readWinningNumbers(): List<Int>? {
         println(GUIDE_INPUT_WINNING_NUMBERS)
-        return readln()
+        return readln().split(",").map {
+            it.trim().toIntOrNull()
+                ?: return null
+        }
     }
 
-    fun readBonusNumber(): String {
+    fun readBonusNumber(): Int? {
         println(GUIDE_INPUT_BONUS_NUMBER)
-        return readln()
+        return readln().toIntOrNull()
     }
 
     companion object {
