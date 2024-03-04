@@ -5,7 +5,7 @@ import lotto.util.LottoConstants
 class Lotto(val numbers: Set<LottoNumber>) {
     init {
         require(numbers.size == LottoConstants.SIZE) {
-            IllegalArgumentException(INVALID_LOTTO_SIZE)
+            throw IllegalArgumentException(INVALID_LOTTO_SIZE)
         }
     }
 

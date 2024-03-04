@@ -47,4 +47,8 @@ object OutputView {
             println(LOSING_MONEY)
         }
     }
+
+    fun outputErrorMessage(exception: Throwable) {
+        println(exception.message)
+    }
 }

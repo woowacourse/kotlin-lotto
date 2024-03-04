@@ -3,7 +3,7 @@ package lotto.model
 class LottoNumber(val number: Int) {
     init {
         require(number in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER) {
-            IllegalArgumentException(INVALID_LOTTO_NUMBER_OUT_OF_RANGE)
+            throw IllegalArgumentException(INVALID_LOTTO_NUMBER_OUT_OF_RANGE)
         }
     }
 

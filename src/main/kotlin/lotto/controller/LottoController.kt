@@ -13,7 +13,7 @@ import lotto.view.OutputView
 
 class LottoController {
     fun run() {
-        playLotto()
+        playLotto().onFailure { e -> OutputView.outputErrorMessage(e) }
     }
 
     private fun playLotto() =

@@ -1,12 +1,12 @@
 package lotto.model
 
+import lotto.util.LottoConstants
+
 data class Lottos(val publishedLottos: List<Lotto>) {
     fun makeWinningStatics(winningLotto: WinningLotto): WinningStatistics {
         val results =
-            MutableList(6) {
-                WinningStatistic(
-                    Pair(Rank.getRankByOrdinal(it), 0),
-                )
+            MutableList(LottoConstants.SIZE) {
+                WinningStatistic(Pair(Rank.getRankByOrdinal(it), 0))
             }
 
         repeat(publishedLottos.size) { index ->
@@ -15,16 +15,7 @@ data class Lottos(val publishedLottos: List<Lotto>) {
             results[rank.ordinal] = WinningStatistic(Pair(rank, currentCount + 1))
         }
 
-        return WinningStatistics(
-            listOf(
-                WinningStatistic(Rank.FIRST to 0),
-                WinningStatistic(Rank.SECOND to 0),
-                WinningStatistic(Pair(Rank.THIRD, 1)),
-                WinningStatistic(Pair(Rank.FOURTH, 1)),
-                WinningStatistic(Pair(Rank.FIFTH, 0)),
-                WinningStatistic(Pair(Rank.MISS, 0)),
-            ),
-        )
+        return WinningStatistics(results)
     }
 
     override fun toString(): String {

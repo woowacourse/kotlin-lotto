@@ -5,5 +5,4 @@ object LottoConstants {
     const val START_RANGE = 1
     const val END_RANGE = 45
     const val SIZE = 6
-    const val MINIMUM_PURCHASE_SIZE_OF_MANUAL_LOTTO = 0
 }
