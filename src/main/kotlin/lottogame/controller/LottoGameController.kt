@@ -48,11 +48,32 @@ class LottoGameController(
         return manualLottie + autoLottie
     }
 
-    private tailrec fun buyManualLottie(count: LottoCount): List<Lotto> {
+    private fun buyManualLottie(count: LottoCount): List<Lotto> {
         val manualLottie = inputView.inputManualLottoNumbers(count.amount)
         val lottieResult = lottoMachine.generateManualLottie(manualLottie)
-        if (lottieResult.any { it !is LottoResult.Success }) return buyManualLottie(count)
+        lottieResult.forEach { validateLottoResults(it) { return buyManualLottie(count) } }
         return lottieResult.map { (it as LottoResult.Success).lotto }
+    }
+
+    private inline fun validateLottoResults(
+        lottoResult: LottoResult,
+        onFailure: () -> Unit,
+    ) {
+        when (lottoResult) {
+            is LottoResult.Success -> {}
+            is LottoResult.InvalidSort -> {
+                println(lottoResult.message)
+                onFailure()
+            }
+            is LottoResult.InvalidDuplicateNumber -> {
+                println(lottoResult.message)
+                onFailure()
+            }
+            is LottoResult.InvalidNumberSize -> {
+                println(lottoResult.message)
+                onFailure()
+            }
+        }
     }
 
     private tailrec fun createBonusLottoNumber(winningLottoNumbers: List<LottoNumber>): LottoNumber {

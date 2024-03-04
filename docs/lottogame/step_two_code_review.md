@@ -30,7 +30,7 @@
 # 3차 피드백 후 수정 사항
 
 ## Controller
-- [ ] : LottoResult 사용하지 않는 subType 에 따라 caption 처리
+- [X] : LottoResult 사용하지 않는 subType 에 따라 caption 처리
 
 ## Domain
 - [ ] : `ofNullable` 대신 Result 반환하도록 리팩토링
