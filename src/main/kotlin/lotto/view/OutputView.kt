@@ -2,10 +2,16 @@ package lotto.view
 
 import lotto.model.Lotto
 import lotto.model.LottoPrize
+import lotto.model.PurchaseInfo
 
-class OutputView {
-    fun printPurchaseLotto(lottos: List<Lotto>) {
-        println(OUTPUT_PURCHASE_COUNT.format(lottos.size))
+object OutputView {
+    private const val DEFAULT_MATCHING_COUNT = 0
+
+    fun printPurchaseLotto(
+        purchaseInfo: PurchaseInfo,
+        lottos: List<Lotto>,
+    ) {
+        println("수동으로 ${purchaseInfo.manualCount}장, 자동으로 ${purchaseInfo.autoCount}장 구매했습니다.")
         lottos.forEach { lotto ->
             println(lotto)
         }
@@ -13,8 +19,8 @@ class OutputView {
     }
 
     fun printWinningResult(prizeCount: Map<LottoPrize, Int>) {
-        println(OUTPUT_WINNING_STATICS)
-        println(OUTPUT_DIVIDER)
+        println("당첨 통계")
+        println("---------")
 
         LottoPrize.entries.forEach { lottoPrize ->
             if (lottoPrize == LottoPrize.NOTHING) return@forEach
@@ -24,7 +30,7 @@ class OutputView {
     }
 
     fun printWinningRatio(profitRatio: Double) {
-        println(OUTPUT_PROFIT_RATIO.format(profitRatio.provideTwoDecimal()))
+        println("총 수익률은 ${profitRatio.provideTwoDecimal()}입니다.")
     }
 
     private fun provideMatchingMessage(
@@ -32,25 +38,11 @@ class OutputView {
         matchingCount: Int,
     ): String {
         if (lottoPrize == LottoPrize.SECOND) {
-            return OUTPUT_MATCHING_COUNT_BONUS.format(
-                lottoPrize.matchingCount,
-                lottoPrize.amount,
-                matchingCount,
-            )
+            return "${lottoPrize.matchingCount}개 일치, 보너스 볼 일치(${lottoPrize.amount}원) - ${matchingCount}개"
         }
 
-        return OUTPUT_MATCHING_COUNT.format(lottoPrize.matchingCount, lottoPrize.amount, matchingCount)
+        return "${lottoPrize.matchingCount}개 일치 - ${matchingCount}개"
     }
 
     private fun Double.provideTwoDecimal() = "%.2f".format(this)
-
-    companion object {
-        private const val DEFAULT_MATCHING_COUNT = 0
-        private const val OUTPUT_PURCHASE_COUNT = "%d개를 구매했습니다."
-        private const val OUTPUT_MATCHING_COUNT = "%d개 일치 (%d원)- %d개"
-        private const val OUTPUT_MATCHING_COUNT_BONUS = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
-        private const val OUTPUT_WINNING_STATICS = "당첨 통계"
-        private const val OUTPUT_DIVIDER = "---------"
-        private const val OUTPUT_PROFIT_RATIO = "총 수익률은 %s입니다."
-    }
 }

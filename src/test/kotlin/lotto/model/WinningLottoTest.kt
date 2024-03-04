@@ -24,7 +24,7 @@ class WinningLottoTest {
     @ParameterizedTest
     @MethodSource("로또 당첨 결과 테스트 데이터")
     fun `로또 당첨 결과의 개수를 확인한다`(
-        winningLottoNumbers: Set<Int>,
+        winningLottoNumbers: List<Int>,
         bonusNumber: Int,
         expected: LottoPrize,
     ) { // given
@@ -43,7 +43,7 @@ class WinningLottoTest {
     @ParameterizedTest
     @MethodSource("로또 수익률 계산 테스트 데이터")
     fun `로또 수익률을 계산한다`(
-        lottoNumbers: Set<Int>,
+        lottoNumbers: List<Int>,
         purchasePrice: Int,
         profitRatio: Double,
     ) {
@@ -59,26 +59,26 @@ class WinningLottoTest {
     }
 
     companion object {
-        private val winningLottoNumbers = setOf(1, 2, 3, 4, 5, 6)
+        private val winningLottoNumbers = listOf(1, 2, 3, 4, 5, 6)
         private const val BONUS_NUMBER = 7
 
         @JvmStatic
         fun `로또 당첨 결과 테스트 데이터`() =
             listOf(
-                Arguments.of(setOf(1, 2, 3, 4, 5, 6), 7, LottoPrize.FIRST),
-                Arguments.of(setOf(1, 2, 3, 4, 5, 7), 6, LottoPrize.SECOND),
-                Arguments.of(setOf(1, 2, 3, 4, 5, 7), 8, LottoPrize.THIRD),
-                Arguments.of(setOf(1, 2, 3, 4, 7, 8), 9, LottoPrize.FOURTH),
-                Arguments.of(setOf(1, 2, 3, 7, 8, 9), 10, LottoPrize.FIFTH),
-                Arguments.of(setOf(10, 11, 12, 13, 14, 15), 16, LottoPrize.NOTHING),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6), 7, LottoPrize.FIRST),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 7), 6, LottoPrize.SECOND),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 7), 8, LottoPrize.THIRD),
+                Arguments.of(listOf(1, 2, 3, 4, 7, 8), 9, LottoPrize.FOURTH),
+                Arguments.of(listOf(1, 2, 3, 7, 8, 9), 10, LottoPrize.FIFTH),
+                Arguments.of(listOf(10, 11, 12, 13, 14, 15), 16, LottoPrize.NOTHING),
             )
 
         @JvmStatic
         fun `로또 수익률 계산 테스트 데이터`() =
             listOf(
-                Arguments.of(setOf(1, 2, 3, 7, 8, 9), 14000, 0.35),
-                Arguments.of(setOf(1, 2, 3, 7, 8, 9), 8000, 0.62),
-                Arguments.of(setOf(1, 2, 3, 4, 5, 6), 1000, 2_000_000),
+                Arguments.of(listOf(1, 2, 3, 7, 8, 9), 14000, 0.35),
+                Arguments.of(listOf(1, 2, 3, 7, 8, 9), 8000, 0.62),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6), 1000, 2_000_000),
             )
     }
 }

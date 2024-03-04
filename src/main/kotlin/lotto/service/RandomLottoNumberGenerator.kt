@@ -6,7 +6,7 @@ class RandomLottoNumberGenerator(
 ) : LottoNumberGenerator {
     private val randomLottoNumbers = (lottoMinNumber..lottoMaxNumber).toList()
 
-    override fun generate() = randomLottoNumbers.shuffled().take(LOTTO_SIZE).toSet()
+    override fun generate() = randomLottoNumbers.shuffled().take(LOTTO_SIZE)
 
     companion object {
         private const val LOTTO_SIZE = 6
