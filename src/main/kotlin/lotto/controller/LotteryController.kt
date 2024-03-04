@@ -57,12 +57,12 @@ class LotteryController(
     private fun printWinningResult(winningResult: WinningResult) = outputView.printWinningResult(winningResult)
 
     private fun readAmount(): Amount {
-        while (true) {
-            val amount = Amount.fromInput(inputView.readAmount())
+        val amount = inputView.readAmount()
 
-            if (amount != null) return amount
-            outputView.printError(EXCEPTION_IS_NOT_NUMBER)
-        }
+        if (amount != null) return Amount(amount)
+
+        outputView.printError(EXCEPTION_IS_NOT_NUMBER)
+        return readAmount()
     }
 
     private fun readManualLotteryCount(

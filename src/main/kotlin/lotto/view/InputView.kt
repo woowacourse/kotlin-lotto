@@ -10,9 +10,9 @@ object InputView {
     private const val HEADER_READ_BONUS = "보너스 볼을 입력해 주세요."
     private const val LOTTERY_DELIMITER = ","
 
-    fun readAmount(): String {
+    fun readAmount(): Int? {
         println(HEADER_READ_AMOUNT)
-        return readln()
+        return readln().toIntOrNull()
     }
 
     fun readManualCount(): String {
