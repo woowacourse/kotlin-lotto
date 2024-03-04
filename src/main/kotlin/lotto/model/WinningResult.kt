@@ -1,6 +1,6 @@
 package lotto.model
 
-class WinningLottoCalculator(private val winningNumbers: Lotto, private val bonusNumber: LottoNumber) {
+class WinningResult(private val winningNumbers: Lotto, private val bonusNumber: LottoNumber) {
     init {
         require(!winningNumbers.getMatchBonus(bonusNumber)) {
             ERROR_BONUS_DUPLICATE

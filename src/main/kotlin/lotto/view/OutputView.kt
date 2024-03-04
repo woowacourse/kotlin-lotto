@@ -36,11 +36,16 @@ class OutputView {
         println(MESSAGE_INPUT_BONUS_NUMBER)
     }
 
-    fun printWinningStatisticsMessage() {
+    fun printWinningResult(rankCounts: Map<WinningRank, Int>) {
         println(MESSAGE_WINNING_STATISTICS)
+        WinningRank.entries.forEach { rank ->
+            if (rank != WinningRank.NONE) {
+                printRankStatistics(rank, rankCounts[rank] ?: DEFAULT_COUNT)
+            }
+        }
     }
 
-    fun printRankStatistics(
+    private fun printRankStatistics(
         rank: WinningRank,
         count: Int,
     ) {
@@ -57,6 +62,7 @@ class OutputView {
     }
 
     companion object {
+        private const val DEFAULT_COUNT = 0
         private const val MESSAGE_INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
         private const val MESSAGE_MANUAL_LOTTO_COUNT = "\n수동으로 구매할 로또 수를 입력해 주세요."
         private const val MESSAGE_INPUT_MANUAL_LOTTO_NUMBERS = "\n수동으로 구매할 번호를 입력해 주세요."

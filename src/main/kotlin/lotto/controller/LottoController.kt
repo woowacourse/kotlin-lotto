@@ -5,8 +5,7 @@ import lotto.model.LottoCount
 import lotto.model.LottoNumber
 import lotto.model.LottoStore
 import lotto.model.PurchaseAmount
-import lotto.model.WinningLottoCalculator
-import lotto.model.WinningRank
+import lotto.model.WinningResult
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -44,34 +43,26 @@ class LottoController(private val inputView: InputView, private val outputView: 
         outputView.printLottoNumbers(lottoStore)
     }
 
-    private fun readWinningLotto(): WinningLottoCalculator {
+    private fun readWinningLotto(): WinningResult {
         outputView.printWinningNumbersMessage()
         val winningLotto = Lotto.lottoNumbersOf(inputView.readWinningNumbers())
 
         outputView.printBonusNumberMessage()
         val bonusNumber = LottoNumber.from(inputView.readWinningBonusNumber())
-        return WinningLottoCalculator(winningLotto, bonusNumber)
+        return WinningResult(winningLotto, bonusNumber)
     }
 
     private fun showWinningResult(
-        winningLottoCalculator: WinningLottoCalculator,
+        winningResult: WinningResult,
         purchaseAmount: Int,
     ) {
-        val rankCounts = winningLottoCalculator.getWinningResult(lottoStore.lottos)
-
-        outputView.printWinningStatisticsMessage()
-        WinningRank.entries.forEach { rank ->
-            if (rank != WinningRank.NONE) {
-                outputView.printRankStatistics(rank, rankCounts[rank] ?: DEFAULT_COUNT)
-            }
-        }
-
-        val profitRate = winningLottoCalculator.calculateProfitRate(purchaseAmount, rankCounts)
+        val rankCounts = winningResult.getWinningResult(lottoStore.lottos)
+        outputView.printWinningResult(rankCounts)
+        val profitRate = winningResult.calculateProfitRate(purchaseAmount, rankCounts)
         outputView.printProfitRateMessage(profitRate)
     }
 
     companion object {
         const val PURCHASE_UNIT = 1000
-        private const val DEFAULT_COUNT = 0
     }
 }
