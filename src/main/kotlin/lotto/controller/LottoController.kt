@@ -4,6 +4,7 @@ import lotto.model.AutoLottoCountCalculator
 import lotto.model.AutoLottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoWinningRank
+import lotto.model.ManualLottoCount
 import lotto.model.ManualLottoMachine
 import lotto.model.Price
 import lotto.model.UserLottoTicket
@@ -17,11 +18,11 @@ class LottoController {
 
     fun runLotto() {
         val purchasePrice = Price(inputView.getPurchasePrice())
-        val manualLottoCount = inputView.getManualLottoCount()
-        val manualTickets = makeManualTickets(manualLottoCount)
-        val autoLottoCount = calculateAutoLottoCount(purchasePrice.num, manualLottoCount)
+        val manualLottoCount = ManualLottoCount(inputView.getManualLottoCount())
+        val manualTickets = makeManualTickets(manualLottoCount.num)
+        val autoLottoCount = calculateAutoLottoCount(purchasePrice.num, manualLottoCount.num)
         val userTickets = makeAutoLottoTickets(autoLottoCount, manualTickets)
-        outputView.printLottoCount(manualLottoCount, autoLottoCount)
+        outputView.printLottoCount(manualLottoCount.num, autoLottoCount)
         outputView.printUserTickets(userTickets)
         printLottoWinning(userTickets, purchasePrice.num)
     }
