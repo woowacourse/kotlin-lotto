@@ -111,7 +111,7 @@ class LottoController(
     }
 
     private fun showResult(result: LottoDrawingResult, purchaseMoney: Money) {
-        val marginRate = result.calculateMarginRate(purchaseMoney)
+        val marginRate = purchaseMoney.calculateMarginRate(result.calculateTotalPrize())
         OutputView.printMargin(marginRate)
     }
 
