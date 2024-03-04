@@ -2,7 +2,6 @@ package lotto.view
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
-import lotto.domain.model.Margin
 import lotto.domain.model.Rank
 
 object OutputView {
@@ -37,9 +36,9 @@ object OutputView {
         }
     }
 
-    fun printMargin(marginRate: Margin) {
-        print("총 수익률은 ${formatDouble(marginRate.rate)}입니다.")
-        if (marginRate.rate < 1) print("(기준이 1이기 때문에 결과적으로 손해라는 의미임)")
+    fun printMargin(marginRate: Double) {
+        print("총 수익률은 ${formatDouble(marginRate)}입니다.")
+        if (marginRate < 1) print("(기준이 1이기 때문에 결과적으로 손해라는 의미임)")
     }
 
     private fun formatDouble(value: Double): String {

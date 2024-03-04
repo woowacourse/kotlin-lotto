@@ -7,8 +7,8 @@ data class Money(val amount: Long) {
 
     fun calculateQuantity(pricePerUnit: Int): Int = (amount / pricePerUnit).toInt()
 
-    fun calculateMarginRate(comparePrice: Money): Margin {
-        return Margin((comparePrice.amount / amount.toDouble()))
+    fun calculateRate(comparePrice: Money): Double {
+        return comparePrice.amount / amount.toDouble()
     }
 
     companion object {
