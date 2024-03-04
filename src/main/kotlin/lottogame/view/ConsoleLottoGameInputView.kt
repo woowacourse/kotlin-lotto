@@ -9,7 +9,9 @@ class ConsoleLottoGameInputView : LottoGameInputView {
     override tailrec fun inputPurchaseExpense(): Money {
         println(MESSAGE_INPUT_PURCHASE_EXPENSE)
         val amount = readln().toIntOrNull() ?: return inputPurchaseExpense()
-        return Money.createOrNull(amount) ?: inputPurchaseExpense()
+        return runCatching { Money(amount) }
+            .onFailure { return inputPurchaseExpense() }
+            .getOrThrow()
     }
 
     override tailrec fun inputManualLottoCount(): LottoCount {

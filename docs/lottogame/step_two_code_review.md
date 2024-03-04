@@ -33,5 +33,5 @@
 - [X] : LottoResult 사용하지 않는 subType 에 따라 caption 처리
 
 ## Domain
-- [ ] : `ofNullable` 대신 Result 반환하도록 리팩토링
-- [ ] : 팩토리 메서드 함수 수정 (리뷰어 분께 질문 후 반영)
+- [x] : 불필요한 팩토리 메서드 함수 삭제 (부생성자로 대체)
+
