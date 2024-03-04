@@ -10,7 +10,7 @@ class Lottery(val lotteryNumbers: List<LotteryNumber>) {
         require(lotteryNumbers.toSet().size == lotteryNumberCount) { ERROR_INVALID_LOTTERY_DUPLICATED }
     }
 
-    fun compareLottery(other: Lottery): Quantity = Quantity(lotteryNumbers.count { it in other.lotteryNumbers })
+    fun matchNumbersQuantity(other: Lottery): Quantity = Quantity(lotteryNumbers.count { it in other.lotteryNumbers })
 
     operator fun contains(number: LotteryNumber): Boolean = lotteryNumbers.any { it == number }
 
