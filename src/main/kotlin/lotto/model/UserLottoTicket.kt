@@ -4,10 +4,10 @@ package lotto.model
 value class UserLottoTicket private constructor(val userLottoTicket: List<LottoNumber>) {
     init {
         require(userLottoTicket.size == LOTTO_TICKET_SIZE) {
-            "[ERROR] 개수가 틀림"
+            "[ERROR] 로또번호의 개수가 틀림"
         }
         require(userLottoTicket.map { it.number }.distinct().size == LOTTO_TICKET_SIZE) {
-            "[ERROR] 중복이 있음"
+            "[ERROR] 로또번호에 중복이 있음"
         }
     }
 
