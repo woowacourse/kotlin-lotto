@@ -6,11 +6,8 @@ import lotto.model.Lottos
 import lotto.model.ManualLottoPurchaseCount
 import lotto.model.Money
 import lotto.model.NumberGenerator
-import lotto.model.Rank
 import lotto.model.WinningLotto
-import lotto.model.WinningStatistic
 import lotto.model.WinningStatistics
-import lotto.util.LottoConstants
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -28,7 +25,8 @@ class LottoController {
             val userLotto = publishLottos(manualLottoCount, money)
             val winningLotto = drawWinningLotto()
 
-            val winningStatistics = makeWinningStatics(userLotto, winningLotto)
+            val winningStatistics = userLotto.makeWinningStatics(winningLotto)
+
             displayWinningStatistics(money.numberOfLotto, winningStatistics)
         }
 
@@ -70,32 +68,6 @@ class LottoController {
         val winningNumbers = inputWinningNumbers.map { LottoNumber(it.toIntOrNull() ?: 0) }
         val bonusNumber = LottoNumber(InputView.inputBonusNumber().toIntOrNull() ?: 0)
         return WinningLotto(winningNumbers, bonusNumber)
-    }
-
-    private fun makeWinningStatics(
-        lottos: Lottos,
-        winningLotto: WinningLotto,
-    ): WinningStatistics {
-        val results =
-            MutableList(LottoConstants.SIZE) {
-                WinningStatistic(Pair(Rank.getRankByOrdinal(it), 0))
-            }
-        repeat(lottos.publishedLottos.size) { index ->
-            val rank = judgeRank(lottos.publishedLottos[index], winningLotto)
-            val currentCount = results[rank.ordinal].result.second
-            results[rank.ordinal] = WinningStatistic(Pair(rank, currentCount + 1))
-        }
-
-        return WinningStatistics(results)
-    }
-
-    private fun judgeRank(
-        lotto: Lotto,
-        winningLotto: WinningLotto,
-    ): Rank {
-        val countOfMatch = winningLotto.calculateCountOfMatch(lotto)
-        val bonusMatched = winningLotto.checkBonusNumberMatched(lotto)
-        return Rank.getRank(countOfMatch, bonusMatched)
     }
 
     private fun displayWinningStatistics(

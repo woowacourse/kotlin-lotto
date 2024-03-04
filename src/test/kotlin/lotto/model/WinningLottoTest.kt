@@ -15,42 +15,42 @@ class WinningLottoTest {
     }
 
     @Test
-    fun `로또 번호 당첨 개수 일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }.toSet())
+    fun `로또에 대한 등수 판단 확인 테스트, (보너스 번호가 맞았을 때)`() {
+        val publishedLotto =
+            Lotto(
+                setOf(
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(7),
+                ),
+            )
 
-        val actual = winningLotto.calculateCountOfMatch(publishedLotto)
-        val expected = 5
+        val actual = Rank.SECOND
+        val excepted = winningLotto.judgeRank(publishedLotto)
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(excepted)
     }
 
     @Test
-    fun `로또 번호 당첨 개수 불일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }.toSet())
+    fun `로또에 대한 등수 판단 확인 테스트, (보너스 번호가 맞지 않았을 때)`() {
+        val publishedLotto =
+            Lotto(
+                setOf(
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                    LottoNumber(8),
+                ),
+            )
 
-        val actual = winningLotto.calculateCountOfMatch(publishedLotto)
-        val expected = 3
+        val actual = Rank.THIRD
+        val excepted = winningLotto.judgeRank(publishedLotto)
 
-        assertThat(actual).isNotEqualTo(expected)
-    }
-
-    @Test
-    fun `보너스 번호 일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) }.toSet())
-
-        val actual = winningLotto.checkBonusNumberMatched(publishedLotto)
-        val expected = true
-
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `보너스 번호 불일치 확인`() {
-        val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) }.toSet())
-
-        val actual = winningLotto.checkBonusNumberMatched(publishedLotto)
-        val expected = false
-
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(excepted)
     }
 }

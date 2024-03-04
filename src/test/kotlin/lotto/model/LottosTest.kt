@@ -1,5 +1,6 @@
 package lotto.model
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -33,5 +34,61 @@ class LottosTest {
 
         val userLottos = manualLotto + autoLotto
         assertEquals(Lottos(listOf(lotto1, lotto2)), userLottos)
+    }
+
+    @Test
+    fun `올바른 우승상황 테스트`() {
+        val winningLotto =
+            WinningLotto(
+                listOf(
+                    LottoNumber(11),
+                    LottoNumber(15),
+                    LottoNumber(17),
+                    LottoNumber(21),
+                    LottoNumber(22),
+                    LottoNumber(35),
+                ),
+                LottoNumber(8),
+            )
+
+        val publishedLottos =
+            Lottos(
+                listOf(
+                    Lotto(
+                        setOf(
+                            LottoNumber(11),
+                            LottoNumber(15),
+                            LottoNumber(17),
+                            LottoNumber(21),
+                            LottoNumber(30),
+                            LottoNumber(31),
+                        ),
+                    ),
+                    Lotto(
+                        setOf(
+                            LottoNumber(11),
+                            LottoNumber(15),
+                            LottoNumber(17),
+                            LottoNumber(21),
+                            LottoNumber(22),
+                            LottoNumber(40),
+                        ),
+                    ),
+                ),
+            )
+
+        val actual = publishedLottos.makeWinningStatics(winningLotto)
+        val expected =
+            WinningStatistics(
+                listOf(
+                    WinningStatistic(Rank.FIRST to 0),
+                    WinningStatistic(Rank.SECOND to 0),
+                    WinningStatistic(Rank.THIRD to 1),
+                    WinningStatistic(Rank.FOURTH to 1),
+                    WinningStatistic(Rank.FIFTH to 0),
+                    WinningStatistic(Rank.MISS to 0),
+                ),
+            )
+        assertThat(actual).isEqualTo(expected)
     }
 }

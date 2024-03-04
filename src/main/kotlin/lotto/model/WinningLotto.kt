@@ -11,13 +11,20 @@ class WinningLotto(private val winningNumbers: List<LottoNumber>, private val bo
         handleException(ErrorCode.INVALID_BONUS_NUMBER_DUPLICATE) { !winningNumbers.contains(bonusNumber) }
     }
 
-    fun calculateCountOfMatch(lotto: Lotto): Int {
+    fun judgeRank(lotto: Lotto): Rank {
+        val countOfMatch = calculateCountOfMatch(lotto)
+        val bonusMatched = checkBonusNumberMatched(lotto)
+
+        return Rank.getRank(countOfMatch, bonusMatched)
+    }
+
+    private fun calculateCountOfMatch(lotto: Lotto): Int {
         return winningNumbers.count { winningNumber ->
             lotto.numbers.any { it.number == winningNumber.number }
         }
     }
 
-    fun checkBonusNumberMatched(lotto: Lotto): Boolean {
+    private fun checkBonusNumberMatched(lotto: Lotto): Boolean {
         return lotto.numbers.any { it.number == bonusNumber.number }
     }
 }
