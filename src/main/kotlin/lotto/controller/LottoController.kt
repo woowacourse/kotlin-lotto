@@ -1,6 +1,5 @@
 package lotto.controller
 
-import lotto.domain.Cashier
 import lotto.domain.RandomLottoGenerator
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
@@ -12,7 +11,6 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
-    private val cashier: Cashier,
     private val randomLottoGenerator: RandomLottoGenerator
 ) {
 
@@ -49,7 +47,7 @@ class LottoController(
     }
 
     private fun getLottoQuantity(money: Money): Int {
-        return cashier.calculateQuantity(money, LOTTO_PRICE)
+        return money.calculateQuantity(LOTTO_PRICE)
     }
 
     private fun getManualLottoQuantity(quantity: Int): Int {
