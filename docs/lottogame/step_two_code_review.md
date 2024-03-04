@@ -25,3 +25,13 @@
 - [x] : Count 삭제, Count 책임 LottoCount 로 이동
 ## Test
 - [x] : Test Fixture 적용하기
+
+---
+# 3차 피드백 후 수정 사항
+
+## Controller
+- [ ] : LottoResult 사용하지 않는 subType 에 따라 caption 처리
+
+## Domain
+- [ ] : `ofNullable` 대신 Result 반환하도록 리팩토링
+- [ ] : 팩토리 메서드 함수 수정 (리뷰어 분께 질문 후 반영)
