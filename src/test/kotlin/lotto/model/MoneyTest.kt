@@ -23,6 +23,19 @@ class MoneyTest {
     }
 
     @ParameterizedTest
+    @CsvSource("5,2", "5,1", "5,0")
+    fun `자동 로또의 수는 총발행 로또 수에서 수동 로또 수를 빼면 구할 수 있다`(
+        numberOfLotto: Int,
+        manualLotto: Int,
+    ) {
+        val money = Money.from("5000")
+        val actual = numberOfLotto - manualLotto
+        val autoCount = money.calculateAutoLottoCount(manualLotto)
+
+        assertThat(actual).isEqualTo(autoCount)
+    }
+
+    @ParameterizedTest
     @ValueSource(strings = ["8000", "1000", "15000"])
     fun `올바른 구매 금액에 대해서, 에러를 던지지 않아야한다`(purchaseAmount: String) {
         assertDoesNotThrow { Money.from(purchaseAmount) }

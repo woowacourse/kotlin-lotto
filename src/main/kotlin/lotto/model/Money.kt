@@ -11,6 +11,10 @@ class Money private constructor(val purchaseAmount: Int) {
         return purchaseAmount / LottoConstants.UNIT_PRICE
     }
 
+    fun calculateAutoLottoCount(manualLottoCount: Int): Int {
+        return numberOfLotto - manualLottoCount
+    }
+
     companion object {
         fun from(purchaseAmount: String): Money {
             handleException(ErrorCode.INVALID_PURCHASE_AMOUNT_RANGE) { purchaseAmount.toIntOrNull() != null }

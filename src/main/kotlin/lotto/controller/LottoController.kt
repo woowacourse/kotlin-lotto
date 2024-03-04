@@ -38,7 +38,8 @@ class LottoController {
     ): Lottos {
         val manual = InputView.inputManualLottos(numberOfManualLotto.count)
         val manualLottos = Lottos(manual.map { generateManualLotto(it) })
-        val autoLottos = Lottos(List(money.numberOfLotto - manualLottos.publishedLottos.size) { generateAutoLotto() })
+        val autoLottoCount = money.calculateAutoLottoCount(manualLottos.publishedLottos.size)
+        val autoLottos = Lottos(List(autoLottoCount) { generateAutoLotto() })
 
         displayPurchaseResult(manualLottos, autoLottos)
 
