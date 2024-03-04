@@ -5,6 +5,7 @@ import lotto.model.AutoLottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoWinningRank
 import lotto.model.ManualLottoMachine
+import lotto.model.Price
 import lotto.model.UserLottoTicket
 import lotto.model.WinningTable
 import lotto.view.InputView
@@ -15,17 +16,17 @@ class LottoController {
     private val outputView = OutputView()
 
     fun runLotto() {
-        val purchasePrice = inputView.getPurchasePrice()
+        val purchasePrice = Price(inputView.getPurchasePrice())
         val manualLottoCount = inputView.getManualLottoCount()
-        val manualTickets = makeManualTikets(manualLottoCount)
-        val autoLottoCount = calculateAutoLottoCount(purchasePrice, manualLottoCount)
+        val manualTickets = makeManualTickets(manualLottoCount)
+        val autoLottoCount = calculateAutoLottoCount(purchasePrice.num, manualLottoCount)
         val userTickets = makeAutoLottoTickets(autoLottoCount, manualTickets)
         outputView.printLottoCount(manualLottoCount, autoLottoCount)
         outputView.printUserTickets(userTickets)
-        printLottoWinning(userTickets, purchasePrice)
+        printLottoWinning(userTickets, purchasePrice.num)
     }
 
-    private fun makeManualTikets(manualLottoCount: Int): List<UserLottoTicket> {
+    private fun makeManualTickets(manualLottoCount: Int): List<UserLottoTicket> {
         val manualLottoNumbers = inputView.getManualLottoTickets(manualLottoCount)
         val manualLottoMachine = ManualLottoMachine(manualLottoNumbers)
         val manualTickets = manualLottoMachine.make()
