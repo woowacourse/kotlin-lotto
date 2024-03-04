@@ -1,28 +1,26 @@
 package lotto.view
 
-import lotto.model.Lotto
-
 class InputView {
-    fun readPurchaseAmount(): String = validateNullInput(readlnOrNull())
+    fun readPurchaseAmount(): String {
+        println("구입금액을 입력해 주세요.")
+        return validateNullInput(readlnOrNull())
+    }
 
-    fun readManualLottoCount(): String = validateNullInput(readlnOrNull())
-
-    fun readManualLottoNumbers(manualLottoCount: Int): List<Lotto> {
-        val manualLotto = mutableListOf<Lotto>()
-        repeat(manualLottoCount) {
-            val lottoNumbers =
-                validateNullInput(readlnOrNull()).replace(" ", "").split(SPLIT_DELIMITER).map(String::trim)
-            manualLotto.add(Lotto.lottoNumbersOf(lottoNumbers))
-        }
-        return manualLotto.toList()
+    fun readManualLottoCount(): String {
+        println("\n수동으로 구매할 로또 수를 입력해 주세요.")
+        return validateNullInput(readlnOrNull())
     }
 
     fun readWinningNumbers(): List<String> {
+        println("\n지난 주 당첨 번호를 입력해 주세요.")
         val winningNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
         return winningNumbers.split(SPLIT_DELIMITER).map { it }
     }
 
-    fun readWinningBonusNumber(): String = validateNullInput(readlnOrNull())
+    fun readWinningBonusNumber(): String {
+        println("\n보너스 볼을 입력해 주세요.")
+        return validateNullInput(readlnOrNull())
+    }
 
     private fun validateNullInput(input: String?): String {
         return input ?: throw IllegalArgumentException(ERROR_EMPTY_INPUT_MESSAGE)

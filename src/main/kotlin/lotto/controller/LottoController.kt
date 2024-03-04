@@ -7,6 +7,7 @@ import lotto.model.LottoStore
 import lotto.model.PurchaseAmount
 import lotto.model.WinningResult
 import lotto.view.InputView
+import lotto.view.ManualLottoInputView
 import lotto.view.OutputView
 
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
@@ -21,33 +22,25 @@ class LottoController(private val inputView: InputView, private val outputView: 
         showWinningResult(winningLotto, purchaseAmount.lottoPurchaseAmount)
     }
 
-    private fun initPurchaseAmount(): PurchaseAmount {
-        outputView.printPurchaseAmountMessage()
-        return PurchaseAmount(inputView.readPurchaseAmount(), PURCHASE_UNIT)
-    }
+    private fun initPurchaseAmount(): PurchaseAmount = PurchaseAmount(inputView.readPurchaseAmount(), PURCHASE_UNIT)
 
     private fun initManualLottoCount(purchasableLottoCount: Int): LottoCount {
-        outputView.printManualLottoCountMessage()
         val newManualLottoCount = inputView.readManualLottoCount()
         return LottoCount(purchasableLottoCount, newManualLottoCount)
     }
 
     private fun generateLottos(lottoCount: LottoCount) {
-        outputView.printManualLottoNumbersMessage()
-        val newManualLottoNumbers = inputView.readManualLottoNumbers(lottoCount.manualLottoCount)
+        val newManualLottoNumbers = ManualLottoInputView.readManualLottoNumbers(lottoCount.manualLottoCount)
         lottoStore.generateLottos(newManualLottoNumbers, lottoCount.autoLottoCount)
     }
 
     private fun showLottos(lottoCount: LottoCount) {
-        outputView.printTotalLottoCountMessage(lottoCount.manualLottoCount, lottoCount.autoLottoCount)
+        outputView.printTotalLottoCountMessage(lottoCount)
         outputView.printLottoNumbers(lottoStore)
     }
 
     private fun readWinningLotto(): WinningResult {
-        outputView.printWinningNumbersMessage()
         val winningLotto = Lotto.lottoNumbersOf(inputView.readWinningNumbers())
-
-        outputView.printBonusNumberMessage()
         val bonusNumber = LottoNumber.from(inputView.readWinningBonusNumber())
         return WinningResult(winningLotto, bonusNumber)
     }
