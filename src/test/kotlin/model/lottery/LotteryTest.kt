@@ -1,6 +1,8 @@
 package model.lottery
 
+import model.lottery.strategy.ExplicitNumbersStrategy
 import model.lottery.strategy.RandomNumbersStrategy
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
@@ -10,6 +12,12 @@ class LotteryTest {
     @RepeatedTest(50)
     fun `랜덤 숫자 생성기로 로또를 만든다`() {
         assertDoesNotThrow { Lottery.from(RandomNumbersStrategy) }
+    }
+
+    @Test
+    fun `명시된 숫자를 생성하여 로또를 만든다`() {
+        val actualLottery = Lottery.from(ExplicitNumbersStrategy(listOf(1, 3, 7, 5, 11, 9)))
+        assertThat(actualLottery).isEqualTo(Lottery.of(listOf(1, 3, 5, 7, 9, 11)))
     }
 
     @Test
