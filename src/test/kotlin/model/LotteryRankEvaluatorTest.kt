@@ -29,6 +29,6 @@ class LotteryRankEvaluatorTest {
     companion object {
         val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
         val winningLottery = Lottery.of(1, 2, 3, 4, 5, 7)
-        val bonusNumber = LotteryNumber.bonusNumber(winningLottery, "6")!!
+        val bonusNumber = LotteryNumber.bonusNumber(winningLottery, 6)
     }
 }
