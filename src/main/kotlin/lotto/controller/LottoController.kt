@@ -4,8 +4,6 @@ import lotto.model.Lotto
 import lotto.model.LottoDrawingResult
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
-import lotto.model.MakeManualLotto
-import lotto.model.MakeRandomLotto
 import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -66,7 +64,7 @@ class LottoController(
                     it.trim().toIntOrNull() ?: throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)
                 }
 
-                Lotto.makeLotto(MakeManualLotto(manualLotto))
+                Lotto(manualLotto)
             }
         }.getOrElse {
             println(it.message)
@@ -76,7 +74,7 @@ class LottoController(
 
     private fun makeAutoLotto(countOfAuto: Int): List<Lotto> {
         return runCatching {
-            List(countOfAuto) { Lotto.makeLotto(MakeRandomLotto()) }
+            List(countOfAuto) { Lotto.makeRandomLotto() }
         }.getOrElse {
             println(it.message)
             makeAutoLotto(countOfAuto)

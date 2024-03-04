@@ -18,8 +18,13 @@ data class Lotto(val numbers: Set<LottoNumber>) {
     override fun toString(): String = numbers.joinToString(", ") { "${it.value}" }
 
     companion object {
-        const val LOTTO_SIZE = 6
+        private const val LOTTO_SIZE = 6
+        private const val LOTTO_MINIMUM_NUMBER = 1
+        private const val LOTTO_MAXIMUM_NUMBER = 45
 
-        fun makeLotto(makeLottoStrategy: MakeLottoStrategy): Lotto = makeLottoStrategy.makeLotto()
+        fun makeRandomLotto(numberGenerator: (IntRange) -> List<Int> = { it.shuffled().take(LOTTO_SIZE) }): Lotto {
+            val randomNumbers = numberGenerator(LOTTO_MINIMUM_NUMBER..LOTTO_MAXIMUM_NUMBER)
+            return Lotto(randomNumbers)
+        }
     }
 }

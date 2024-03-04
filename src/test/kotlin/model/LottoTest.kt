@@ -1,9 +1,6 @@
 package model
 
 import lotto.model.Lotto
-import lotto.model.MakeLottoStrategy
-import lotto.model.MakeManualLotto
-import lotto.model.MakeRandomLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -40,23 +37,11 @@ class LottoTest {
     }
 
     @Test
-    fun `수동 로또가 만들어지는지`() {
-        val manualNumber = listOf(1, 2, 3, 4, 5, 6)
-        val makeManualLotto: MakeLottoStrategy = MakeManualLotto(manualNumber)
-        val actual = makeManualLotto.makeLotto()
-
-        val expected = Lotto(1, 2, 3, 4, 5, 6)
-
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
     fun `자동 로또가 범위내에서 만들어지는지`() {
-        val makeManualLotto: MakeLottoStrategy = MakeRandomLotto { (1..6).shuffled() }
-        val actual: Lotto = makeManualLotto.makeLotto()
+        val randomLotto = Lotto.makeRandomLotto { (1..6).shuffled() }
 
         val expected = Lotto(1, 2, 3, 4, 5, 6)
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(randomLotto).isEqualTo(expected)
     }
 }
