@@ -3,7 +3,7 @@ package lotto.model
 @JvmInline
 value class LottoNumber private constructor(val number: Int) {
     init {
-        require(number in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER)
+        require(number in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER) { "로또넘버 에러" }
     }
 
     companion object {
