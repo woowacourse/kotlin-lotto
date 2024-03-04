@@ -3,6 +3,7 @@ package lotto.view
 import lotto.model.puchaseinformation.PurchaseInformation
 
 object InputView {
+    private const val EXCEPTION_IS_NOT_NUMBER = "숫자만 입력하셔야 합니다\n"
     private const val HEADER_READ_AMOUNT = "구입금액을 입력해 주세요."
     private const val HEADER_READ_MANUAL_COUNT = "\n수동으로 구매할 로또 수를 입력해 주세요."
     private const val HEADER_READ_MANUAL_LOTTERIES = "\n수동으로 구매할 번호를 입력해 주세요."
@@ -10,14 +11,20 @@ object InputView {
     private const val HEADER_READ_BONUS = "보너스 볼을 입력해 주세요."
     private const val LOTTERY_DELIMITER = ","
 
-    fun readAmount(): Int? {
+    fun readAmount(): Int {
         println(HEADER_READ_AMOUNT)
-        return readln().toIntOrNull()
+        val amount = readln().toIntOrNull()
+        if (amount != null) return amount
+        println(EXCEPTION_IS_NOT_NUMBER)
+        return readAmount()
     }
 
-    fun readManualCount(): Int? {
+    fun readManualCount(): Int {
         println(HEADER_READ_MANUAL_COUNT)
-        return readln().toIntOrNull()
+        val manualCount = readln().toIntOrNull()
+        if (manualCount != null) return manualCount
+        println(EXCEPTION_IS_NOT_NUMBER)
+        return readManualCount()
     }
 
     fun readManualLotteries(purchaseInformation: PurchaseInformation): List<List<String>> {

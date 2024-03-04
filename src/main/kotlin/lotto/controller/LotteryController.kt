@@ -51,23 +51,9 @@ class LotteryController(
 
     private fun printWinningResult(winningResult: WinningResult) = outputView.printWinningResult(winningResult)
 
-    private fun readAmount(): Int {
-        val amount = inputView.readAmount()
+    private fun readAmount(): Int = inputView.readAmount()
 
-        if (amount != null) return amount
-
-        outputView.printError(EXCEPTION_IS_NOT_NUMBER)
-        return readAmount()
-    }
-
-    private fun readManualLotteryCount(): Int {
-        val manualLotteryCount = inputView.readManualCount()
-
-        if (manualLotteryCount != null) return manualLotteryCount
-
-        outputView.printError(EXCEPTION_IS_NOT_NUMBER)
-        return readManualLotteryCount()
-    }
+    private fun readManualLotteryCount(): Int = inputView.readManualCount()
 
     private fun readManualLotteries(purchaseInformation: PurchaseInformation) = inputView.readManualLotteries(purchaseInformation)
 
@@ -88,8 +74,4 @@ class LotteryController(
             outputView.printErrorMessage(it)
             retryUntilSuccess(action)
         }
-
-    companion object {
-        private const val EXCEPTION_IS_NOT_NUMBER = "숫자만 입력하셔야 합니다"
-    }
 }
