@@ -10,6 +10,7 @@ object InputView {
     private const val HEADER_READ_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
     private const val HEADER_READ_BONUS = "보너스 볼을 입력해 주세요."
     private const val LOTTERY_DELIMITER = ","
+    private const val LOTTERY_COUNT = 6
 
     fun readAmount(): Int {
         println(HEADER_READ_AMOUNT)
@@ -27,34 +28,37 @@ object InputView {
         return readManualCount()
     }
 
-    fun readManualLotteries(purchaseInformation: PurchaseInformation): List<List<String>> {
+    private fun readManualLottery(): List<Int> {
+        val lottery = splitManualLottery(readln()).mapNotNull { it.toIntOrNull() }
+        if (lottery.size == LOTTERY_COUNT) return lottery
+        println(EXCEPTION_IS_NOT_NUMBER)
+        return readManualLottery()
+    }
+
+    private fun splitManualLottery(input: String) = input.trim().split(",")
+
+    fun readManualLotteries(purchaseInformation: PurchaseInformation): List<List<Int>> {
         println(HEADER_READ_MANUAL_LOTTERIES)
-        val manualLotteriesInput =
-            List(purchaseInformation.manualLotteryCount) {
-                readln()
-            }
-
-        return splitManualLotteries(manualLotteriesInput)
-    }
-
-    private fun splitManualLotteries(input: List<String>): List<List<String>> {
-        val manualLotteries = mutableListOf<List<String>>()
-
-        input.forEach {
-            manualLotteries.add(it.trim().split(","))
+        return List(purchaseInformation.manualLotteryCount) {
+            readManualLottery()
         }
-        return manualLotteries
     }
 
-    fun readWinningLottery(): List<String> {
+    fun readWinningLottery(): List<Int> {
         println(HEADER_READ_WINNING_NUMBERS)
-        return splitWinningLottery(readln())
+        val winningLottery = splitWinningLottery(readln()).mapNotNull { it.toIntOrNull() }
+        if (winningLottery.size == LOTTERY_COUNT) return winningLottery
+        println(EXCEPTION_IS_NOT_NUMBER)
+        return readWinningLottery()
     }
 
     private fun splitWinningLottery(input: String): List<String> = input.split(LOTTERY_DELIMITER)
 
-    fun readBonus(): String {
+    fun readBonus(): Int {
         println(HEADER_READ_BONUS)
-        return readln()
+        val bonus = readln().toIntOrNull()
+        if (bonus != null) return bonus
+        println(EXCEPTION_IS_NOT_NUMBER)
+        return readBonus()
     }
 }

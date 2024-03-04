@@ -11,7 +11,7 @@ object LotteryMachine {
     }
 
     fun issueTicket(
-        manualLotteriesInput: List<List<String>>,
+        manualLotteriesInput: List<List<Int>>,
         strategyForAuto: LotteriesGenerationStrategy,
         purchaseInformation: PurchaseInformation,
     ): Ticket {

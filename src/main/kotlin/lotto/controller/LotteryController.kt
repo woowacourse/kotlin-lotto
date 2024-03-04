@@ -58,7 +58,7 @@ class LotteryController(
     private fun readManualLotteries(purchaseInformation: PurchaseInformation) = inputView.readManualLotteries(purchaseInformation)
 
     private fun issueTicket(
-        manualLotteries: List<List<String>>,
+        manualLotteries: List<List<Int>>,
         strategyForAuto: RandomLotteriesGenerationStrategy,
         purchaseInformation: PurchaseInformation,
     ): Ticket = LotteryMachine.issueTicket(manualLotteries, strategyForAuto, purchaseInformation)

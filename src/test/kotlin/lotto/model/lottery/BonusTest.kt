@@ -10,8 +10,8 @@ class BonusTest {
     private val defaultLottery = Lottery((1..6).map { LotteryNumber.from(it) }.toSet())
 
     @ParameterizedTest
-    @ValueSource(strings = ["1", "2", "3"])
-    fun `보너스 번호가 사용자가 입력한 로또번호에 포함된다면 예외 발생`(input: String) {
+    @ValueSource(ints = [1, 2, 3])
+    fun `보너스 번호가 사용자가 입력한 로또번호에 포함된다면 예외 발생`(input: Int) {
         assertThatThrownBy {
             Bonus.fromInput(input, defaultLottery)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
@@ -21,9 +21,9 @@ class BonusTest {
     @ParameterizedTest
     @CsvSource("7, 7", "8, 8", "9, 9")
     fun `보너스 번호가 사용자가 입력한 로또번호에 포함되지 않는다면 성공`(
-        input: String,
-        number: String,
+        input: Int,
+        number: Int,
     ) {
-        assertThat(Bonus.fromInput(input, defaultLottery).lotteryNumber.toString()).isEqualTo(number)
+        assertThat(Bonus.fromInput(input, defaultLottery).lotteryNumber.toString().toInt()).isEqualTo(number)
     }
 }

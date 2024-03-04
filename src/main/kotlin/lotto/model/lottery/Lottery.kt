@@ -23,7 +23,7 @@ class Lottery(
         const val EXCEPTION_INVALID_COUNT = "로또 번호는 ${LOTTERY_COUNT}개여야 합니다"
         const val EXCEPTION_DUPLICATED_NUMBER = "로또 번호에 중복이 없어야 합니다"
 
-        private fun List<String>.validateCount(): List<String> {
+        private fun List<Int>.validateCount(): List<Int> {
             require(this.size == LOTTERY_COUNT) { EXCEPTION_INVALID_COUNT }
             return this
         }
@@ -33,8 +33,8 @@ class Lottery(
             return Lottery(lotteryNumbers)
         }
 
-        fun fromInput(input: List<String>): Lottery {
-            val lotteryNumbers = input.validateCount().map { LotteryNumber.fromInput(it) }.toSet()
+        fun fromInput(input: List<Int>): Lottery {
+            val lotteryNumbers = input.validateCount().map { LotteryNumber.from(it) }.toSet()
             return Lottery(lotteryNumbers)
         }
     }
