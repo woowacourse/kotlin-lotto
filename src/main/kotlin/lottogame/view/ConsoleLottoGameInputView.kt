@@ -15,7 +15,9 @@ class ConsoleLottoGameInputView : LottoGameInputView {
     override tailrec fun inputManualLottoCount(): LottoCount {
         println(MESSAGE_INPUT_MANUAL_LOTTO_COUNT)
         val count = readln().toIntOrNull() ?: return inputManualLottoCount()
-        return LottoCount.ofNullable(count) ?: inputManualLottoCount()
+        return runCatching { LottoCount(count) }
+            .onFailure { return inputManualLottoCount() }
+            .getOrThrow()
     }
 
     override tailrec fun inputManualLottoNumbers(size: Int): List<List<LottoNumber>> {
