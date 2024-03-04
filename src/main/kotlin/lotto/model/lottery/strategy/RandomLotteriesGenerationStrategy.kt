@@ -9,8 +9,8 @@ class RandomLotteriesGenerationStrategy(
     private val randomLotteryNumberGenerator: LotteryNumberGenerator = RandomLotteryNumberGenerator,
 ) : LotteriesGenerationStrategy {
     override fun issueLotteries(): List<Lottery> {
-        val totalLotteriesCount = purchaseInformation.amount.money / lotteryTicketPrice
-        val manualLotteriesCount = purchaseInformation.manualLotteryCount.count
+        val totalLotteriesCount = purchaseInformation.amount / lotteryTicketPrice
+        val manualLotteriesCount = purchaseInformation.manualLotteryCount
 
         return List(totalLotteriesCount - manualLotteriesCount) {
             Lottery(randomLotteryNumberGenerator.generateNumbers(), false)

@@ -5,8 +5,6 @@ import lotto.model.Ticket
 import lotto.model.lottery.Bonus
 import lotto.model.lottery.Lottery
 import lotto.model.lottery.strategy.RandomLotteriesGenerationStrategy
-import lotto.model.puchaseinformation.Amount
-import lotto.model.puchaseinformation.ManualLotteryCount
 import lotto.model.puchaseinformation.PurchaseInformation
 import lotto.model.winning.WinningResult
 import lotto.view.InputView
@@ -17,7 +15,7 @@ class LotteryController(
     private val outputView: OutputView,
 ) {
     fun start() {
-        val purchaseInformation = getPurchaseInformation()
+        val purchaseInformation = retryUntilSuccess { getPurchaseInformation() }
         val ticket = generateTicket(purchaseInformation)
         printTicketInfo(ticket)
 
@@ -26,15 +24,12 @@ class LotteryController(
         printWinningResult(winningResult)
     }
 
-    private fun getPurchaseInformation(): PurchaseInformation {
-        val amount = retryUntilSuccess { readAmount() }
-        val manualLotteryCount = retryUntilSuccess { readManualLotteryCount(amount) }
+    private fun getAmount(): PurchaseInformation = PurchaseInformation(readAmount())
 
-        return PurchaseInformation(amount, manualLotteryCount)
-    }
+    private fun getPurchaseInformation(): PurchaseInformation = PurchaseInformation(getAmount().amount, readManualLotteryCount())
 
     private fun generateTicket(purchaseInformation: PurchaseInformation): Ticket {
-        val manualLotteries = readManualLotteries(purchaseInformation.manualLotteryCount)
+        val manualLotteries = readManualLotteries(purchaseInformation)
 
         return issueTicket(manualLotteries, RandomLotteriesGenerationStrategy(purchaseInformation), purchaseInformation)
     }
@@ -56,33 +51,25 @@ class LotteryController(
 
     private fun printWinningResult(winningResult: WinningResult) = outputView.printWinningResult(winningResult)
 
-    private fun readAmount(): Amount {
+    private fun readAmount(): Int {
         val amount = inputView.readAmount()
 
-        if (amount != null) return Amount(amount)
+        if (amount != null) return amount
 
         outputView.printError(EXCEPTION_IS_NOT_NUMBER)
         return readAmount()
     }
 
-    private fun readManualLotteryCount(
-        amount: Amount,
-        lotteryTicketPrice: Int = LOTTERY_TICKET_PRICE,
-    ): ManualLotteryCount {
-        while (true) {
-            val manualLotteryCount =
-                ManualLotteryCount.fromInput(
-                    inputView.readManualCount(),
-                    amount,
-                    lotteryTicketPrice,
-                )
+    private fun readManualLotteryCount(): Int {
+        val manualLotteryCount = inputView.readManualCount()
 
-            if (manualLotteryCount != null) return manualLotteryCount
-            OutputView.printError(EXCEPTION_IS_NOT_NUMBER)
-        }
+        if (manualLotteryCount != null) return manualLotteryCount
+
+        outputView.printError(EXCEPTION_IS_NOT_NUMBER)
+        return readManualLotteryCount()
     }
 
-    private fun readManualLotteries(manualLotteryCount: ManualLotteryCount) = inputView.readManualLotteries(manualLotteryCount)
+    private fun readManualLotteries(purchaseInformation: PurchaseInformation) = inputView.readManualLotteries(purchaseInformation)
 
     private fun issueTicket(
         manualLotteries: List<List<String>>,
@@ -103,7 +90,6 @@ class LotteryController(
         }
 
     companion object {
-        private const val LOTTERY_TICKET_PRICE = 1000
         private const val EXCEPTION_IS_NOT_NUMBER = "숫자만 입력하셔야 합니다"
     }
 }

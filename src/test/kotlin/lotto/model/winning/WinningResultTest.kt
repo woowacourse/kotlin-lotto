@@ -4,8 +4,6 @@ import lotto.model.LotteryMachine
 import lotto.model.lottery.Bonus
 import lotto.model.lottery.Lottery
 import lotto.model.lottery.strategy.ExplicitLotteriesGenerationStrategy
-import lotto.model.puchaseinformation.Amount
-import lotto.model.puchaseinformation.ManualLotteryCount
 import lotto.model.puchaseinformation.PurchaseInformation
 import lotto.model.winning.WinningResult.Companion.round
 import org.assertj.core.api.Assertions.assertThat
@@ -30,7 +28,7 @@ class WinningResultTest {
                 setOf(10, 11, 12, 13, 14, 15),
             )
 
-        val purchaseInformation = PurchaseInformation(Amount(6000), ManualLotteryCount(manualInput.size))
+        val purchaseInformation = PurchaseInformation(6000, manualInput.size)
 
         val ticket =
             LotteryMachine.issueTicket(manualInput, ExplicitLotteriesGenerationStrategy(autoInput), purchaseInformation)
@@ -38,7 +36,7 @@ class WinningResultTest {
         val winningResult = WinningResult.of(ticket, winningLottery, bonus)
 
         val prizeMoney = Rank.FIRST.winningMoney + Rank.SECOND.winningMoney + Rank.THIRD.winningMoney + Rank.FIFTH.winningMoney
-        val amount = purchaseInformation.amount.money
+        val amount = purchaseInformation.amount
 
         val expectedROI = (prizeMoney / amount.toDouble()).round(2)
 

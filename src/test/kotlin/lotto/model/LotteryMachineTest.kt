@@ -4,8 +4,6 @@ import lotto.model.lottery.Lottery
 import lotto.model.lottery.strategy.ExplicitLotteriesGenerationStrategy
 import lotto.model.lottery.strategy.ManualLotteriesGenerationStrategy
 import lotto.model.lottery.strategy.RandomLotteriesGenerationStrategy
-import lotto.model.puchaseinformation.Amount
-import lotto.model.puchaseinformation.ManualLotteryCount
 import lotto.model.puchaseinformation.PurchaseInformation
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -22,11 +20,9 @@ class LotteryMachineTest {
                 listOf("13", "14", "15", "16", "17", "18"),
             )
 
-        val manualLotteryCount = ManualLotteryCount(3)
-
         val manualLotteries = LotteryMachine.issueLotteries(ManualLotteriesGenerationStrategy(manualInput))
 
-        assertThat(manualLotteries.size).isEqualTo(manualLotteryCount.count)
+        assertThat(manualLotteries.size).isEqualTo(manualInput.size)
     }
 
     @ParameterizedTest
@@ -35,12 +31,12 @@ class LotteryMachineTest {
         money: Int,
         count: Int,
     ) {
-        val purchaseInformation = PurchaseInformation(Amount(money), ManualLotteryCount(count))
+        val purchaseInformation = PurchaseInformation(money, count)
 
         val autoLotteries = LotteryMachine.issueLotteries(RandomLotteriesGenerationStrategy(purchaseInformation))
 
-        val amount = purchaseInformation.amount.money
-        val manualLotteryCount = purchaseInformation.manualLotteryCount.count
+        val amount = purchaseInformation.amount
+        val manualLotteryCount = purchaseInformation.manualLotteryCount
 
         val totalLotteryCount = amount / 1000
 
