@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.model.AutoLottoCount
 import lotto.model.AutoLottoCountCalculator
 import lotto.model.AutoLottoMachine
 import lotto.model.LottoNumber
@@ -20,9 +21,10 @@ class LottoController {
         val purchasePrice = Price(inputView.getPurchasePrice())
         val manualLottoCount = ManualLottoCount(inputView.getManualLottoCount())
         val manualTickets = makeManualTickets(manualLottoCount.num)
-        val autoLottoCount = calculateAutoLottoCount(purchasePrice.num, manualLottoCount.num)
-        val userTickets = makeAutoLottoTickets(autoLottoCount, manualTickets)
-        outputView.printLottoCount(manualLottoCount.num, autoLottoCount)
+        val autoLottoCount =
+            AutoLottoCount(calculateAutoLottoCount(purchasePrice.num, manualLottoCount.num))
+        val userTickets = makeAutoLottoTickets(autoLottoCount.num, manualTickets)
+        outputView.printLottoCount(manualLottoCount.num, autoLottoCount.num)
         outputView.printUserTickets(userTickets)
         printLottoWinning(userTickets, purchasePrice.num)
     }
