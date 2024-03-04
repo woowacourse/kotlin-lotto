@@ -10,7 +10,7 @@ class LotteryGenerator {
                 .toIntArray(),
         )
 
-    fun manualGenerate(input: String): Lottery = Lottery.fromInput(input)
+    fun manualGenerate(input: List<Int>): Lottery = Lottery.fromInput(input)
 
     companion object {
         private const val MIN_LOTTERY_NUMBER = 1

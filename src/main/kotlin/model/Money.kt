@@ -18,14 +18,9 @@ data class Money(val amount: BigDecimal) : Comparable<Money> {
     override fun compareTo(other: Money): Int = (amount - other.amount).toInt()
 
     companion object {
-        fun from(input: String): Money? {
-            val amount = input.toIntOrNull()
-            if (amount == null || amount !in PRICE..MAX_PRICE_AMOUNT) return null
-
-            // requireNotNull(amount) { ERROR_INVALID_PURCHASE_AMOUNT }
-            // require(amount <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
-            // require(amount >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
-
+        fun from(amount: Int): Money {
+            require(amount <= MAX_PURCHASE_AMOUNT) { ERROR_EXCEED_MAX_PURCHASE_AMOUNT }
+            require(amount >= PRICE) { ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT }
             val purchasableAmount = amount - (amount % 1000)
 
             return Money(BigDecimal(purchasableAmount))
@@ -41,7 +36,5 @@ data class Money(val amount: BigDecimal) : Comparable<Money> {
 
         private val ERROR_EXCEED_MAX_PURCHASE_AMOUNT = "${decimalFormat.format(MAX_PRICE_AMOUNT)}원 이하로만 구매가 가능합니다."
         private val ERROR_LESS_THAN_MIN_PURCHASE_AMOUNT = "${decimalFormat.format(MIN_PRICE_AMOUNT)}원 이상의 금액을 지불해야 합니다."
-
-        private const val ERROR_INVALID_PURCHASE_AMOUNT = "제대로 된 금액을 입력해야 합니다."
     }
 }
