@@ -4,8 +4,8 @@ import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.LottoNumberGeneratorManager
 import lotto.model.LottoStore
-import lotto.model.WinningLottoCalculator
 import lotto.model.WinningRank
+import lotto.model.WinningResult
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -25,7 +25,7 @@ class LottoStoreTest {
         lottoStore.generateLottos(emptyList(), autoLottoCount)
         val winningNumbers = setUpLotto("1", "2", "3", "4", "5", "6")
         val bonusNumber = LottoNumber(7)
-        val winningLottoCalculator = WinningLottoCalculator(winningNumbers, bonusNumber)
+        val winningLottoCalculator = WinningResult(winningNumbers, bonusNumber)
         Assertions.assertThat(
             winningLottoCalculator.getWinningResult(lottoStore.lottos),
         ).isEqualTo(
@@ -48,7 +48,7 @@ class LottoStoreTest {
         lottoStore.generateLottos(manualLottos, autoLottoCount)
         val winningNumbers = setUpLotto("1", "2", "3", "4", "5", "6")
         val bonusNumber = LottoNumber(7)
-        val winningLottoCalculator = WinningLottoCalculator(winningNumbers, bonusNumber)
+        val winningLottoCalculator = WinningResult(winningNumbers, bonusNumber)
         Assertions.assertThat(
             winningLottoCalculator.getWinningResult(lottoStore.lottos),
         ).isEqualTo(
