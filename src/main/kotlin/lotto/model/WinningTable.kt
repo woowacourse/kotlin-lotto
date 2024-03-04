@@ -1,14 +1,14 @@
 package lotto.model
 
-class WinningTable(winnings: Map<Rank, Count>) {
+class WinningTable(winnings: Map<Rank, RankCount>) {
     var winnings = winnings
         private set
 
     init {
-        val winningTable: MutableMap<Rank, Count> =
-            Rank.entries.associateWith { Count(0) }.toMutableMap()
+        val winningTable: MutableMap<Rank, RankCount> =
+            Rank.entries.associateWith { RankCount(0) }.toMutableMap()
         Rank.entries.forEach {
-            winningTable[it] = winnings[it] ?: Count(0)
+            winningTable[it] = winnings[it] ?: RankCount(0)
         }
         this.winnings = winningTable
     }

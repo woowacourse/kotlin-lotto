@@ -3,7 +3,7 @@ package lotto.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AutoLottoCountCalculatorTest {
+class AutoLottoRankCountCalculatorTest {
     private val autoLottoCountCalculator = AutoLottoCountCalculator(3000, 1)
 
     @Test

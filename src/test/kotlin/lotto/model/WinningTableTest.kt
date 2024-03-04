@@ -14,12 +14,12 @@ class WinningTableTest {
     fun `RankMap의 value에 null이 없다`() {
         val ranks =
             mapOf(
-                FIRST to Count(0),
-                SECOND to Count(0),
-                THIRD to Count(1),
-                FOURTH to Count(1),
-                FIFTH to Count(0),
-                SIXTH to Count(0),
+                FIRST to RankCount(0),
+                SECOND to RankCount(0),
+                THIRD to RankCount(1),
+                FOURTH to RankCount(1),
+                FIFTH to RankCount(0),
+                SIXTH to RankCount(0),
             )
         assertDoesNotThrow {
             WinningTable(ranks)
