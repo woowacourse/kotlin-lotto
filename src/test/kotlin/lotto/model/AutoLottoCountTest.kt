@@ -3,11 +3,11 @@ package lotto.model
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class UserLottoTicketTest {
+class AutoLottoCountTest {
     @Test
-    fun `로또의 번호는 6개이다`() {
+    fun `자동로또개수는 양수이어야 한다`() {
         assertThrows<IllegalArgumentException> {
-            UserLottoTicket.of(listOf(1, 2, 3, 4, 5, 6, 7).map { LottoNumber.of(it) })
+            AutoLottoCount(-1)
         }
     }
 }

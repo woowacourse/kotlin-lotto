@@ -1,8 +1,14 @@
 package lotto.model
 
-class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
+@JvmInline
+value class UserLottoTicket private constructor(val userLottoTicket: List<LottoNumber>) {
     init {
-        require(userLottoTicket.size == LOTTO_TICKET_SIZE)
+        require(userLottoTicket.size == LOTTO_TICKET_SIZE) {
+            "[ERROR] 로또번호의 개수가 틀림"
+        }
+        require(userLottoTicket.map { it.number }.distinct().size == LOTTO_TICKET_SIZE) {
+            "[ERROR] 로또번호에 중복이 있음"
+        }
     }
 
     private fun countOfMatchWithNumbers(numbers: List<LottoNumber>): Int {
@@ -16,7 +22,7 @@ class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
     fun getRank(
         numbers: List<LottoNumber>,
         number: LottoNumber,
-    ): Rank? {
+    ): Rank {
         val countOfMatchWithWinningNumbers = countOfMatchWithNumbers(numbers)
         val isBonusInTicket = isNumInTicket(number)
         return Rank.decideRank(countOfMatchWithWinningNumbers, isBonusInTicket)
@@ -24,5 +30,10 @@ class UserLottoTicket(val userLottoTicket: List<LottoNumber>) {
 
     companion object {
         private const val LOTTO_TICKET_SIZE = 6
+
+        fun of(lottoNumbers: List<LottoNumber>): UserLottoTicket {
+            val sortedLottoNumbers = lottoNumbers.sortedBy { it.number }
+            return UserLottoTicket(sortedLottoNumbers)
+        }
     }
 }
