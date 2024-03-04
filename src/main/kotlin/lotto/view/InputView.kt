@@ -1,11 +1,6 @@
 package lotto.view
 
 class InputView {
-    fun readPurchaseAmount(): String {
-        println("구입금액을 입력해 주세요.")
-        return validateNullInput(readlnOrNull())
-    }
-
     fun readManualLottoCount(): String {
         println("\n수동으로 구매할 로또 수를 입력해 주세요.")
         return validateNullInput(readlnOrNull())

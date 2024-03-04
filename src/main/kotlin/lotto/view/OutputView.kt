@@ -5,6 +5,10 @@ import lotto.model.LottoStore
 import lotto.model.WinningRank
 
 class OutputView {
+    fun printError(message: String) {
+        println("[ERROR] $message")
+    }
+
     fun printTotalLottoCountMessage(lottoCount: LottoCount) {
         println("\n수동으로 ${lottoCount.manualLottoCount}장, 자동으로 ${lottoCount.autoLottoCount}개를 구매했습니다.")
     }
