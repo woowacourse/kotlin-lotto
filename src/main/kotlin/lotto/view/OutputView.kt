@@ -7,6 +7,14 @@ import lotto.domain.model.Rank
 
 object OutputView {
 
+    fun printInputManualNumberMessage() {
+        println("\n수동으로 구매할 번호를 입력해 주세요.")
+    }
+
+    fun printInputWinningNumberMessage() {
+        println("\n지난 주 당첨 번호를 입력해 주세요.")
+    }
+
     fun printLottoQuantity(manualLottoQuantity: Int, autoLottoQuantity: Int) {
         println("\n수동으로 ${manualLottoQuantity}장, 자동으로 ${autoLottoQuantity}개를 구매했습니다.")
     }

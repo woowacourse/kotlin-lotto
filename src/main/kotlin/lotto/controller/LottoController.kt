@@ -62,7 +62,7 @@ class LottoController(
     }
 
     private fun getManualLottoTicket(manualLottoQuantity: Int): LottoTickets {
-        println("\n수동으로 구매할 번호를 입력해 주세요.")
+        OutputView.printInputManualNumberMessage()
         val manualLottoTickets = mutableListOf<Lotto>()
         repeat(manualLottoQuantity) {
             manualLottoTickets.add(getValidManualLotto())
@@ -88,7 +88,7 @@ class LottoController(
 
     private fun getValidWinningLotto(): Lotto {
         return try {
-            println("\n지난 주 당첨 번호를 입력해 주세요.")
+            OutputView.printInputWinningNumberMessage()
             Lotto.from(InputView.readLottoNumbers())
         } catch (e: IllegalArgumentException) {
             println(e.message)
