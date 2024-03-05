@@ -1,12 +1,15 @@
 package lotto.model
 
-import lotto.util.LottoConstants
-
 class NumberGenerator {
     fun generateLottoNumbers(): List<Int> {
-        return (LottoConstants.START_RANGE..LottoConstants.END_RANGE).map { it }
+        return (START_RANGE..END_RANGE).map { it }
             .shuffled()
-            .take(LottoConstants.SIZE)
+            .take(Lotto.LOTTO_SIZE)
             .sorted()
+    }
+
+    companion object {
+        const val START_RANGE = 1
+        const val END_RANGE = 45
     }
 }

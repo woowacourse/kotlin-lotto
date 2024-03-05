@@ -1,6 +1,5 @@
 package lotto.model
 
-import lotto.util.LottoConstants
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -18,7 +17,7 @@ class NumberGeneratorTest {
 
     @Test
     fun `로또 번호가 시작 범위에서 마지막 범위사이의 숫자인지 확인`() {
-        assertThat(lottoNumbers).allMatch { it.number in LottoConstants.START_RANGE..LottoConstants.END_RANGE }
+        assertThat(lottoNumbers).allMatch { it.number in NumberGenerator.START_RANGE..NumberGenerator.END_RANGE }
     }
 
     @Test
