@@ -1,12 +1,10 @@
 package lotto.model
 
-class LottoTicket(
-    lottoNumbers: List<LottoNumber>,
+class LottoTicket private constructor(
+    val lottoNumberSet: Set<LottoNumber?>,
 ) {
-    val lottoNumberSet = lottoNumbers.toSortedSet()
-
     init {
-        require(lottoNumberSet.size == SIZE) { NUMBER_DUPLICATED_OR_INSUFFICIENT }
+        require(lottoNumberSet.size == SIZE)
     }
 
     infix fun intersect(other: LottoTicket) = other.lottoNumberSet intersect this.lottoNumberSet
@@ -15,8 +13,24 @@ class LottoTicket(
 
     companion object {
         const val SIZE = 6
-        private const val NUMBER_DUPLICATED_OR_INSUFFICIENT = "로또 번호가 모자라거나 중복됨."
 
-        fun from(intLottoNumbers: List<Int>) = LottoTicket(intLottoNumbers.map { LottoNumber.of(it) })
+        fun from(lottoNumbers: List<LottoNumber?>): LottoTicket = LottoTicket(lottoNumbers.toSet())
+
+        fun fromListToResult(lottoNumbers: List<LottoNumber?>): LottoTicketResult {
+            val lottoNumberSet = lottoNumbers.toSet()
+            return when {
+                lottoNumberSet.size != SIZE -> LottoTicketResult.IsInvalidSizeOrDuplicated()
+                null in lottoNumberSet -> LottoTicketResult.ContainsNullLottoNumberFailure()
+                else -> LottoTicketResult.Success(LottoTicket(lottoNumberSet))
+            }
+        }
     }
+}
+
+sealed class LottoTicketResult {
+    data class Success(val lottoTicket: LottoTicket) : LottoTicketResult()
+
+    class ContainsNullLottoNumberFailure : LottoTicketResult()
+
+    class IsInvalidSizeOrDuplicated : LottoTicketResult()
 }

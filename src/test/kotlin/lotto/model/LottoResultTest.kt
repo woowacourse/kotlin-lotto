@@ -1,12 +1,5 @@
-package model
+package lotto.model
 
-import lotto.model.LottoNumber
-import lotto.model.LottoResult
-import lotto.model.LottoTicket
-import lotto.model.LottoTicketFactory
-import lotto.model.LottoWinning
-import lotto.model.Money
-import lotto.model.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,9 +7,6 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class LottoResultTest {
-    private val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
-    private val bonusNumber = LottoNumber.of(7)
-
     @Test
     fun `특정 등수에 당첨되지 않았을 경우 0으로 센다`() {
         val rankMap = emptyMap<Rank, Int>()
@@ -32,7 +22,6 @@ class LottoResultTest {
             List(lottoCount) { winningTicket }.iterator()
 
         val userTickets = LottoTicketFactory { userLottoIterator.next() }.makeLottoTickets(lottoCount)
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber)
         val lottoResult = lottoWinning.makeLottoResult(userTickets)
 
         val actual = lottoResult.getNum(Rank.FIRST)

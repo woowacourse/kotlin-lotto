@@ -6,6 +6,6 @@ object RandomLottoTicketGenerator : LottoTicketGenerator {
             LottoNumber.RANGE.shuffled()
                 .take(LottoTicket.SIZE)
                 .map { LottoNumber.of(it) }
-        return LottoTicket(lottoNumbers)
+        return LottoTicket.from(lottoNumbers)
     }
 }
