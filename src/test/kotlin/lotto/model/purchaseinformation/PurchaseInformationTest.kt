@@ -44,6 +44,6 @@ class PurchaseInformationTest {
         private const val MIN_MANUAL_LOTTERY_COUNT = 0
         private const val LOTTERY_TICKET_PRICE = 1000
         private const val EXCEPTION_INSUFFICIENT_MONEY = "금액이 부족합니다"
-        private const val EXCEPTION_LESS_THAN_THOUSAND = "로또 구입 금액은 ${LOTTERY_TICKET_PRICE}원 이상이어야 합니다"
+        private const val EXCEPTION_LESS_THAN_THOUSAND = "로또 구입 금액은 ${LOTTERY_TICKET_PRICE}원 이상이어야 합니다\n"
     }
 }

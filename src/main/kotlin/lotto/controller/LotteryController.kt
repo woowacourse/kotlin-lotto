@@ -15,7 +15,7 @@ class LotteryController(
     private val outputView: OutputView,
 ) {
     fun start() {
-        val purchaseInformation = retryUntilSuccess { getPurchaseInformation() }
+        val purchaseInformation = getPurchaseInformation()
         val ticket = generateTicket(purchaseInformation)
         printTicketInfo(ticket)
 
@@ -24,9 +24,12 @@ class LotteryController(
         printWinningResult(winningResult)
     }
 
-    private fun getAmount(): PurchaseInformation = PurchaseInformation(readAmount())
+    private fun getAmount(): PurchaseInformation = retryUntilSuccess { PurchaseInformation(readAmount()) }
 
-    private fun getPurchaseInformation(): PurchaseInformation = PurchaseInformation(getAmount().amount, readManualLotteryCount())
+    private fun getPurchaseInformation(): PurchaseInformation {
+        val amount = getAmount().amount
+        return retryUntilSuccess { PurchaseInformation(amount, readManualLotteryCount()) }
+    }
 
     private fun generateTicket(purchaseInformation: PurchaseInformation): Ticket {
         val manualLotteries = readManualLotteries(purchaseInformation)
