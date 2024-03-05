@@ -1,4 +1,4 @@
-package model
+package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -7,9 +7,6 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class LottoResultTest {
-    private val winningTicket = LottoTicket.from(listOf(1, 2, 3, 4, 5, 6))
-    private val bonusNumber = LottoNumber(7)
-
     @Test
     fun `특정 등수에 당첨되지 않았을 경우 0으로 센다`() {
         val rankMap = emptyMap<Rank, Int>()
@@ -23,13 +20,9 @@ class LottoResultTest {
         val lottoCount = 4
         val userLottoIterator =
             List(lottoCount) { winningTicket }.iterator()
-        val lottoPrice = LottoPurchase.PRICE_OF_LOTTO_TICKET
 
-        val lottoPurchase = LottoPurchase(lottoCount * lottoPrice) { userLottoIterator.next() }
-
-        val userTickets = lottoPurchase.makeUserTickets()
-        val lottoWinning = LottoWinning(winningTicket, bonusNumber, userTickets)
-        val lottoResult = lottoWinning.makeLottoResult()
+        val userTickets = LottoTicketFactory { userLottoIterator.next() }.makeLottoTickets(lottoCount)
+        val lottoResult = lottoWinning.makeLottoResult(userTickets)
 
         val actual = lottoResult.getNum(Rank.FIRST)
         val expected = 4
@@ -41,7 +34,7 @@ class LottoResultTest {
     @MethodSource
     fun `당첨금을 합산한다`(
         lottoResult: LottoResult,
-        expected: Long,
+        expected: Money,
     ) {
         val actual = lottoResult.winningMoney
         val expected = expected
@@ -63,7 +56,7 @@ class LottoResultTest {
                             Rank.MISS to 1,
                         ),
                     ),
-                    2_031_555_000,
+                    Money(2_031_555_000),
                 ),
                 Arguments.of(
                     LottoResult(
@@ -76,7 +69,7 @@ class LottoResultTest {
                             Rank.MISS to 0,
                         ),
                     ),
-                    200_000_000_000,
+                    Money(200_000_000_000),
                 ),
             )
     }
