@@ -2,33 +2,26 @@ package lotto.model
 
 import lotto.util.NumbersGenerator
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class LottoMachineTest {
-    @ParameterizedTest
-    @CsvSource("1000, 1", "2000, 2", "3000, 3", "10000, 10")
-    fun `로또 발행 개수를 계산한다`(
-        input: Int,
-        expected: Int,
-    ) {
-        val actual = LottoMachine.getNumberOfTicket(input)
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @ParameterizedTest
-    @CsvSource("1", "2", "3", "10")
-    fun `발행 개수 만큼 로또를 발행한다`(count: Int) {
-        val numbersGenerator =
+    @Test
+    fun `수동, 자동 개수에 맞게 로또를 발행하여 한번에 반환한다`() {
+        val manualNumber = listOf(setOf(1, 2, 3, 4, 5, 6), setOf(1, 2, 3, 4, 5, 6))
+        val lottoCount = LottoCount(numberOfTotalLotto = 6, numberOfManualLotto = 2)
+        val autoNumbersGenerator =
             object : NumbersGenerator {
                 override fun generateNumbers(): List<Int> {
-                    return listOf(1, 2, 3, 4, 5, 6)
+                    return listOf(7, 8, 9, 10, 11, 12)
                 }
             }
-        val result = LottoMachine.issueTickets(count, numbersGenerator)
-        assertThat(result.size).isEqualTo(count)
-        result.forEach {
-            assertThat(it).isEqualTo(Lotto.of(1, 2, 3, 4, 5, 6))
-        }
+        val result = LottoMachine.issueLotto(lottoCount, manualNumber, autoNumbersGenerator)
+
+        assertAll(
+            { assertThat(result.size).isEqualTo(6) },
+            { assertThat(result.filter { it == Lotto(1, 2, 3, 4, 5, 6) }.size).isEqualTo(2) },
+            { assertThat(result.filter { it == Lotto(7, 8, 9, 10, 11, 12) }.size).isEqualTo(4) },
+        )
     }
 }

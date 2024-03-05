@@ -5,12 +5,15 @@ import lotto.model.WinningRank
 import lotto.model.WinningStatus
 
 object OutputView {
-    fun printNumberOfTicket(numberOfTicket: Int) {
-        println("${numberOfTicket}개를 구매했습니다.")
+    fun printNumberOfTicket(
+        numberOfManualTickets: Int,
+        numberOfAutoTickets: Int,
+    ) {
+        println("수동으로 ${numberOfManualTickets}장, 자동으로 ${numberOfAutoTickets}개를 구매했습니다.")
     }
 
     fun printLottoTickets(lottoTickets: List<Lotto>) {
-        lottoTickets.forEach { println(it) }
+        lottoTickets.forEach { println(it.numbers.toList().sortedBy { it.toString().toInt() }) }
         println()
     }
 

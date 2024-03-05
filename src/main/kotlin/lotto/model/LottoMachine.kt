@@ -3,20 +3,33 @@ package lotto.model
 import lotto.util.NumbersGenerator
 
 object LottoMachine {
-    const val TICKET_PRICE = 1_000
+    fun issueLotto(
+        lottoCount: LottoCount,
+        manualNumbers: List<Set<Int>>,
+        lottoNumbersGenerator: NumbersGenerator,
+    ): List<Lotto> {
+        val manualLottoTickets = generateManualLotto(lottoCount.numberOfManualLotto, manualNumbers)
+        val autoLotto = generateAutoLotto(lottoCount.getNumberOfAutoTickets(), lottoNumbersGenerator)
 
-    fun getNumberOfTicket(cash: Int): Int = cash / TICKET_PRICE
+        return manualLottoTickets.plus(autoLotto)
+    }
 
-    fun issueTickets(
+    private fun generateLotto(numbers: List<Set<Int>>): List<Lotto> =
+        numbers.map { number -> Lotto(number.mapNotNull { LottoNumber.valueOf(it) }.toSet()) }
+
+    private fun generateManualLotto(
+        count: Int,
+        manualNumbers: List<Set<Int>>,
+    ): List<Lotto> = if (count > 0) generateLotto(manualNumbers) else emptyList()
+
+    private fun generateAutoLotto(
         count: Int,
         lottoNumbersGenerator: NumbersGenerator,
     ): List<Lotto> {
-        val tickets = mutableListOf<Lotto>()
-        repeat(count) {
-            tickets.add(
-                Lotto(lottoNumbersGenerator.generateNumbers().map { LottoNumber.valueOf(it) }.toSet()),
-            )
-        }
-        return tickets
+        val autoNumbers =
+            List(count) {
+                lottoNumbersGenerator.generateNumbers().toSet()
+            }
+        return generateLotto(autoNumbers)
     }
 }
