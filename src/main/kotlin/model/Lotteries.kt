@@ -2,7 +2,7 @@ package model
 
 data class Lotteries(val lotteries: List<Lottery>) {
     companion object {
-        fun of(
+        fun from(
             manualLotteries: Lotteries,
             autoLotteries: Lotteries,
         ): Lotteries {
