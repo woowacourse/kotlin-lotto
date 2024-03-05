@@ -6,7 +6,7 @@ import lotto.model.WinningRank
 
 class OutputView {
     fun printError(message: String) {
-        println("[ERROR] $message")
+        print("[ERROR] $message")
     }
 
     fun printTotalLottoCountMessage(lottoCount: LottoCount) {

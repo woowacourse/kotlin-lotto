@@ -16,8 +16,7 @@ class LottoCount(private val purchasableLottoCount: Int, inputManualLottoCount: 
 
     companion object {
         private const val MIN_MANUAL_LOTTO_COUNT = 0
-        private const val ERROR_PREFIX = "[ERROR] "
-        private const val ERROR_MANUAL_LOTTO_COUNT = "${ERROR_PREFIX}수동으로 구매할 로또 수는 구매 가능한 로또 수보다 작거나 같아야 합니다."
-        private const val ERROR_INPUT_TYPE_MESSAGE = "${ERROR_PREFIX}수동으로 구매할 로또 수는 숫자만 입력 가능합니다."
+        private const val ERROR_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수는 구매 가능한 로또 수보다 작거나 같아야 합니다."
+        private const val ERROR_INPUT_TYPE_MESSAGE = "수동으로 구매할 로또 수는 숫자만 입력 가능합니다."
     }
 }

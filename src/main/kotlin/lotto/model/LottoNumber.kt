@@ -10,9 +10,8 @@ data class LottoNumber(val number: Int) {
         private const val LOTTO_MAX_NUMBER = 45
         private val LOTTO_NUMBER_RANGE: IntRange = LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER
 
-        private const val ERROR_PREFIX = "[ERROR] "
-        private const val ERROR_LOTTO_NUMBER_RANGE = "${ERROR_PREFIX}로또 번호는 1~45 사이여야 합니다."
-        private const val ERROR_INPUT_TYPE_MESSAGE = "${ERROR_PREFIX}로또 번호는 숫자만 입력 가능합니다."
+        private const val ERROR_LOTTO_NUMBER_RANGE = "로또 번호는 1~45 사이여야 합니다."
+        private const val ERROR_INPUT_TYPE_MESSAGE = "로또 번호는 숫자만 입력 가능합니다."
 
         fun from(numberString: String): LottoNumber {
             val number = numberString.toIntOrNull() ?: throw IllegalArgumentException(ERROR_INPUT_TYPE_MESSAGE)

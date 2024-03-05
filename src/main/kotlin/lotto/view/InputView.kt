@@ -1,10 +1,23 @@
 package lotto.view
 
 class InputView {
+    fun readPurchaseAmount(): String? {
+        println("구입금액을 입력해 주세요.")
+        return runCatching {
+            validateNullInput(readlnOrNull())
+        }.getOrNull()
+    }
+
+    fun readManualLottoCount(): String? {
+        println("\n수동으로 구매할 로또 수를 입력해 주세요.")
+        return runCatching {
+            validateNullInput(readlnOrNull())
+        }.getOrNull()
+    }
+
     fun readWinningNumbers(): List<String> {
         println("\n지난 주 당첨 번호를 입력해 주세요.")
-        val winningNumbers = validateNullInput(readlnOrNull()).replace(" ", "")
-        return winningNumbers.split(SPLIT_DELIMITER).map { it }
+        return validateNullInput(readlnOrNull()).split(SPLIT_DELIMITER)
     }
 
     fun readWinningBonusNumber(): String {
@@ -13,7 +26,11 @@ class InputView {
     }
 
     private fun validateNullInput(input: String?): String {
-        return input ?: throw IllegalArgumentException(ERROR_EMPTY_INPUT_MESSAGE)
+        if (input.isNullOrBlank()) {
+            println(ERROR_EMPTY_INPUT_MESSAGE)
+            throw IllegalArgumentException(ERROR_EMPTY_INPUT_MESSAGE)
+        }
+        return input
     }
 
     companion object {

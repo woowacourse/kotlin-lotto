@@ -9,7 +9,6 @@ import lotto.model.WinningResult
 import lotto.view.InputView
 import lotto.view.ManualLottoInputView
 import lotto.view.OutputView
-import lotto.view.PurchaseAmountInputView
 
 class LottoController(private val inputView: InputView, private val outputView: OutputView) {
     private val lottoStore = LottoStore()
@@ -23,14 +22,19 @@ class LottoController(private val inputView: InputView, private val outputView: 
         showWinningResult(winningLotto, purchaseAmount.lottoPurchaseAmount)
     }
 
-    private fun initPurchaseAmount(): PurchaseAmount {
-        return PurchaseAmountInputView.readPurchaseAmount(PURCHASE_UNIT) ?: return initPurchaseAmount()
-    }
+    private fun initPurchaseAmount(): PurchaseAmount =
+        retryWhileNoException {
+            inputView.readPurchaseAmount()?.let { input ->
+                PurchaseAmount(input, PURCHASE_UNIT)
+            } ?: initPurchaseAmount()
+        }
 
-    private fun initManualLottoCount(purchasableLottoCount: Int): LottoCount {
-        val newManualLottoCount = inputView.readManualLottoCount()
-        return LottoCount(purchasableLottoCount, newManualLottoCount)
-    }
+    private fun initManualLottoCount(purchasableLottoCount: Int): LottoCount =
+        retryWhileNoException {
+            inputView.readManualLottoCount()?.let { manualLottoCount ->
+                LottoCount(purchasableLottoCount, manualLottoCount)
+            } ?: initManualLottoCount(purchasableLottoCount)
+        }
 
     private fun generateLottos(lottoCount: LottoCount) {
         val newManualLottoNumbers = ManualLottoInputView.readManualLottoNumbers(lottoCount.manualLottoCount)
@@ -60,5 +64,15 @@ class LottoController(private val inputView: InputView, private val outputView: 
 
     companion object {
         const val PURCHASE_UNIT = 1000
+    }
+
+    private fun <T> retryWhileNoException(action: () -> T): T {
+        while (true) {
+            try {
+                return action()
+            } catch (e: IllegalArgumentException) {
+                outputView.printError(e.localizedMessage)
+            }
+        }
     }
 }
