@@ -1,16 +1,26 @@
 package model
 
 class LotteryGenerator {
-    fun autoGenerate(): Lottery =
-        Lottery.of(
-            *(MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER)
-                .shuffled()
-                .take(LOTTERY_NUMBER_COUNT)
-                .sorted()
-                .toIntArray(),
-        )
+    fun generate(
+        lotteryType: LotteryType,
+        input: List<Int> = emptyList(),
+    ): Lottery {
+        return when (lotteryType) {
+            is LotteryType.Auto -> {
+                Lottery.of(
+                    *(MIN_LOTTERY_NUMBER..MAX_LOTTERY_NUMBER)
+                        .shuffled()
+                        .take(LOTTERY_NUMBER_COUNT)
+                        .sorted()
+                        .toIntArray(),
+                )
+            }
 
-    fun manualGenerate(input: List<Int>): Lottery = Lottery.fromInput(input)
+            is LotteryType.Manual -> {
+                Lottery.fromInput(input)
+            }
+        }
+    }
 
     companion object {
         private const val MIN_LOTTERY_NUMBER = 1
