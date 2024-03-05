@@ -33,21 +33,21 @@ class LotteryNumberTest {
     @Test
     fun `당첨번호와 중복되지 않은 범위 내의 보너스 번호를 생성할 수 있다`() {
         assertDoesNotThrow {
-            LotteryNumber.bonusNumber(DEFAULT_LOTTERY, "7")
+            LotteryNumber.bonusNumber(DEFAULT_LOTTERY, 7)
         }
     }
 
     @Test
     fun `보너스 번호가 당첨번호와 중복되면 예외를 던진다`() {
         assertThrows<IllegalArgumentException> {
-            LotteryNumber.bonusNumber(DEFAULT_LOTTERY, "6")
+            LotteryNumber.bonusNumber(DEFAULT_LOTTERY, 6)
         }
     }
 
     @Test
     fun `보너스 번호가 1~45의 범위를 벗어나면 예외를 던진다`() {
         assertThrows<IllegalArgumentException> {
-            LotteryNumber.bonusNumber(DEFAULT_LOTTERY, "46")
+            LotteryNumber.bonusNumber(DEFAULT_LOTTERY, 46)
         }
     }
 
