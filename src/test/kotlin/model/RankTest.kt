@@ -1,5 +1,6 @@
-package domain
+package model
 
+import lotto.model.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -18,8 +19,8 @@ class RankTest {
         "0, false, MISS"
     )
     fun `일치 개수와 보너스 매치 여부에 따른 랭크 반환하는 지`(countOfMatch: Int, matchBonus: Boolean, rank: Rank) {
-        val expected = Rank.valueOf(countOfMatch, matchBonus)
+        val actual = Rank.valueOf(countOfMatch, matchBonus)
 
-        assertThat(expected).isEqualTo(rank)
+        assertThat(actual).isEqualTo(rank)
     }
 }

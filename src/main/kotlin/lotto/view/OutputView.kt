@@ -1,25 +1,26 @@
-package view
+package lotto.view
 
-import domain.Lotto
-import domain.Rank
-import domain.model.LottoDrawingResult
-import domain.model.Margin
+import lotto.model.Lotto
+import lotto.model.LottoMachine
+import lotto.model.Margin
+import lotto.model.Rank
 
 class OutputView {
 
-    fun printNumberOfTicket(number: Int) {
-        println("${number}개를 구매했습니다.")
-    }
-
-    fun printLottoNumbers(lottoTickets: List<Lotto>) {
-        lottoTickets.forEach { lotto ->
+    fun printLottoNumbers(lottoCount: LottoMachine, lottoes: List<Lotto>) {
+        when {
+            lottoCount.manual == 0 -> println("\n자동으로 ${lottoCount.auto}개를 구매했습니다.")
+            lottoCount.auto == 0 -> println("\n수동으로 ${lottoCount.manual}개를 구매했습니다.")
+            else -> println("\n수동으로 ${lottoCount.manual}장, 자동으로 ${lottoCount.auto}개를 구매했습니다.")
+        }
+        lottoes.forEach { lotto ->
             println(lotto.numbers.map { it.value }.joinToString(prefix = "[", separator = ", ", postfix = "]"))
         }
     }
 
-    fun printLottoResult(lottoDrawingResult: LottoDrawingResult) {
+    fun printLottoResult(statistics: Map<Rank, Int>) {
         println("\n당첨 통계\n---------")
-        val resultWithoutMiss = lottoDrawingResult.statistics.filter { it.key != Rank.MISS }
+        val resultWithoutMiss = statistics.filter { it.key != Rank.MISS }
         resultWithoutMiss.forEach { (rank, count) ->
             if (rank == Rank.SECOND) {
                 println("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney}원)- ${count}개")
