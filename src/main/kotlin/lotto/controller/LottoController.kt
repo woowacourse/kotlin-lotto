@@ -79,7 +79,7 @@ class LottoController(
 
     private fun makeAutoLottoTicket(quantity: Int): LottoTickets {
         val lottoTickets = List(quantity) {
-            randomLottoGenerator.make(MINIMUM_LOTTO_NUMBER, MAXIMUM_LOTTO_NUMBER)
+            randomLottoGenerator.make(LottoNumber.MINIMUM_LOTTO_NUMBER, LottoNumber.MAXIMUM_LOTTO_NUMBER)
         }
         return LottoTickets(lottoTickets)
     }
@@ -117,7 +117,5 @@ class LottoController(
 
     companion object {
         const val LOTTO_PRICE = 1000
-        const val MINIMUM_LOTTO_NUMBER = 1
-        const val MAXIMUM_LOTTO_NUMBER = 45
     }
 }
