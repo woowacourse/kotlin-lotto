@@ -1,37 +1,36 @@
 package model.lottery
 
+import model.lottery.strategy.ExplicitNumbersStrategy
+import model.lottery.strategy.RandomNumbersStrategy
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 
 class LotteryTest {
-
-    @Test
-    fun `중복이 없는 6 개의 1 ~ 45 사이 숫자로 로또를 생성한다`() {
-        assertDoesNotThrow {
-            Lottery.of(1, 2, 3, 4, 5, 6)
-        }
+    @RepeatedTest(50)
+    fun `랜덤 숫자 생성기로 로또를 만든다`() {
+        assertDoesNotThrow { Lottery.from(RandomNumbersStrategy) }
     }
 
     @Test
-    fun `로또 번호 6개만을 저장한다`() {
-        val lottery = Lottery.of(1, 2, 3, 4, 5, 6)
-        assertThat(lottery.lotteryNumbers.size).isEqualTo(6)
+    fun `명시된 숫자를 생성하여 로또를 만든다`() {
+        val actualLottery = Lottery.from(ExplicitNumbersStrategy(listOf(1, 3, 7, 5, 11, 9)))
+        assertThat(actualLottery).isEqualTo(Lottery.of(listOf(1, 3, 5, 7, 9, 11)))
     }
 
     @Test
-    fun `로또 번호 6개가 아니면 예외를 던진다`() {
-        assertThrows<IllegalArgumentException> {
-            Lottery.of(1, 2, 3, 4, 5)
-        }
+    fun `로또 번호가 보너스 번호를 포함하지 않는다면 보너스 매치가 거짓이다`() {
+        val lottery = Lottery.of(listOf(4, 5, 6, 1, 2, 3))
+        val bonusNumber = LotteryNumber.of(21)
+        assertFalse(bonusNumber in lottery)
     }
 
     @Test
-    fun `로또 번호에 중복된 번호가 없어야 한다`() {
-        assertThrows<IllegalArgumentException> {
-            Lottery.of(1, 2, 2, 4, 5, 6)
-        }
+    fun `로또 번호가 보너스 번호를 포함하면 보너스 매치가 참이다`() {
+        val lottery = Lottery.of(listOf(4, 5, 6, 1, 2, 3))
+        val bonusNumber = LotteryNumber.of(21)
+        assertFalse(bonusNumber in lottery)
     }
-
 }

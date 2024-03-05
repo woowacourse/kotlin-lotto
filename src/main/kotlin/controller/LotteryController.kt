@@ -1,41 +1,74 @@
 package controller
+
 import model.Money
-import model.lottery.*
-import model.profit.Profit
-import model.profit.ProfitStatusDecider
+import model.Quantity
+import model.lottery.Lotteries
+import model.lottery.Lottery
+import model.lottery.LotteryNumber
+import model.lottery.LotterySeller
+import model.lottery.WinningLottery
+import model.lottery.strategy.RandomNumbersStrategy
+import model.winning.WinningResult
 import view.InputView
 import view.OutputView
 
 class LotteryController(
-    private val inputView: InputView = InputView(),
-    private val outputView: OutputView = OutputView(),
-    private val lotteryResultEvaluator: LotteryResultEvaluator = LotteryResultEvaluator(),
-    private val profit: Profit = Profit()
+    private val inputView: InputView,
+    private val outputView: OutputView,
+    private val lotterySeller: LotterySeller,
 ) {
-
     fun start() {
-        val purchaseAmount = Money.from(inputView.readPurchaseAmount())
-        val lotterySeller = LotterySeller(purchaseAmount)
-        val lotteryCount = lotterySeller.getLotteryCount()
+        val purchaseAmount = Money.wons(inputView.readPurchaseAmount())
+        val lotteries = buyLotteries(purchaseAmount)
 
-        val lotteryGenerator = LotteryGenerator()
-
-        val lotteries = Lotteries(List(lotteryCount) { lotteryGenerator.generate() })
-        outputView.showPurchasedLotteries(lotteries)
-
-        val winningNumbers = Lottery.fromInput(inputView.readWinningNumbers())
-        val bonusNumber = LotteryNumber.bonusNumber(winningNumbers, inputView.readBonusNumber())
-
-        val winningResult = lotteryResultEvaluator.evaluate(lotteries, winningNumbers, bonusNumber)
-        outputView.showWinningResult(winningResult)
-
-        val totalPrize = Money.wons(winningResult.result.entries.sumOf {
-            it.key.winningPrize.amount.toInt() * it.value
-        })
-
-        val profitRate = profit.calculateRate(purchaseAmount, totalPrize)
-
-        outputView.showProfitRate(profitRate, ProfitStatusDecider.decide(purchaseAmount, totalPrize))
+        val winningResult = calculateWinningResult(lotteries)
+        calculateProfitRate(purchaseAmount, winningResult)
     }
 
+    private fun buyLotteries(purchaseAmount: Money): Lotteries {
+        val lotteryQuantity = lotterySeller.getLotteryQuantity(purchaseAmount)
+        val manualLotteryQuantity = Quantity(inputView.readManualLotteryQuantity())
+        val randomLotteryQuantity = lotteryQuantity - manualLotteryQuantity
+
+        val lotteries = buyManualLotteries(manualLotteryQuantity) + buyRandomLotteries(randomLotteryQuantity)
+        outputView.showLotteriesType(manualLotteryQuantity, randomLotteryQuantity)
+        outputView.showPurchasedLotteries(lotteries)
+        return lotteries
+    }
+
+    private fun buyManualLotteries(manualLotteryQuantity: Quantity): Lotteries {
+        if (manualLotteryQuantity.count > 0) {
+            inputView.guideManualLottery()
+            return Lotteries(
+                List(manualLotteryQuantity.count) {
+                    Lottery.of((inputView.readManualLottery()))
+                },
+            )
+        }
+        return Lotteries(listOf())
+    }
+
+    private fun buyRandomLotteries(randomLotteryQuantity: Quantity): Lotteries =
+        Lotteries(List(randomLotteryQuantity.count) { Lottery.from(RandomNumbersStrategy) })
+
+    private fun calculateWinningResult(lotteries: Lotteries): WinningResult {
+        val winningLottery = readWinningLottery()
+        val winningResult = lotteries.evaluateWinning(winningLottery)
+        outputView.showWinningResult(winningResult)
+        return winningResult
+    }
+
+    private fun readWinningLottery(): WinningLottery =
+        WinningLottery(
+            Lottery.of((inputView.readWinningLottery())),
+            LotteryNumber.of(inputView.readBonusNumber()),
+        )
+
+    private fun calculateProfitRate(
+        purchaseAmount: Money,
+        winningResult: WinningResult,
+    ) {
+        val profitRate = winningResult.calculateProfitRate(purchaseAmount)
+        outputView.showProfitRate(profitRate, profitRate.decideProfitStatus())
+    }
 }
