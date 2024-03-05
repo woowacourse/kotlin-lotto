@@ -1,14 +1,19 @@
 package lotto.model
 
-import lotto.exception.ErrorCode
-import lotto.exception.ExceptionHandler.handleException
+import lotto.exception.Exceptions
 import lotto.model.Lotto.Companion.LOTTO_SIZE
 
 class WinningLotto(private val winningNumbers: List<LottoNumber>, private val bonusNumber: LottoNumber) {
     init {
-        handleException(ErrorCode.INVALID_WINNING_NUMBERS_SIZE) { winningNumbers.size == LOTTO_SIZE }
-        handleException(ErrorCode.INVALID_WINNING_NUMBERS_DUPLICATE) { winningNumbers.toSet().size == LOTTO_SIZE }
-        handleException(ErrorCode.INVALID_BONUS_NUMBER_DUPLICATE) { !winningNumbers.contains(bonusNumber) }
+        if (winningNumbers.size != LOTTO_SIZE) {
+            throw Exceptions.WinningLottoSizeException()
+        }
+        if (winningNumbers.toSet().size != LOTTO_SIZE) {
+            throw Exceptions.WinningLottoDuplication()
+        }
+        if (winningNumbers.contains(bonusNumber)) {
+            throw Exceptions.BonusNumberDuplicationWithWinningNumber()
+        }
     }
 
     fun judgeRank(lotto: Lotto): Rank {

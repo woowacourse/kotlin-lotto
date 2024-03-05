@@ -1,6 +1,5 @@
 package lotto.model
 
-import lotto.exception.ErrorCode
 import lotto.exception.Exceptions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -43,12 +42,9 @@ class MoneyTest {
 
     @ParameterizedTest
     @ValueSource(strings = ["400", "999", "-1"])
-    fun `구매 금액이 1000원 미만인 경우, INVALID_PURCHASE_AMOUNT_RANGE을 던져야한다`(purchaseAmount: String) {
-        val exception =
-            assertThrows<Exceptions.PurchaseAmountRangeException> {
-                Money.from(purchaseAmount)
-            }
-
-        assertThat(exception.message).isEqualTo(ErrorCode.INVALID_PURCHASE_AMOUNT_RANGE.message)
+    fun `구매 금액이 1000원 미만인 경우, 에러를 던져야한다`(purchaseAmount: String) {
+        assertThrows<Exceptions.PurchaseAmountRangeException> {
+            Money.from(purchaseAmount)
+        }
     }
 }
