@@ -44,8 +44,8 @@ class LottoController {
         return manualLottos + autoLottos
     }
 
-    private fun generateManualLotto(manual: List<String>): Lotto {
-        return Lotto(manual.map { LottoNumber(it.toIntOrNull() ?: 0) }.toSet())
+    private fun generateManualLotto(manual: List<Int>): Lotto {
+        return Lotto(manual.map { LottoNumber(it) }.toSet())
     }
 
     private fun generateAutoLotto(): Lotto {

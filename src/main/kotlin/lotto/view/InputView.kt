@@ -18,9 +18,9 @@ object InputView {
         return readlnOrNull().orEmpty()
     }
 
-    fun inputManualLottos(numberOfManaulLotto: Int): List<List<String>> {
+    fun inputManualLottos(numberOfManaulLotto: Int): List<List<Int>> {
         println(INPUT_GUIDE_MANUAL_LOTTO_NUMBER)
-        return List(numberOfManaulLotto) { readlnOrNull().orEmpty().split(INPUT_SEPARATOR).map { it.trim() } }
+        return List(numberOfManaulLotto) { readlnOrNull().orEmpty().split(INPUT_SEPARATOR).map { it.toInt() } }
     }
 
     fun inputWinningNumbers(): List<String> {

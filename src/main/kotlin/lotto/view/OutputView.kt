@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lottos
+import lotto.model.Rank
 import lotto.model.WinningStatistics
 
 object OutputView {
@@ -12,6 +13,15 @@ object OutputView {
     private const val DEFAULT_SEPARATOR = ", "
     private const val START = "["
     private const val END = "]"
+    private const val RANK_FIFTH_MESSAGE = "3개 일치 (5000원)- %d개\n"
+    private const val RANK_FOURTH_MESSAGE =
+        "4개 일치 (50000원)- %d개\n"
+    private const val RANK_THIRD_MESSAGE =
+        "5개 일치 (1500000원)- %d개\n"
+    private const val RANK_SECOND_MESSAGE =
+        "5개 일치, 보너스 볼 일치(30000000원) - %d개\n"
+    private const val RANK_FIRST_MESSAGE =
+        "6개 일치 (2000000000원)- %d개\n"
 
     fun outputShowLottos(
         manualLottos: Lottos,
@@ -38,7 +48,18 @@ object OutputView {
 
     fun outputWinningStatistics(winningStatistics: WinningStatistics) {
         println(WINNING_STATISTICS)
-        println(winningStatistics)
+        val messages =
+            listOf(
+                Rank.FIFTH to RANK_FIFTH_MESSAGE,
+                Rank.FOURTH to RANK_FOURTH_MESSAGE,
+                Rank.THIRD to RANK_THIRD_MESSAGE,
+                Rank.SECOND to RANK_SECOND_MESSAGE,
+                Rank.FIRST to RANK_FIRST_MESSAGE,
+            ).map { (rank, format) ->
+                format.format(winningStatistics.results[rank] ?: 0)
+            }
+
+        messages.forEach(::print)
     }
 
     fun outputRateOfReturn(rateOfReturn: Double) {
