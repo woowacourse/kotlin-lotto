@@ -24,8 +24,15 @@ class LottoController(
 
         val lottoWinning = makeLottoWinning()
         val lottoResult = lottoWinning.makeLottoResult(lottoTickets)
-        val profitRate = lottoResult.winningMoney / purchasePrice ?: 0f
+        val profitRate = getProfitRate(lottoResult.winningMoney, purchasePrice)
         printWinningResult(lottoResult, profitRate)
+    }
+
+    private fun getProfitRate(
+        purchasePrice: Money,
+        winningMoney: Money,
+    ): Float {
+        return (winningMoney / purchasePrice) ?: 0f
     }
 
     private fun getPurchasePrice(): Money {
