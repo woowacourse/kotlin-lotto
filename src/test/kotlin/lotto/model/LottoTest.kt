@@ -7,31 +7,11 @@ import org.junit.jupiter.api.assertThrows
 class LottoTest {
     @Test
     fun `올바른 로또에 대해서, 에러를 던지지 않아야한다`() {
-        val numbers =
-            setOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(6),
-            )
-        Assertions.assertDoesNotThrow { numbers }
+        Assertions.assertDoesNotThrow { Lotto(1, 2, 3, 4, 5, 6) }
     }
 
     @Test
     fun `로또 숫자가 중복인 경우에 대해서, 에러를 던져야 한다`() {
-        val numbers =
-            setOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(5),
-                LottoNumber(5),
-                LottoNumber(5),
-            )
-        assertThrows<IllegalArgumentException> {
-            Lotto(numbers)
-        }
+        assertThrows<IllegalArgumentException> { Lotto(1, 2, 3, 5, 5, 5) }
     }
 }
