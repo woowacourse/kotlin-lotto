@@ -4,20 +4,21 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class NumberGeneratorTest {
-    private lateinit var lottoNumbers: List<LottoNumber>
+class LottoNumberGeneratorTest {
+    private lateinit var lottoNumbers: Set<LottoNumber>
     private lateinit var lotto: Lotto
-    private val numberGenerator = NumberGenerator()
+    private val lottoNumberGenerator = LottoNumberGenerator()
 
     @BeforeEach
     fun setUp() {
-        lottoNumbers = numberGenerator.generateLottoNumbers().map { LottoNumber(it) }
-        lotto = Lotto(lottoNumbers.toSet())
+        lottoNumbers = lottoNumberGenerator.generateAuto()
+        lotto = Lotto(lottoNumbers)
     }
 
     @Test
-    fun `로또 번호가 시작 범위에서 마지막 범위사이의 숫자인지 확인`() {
-        assertThat(lottoNumbers).allMatch { it.number in NumberGenerator.START_RANGE..NumberGenerator.END_RANGE }
+    fun `로또 번호가 유효한 범위 내에 있는지 확인`() {
+        val validRange = LottoNumberGenerator.START_RANGE..LottoNumberGenerator.END_RANGE
+        assertThat(lottoNumbers).allMatch { it.number in validRange }
     }
 
     @Test

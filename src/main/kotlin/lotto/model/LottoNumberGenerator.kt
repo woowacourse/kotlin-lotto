@@ -1,11 +1,17 @@
 package lotto.model
 
-class NumberGenerator {
-    fun generateLottoNumbers(): List<Int> {
+class LottoNumberGenerator {
+    fun generateManual(numbers: List<Int>): Set<LottoNumber> {
+        return numbers.map { LottoNumber(it) }.toSet()
+    }
+
+    fun generateAuto(): Set<LottoNumber> {
         return (START_RANGE..END_RANGE).map { it }
             .shuffled()
             .take(Lotto.LOTTO_SIZE)
             .sorted()
+            .map { LottoNumber(it) }
+            .toSet()
     }
 
     companion object {

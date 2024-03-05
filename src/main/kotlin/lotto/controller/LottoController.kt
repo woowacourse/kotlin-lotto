@@ -2,10 +2,10 @@ package lotto.controller
 
 import lotto.model.Lotto
 import lotto.model.LottoNumber
+import lotto.model.LottoNumberGenerator
 import lotto.model.Lottos
 import lotto.model.ManualLottoPurchaseCount
 import lotto.model.Money
-import lotto.model.NumberGenerator
 import lotto.model.WinningLotto
 import lotto.model.WinningStatistics
 import lotto.view.InputView
@@ -27,40 +27,25 @@ class LottoController {
 
             val winningStatistics = userLotto.makeWinningStatics(winningLotto)
 
-            displayWinningStatistics(money.numberOfLotto, winningStatistics)
+            displayWinningStatistics(money.purchaseAmount, winningStatistics)
         }
 
     private fun publishLottos(
         numberOfManualLotto: ManualLottoPurchaseCount,
         money: Money,
     ): Lottos {
-        val manual = InputView.inputManualLottos(numberOfManualLotto.count)
-        val manualLottos = Lottos(manual.map { generateManualLotto(it) })
+        val generator = LottoNumberGenerator()
+        val manual =
+            InputView.inputManualLottos(numberOfManualLotto.count)
+                .map { manualNumbers ->
+                    generator.generateManual(manualNumbers)
+                }
+        val manualLottos = Lottos(manual.map { Lotto(it) })
         val autoLottoCount = money.calculateAutoLottoCount(manualLottos.publishedLottos.size)
-        val autoLottos = Lottos(List(autoLottoCount) { generateAutoLotto() })
+        val autoLottos = Lottos(List(autoLottoCount) { Lotto(generator.generateAuto()) })
 
-        displayPurchaseResult(manualLottos, autoLottos)
-
+        OutputView.outputShowLottos(manualLottos, autoLottos)
         return manualLottos + autoLottos
-    }
-
-    private fun generateManualLotto(manual: List<Int>): Lotto {
-        return Lotto(manual.map { LottoNumber(it) }.toSet())
-    }
-
-    private fun generateAutoLotto(): Lotto {
-        return Lotto(generateLottoNumbers())
-    }
-
-    private fun generateLottoNumbers(): Set<LottoNumber> {
-        return NumberGenerator().generateLottoNumbers().map { LottoNumber(it) }.toSet()
-    }
-
-    private fun displayPurchaseResult(
-        manualLotto: Lottos,
-        autoLotto: Lottos,
-    ) {
-        OutputView.outputShowLottos(manualLotto, autoLotto)
     }
 
     private fun drawWinningLotto(): WinningLotto {
