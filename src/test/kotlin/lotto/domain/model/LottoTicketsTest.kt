@@ -21,7 +21,7 @@ class LottoTicketsTest {
     }
 
     @Test
-    fun `concat으로 두 LottoTickets을 하나의 LottoTickets로 합칠 수 있다`() {
+    fun `두 LottoTickets을 하나의 LottoTickets로 합칠 수 있다`() {
         val ticket1 = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
         val ticket2 = Lotto.from(listOf(7, 8, 9, 10, 11, 12))
         val tickets1 = LottoTickets(listOf(ticket1))
