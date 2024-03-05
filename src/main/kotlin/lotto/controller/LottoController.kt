@@ -16,12 +16,8 @@ class LottoController(
 ) {
     fun run() {
         val purchasePrice = getPurchasePrice()
-        val lottoCounter = getCounter(purchasePrice)
-
-        val manualLottoCount = inputView.getManualCount()
-        lottoCounter.reduce(manualLottoCount)
-        val autoLottoCount = lottoCounter.remain
-
+        val lottoCounter = LottoCounter(purchasePrice)
+        val (manualLottoCount, autoLottoCount) = getCounts(lottoCounter)
         val lottoTickets = generateLottoTickets(manualLottoCount, autoLottoCount)
         outputView.printLottoCount(manualLottoCount, autoLottoCount)
         outputView.printLottoTickets(lottoTickets)
@@ -36,12 +32,17 @@ class LottoController(
         return inputView.getPurchasePrice()
     }
 
-    private tailrec fun getCounter(purchasePrice: Money): LottoCounter {
-        val counter = LottoCounter.getOrNull(purchasePrice)
-        if (counter != null) {
-            return counter
+    private fun getManualCount(): Int {
+        return inputView.getManualCount()
+    }
+
+    private tailrec fun getCounts(lottoCounter: LottoCounter): Pair<Int, Int> {
+        val manualLottoCount = getManualCount()
+        val autoLottoCount = lottoCounter.getAutoCountOrNull(manualLottoCount)
+        if (autoLottoCount != null) {
+            return manualLottoCount to autoLottoCount
         }
-        return getCounter(purchasePrice)
+        return getCounts(lottoCounter)
     }
 
     private fun generateLottoTickets(
