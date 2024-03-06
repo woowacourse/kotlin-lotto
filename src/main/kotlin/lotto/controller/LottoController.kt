@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.domain.ManualLottoGenerator
 import lotto.domain.RandomLottoGenerator
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
@@ -54,18 +55,23 @@ class LottoController(
         }
     }
 
-    private fun makeManualLottoTicket(manualLottoQuantity: Int): LottoTickets {
-        if (manualLottoQuantity != 0) OutputView.printInputManualNumberMessage()
-        val manualLottoTickets = List(manualLottoQuantity) { getValidManualLotto() }
-        return LottoTickets(manualLottoTickets)
+    private fun makeManualLottoTicket(quantity: Int): LottoTickets {
+        if (quantity != 0) OutputView.printInputManualNumberMessage()
+        val lottoTickets = List(quantity) {
+            val numbers = readValidManualLottoNumbers()
+            ManualLottoGenerator(numbers).make()
+        }
+        return LottoTickets(lottoTickets)
     }
 
-    private fun getValidManualLotto(): Lotto {
+    private fun readValidManualLottoNumbers(): List<Int> {
         return try {
-            Lotto(InputView.readLottoNumbers().map { LottoNumber(it) })
+            val numbers = InputView.readLottoNumbers()
+            Lotto.from(numbers)
+            return numbers
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getValidManualLotto()
+            readValidManualLottoNumbers()
         }
     }
 
