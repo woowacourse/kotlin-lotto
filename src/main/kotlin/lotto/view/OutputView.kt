@@ -2,13 +2,20 @@ package lotto.view
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoDrawingResult
-import lotto.domain.model.Margin
 import lotto.domain.model.Rank
 
 object OutputView {
 
-    fun printLottoQuantity(quantity: Int) {
-        println("${quantity}개를 구매했습니다.")
+    fun printInputManualNumberMessage() {
+        println("\n수동으로 구매할 번호를 입력해 주세요.")
+    }
+
+    fun printInputWinningNumberMessage() {
+        println("\n지난 주 당첨 번호를 입력해 주세요.")
+    }
+
+    fun printLottoQuantity(manualLottoQuantity: Int, autoLottoQuantity: Int) {
+        println("\n수동으로 ${manualLottoQuantity}장, 자동으로 ${autoLottoQuantity}개를 구매했습니다.")
     }
 
     fun printLottoNumbers(lottoTickets: List<Lotto>) {
@@ -19,19 +26,22 @@ object OutputView {
 
     fun printLottoResult(lottoDrawingResult: LottoDrawingResult) {
         println("\n당첨 통계\n---------")
-        val resultWithoutMiss = lottoDrawingResult.statistics.filter { it.key != Rank.MISS }
-        resultWithoutMiss.forEach { (rank, count) ->
-            if (rank.isBonusMatch) {
-                println("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney}원)- ${count}개")
-            } else {
-                println("${rank.countOfMatch}개 일치 (${rank.winningMoney}원)- ${count}개")
+        Rank.entries.forEach { rank ->
+            if (rank != Rank.MISS) {
+                val count = lottoDrawingResult.getCountByRank(rank)
+                printRankInfoAndCount(rank, count)
             }
         }
     }
 
-    fun printMargin(marginRate: Margin) {
-        print("총 수익률은 ${formatDouble(marginRate.rate)}입니다.")
-        if (marginRate.rate < 1) print("(기준이 1이기 때문에 결과적으로 손해라는 의미임)")
+    private fun printRankInfoAndCount(rank: Rank, count: Int) {
+        val bonusMessage = if (rank.isBonusMatch) ", 보너스 볼 일치" else ""
+        println("${rank.countOfMatch}개 일치$bonusMessage (${rank.winningMoney}원)- ${count}개")
+    }
+
+    fun printMargin(marginRate: Double) {
+        print("총 수익률은 ${formatDouble(marginRate)}입니다.")
+        if (marginRate < 1) print("(기준이 1이기 때문에 결과적으로 손해라는 의미임)")
     }
 
     private fun formatDouble(value: Double): String {

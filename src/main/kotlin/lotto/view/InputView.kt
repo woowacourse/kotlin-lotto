@@ -1,39 +1,35 @@
 package lotto.view
 
 object InputView {
-    private const val MINIMUM_PURCHASE_AMOUNT = 0
     private const val WINNING_NUMBER_DELIMITER = ","
-    private const val MINIMUM_VALUE_EXCEPTION_MESSAGE = "구입 금액은 ${MINIMUM_PURCHASE_AMOUNT}원 이상이어야 합니다."
-    private const val INVALID_UNIT_EXCEPTION_MESSAGE = "구입 금액은 %s원 단위여야 합니다."
-    private const val INVALID_FORMAT_EXCEPTION_MESSAGE = "입력값은 정수여야 합니다."
 
     fun readPurchaseAmount(minPricePerUnit: Int): Long {
-        return try {
-            println("구입금액을 입력해 주세요.")
-            val input = readln().toLong()
-            require(input > 0L) { MINIMUM_VALUE_EXCEPTION_MESSAGE }
-            require(input % minPricePerUnit == 0L) { INVALID_UNIT_EXCEPTION_MESSAGE.format(minPricePerUnit) }
-            input
-        } catch (e: NumberFormatException) {
-            throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)
-        }
+        println("구입금액을 입력해 주세요.")
+        return readln().toLongOrNull() ?: return readPurchaseAmount(minPricePerUnit)
     }
 
-    fun readWinningNumbers(): List<Int> {
-        return try {
-            println("\n지난 주 당첨 번호를 입력해 주세요.")
-            readln().split(WINNING_NUMBER_DELIMITER).map { it.trim().toInt() }
-        } catch (e: NumberFormatException) {
-            throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)
+    fun readPurchaseQuantity(maxQuantity: Int): Int {
+        println("수동으로 구매할 로또 수를 입력해 주세요.")
+        var input = readln().toInt()
+        if (input !in 0..maxQuantity) {
+            input = input.coerceIn(0, maxQuantity)
+            println("0 ~ ${maxQuantity}개 사이의 수동 로또를 구매할 수 있어, ${input}개를 구매합니다.")
+        }
+        return input
+    }
+
+    fun readLottoNumbers(): List<Int> {
+        val lottoNumbers = readln().split(WINNING_NUMBER_DELIMITER).map { it.trim().toIntOrNull() }
+        return if (lottoNumbers.contains(null)) {
+            println("로또 번호는 숫자 형식 입니다.")
+            readLottoNumbers()
+        } else {
+            lottoNumbers.filterNotNull()
         }
     }
 
     fun readBonusNumber(): Int {
-        return try {
-            println("보너스 볼을 입력해 주세요.")
-            readln().toInt()
-        } catch (e: NumberFormatException) {
-            throw IllegalArgumentException(INVALID_FORMAT_EXCEPTION_MESSAGE)
-        }
+        println("보너스 볼을 입력해 주세요.")
+        return readln().toIntOrNull() ?: readBonusNumber()
     }
 }

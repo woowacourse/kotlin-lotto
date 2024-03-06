@@ -20,6 +20,6 @@ class LottoNumberTest {
     fun `당첨번호가 1 ~ 45를 벗어나면 예외를 던진다`(number: Int) {
         val exception = assertThrows<IllegalArgumentException> { LottoNumber(number) }
 
-        assertThat(exception.message).isEqualTo("당첨번호는 1 ~ 45 사이의 정수여야 합니다.")
+        assertThat(exception.message).isEqualTo("로또 번호는 1 ~ 45 사이의 정수여야 합니다.")
     }
 }
