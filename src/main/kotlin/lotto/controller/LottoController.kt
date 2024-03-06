@@ -13,7 +13,14 @@ import lotto.view.OutputView
 
 class LottoController {
     fun run() {
-        playLotto().onFailure { e -> OutputView.outputErrorMessage(e) }
+        while (true) {
+            val result = playLotto()
+            if (result.isSuccess) {
+                break
+            } else {
+                result.onFailure { e -> OutputView.outputErrorMessage(e) }
+            }
+        }
     }
 
     private fun playLotto() =
