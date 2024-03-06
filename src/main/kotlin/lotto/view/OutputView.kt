@@ -26,14 +26,17 @@ object OutputView {
 
     fun printLottoResult(lottoDrawingResult: LottoDrawingResult) {
         println("\n당첨 통계\n---------")
-        val resultWithoutMiss = lottoDrawingResult.resultStatistics.filter { it.key != Rank.MISS }
-        resultWithoutMiss.forEach { (rank, count) ->
-            if (rank.isBonusMatch) {
-                println("${rank.countOfMatch}개 일치, 보너스 볼 일치(${rank.winningMoney}원)- ${count}개")
-            } else {
-                println("${rank.countOfMatch}개 일치 (${rank.winningMoney}원)- ${count}개")
+        Rank.entries.forEach { rank ->
+            if (rank != Rank.MISS) {
+                val count = lottoDrawingResult.getCountByRank(rank)
+                printRankInfoAndCount(rank, count)
             }
         }
+    }
+
+    private fun printRankInfoAndCount(rank: Rank, count: Int) {
+        val bonusMessage = if (rank.isBonusMatch) ", 보너스 볼 일치" else ""
+        println("${rank.countOfMatch}개 일치$bonusMessage (${rank.winningMoney}원)- ${count}개")
     }
 
     fun printMargin(marginRate: Double) {

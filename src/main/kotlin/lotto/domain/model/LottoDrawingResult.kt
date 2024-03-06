@@ -1,12 +1,14 @@
 package lotto.domain.model
 
-data class LottoDrawingResult(private val originStatistics: Map<Rank, Int>) {
-    val resultStatistics: Map<Rank, Int> =
-        Rank.entries.associateWith { rank -> originStatistics.getOrDefault(rank, DEFAULT_COUNT) }
+data class LottoDrawingResult(private val statistics: Map<Rank, Int>) {
+
+    fun getCountByRank(rank: Rank): Int {
+        return statistics[rank] ?: DEFAULT_COUNT
+    }
 
     fun calculateTotalPrize(): Money {
         return Money(
-            originStatistics.entries.sumOf { (rank, count) ->
+            statistics.entries.sumOf { (rank, count) ->
                 rank.winningMoney * count.toLong()
             }
         )
