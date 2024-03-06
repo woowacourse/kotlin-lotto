@@ -16,26 +16,26 @@ class WinningLotto(private val winningNumbers: List<LottoNumber>, private val bo
         }
     }
 
-    fun judgeRank(lotto: Lotto): Rank {
-        val countOfMatch = calculateCountOfMatch(lotto)
-        val bonusMatched = checkBonusNumberMatched(lotto)
+    fun judgeRank(lottoNumbers: Set<LottoNumber>): Rank {
+        val countOfMatch = calculateCountOfMatch(lottoNumbers)
+        val bonusMatched = checkBonusNumberMatched(lottoNumbers)
 
         return Rank.getRank(countOfMatch, bonusMatched)
     }
 
-    private fun calculateCountOfMatch(lotto: Lotto): Int {
+    private fun calculateCountOfMatch(lottoNumbers: Set<LottoNumber>): Int {
         return winningNumbers.count { winningNumber ->
-            lotto.numbers.any { it.number == winningNumber.number }
+            lottoNumbers.any { it.number == winningNumber.number }
         }
     }
 
-    private fun checkBonusNumberMatched(lotto: Lotto): Boolean {
-        return lotto.numbers.any { it.number == bonusNumber.number }
+    private fun checkBonusNumberMatched(lottoNumbers: Set<LottoNumber>): Boolean {
+        return lottoNumbers.any { it.number == bonusNumber.number }
     }
 
     fun makeWinningStatics(lottos: Lottos): WinningStatistics {
         return lottos.publishedLottos
-            .groupBy { judgeRank(it) }
+            .groupBy { judgeRank(it.numbers) }
             .mapValues { it.value.size }
             .let(::WinningStatistics)
     }
