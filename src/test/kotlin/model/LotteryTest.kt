@@ -15,7 +15,7 @@ class LotteryTest {
 
     @Test
     fun `로또 번호 6개만을 저장한다`() {
-        assertThat(SUCCESS_LOTTERY.lotteryNumbers.size).isEqualTo(6)
+        assertThat(SUCCESS_LOTTERY.lotteryNumbers.size).isEqualTo(DEFAULT_LOTTERY_SIZE)
     }
 
     @Test
@@ -34,5 +34,6 @@ class LotteryTest {
 
     companion object {
         private val SUCCESS_LOTTERY = Lottery.of(1, 2, 3, 4, 5, 6)
+        private const val DEFAULT_LOTTERY_SIZE = 6
     }
 }
