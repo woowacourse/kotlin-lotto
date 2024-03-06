@@ -25,7 +25,7 @@ class LottoController {
             val userLotto = publishLottos(manualLottoCount, money)
             val winningLotto = drawWinningLotto()
 
-            val winningStatistics = userLotto.makeWinningStatics(winningLotto)
+            val winningStatistics = winningLotto.makeWinningStatics(userLotto)
 
             displayWinningStatistics(money.purchaseAmount, winningStatistics)
         }

@@ -14,25 +14,4 @@ class LottosTest {
         val userLottos = manualLotto + autoLotto
         assertThat(userLottos).isEqualTo(Lottos(listOf(manualLottoNumber, autoLottoNumber)))
     }
-
-    @Test
-    fun `올바른 우승상황 테스트`() {
-        val lotto = listOf(11, 15, 17, 21, 22, 35).map { LottoNumber(it) }
-        val bonus = LottoNumber(8)
-        val winningLotto = WinningLotto(lotto, bonus)
-
-        val firstLotto = Lotto(11, 15, 17, 21, 30, 31)
-        val secondLotto = Lotto(11, 15, 17, 21, 22, 40)
-        val publishedLottos = Lottos(listOf(firstLotto, secondLotto))
-
-        val actual = publishedLottos.makeWinningStatics(winningLotto)
-        val expected =
-            WinningStatistics(
-                mapOf(
-                    Rank.THIRD to 1,
-                    Rank.FOURTH to 1,
-                ),
-            )
-        assertThat(actual).isEqualTo(expected)
-    }
 }

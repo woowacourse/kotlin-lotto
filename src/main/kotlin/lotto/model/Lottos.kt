@@ -1,13 +1,6 @@
 package lotto.model
 
 data class Lottos(val publishedLottos: List<Lotto>) {
-    fun makeWinningStatics(winningLotto: WinningLotto): WinningStatistics {
-        return publishedLottos
-            .groupBy { winningLotto.judgeRank(it) }
-            .mapValues { it.value.size }
-            .let(::WinningStatistics)
-    }
-
     override fun toString(): String {
         return publishedLottos.joinToString("\n")
     }

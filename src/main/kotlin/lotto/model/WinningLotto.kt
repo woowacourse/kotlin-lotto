@@ -32,4 +32,11 @@ class WinningLotto(private val winningNumbers: List<LottoNumber>, private val bo
     private fun checkBonusNumberMatched(lotto: Lotto): Boolean {
         return lotto.numbers.any { it.number == bonusNumber.number }
     }
+
+    fun makeWinningStatics(lottos: Lottos): WinningStatistics {
+        return lottos.publishedLottos
+            .groupBy { judgeRank(it) }
+            .mapValues { it.value.size }
+            .let(::WinningStatistics)
+    }
 }
