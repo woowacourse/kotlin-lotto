@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.model.LottoNumber
 import lotto.model.Lottos
 import lotto.model.Rank
 import lotto.model.WinningStatistics
@@ -30,20 +31,18 @@ object OutputView {
         println(PURCHASE.format(manualLottos.publishedLottos.size, autoLottos.publishedLottos.size))
 
         manualLottos.publishedLottos.forEach { lotto ->
-            val formattedString =
-                lotto.numbers
-                    .sortedBy { it.number }
-                    .joinToString(DEFAULT_SEPARATOR, START, END) { it.number.toString() }
-            println(formattedString)
+            println(outputShowLotto(lotto.numbers))
         }
 
         autoLottos.publishedLottos.forEach { lotto ->
-            val formattedString =
-                lotto.numbers
-                    .sortedBy { it.number }
-                    .joinToString(DEFAULT_SEPARATOR, START, END) { it.number.toString() }
-            println(formattedString)
+            println(outputShowLotto(lotto.numbers))
         }
+    }
+
+    private fun outputShowLotto(lotto: Set<LottoNumber>): String {
+        return lotto
+            .sortedBy { it.number }
+            .joinToString(DEFAULT_SEPARATOR, START, END) { it.number.toString() }
     }
 
     fun outputWinningStatistics(winningStatistics: WinningStatistics) {
