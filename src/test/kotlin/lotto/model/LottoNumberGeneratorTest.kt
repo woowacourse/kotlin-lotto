@@ -1,26 +1,24 @@
-import model.Lotto
-import model.NumberGenerator
+package lotto.model
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class PublishLottoTest {
-    private lateinit var lottoNumbers: List<Int>
+class LottoNumberGeneratorTest {
+    private lateinit var lottoNumbers: Set<LottoNumber>
     private lateinit var lotto: Lotto
-    private val numberGenerator = NumberGenerator()
+    private val lottoNumberGenerator = LottoNumberGenerator()
 
     @BeforeEach
     fun setUp() {
-        val randomNumbers = numberGenerator.makeRandomNumbers()
-        lottoNumbers = numberGenerator.drawSixNumbers(randomNumbers)
+        lottoNumbers = lottoNumberGenerator.generateAuto()
         lotto = Lotto(lottoNumbers)
     }
 
     @Test
-    fun `로또 번호가 1에서 45사이의 숫자인지 확인`() {
-        assertThat(lottoNumbers.all { number ->
-            number in 1..45
-        }).isTrue
+    fun `로또 번호가 유효한 범위 내에 있는지 확인`() {
+        val validRange = LottoNumberGenerator.START_RANGE..LottoNumberGenerator.END_RANGE
+        assertThat(lottoNumbers).allMatch { it.number in validRange }
     }
 
     @Test
@@ -40,6 +38,6 @@ class PublishLottoTest {
 
     @Test
     fun `로또 번호가 오름차순인지 확인`() {
-        assertThat(lottoNumbers).isEqualTo(lottoNumbers.sorted())
+        assertThat(lottoNumbers.map { it.number }).isSorted()
     }
 }
