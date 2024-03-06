@@ -23,16 +23,6 @@ class LottoController(
         showResult(result, purchaseMoney)
     }
 
-    private fun getTotalLottoTicket(
-        manualLottoTickets: LottoTickets,
-        autoLottoTickets: LottoTickets
-    ): LottoTickets {
-        OutputView.printLottoQuantity(manualLottoTickets.size, autoLottoTickets.size)
-        val totalLottoTickets = manualLottoTickets.concat(autoLottoTickets)
-        OutputView.printLottoNumbers(totalLottoTickets.tickets)
-        return totalLottoTickets
-    }
-
     private fun getValidMoney(): Money {
         return try {
             Money(InputView.readPurchaseAmount(LOTTO_PRICE))
@@ -40,6 +30,15 @@ class LottoController(
             println(e.message)
             getValidMoney()
         }
+    }
+
+    private fun buyLottoTickets(purchaseMoney: Money): LottoTickets {
+        val totalLottoQuantity = getLottoQuantity(purchaseMoney)
+        val manualLottoQuantity = getManualLottoQuantity(totalLottoQuantity)
+        val manualLottoTickets = getManualLottoTicket(manualLottoQuantity)
+        val autoLottoTickets = makeAutoLottoTicket(totalLottoQuantity - manualLottoQuantity)
+        printTotalLottoTicket(manualLottoTickets, autoLottoTickets)
+        return manualLottoTickets.concat(autoLottoTickets)
     }
 
     private fun getLottoQuantity(money: Money): Int {
@@ -77,13 +76,13 @@ class LottoController(
         return LottoTickets(lottoTickets)
     }
 
-    private fun buyLottoTickets(purchaseMoney: Money): LottoTickets {
-        val totalLottoQuantity = getLottoQuantity(purchaseMoney)
-        val manualLottoQuantity = getManualLottoQuantity(totalLottoQuantity)
-        val manualLottoTickets = getManualLottoTicket(manualLottoQuantity)
-        val autoLottoTickets = makeAutoLottoTicket(totalLottoQuantity - manualLottoQuantity)
-        val totalLottoTickets = getTotalLottoTicket(manualLottoTickets, autoLottoTickets)
-        return totalLottoTickets
+    private fun printTotalLottoTicket(
+        manualLottoTickets: LottoTickets,
+        autoLottoTickets: LottoTickets
+    ) {
+        OutputView.printLottoQuantity(manualLottoTickets.size, autoLottoTickets.size)
+        OutputView.printLottoNumbers(manualLottoTickets.tickets)
+        OutputView.printLottoNumbers(autoLottoTickets.tickets)
     }
 
     private fun getValidWinningLotto(): Lotto {
