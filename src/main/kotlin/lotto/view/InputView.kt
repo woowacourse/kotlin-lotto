@@ -18,14 +18,6 @@ object InputView {
         return input
     }
 
-    fun readPurchaseQuantity2(maxQuantity: Int): Int {
-        println("수동으로 구매할 로또 수를 입력해 주세요.")
-        var input = readln().toInt()
-        input = input.coerceIn(0, maxQuantity)
-        println("0 ~ $maxQuantity 개 사이의 수동 로또를 구매할 수 있어, $input 개를 구매합니다.")
-        return input
-    }
-
     fun readLottoNumbers(): List<Int> {
         val lottoNumbers = readln().split(WINNING_NUMBER_DELIMITER).map { it.trim().toIntOrNull() }
         return if (lottoNumbers.contains(null)) {
