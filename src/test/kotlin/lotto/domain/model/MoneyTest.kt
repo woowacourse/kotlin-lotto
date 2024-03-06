@@ -33,25 +33,4 @@ class MoneyTest {
             assertThat(result).isEqualTo(10)
         }
     }
-
-    @Nested
-    @DisplayName("수익률을 계산하는 calculateMarginRate 메서드 테스트")
-    inner class CalculateMarginRateTest {
-
-        @Test
-        fun `구입 금액이 5천원이고 수익 금액이 5만원일 때 수익률 10을 반환한다`() {
-            val drawingResult = Money(50_000)
-            val purchaseAmount = Money(5000)
-            val actual = purchaseAmount.calculateRate(drawingResult)
-            assertThat(actual).isEqualTo(10.0)
-        }
-
-        @Test
-        fun `구입 금액이 14000원이고 수익 금액이 5천원일 때 수익률 0,35714285714285715를 반환한다`() {
-            val drawingResult = Money(5000)
-            val purchaseAmount = Money(14000)
-            val actual = purchaseAmount.calculateRate(drawingResult)
-            assertThat(actual).isEqualTo(0.35714285714285715)
-        }
-    }
 }

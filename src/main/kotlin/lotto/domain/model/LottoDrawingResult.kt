@@ -14,6 +14,10 @@ data class LottoDrawingResult(private val statistics: Map<Rank, Int>) {
         )
     }
 
+    fun calculateEarningRate(winningPrice: Money, purchaseAmount: Money): Double {
+        return winningPrice.amount / purchaseAmount.amount.toDouble()
+    }
+
     companion object {
         private const val DEFAULT_COUNT = 0
     }

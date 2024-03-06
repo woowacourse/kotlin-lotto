@@ -35,7 +35,7 @@ class LottoController(
     private fun buyLottoTickets(purchaseMoney: Money): LottoTickets {
         val totalLottoQuantity = getLottoQuantity(purchaseMoney)
         val manualLottoQuantity = getManualLottoQuantity(totalLottoQuantity)
-        val manualLottoTickets = getManualLottoTicket(manualLottoQuantity)
+        val manualLottoTickets = makeManualLottoTicket(manualLottoQuantity)
         val autoLottoTickets = makeAutoLottoTicket(totalLottoQuantity - manualLottoQuantity)
         printTotalLottoTicket(manualLottoTickets, autoLottoTickets)
         return manualLottoTickets.concat(autoLottoTickets)
@@ -54,7 +54,7 @@ class LottoController(
         }
     }
 
-    private fun getManualLottoTicket(manualLottoQuantity: Int): LottoTickets {
+    private fun makeManualLottoTicket(manualLottoQuantity: Int): LottoTickets {
         if (manualLottoQuantity != 0) OutputView.printInputManualNumberMessage()
         val manualLottoTickets = List(manualLottoQuantity) { getValidManualLotto() }
         return LottoTickets(manualLottoTickets)
@@ -112,7 +112,8 @@ class LottoController(
     }
 
     private fun showResult(result: LottoDrawingResult, purchaseMoney: Money) {
-        val marginRate = purchaseMoney.calculateRate(result.calculateTotalPrize())
+        val winningMoney = result.calculateTotalPrize()
+        val marginRate = result.calculateEarningRate(winningMoney, purchaseMoney)
         OutputView.printMargin(marginRate)
     }
 
