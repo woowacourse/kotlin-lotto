@@ -56,7 +56,7 @@ class LottoController(
     }
 
     private fun getManualLottoTicket(manualLottoQuantity: Int): LottoTickets {
-        OutputView.printInputManualNumberMessage()
+        if (manualLottoQuantity != 0) OutputView.printInputManualNumberMessage()
         val manualLottoTickets = mutableListOf<Lotto>()
         repeat(manualLottoQuantity) {
             manualLottoTickets.add(getValidManualLotto())
