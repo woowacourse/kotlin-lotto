@@ -16,11 +16,7 @@ class LottoController(
 
     fun start() {
         val purchaseMoney = getValidMoney()
-        val totalLottoQuantity = getLottoQuantity(purchaseMoney)
-        val manualLottoQuantity = getManualLottoQuantity(totalLottoQuantity)
-        val manualLottoTickets = getManualLottoTicket(manualLottoQuantity)
-        val autoLottoTickets = makeAutoLottoTicket(totalLottoQuantity - manualLottoQuantity)
-        val totalLottoTickets = getTotalLottoTicket(manualLottoTickets, autoLottoTickets)
+        val totalLottoTickets = buyLottoTickets(purchaseMoney)
         val winningLotto = getValidWinningLotto()
         val winningNumbers = getValidWinningNumbers(winningLotto)
         val result = getLottoDrawingResult(winningNumbers, totalLottoTickets.tickets)
@@ -82,6 +78,15 @@ class LottoController(
             randomLottoGenerator.make(LottoNumber.MINIMUM_LOTTO_NUMBER, LottoNumber.MAXIMUM_LOTTO_NUMBER)
         }
         return LottoTickets(lottoTickets)
+    }
+
+    private fun buyLottoTickets(purchaseMoney: Money): LottoTickets {
+        val totalLottoQuantity = getLottoQuantity(purchaseMoney)
+        val manualLottoQuantity = getManualLottoQuantity(totalLottoQuantity)
+        val manualLottoTickets = getManualLottoTicket(manualLottoQuantity)
+        val autoLottoTickets = makeAutoLottoTicket(totalLottoQuantity - manualLottoQuantity)
+        val totalLottoTickets = getTotalLottoTicket(manualLottoTickets, autoLottoTickets)
+        return totalLottoTickets
     }
 
     private fun getValidWinningLotto(): Lotto {
