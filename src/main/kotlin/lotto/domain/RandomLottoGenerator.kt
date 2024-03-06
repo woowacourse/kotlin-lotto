@@ -1,10 +1,11 @@
 package lotto.domain
 
 import lotto.domain.model.Lotto
+import lotto.domain.model.LottoNumber
 
 class RandomLottoGenerator : LottoGenerator {
-    override fun make(minimumInclusive: Int, maximumInclusive: Int): Lotto {
-        val lottoNumbers = (minimumInclusive..maximumInclusive).toList()
+    override fun make(): Lotto {
+        val lottoNumbers = (LottoNumber.LOTTO_NUMBER_RANGE).toList()
         return Lotto.from(lottoNumbers.shuffled().take(LOTTO_SIZE))
     }
 

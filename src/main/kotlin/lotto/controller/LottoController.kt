@@ -71,7 +71,7 @@ class LottoController(
 
     private fun makeAutoLottoTicket(quantity: Int): LottoTickets {
         val lottoTickets = List(quantity) {
-            randomLottoGenerator.make(LottoNumber.MINIMUM_LOTTO_NUMBER, LottoNumber.MAXIMUM_LOTTO_NUMBER)
+            randomLottoGenerator.make()
         }
         return LottoTickets(lottoTickets)
     }
