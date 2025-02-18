@@ -2,7 +2,7 @@ package model
 
 class WinningLotto(
     private val winningNumbers: Lotto,
-    bonusNumber: LottoNumber,
+    private val bonusNumber: LottoNumber,
 ) {
     init {
         require(!winningNumbers.lottoNumbers.map { it.number }.contains(bonusNumber.number))
@@ -12,5 +12,9 @@ class WinningLotto(
         val winningNumbers = winningNumbers.lottoNumbers.map { it.number }.toSet()
         val lottoNumbers = lotto.lottoNumbers.map { it.number }.toSet()
         return winningNumbers.intersect(lottoNumbers).size
+    }
+
+    fun getMatchBonus(lotto: Lotto): Boolean {
+        return lotto.lottoNumbers.map { it.number }.contains(bonusNumber.number)
     }
 }
