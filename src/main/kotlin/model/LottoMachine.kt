@@ -5,6 +5,7 @@ import constants.LottoConstants
 class LottoMachine(purchaseAmount: Int) {
     init {
         require(purchaseAmount % LottoConstants.LOTTO_PRICE == 0)
+        require(purchaseAmount >= LottoConstants.LOTTO_PRICE)
     }
 
     fun generateLotto(): Lotto {

@@ -22,6 +22,22 @@ class LottoMachineTest {
         }
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = [1000, 2000, 3000, 4000, 5000])
+    fun `구입 금액은 1000원 이상이다`(purchaseAmount: Int) {
+        assertDoesNotThrow {
+            LottoMachine(purchaseAmount)
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [-1000, 100, 200, 300, 400, 500])
+    fun `구입 금액은 1000원 이상이 아니면 예외가 발생한다`(purchaseAmount: Int) {
+        assertThrows<IllegalArgumentException> {
+            LottoMachine(purchaseAmount)
+        }
+    }
+
     @Test
     fun `6개의 로또 번호를 생성한다`() {
         assertDoesNotThrow {
