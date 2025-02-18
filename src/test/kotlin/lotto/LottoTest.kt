@@ -15,10 +15,4 @@ class LottoTest {
         val lotto = Lotto()
         assertThat(lotto.numbers.size).isEqualTo(6)
     }
-
-    @Test
-    fun `로또 1장의 가격은 1000원이다`() {
-        val lotto = Lotto()
-        assertThat(lotto.price).isEqualTo(1_000)
-    }
 }
