@@ -20,4 +20,20 @@ class LottoTest {
             Lotto(lottoNumbers)
         }
     }
+
+    @Test
+    fun `로또 번호는 중복되지 않는다`() {
+        assertDoesNotThrow {
+            val lottoNumbers = (1..6).map { LottoNumber(it) }
+            Lotto(lottoNumbers)
+        }
+    }
+
+    @Test
+    fun `로또 번호가 중복되면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            val lottoNumbers = (1..6).map { LottoNumber(1) }
+            Lotto(lottoNumbers)
+        }
+    }
 }

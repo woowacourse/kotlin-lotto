@@ -1,6 +1,6 @@
 package model
 
-class LottoNumber(number: Int) {
+class LottoNumber(val number: Int) {
     init {
         require(number in MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER)
     }
