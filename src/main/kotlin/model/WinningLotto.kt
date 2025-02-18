@@ -1,6 +1,10 @@
 package model
 
 class WinningLotto(
-    val winningNumbers: List<LottoNumber>,
-    val bonusNumber: LottoNumber,
-)
+    winningNumbers: Lotto,
+    bonusNumber: LottoNumber,
+) {
+    init {
+        require(!winningNumbers.lottoNumbers.map { it.number }.contains(bonusNumber.number))
+    }
+}
