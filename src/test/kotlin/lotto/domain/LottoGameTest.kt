@@ -33,4 +33,20 @@ class LottoGameTest {
 
         assertThat(lottoGame.getSameNumberCount(number)).isEqualTo(Rank.THIRD)
     }
+
+    @Test
+    fun `구입한 로또들의 당첨 통계를 알 수 있다`() {
+        val number1: List<Int> = listOf(1, 2, 3, 4, 5, 6) // 5개 매치
+        val number2: List<Int> = listOf(2, 3, 4, 5, 6, 7) // 6개 매치
+        val number3: List<Int> = listOf(3, 4, 5, 6, 7, 45) // 5개 + 보너스볼 매치
+        val lottos: List<Lotto> = listOf(Lotto(number1), Lotto(number2), Lotto(number3))
+
+        val winningNumber: List<Int> = listOf(2, 3, 4, 5, 6, 7)
+        val winningBonusNumber: Int = 45
+
+        val lottoGame = LottoGame(winningNumber, winningBonusNumber)
+        lottoGame.matchLotto(lottos)
+
+        assertThat(lottoGame.winningStats).isEqualTo(listOf(1, 1, 1, 0, 0))
+    }
 }
