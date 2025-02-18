@@ -12,8 +12,8 @@ class PurchaseTest {
     }
 
     @Test
-    fun `구입 금액에 해당하는 로또를 발급한다`() {
+    fun `구입 금액에 맞는 로또 개수를 계산할 수 있다`() {
         val amountOfPurchase = 10000
-        assertThat(Purchase(amountOfPurchase).getAmountOfLottos(amountOfPurchase)).isEqualTo(10)
+        assertThat(Purchase(amountOfPurchase).calculateAmountOfLottos(amountOfPurchase)).isEqualTo(10)
     }
 }
