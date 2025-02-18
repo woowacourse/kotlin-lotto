@@ -1,3 +1,5 @@
+package lotto
+
 class Lotto {
     val price: Int = LOTTO_PRICE
     val numbers: List<Int> = (1..45).shuffled().take(6)
