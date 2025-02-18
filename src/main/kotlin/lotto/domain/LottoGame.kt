@@ -3,7 +3,7 @@ package lotto.domain
 import lotto.util.Rank
 
 class LottoGame(private val winningNumber: List<Int>, private val bonusNumber: Int) {
-    val winningStats: ArrayList<Int> = arrayListOf(0, 0, 0, 0, 0)
+    var winningStats: ArrayList<Int> = arrayListOf(0, 0, 0, 0, 0)
 
     fun getSameNumberCount(lottoNumber: List<Int>): Rank {
         return when (winningNumber.intersect(lottoNumber).size) {
@@ -27,5 +27,13 @@ class LottoGame(private val winningNumber: List<Int>, private val bonusNumber: I
             val state = getSameNumberCount(lotto.numbers)
             winningStats[state.index]++
         }
+    }
+
+    fun calculatePrize(): Long {
+        var totalPrize: Long = 0
+        winningStats.forEachIndexed { index, i ->
+            totalPrize += Rank.entries.find { it.index == index }?.price?.times(i)!!
+        }
+        return totalPrize
     }
 }
