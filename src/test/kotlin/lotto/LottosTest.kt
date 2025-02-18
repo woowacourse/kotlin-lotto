@@ -13,8 +13,8 @@ class Lottos(
             price: Int,
             vararg lottos: Lotto,
         ): Lottos {
-            require(price >= Lotto.PRICE) { "최소 구입 금액은 ${Lotto.PRICE}원입니다." }
-            val count = price / Lotto.PRICE
+            require(price >= Lotto.LOTTO_PRICE) { "최소 구입 금액은 ${Lotto.LOTTO_PRICE}원입니다." }
+            val count = price / Lotto.LOTTO_PRICE
             require(count == lottos.size) { "구입 금액과 로또의 개수가 일치하지 않습니다." }
             return Lottos(*lottos)
         }
@@ -27,7 +27,7 @@ class LottosTest {
         val wantLottoCount = 5
         val lottos: Lottos =
             Lottos.buy(
-                Lotto.PRICE * wantLottoCount,
+                Lotto.LOTTO_PRICE * wantLottoCount,
                 Lotto(1, 2, 3, 4, 5, 6),
                 Lotto(1, 2, 3, 4, 5, 6),
                 Lotto(1, 2, 3, 4, 5, 6),
