@@ -3,6 +3,8 @@ package lotto.domain
 import lotto.util.Rank
 
 class LottoGame(private val winningNumber: List<Int>, private val bonusNumber: Int) {
+    val winningStats: ArrayList<Int> = arrayListOf(0, 0, 0, 0, 0)
+
     fun getSameNumberCount(lottoNumber: List<Int>): Rank {
         return when (winningNumber.intersect(lottoNumber).size) {
             6 -> Rank.FIRST
@@ -18,5 +20,12 @@ class LottoGame(private val winningNumber: List<Int>, private val bonusNumber: I
             return Rank.SECOND
         }
         return Rank.THIRD
+    }
+
+    fun matchLotto(lottos: List<Lotto>) {
+        lottos.forEach { lotto ->
+            val state = getSameNumberCount(lotto.numbers)
+            winningStats[state.index]++
+        }
     }
 }

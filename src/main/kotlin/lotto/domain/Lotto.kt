@@ -1,5 +1,3 @@
 package lotto.domain
 
-class Lotto {
-    val numbers: List<Int> = (1..45).shuffled().take(6)
-}
+class Lotto(val numbers: List<Int>)
