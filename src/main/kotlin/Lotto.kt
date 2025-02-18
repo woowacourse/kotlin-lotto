@@ -1,10 +1,10 @@
 package lotto
 
-class Lotto(numbers: List<Int>) {
+class Lotto(val numbers: List<Int>) {
     init {
         require(numbers.size == LOTTO_SIZE) { INVALID_LOTTO_SIZE }
         require(numbers.all { it in (1..45) }) { INVALID_LOTTO_NUMBERS }
-        require(numbers.size == numbers.toSet().size){ DUPLICATED_LOTTO_NUMBERS }
+        require(numbers.size == numbers.toSet().size) { DUPLICATED_LOTTO_NUMBERS }
     }
 
     companion object {
