@@ -10,10 +10,8 @@ class Lotto(
     val numbers: Set<Int> = numbers.toSet()
 
     init {
-        require(numbers.size == 6) { "로또는 6개의 숫자를 갖고 있어야 합니다." }
-        require(this@Lotto.numbers.all { number: Int -> number in 1..45 }) {
-            "로또는 1부터 45 사이의 숫자만 가질 수 있습니다."
-        }
+        require(numbers.size == 6) { ERROR_MESSAGE_LOTTO_NEEDS_6_NUMBERS }
+        require(this@Lotto.numbers.all { number: Int -> number in 1..45 }) { ERROR_MESSAGE_LOTTO_NUMBER_SHOULD_BE_IN_1_TO_45 }
     }
 }
 
