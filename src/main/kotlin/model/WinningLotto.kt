@@ -1,5 +1,7 @@
 package model
 
+import Rank
+
 class WinningLotto(
     private val winningNumbers: Lotto,
     private val bonusNumber: LottoNumber,
@@ -8,13 +10,19 @@ class WinningLotto(
         require(!winningNumbers.lottoNumbers.map { it.number }.contains(bonusNumber.number))
     }
 
-    fun getCountOfMatch(lotto: Lotto): Int {
+    fun getRank(lotto: Lotto): Rank {
+        val countOfMatch = getCountOfMatch(lotto)
+        val matchBonus = getMatchBonus(lotto)
+        return Rank.valueOf(countOfMatch, matchBonus)
+    }
+
+    private fun getCountOfMatch(lotto: Lotto): Int {
         val winningNumbers = winningNumbers.lottoNumbers.map { it.number }.toSet()
         val lottoNumbers = lotto.lottoNumbers.map { it.number }.toSet()
         return winningNumbers.intersect(lottoNumbers).size
     }
 
-    fun getMatchBonus(lotto: Lotto): Boolean {
+    private fun getMatchBonus(lotto: Lotto): Boolean {
         return lotto.lottoNumbers.map { it.number }.contains(bonusNumber.number)
     }
 }
