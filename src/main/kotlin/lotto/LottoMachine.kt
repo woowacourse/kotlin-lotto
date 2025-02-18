@@ -1,10 +1,22 @@
 package lotto
 
-class LottoMachine {
-    private val numbers: List<Int> = (LottoNumber.MAX_VALUE..LottoNumber.MIN_VALUE).toList()
+import kotlin.collections.mutableListOf
 
-    fun makeLotto(): List<LottoNumber> {
-        return numbers.shuffled().take(LOTTO_NUMBER_AMOUNT).sorted().map { LottoNumber(it) }
+class LottoMachine(private val amount: Amount) {
+    private val numbers: List<Int> = (LottoNumber.MIN_VALUE..LottoNumber.MAX_VALUE).toList()
+
+    fun publishLottoTickets(): List<Lotto> {
+        val lottoTickets = mutableListOf<Lotto>()
+        repeat(amount.getLottoQuantity()) {
+            val lotto = publishLotto()
+            lottoTickets.add(lotto)
+        }
+        return lottoTickets
+    }
+
+    private fun publishLotto(): Lotto {
+        val lottoNumbers = numbers.shuffled().take(LOTTO_NUMBER_AMOUNT).sorted().map { LottoNumber(it) }
+        return Lotto(lottoNumbers)
     }
 
     companion object {
