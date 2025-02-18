@@ -26,8 +26,8 @@ class LottoMachineTest {
     fun `구입 금액만큼 로또 갯수를 반환한다`() {
         val amount = 5000
         val lottoMachine = LottoMachine(amount)
-        val lottoQuantity = lottoMachine.getLottoQuantity()
+        val lottos = lottoMachine.getLottos()
 
-        Assertions.assertEquals(5, lottoQuantity)
+        Assertions.assertEquals(5, lottos.lottos.size)
     }
 }
