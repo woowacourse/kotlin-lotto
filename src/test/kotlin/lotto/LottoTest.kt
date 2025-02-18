@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class Lotto(
-    vararg number: Int,
+    vararg numbers: Int,
 ) {
-    val numbers: Set<Int> = number.toSet()
+    val numbers: Set<Int> = numbers.toSet()
 
     init {
-        require(number.size == 6) { "로또는 6개의 숫자를 갖고 있어야 합니다." }
-        require(numbers.all { number: Int -> number in 1..45 }) {
+        require(numbers.size == 6) { "로또는 6개의 숫자를 갖고 있어야 합니다." }
+        require(this@Lotto.numbers.all { number: Int -> number in 1..45 }) {
             "로또는 1부터 45 사이의 숫자만 가질 수 있습니다."
         }
     }
