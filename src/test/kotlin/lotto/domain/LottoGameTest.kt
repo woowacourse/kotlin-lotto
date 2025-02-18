@@ -49,4 +49,16 @@ class LottoGameTest {
 
         assertThat(lottoGame.winningStats).isEqualTo(listOf(1, 1, 1, 0, 0))
     }
+
+    @Test
+    fun `당첨 통계로 당첨 금액을 계산한다`() {
+        val winningNumber: List<Int> = listOf(2, 3, 4, 5, 6, 7)
+        val winningBonusNumber: Int = 45
+
+        val lottoGame = LottoGame(winningNumber, winningBonusNumber)
+
+        lottoGame.winningStats = arrayListOf(1, 1, 1, 1, 1)
+
+        assertThat(lottoGame.calculatePrize()).isEqualTo(2_031_555_000)
+    }
 }
