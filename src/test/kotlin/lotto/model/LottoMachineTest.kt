@@ -1,5 +1,6 @@
 package lotto.model
 
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -19,5 +20,14 @@ class LottoMachineTest {
     @Test
     fun `입력한 금액이 1,000으로 나누어지지 않으면 실패한다`() {
         assertThrows<IllegalArgumentException> { LottoMachine(1001) }
+    }
+
+    @Test
+    fun `구입 금액만큼 로또 갯수를 반환한다`() {
+        val amount = 5000
+        val lottoMachine = LottoMachine(amount)
+        val lottoQuantity = lottoMachine.getLottoQuantity()
+
+        Assertions.assertEquals(5, lottoQuantity)
     }
 }
