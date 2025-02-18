@@ -24,4 +24,10 @@ class LottoTest {
         val nums = listOf(1, 2, 3, 4, 5, 46)
         assertThrows<IllegalArgumentException> { Lotto(nums) }
     }
+
+    @Test
+    fun `로또 번호는 중복되지 않는다`() {
+        val nums = listOf(1, 1, 3, 4, 5, 42)
+        assertThrows<IllegalArgumentException> { Lotto(nums) }
+    }
 }
