@@ -1,4 +1,4 @@
-package lotto
+package lotto.domain
 
 class LottoMachine {
     val price: Int = LOTTO_PRICE
