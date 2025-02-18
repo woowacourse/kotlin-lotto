@@ -9,8 +9,8 @@ class Lotto(
     val numbers: Set<Int> = numbers.toSet()
 
     init {
-        require(numbers.size == LOTTO_SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_NUMBERS }
-        require(numbers.all { number: Int -> number in LOTTO_NUMBER_MIN..LOTTO_NUMBER_MAX }) {
+        require(this.numbers.size == LOTTO_SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_NUMBERS }
+        require(this.numbers.all { number: Int -> number in LOTTO_NUMBER_MIN..LOTTO_NUMBER_MAX }) {
             ERROR_MESSAGE_LOTTO_NUMBER_SHOULD_BE_IN_1_TO_45
         }
     }
@@ -41,5 +41,10 @@ class LottoTest {
     fun `당첨 번호는 1부터 45 사이의 숫자여야 한다`() {
         assertThrows<IllegalArgumentException> { Lotto(0, 1, 2, 3, 4, 5) }
         assertThrows<IllegalArgumentException> { Lotto(1, 2, 3, 4, 5, 46) }
+    }
+
+    @Test
+    fun `로또 번호가 중복되면 안 된다`() {
+        assertThrows<IllegalArgumentException> { Lotto(1, 2, 3, 1, 2, 3) }
     }
 }
