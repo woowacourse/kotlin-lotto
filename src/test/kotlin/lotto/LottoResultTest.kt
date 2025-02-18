@@ -29,9 +29,11 @@ enum class LottoResult(
                 matchCount == 4 -> FOURTH
                 matchCount == 3 -> FIFTH
                 matchCount in 0..2 -> FAIL
-                else -> throw IllegalStateException("로또 비교에 실패했습니다.")
+                else -> throw IllegalStateException(ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT)
             }
         }
+
+        private const val ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT = "로또 비교에 실패했습니다."
     }
 }
 
