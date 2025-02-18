@@ -9,7 +9,7 @@ class LottoNumbers {
 
     fun generateNumber(): Int = (1..45).random()
 
-    fun generateNumbers(): List<Int> {
+    fun generateNumbers() {
         while (true) {
             val number = generateNumber()
             if (number !in numbers) {
@@ -17,6 +17,5 @@ class LottoNumbers {
             }
             if (numbers.size == 6) break
         }
-        return numbers
     }
 }
