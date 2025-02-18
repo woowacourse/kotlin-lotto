@@ -40,7 +40,7 @@ enum class LottoResult(
 class LottoResultTest {
     @Test
     fun `지난 주 당첨 번호를 참고하여 구매한 로또의 결과를 계산한다`() {
-        val wonLotto = WinningLotto(1, 2, 3, 4, 5, 6, bonusNumber = 7)
+        val wonLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), bonusNumber = 7)
 
         val expectedFirstLotto = Lotto(1, 2, 3, 4, 5, 6)
         val expectedSecondLotto = Lotto(1, 2, 3, 4, 5, 7)

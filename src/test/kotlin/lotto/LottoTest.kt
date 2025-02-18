@@ -17,13 +17,13 @@ class Lotto(
     }
 
     companion object {
+        const val LOTTO_PRICE = 1_000
+        const val LOTTO_NUMBER_MIN = 1
+        const val LOTTO_NUMBER_MAX = 45
+
         private const val LOTTO_SIZE = 6
-        private const val LOTTO_NUMBER_MIN = 1
-        private const val LOTTO_NUMBER_MAX = 45
         private const val ERROR_MESSAGE_LOTTO_NEEDS_6_NUMBERS = "로또는 6개의 숫자를 갖고 있어야 합니다."
         private const val ERROR_MESSAGE_LOTTO_NUMBER_SHOULD_BE_IN_1_TO_45 = "로또는 1부터 45 사이의 숫자만 가질 수 있습니다."
-
-        const val LOTTO_PRICE = 1_000
     }
 }
 
