@@ -2,7 +2,11 @@ package model
 
 import constants.LottoConstants
 
-class LottoMachine {
+class LottoMachine(purchaseAmount: Int) {
+    init {
+        require(purchaseAmount % LottoConstants.LOTTO_PRICE == 0)
+    }
+
     fun generateLotto(): Lotto {
         val lottoNumbers =
             (LottoConstants.LOTTO_RANGE).shuffled()
