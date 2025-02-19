@@ -19,7 +19,7 @@ class LottoController(
 
         outputView.printPurchasedLottos(lottos)
 
-        val winningNumber = inputView.getWinningNumber().split(", ").map { it.toInt() }
+        val winningNumber = getWinningNumber()
         val bonusNumber = inputView.getBonusNumber().toInt()
         val lottoResult = LottoResult(winningNumber, bonusNumber)
         lottoResult.matchLotto(lottos)
@@ -38,5 +38,11 @@ class LottoController(
 
     private fun parseToInt(input: String): Int {
         return input.toInt()
+    }
+
+    private fun getWinningNumber(): List<Int> {
+        val winningNumber = inputView.getWinningNumber().split(", ").map { it.trim() }
+        validator.validateWinningNumber(winningNumber)
+        return winningNumber.map { it.toInt() }
     }
 }
