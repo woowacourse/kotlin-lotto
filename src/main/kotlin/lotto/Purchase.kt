@@ -8,8 +8,8 @@ class Purchase(
         require(amountOfPurchase.toInt() % LOTTO_PRICE == 0) { "로또는 1000원 단위로 구입해주세요" }
     }
 
-    fun calculateAmountOfLottos(money: String): Int {
-        return money.toInt() / LOTTO_PRICE
+    fun calculateAmountOfLottos(): Int {
+        return amountOfPurchase.toInt() / LOTTO_PRICE
     }
 
     private companion object {
