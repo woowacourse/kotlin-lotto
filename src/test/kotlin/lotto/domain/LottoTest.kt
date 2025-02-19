@@ -18,4 +18,11 @@ class LottoTest {
         val lotto = Lotto(randomGenerator.getRandomNumberList())
         assertThat(lotto.numbers.size).isEqualTo(6)
     }
+
+    @Test
+    fun `로또 번호는 오름차순으로 정렬한다`() {
+        val randomGenerator = RandomGenerator()
+        val lotto = Lotto(randomGenerator.getRandomNumberList())
+        assertThat(lotto.numbers).isSorted
+    }
 }
