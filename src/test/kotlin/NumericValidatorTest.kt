@@ -1,4 +1,4 @@
-import lotto.validator.NumericValidator
+import validator.NumericValidator
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

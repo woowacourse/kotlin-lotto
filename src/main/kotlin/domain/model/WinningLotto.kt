@@ -1,4 +1,4 @@
-package lotto
+package domain.model
 
 class WinningLotto(
     lotto: Lotto,

@@ -1,14 +1,12 @@
-package lotto.domain
+package domain.generator
 
-import lotto.Lotto
-import lotto.domain.model.PurchaseLotto
-import lotto.domain.model.PurchasePrice
-import lotto.domain.model.PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
+import domain.model.Lotto
+import domain.model.PurchaseLotto
+import domain.model.PurchasePrice
 import java.util.TreeSet
-import kotlin.collections.shuffled
 
 class LottoGenerator(money: PurchasePrice) {
-    val purchaseLottoCount = money.value / STANDARD_AMOUNT_UNIT
+    private val purchaseLottoCount = money.value / PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
 
     fun makeLotto(): PurchaseLotto {
         return PurchaseLotto(List<Lotto>(purchaseLottoCount) { makeOneLotto() })

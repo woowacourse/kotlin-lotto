@@ -1,5 +1,5 @@
-import lotto.Lotto
-import lotto.WinningLotto
+import domain.model.Lotto
+import domain.model.WinningLotto
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.util.TreeSet

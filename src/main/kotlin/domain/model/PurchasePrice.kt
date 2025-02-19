@@ -1,6 +1,6 @@
-package lotto.domain.model
+package domain.model
 
-import lotto.Lotto.Companion.ERROR
+import domain.model.Lotto.Companion.ERROR
 
 @JvmInline
 value class PurchasePrice(val value: Int) {

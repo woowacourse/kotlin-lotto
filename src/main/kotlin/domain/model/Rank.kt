@@ -1,4 +1,4 @@
-package lotto
+package domain.model
 
 enum class Rank(val countOfMatch: Int, val winningMoney: Int, val requiresBonusMatch: Boolean = false) {
     FIRST(6, 2_000_000_000),

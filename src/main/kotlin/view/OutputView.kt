@@ -1,4 +1,4 @@
-package lotto.view
+package view
 
 class OutputView {
     fun printErrorMessage(message: String?) {

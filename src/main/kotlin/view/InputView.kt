@@ -1,4 +1,4 @@
-package lotto.view
+package view
 
 class InputView {
     fun readPurchasePrice(): String {
