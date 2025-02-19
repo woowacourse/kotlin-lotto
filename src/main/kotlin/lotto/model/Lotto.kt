@@ -1,7 +1,7 @@
 package lotto.model
 
 class Lotto(
-    numbers: List<Int>,
+    private val numbers: List<Int>,
 ) {
     init {
         validateLottoNumbersCount(numbers)
