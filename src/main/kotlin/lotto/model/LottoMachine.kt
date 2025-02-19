@@ -20,8 +20,8 @@ class LottoMachine(
 
     private fun getLottoNumbers(): List<Int> {
         val shuffledLottoNumbers = (1..45).shuffled()
-        val sortedLottoNumbers = shuffledLottoNumbers.sorted()
+        val selectedLottoNumbers = shuffledLottoNumbers.take(6)
 
-        return sortedLottoNumbers.take(6)
+        return selectedLottoNumbers.sorted()
     }
 }
