@@ -5,9 +5,14 @@ class LottoFactory {
 
     fun generateLottos(amount: Int): List<Lotto> {
         repeat(amount) {
-            val nums = listOf(1, 2, 3, 4, 5, 6)
+            val nums: List<Int> = generateLottoNumbers()
             lottos.add(Lotto(nums))
         }
         return lottos
+    }
+
+    fun generateLottoNumbers(): List<Int> {
+        val lottoNumber = (1..45).shuffled().take(6).sorted()
+        return lottoNumber
     }
 }
