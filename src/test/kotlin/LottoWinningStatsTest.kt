@@ -1,6 +1,6 @@
-import domain.Lotto
-import domain.LottoCalculator
-import domain.WinningLotto
+import domain.model.Lotto
+import domain.model.WinningLotto
+import domain.service.LottoCalculator
 import domain.value.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

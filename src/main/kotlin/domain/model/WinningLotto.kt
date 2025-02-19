@@ -1,7 +1,7 @@
-package domain
+package domain.model
 
-import Rank
 import domain.value.LottoNumber
+import enums.Rank
 
 class WinningLotto(
     private val winningNumbers: Lotto,
@@ -23,7 +23,5 @@ class WinningLotto(
         return winningNumbers.intersect(lottoNumbers).size
     }
 
-    private fun getMatchBonus(lotto: Lotto): Boolean {
-        return lotto.lottoNumbers.map { it.number }.contains(bonusNumber.number)
-    }
+    private fun getMatchBonus(lotto: Lotto): Boolean = lotto.lottoNumbers.map { it.number }.contains(bonusNumber.number)
 }

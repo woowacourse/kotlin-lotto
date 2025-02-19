@@ -1,4 +1,4 @@
-import domain.Lotto
+import domain.model.Lotto
 import domain.value.LottoNumber
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow

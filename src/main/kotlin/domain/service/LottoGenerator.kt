@@ -1,6 +1,7 @@
-package domain
+package domain.service
 
 import constants.LottoConstants
+import domain.model.Lotto
 import domain.value.LottoNumber
 
 class LottoGenerator {

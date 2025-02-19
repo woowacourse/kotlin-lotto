@@ -1,4 +1,4 @@
-package domain
+package domain.model
 
 import constants.LottoConstants
 import domain.value.LottoNumber

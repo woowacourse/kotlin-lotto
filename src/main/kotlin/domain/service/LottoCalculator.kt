@@ -1,8 +1,11 @@
-package domain
+package domain.service
 
-import Rank
 import constants.LottoConstants
+import domain.model.Lotto
+import domain.model.LottoWinningStats
+import domain.model.WinningLotto
 import domain.value.PurchaseAmount
+import enums.Rank
 
 class LottoCalculator(
     private val winningLotto: WinningLotto,

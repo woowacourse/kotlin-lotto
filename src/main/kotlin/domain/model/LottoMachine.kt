@@ -1,5 +1,6 @@
-package domain
+package domain.model
 
+import domain.service.LottoGenerator
 import domain.value.PurchaseQuantity
 
 class LottoMachine {

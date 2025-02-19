@@ -1,6 +1,7 @@
-import domain.Lotto
-import domain.WinningLotto
+import domain.model.Lotto
+import domain.model.WinningLotto
 import domain.value.LottoNumber
+import enums.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

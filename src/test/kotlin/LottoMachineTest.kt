@@ -1,5 +1,5 @@
-import domain.Lotto
-import domain.LottoMachine
+import domain.model.Lotto
+import domain.model.LottoMachine
 import domain.value.PurchaseAmount
 import domain.value.PurchaseQuantity
 import org.assertj.core.api.Assertions.assertThat
