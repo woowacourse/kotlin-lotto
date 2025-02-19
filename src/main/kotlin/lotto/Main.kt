@@ -1,7 +1,18 @@
 package lotto
 
-import lotto.view.View
+import lotto.controller.LottoController
 
 fun main() {
-    View.readPriceInput()
+    val lottoApplication = LottoApplication()
+    lottoApplication.run()
+}
+
+class LottoApplication {
+    val controller = LottoController()
+
+    fun run() {
+        controller.buyLottos()
+        controller.readWinningLotto()
+        controller.showResult()
+    }
 }
