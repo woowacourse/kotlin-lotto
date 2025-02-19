@@ -3,7 +3,6 @@ package domain.generator
 import domain.model.Lotto
 import domain.model.PurchaseLotto
 import domain.model.PurchasePrice
-import java.util.TreeSet
 
 class LottoGenerator(money: PurchasePrice) {
     private val purchaseLottoCount = money.value / PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
