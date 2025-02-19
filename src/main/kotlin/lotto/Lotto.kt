@@ -1,6 +1,6 @@
 package lotto
 
-class Lotto(private val numbers: List<LottoNumber>) {
+class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == 6) {
             COUNT_ERROR_MESSAGE
