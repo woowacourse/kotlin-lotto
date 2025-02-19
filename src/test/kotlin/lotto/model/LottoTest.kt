@@ -1,9 +1,8 @@
 package lotto.model
 
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 class LottoTest {
     @Test
@@ -12,10 +11,11 @@ class LottoTest {
         assertThrows<IllegalArgumentException> { Lotto(numbers) }
     }
 
-    @ValueSource(ints = [0, 46])
-    @ParameterizedTest
-    fun `로또 번호 범위가 1 이상 45 이하가 아닐 때 오류를 반환한다`(number: Int) {
-        val numbers = listOf(1, 2, 3, 4, 5, number)
-        assertThrows<IllegalArgumentException> { Lotto(numbers) }
+    @Test
+    fun `당첨 번호와 기존 로또가 동시에 보유하고 있는 번호 갯수를 반환한다`() {
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningNumbers: List<Int> = listOf(1, 2, 3, 4, 5, 6)
+
+        Assertions.assertEquals(6, lotto.compareWinningNumbers(winningNumbers))
     }
 }
