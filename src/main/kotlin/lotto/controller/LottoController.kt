@@ -22,9 +22,6 @@ class LottoController(
 
         val winningNumbers: List<Int> = inputView.inputWinningNumber()
         val bonusNumber: String = inputView.inputBonusNumber()
-        WinningLotto(Lotto(winningNumbers), bonusNumber)
-
-        // 로또 당첨 계산
-        println(lottos.compareWithWinningLotto(Lotto(winningNumbers)))
+        val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
     }
 }
