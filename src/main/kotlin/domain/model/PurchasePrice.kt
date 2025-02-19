@@ -5,7 +5,7 @@ import lotto.Lotto.Companion.ERROR
 @JvmInline
 value class PurchasePrice(val value: Int) {
     init {
-        require(value > 0){ INVALID_MINIMUM_PURCHASE_AMOUNT }
+        require(value > 0) { INVALID_MINIMUM_PURCHASE_AMOUNT }
         require(value % STANDARD_AMOUNT_UNIT == 0) { INVALID_THOUSAND_WON_UNIT }
     }
 
