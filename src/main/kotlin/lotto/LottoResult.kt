@@ -1,13 +1,8 @@
 package lotto
 
-class LottoResult(val amount: Int) {
-    val lottos = mutableListOf<Lotto>()
-
-    fun generateLottos(): List<Lotto> {
-        repeat(amount) {
-            val nums: List<Int> = LottoFactory().generateLottoNumbers()
-            lottos.add(Lotto(nums))
-        }
-        return lottos
+class LottoResult(val lottos: List<Lotto>) {
+    // 각각의 로또 비교하기
+    fun compareWithWinningLotto(winningLotto: Lotto): List<Int> {
+        return lottos.map { it.lottoNums.count { num -> num in winningLotto.lottoNums } }
     }
 }

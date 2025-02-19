@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.Lotto
 import lotto.LottoFactory
+import lotto.LottoResult
 import lotto.Purchase
 import lotto.WinningLotto
 import lotto.view.InputView
@@ -16,12 +17,14 @@ class LottoController(
         val amount = Purchase(price).calculateAmountOfLottos()
         outputView.printLottoAmount(amount)
 
-        val lottos: List<Lotto> = LottoFactory().generateLottos(amount)
+        val lottos: LottoResult = LottoFactory().generateLottos(amount)
         outputView.printLottos(lottos)
 
         val winningNumbers: List<Int> = inputView.inputWinningNumber()
         val bonusNumber: String = inputView.inputBonusNumber()
-
         WinningLotto(Lotto(winningNumbers), bonusNumber)
+
+        // 로또 당첨 계산
+        println(lottos.compareWithWinningLotto(Lotto(winningNumbers)))
     }
 }

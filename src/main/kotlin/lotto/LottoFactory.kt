@@ -1,18 +1,12 @@
 package lotto
 
-class LottoFactory() {
-    val lottos = mutableListOf<Lotto>()
-
+class LottoFactory {
     fun generateLottoNumbers(): List<Int> {
-        val lottoNumber = (1..45).shuffled().take(6).sorted()
-        return lottoNumber
+        return (1..45).shuffled().take(6).sorted()
     }
 
-    fun generateLottos(amount: Int): List<Lotto> {
-        repeat(amount) {
-            val nums: List<Int> = LottoFactory().generateLottoNumbers()
-            lottos.add(Lotto(nums))
-        }
-        return lottos
+    fun generateLottos(amount: Int): LottoResult {
+        val lottos = List(amount) { Lotto(generateLottoNumbers()) }
+        return LottoResult(lottos)
     }
 }
