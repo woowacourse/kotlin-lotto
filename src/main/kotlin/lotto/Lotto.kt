@@ -6,4 +6,8 @@ class Lotto(
     init {
         require(numbers.size == numbers.distinct().size) { "중복된 숫자가 존재합니다." }
     }
+
+    companion object {
+        const val PRICE = 1_000
+    }
 }
