@@ -61,7 +61,7 @@ class LottoController(
         retryWhenException(
             action = {
                 val input = inputView.readBonusNumber()
-                WinningLotto(winningNumbers, input)
+                WinningLotto(winningNumbers, LottoNumber(input))
             },
             onError = { outputView.printErrorMessage(it) },
         )

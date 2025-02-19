@@ -33,7 +33,7 @@ class WinningLottoTest {
         val lotto = createLotto(11, 22, 33, 44, 45, 7)
 
         assertThrows<IllegalArgumentException> {
-            WinningLotto(lotto, 7)
+            WinningLotto(lotto, LottoNumber(7))
         }.apply { assertThat(this).hasMessage("[ERROR] 보너스 번호와 로또 번호는 중복될 수 없습니다.") }
     }
 
@@ -52,7 +52,7 @@ class WinningLottoTest {
 
         val rank = mapOf(Rank.FIFTH to 1)
         val profitRate =
-            WinningLotto(Lotto(values), 10).getProfitRate(PurchasePrice(10_000), rank)
+            WinningLotto(Lotto(values), LottoNumber(10)).getProfitRate(PurchasePrice(10_000), rank)
 
         assertThat(profitRate).isEqualTo(0.5)
     }
@@ -65,6 +65,6 @@ class WinningLottoTest {
         vararg numbers: Int,
         bonus: Int,
     ): WinningLotto {
-        return WinningLotto(createLotto(*numbers), bonus)
+        return WinningLotto(createLotto(*numbers), LottoNumber(bonus))
     }
 }

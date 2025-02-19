@@ -1,20 +1,15 @@
 package domain.model
 
-import domain.model.LottoNumber.Companion.INVALID_LOTTO_NUMBERS
-import domain.service.LottoGenerator.Companion.LOTTO_MAX
-import domain.service.LottoGenerator.Companion.LOTTO_MIN
 import util.ErrorConstants.ERROR
 
 class WinningLotto(
     val winningNumbers: Lotto,
-    val bonusNumber: Int,
+    val bonusNumber: LottoNumber,
 ) {
     init {
-        require(bonusNumber !in winningNumbers.numbers.map { it.value }) {
+        require(bonusNumber.value !in winningNumbers.numbers.map { it.value }) {
             DUPLICATED_BONUS_NUMBER
         }
-
-        require(bonusNumber in LOTTO_MIN..LOTTO_MAX) { INVALID_LOTTO_NUMBERS }
     }
 
     fun getProfitRate(
@@ -43,7 +38,7 @@ class WinningLotto(
         val winningLottoNumbers = winningNumbers.numbers
 
         val lottoMatches = buyLotto.intersect(winningLottoNumbers).size
-        val isBonusMatched = bonusNumber in buyLotto.map { it.value }
+        val isBonusMatched = bonusNumber.value in buyLotto.map { it.value }
 
         val rank = Rank.valueOf(lottoMatches, isBonusMatched)
         return rank
