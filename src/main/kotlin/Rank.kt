@@ -14,11 +14,8 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int, val requiresBonusM
             countOfMatch: Int,
             matchBonus: Boolean,
         ): Rank {
-            if (matchBonus && countOfMatch == 5) {
-                return SECOND
-            }
             return entries.first {
-                it.countOfMatch == countOfMatch && it.requiresBonusMatch == false
+                it.countOfMatch == countOfMatch && it.requiresBonusMatch == matchBonus
             }
         }
     }
