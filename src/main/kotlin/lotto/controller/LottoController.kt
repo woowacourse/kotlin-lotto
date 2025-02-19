@@ -1,5 +1,7 @@
 package lotto.controller
 
+import lotto.Lotto
+import lotto.LottoFactory
 import lotto.Purchase
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -10,6 +12,10 @@ class LottoController(
 ) {
     fun run() {
         val price = inputView.inputPurchasePrice()
-        outputView.printLottoAmount(Purchase(price).calculateAmountOfLottos())
+        val amount = Purchase(price).calculateAmountOfLottos()
+        outputView.printLottoAmount(amount)
+
+        val lottos: List<Lotto> = LottoFactory().generateLottos(amount)
+        outputView.printLottos(lottos)
     }
 }
