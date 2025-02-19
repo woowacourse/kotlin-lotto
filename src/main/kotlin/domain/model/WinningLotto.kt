@@ -2,10 +2,10 @@ package domain.model
 
 class WinningLotto(
     lotto: Lotto,
-    bonusNumber: Int,
+    bonusNumber: BonusNumber,
 ) {
     init {
-        require(bonusNumber !in lotto.numbers) { DUPLICATED_BONUS_NUMBER }
+        require(bonusNumber.value !in lotto.numbers) { DUPLICATED_BONUS_NUMBER }
     }
 
     companion object {
