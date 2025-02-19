@@ -1,6 +1,6 @@
 package lotto.domain
 
-import lotto.RandomGenerator
+import lotto.generator.RandomGenerator
 
 class LottoMachine {
     val price: Int = LOTTO_PRICE
