@@ -18,4 +18,12 @@ class LottoTest {
 
         Assertions.assertEquals(6, lotto.compareWinningNumbers(winningNumbers))
     }
+
+    @Test
+    fun `기존 로또가 보너스 번호를 보유하고 있는지 여부를 반환한다`() {
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = 1
+
+        Assertions.assertTrue(lotto.isHaveBonusNumber(bonusNumber))
+    }
 }
