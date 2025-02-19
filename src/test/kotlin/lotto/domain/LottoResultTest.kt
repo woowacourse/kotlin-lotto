@@ -4,34 +4,32 @@ import lotto.util.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class LottoGameTest {
+class LottoResultTest {
     @Test
     fun `6개 숫자를 넣으면 일치한 숫자의 개수를 알 수 있다`() {
         val number: List<Int> = listOf(1, 2, 3, 4, 5, 6)
         val winningNumber: List<Int> = listOf(3, 4, 5, 6, 7, 8)
-        val lottoGame = LottoGame(winningNumber, 1)
+        val lottoGame = LottoResult(winningNumber, 1)
 
-        assertThat(lottoGame.getSameNumberCount(number)).isEqualTo(Rank.FOURTH)
+        assertThat(lottoGame.compareLotto(number)).isEqualTo(4)
     }
 
     @Test
-    fun `5개의 숫자가 일치하고 보너스 볼이 일치하면 2등을 반환한다`() {
+    fun `보너스 번호가 일치하면 true를 반환한다`() {
         val number: List<Int> = listOf(1, 2, 3, 4, 5, 6)
-        val winningNumber: List<Int> = listOf(2, 3, 4, 5, 6, 7)
-        val winningBonusNumber: Int = 1
-        val lottoGame = LottoGame(winningNumber, winningBonusNumber)
+        val winningNumber: List<Int> = listOf(3, 4, 5, 6, 7, 8)
+        val lottoGame = LottoResult(winningNumber, 1)
 
-        assertThat(lottoGame.getSameNumberCount(number)).isEqualTo(Rank.SECOND)
+        assertThat(lottoGame.checkBonusNumber(number)).isTrue()
     }
 
     @Test
-    fun `5개의 숫자가 일치하고 보너스 볼이 일치하지 않으면 3등을 반환한다`() {
+    fun `보너스 번호가 일치하지 않으면 false를 반환한다`() {
         val number: List<Int> = listOf(1, 2, 3, 4, 5, 6)
-        val winningNumber: List<Int> = listOf(2, 3, 4, 5, 6, 7)
-        val winningBonusNumber: Int = 45
-        val lottoGame = LottoGame(winningNumber, winningBonusNumber)
+        val winningNumber: List<Int> = listOf(3, 4, 5, 6, 7, 8)
+        val lottoGame = LottoResult(winningNumber, 45)
 
-        assertThat(lottoGame.getSameNumberCount(number)).isEqualTo(Rank.THIRD)
+        assertThat(lottoGame.checkBonusNumber(number)).isFalse()
     }
 
     @Test
@@ -44,10 +42,18 @@ class LottoGameTest {
         val winningNumber: List<Int> = listOf(2, 3, 4, 5, 6, 7)
         val winningBonusNumber: Int = 45
 
-        val lottoGame = LottoGame(winningNumber, winningBonusNumber)
+        val lottoGame = LottoResult(winningNumber, winningBonusNumber)
         lottoGame.matchLotto(lottos)
 
-        assertThat(lottoGame.winningStats).isEqualTo(listOf(1, 1, 1, 0, 0))
+        val correctWinningStats: Map<Rank, Int> =
+            mapOf(
+                Rank.FIRST to 1,
+                Rank.SECOND to 1,
+                Rank.THIRD to 1,
+                Rank.FOURTH to 0,
+                Rank.FIFTH to 0,
+            )
+        assertThat(lottoGame.winningStats).isEqualTo(correctWinningStats.toMutableMap())
     }
 
     @Test
@@ -55,9 +61,9 @@ class LottoGameTest {
         val winningNumber: List<Int> = listOf(2, 3, 4, 5, 6, 7)
         val winningBonusNumber: Int = 45
 
-        val lottoGame = LottoGame(winningNumber, winningBonusNumber)
+        val lottoGame = LottoResult(winningNumber, winningBonusNumber)
 
-        lottoGame.winningStats = arrayListOf(1, 1, 1, 1, 1)
+        lottoGame.winningStats = mutableMapOf(Rank.FIRST to 1, Rank.SECOND to 1, Rank.THIRD to 1, Rank.FOURTH to 1, Rank.FIFTH to 1)
 
         assertThat(lottoGame.calculatePrize()).isEqualTo(2_031_555_000)
     }
