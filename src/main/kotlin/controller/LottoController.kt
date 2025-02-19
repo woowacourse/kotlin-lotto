@@ -1,8 +1,11 @@
 package controller
 
 import domain.generator.LottoGenerator
+import domain.model.BonusNumber
+import domain.model.Lotto
 import domain.model.PurchaseLotto
 import domain.model.PurchasePrice
+import domain.model.WinningLotto
 import lotto.util.retryWhenException
 import validator.NumericValidator
 import view.InputView
@@ -16,6 +19,8 @@ class LottoController(
         val purchasePrice = getPurchasePrice()
         val lotto = buyLotto(purchasePrice)
         displayBuyLotto(lotto)
+        val winningNumbers = getWinningNumbers()
+        val winningLotto = getWinningLotto(winningNumbers)
     }
 
     fun getPurchasePrice(): PurchasePrice {
@@ -38,5 +43,27 @@ class LottoController(
     fun displayBuyLotto(lotto: PurchaseLotto) {
         outputView.printPurchasedLottoCount(lotto.values.size)
         outputView.printPurchasedLotto(lotto.toString())
+    }
+
+    fun getWinningNumbers(): Lotto {
+        return retryWhenException(
+            action = {
+                val input = inputView.readWinningNumbers()
+                Lotto(input.split(",").map { it.trim().toInt() })
+            },
+            onError = { outputView.printErrorMessage(it) },
+        )
+    }
+
+    fun getWinningLotto(winningNumbers: Lotto): WinningLotto {
+        return retryWhenException(
+            action = {
+                val input = inputView.readBonusNumber()
+                NumericValidator(input)
+                val bonusNumber = BonusNumber(input.toInt())
+                WinningLotto(winningNumbers, bonusNumber)
+            },
+            onError = { outputView.printErrorMessage(it) },
+        )
     }
 }
