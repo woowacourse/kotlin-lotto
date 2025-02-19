@@ -24,4 +24,11 @@ class LottoMachine(
 
         return selectedLottoNumbers.sorted()
     }
+
+    fun getProfitRate(countLottoByRank: Map<Rank, Int>): Float {
+        val totalProfit = countLottoByRank.entries.sumOf { it.key.winningMoney * it.value }
+        return formatProfitRate(totalProfit)
+    }
+
+    private fun formatProfitRate(totalProfit: Int): Float = totalProfit / amount.toFloat()
 }
