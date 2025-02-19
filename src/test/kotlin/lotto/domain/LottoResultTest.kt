@@ -67,4 +67,17 @@ class LottoResultTest {
 
         assertThat(lottoGame.calculatePrize()).isEqualTo(2_031_555_000)
     }
+
+    @Test
+    fun `당첨 금액과 구입 금액으로 수익률을 계산한다`() {
+        val totalPrize: Long = 5_000
+        val purchaseAmount: Int = 14_000
+
+        val winningNumber: List<Int> = listOf(2, 3, 4, 5, 6, 7)
+        val winningBonusNumber: Int = 45
+
+        val lottoResult = LottoResult(winningNumber, winningBonusNumber)
+
+        assertThat(lottoResult.calculateProfit(totalPrize, purchaseAmount)).isEqualTo(0.35)
+    }
 }
