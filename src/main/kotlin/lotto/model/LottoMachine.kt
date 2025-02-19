@@ -19,8 +19,7 @@ class LottoMachine(
     }
 
     private fun getLottoNumbers(): List<Int> {
-        val allLottoNumbers = (1..45).toList()
-        val shuffledLottoNumbers = allLottoNumbers.shuffled()
+        val shuffledLottoNumbers = (1..45).shuffled()
         val sortedLottoNumbers = shuffledLottoNumbers.sorted()
 
         return sortedLottoNumbers.take(6)
