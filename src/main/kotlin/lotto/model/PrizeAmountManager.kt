@@ -1,4 +1,4 @@
-package lotto
+package lotto.model
 
 class PrizeAmountManager {
     fun calculateAllAmount(rankList: List<Rank>): Int {

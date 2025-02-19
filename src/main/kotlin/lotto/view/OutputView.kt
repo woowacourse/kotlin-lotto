@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.Lotto
+import lotto.model.Lotto
 
 class OutputView {
     fun inputViewPrint(message: String) {

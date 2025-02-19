@@ -1,4 +1,4 @@
-package lotto
+package lotto.model
 
 class Amount(val money: Int) {
     init {
