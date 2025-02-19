@@ -47,4 +47,3 @@
 
 - 프로퍼티 `Lotto`을 가짐
 - 프로퍼티 `bonusNumber: Int`를 가짐
-

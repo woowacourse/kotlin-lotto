@@ -10,11 +10,11 @@ class LottosTest {
         val lottos: Lottos =
             Lottos.buy(
                 Lotto.LOTTO_PRICE * wantLottoCount,
-                Lotto(1, 2, 3, 4, 5, 6),
-                Lotto(1, 2, 3, 4, 5, 6),
-                Lotto(1, 2, 3, 4, 5, 6),
-                Lotto(1, 2, 3, 4, 5, 6),
-                Lotto(1, 2, 3, 4, 5, 6),
+                Lotto(setOf(1, 2, 3, 4, 5, 6)),
+                Lotto(setOf(1, 2, 3, 4, 5, 6)),
+                Lotto(setOf(1, 2, 3, 4, 5, 6)),
+                Lotto(setOf(1, 2, 3, 4, 5, 6)),
+                Lotto(setOf(1, 2, 3, 4, 5, 6)),
             )
         assertThat(lottos.lottos.size).isEqualTo(wantLottoCount)
     }

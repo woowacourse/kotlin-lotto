@@ -1,10 +1,8 @@
 package lotto.domain
 
 class Lotto(
-    vararg numbers: Int,
+    val numbers: Set<Int>,
 ) {
-    val numbers: Set<Int> = numbers.toSet()
-
     init {
         require(numbers.size == LOTTO_SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_NUMBERS }
         require(this.numbers.size == LOTTO_SIZE) { ERROR_MESSAGE_LOTTO_NUMBER_SHOULD_NOT_DUPLICATE }

@@ -18,7 +18,7 @@ class LottoController {
             Lottos.buy(
                 price = price,
                 *(
-                    lottoNumbers.map { lottoNumber: List<Int> -> Lotto(*lottoNumber.toIntArray()) }
+                    lottoNumbers.map { lottoNumber: List<Int> -> Lotto(lottoNumber.toSet()) }
                 ).toTypedArray(),
             )
         boughtLottos = lottos

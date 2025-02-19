@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test
 class LottoResultTest {
     @Test
     fun `지난 주 당첨 번호를 참고하여 구매한 로또의 결과를 계산한다`() {
-        val wonLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), bonusNumber = 7)
+        val wonLotto = WinningLotto(Lotto(setOf(1, 2, 3, 4, 5, 6)), bonusNumber = 7)
 
-        val expectedFirstLotto = Lotto(1, 2, 3, 4, 5, 6)
-        val expectedSecondLotto = Lotto(1, 2, 3, 4, 5, 7)
-        val expectedThirdLotto = Lotto(1, 2, 3, 4, 5, 45)
-        val expectedFourthLotto = Lotto(1, 2, 3, 4, 44, 45)
-        val expectedFifthLotto = Lotto(1, 2, 3, 43, 44, 45)
-        val expectedFailLotto = Lotto(8, 9, 10, 11, 12, 13)
+        val expectedFirstLotto = Lotto(setOf(1, 2, 3, 4, 5, 6))
+        val expectedSecondLotto = Lotto(setOf(1, 2, 3, 4, 5, 7))
+        val expectedThirdLotto = Lotto(setOf(1, 2, 3, 4, 5, 45))
+        val expectedFourthLotto = Lotto(setOf(1, 2, 3, 4, 44, 45))
+        val expectedFifthLotto = Lotto(setOf(1, 2, 3, 43, 44, 45))
+        val expectedFailLotto = Lotto(setOf(8, 9, 10, 11, 12, 13))
 
         assertThat(LottoResult.from(wonLotto = wonLotto, boughtLotto = expectedFirstLotto)).isEqualTo(LottoResult.FIRST)
         assertThat(
