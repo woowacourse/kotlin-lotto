@@ -1,6 +1,7 @@
-package model
+package domain
 
 import constants.LottoConstants
+import domain.value.LottoNumber
 
 class Lotto(val lottoNumbers: List<LottoNumber>) {
     init {

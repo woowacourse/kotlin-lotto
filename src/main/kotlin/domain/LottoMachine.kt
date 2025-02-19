@@ -1,6 +1,7 @@
-package model
+package domain
 
 import constants.LottoConstants
+import domain.value.LottoNumber
 
 class LottoMachine(private val purchaseAmount: Int) {
     private lateinit var lottos: Lottos

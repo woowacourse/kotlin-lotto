@@ -1,4 +1,4 @@
-package model
+package domain.value
 
 import constants.LottoConstants
 

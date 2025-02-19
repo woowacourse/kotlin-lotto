@@ -1,6 +1,7 @@
-package model
+package domain
 
 import Rank
+import domain.value.LottoNumber
 
 class WinningLotto(
     private val winningNumbers: Lotto,

@@ -1,4 +1,4 @@
-import model.LottoMachine
+import domain.LottoMachine
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
