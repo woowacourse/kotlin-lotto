@@ -1,6 +1,6 @@
 package lotto
 
-class Lotto(val numbers: List<LottoNumber>) {
+class Lotto(private val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == 6) {
             COUNT_ERROR_MESSAGE
@@ -14,6 +14,10 @@ class Lotto(val numbers: List<LottoNumber>) {
             SORT_ERROR_MESSAGE
         }
     }
+
+    fun countMatchingNumber(lotto: Lotto): Int = this.numbers.toSet().intersect(lotto.numbers.toSet()).size
+
+    fun checkBonusNumber(lottoNumber: LottoNumber): Boolean = this.numbers.contains(lottoNumber)
 
     companion object {
         private const val COUNT_ERROR_MESSAGE = "[ERROR] 로또 번호는 6개여야 합니다."
