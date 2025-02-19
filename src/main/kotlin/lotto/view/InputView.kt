@@ -1,7 +1,7 @@
 package lotto.view
 
 class InputView {
-    fun readLottoPurchaseAmount(): Int = readln().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER)
+    fun readLottoPurchaseAmount(): Int = readln().trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER)
 
     fun readWinningLottoNumbers(): List<Int> =
         readln()
