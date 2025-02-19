@@ -1,6 +1,6 @@
 package lotto
 
-class Winning(
+class WinningLotto(
     val winningLotto: Lotto,
     val bounusNumber: Int,
 ) {
