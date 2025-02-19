@@ -1,6 +1,6 @@
 package lotto.domain
 
-import lotto.RandomGenerator
+import lotto.generator.RandomGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
