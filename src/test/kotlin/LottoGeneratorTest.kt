@@ -1,5 +1,5 @@
-import domain.generator.LottoGenerator
 import domain.model.PurchasePrice
+import domain.service.LottoGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

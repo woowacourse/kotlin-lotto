@@ -1,4 +1,4 @@
-package domain.generator
+package domain.service
 
 import domain.model.Lotto
 import domain.model.PurchaseLotto

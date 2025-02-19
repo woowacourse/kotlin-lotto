@@ -1,8 +1,8 @@
 package domain.model
 
 class WinningLotto(
-    lotto: Lotto,
-    bonusNumber: BonusNumber,
+    val lotto: Lotto,
+    val bonusNumber: BonusNumber,
 ) {
     init {
         require(bonusNumber.value !in lotto.numbers) { DUPLICATED_BONUS_NUMBER }

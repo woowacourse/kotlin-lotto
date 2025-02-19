@@ -6,12 +6,12 @@ class InputView {
         return readln()
     }
 
-    fun readWinningNumbers(): String  {
+    fun readWinningNumbers(): String {
         println(MESSAGE_INPUT_WINNING_NUMBER)
         return readln()
     }
 
-    fun readBonusNumber(): String  {
+    fun readBonusNumber(): String {
         println(MESSAGE_INPUT_BONUS_NUMBER)
         return readln()
     }

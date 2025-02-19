@@ -1,11 +1,11 @@
 package controller
 
-import domain.generator.LottoGenerator
 import domain.model.BonusNumber
 import domain.model.Lotto
 import domain.model.PurchaseLotto
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
+import domain.service.LottoGenerator
 import lotto.util.retryWhenException
 import validator.NumericValidator
 import view.InputView
