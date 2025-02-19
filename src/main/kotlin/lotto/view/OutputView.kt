@@ -2,19 +2,21 @@ package lotto.view
 
 import lotto.domain.Lotto
 import lotto.util.Rank
-import kotlin.math.floor
 
 class OutputView {
-    fun printPurchasedLottoTickets(lottos: List<Lotto>) {
-        println(MESSAGE_BUY_LOTTO.format(lottos.size))
+    fun printPurchasedLottos(
+        count: Int,
+        lottos: List<Lotto>,
+    ) {
+        println(MESSAGE_BUY_LOTTO.format(count))
         lottos.forEach { lotto ->
-            println(lotto.getSortedLotto().map { it.toInt() }.joinToString(", ", "[", "]"))
+            println(lotto)
         }
     }
 
     fun printWinningStats(winningStats: Map<Rank, Int>) {
         println(MESSAGE_WINNING_STATS)
-        for ((state, count) in winningStats.toList().reversed()) {
+        for ((state, count) in winningStats) {
             printWinningStat(state, count)
         }
     }
@@ -23,7 +25,7 @@ class OutputView {
         state: Rank,
         count: Int,
     ) {
-        if (state == Rank.SECOND) {
+        if (state.countOfMatch == 2) {
             printWinningStatWithBonusBall(state, count)
         } else {
             printWinningStatWIthNoBonusBall(state, count)
@@ -45,15 +47,14 @@ class OutputView {
     }
 
     fun printProfit(profit: Double) {
-        val formattedProfit = floor(profit * 100) / 100
-        println(MESSAGE_PROFIT.format(formattedProfit))
+        println(MESSAGE_PROFIT.format(profit))
     }
 
     companion object {
         const val MESSAGE_BUY_LOTTO = "%d개를 구매했습니다."
-        const val MESSAGE_WINNING_STATS = "\n당첨 통계\n---------"
+        const val MESSAGE_WINNING_STATS = "당첨 통계\n---------"
         const val MESSAGE_MATCH_COUNT = "%d개 일치 (%d원)- %d개"
         const val MESSAGE_MATCH_COUNT_WITH_BONUS_BALL = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
-        const val MESSAGE_PROFIT = "총 수익률은 %.2f입니다."
+        const val MESSAGE_PROFIT = "총 수익률은 %lf입니다."
     }
 }
