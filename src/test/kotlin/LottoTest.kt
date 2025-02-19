@@ -36,4 +36,20 @@ class LottoTest {
             Lotto(lottoNumbers)
         }
     }
+
+    @Test
+    fun `로또 번호는 오름차순으로 정렬되어 있다`() {
+        assertDoesNotThrow {
+            val lottoNumbers = (1..6).map { LottoNumber(it) }
+            Lotto(lottoNumbers)
+        }
+    }
+
+    @Test
+    fun `로또 번호가 오름차순으로 정렬되어 있지 않으면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            val lottoNumbers = (1..6).map { LottoNumber(it) }.reversed()
+            Lotto(lottoNumbers)
+        }
+    }
 }
