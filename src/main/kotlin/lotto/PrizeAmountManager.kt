@@ -8,4 +8,11 @@ class PrizeAmountManager {
         }
         return amount
     }
+
+    fun calculateRate(
+        inputMoney: Int,
+        allAmount: Int,
+    ): Double {
+        return allAmount.toDouble() / inputMoney.toDouble()
+    }
 }
