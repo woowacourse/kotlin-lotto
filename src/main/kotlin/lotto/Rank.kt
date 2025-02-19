@@ -14,11 +14,11 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             matchBonus: Boolean,
         ): Rank {
             return when {
-                countOfMatch == 6 -> FIRST
-                countOfMatch == 5 && matchBonus -> SECOND
-                countOfMatch == 5 -> THIRD
-                countOfMatch == 4 -> FOURTH
-                countOfMatch == 3 -> FIFTH
+                countOfMatch == FIRST.countOfMatch -> FIRST
+                countOfMatch == SECOND.countOfMatch && matchBonus -> SECOND
+                countOfMatch == THIRD.countOfMatch -> THIRD
+                countOfMatch == FOURTH.countOfMatch -> FOURTH
+                countOfMatch == FIFTH.countOfMatch -> FIFTH
                 else -> MISS
             }
         }
