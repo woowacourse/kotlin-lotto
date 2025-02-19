@@ -13,7 +13,7 @@ class LottoGenerator(money: PurchasePrice) {
     }
 
     private fun makeOneLotto(): Lotto {
-        val newLotto = TreeSet<Int>((LOTTO_MIN..LOTTO_MAX).shuffled().take(6))
+        val newLotto = (LOTTO_MIN..LOTTO_MAX).shuffled().take(6)
         return Lotto(newLotto)
     }
 
