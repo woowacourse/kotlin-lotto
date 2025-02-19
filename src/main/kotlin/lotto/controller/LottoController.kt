@@ -10,6 +10,7 @@ class LottoController(
 ) {
     fun run() {
         val purchaseMoney = getPurchaseMoney()
+        val lottoCount = getLottoCount(purchaseMoney)
     }
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =
@@ -21,4 +22,10 @@ class LottoController(
             outputView.printErrorMessage(error.message ?: "")
             getPurchaseMoney()
         }
+
+    private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
+        val lottoCount = purchaseMoney.getLottoCount()
+        outputView.printLottoCount(lottoCount)
+        return lottoCount
+    }
 }
