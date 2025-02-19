@@ -19,9 +19,9 @@ class LottoController(
         val lottos: List<Lotto> = LottoFactory().generateLottos(amount)
         outputView.printLottos(lottos)
 
-        val winningNumbers: List<String> = inputView.inputWinningNumber()
+        val winningNumbers: List<Int> = inputView.inputWinningNumber()
         val bonusNumber: String = inputView.inputBonusNumber()
 
-        WinningLotto(winningNumbers, bonusNumber)
+        WinningLotto(Lotto(winningNumbers), bonusNumber)
     }
 }

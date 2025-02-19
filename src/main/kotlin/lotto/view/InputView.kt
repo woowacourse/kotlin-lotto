@@ -6,9 +6,9 @@ object InputView {
         return readlnOrNull() ?: ""
     }
 
-    fun inputWinningNumber(): List<String> {
+    fun inputWinningNumber(): List<Int> {
         println("지난 주 당첨 번호를 입력해 주세요.")
-        return readlnOrNull()?.split(",")?.map { it.trim() } ?: emptyList()
+        return readlnOrNull()?.split(",")?.map { it.trim().toInt() } ?: emptyList()
     }
 
     fun inputBonusNumber(): String {
