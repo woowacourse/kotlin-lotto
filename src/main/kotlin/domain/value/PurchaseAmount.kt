@@ -1,7 +1,7 @@
 package domain.value
 
 class PurchaseAmount(
-    amount: Int,
+    val amount: Int,
 ) {
     init {
         require(amount >= MINIMUM_PURCHASE_AMOUNT)

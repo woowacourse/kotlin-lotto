@@ -3,19 +3,21 @@ package domain
 import constants.LottoConstants
 import domain.value.LottoNumber
 
-class LottoMachine(private val purchaseAmount: Int) {
+class LottoMachine(
+    private val purchaseAmount: Int,
+) {
     private lateinit var lottos: Lottos
 
     init {
-        require(purchaseAmount % LottoConstants.LOTTO_PRICE == 0)
-        require(purchaseAmount >= LottoConstants.LOTTO_PRICE)
         initializeLottos()
     }
 
     fun generateLotto(): Lotto {
         val lottoNumbers =
-            (LottoConstants.LOTTO_RANGE).shuffled()
-                .subList(0, LottoConstants.NUMBER_OF_LOTTO_NUMBERS).map { LottoNumber(it) }
+            (LottoConstants.LOTTO_RANGE)
+                .shuffled()
+                .subList(0, LottoConstants.NUMBER_OF_LOTTO_NUMBERS)
+                .map { LottoNumber(it) }
         return Lotto(lottoNumbers)
     }
 
