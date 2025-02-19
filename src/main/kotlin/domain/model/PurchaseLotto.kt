@@ -1,5 +1,7 @@
-package lotto.domain.model
+package domain.model
 
-import lotto.Lotto
-
-class PurchaseLotto(val values: List<Lotto>)
+class PurchaseLotto(val values: List<Lotto>) {
+    override fun toString(): String {
+        return this.values.map { it.numbers }.joinToString("\n")
+    }
+}
