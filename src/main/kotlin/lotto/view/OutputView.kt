@@ -4,13 +4,10 @@ import lotto.domain.Lotto
 import lotto.util.Rank
 
 class OutputView {
-    fun printPurchasedLottos(
-        count: Int,
-        lottos: List<Lotto>,
-    ) {
-        println(MESSAGE_BUY_LOTTO.format(count))
+    fun printPurchasedLottos(lottos: List<Lotto>) {
+        println(MESSAGE_BUY_LOTTO.format(lottos.size))
         lottos.forEach { lotto ->
-            println(lotto)
+            println(lotto.numbers)
         }
     }
 
@@ -25,7 +22,7 @@ class OutputView {
         state: Rank,
         count: Int,
     ) {
-        if (state.countOfMatch == 2) {
+        if (state.name == "SECOND") {
             printWinningStatWithBonusBall(state, count)
         } else {
             printWinningStatWIthNoBonusBall(state, count)
@@ -52,9 +49,9 @@ class OutputView {
 
     companion object {
         const val MESSAGE_BUY_LOTTO = "%d개를 구매했습니다."
-        const val MESSAGE_WINNING_STATS = "당첨 통계\n---------"
+        const val MESSAGE_WINNING_STATS = "\n당첨 통계\n---------"
         const val MESSAGE_MATCH_COUNT = "%d개 일치 (%d원)- %d개"
         const val MESSAGE_MATCH_COUNT_WITH_BONUS_BALL = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
-        const val MESSAGE_PROFIT = "총 수익률은 %lf입니다."
+        const val MESSAGE_PROFIT = "총 수익률은 %.2f입니다."
     }
 }
