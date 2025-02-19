@@ -5,6 +5,6 @@ import lotto.view.InputView
 import lotto.view.OutputView
 
 fun main() {
-    val lottoController = LottoController(InputView(), OutputView())
+    val lottoController = LottoController(InputView(), OutputView(), LottoMachine())
     lottoController.run()
 }
