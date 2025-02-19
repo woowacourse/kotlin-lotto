@@ -9,8 +9,8 @@ class LottoNumber(
 
     companion object {
         private const val ERROR_OUT_OF_RANGE_NUMBERS = "로또 번호는 1 ~ 45 사이의 숫자입니다."
-        private const val MIN_NUMBER = 1
-        private const val MAX_NUMBER = 45
+        const val MIN_NUMBER = 1
+        const val MAX_NUMBER = 45
     }
 
     override fun equals(other: Any?): Boolean {
