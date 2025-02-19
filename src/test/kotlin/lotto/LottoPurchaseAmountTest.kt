@@ -1,7 +1,9 @@
 package lotto
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class LottoPurchaseAmountTest {
@@ -19,5 +21,16 @@ class LottoPurchaseAmountTest {
         assertThatIllegalArgumentException()
             .isThrownBy { LottoPurchaseAmount(money) }
             .withMessage("구입 금액은 1,000원 단위입니다.")
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["1_000:1", "2_000:2", "100_000:100"], delimiter = ':')
+    fun `로또 구입 금액에 따른 로또 개수를 반환한다`(
+        money: Int,
+        expectedLottoCount: Int,
+    ) {
+        assertThat(
+            LottoPurchaseAmount(money).getLottoCount(),
+        ).isEqualTo(expectedLottoCount)
     }
 }
