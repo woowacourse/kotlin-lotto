@@ -1,8 +1,13 @@
 package domain.value
 
+import kotlin.math.roundToInt
+
 class EarningRate(
-    val rate: Double,
+    rate: Double,
 ) {
+    val rate: Double = rate
+        get() = (field * 100.0).roundToInt() / 100.0
+
     init {
         require(rate >= MINIMUM_EARNING_RATE)
     }
