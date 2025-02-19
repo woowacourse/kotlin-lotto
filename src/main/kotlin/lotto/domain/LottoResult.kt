@@ -1,6 +1,7 @@
 package lotto.domain
 
 import lotto.util.Rank
+import kotlin.math.floor
 
 class LottoResult(private val winningNumber: List<Int>, private val bonusNumber: Int) {
     var winningStats: MutableMap<Rank, Int> =
@@ -43,5 +44,13 @@ class LottoResult(private val winningNumber: List<Int>, private val bonusNumber:
         }
 
         return totalPrize
+    }
+
+    fun calculateProfit(
+        totalPrize: Long,
+        purchaseAmount: Int,
+    ): Double {
+        val result = totalPrize / purchaseAmount.toDouble() * 100
+        return floor(result) / 100
     }
 }
