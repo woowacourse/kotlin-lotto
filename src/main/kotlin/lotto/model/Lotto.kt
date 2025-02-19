@@ -24,4 +24,10 @@ class Lotto(
 
         return numbers.count { existNumber -> winningNumbers.contains(existNumber) }
     }
+
+    fun isHaveBonusNumber(bonusNumber: Int): Boolean {
+        validateLottoNumbersRange(listOf(bonusNumber))
+
+        return numbers.contains(bonusNumber)
+    }
 }
