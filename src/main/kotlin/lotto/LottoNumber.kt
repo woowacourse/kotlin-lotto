@@ -12,4 +12,11 @@ class LottoNumber(
         private const val MIN_NUMBER = 1
         private const val MAX_NUMBER = 45
     }
+
+    override fun equals(other: Any?): Boolean {
+        other as LottoNumber
+        return number == other.number
+    }
+
+    override fun hashCode(): Int = number
 }

@@ -1,11 +1,11 @@
 package lotto
 
 class WinningLotto(
-    val winningNumber: WinningNumber,
-    val bonusNumber: BonusNumber,
+    val winningNumber: Lotto,
+    val bonusNumber: LottoNumber,
 ) {
     init {
-        require(winningNumber.numbers.contains(bonusNumber.number).not()) { ERROR_DUPLICATED_BONUS_NUMBER }
+        require(winningNumber.numbers.contains(bonusNumber).not()) { ERROR_DUPLICATED_BONUS_NUMBER }
     }
 
     companion object {
