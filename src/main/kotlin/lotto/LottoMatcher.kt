@@ -1,17 +1,22 @@
 package lotto
 
-class LottoMatcher {
-    fun calculateRank(
-        userLotto: Lotto,
-        winLotto: Lotto,
-        bonusNumber: LottoNumber,
-    ): Rank {
-        var matchCount = 0
-        var bonusMatch = false
-        for (lottoNumber in userLotto.numbers) {
-            if (winLotto.numbers.contains(lottoNumber)) matchCount++
+class LottoMatcher(
+    private val winningLotto: Lotto,
+    private val bonusNumber: LottoNumber,
+) {
+    init {
+        require(!winningLotto.checkBonusNumber(bonusNumber)) {
+            BONUS_DUPLICATE_MESSAGE
         }
-        if (userLotto.numbers.contains(bonusNumber)) bonusMatch = true
-        return Rank.valueOf(matchCount, bonusMatch)
+    }
+
+    fun calculateRank(publishedLotto: Lotto): Rank {
+        val matchCount = publishedLotto.countMatchingNumber(winningLotto)
+        val matchBonus = publishedLotto.checkBonusNumber(bonusNumber)
+        return Rank.valueOf(matchCount, matchBonus)
+    }
+
+    companion object {
+        private const val BONUS_DUPLICATE_MESSAGE = "[ERROR] 당첨 번호와 보너스 볼은 중복될 수 없습니다."
     }
 }
