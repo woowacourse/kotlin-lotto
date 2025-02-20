@@ -26,6 +26,10 @@ enum class Rank(
                 else -> entries.firstOrNull { it.matchCount == matchCount } ?: MISS
             }
 
-        private fun findSecondOrThird(isMatchedBonus: Boolean) = if (isMatchedBonus) SECOND else THIRD
+        private fun findSecondOrThird(isMatchedBonus: Boolean): Rank =
+            when (isMatchedBonus) {
+                SECOND.isMatchedBonus -> SECOND
+                else -> THIRD
+            }
     }
 }
