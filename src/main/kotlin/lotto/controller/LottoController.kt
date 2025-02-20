@@ -25,7 +25,7 @@ class LottoController {
         val lottoNumbers: List<Int> = View.readLottoNumbers()
         val lotto = Lotto(lottoNumbers.map { number: Int -> LottoNumber(number) }.toSet())
         val bonusNumber = LottoNumber(View.readBonusNumber())
-        this.winningLotto = WinningLotto(lotto, bonusNumber)
+        winningLotto = WinningLotto(lotto, bonusNumber)
     }
 
     fun showResult() {
