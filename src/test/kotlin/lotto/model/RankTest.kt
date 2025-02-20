@@ -31,6 +31,17 @@ class RankTest {
         Assertions.assertEquals(expectedRank, actualRank)
     }
 
+    @ValueSource(booleans = [true, false])
+    @ParameterizedTest
+    fun `3개가 맞은 상태에서 보너스 번호가 맞으면 5등이 반환된다`(matchBonus: Boolean) {
+        val expectedRank = Rank.FIFTH
+
+        val countOfMatch = 3
+        val actualRank = Rank.fromMatchResult(countOfMatch, matchBonus)
+
+        Assertions.assertEquals(expectedRank, actualRank)
+    }
+
     companion object {
         @JvmStatic
         fun countOfMatchCasesForRankTest(): Stream<Arguments> =

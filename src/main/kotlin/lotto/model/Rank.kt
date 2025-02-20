@@ -21,9 +21,15 @@ enum class Rank(
             if (isMiss(countOfMatch)) return MISS
 
             return entries.find { rank ->
-                rank.countOfMatch == countOfMatch && rank.matchBonus == matchBonus
+                if (isSecond(countOfMatch, matchBonus)) return SECOND
+                rank.countOfMatch == countOfMatch
             } ?: throw IllegalArgumentException("[ERROR] 유효하지 않은 당첨 결과입니다.")
         }
+
+        private fun isSecond(
+            countOfMatch: Int,
+            matchBonus: Boolean,
+        ): Boolean = countOfMatch == SECOND.countOfMatch && matchBonus
 
         private fun isMiss(countOfMatch: Int): Boolean = countOfMatch <= 2
     }
