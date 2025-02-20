@@ -3,8 +3,8 @@ package lotto.validator
 class InputValidator {
     fun validatePurchaseAmount(input: String) {
         val purchaseAmount = input.toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_INTEGER)
-        if (purchaseAmount % LOTTO_TICKET_PRICE != 0) throw IllegalArgumentException(ERROR_NOT_THOUSAND_UNIT)
-        if (purchaseAmount <= 0) throw IllegalArgumentException(ERROR_UNDER_ZERO)
+        if (purchaseAmount % LOTTO_TICKET_PRICE != REMAINING) throw IllegalArgumentException(ERROR_NOT_THOUSAND_UNIT)
+        if (purchaseAmount <= SMALL_CHANGE) throw IllegalArgumentException(ERROR_UNDER_ZERO)
     }
 
     fun validateWinningNumber(input: List<String>) {
@@ -12,7 +12,20 @@ class InputValidator {
         if (input.toSet().size != input.size) throw IllegalArgumentException(ERROR_NOT_DUPLICATE_NUMBER)
         if (input.map { it.toIntOrNull() }.contains(null)) throw IllegalArgumentException(ERROR_NOT_INTEGER)
         val winningNumber = input.map { it.toInt() }
-        if (!winningNumber.all { it in MIN_BOUND..MAX_BOUND }) throw IllegalArgumentException(ERROR_OUT_OF_RANGE)
+        if (!winningNumber.all { !checkInRange(it) }) throw IllegalArgumentException(ERROR_OUT_OF_RANGE)
+    }
+
+    fun validateBonusNumber(
+        input: String,
+        winningNumber: List<Int>,
+    ) {
+        val bonusNumber = input.toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_INTEGER)
+        if (winningNumber.contains(bonusNumber)) throw IllegalArgumentException(ERROR_NOT_DUPLICATE_NUMBER)
+        if (!checkInRange(bonusNumber)) throw IllegalArgumentException(ERROR_OUT_OF_RANGE)
+    }
+
+    private fun checkInRange(number: Int): Boolean {
+        return number in MIN_BOUND..MAX_BOUND
     }
 
     companion object {
@@ -27,5 +40,7 @@ class InputValidator {
         const val MIN_BOUND = 1
         const val MAX_BOUND = 45
         const val LOTTO_TICKET_PRICE = 1_000
+        const val REMAINING = 0
+        const val SMALL_CHANGE = 0
     }
 }
