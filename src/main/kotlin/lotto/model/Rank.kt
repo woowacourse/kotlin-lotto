@@ -29,7 +29,7 @@ enum class Rank(
         private fun isSecond(
             countOfMatch: Int,
             matchBonus: Boolean,
-        ): Boolean = countOfMatch == SECOND.countOfMatch && matchBonus
+        ): Boolean = countOfMatch == SECOND.countOfMatch && matchBonus == SECOND.matchBonus
 
         private fun isMiss(countOfMatch: Int): Boolean = countOfMatch <= 2
     }
