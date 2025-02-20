@@ -1,11 +1,11 @@
 package lotto.controller
 
-import lotto.Lotto
-import lotto.LottoMachine
-import lotto.LottoNumber
-import lotto.LottoPurchaseAmount
-import lotto.Lottos
-import lotto.WinningLotto
+import lotto.model.Lotto
+import lotto.model.LottoMachine
+import lotto.model.LottoNumber
+import lotto.model.LottoPurchaseAmount
+import lotto.model.Lottos
+import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
 

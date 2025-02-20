@@ -1,4 +1,4 @@
-package lotto
+package lotto.model
 
 class LottoPurchaseAmount(
     private val money: Int,

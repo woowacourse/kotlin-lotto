@@ -1,5 +1,6 @@
 package lotto
 
+import lotto.model.LottoNumber
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

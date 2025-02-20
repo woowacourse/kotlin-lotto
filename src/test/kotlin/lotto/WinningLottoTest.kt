@@ -1,5 +1,8 @@
 package lotto
 
+import lotto.model.Lotto
+import lotto.model.LottoNumber
+import lotto.model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.BeforeEach

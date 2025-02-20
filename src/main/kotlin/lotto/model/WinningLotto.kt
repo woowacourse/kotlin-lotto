@@ -1,4 +1,4 @@
-package lotto
+package lotto.model
 
 class WinningLotto(
     val winningNumber: Lotto,
