@@ -6,12 +6,12 @@ class Lottos(
     companion object {
         fun buy(
             price: Int,
-            vararg lottos: Lotto,
+            lottos: Set<Lotto>,
         ): Lottos {
             require(price >= Lotto.LOTTO_PRICE) { ERROR_MESSAGE_NOT_ENOUGH_MONEY }
             val count = price / Lotto.LOTTO_PRICE
             require(count == lottos.size) { ERROR_MESSAGE_NOT_MATCHED_MONEY_AND_LOTTOS_COUNT }
-            return Lottos(lottos.toSet())
+            return Lottos(lottos)
         }
 
         private const val ERROR_MESSAGE_NOT_ENOUGH_MONEY = "최소 구입 금액은 ${Lotto.LOTTO_PRICE}원입니다."

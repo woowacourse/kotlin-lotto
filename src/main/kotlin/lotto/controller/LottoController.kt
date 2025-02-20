@@ -17,9 +17,7 @@ class LottoController {
         val lottos: Lottos =
             Lottos.buy(
                 price = price,
-                *(
-                    lottoNumbers.map { lottoNumber: List<Int> -> Lotto(lottoNumber.toSet()) }
-                ).toTypedArray(),
+                lottos = lottoNumbers.map { lottoNumber: List<Int> -> Lotto(lottoNumber.toSet()) }.toSet(),
             )
         boughtLottos = lottos
         view.showLottos(lottos)
