@@ -1,6 +1,7 @@
 package lotto.domain.value
 
-class PurchaseAmount(
+@JvmInline
+value class PurchaseAmount(
     val amount: Int,
 ) {
     init {
