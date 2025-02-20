@@ -3,7 +3,7 @@ package lotto.view
 import lotto.Constants
 
 class InputView {
-    private fun validateAmount(amount: String): Int {
+    fun validateAmount(amount: String): Int {
         require(amount.toIntOrNull() != null) {
             IllegalArgumentException(ERROR_INVALID_AMOUNT)
         }
@@ -16,7 +16,7 @@ class InputView {
         return amount.toInt()
     }
 
-    private fun validateWinningNumbers(winningNumbers: List<String>): List<Int> {
+    fun validateWinningNumbers(winningNumbers: List<String>): List<Int> {
         require(winningNumbers.all { it.toIntOrNull() != null }) {
             IllegalArgumentException(ERROR_INVALID_WINNING_TYPE)
         }
