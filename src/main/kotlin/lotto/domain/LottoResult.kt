@@ -24,21 +24,45 @@ enum class LottoResult(
             wonLotto: WinningLotto,
             boughtLotto: Lotto,
         ): LottoResult {
-            val matchCount: Int = boughtLotto.numbers.count { number: Int -> number in wonLotto.numbers }
-            if (matchCount < entries.minus(FAIL).minOf { it.matchCount }) return FAIL
-            val bonusMatched: Boolean = boughtLotto.numbers.contains(wonLotto.bonusNumber)
+            if (isFailLotto(wonLotto, boughtLotto)) return FAIL
 
-            val sameMatchCountResults: List<LottoResult> =
-                entries.filter { entry: LottoResult -> entry.matchCount == matchCount }
+            val sameMatchCountResults: List<LottoResult> = findSameMatchCountResults(wonLotto, boughtLotto)
             if (sameMatchCountResults.size == 1) return sameMatchCountResults.first()
 
-            if (bonusMatched) {
+            if (bonusMatched(wonLotto, boughtLotto)) {
                 return sameMatchCountResults.find { entry: LottoResult -> entry.bonusMatched == BonusMatched.YES }
                     ?: throw IllegalStateException(ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT)
             }
             return sameMatchCountResults.find { entry: LottoResult -> entry.bonusMatched == BonusMatched.NO }
                 ?: throw IllegalStateException(ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT)
         }
+
+        private fun calculateMatchCount(
+            wonLotto: WinningLotto,
+            boughtLotto: Lotto,
+        ): Int = boughtLotto.numbers.count { number: Int -> number in wonLotto.numbers }
+
+        private fun isFailLotto(
+            wonLotto: WinningLotto,
+            boughtLotto: Lotto,
+        ): Boolean = calculateMatchCount(wonLotto, boughtLotto) < entries.minus(FAIL).minOf { it.matchCount }
+
+        private fun findSameMatchCountResults(
+            wonLotto: WinningLotto,
+            boughtLotto: Lotto,
+        ): List<LottoResult> =
+            entries.filter { entry: LottoResult ->
+                entry.matchCount ==
+                    calculateMatchCount(
+                        wonLotto,
+                        boughtLotto,
+                    )
+            }
+
+        private fun bonusMatched(
+            wonLotto: WinningLotto,
+            boughtLotto: Lotto,
+        ): Boolean = boughtLotto.numbers.contains(wonLotto.bonusNumber)
 
         private const val ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT = "로또 비교에 실패했습니다."
     }
