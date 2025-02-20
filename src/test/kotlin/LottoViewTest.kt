@@ -70,4 +70,29 @@ class LottoViewTest {
         assertThat(LottoView.checkValidBonusNum("6"))
             .isEqualTo(6)
     }
+
+    @Test
+    @DisplayName("  - 숫자로 변환할 수 없는 값을 입력받는다면 IllegalArgumentException를 반환하고, \"올바르지 않은 형식입니다\" 라는 메시지를 출력한다\n")
+    fun t3_1() {
+        assertThatThrownBy{ LottoView.checkValidBonusNum("11r") }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("올바르지 않은 형식입니다")
+    }
+
+    @Test
+    @DisplayName("  - 1부터 45 사이의 숫자를 입력받지 않는다면 IllegalArgumentException을 반환하고 \"1부터 45까지의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
+    fun t3_2() {
+        assertThatThrownBy{ LottoView.checkValidBonusNum("2345") }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("1부터 45까지의 숫자를 입력해주세요")
+    }
+
+    @Test
+    @DisplayName("  - 1부터 45 사이의 숫자를 입력받지 않는다면 IllegalArgumentException을 반환하고 \"1부터 45까지의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
+    fun t3_2_1() {
+        assertThatThrownBy{ LottoView.checkValidBonusNum("-1") }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("1부터 45까지의 숫자를 입력해주세요")
+    }
+
 }
