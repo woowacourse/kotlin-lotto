@@ -107,7 +107,7 @@ class OutputView {
         private const val INITIAL_LOTTO_RANK_COUNT = 0
         private const val DEFAULT_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치 (%d원)- %d개"
         private const val SECOND_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
-        private const val RATE_OF_RETURN_MESSAGE_FORMAT = "총 수익률을 %.2f입니다."
+        private const val RATE_OF_RETURN_MESSAGE_FORMAT = "총 수익률은 %.2f입니다."
         private const val RATE_OF_RETURN_IS_LOSS_MONEY_MESSAGE = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
     }
 }
