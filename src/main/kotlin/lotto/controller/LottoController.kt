@@ -29,8 +29,7 @@ class LottoController(
     private fun getPurchaseMoney(): LottoPurchaseAmount =
         try {
             outputView.printPurchaseAmountGuide()
-            val money = inputView.readLottoPurchaseAmount()
-            LottoPurchaseAmount(money)
+            inputView.readLottoPurchaseAmount()
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getPurchaseMoney()
@@ -51,8 +50,7 @@ class LottoController(
     private fun getWinningLottoNumbers(): Lotto =
         try {
             outputView.printWinningLottoNumbersOfLastWeekGuide()
-            val winningLottoNumbers = inputView.readWinningLottoNumbersOfLastWeek()
-            Lotto(winningLottoNumbers.map { number -> LottoNumber(number) }.toList())
+            inputView.readWinningLottoNumbersOfLastWeek()
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getWinningLottoNumbers()
@@ -69,8 +67,7 @@ class LottoController(
 
     private fun getBonusNumber(): LottoNumber {
         outputView.printBonusNumberGuide()
-        val bonusNumber = LottoNumber(inputView.readBonusNumber())
-        return bonusNumber
+        return inputView.readBonusNumber()
     }
 
     private fun processLottoStatistics(lottoStatistics: LottoStatistics) {
