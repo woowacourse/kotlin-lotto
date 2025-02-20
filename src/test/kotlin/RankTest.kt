@@ -26,4 +26,10 @@ class RankTest {
         val result = Rank.valueOf(4, false)
         assertThat(result).isEqualTo(Rank.FOURTH)
     }
+
+    @Test
+    fun `4개가 일치하고 보너스 번호도 일치하면 4등 순위가 반환된다`() {
+        val result = Rank.valueOf(4, true)
+        assertThat(result).isEqualTo(Rank.FOURTH)
+    }
 }
