@@ -1,4 +1,4 @@
-package lotto
+package lotto.value
 
 import lotto.domain.value.PurchaseAmount
 import lotto.domain.value.PurchaseQuantity

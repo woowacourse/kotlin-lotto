@@ -1,4 +1,4 @@
-package lotto
+package lotto.value
 
 import lotto.domain.value.EarningRate
 import org.assertj.core.api.Assertions.assertThat

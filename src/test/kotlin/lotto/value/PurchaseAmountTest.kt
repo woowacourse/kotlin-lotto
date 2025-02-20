@@ -1,4 +1,4 @@
-package lotto
+package lotto.value
 
 import lotto.domain.value.PurchaseAmount
 import org.junit.jupiter.api.assertThrows

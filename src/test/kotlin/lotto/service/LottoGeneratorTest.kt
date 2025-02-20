@@ -1,4 +1,4 @@
-package lotto
+package lotto.service
 
 import lotto.domain.service.LottoGenerator
 import org.junit.jupiter.api.Test
