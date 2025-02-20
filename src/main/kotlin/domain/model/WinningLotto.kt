@@ -16,6 +16,16 @@ class WinningLotto(
 
         require(bonusNumber in LOTTO_MIN..LOTTO_MAX) { INVALID_LOTTO_NUMBERS }
     }
+
+    fun calculate(purchaseLotto: List<Lotto>): LottoResult {
+        val rankResult = Rank.rankMap().toMutableMap()
+        purchaseLotto.forEach { lotto ->
+            val rank = getRank(lotto.numbers)
+            rankResult[rank] = rankResult.getOrDefault(rank, 0) + 1
+        }
+        return LottoResult(rankResult)
+    }
+
     private fun getRank(buyLotto: List<LottoNumber>): Rank {
         val winningLottoNumbers = winningNumbers.numbers
 
