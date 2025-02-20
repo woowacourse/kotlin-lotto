@@ -44,4 +44,10 @@ class Lotto(
 
         return numbers.contains(bonusNumber)
     }
+
+    companion object {
+        const val LOTTO_NUMBER_SIZE = 6
+        const val LOTTO_NUMBER_MIN_RANGE = 1
+        const val LOTTO_NUMBER_MAX_RANGE = 45
+    }
 }

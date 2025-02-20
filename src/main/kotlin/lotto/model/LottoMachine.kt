@@ -1,5 +1,9 @@
 package lotto.model
 
+import lotto.model.Lotto.Companion.LOTTO_NUMBER_MAX_RANGE
+import lotto.model.Lotto.Companion.LOTTO_NUMBER_MIN_RANGE
+import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
+
 class LottoMachine(
     private val amount: Int,
 ) {
@@ -9,18 +13,18 @@ class LottoMachine(
     }
 
     private fun validateAmountMinimumRange() {
-        require(amount >= 0) {
-            "[ERROR] 0원 이상의 금액으로 입력해 주세요. 입력값: $amount"
+        require(amount >= LOTTO_MIN_AMOUNT) {
+            "[ERROR] ${LOTTO_MIN_AMOUNT}원 이상의 금액으로 입력해 주세요. 입력값: $amount"
         }
     }
 
     private fun validateAmountUnit() {
-        require(amount % 1000 == 0) {
-            "[ERROR] 1,000원 단위의 금액으로 입력해 주세요. 입력값: $amount"
+        require(amount % LOTTO_EACH_AMOUNT == 0) {
+            "[ERROR] ${LOTTO_EACH_AMOUNT}원 단위의 금액으로 입력해 주세요. 입력값: $amount"
         }
     }
 
-    fun getLottoQuantity(): Int = amount / 1000
+    fun getLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT
 
     fun getLottos(lottoQuantity: Int): Lottos {
         val lottos = List<Lotto>(lottoQuantity) { Lotto(getLottoNumbers()) }
@@ -28,8 +32,8 @@ class LottoMachine(
     }
 
     private fun getLottoNumbers(): List<Int> {
-        val shuffledLottoNumbers = (1..45).shuffled()
-        val selectedLottoNumbers = shuffledLottoNumbers.take(6)
+        val shuffledLottoNumbers = (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE).shuffled()
+        val selectedLottoNumbers = shuffledLottoNumbers.take(LOTTO_NUMBER_SIZE)
 
         return selectedLottoNumbers.sorted()
     }
@@ -40,4 +44,9 @@ class LottoMachine(
     }
 
     private fun formatProfitRate(totalProfit: Int): Float = totalProfit / amount.toFloat()
+
+    companion object {
+        private const val LOTTO_MIN_AMOUNT = 0
+        private const val LOTTO_EACH_AMOUNT = 1000
+    }
 }
