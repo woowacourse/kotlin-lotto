@@ -42,7 +42,7 @@ class LottoController(
     }
 
     private fun getWinningNumber(): List<Int> {
-        val winningNumber = inputView.getWinningNumber().split(", ").map { it.trim() }
+        val winningNumber = inputView.getWinningNumber().split(",").map { it.trim() }
         validator.validateWinningNumber(winningNumber)
         return winningNumber.map { parseToInt(it) }
     }
