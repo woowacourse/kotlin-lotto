@@ -16,7 +16,7 @@ class LottoTest {
     }
 
     @ParameterizedTest
-    @MethodSource("lottoCasesForRankTest")
+    @MethodSource("lottoCasesForResultTest")
     fun `각 로또는 해당되는 당첨 번호에 맞게 랭크가 반환된다`(
         lottoNumbers: List<Int>,
         expectedRank: Rank,
@@ -44,7 +44,7 @@ class LottoTest {
 
     companion object {
         @JvmStatic
-        fun lottoCasesForRankTest(): Stream<Arguments> =
+        fun lottoCasesForResultTest(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(listOf(1, 2, 3, 4, 5, 6), Rank.FIRST),
                 Arguments.of(listOf(1, 2, 3, 4, 5, 8), Rank.THIRD),
