@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoRank
 import java.math.BigDecimal
 
@@ -8,8 +9,8 @@ class OutputView {
         println(PRINT_PURCHASE_LOTTO_COUNT_FORMAT.format(purchaseLottoCount))
     }
 
-    fun printPurchaseLottoNumbers(lottoNumbers: List<Int>) {
-        println(lottoNumbers)
+    fun printPurchaseLottoNumbers(lottoNumbers: List<LottoNumber>) {
+        println(lottoNumbers.map { it.number })
     }
 
     fun printWinningResults(ranks: List<LottoRank>) {
@@ -40,9 +41,9 @@ class OutputView {
     }
 
     private companion object {
-        const val PRINT_WINNING_RESULT_HEADER = "당첨 통계\n---------"
+        const val PRINT_WINNING_RESULT_HEADER = "\n당첨 통계\n---------"
         const val PRINT_PURCHASE_LOTTO_COUNT_FORMAT = "%s개 구매했습니다."
-        const val PRINT_WINNING_RESULT_FORMAT = "%s개 일치%s(%s원- %s개)"
+        const val PRINT_WINNING_RESULT_FORMAT = "%s개 일치%s(%s원) - %s개"
         const val PRINT_TOTAL_RETURNS_FORMAT = "총 수익률은 %s입니다.%s"
         const val RETURN_COMMENT = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
         const val BONUS_COMMENT = ", 보너스 볼 일치"
