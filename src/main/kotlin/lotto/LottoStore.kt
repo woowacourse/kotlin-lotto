@@ -15,6 +15,24 @@ class LottoStore(
 ) {
     private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
+    private fun generateLottoTicket(count: Int): LottoMachine {
+        val lottoTicket = LottoMachine(count)
+        lottoTicket.lottos.map {
+            outputView.printLotto(it)
+        }
+        return lottoTicket
+    }
+
+    private fun calculateResult(
+        lottoTicket: LottoMachine,
+        winningNumbers: List<Int>,
+        bonusNumber: Int,
+    ): LottoResult {
+        val winning = Lotto(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))
+        val result = LottoScanner(winning).getResult(lottoTicket.lottos)
+        return result
+    }
+
     private fun formattingWinningStatus(result: LottoResult): Map<Rank, Int> {
         val resultMap = mutableMapOf<Rank, Int>()
         Rank.entries.filter { it != Rank.MISS }.map { rank ->
@@ -27,14 +45,10 @@ class LottoStore(
         val amount = inputView.inputPurchaseAmount()
         val count = calculatePurchaseCount(amount)
         outputView.printPurchaseCount(count)
-        val lottoTicket = LottoMachine(count)
-        lottoTicket.lottos.map {
-            outputView.printLotto(it)
-        }
+        val lottoTicket = generateLottoTicket(count)
         val winningNumbers = inputView.inputWinningNumbers()
         val bonusNumber = inputView.inputBonusNumber()
-        val winning = Lotto(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))
-        val result = LottoScanner(winning).getResult(lottoTicket.lottos)
+        val result = calculateResult(lottoTicket, winningNumbers, bonusNumber)
         val formattedWinningStatus = formattingWinningStatus(result)
         outputView.printResult(formattedWinningStatus)
         outputView.printProfit(result.calculateProfit())
