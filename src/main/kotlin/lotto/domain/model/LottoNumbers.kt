@@ -3,8 +3,8 @@ package lotto.domain.model
 import lotto.ERROR_PREFIX
 import lotto.LOTTO_NUMBER_SIZE
 
-open class LottoNumbers {
-    protected fun validateLottoNumbers(numbers: List<LottoNumber>) {
+open class LottoNumbers(val numbers: List<LottoNumber>) {
+    init {
         require(numbers.size == LOTTO_NUMBER_SIZE) { INVALID_LOTTO_NUMBER_SIZE_MESSAGE }
         require(numbers.size == numbers.distinct().size) { DUPLICATE_WINNING_NUMBER_MESSAGE }
     }
