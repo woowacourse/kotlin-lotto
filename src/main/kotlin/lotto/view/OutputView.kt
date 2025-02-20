@@ -38,8 +38,11 @@ class OutputView {
 
     private fun printMatchBonus(matchBonus: Boolean): String = if (matchBonus) ", 보너스 볼 일치" else ""
 
-    fun printProfitRate(profitRate: Float) {
-        println("총 수익률은 ${profitRate.formatToTwoDecimal()}입니다.")
+    fun printProfitRate(
+        profitRate: Float,
+        profitDescription: String,
+    ) {
+        println("총 수익률은 ${profitRate.formatToTwoDecimal()}입니다.(기준이 1이기 때문에 결과적으로 $profitDescription(이)라는 의미임)")
     }
 
     private fun Float.formatToTwoDecimal() = "%.2f".format(this)

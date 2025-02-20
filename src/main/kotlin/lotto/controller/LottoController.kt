@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.model.LottoMachine
 import lotto.model.Lottos
+import lotto.model.ProfitStatus
 import lotto.model.Rank
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -89,6 +90,9 @@ class LottoController(
         lottoMachine: LottoMachine,
         lottoWinningResult: Map<Rank, Int>,
     ) {
-        outputView.printProfitRate(lottoMachine.getProfitRate(lottoWinningResult))
+        val profitRate = lottoMachine.getProfitRate(lottoWinningResult)
+        val profitStatus = ProfitStatus.fromProfitStatus(profitRate)
+
+        outputView.printProfitRate(profitRate, profitStatus.krDescription)
     }
 }
