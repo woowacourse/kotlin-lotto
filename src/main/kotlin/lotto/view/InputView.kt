@@ -16,18 +16,17 @@ object InputView {
 
     fun readWinningNumbers(): Lotto {
         val lottoInput: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
-        val wonLotto =
-            Lotto(
-                lottoInput
-                    .split(LOTTO_NUMBERS_DELIMITER)
-                    .map { number: String ->
-                        number.trim().toIntOrNull() ?: throw IllegalArgumentException(
-                            ERROR_MESSAGE_INVALID_WINNING_NUMBERS,
-                        )
-                    }.toSet(),
-            )
+        val wonLotto = Lotto(lottoInput.toLottoNumbers())
         return wonLotto
     }
+
+    private fun String.toLottoNumbers(): Set<Int> =
+        split(LOTTO_NUMBERS_DELIMITER)
+            .map { number: String ->
+                number.trim().toIntOrNull() ?: throw IllegalArgumentException(
+                    ERROR_MESSAGE_INVALID_WINNING_NUMBERS,
+                )
+            }.toSet()
 
     fun readBonusNumber(): Int {
         val bonusInput: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
