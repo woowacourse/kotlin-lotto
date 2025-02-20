@@ -2,11 +2,12 @@ package lotto.domain.model
 
 import lotto.domain.service.LottoCalculator
 import lotto.domain.value.LottoNumber
+import lotto.domain.value.PurchaseAmount
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class LottoWinningStatsTest {
+class LottoResultTest {
     private lateinit var winningLotto: WinningLotto
 
     @BeforeEach
@@ -24,10 +25,12 @@ class LottoWinningStatsTest {
         val lottos = mutableListOf(Lotto(thirdRankNumbers))
         repeat(13) { lottos.add(Lotto(missRankNumbers)) }
 
-        val lottoCalculator = LottoCalculator(winningLotto, lottos)
-        val winningStats = lottoCalculator.calculateWinningStats()
+        val purchaseAmount = PurchaseAmount(14000)
+        val purchaseDetail = PurchaseDetail(purchaseAmount, lottos)
+        val lottoCalculator = LottoCalculator()
+        val winningStats = lottoCalculator.calculateWinningStats(winningLotto, purchaseDetail)
 
-        val actualEarningRate = (5_000).toDouble() / 14000
+        val actualEarningRate = (5_000).toDouble() / purchaseAmount.amount
         assertThat(winningStats.calculateEarningRate().rate).isEqualTo(actualEarningRate)
     }
 }

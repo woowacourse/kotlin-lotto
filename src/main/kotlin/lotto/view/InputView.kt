@@ -1,7 +1,6 @@
 package lotto.view
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.WinningLotto
 import lotto.domain.value.LottoNumber
 import lotto.domain.value.PurchaseAmount
 import kotlin.runCatching
@@ -14,7 +13,7 @@ class InputView {
         return PurchaseAmount(inputMessage.toInt())
     }
 
-    fun readWinningLottoWithoutBonusNumber(): Lotto {
+    fun readWinningLottoNumbers(): Lotto {
         println(INPUT_WINNING_LOTTO)
         val inputMessage = readln()
         val lotto =
@@ -23,20 +22,16 @@ class InputView {
                     inputMessage.split(",").map { LottoNumber(it.toInt()) },
                 )
             }.getOrElse { throw IllegalArgumentException() }
-
         return lotto
     }
 
-    fun getWinningLottoWithBonusNumber(lotto: Lotto): WinningLotto {
+    fun readBonusNumber(): LottoNumber {
         println(INPUT_BONUS_NUMBER)
-        val winningLotto =
+        val bonusNumber =
             runCatching {
-                WinningLotto(
-                    lotto,
-                    LottoNumber(readln().toInt()),
-                )
+                LottoNumber(readln().toInt())
             }.getOrElse { throw IllegalArgumentException() }
-        return winningLotto
+        return bonusNumber
     }
 
     companion object {

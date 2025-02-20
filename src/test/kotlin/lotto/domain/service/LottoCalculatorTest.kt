@@ -1,8 +1,10 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
+import lotto.domain.model.PurchaseDetail
 import lotto.domain.model.WinningLotto
 import lotto.domain.value.LottoNumber
+import lotto.domain.value.PurchaseAmount
 import lotto.enums.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -23,8 +25,11 @@ class LottoCalculatorTest {
     fun `로또 1등이 한번 당첨되면 1등 당첨 횟수는 1이다`() {
         val firstRankNumbers = (1..6).map { LottoNumber(it) }
         val lottos = listOf(Lotto(firstRankNumbers))
-        val lottoCalculator = LottoCalculator(winningLotto, lottos)
-        val winningStats = lottoCalculator.calculateWinningStats()
+
+        val purchaseAmount = PurchaseAmount(1000)
+        val purchaseDetail = PurchaseDetail(purchaseAmount, lottos)
+        val lottoCalculator = LottoCalculator()
+        val winningStats = lottoCalculator.calculateWinningStats(winningLotto, purchaseDetail)
 
         assertThat(winningStats.winningStats[Rank.FIRST]).isEqualTo(1)
     }
@@ -34,8 +39,11 @@ class LottoCalculatorTest {
         val firstRankNumbers = (1..6).map { LottoNumber(it) }
         val missRankNumbers = (11..16).map { LottoNumber(it) }
         val lottos = listOf(Lotto(firstRankNumbers), Lotto(missRankNumbers))
-        val lottoCalculator = LottoCalculator(winningLotto, lottos)
-        val winningStats = lottoCalculator.calculateWinningStats()
+
+        val purchaseAmount = PurchaseAmount(2000)
+        val purchaseDetail = PurchaseDetail(purchaseAmount, lottos)
+        val lottoCalculator = LottoCalculator()
+        val winningStats = lottoCalculator.calculateWinningStats(winningLotto, purchaseDetail)
 
         assertThat(winningStats.winningStats[Rank.MISS]).isEqualTo(1)
     }

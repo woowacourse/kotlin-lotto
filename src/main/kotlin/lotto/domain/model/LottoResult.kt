@@ -4,7 +4,7 @@ import lotto.domain.value.EarningRate
 import lotto.domain.value.PurchaseAmount
 import lotto.enums.Rank
 
-class LottoWinningStats(
+class LottoResult(
     val winningStats: Map<Rank, Int>,
     private val purchaseAmount: PurchaseAmount,
 ) {
