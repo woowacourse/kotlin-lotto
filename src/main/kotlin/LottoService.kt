@@ -26,6 +26,7 @@ class LottoService(private val random:Random) {
 
     fun checkRankMany(manyLotto:List<List<Int>>, winningLotto: List<Int>, bonus: Int):Map<Rank,Int> {
         val rankMap = mutableMapOf<Rank, Int>()
+        for (rank in Rank.entries) rankMap.putIfAbsent(rank, 0)
         for (lotto in manyLotto) {
             val rank = checkRank(lotto, winningLotto, bonus)
             rankMap[rank] = rankMap.getOrDefault(rank, 0) + 1
@@ -33,14 +34,16 @@ class LottoService(private val random:Random) {
         return rankMap.toMap()
     }
 
-    fun getRate(rankMap:Map<Rank, Int>):String {
-        var total = 0
-        for (rank in rankMap.keys) {
-            total += rank.winningMoney * rankMap[rank]!!
-        }
+    companion object {
+        fun getRate(rankMap:Map<Rank, Int>):String {
+            var total = 0
+            for (rank in rankMap.keys) {
+                total += rank.winningMoney * rankMap[rank]!!
+            }
 
-        val sum = rankMap.values.sum() * 1000
-        if (sum == 0) return "0.0"
-        return String.format("%.2f", (total / sum).toDouble())
+            val sum = rankMap.values.sum() * 1000
+            if (sum == 0) return "0.0"
+            return String.format("%.2f", (total / sum).toDouble())
+        }
     }
 }

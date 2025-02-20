@@ -110,7 +110,7 @@ class LottoServiceTest {
         val winningLotto = listOf(1,2,3,4,5,6)
         val bonus = 7
         val rankMap = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
-        val result = lottoService.getRate(rankMap)
+        val result = LottoService.getRate(rankMap)
         assertThat(result).isEqualTo("25.00")
     }
 }
