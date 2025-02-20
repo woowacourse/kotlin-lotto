@@ -39,6 +39,8 @@ class OutputView {
     private fun printMatchBonus(matchBonus: Boolean): String = if (matchBonus) ", 보너스 볼 일치" else ""
 
     fun printProfitRate(profitRate: Float) {
-        println("총 수익률은 ${profitRate}입니다.")
+        println("총 수익률은 ${profitRate.formatToTwoDecimal()}입니다.")
     }
+
+    private fun Float.formatToTwoDecimal() = "%.2f".format(this)
 }
