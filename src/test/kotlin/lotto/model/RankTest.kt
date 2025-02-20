@@ -9,7 +9,7 @@ import java.util.stream.Stream
 
 class RankTest {
     @ParameterizedTest
-    @MethodSource("countOfMatchCaseForRankTest")
+    @MethodSource("countOfMatchCasesForRankTest")
     fun `당첨 번호와 중복되는 개수에 따라 알맞은 랭크가 2등을 제외하고 반환된다`(
         countOfMatch: Int,
         expectedRank: Rank,
@@ -33,7 +33,7 @@ class RankTest {
 
     companion object {
         @JvmStatic
-        fun countOfMatchCaseForRankTest(): Stream<Arguments> =
+        fun countOfMatchCasesForRankTest(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(6, Rank.FIRST),
                 Arguments.of(5, Rank.THIRD),
