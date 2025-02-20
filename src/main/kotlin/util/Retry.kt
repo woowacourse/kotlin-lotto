@@ -1,4 +1,4 @@
-package lotto.util
+package util
 
 fun <T> retryWhenException(
     action: () -> T,

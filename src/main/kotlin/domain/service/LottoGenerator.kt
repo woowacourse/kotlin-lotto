@@ -4,10 +4,11 @@ import domain.model.Lotto
 import domain.model.PurchaseLotto
 import domain.model.PurchasePrice
 
-class LottoGenerator(money: PurchasePrice) {
-    private val purchaseLottoCount = money.value / PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
-
+class LottoGenerator(
+    private val money: PurchasePrice,
+) {
     fun makeLotto(): PurchaseLotto {
+        val purchaseLottoCount = money.value / PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
         return PurchaseLotto(List<Lotto>(purchaseLottoCount) { makeOneLotto() })
     }
 

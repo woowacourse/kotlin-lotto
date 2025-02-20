@@ -23,7 +23,7 @@ class LottoResult(
         return ROUND.format(totalPrice / purchasePrice.value)
     }
 
-    fun getWinningMessage(
+    private fun getWinningMessage(
         rank: Rank,
         matchCount: Int,
     ): String =

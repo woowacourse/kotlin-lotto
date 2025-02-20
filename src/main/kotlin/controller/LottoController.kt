@@ -8,7 +8,7 @@ import domain.model.PurchasePrice
 import domain.model.WinningLotto
 import domain.service.LottoGenerator
 import domain.service.LottoMatchCalculator
-import lotto.util.retryWhenException
+import util.retryWhenException
 import validator.NumericValidator
 import view.InputView
 import view.OutputView
@@ -29,7 +29,7 @@ class LottoController(
         displayResult(lottoResult, profitRate)
     }
 
-    fun getPurchasePrice(): PurchasePrice =
+    private fun getPurchasePrice(): PurchasePrice =
         retryWhenException(
             action = {
                 val input = inputView.readPurchasePrice()
@@ -39,18 +39,18 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    fun buyLotto(money: PurchasePrice): PurchaseLotto {
+    private fun buyLotto(money: PurchasePrice): PurchaseLotto {
         val generator = LottoGenerator(money)
         val lotto = generator.makeLotto()
         return lotto
     }
 
-    fun displayBuyLotto(lotto: PurchaseLotto) {
+    private fun displayBuyLotto(lotto: PurchaseLotto) {
         outputView.printPurchasedLottoCount(lotto.values.size)
         outputView.printPurchasedLotto(lotto.toString())
     }
 
-    fun getWinningNumbers(): Lotto =
+    private fun getWinningNumbers(): Lotto =
         retryWhenException(
             action = {
                 val input = inputView.readWinningNumbers()
@@ -59,7 +59,7 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    fun getWinningLotto(winningNumbers: Lotto): WinningLotto =
+    private fun getWinningLotto(winningNumbers: Lotto): WinningLotto =
         retryWhenException(
             action = {
                 val input = inputView.readBonusNumber()
@@ -70,7 +70,7 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    fun displayResult(
+    private fun displayResult(
         lottoResult: LottoResult,
         profitRate: String,
     ) {

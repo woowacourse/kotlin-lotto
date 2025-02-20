@@ -7,8 +7,8 @@ import domain.model.Rank
 import domain.model.WinningLotto
 
 class LottoMatchCalculator(
-    val purchaseLotto: PurchaseLotto,
-    val winningLotto: WinningLotto,
+    private val purchaseLotto: PurchaseLotto,
+    private val winningLotto: WinningLotto,
 ) {
     fun calculate(): LottoResult {
         val result = LottoResult()
@@ -18,7 +18,7 @@ class LottoMatchCalculator(
         return result
     }
 
-    fun getRank(lotto: Lotto): Rank {
+    private fun getRank(lotto: Lotto): Rank {
         val buyLottoNumbers = lotto.numbers
         val winningLottoNumbers = winningLotto.lotto.numbers
 
