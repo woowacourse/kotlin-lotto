@@ -11,11 +11,11 @@ class LottoMatchCalculator(
     private val winningLotto: WinningLotto,
 ) {
     fun calculate(): LottoResult {
-        val result = LottoResult()
+        val rank = Rank.rankMap().toMutableMap()
         purchaseLotto.values.forEach {
-            result.result[getRank(it)] = result.result.getOrDefault(getRank(it), 0) + 1
+            rank[getRank(it)] = rank.getOrDefault(getRank(it), 0) + 1
         }
-        return result
+        return LottoResult(rank)
     }
 
     private fun getRank(lotto: Lotto): Rank {

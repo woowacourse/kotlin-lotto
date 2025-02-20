@@ -1,17 +1,14 @@
 package domain.model
 
 class LottoResult(
-    val result: MutableMap<Rank, Int> =
-        Rank.entries
-            .reversed()
-            .associateWith { 0 }
-            .toMutableMap(),
+    val result: Map<Rank, Int>,
 ) {
-    override fun toString(): String =
-        result
+    override fun toString(): String {
+        return result
             .map {
                 getWinningMessage(it.key, it.value)
             }.joinToString("\n")
+    }
 
     fun getProfitRate(purchasePrice: PurchasePrice): String {
         val totalPrice: Double =
@@ -26,12 +23,24 @@ class LottoResult(
     private fun getWinningMessage(
         rank: Rank,
         matchCount: Int,
-    ): String =
-        when (rank) {
+    ): String {
+        return when (rank) {
             Rank.MISS -> EMPTY_VALUE
-            Rank.SECOND -> MESSAGE_BONUS_BALL_MATCH.format(rank.countOfMatch, rank.winningMoney, matchCount)
-            else -> MESSAGE_EACH_RANK_RESULT.format(rank.countOfMatch, rank.winningMoney, matchCount)
+            Rank.SECOND ->
+                MESSAGE_BONUS_BALL_MATCH.format(
+                    rank.countOfMatch,
+                    rank.winningMoney,
+                    matchCount,
+                )
+
+            else ->
+                MESSAGE_EACH_RANK_RESULT.format(
+                    rank.countOfMatch,
+                    rank.winningMoney,
+                    matchCount,
+                )
         }
+    }
 
     companion object {
         const val EMPTY_VALUE = ""

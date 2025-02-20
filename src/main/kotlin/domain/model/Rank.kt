@@ -1,6 +1,10 @@
 package domain.model
 
-enum class Rank(val countOfMatch: Int, val winningMoney: Int, val requiresBonusMatch: Boolean = false) {
+enum class Rank(
+    val countOfMatch: Int,
+    val winningMoney: Int,
+    val requiresBonusMatch: Boolean = false,
+) {
     FIRST(6, 2_000_000_000),
     SECOND(5, 30_000_000, true),
     THIRD(5, 1_500_000),
@@ -10,6 +14,11 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int, val requiresBonusM
     ;
 
     companion object {
+        fun rankMap(): Map<Rank, Int> =
+            Rank.entries
+                .reversed()
+                .associateWith { 0 }
+
         fun valueOf(
             countOfMatch: Int,
             matchBonus: Boolean,
