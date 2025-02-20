@@ -14,16 +14,23 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun runLotto() {
-        val purchaseAmount = inputView.readPurchaseAmount()
-        val purchaseQuantity = PurchaseQuantity(purchaseAmount)
+        val purchaseQuantity = getPurchaseQuantity()
         outputView.printPurchaseQuantity(purchaseQuantity)
-        val lottoMachine = LottoMachine()
-        val lottos = lottoMachine.generateLottos(purchaseQuantity)
+        val lottos = getLottoByQuantity(purchaseQuantity)
         outputView.printLottos(lottos)
-        val winningLotto = getWinningLotto()
-        val lottoWinningStats = getLottoWInningStats(winningLotto, lottos)
+        val lottoWinningStats = getLottoWInningStats(lottos)
         outputView.printLottoStats(lottoWinningStats)
         outputView.printLottoEarningRate(lottoWinningStats.calculateEarningRate())
+    }
+
+    private fun getPurchaseQuantity(): PurchaseQuantity {
+        val purchaseAmount = inputView.readPurchaseAmount()
+        return PurchaseQuantity(purchaseAmount)
+    }
+
+    private fun getLottoByQuantity(purchaseQuantity: PurchaseQuantity): List<Lotto> {
+        val lottoMachine = LottoMachine()
+        return lottoMachine.generateLottos(purchaseQuantity)
     }
 
     private fun getWinningLotto(): WinningLotto {
@@ -31,10 +38,8 @@ class LottoController(
         return inputView.getWinningLottoWithBonusNumber(winningLottoWithoutBonus)
     }
 
-    private fun getLottoWInningStats(
-        winningLotto: WinningLotto,
-        lottos: List<Lotto>,
-    ): LottoWinningStats {
+    private fun getLottoWInningStats(lottos: List<Lotto>): LottoWinningStats {
+        val winningLotto = getWinningLotto()
         val lottoCalculator = LottoCalculator(winningLotto, lottos)
         return lottoCalculator.calculateWinningStats()
     }
