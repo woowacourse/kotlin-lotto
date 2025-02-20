@@ -10,13 +10,12 @@ import org.junit.jupiter.api.assertThrows
 
 class WinningLottoTest {
     private lateinit var winningNumbers: Lotto
-    private lateinit var bonusNumber: LottoNumber
+    private val bonusNumber = LottoNumber(45)
 
     @BeforeEach
     fun setUp() {
         val lottoNumbers = (1..6).map { LottoNumber(it) }
         winningNumbers = Lotto(lottoNumbers)
-        bonusNumber = LottoNumber(45)
     }
 
     @Test
