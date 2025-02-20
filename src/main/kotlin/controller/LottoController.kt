@@ -64,8 +64,7 @@ class LottoController(
             action = {
                 val input = inputView.readBonusNumber()
                 NumericValidator(input)
-                val bonusNumber = BonusNumber(input.toInt())
-                WinningLotto(winningNumbers, bonusNumber)
+                WinningLotto(winningNumbers, input.toInt())
             },
             onError = { outputView.printErrorMessage(it) },
         )
