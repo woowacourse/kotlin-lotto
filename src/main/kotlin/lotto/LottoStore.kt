@@ -13,9 +13,9 @@ class LottoStore(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {
-    fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
+    private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
-    fun formattingWinningStatus(result: LottoResult): Map<Rank, Int> {
+    private fun formattingWinningStatus(result: LottoResult): Map<Rank, Int> {
         val resultMap = mutableMapOf<Rank, Int>()
         Rank.entries.filter { it != Rank.MISS }.map { rank ->
             resultMap[rank] = result.getWinningStatus().getOrDefault(rank, 0)

@@ -1,7 +1,7 @@
 package lotto.model
 
 class LottoMachine(
-    val count: Int,
+    count: Int,
 ) {
     val lottos: List<Lotto> = generateLottos(count)
 
