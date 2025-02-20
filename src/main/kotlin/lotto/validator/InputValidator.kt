@@ -12,7 +12,7 @@ class InputValidator {
         if (input.toSet().size != input.size) throw IllegalArgumentException(ERROR_NOT_DUPLICATE_NUMBER)
         if (input.map { it.toIntOrNull() }.contains(null)) throw IllegalArgumentException(ERROR_NOT_INTEGER)
         val winningNumber = input.map { it.toInt() }
-        if (winningNumber.all { !checkInRange(it) }) throw IllegalArgumentException(ERROR_OUT_OF_RANGE)
+        if (!winningNumber.all { checkInRange(it) }) throw IllegalArgumentException(ERROR_OUT_OF_RANGE)
     }
 
     fun validateBonusNumber(
