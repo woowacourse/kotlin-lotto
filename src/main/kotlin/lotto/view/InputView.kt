@@ -1,5 +1,7 @@
 package lotto.view
 
+import lotto.Constants
+
 class InputView {
     private fun validateAmount(amount: String): Int {
         require(amount.toIntOrNull() != null) {
@@ -8,7 +10,7 @@ class InputView {
         require(amount.toInt() > ZERO) {
             IllegalArgumentException(ERROR_INVALID_OVER_ZERO)
         }
-        require(amount.toInt() % LOTTO_AMOUNT == ZERO) {
+        require(amount.toInt() % Constants.LOTTO_AMOUNT == ZERO) {
             IllegalArgumentException(ERROR_INVALID_DIVISION)
         }
         return amount.toInt()
@@ -50,7 +52,6 @@ class InputView {
         private const val ERROR_INVALID_WINNING_TYPE = "당첨번호는 정수를 입력해야 합니다."
 
         private const val ZERO = 0
-        private const val LOTTO_AMOUNT = 1_000
         private const val COMMA = ","
     }
 }

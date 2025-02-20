@@ -12,7 +12,7 @@ class LottoStore(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {
-    fun calculatePurchaseCount(amount: Int) = amount / 1000
+    fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
     fun formattingWinningStatus(result: LottoResult): Map<Rank, Int> {
         val resultMap = mutableMapOf<Rank, Int>()

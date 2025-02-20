@@ -1,11 +1,13 @@
 package lotto.model
 
+import lotto.Constants
+
 class Lotto(
     private val numbers: List<LottoNumber> = generateLotto(),
     private val bonusNumber: LottoNumber? = null,
 ) {
     init {
-        require(numbers.size == 6)
+        require(numbers.size == LOTTO_PICK_COUNT)
         require(numbers.size == numbers.toSet().size)
         require(!numbers.contains(bonusNumber))
     }
@@ -18,10 +20,12 @@ class Lotto(
 
     companion object {
         private fun generateLotto(): List<LottoNumber> =
-            (1..45)
+            (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
                 .shuffled()
-                .take(6)
+                .take(LOTTO_PICK_COUNT)
                 .sorted()
                 .map { LottoNumber(it) }
+
+        private const val LOTTO_PICK_COUNT = 6
     }
 }
