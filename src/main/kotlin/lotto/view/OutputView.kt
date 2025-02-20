@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.LottoResult
-import lotto.Rank
+import lotto.domain.LottoResult
+import lotto.domain.Rank
 
 object OutputView {
     fun printLottoAmount(amount: Int) {

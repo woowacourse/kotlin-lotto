@@ -1,10 +1,10 @@
 package lotto.controller
 
-import lotto.Lotto
-import lotto.LottoFactory
-import lotto.LottoResult
-import lotto.Purchase
-import lotto.WinningLotto
+import lotto.domain.Lotto
+import lotto.domain.LottoFactory
+import lotto.domain.LottoResult
+import lotto.domain.Purchase
+import lotto.domain.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
 
