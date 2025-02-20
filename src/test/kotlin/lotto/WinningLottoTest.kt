@@ -25,4 +25,9 @@ class WinningLottoTest {
     fun `당첨 번호는 보너스 번호와 중복되면 예외가 발생한다 `() {
         assertThrows<IllegalArgumentException> { WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), 1) }
     }
+
+    @Test
+    fun `보너스 번호는 1부터 45 범위 내에 있지 않으면 예외가 발생한다 `() {
+        assertThrows<IllegalArgumentException> { WinningLotto(Lotto(listOf(1, 2, 3, 4, 5, 6)), 46) }
+    }
 }
