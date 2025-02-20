@@ -1,6 +1,9 @@
 package lotto.model
 
-enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
+enum class Rank(
+    val countOfMatch: Int,
+    val winningMoney: Int,
+) {
     FIRST(6, 2_000_000_000),
     SECOND(5, 30_000_000),
     THIRD(5, 1_500_000),
@@ -9,19 +12,12 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
     MISS(0, 0),
     ;
 
-    private var count = 0
-        private set
-
-    fun increment() {
-        count++
-    }
-
     companion object {
         fun fromMatch(
             matchCount: Int,
             hasBonus: Boolean,
-        ): Rank {
-            return when {
+        ): Rank =
+            when {
                 matchCount == 6 -> FIRST
                 matchCount == 5 && hasBonus -> SECOND
                 matchCount == 5 -> THIRD
@@ -29,6 +25,5 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
                 matchCount == 3 -> FIFTH
                 else -> MISS
             }
-        }
     }
 }
