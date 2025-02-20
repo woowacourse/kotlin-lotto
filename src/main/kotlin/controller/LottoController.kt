@@ -18,14 +18,14 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val purchasePrice: PurchasePrice = getPurchasePrice()
+        val purchasePrice = getPurchasePrice()
         val lotto: PurchaseLotto = buyLotto(purchasePrice)
         displayBuyLotto(lotto)
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
+
         val lottoResult: LottoResult = LottoMatchCalculator(lotto, winningLotto).calculate()
         val profitRate = lottoResult.getProfitRate(purchasePrice)
-
         displayResult(lottoResult, profitRate)
     }
 
@@ -74,7 +74,7 @@ class LottoController(
         lottoResult: LottoResult,
         profitRate: String,
     ) {
-        outputView.printWinningResult(lottoResult, profitRate)
+        outputView.printWinningResult(lottoResult.toString(), profitRate)
         if (profitRate.toDouble() < 1) outputView.printLossMessage()
     }
 }

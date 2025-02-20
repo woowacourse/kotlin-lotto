@@ -1,7 +1,5 @@
 package view
 
-import domain.model.LottoResult
-
 class OutputView {
     fun printErrorMessage(message: String?) {
         println(message)
@@ -16,10 +14,11 @@ class OutputView {
     }
 
     fun printWinningResult(
-        lottoResult: LottoResult,
+        lottoResult: String,
         profitRate: String,
     ) {
-        println(lottoResult.toString())
+        print(MESSAGE_WINNING_RESULT)
+        println(lottoResult)
         print(MESSAGE_TOTAL_PROFIT_RATE.format(profitRate))
     }
 
@@ -28,7 +27,7 @@ class OutputView {
     }
 
     companion object {
-        const val MESSAGE_PURCHASE_LOTTO_COUNT = "%d개를 구매했습니다."
+        const val MESSAGE_PURCHASE_LOTTO_COUNT = "%d개를 구매했습니다.\n"
         const val MESSAGE_WINNING_RESULT = "당첨 통계\n---------"
         const val MESSAGE_LOSS = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
         const val MESSAGE_TOTAL_PROFIT_RATE = "총 수익률은 %s입니다."
