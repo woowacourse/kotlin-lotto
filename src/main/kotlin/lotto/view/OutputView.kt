@@ -23,6 +23,7 @@ class OutputView {
     }
 
     fun printWinningLottoNumbersOfLastWeekGuide() {
+        println()
         println(WINNING_LOTTO_NUMBERS_OF_LAST_WEEK_GUIDE_MESSAGE)
     }
 
@@ -35,6 +36,7 @@ class OutputView {
     }
 
     fun printLottoStatistics(lottoStatistics: Map<Rank, Int>) {
+        println()
         println(LOTTO_STATISTICS_TITLE)
         Rank.entries.reversed().drop(EXCLUDE_MISS_LANK).forEach { rank ->
             if (rank == Rank.SECOND) {
