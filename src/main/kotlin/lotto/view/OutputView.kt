@@ -32,10 +32,11 @@ class OutputView {
         countOfMatch: Int,
         matchBonus: Boolean,
     ) {
-        println("${requiredMatch}개 일치")
-        if (matchBonus) print(", 보너스 볼 일치")
-        print("(${profit}원)- ${countOfMatch}개")
+        print("${requiredMatch}개 일치${printMatchBonus(matchBonus)}")
+        println("(${profit}원)- ${countOfMatch}개")
     }
+
+    private fun printMatchBonus(matchBonus: Boolean): String = if (matchBonus) ", 보너스 볼 일치" else ""
 
     fun printProfitRate(profitRate: Float) {
         println("총 수익률은 ${profitRate}입니다.")

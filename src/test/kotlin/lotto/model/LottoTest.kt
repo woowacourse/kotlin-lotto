@@ -40,8 +40,8 @@ class LottoTest {
 
     companion object {
         @JvmStatic
-        fun lottoCasesForRankTest(): List<Pair<List<Int>, Rank>> {
-            return listOf(
+        fun lottoCasesForRankTest(): List<Pair<List<Int>, Rank>> =
+            listOf(
                 listOf(1, 2, 3, 4, 5, 6) to Rank.FIRST,
                 listOf(1, 2, 3, 4, 5, 8) to Rank.THIRD,
                 listOf(1, 2, 3, 4, 9, 10) to Rank.FOURTH,
@@ -50,6 +50,5 @@ class LottoTest {
                 listOf(1, 22, 23, 24, 25, 26) to Rank.MISS,
                 listOf(21, 22, 23, 24, 25, 26) to Rank.MISS,
             )
-        }
     }
 }

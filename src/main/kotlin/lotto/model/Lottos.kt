@@ -1,7 +1,7 @@
 package lotto.model
 
 class Lottos(
-    val lottos: List<Lotto>,
+    private val lottos: List<Lotto>,
 ) {
     fun countLottoByRank(
         winningNumbers: List<Int>,
@@ -16,4 +16,6 @@ class Lottos(
 
         return countResult
     }
+
+    fun getAllLottoNumbers(): List<List<Int>> = lottos.map { lotto -> lotto.numbers }
 }
