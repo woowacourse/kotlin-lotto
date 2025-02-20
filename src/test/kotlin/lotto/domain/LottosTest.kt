@@ -11,11 +11,11 @@ class LottosTest {
             Lottos.buy(
                 Lotto.LOTTO_PRICE * wantLottoCount,
                 setOf(
-                    Lotto(setOf(1, 2, 3, 4, 5, 6)),
-                    Lotto(setOf(1, 2, 3, 4, 5, 6)),
-                    Lotto(setOf(1, 2, 3, 4, 5, 6)),
-                    Lotto(setOf(1, 2, 3, 4, 5, 6)),
-                    Lotto(setOf(1, 2, 3, 4, 5, 6)),
+                    Lotto(setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()),
+                    Lotto(setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()),
+                    Lotto(setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()),
+                    Lotto(setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()),
+                    Lotto(setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()),
                 ),
             )
         assertThat(lottos.lottos.size).isEqualTo(wantLottoCount)

@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.Lottos
 import lotto.domain.WinningLotto
@@ -17,7 +18,11 @@ class LottoController {
         val lottos: Lottos =
             Lottos.buy(
                 price = price,
-                lottos = lottoNumbers.map { lottoNumber: List<Int> -> Lotto(lottoNumber.toSet()) }.toSet(),
+                lottos =
+                    lottoNumbers
+                        .map { lottoNumber: List<Int> ->
+                            Lotto(lottoNumber.map { number: Int -> LottoNumber(number) }.toSet())
+                        }.toSet(),
             )
         boughtLottos = lottos
         view.showLottos(lottos)

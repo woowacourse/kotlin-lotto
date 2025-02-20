@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 
 object InputView {
     private const val LOTTO_NUMBERS_DELIMITER = ","
@@ -20,12 +21,12 @@ object InputView {
         return wonLotto
     }
 
-    private fun String.toLottoNumbers(): Set<Int> =
+    private fun String.toLottoNumbers(): Set<LottoNumber> =
         split(LOTTO_NUMBERS_DELIMITER)
             .map { number: String ->
-                number.trim().toIntOrNull() ?: throw IllegalArgumentException(
-                    ERROR_MESSAGE_INVALID_WINNING_NUMBERS,
-                )
+                val number: Int =
+                    number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_WINNING_NUMBERS)
+                LottoNumber(number)
             }.toSet()
 
     fun readBonusNumber(): Int {

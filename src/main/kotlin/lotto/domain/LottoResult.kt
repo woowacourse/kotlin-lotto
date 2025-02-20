@@ -40,7 +40,7 @@ enum class LottoResult(
         private fun calculateMatchCount(
             wonLotto: WinningLotto,
             boughtLotto: Lotto,
-        ): Int = boughtLotto.numbers.count { number: Int -> number in wonLotto.numbers }
+        ): Int = boughtLotto.numbers.count { lottoNumber: LottoNumber -> lottoNumber.value in wonLotto.numbers }
 
         private fun isFailLotto(
             wonLotto: WinningLotto,

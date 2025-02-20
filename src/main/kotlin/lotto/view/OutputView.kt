@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.Lottos
 import kotlin.math.floor
@@ -26,7 +27,7 @@ object OutputView {
 
     fun showLottos(lottos: Lottos) {
         lottos.lottos.forEach { lotto: Lotto ->
-            println(lotto.numbers.sorted())
+            println(lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted())
         }
     }
 

@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.Lottos
 import lotto.domain.WinningLotto
@@ -29,7 +30,7 @@ object View {
         OutputView.requestWinningLotto()
         val winningLotto = InputView.readWinningNumbers()
         OutputView.requestBonusNumber()
-        val bonusNUmber = InputView.readBonusNumber()
-        return WinningLotto(winningLotto, bonusNUmber)
+        val bonusNumber = InputView.readBonusNumber()
+        return WinningLotto(winningLotto, LottoNumber(bonusNumber))
     }
 }

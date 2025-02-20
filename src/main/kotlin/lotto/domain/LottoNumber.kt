@@ -1,10 +1,10 @@
 package lotto.domain
 
 data class LottoNumber(
-    val number: Int,
+    val value: Int,
 ) {
     init {
-        require(number in Lotto.LOTTO_NUMBER_MIN..Lotto.LOTTO_NUMBER_MAX) { ERROR_MESSAGE_LOTTO_NUMBER_SHOULD_BE_IN_1_TO_45 }
+        require(value in Lotto.LOTTO_NUMBER_MIN..Lotto.LOTTO_NUMBER_MAX) { ERROR_MESSAGE_LOTTO_NUMBER_SHOULD_BE_IN_1_TO_45 }
     }
 
     companion object {
