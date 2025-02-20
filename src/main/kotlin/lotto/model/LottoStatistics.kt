@@ -11,7 +11,7 @@ class LottoStatistics(
         val lottoStatistics = mutableMapOf<Rank, Int>()
         lottos.lottoBundle.forEach { lotto ->
             val rank = winningLotto.findLottoRank(lotto)
-            lottoStatistics[rank] = lottoStatistics.getOrDefault(rank, INITIAL_VALUE) + INCREMENT_COUNT_UNIT
+            lottoStatistics[rank] = lottoStatistics.getOrDefault(rank, INITIAL_LOTTO_RANK_COUNT) + INCREMENT_COUNT_UNIT
         }
 
         return lottoStatistics.toMap()
@@ -25,7 +25,7 @@ class LottoStatistics(
     }
 
     private fun getTotalPrize(): Double {
-        var sum = 0.0
+        var sum = INITIAL_TOTAL_PRIZE
         lottoStatistics.forEach { (rank, count) ->
             sum += rank.prizeMoney * count
         }
@@ -36,7 +36,8 @@ class LottoStatistics(
     fun getIsLossMoney(): Boolean = getRateOfReturn() < 1
 
     companion object {
-        private const val INITIAL_VALUE = 0
+        private const val INITIAL_LOTTO_RANK_COUNT = 0
         private const val INCREMENT_COUNT_UNIT = 1
+        private const val INITIAL_TOTAL_PRIZE = 0.0
     }
 }
