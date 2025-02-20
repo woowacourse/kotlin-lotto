@@ -1,8 +1,8 @@
-package domain.model
+package lotto.domain.model
 
-import domain.value.EarningRate
-import domain.value.PurchaseAmount
-import enums.Rank
+import lotto.domain.value.EarningRate
+import lotto.domain.value.PurchaseAmount
+import lotto.enums.Rank
 
 class LottoWinningStats(
     val winningStats: Map<Rank, Int>,

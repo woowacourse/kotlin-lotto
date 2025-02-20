@@ -1,4 +1,6 @@
-import domain.value.LottoNumber
+package lotto
+
+import lotto.domain.value.LottoNumber
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

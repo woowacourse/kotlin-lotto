@@ -1,7 +1,7 @@
-package domain.model
+package lotto.domain.model
 
-import domain.service.LottoGenerator
-import domain.value.PurchaseQuantity
+import lotto.domain.service.LottoGenerator
+import lotto.domain.value.PurchaseQuantity
 
 class LottoMachine {
     private val lottoGenerator = LottoGenerator()

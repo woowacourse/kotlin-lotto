@@ -1,5 +1,7 @@
-import domain.value.PurchaseAmount
-import domain.value.PurchaseQuantity
+package lotto
+
+import lotto.domain.value.PurchaseAmount
+import lotto.domain.value.PurchaseQuantity
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

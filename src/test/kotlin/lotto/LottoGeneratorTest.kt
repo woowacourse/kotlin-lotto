@@ -1,4 +1,6 @@
-import domain.service.LottoGenerator
+package lotto
+
+import lotto.domain.service.LottoGenerator
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 

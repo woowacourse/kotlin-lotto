@@ -1,4 +1,4 @@
-package domain.value
+package lotto.domain.value
 
 import kotlin.math.roundToInt
 

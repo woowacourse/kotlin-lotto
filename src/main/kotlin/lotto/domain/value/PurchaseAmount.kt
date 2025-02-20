@@ -1,4 +1,4 @@
-package domain.value
+package lotto.domain.value
 
 class PurchaseAmount(
     val amount: Int,

@@ -1,8 +1,8 @@
-package domain.service
+package lotto.domain.service
 
-import constants.LottoConstants
-import domain.model.Lotto
-import domain.value.LottoNumber
+import lotto.constants.LottoConstants
+import lotto.domain.model.Lotto
+import lotto.domain.value.LottoNumber
 
 class LottoGenerator {
     fun generateLotto(): Lotto {

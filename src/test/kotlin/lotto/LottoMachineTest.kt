@@ -1,7 +1,9 @@
-import domain.model.Lotto
-import domain.model.LottoMachine
-import domain.value.PurchaseAmount
-import domain.value.PurchaseQuantity
+package lotto
+
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoMachine
+import lotto.domain.value.PurchaseAmount
+import lotto.domain.value.PurchaseQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

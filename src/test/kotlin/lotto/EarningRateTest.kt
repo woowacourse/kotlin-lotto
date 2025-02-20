@@ -1,10 +1,11 @@
-import domain.value.EarningRate
+package lotto
+
+import lotto.domain.value.EarningRate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import java.lang.IllegalArgumentException
 
 class EarningRateTest {
     @ParameterizedTest

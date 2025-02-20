@@ -1,6 +1,6 @@
-package domain.value
+package lotto.domain.value
 
-import constants.LottoConstants
+import lotto.constants.LottoConstants
 
 class PurchaseQuantity(
     purchaseAmount: PurchaseAmount,
