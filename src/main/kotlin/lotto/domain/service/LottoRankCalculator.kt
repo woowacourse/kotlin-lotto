@@ -12,7 +12,7 @@ class LottoRankCalculator {
         bonusNumber: BonusNumber,
     ): LottoRank {
         val matchCount = getMatchCount(lotto, winningNumbers)
-        val matchBonus = if (matchCount == 5) hasBonusNumber(lotto, bonusNumber) else false
+        val matchBonus = if (matchCount == LottoRank.SECOND.matchCount) hasBonusNumber(lotto, bonusNumber) else false
         return LottoRank.calculate(matchCount, matchBonus)
     }
 

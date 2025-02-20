@@ -15,7 +15,7 @@ class OutputView {
 
     fun printWinningResults(ranks: List<LottoRank>) {
         println(PRINT_WINNING_RESULT_HEADER)
-        LottoRank.entries.reversed().drop(1).forEach { lottoRank ->
+        LottoRank.entries.reversed().drop(DROP_MISS_RANK_INDEX).forEach { lottoRank ->
             printWinningResultFormat(lottoRank, ranks)
         }
     }
@@ -36,7 +36,7 @@ class OutputView {
     }
 
     fun printTotalReturns(totalReturns: BigDecimal) {
-        val returnComment = if (totalReturns < 1.toBigDecimal()) RETURN_COMMENT else ""
+        val returnComment = if (totalReturns < LOSS_THRESHOLD.toBigDecimal()) RETURN_COMMENT else ""
         println(PRINT_TOTAL_RETURNS_FORMAT.format(totalReturns, returnComment))
     }
 
@@ -47,5 +47,7 @@ class OutputView {
         const val PRINT_TOTAL_RETURNS_FORMAT = "총 수익률은 %s입니다.%s"
         const val RETURN_COMMENT = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
         const val BONUS_COMMENT = ", 보너스 볼 일치"
+        const val DROP_MISS_RANK_INDEX = 1
+        const val LOSS_THRESHOLD = 1
     }
 }
