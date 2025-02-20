@@ -23,11 +23,11 @@ class LottoController(
         val bonusNumber = getBonusNumber(winningNumber)
 
         val lottoResult = LottoResult(winningNumber, bonusNumber)
-        lottoResult.matchLotto(lottos)
+        val winningStats = lottoResult.matchLotto(lottos)
 
-        outputView.printWinningStats(lottoResult.winningStats)
+        outputView.printWinningStats(winningStats)
 
-        val prize = lottoResult.calculatePrize()
+        val prize = lottoResult.calculatePrize(winningStats)
         outputView.printProfit(lottoResult.calculateProfit(prize, purchaseAmount))
     }
 
