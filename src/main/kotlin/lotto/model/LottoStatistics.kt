@@ -33,7 +33,7 @@ class LottoStatistics(
         return sum
     }
 
-    fun getIsLossMoney(): Boolean = getRateOfReturn() < 1
+    fun getIsLossMoney(rateOfReturn: Double): Boolean = rateOfReturn < 1
 
     companion object {
         private const val INITIAL_LOTTO_RANK_COUNT = 0
