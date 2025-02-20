@@ -20,7 +20,7 @@ class InputView {
         val lotto =
             runCatching {
                 Lotto(
-                    inputMessage.split(",").map { LottoNumber(it.toInt()) },
+                    inputMessage.split(",").map { LottoNumber(it.trim().toInt()) }.sortedBy { it.number },
                 )
             }.getOrElse { throw IllegalArgumentException() }
 
