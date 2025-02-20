@@ -1,5 +1,6 @@
 package lotto
 
+import lotto.global.Rank
 import kotlin.random.Random
 
 class LottoService(private val random: Random) {

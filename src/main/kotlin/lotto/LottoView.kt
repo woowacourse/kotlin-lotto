@@ -1,10 +1,12 @@
 package lotto
 
+import lotto.global.Message
+import lotto.global.Rank
 import java.lang.IllegalArgumentException
 
 class LottoView {
     fun getLottoAmount(): Int {
-        println("구입금액을 입력해 주세요.")
+        println(Message.ASK_AMOUNT.msg)
         val userInput = checkLottoAmount(readln())
         println("${userInput}개를 구매했습니다.")
         return userInput
@@ -15,12 +17,12 @@ class LottoView {
     }
 
     fun getWinningLotto(): List<Int> {
-        println("지난 주 당첨 번호를 입력해 주세요.")
+        println(Message.ASK_WINNING_LOTTO.msg)
         return checkValidLotto(readln())
     }
 
     fun getBonusNum(): Int {
-        println("보너스 볼을 입력해 주세요.")
+        println(Message.ASK_BONUS_BALL.msg)
         return checkValidBonusNum(readln())
     }
 
@@ -45,32 +47,32 @@ class LottoView {
             try {
                 return input.toInt() / 1000
             } catch (e: NumberFormatException) {
-                throw IllegalArgumentException("올바르지 않은 형식입니다")
+                throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
             }
         }
 
         fun checkValidLotto(input: String): List<Int> {
             try {
                 var winningLotto = input.split(",").map { number -> number.toInt() }
-                if (winningLotto.size != 6) throw IllegalArgumentException("6개의 숫자를 입력해주세요")
+                if (winningLotto.size != 6) throw IllegalArgumentException(Message.ERR_NOT_SIX_ELEMENTS.msg)
                 winningLotto = winningLotto.filter { number -> number in 1..45 }
-                if (winningLotto.size != 6) throw IllegalArgumentException("1부터 45까지의 숫자를 입력해주세요")
+                if (winningLotto.size != 6) throw IllegalArgumentException(Message.ERR_NOT_IN_RANGE.msg)
                 winningLotto = winningLotto.toSet().toList()
-                if (winningLotto.size != 6) throw IllegalArgumentException("중복되지 않은 숫자를 입력해주세요")
+                if (winningLotto.size != 6) throw IllegalArgumentException(Message.ERR_ELEMENT_DUPLICATED.msg)
 
                 return winningLotto
             } catch (e: NumberFormatException) {
-                throw IllegalArgumentException("올바르지 않은 형식입니다")
+                throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
             }
         }
 
         fun checkValidBonusNum(input: String): Int {
             try {
                 val rawInput = input.toInt()
-                if (rawInput !in 1..45) throw IllegalArgumentException("1부터 45까지의 숫자를 입력해주세요")
+                if (rawInput !in 1..45) throw IllegalArgumentException(Message.ERR_NOT_IN_RANGE.msg)
                 return rawInput
             } catch (e: NumberFormatException) {
-                throw IllegalArgumentException("올바르지 않은 형식입니다")
+                throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
             }
         }
     }

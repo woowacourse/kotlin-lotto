@@ -1,7 +1,7 @@
 package lottoTest
 
 import lotto.LottoService
-import lotto.Rank
+import lotto.global.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
