@@ -30,4 +30,22 @@ class LottoTest {
         val nums = listOf(1, 1, 3, 4, 5, 42)
         assertThrows<IllegalArgumentException> { Lotto(nums) }
     }
+
+    @Test
+    fun `자동 생성된 로또와 당첨 번호를 비교할 수 있다`() {
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 9))
+        val result = lotto.compareWithWinningLotto(winningLotto)
+
+        assertThat(result).isEqualTo(5)
+    }
+
+    @Test
+    fun `자동 생성된 로또와 보너스 번호를 비교할 수 있다`() {
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = 3
+        val result = lotto.compareWithBonusNumber(bonusNumber)
+
+        assertThat(result).isTrue()
+    }
 }
