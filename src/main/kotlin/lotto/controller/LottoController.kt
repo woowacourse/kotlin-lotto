@@ -66,26 +66,23 @@ class LottoController(
         val lottoWinningResult = lottos.countLottoByRank(lastWeekWinningNumbers, bonusNumber)
         outputView.printWinningResultTitle()
         lottoWinningResult.forEach { (rank, count) ->
-            getLottoWinningResult(rank, count)
+            displayLottoWinningResult(rank, count)
         }
         return lottoWinningResult
     }
 
-    private fun getLottoWinningResult(
+    private fun displayLottoWinningResult(
         rank: Rank,
         count: Int,
     ) {
-        when (rank) {
-            Rank.MISS -> Unit
-            else -> {
-                outputView.printWinningResult(
-                    requiredMatch = rank.countOfMatch,
-                    profit = rank.winningMoney,
-                    matchBonus = rank.matchBonus,
-                    countOfMatch = count,
-                )
-            }
-        }
+        if (rank == Rank.MISS) return
+
+        outputView.printWinningResult(
+            requiredMatch = rank.countOfMatch,
+            profit = rank.winningMoney,
+            matchBonus = rank.matchBonus,
+            countOfMatch = count,
+        )
     }
 
     private fun displayLottoWinningProfit(
