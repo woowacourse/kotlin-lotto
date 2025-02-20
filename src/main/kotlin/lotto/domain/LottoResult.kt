@@ -18,7 +18,7 @@ class LottoResult(
 
     fun calculateProfitRate(): Double {
         val totalWinningMoney = getRanks().sumOf { it.winningMoney }
-        val totalCost = lottos.size * 1000
+        val totalCost = lottos.size * Purchase.LOTTO_PRICE
         return totalWinningMoney.toDouble() / totalCost
     }
 }

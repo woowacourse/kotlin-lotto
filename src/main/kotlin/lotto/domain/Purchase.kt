@@ -12,7 +12,7 @@ class Purchase(
         return amountOfPurchase.toInt() / LOTTO_PRICE
     }
 
-    private companion object {
+    companion object {
         const val LOTTO_PRICE = 1000
     }
 }
