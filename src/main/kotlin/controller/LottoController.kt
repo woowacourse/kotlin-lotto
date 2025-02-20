@@ -26,7 +26,7 @@ class LottoController(
         val lottoResult: LottoResult = LottoMatchCalculator(lotto, winningLotto).calculate()
         val profitRate = lottoResult.getProfitRate(purchasePrice)
 
-        outputView.printWinningResult(lottoResult, profitRate)
+        displayResult(lottoResult, profitRate)
     }
 
     fun getPurchasePrice(): PurchasePrice =
@@ -69,4 +69,12 @@ class LottoController(
             },
             onError = { outputView.printErrorMessage(it) },
         )
+
+    fun displayResult(
+        lottoResult: LottoResult,
+        profitRate: String,
+    ) {
+        outputView.printWinningResult(lottoResult, profitRate)
+        if (profitRate.toDouble() < 1) outputView.printLossMessage()
+    }
 }

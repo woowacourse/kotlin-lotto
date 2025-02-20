@@ -20,7 +20,11 @@ class OutputView {
         profitRate: String,
     ) {
         println(lottoResult.toString())
-        println(MESSAGE_TOTAL_PROFIT_RATE.format(profitRate))
+        print(MESSAGE_TOTAL_PROFIT_RATE.format(profitRate))
+    }
+
+    fun printLossMessage() {
+        println(MESSAGE_LOSS)
     }
 
     companion object {
