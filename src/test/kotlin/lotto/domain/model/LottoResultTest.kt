@@ -28,7 +28,7 @@ class LottoResultTest {
         val purchaseAmount = PurchaseAmount(14000)
         val purchaseDetail = PurchaseDetail(purchaseAmount, lottos)
         val lottoCalculator = LottoCalculator()
-        val winningStats = lottoCalculator.calculateWinningStats(winningLotto, purchaseDetail)
+        val winningStats = lottoCalculator.calculateLottoResult(winningLotto, purchaseDetail)
 
         val actualEarningRate = (5_000).toDouble() / purchaseAmount.amount
         assertThat(winningStats.calculateEarningRate().rate).isEqualTo(actualEarningRate)

@@ -15,6 +15,5 @@ class Lotto(
                 .distinct()
                 .size == LottoConstants.NUMBER_OF_LOTTO_NUMBERS,
         ) { ErrorMessages.DUPLICATE_LOTTO_NUMBER }
-        require(lottoNumbers.map { it.number }.zipWithNext().all { (a, b) -> a < b })
     }
 }

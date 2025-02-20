@@ -29,7 +29,7 @@ class LottoCalculatorTest {
         val purchaseAmount = PurchaseAmount(1000)
         val purchaseDetail = PurchaseDetail(purchaseAmount, lottos)
         val lottoCalculator = LottoCalculator()
-        val winningStats = lottoCalculator.calculateWinningStats(winningLotto, purchaseDetail)
+        val winningStats = lottoCalculator.calculateLottoResult(winningLotto, purchaseDetail)
 
         assertThat(winningStats.winningStats[Rank.FIRST]).isEqualTo(1)
     }
@@ -43,7 +43,7 @@ class LottoCalculatorTest {
         val purchaseAmount = PurchaseAmount(2000)
         val purchaseDetail = PurchaseDetail(purchaseAmount, lottos)
         val lottoCalculator = LottoCalculator()
-        val winningStats = lottoCalculator.calculateWinningStats(winningLotto, purchaseDetail)
+        val winningStats = lottoCalculator.calculateLottoResult(winningLotto, purchaseDetail)
 
         assertThat(winningStats.winningStats[Rank.MISS]).isEqualTo(1)
     }

@@ -18,7 +18,7 @@ class LottoController(
 
         val winningLotto = getWinningLotto()
         val lottoCalculator = LottoCalculator()
-        val lottoResult = lottoCalculator.calculateWinningStats(winningLotto, purchaseDetail)
+        val lottoResult = lottoCalculator.calculateLottoResult(winningLotto, purchaseDetail)
         outputView.printLottoResult(lottoResult)
     }
 

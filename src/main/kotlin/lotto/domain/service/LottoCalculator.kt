@@ -6,7 +6,7 @@ import lotto.domain.model.WinningLotto
 import lotto.enums.Rank
 
 class LottoCalculator {
-    fun calculateWinningStats(
+    fun calculateLottoResult(
         winningLotto: WinningLotto,
         purchaseDetail: PurchaseDetail,
     ): LottoResult {
