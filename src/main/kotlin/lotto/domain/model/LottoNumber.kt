@@ -3,7 +3,7 @@ package lotto.domain.model
 import lotto.INVALID_LOTTO_MAX_NUMBER
 import lotto.INVALID_LOTTO_MIN_NUMBER
 
-class LottoNumber(val number: Int) {
+data class LottoNumber(val number: Int) {
     init {
         require(number in INVALID_LOTTO_MIN_NUMBER..INVALID_LOTTO_MAX_NUMBER) { INVALID_LOTTO_NUMBER_RANGE_MESSAGE }
     }
