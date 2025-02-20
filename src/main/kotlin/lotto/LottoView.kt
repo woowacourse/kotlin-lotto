@@ -1,5 +1,6 @@
 package lotto
 
+import lotto.domain.Lotto
 import lotto.global.Message
 import lotto.global.Rank
 import java.lang.IllegalArgumentException
@@ -12,13 +13,13 @@ class LottoView {
         return userInput
     }
 
-    fun printLotto(manyLotto: List<List<Int>>) {
+    fun printLotto(manyLotto: List<Lotto>) {
         for (lotto in manyLotto) println(lotto)
     }
 
-    fun getWinningLotto(): List<Int> {
+    fun getWinningLotto(): Lotto {
         println(Message.ASK_WINNING_LOTTO.msg)
-        return requireValidLotto(readln())
+        return Lotto(requireValidLotto(readln()))
     }
 
     fun getBonusNum(): Int {

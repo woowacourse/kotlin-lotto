@@ -1,6 +1,7 @@
 package lottoTest
 
 import lotto.LottoService
+import lotto.domain.Lotto
 import lotto.global.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -16,10 +17,10 @@ class LottoServiceTest {
         // 랜덤 요소 안정성을 위하여 여러 번 반복합니다
         repeat(1000) {
             val lotto = lottoService.getLotto()
-            assertThat(lotto)
+            assertThat(lotto.value)
                 .hasSize(6)
                 .allMatch({ num -> num in 1..45 })
-                .isEqualTo(lotto.distinct())
+                .isEqualTo(lotto.value.distinct())
         }
     }
 
@@ -33,8 +34,8 @@ class LottoServiceTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3() {
-        val lotto = listOf(1, 2, 3, 4, 5, 6)
-        val winningLotto = listOf(1, 2, 3, 4, 5, 6)
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7
         val result = lottoService.checkRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FIRST)
@@ -43,8 +44,8 @@ class LottoServiceTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_1() {
-        val lotto = listOf(1, 2, 3, 4, 5, 6)
-        val winningLotto = listOf(1, 2, 3, 4, 5, 5)
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 8))
         val bonus = 7
         val result = lottoService.checkRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.THIRD)
@@ -53,8 +54,8 @@ class LottoServiceTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_2() {
-        val lotto = listOf(1, 2, 3, 4, 5, 6)
-        val winningLotto = listOf(1, 2, 3, 4, 5, 7)
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7))
         val bonus = 7
         val result = lottoService.checkRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.SECOND)
@@ -63,8 +64,8 @@ class LottoServiceTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_3() {
-        val lotto = listOf(1, 2, 3, 4, 5, 6)
-        val winningLotto = listOf(1, 2, 3, 4, 8, 9)
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 8, 9))
         val bonus = 7
         val result = lottoService.checkRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FOURTH)
@@ -73,8 +74,8 @@ class LottoServiceTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_4() {
-        val lotto = listOf(1, 2, 3, 4, 5, 6)
-        val winningLotto = listOf(1, 2, 3, 10, 8, 9)
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 3, 10, 8, 9))
         val bonus = 7
         val result = lottoService.checkRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FIFTH)
@@ -83,8 +84,8 @@ class LottoServiceTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_5() {
-        val lotto = listOf(1, 2, 3, 4, 5, 6)
-        val winningLotto = listOf(1, 2, 11, 10, 8, 9)
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
         val bonus = 7
         val result = lottoService.checkRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.MISS)
@@ -95,11 +96,11 @@ class LottoServiceTest {
     fun t4() {
         val manyLotto =
             listOf(
-                listOf(1, 2, 3, 4, 5, 6),
-                listOf(1, 2, 3, 4, 5, 6),
-                listOf(1, 2, 3, 4, 5, 6),
+                Lotto(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto(listOf(1, 2, 3, 4, 5, 6)),
             )
-        val winningLotto = listOf(1, 2, 11, 10, 8, 9)
+        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
         val bonus = 7
         val result = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
         assertThat(result[Rank.MISS]).isEqualTo(3)
@@ -110,10 +111,10 @@ class LottoServiceTest {
     fun t5() {
         val manyLotto =
             listOf(
-                listOf(1, 2, 3, 4, 44, 45),
-                listOf(11, 12, 13, 14, 15, 16),
+                Lotto(listOf(1, 2, 3, 4, 44, 45)),
+                Lotto(listOf(11, 12, 13, 14, 15, 16))
             )
-        val winningLotto = listOf(1, 2, 3, 4, 5, 6)
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7
         val rankMap = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
         val result = LottoService.getRate(rankMap)
@@ -125,11 +126,11 @@ class LottoServiceTest {
     fun t5_1() {
         val manyLotto =
             listOf(
-                listOf(1, 2, 3, 43, 44, 45),
-                listOf(11, 12, 13, 14, 15, 16),
-                listOf(1, 2, 3, 43, 44, 45),
+                Lotto(listOf(1, 2, 3, 43, 44, 45)),
+                Lotto(listOf(11, 12, 13, 14, 15, 16)),
+                Lotto(listOf(1, 2, 3, 43, 44, 45)),
             )
-        val winningLotto = listOf(1, 2, 3, 4, 5, 6)
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7
         val rankMap = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
         val result = LottoService.getRate(rankMap)

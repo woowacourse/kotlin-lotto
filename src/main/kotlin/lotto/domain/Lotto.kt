@@ -1,3 +1,3 @@
 package lotto.domain
 
-data class Lotto(private val lotto:List<Int>)
+data class Lotto(val value:List<Int>)

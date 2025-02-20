@@ -1,37 +1,38 @@
 package lotto
 
+import lotto.domain.Lotto
 import lotto.global.Rank
 import kotlin.random.Random
 
 class LottoService(private val random: Random) {
-    fun getLotto(): List<Int> {
+    fun getLotto(): Lotto {
         val lotto = mutableListOf<Int>()
         while (lotto.toSet().size != 6) {
             lotto.clear()
             repeat(6) { lotto.add(random.nextInt(1, 46)) }
         }
-        return lotto.toList()
+        return Lotto(lotto.toList())
     }
 
-    fun getManyLotto(iterates: Int): List<List<Int>> {
-        val manyLotto = mutableListOf<List<Int>>()
+    fun getManyLotto(iterates: Int): List<Lotto> {
+        val manyLotto = mutableListOf<Lotto>()
         repeat(iterates) { manyLotto.add(getLotto()) }
         return manyLotto.toList()
     }
 
     fun checkRank(
-        lotto: List<Int>,
-        winningLotto: List<Int>,
+        lotto: Lotto,
+        winningLotto: Lotto,
         bonus: Int,
     ): Rank {
         var countOfMatch = 0
-        lotto.forEach { num -> if (num in winningLotto) countOfMatch++ }
-        return Rank.getRank(countOfMatch, (bonus in winningLotto))
+        lotto.value.forEach { num -> if (num in winningLotto.value) countOfMatch++ }
+        return Rank.getRank(countOfMatch, (bonus in winningLotto.value))
     }
 
     fun checkRankMany(
-        manyLotto: List<List<Int>>,
-        winningLotto: List<Int>,
+        manyLotto: List<Lotto>,
+        winningLotto: Lotto,
         bonus: Int,
     ): Map<Rank, Int> {
         val rankMap = mutableMapOf<Rank, Int>()
