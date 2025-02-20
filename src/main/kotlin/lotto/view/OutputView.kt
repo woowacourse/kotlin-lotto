@@ -2,6 +2,7 @@ package lotto.view
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoWinningStats
+import lotto.domain.value.EarningRate
 import lotto.domain.value.PurchaseQuantity
 
 class OutputView {
@@ -20,5 +21,9 @@ class OutputView {
         lottoWinningStats.winningStats.entries.reversed().forEach { winningStats ->
             println("${winningStats.key.countOfMatch}개 일치 (${winningStats.key.winningMoney}원)- ${winningStats.value}개")
         }
+    }
+
+    fun printLottoEarningRate(earningRate: EarningRate) {
+        println("총 수익률은 ${earningRate.rate}입니다.")
     }
 }

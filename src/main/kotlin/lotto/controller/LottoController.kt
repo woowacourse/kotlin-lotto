@@ -23,6 +23,7 @@ class LottoController(
         val winningLotto = getWinningLotto()
         val lottoWinningStats = getLottoWInningStats(winningLotto, lottos)
         outputView.printLottoStats(lottoWinningStats)
+        outputView.printLottoEarningRate(lottoWinningStats.calculateEarningRate())
     }
 
     private fun getWinningLotto(): WinningLotto {
