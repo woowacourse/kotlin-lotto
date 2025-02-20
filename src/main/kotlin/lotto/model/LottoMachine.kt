@@ -15,11 +15,11 @@ class LottoMachine(private val amount: Amount) {
     }
 
     private fun publishLotto(): Lotto {
-        val lottoNumbers = numbers.shuffled().take(LOTTO_NUMBER_AMOUNT).sorted().map { LottoNumber(it) }
+        val lottoNumbers = numbers.shuffled().take(LOTTO_NUMBER_COUNT).sorted().map { LottoNumber(it) }
         return Lotto(lottoNumbers)
     }
 
     companion object {
-        private const val LOTTO_NUMBER_AMOUNT = 6
+        private const val LOTTO_NUMBER_COUNT = 6
     }
 }
