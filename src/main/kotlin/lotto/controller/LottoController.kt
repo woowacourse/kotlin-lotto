@@ -21,6 +21,8 @@ class LottoController(
         outputView.printLottos(lottos.map { it.lottoNums })
 
         val winningNumbers: List<Int> = inputView.inputWinningNumber()
+        Lotto(winningNumbers)
+
         val bonusNumber: String = inputView.inputBonusNumber()
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
         val profitRate: Double = LottoResult(lottos, winningLotto).calculateProfitRate()
