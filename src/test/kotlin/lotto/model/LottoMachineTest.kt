@@ -1,5 +1,6 @@
 package lotto.model
 
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -10,11 +11,9 @@ class LottoMachineTest {
     @ValueSource(ints = [-1, 0])
     @ParameterizedTest
     fun `입력한 금액은 0원 이상만 가능하다`(amount: Int) {
-        runCatching {
-            LottoMachine(amount)
-        }.onFailure { error ->
-            assert(error.message?.contains("0원 이상의 금액") ?: false)
-        }
+        assertThatThrownBy {
+            LottoMachine(0)
+        }.hasMessageContaining("0원 이상의 금액")
     }
 
     @Test
