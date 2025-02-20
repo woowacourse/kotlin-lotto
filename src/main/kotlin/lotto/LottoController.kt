@@ -1,3 +1,5 @@
+package lotto
+
 import kotlin.random.Random
 
 class LottoController {
