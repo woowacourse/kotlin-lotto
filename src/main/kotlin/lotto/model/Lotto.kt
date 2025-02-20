@@ -9,15 +9,15 @@ class Lotto(
     }
 
     private fun validateLottoNumbersCount(numbers: List<Int>) {
-        require(numbers.size == 6) {
-            "[ERROR] 로또는 6개의 번호만 가질 수 있습니다."
+        require(numbers.size == LOTTO_NUMBER_SIZE) {
+            "[ERROR] 로또는 ${LOTTO_NUMBER_SIZE}개의 번호만 가질 수 있습니다."
         }
     }
 
     private fun validateLottoNumbersRange(numbers: List<Int>) {
         numbers.forEach { number ->
-            require(number in 1..45) {
-                "[ERROR] 로또 번호의 범위는 1 이상 45 이하여야 합니다."
+            require(number in LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE) {
+                "[ERROR] 로또 번호의 범위는 $LOTTO_NUMBER_MIN_RANGE 이상 $LOTTO_NUMBER_MAX_RANGE 이하여야 합니다."
             }
         }
     }
