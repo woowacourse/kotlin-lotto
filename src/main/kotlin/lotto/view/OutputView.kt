@@ -39,21 +39,35 @@ class OutputView {
         println()
         println(LOTTO_STATISTICS_TITLE)
         Rank.entries.reversed().drop(EXCLUDE_MISS_LANK).forEach { rank ->
-            if (rank == Rank.SECOND) {
-                printLottoSecondStatistics(lottoStatistics[rank] ?: INITIAL_LOTTO_RANK_COUNT)
-            } else {
-                println(
-                    DEFAULT_RANK_STATISTICS_MESSAGE_FORMAT.format(
-                        rank.matchCount,
-                        rank.prizeMoney,
-                        lottoStatistics[rank] ?: INITIAL_LOTTO_RANK_COUNT,
-                    ),
-                )
-            }
+            printRankStatistics(rank, lottoStatistics)
         }
     }
 
-    private fun printLottoSecondStatistics(lottoCount: Int) {
+    private fun printRankStatistics(
+        rank: Rank,
+        lottoStatistics: Map<Rank, Int>,
+    ) {
+        if (rank == Rank.SECOND) {
+            printLottoSecondRankStatistics(lottoStatistics[rank] ?: INITIAL_LOTTO_RANK_COUNT)
+        } else {
+            printLottoDefaultRankStatistics(rank, lottoStatistics)
+        }
+    }
+
+    private fun printLottoDefaultRankStatistics(
+        rank: Rank,
+        lottoStatistics: Map<Rank, Int>,
+    ) {
+        println(
+            DEFAULT_RANK_STATISTICS_MESSAGE_FORMAT.format(
+                rank.matchCount,
+                rank.prizeMoney,
+                lottoStatistics[rank] ?: INITIAL_LOTTO_RANK_COUNT,
+            ),
+        )
+    }
+
+    private fun printLottoSecondRankStatistics(lottoCount: Int) {
         println(
             SECOND_RANK_STATISTICS_MESSAGE_FORMAT.format(
                 Rank.SECOND.matchCount,
