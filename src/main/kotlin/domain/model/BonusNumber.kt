@@ -1,6 +1,6 @@
 package domain.model
 
-import domain.model.Lotto.Companion.ERROR
+import util.ErrorConstants.ERROR
 import domain.service.LottoGenerator.Companion.LOTTO_MAX
 import domain.service.LottoGenerator.Companion.LOTTO_MIN
 
@@ -11,6 +11,6 @@ value class BonusNumber(val value: Int) {
     }
 
     companion object {
-        const val INVALID_BONUS_NUMBER = "$ERROR 보너스 볼 번호는 1부터 45 사이입니다."
+        const val INVALID_BONUS_NUMBER = "$ERROR 보너스 볼 번호는 ${LOTTO_MIN}부터 $LOTTO_MAX 사이입니다."
     }
 }

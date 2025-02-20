@@ -28,7 +28,7 @@ enum class Rank(
             }
             return entries.find {
                 it.countOfMatch == countOfMatch && !it.requiresBonusMatch
-            } ?: Rank.MISS
+            } ?: MISS
         }
     }
 }

@@ -1,6 +1,6 @@
 package validator
 
-import domain.model.Lotto.Companion.ERROR
+import util.ErrorConstants.ERROR
 
 class NumericValidator(val value: String) {
     init {

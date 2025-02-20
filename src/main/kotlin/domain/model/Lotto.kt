@@ -2,6 +2,7 @@ package domain.model
 
 import domain.service.LottoGenerator.Companion.LOTTO_MAX
 import domain.service.LottoGenerator.Companion.LOTTO_MIN
+import util.ErrorConstants.ERROR
 
 class Lotto(val numbers: List<Int>) {
     init {
@@ -11,10 +12,9 @@ class Lotto(val numbers: List<Int>) {
     }
 
     companion object {
-        const val ERROR = "[ERROR]"
         const val LOTTO_SIZE = 6
-        const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 6개 입니다."
-        const val INVALID_LOTTO_NUMBERS = "$ERROR 로또 번호는 1부터 45 사이입니다."
+        const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 ${LOTTO_SIZE}개 입니다."
+        const val INVALID_LOTTO_NUMBERS = "$ERROR 로또 번호는 ${LOTTO_MIN}부터 $LOTTO_MAX 사이입니다."
         const val DUPLICATED_LOTTO_NUMBERS = "$ERROR 로또 번호는 중복이 없습니다."
     }
 }
