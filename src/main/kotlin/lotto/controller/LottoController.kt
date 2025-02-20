@@ -26,6 +26,7 @@ class LottoController(
         val winningLotto = getWinningLotto(winningLottoNumbers)
         val lottoStatistics = LottoStatistics(lottos, winningLotto, purchaseMoney)
         outputView.printLottoStatistics(lottoStatistics.lottoStatistics)
+        outputView.printLottoRateOfReturn(lottoStatistics.getRateOfReturn(), lottoStatistics.getIsLossMoney())
     }
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =

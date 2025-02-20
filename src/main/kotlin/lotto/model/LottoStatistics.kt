@@ -33,6 +33,8 @@ class LottoStatistics(
         return sum
     }
 
+    fun getIsLossMoney(): Boolean = getRateOfReturn() < 1
+
     companion object {
         private const val INITIAL_VALUE = 0
         private const val INCREMENT_COUNT_UNIT = 1

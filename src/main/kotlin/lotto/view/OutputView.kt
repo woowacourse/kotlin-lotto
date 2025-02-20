@@ -50,6 +50,16 @@ class OutputView {
         println("${Rank.SECOND.matchCount}개 일치, 보너스볼 일치(${Rank.SECOND.prizeMoney}원) - ${lottoCount}개")
     }
 
+    fun printLottoRateOfReturn(
+        rateOfReturn: Double,
+        isLossMoney: Boolean,
+    ) {
+        print("총 수익률을 %.2f입니다.".format(rateOfReturn))
+        if (isLossMoney) {
+            print("(기준이 1이기 때문에 결과적으로 손해라는 의미임)")
+        }
+    }
+
     companion object {
         private const val PURCHASE_AMOUNT_GUIDE_MESSAGE = "구입금액을 입력해 주세요."
         private const val LOTTO_COUNT_MESSAGE_FORMAT = "%d개를 구매했습니다."
