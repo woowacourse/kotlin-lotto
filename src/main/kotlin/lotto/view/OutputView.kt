@@ -11,13 +11,14 @@ object OutputView {
     private const val MESSAGE_ENTER_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
     private const val MESSAGE_RESULT_HEADER = "당첨 통계\n---------"
     private const val ERROR_MESSAGE_ILLEGAL_STATE = "연산에 실패했습니다."
+    private const val MESSAGE_BOUGHT = "개를 구매했습니다."
 
     fun requestPrice() {
         println(MESSAGE_ENTER_PRICE)
     }
 
     fun showLottoCount(lottoCount: Int) {
-        println("${lottoCount}개를 구매했습니다.")
+        println("$lottoCount$MESSAGE_BOUGHT")
     }
 
     fun showLottos(lottos: Lottos) {
