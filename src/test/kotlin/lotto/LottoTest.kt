@@ -45,4 +45,19 @@ class LottoTest {
             )
         }
     }
+
+    @Test
+    fun `로또 숫자가 6개가 아닐 경우 예외를 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Lotto(
+                listOf(
+                    LottoNumber(1),
+                    LottoNumber(2),
+                    LottoNumber(3),
+                    LottoNumber(4),
+                    LottoNumber(5),
+                ),
+            )
+        }
+    }
 }
