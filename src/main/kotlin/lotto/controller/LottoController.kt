@@ -1,8 +1,13 @@
 package lotto.controller
 
+import lotto.domain.value.PurchaseQuantity
 import lotto.view.InputView
-class LottoController(private val inputView: InputView) {
+import lotto.view.OutputView
+
+class LottoController(private val inputView: InputView, private val outputView: OutputView) {
     fun runLotto() {
-        inputView.readPurchaseAmount()
+        val purchaseAmount = inputView.readPurchaseAmount()
+        val purchaseQuantity = PurchaseQuantity(purchaseAmount)
+        outputView.printPurchaseQuantity(purchaseQuantity)
     }
 }
