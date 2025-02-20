@@ -5,7 +5,6 @@ import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
-import lotto.model.Lottos
 import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -19,8 +18,7 @@ class LottoController(
         val purchaseMoney = getPurchaseMoney()
         val lottoCount = getLottoCount(purchaseMoney)
         val lottos = lottoMachine.createLottos(lottoCount)
-
-        processIssuedLotto(lottos)
+        outputView.printLottos(lottos)
 
         val winningLotto = getWinningLotto()
         val lottoStatistics = LottoStatistics(lottos, winningLotto, purchaseMoney)
@@ -42,10 +40,6 @@ class LottoController(
         val lottoCount = purchaseMoney.getLottoCount()
         outputView.printLottoCount(lottoCount)
         return lottoCount
-    }
-
-    private fun processIssuedLotto(lottos: Lottos) {
-        lottos.lottoBundle.forEach { lotto -> outputView.printLottoNumbers(lotto) }
     }
 
     private fun getWinningLotto(): WinningLotto {

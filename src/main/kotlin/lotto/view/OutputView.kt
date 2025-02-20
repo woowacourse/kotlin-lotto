@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.Lottos
 import lotto.model.Rank
 
 class OutputView {
@@ -12,7 +13,11 @@ class OutputView {
         println(LOTTO_COUNT_MESSAGE_FORMAT.format(lottoCount))
     }
 
-    fun printLottoNumbers(lotto: Lotto) {
+    fun printLottos(lottos: Lottos) {
+        lottos.lottoBundle.forEach { lotto -> printLottoNumbers(lotto) }
+    }
+
+    private fun printLottoNumbers(lotto: Lotto) {
         println(
             lotto.numbers.joinToString(
                 separator = LOTTO_NUMBER_SEPARATOR,
