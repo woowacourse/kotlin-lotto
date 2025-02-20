@@ -1,9 +1,12 @@
 package domain.model
 
+import domain.service.LottoGenerator.Companion.LOTTO_MAX
+import domain.service.LottoGenerator.Companion.LOTTO_MIN
+
 class Lotto(val numbers: List<Int>) {
     init {
         require(numbers.size == LOTTO_SIZE) { INVALID_LOTTO_SIZE }
-        require(numbers.all { it in (1..45) }) { INVALID_LOTTO_NUMBERS }
+        require(numbers.all { it in (LOTTO_MIN..LOTTO_MAX) }) { INVALID_LOTTO_NUMBERS }
         require(numbers.size == numbers.toSet().size) { DUPLICATED_LOTTO_NUMBERS }
     }
 
