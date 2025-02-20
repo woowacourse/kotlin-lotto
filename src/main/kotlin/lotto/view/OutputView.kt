@@ -31,8 +31,8 @@ class OutputView {
         println(BONUS_NUMBER_GUIDE_MESSAGE)
     }
 
-    fun printErrorMessage(message: String) {
-        println(ERROR_FORMAT.format(message))
+    fun printErrorMessage(message: String?) {
+        println(ERROR_FORMAT.format(message ?: DEFAULT_ERROR_MESSAGE))
     }
 
     fun printLottoStatistics(lottoStatistics: Map<Rank, Int>) {
@@ -96,6 +96,7 @@ class OutputView {
         private const val WINNING_LOTTO_NUMBERS_OF_LAST_WEEK_GUIDE_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
         private const val BONUS_NUMBER_GUIDE_MESSAGE = "보너스 볼을 입력해 주세요."
         private const val ERROR_FORMAT = "[ERROR] %s"
+        private const val DEFAULT_ERROR_MESSAGE = "알 수 없는 에러가 발생했습니다."
         private const val LOTTO_STATISTICS_TITLE = "당첨 통계\n---------"
         private const val EXCLUDE_MISS_LANK = 1
         private const val INITIAL_LOTTO_RANK_COUNT = 0
