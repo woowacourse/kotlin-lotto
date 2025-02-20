@@ -13,6 +13,8 @@ class LottoController {
         val count = LottoTicketCounter(purchase).count()
         outputView.printLottoCount(count)
         outputView.printLottoBundle(count)
+        inputView.inputWinningNumbers()
+        inputView.inputBonusNumber()
     }
 }
 
