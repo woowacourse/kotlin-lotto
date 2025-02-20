@@ -7,16 +7,14 @@ import org.junit.jupiter.api.assertThrows
 class AmountTest {
     @Test
     fun `구입 금액이 천원 단위가 아닌 경우 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
-            Amount(1100)
-        }
+        val exception = assertThrows<IllegalArgumentException> { Amount(1100) }
+        assertThat(exception.message).isEqualTo("[ERROR] 구입 금액은 천원 단위여야 합니다.")
     }
 
     @Test
     fun `구입 금액이 천원 미만인 경우 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
-            Amount(900)
-        }
+        val exception = assertThrows<IllegalArgumentException> { Amount(900) }
+        assertThat(exception.message).isEqualTo("[ERROR] 구입 금액이 최소 금액보다 작습니다.")
     }
 
     @Test
