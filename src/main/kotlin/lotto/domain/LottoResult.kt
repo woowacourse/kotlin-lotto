@@ -1,34 +1,33 @@
 package lotto.domain
 
 import lotto.util.Rank
-import kotlin.math.floor
 
 class LottoResult(private val winningNumber: List<Int>, private val bonusNumber: Int) {
     fun matchLotto(lottos: List<Lotto>): Map<Rank, Int> {
         val winningStats: MutableMap<Rank, Int> =
             mutableMapOf(
-                Rank.FIFTH to 0,
-                Rank.FOURTH to 0,
-                Rank.THIRD to 0,
-                Rank.SECOND to 0,
-                Rank.FIRST to 0,
+                Rank.FIFTH to DEFAULT_VALUE,
+                Rank.FOURTH to DEFAULT_VALUE,
+                Rank.THIRD to DEFAULT_VALUE,
+                Rank.SECOND to DEFAULT_VALUE,
+                Rank.FIRST to DEFAULT_VALUE,
             )
 
         lottos.forEach { lotto ->
             val count: Int = compareLotto(lotto.numbers)
             val bonus: Boolean = checkBonusNumber(lotto.numbers)
-            val rankState: Rank? = Rank.getRankState(count, bonus)
+            val rankState: Rank = Rank.getRankState(count, bonus)
             updateWinningStats(rankState, winningStats)
         }
         return winningStats.toMap()
     }
 
     private fun updateWinningStats(
-        rankState: Rank?,
+        rankState: Rank,
         winningStats: MutableMap<Rank, Int>,
     ) {
-        if (rankState == null || rankState == Rank.NONE) return
-        winningStats[rankState] = (winningStats[rankState] ?: 0) + 1
+        if (rankState == Rank.NONE) return
+        winningStats[rankState] = (winningStats[rankState] ?: DEFAULT_VALUE) + INCREASED_VALUE
         println(winningStats[rankState])
     }
 
@@ -41,7 +40,7 @@ class LottoResult(private val winningNumber: List<Int>, private val bonusNumber:
     }
 
     fun calculatePrize(winningStats: Map<Rank, Int>): Long {
-        var totalPrize: Long = 0
+        var totalPrize: Long = DEFAULT_VALUE.toLong()
 
         winningStats.forEach { (state, count) ->
             totalPrize += state.price * count
@@ -54,7 +53,11 @@ class LottoResult(private val winningNumber: List<Int>, private val bonusNumber:
         totalPrize: Long,
         purchaseAmount: Int,
     ): Double {
-        val result = totalPrize / purchaseAmount.toDouble() * 100
-        return floor(result) / 100
+        return totalPrize / purchaseAmount.toDouble()
+    }
+
+    companion object {
+        const val DEFAULT_VALUE = 0
+        const val INCREASED_VALUE = 1
     }
 }

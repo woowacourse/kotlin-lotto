@@ -5,10 +5,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoResultTest {
+    val number: List<Int> = listOf(1, 2, 3, 4, 5, 6)
+    val winningNumber: List<Int> = listOf(3, 4, 5, 6, 7, 8)
+
     @Test
     fun `6개 숫자를 넣으면 일치한 숫자의 개수를 알 수 있다`() {
-        val number: List<Int> = listOf(1, 2, 3, 4, 5, 6)
-        val winningNumber: List<Int> = listOf(3, 4, 5, 6, 7, 8)
         val lottoGame = LottoResult(winningNumber, 1)
 
         assertThat(lottoGame.compareLotto(number)).isEqualTo(4)
@@ -16,8 +17,6 @@ class LottoResultTest {
 
     @Test
     fun `보너스 번호가 일치하면 true를 반환한다`() {
-        val number: List<Int> = listOf(1, 2, 3, 4, 5, 6)
-        val winningNumber: List<Int> = listOf(3, 4, 5, 6, 7, 8)
         val lottoGame = LottoResult(winningNumber, 1)
 
         assertThat(lottoGame.checkBonusNumber(number)).isTrue()
@@ -25,8 +24,6 @@ class LottoResultTest {
 
     @Test
     fun `보너스 번호가 일치하지 않으면 false를 반환한다`() {
-        val number: List<Int> = listOf(1, 2, 3, 4, 5, 6)
-        val winningNumber: List<Int> = listOf(3, 4, 5, 6, 7, 8)
         val lottoGame = LottoResult(winningNumber, 45)
 
         assertThat(lottoGame.checkBonusNumber(number)).isFalse()
@@ -43,7 +40,7 @@ class LottoResultTest {
         val winningBonusNumber: Int = 45
 
         val lottoGame = LottoResult(winningNumber, winningBonusNumber)
-        lottoGame.matchLotto(lottos)
+        val winningStats = lottoGame.matchLotto(lottos)
 
         val correctWinningStats: Map<Rank, Int> =
             mapOf(
@@ -53,7 +50,7 @@ class LottoResultTest {
                 Rank.FOURTH to 0,
                 Rank.FIFTH to 0,
             )
-        assertThat(lottoGame.winningStats).isEqualTo(correctWinningStats.toMutableMap())
+        assertThat(winningStats).isEqualTo(correctWinningStats)
     }
 
     @Test
@@ -61,11 +58,11 @@ class LottoResultTest {
         val winningNumber: List<Int> = listOf(2, 3, 4, 5, 6, 7)
         val winningBonusNumber: Int = 45
 
-        val lottoGame = LottoResult(winningNumber, winningBonusNumber)
+        val lottoResult = LottoResult(winningNumber, winningBonusNumber)
 
-        lottoGame.winningStats = mutableMapOf(Rank.FIRST to 1, Rank.SECOND to 1, Rank.THIRD to 1, Rank.FOURTH to 1, Rank.FIFTH to 1)
+        val winningStats = mapOf(Rank.FIRST to 1, Rank.SECOND to 1, Rank.THIRD to 1, Rank.FOURTH to 1, Rank.FIFTH to 1)
 
-        assertThat(lottoGame.calculatePrize()).isEqualTo(2_031_555_000)
+        assertThat(lottoResult.calculatePrize(winningStats)).isEqualTo(2_031_555_000)
     }
 
     @Test
@@ -78,6 +75,6 @@ class LottoResultTest {
 
         val lottoResult = LottoResult(winningNumber, winningBonusNumber)
 
-        assertThat(lottoResult.calculateProfit(totalPrize, purchaseAmount)).isEqualTo(0.35)
+        assertThat(lottoResult.calculateProfit(totalPrize, purchaseAmount)).isEqualTo(totalPrize / purchaseAmount.toDouble())
     }
 }

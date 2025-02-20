@@ -12,11 +12,19 @@ enum class Rank(val countOfMatch: Int, val price: Int) {
         fun getRankState(
             countOfMatch: Int,
             matchBonus: Boolean,
-        ): Rank? {
-            if (!matchBonus && countOfMatch == 5) return THIRD
-            return entries.find {
-                countOfMatch == it.countOfMatch
+        ): Rank {
+            return when (countOfMatch) {
+                6 -> FIRST
+                5 -> checkMatchBonus(matchBonus)
+                4 -> FOURTH
+                3 -> FIFTH
+                else -> NONE
             }
+        }
+
+        private fun checkMatchBonus(matchBonus: Boolean): Rank {
+            if (matchBonus) return SECOND
+            return THIRD
         }
     }
 }

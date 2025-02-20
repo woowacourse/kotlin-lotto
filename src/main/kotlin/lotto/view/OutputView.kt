@@ -22,7 +22,7 @@ class OutputView {
         state: Rank,
         count: Int,
     ) {
-        if (state.name == "SECOND") {
+        if (state == Rank.SECOND) {
             printWinningStatWithBonusBall(state, count)
         } else {
             printWinningStatWIthNoBonusBall(state, count)
