@@ -12,6 +12,9 @@ object OutputView {
     private const val MESSAGE_RESULT_HEADER = "당첨 통계\n---------"
     private const val ERROR_MESSAGE_ILLEGAL_STATE = "연산에 실패했습니다."
     private const val MESSAGE_BOUGHT = "개를 구매했습니다."
+    private const val MESSAGE_PROFIT_RATE_LOSE = "손해라는"
+    private const val MESSAGE_PROFIT_RATE_DRAW = "본전이라는"
+    private const val MESSAGE_PROFIT_RATE_WIN = "이득이라는"
 
     fun requestPrice() {
         println(MESSAGE_ENTER_PRICE)
@@ -63,9 +66,9 @@ object OutputView {
 
     private fun makeProfitRateDescription(profitRate: Double): String =
         when {
-            profitRate < 1.0 -> "손해라는"
-            profitRate == 1.0 -> "본전이라는"
-            profitRate > 1.0 -> "이득이라는"
+            profitRate < 1.0 -> MESSAGE_PROFIT_RATE_LOSE
+            profitRate == 1.0 -> MESSAGE_PROFIT_RATE_DRAW
+            profitRate > 1.0 -> MESSAGE_PROFIT_RATE_WIN
             else -> throw IllegalStateException(ERROR_MESSAGE_ILLEGAL_STATE)
         }
 }
