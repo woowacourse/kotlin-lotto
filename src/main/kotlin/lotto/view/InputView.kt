@@ -5,7 +5,7 @@ class InputView {
         require(amount.toIntOrNull() != null) {
             IllegalArgumentException(ERROR_INVALID_AMOUNT)
         }
-        require(amount.toInt() / 1000 == 0) {
+        require(amount.toInt() % 1000 == 0) {
             IllegalArgumentException(ERROR_INVALID_DIVISION)
         }
         return amount.toInt()
