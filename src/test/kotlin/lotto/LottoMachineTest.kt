@@ -1,24 +1,9 @@
 package lotto
 
+import lotto.model.LottoMachine
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-
-class LottoMachine(
-    val count: Int,
-) {
-    val lottos: List<Lotto> = generateLottos(count)
-
-    companion object {
-        private fun generateLottos(count: Int): List<Lotto> {
-            val lottos = mutableListOf<Lotto>()
-            repeat(count) {
-                lottos.add(Lotto())
-            }
-            return lottos
-        }
-    }
-}
 
 class LottoMachineTest {
     @ParameterizedTest

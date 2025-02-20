@@ -1,18 +1,9 @@
 package lotto
 
+import lotto.model.LottoNumber
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-
-data class LottoNumber(
-    val number: Int,
-) {
-    init {
-        require(number in 1..45) {
-            "숫자는 1에서 45 사이여야 합니다."
-        }
-    }
-}
 
 class LottoNumberTest {
     @ParameterizedTest
