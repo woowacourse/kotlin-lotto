@@ -26,6 +26,7 @@ class OutputView {
     }
 
     fun printLottoEarningRate(earningRate: EarningRate) {
-        println("총 수익률은 ${earningRate.rate}입니다.")
+        val gainLossText = if (earningRate.rate > 1) "이득이라는" else (if (earningRate.rate == 1.0) "본전이라는" else "손해라는")
+        println("총 수익률은 ${earningRate.rate}입니다.(기준이 1이기 때문에 결과적으로 $gainLossText 의미임)")
     }
 }
