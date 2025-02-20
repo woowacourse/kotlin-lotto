@@ -9,7 +9,7 @@ class OutputView {
         println(format(OUTPUT_LOTTO_COUNT_MESSAGE, number))
     }
 
-    fun printLottoBundle(input: String) {
+    fun printLottoBundle(input: Int) {
         val lottoBundle = LottoStore().getTickets(input, RandomLottoGenerator())
         lottoBundle.forEach { lotto ->
             println(lotto.numbers)
