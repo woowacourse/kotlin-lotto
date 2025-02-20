@@ -2,8 +2,19 @@ package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class LottoMatcherTest {
+    @Test
+    fun `당첨 번호와 보너스 볼은 중복될 수 없다`() {
+        val winningNumber = listOf(1, 2, 3, 4, 5, 6)
+        val winningLotto = parseLottoNumber(winningNumber)
+        val bonusNumber = LottoNumber(1)
+        assertThrows<IllegalArgumentException> {
+            LottoMatcher(winningLotto, bonusNumber)
+        }
+    }
+
     @Test
     fun `당첨 번호와 일치하는 번호가 6개인 경우 1등이 된다`() {
         val numbers = listOf(1, 2, 3, 4, 5, 6)
