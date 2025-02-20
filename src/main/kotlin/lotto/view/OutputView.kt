@@ -12,7 +12,7 @@ class OutputView {
         quantity: Int,
         publishedLotto: List<Lotto>,
     ) {
-        println(quantity.toString() + "개를 구매했습니다.")
+        println("${quantity}개를 구매했습니다.")
         publishedLotto.forEach { lotto ->
             val numbers = lotto.numbers.map { it.value }
             println(numbers)
