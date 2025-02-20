@@ -113,4 +113,19 @@ class LottoServiceTest {
         val result = LottoService.getRate(rankMap)
         assertThat(result).isEqualTo("25.00")
     }
+
+    @Test
+    @DisplayName("수익률의 기준은 (수익금) / (구매액) 을 소수 둘 째 자리까지 반올림한 값이다")
+    fun t5_1 () {
+        val manyLotto = listOf(
+            listOf(1,2,3,43,44,45),
+            listOf(11,12,13,14,15,16),
+            listOf(1,2,3,43,44,45),
+            )
+        val winningLotto = listOf(1,2,3,4,5,6)
+        val bonus = 7
+        val rankMap = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
+        val result = LottoService.getRate(rankMap)
+        assertThat(result).isEqualTo("3.33")
+    }
 }
