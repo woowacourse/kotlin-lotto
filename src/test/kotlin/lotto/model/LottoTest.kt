@@ -46,7 +46,9 @@ class LottoTest {
                 listOf(1, 2, 3, 4, 5, 8) to Rank.THIRD,
                 listOf(1, 2, 3, 4, 9, 10) to Rank.FOURTH,
                 listOf(1, 2, 3, 8, 9, 10) to Rank.FIFTH,
-                listOf(1, 2, 8, 9, 10, 11) to Rank.MISS,
+                listOf(1, 2, 23, 24, 25, 26) to Rank.MISS,
+                listOf(1, 22, 23, 24, 25, 26) to Rank.MISS,
+                listOf(21, 22, 23, 24, 25, 26) to Rank.MISS,
             )
         }
     }
