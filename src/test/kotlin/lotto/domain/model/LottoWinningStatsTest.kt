@@ -1,7 +1,5 @@
-package lotto
+package lotto.domain.model
 
-import lotto.domain.model.Lotto
-import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoCalculator
 import lotto.domain.value.LottoNumber
 import org.assertj.core.api.Assertions.assertThat

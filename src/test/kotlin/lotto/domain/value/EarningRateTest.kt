@@ -1,6 +1,5 @@
-package lotto
+package lotto.domain.value
 
-import lotto.domain.value.EarningRate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

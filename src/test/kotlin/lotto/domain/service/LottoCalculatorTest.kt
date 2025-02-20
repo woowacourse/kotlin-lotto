@@ -1,8 +1,7 @@
-package lotto
+package lotto.domain.service
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.WinningLotto
-import lotto.domain.service.LottoCalculator
 import lotto.domain.value.LottoNumber
 import lotto.enums.Rank
 import org.assertj.core.api.Assertions.assertThat
