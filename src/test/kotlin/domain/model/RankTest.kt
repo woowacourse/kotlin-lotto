@@ -1,4 +1,5 @@
-import domain.model.Rank
+package domain.model
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
