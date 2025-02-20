@@ -14,8 +14,7 @@ class LottoController(
 
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val lottoMachine = LottoMachine()
-        val lottos = lottoMachine.buyLottos(purchaseAmount)
+        val lottos = LottoMachine().buyLottos(purchaseAmount)
 
         outputView.printPurchasedLottos(lottos)
 
@@ -42,7 +41,7 @@ class LottoController(
     }
 
     private fun getWinningNumber(): List<Int> {
-        val winningNumber = inputView.getWinningNumber().split(",").map { it.trim() }
+        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { it.trim() }
         validator.validateWinningNumber(winningNumber)
         return winningNumber.map { parseToInt(it) }
     }
@@ -51,5 +50,9 @@ class LottoController(
         val bonusNumber = inputView.getBonusNumber()
         validator.validateBonusNumber(bonusNumber, winningNumber)
         return parseToInt(bonusNumber)
+    }
+
+    companion object {
+        const val DELIMITERS = ","
     }
 }
