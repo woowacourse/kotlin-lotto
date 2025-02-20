@@ -20,7 +20,7 @@ class WinningLottoTest {
 
         assertThrows<IllegalArgumentException> {
             WinningLotto(lotto, 6)
-        }.apply { assertThat(this).hasMessage("[ERROR] 보너스 번호는 로또 번호는 중복될 수 없습니다.") }
+        }.apply { assertThat(this).hasMessage("[ERROR] 보너스 번호와 로또 번호는 중복될 수 없습니다.") }
     }
 
     @ValueSource(ints = [0, 46])
@@ -36,9 +36,10 @@ class WinningLottoTest {
                         LottoNumber(5),
                         LottoNumber(6),
                         LottoNumber(7),
-                    )
-                ), value
+                    ),
+                ),
+                value,
             )
-        }.apply { assertThat(this).hasMessage("[ERROR] 보너스 볼 번호는 1부터 45 사이입니다.") }
+        }.apply { assertThat(this).hasMessage("[ERROR] 로또 번호는 1부터 45 사이입니다.") }
     }
 }
