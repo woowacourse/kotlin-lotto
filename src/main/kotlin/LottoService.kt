@@ -43,7 +43,7 @@ class LottoService(private val random:Random) {
 
             val sum = rankMap.values.sum() * 1000
             if (sum == 0) return "0.0"
-            return String.format("%.2f", (total / sum).toDouble())
+            return String.format("%.2f", (total.toDouble() / sum.toDouble()))
         }
     }
 }
