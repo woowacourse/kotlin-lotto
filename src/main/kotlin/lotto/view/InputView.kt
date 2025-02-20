@@ -3,7 +3,7 @@ package lotto.view
 class InputView {
     fun readLottoPurchaseAmount(): Int = readln().trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER)
 
-    fun readWinningLottoNumbers(): List<Int> =
+    fun readWinningLottoNumbersOfLastWeek(): List<Int> =
         readln()
             .split(LOTTO_NUMBER_DELIMITER)
             .map { number -> number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER) }

@@ -22,8 +22,8 @@ class OutputView {
         )
     }
 
-    fun printWinningLottoNumbersGuide() {
-        println(WINNING_LOTTO_NUMBERS_GUIDE_MESSAGE)
+    fun printWinningLottoNumbersOfLastWeekGuide() {
+        println(WINNING_LOTTO_NUMBERS_OF_LAST_WEEK_GUIDE_MESSAGE)
     }
 
     fun printBonusNumberGuide() {
@@ -77,7 +77,7 @@ class OutputView {
         private const val LOTTO_NUMBER_SEPARATOR = ", "
         private const val LOTTO_NUMBERS_PREFIX = "["
         private const val LOTTO_NUMBERS_POSTFIX = "]"
-        private const val WINNING_LOTTO_NUMBERS_GUIDE_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
+        private const val WINNING_LOTTO_NUMBERS_OF_LAST_WEEK_GUIDE_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
         private const val BONUS_NUMBER_GUIDE_MESSAGE = "보너스 볼을 입력해 주세요."
         private const val ERROR_FORMAT = "[ERROR] %s"
         private const val LOTTO_STATISTICS_TITLE = "당첨 통계\n---------"
