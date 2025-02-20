@@ -23,7 +23,3 @@ class LottoController {
 
     private fun getBonusNumber(): Int = inputView.inputBonusNumber()
 }
-
-fun main() {
-    LottoController().play()
-}
