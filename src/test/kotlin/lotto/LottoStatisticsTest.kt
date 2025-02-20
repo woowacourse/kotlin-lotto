@@ -78,7 +78,6 @@ class LottoStatisticsTest {
     @ParameterizedTest
     @ValueSource(doubles = [0.0, 0.9999999])
     fun `수익률이 1 미만 일 경우 수익률 손해를 파악하는 메서드는 true를 반환한다`(rateOfReturn: Double) {
-        // given
         val lottoStatistics =
             LottoStatistics(
                 lottos = lottos,
@@ -106,7 +105,6 @@ class LottoStatisticsTest {
     @ParameterizedTest
     @ValueSource(doubles = [1.0, 100.0])
     fun `수익률이 1 이상 일 경우 수익률 손해를 파악하는 메서드는 false 반환한다`(rateOfReturn: Double) {
-        // given
         val lottoStatistics =
             LottoStatistics(
                 lottos = lottos,

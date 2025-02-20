@@ -9,7 +9,6 @@ import org.junit.jupiter.api.assertThrows
 class LottoTest {
     @Test
     fun `로또 하나의 숫자는 중복되지 않은 6개의 숫자이다`() {
-        // given
         val lotto =
             Lotto(
                 listOf(
@@ -22,11 +21,8 @@ class LottoTest {
                 ),
             )
         val expected = 6
-
-        // when
         val actual = lotto.numbers.distinct().size
 
-        // then
         Assertions.assertEquals(expected, actual)
     }
 

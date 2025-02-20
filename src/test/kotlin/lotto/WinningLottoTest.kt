@@ -30,7 +30,6 @@ class WinningLottoTest {
 
     @Test
     fun `당첨 로또는 당첨번호와 보너스 번호를 갖는다`() {
-        // given
         val bonusNumber = LottoNumber(7)
         val winningLotto = WinningLotto(winningNumber, bonusNumber)
 
@@ -49,7 +48,6 @@ class WinningLottoTest {
 
     @Test
     fun `당첨 로또는 당첨 번호와 보너스 번호가 중복될 경우 예외를 발생한다`() {
-        // given
         val bonusNumber = LottoNumber(6)
 
         assertThatIllegalArgumentException()
