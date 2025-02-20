@@ -9,7 +9,7 @@ class LottoStoreTest {
     @Test
     fun `로또를 구입 갯수만큼 발행한다 `() {
         val lottoStore = LottoStore()
-        val purchase = "5000"
+        val purchase = 5000
         assertThat(lottoStore.getTickets(purchase, RandomLottoGenerator()).size).isEqualTo(5)
     }
 }
