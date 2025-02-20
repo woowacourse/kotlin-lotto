@@ -1,5 +1,7 @@
 package domain.model
 
+import util.joinToLineBreak
+
 class LottoResult(
     val result: Map<Rank, Int>,
 ) {
@@ -7,7 +9,7 @@ class LottoResult(
         return result
             .map {
                 getWinningMessage(it.key, it.value)
-            }.joinToString("\n")
+            }.joinToLineBreak()
     }
 
     fun getProfitRate(purchasePrice: PurchasePrice): String {
