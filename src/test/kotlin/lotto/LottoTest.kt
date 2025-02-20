@@ -6,6 +6,7 @@ import org.junit.jupiter.api.assertThrows
 
 class Lotto(
     private val numbers: List<LottoNumber> = generateLotto(),
+    private val bonusNumber: LottoNumber? = null,
 ) {
     init {
         require(numbers.size == 6)
@@ -13,6 +14,10 @@ class Lotto(
     }
 
     fun getSize() = numbers.size
+
+    fun getNumbers() = numbers.toList()
+
+    fun getBonusNumber() = bonusNumber
 
     companion object {
         private fun generateLotto(): List<LottoNumber> =
