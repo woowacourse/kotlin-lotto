@@ -5,18 +5,16 @@ class LottoStatistics(
     private val winningLotto: WinningLotto,
     private val purchaseMoney: LottoPurchaseAmount,
 ) {
-    private val _lottoStatistics = mutableMapOf<Rank, Int>()
-    val lottoStatistics: Map<Rank, Int> get() = _lottoStatistics
+    val lottoStatistics = calculateStatistics()
 
-    init {
-        calculateStatistics()
-    }
-
-    private fun calculateStatistics() {
+    private fun calculateStatistics(): Map<Rank, Int> {
+        val lottoStatistics = mutableMapOf<Rank, Int>()
         lottos.lottoBundle.forEach { lotto ->
             val rank = winningLotto.findLottoRank(lotto)
-            _lottoStatistics[rank] = _lottoStatistics.getOrDefault(rank, INITIAL_VALUE) + INCREMENT_COUNT_UNIT
+            lottoStatistics[rank] = lottoStatistics.getOrDefault(rank, INITIAL_VALUE) + INCREMENT_COUNT_UNIT
         }
+
+        return lottoStatistics.toMap()
     }
 
     fun getRateOfReturn(): Double {
@@ -28,10 +26,10 @@ class LottoStatistics(
 
     private fun getTotalPrize(): Double {
         var sum = 0.0
-
-        _lottoStatistics.forEach { (rank, count) ->
+        lottoStatistics.forEach { (rank, count) ->
             sum += rank.prizeMoney * count
         }
+
         return sum
     }
 

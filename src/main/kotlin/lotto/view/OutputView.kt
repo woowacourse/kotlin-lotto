@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.Rank
 
 class OutputView {
     fun printPurchaseAmountGuide() {
@@ -31,6 +32,22 @@ class OutputView {
 
     fun printErrorMessage(message: String) {
         println(ERROR_FORMAT.format(message))
+    }
+
+    fun printLottoStatistics(lottoStatistics: Map<Rank, Int>) {
+        println("당첨 통계")
+        println("---------")
+        Rank.entries.reversed().drop(1).forEach { rank ->
+            if (rank == Rank.SECOND) {
+                printLottoSecondStatistics(lottoStatistics[rank] ?: 0)
+            } else {
+                println("${rank.matchCount}개 일치 (${rank.prizeMoney}원)- ${lottoStatistics[rank] ?: 0}개")
+            }
+        }
+    }
+
+    private fun printLottoSecondStatistics(lottoCount: Int) {
+        println("${Rank.SECOND.matchCount}개 일치, 보너스볼 일치(${Rank.SECOND.prizeMoney}원) - ${lottoCount}개")
     }
 
     companion object {

@@ -25,12 +25,38 @@ class LottoController(
         val winningLottoNumbers = getWinningLottoNumbers()
         val winningLotto = getWinningLotto(winningLottoNumbers)
         val lottoStatistics = LottoStatistics(lottos, winningLotto, purchaseMoney)
+        outputView.printLottoStatistics(lottoStatistics.lottoStatistics)
     }
+
+    private fun getPurchaseMoney(): LottoPurchaseAmount =
+        try {
+            outputView.printPurchaseAmountGuide()
+            val money = inputView.readLottoPurchaseAmount()
+            LottoPurchaseAmount(money)
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message ?: "")
+            getPurchaseMoney()
+        }
 
     private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
         val lottoCount = purchaseMoney.getLottoCount()
         outputView.printLottoCount(lottoCount)
         return lottoCount
+    }
+
+    private fun getWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
+        try {
+            val bonusNumber = getBonusNumber()
+            WinningLotto(winningLottoNumbers, bonusNumber)
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message ?: "")
+            getWinningLotto(winningLottoNumbers)
+        }
+
+    private fun getBonusNumber(): LottoNumber {
+        outputView.printBonusNumberGuide()
+        val bonusNumber = LottoNumber(inputView.readBonusNumber())
+        return bonusNumber
     }
 
     private fun getLottos(lottoCount: Int): Lottos {
@@ -48,29 +74,4 @@ class LottoController(
             outputView.printErrorMessage(error.message ?: "")
             getWinningLottoNumbers()
         }
-
-    private fun getPurchaseMoney(): LottoPurchaseAmount =
-        try {
-            outputView.printPurchaseAmountGuide()
-            val money = inputView.readLottoPurchaseAmount()
-            LottoPurchaseAmount(money)
-        } catch (error: IllegalArgumentException) {
-            outputView.printErrorMessage(error.message ?: "")
-            getPurchaseMoney()
-        }
-
-    private fun getWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
-        try {
-            val bonusNumber = getBonusNumber()
-            WinningLotto(winningLottoNumbers, bonusNumber)
-        } catch (error: IllegalArgumentException) {
-            outputView.printErrorMessage(error.message ?: "")
-            getWinningLotto(winningLottoNumbers)
-        }
-
-    private fun getBonusNumber(): LottoNumber {
-        outputView.printBonusNumberGuide()
-        val bonusNumber = LottoNumber(inputView.readBonusNumber())
-        return bonusNumber
-    }
 }
