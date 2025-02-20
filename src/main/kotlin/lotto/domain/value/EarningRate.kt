@@ -1,5 +1,6 @@
 package lotto.domain.value
 
+import lotto.constants.ErrorMessages
 import kotlin.math.roundToInt
 
 class EarningRate(
@@ -9,7 +10,7 @@ class EarningRate(
         get() = (field * 100.0).roundToInt() / 100.0
 
     init {
-        require(rate >= MINIMUM_EARNING_RATE)
+        require(rate >= MINIMUM_EARNING_RATE) { ErrorMessages.INVALID_EARNING_RATE_RANGE }
     }
 
     companion object {

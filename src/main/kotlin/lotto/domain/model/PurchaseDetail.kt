@@ -1,5 +1,6 @@
 package lotto.domain.model
 
+import lotto.constants.ErrorMessages
 import lotto.domain.value.PurchaseAmount
 
 class PurchaseDetail(
@@ -7,6 +8,6 @@ class PurchaseDetail(
     val lottos: List<Lotto>,
 ) {
     init {
-        require(lottos.size == purchaseAmount.getPurchaseQuantity())
+        require(lottos.size == purchaseAmount.getPurchaseQuantity()) { ErrorMessages.INVALID_PURCHASE_DETAIL }
     }
 }
