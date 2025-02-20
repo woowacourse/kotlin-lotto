@@ -21,10 +21,7 @@ enum class Rank(
             if (isMiss(countOfMatch)) return MISS
 
             return entries.find { rank ->
-                val isMatchCountSame = rank.countOfMatch == countOfMatch
-                val isMatchBonus = rank.matchBonus == matchBonus
-
-                isMatchCountSame && isMatchBonus
+                rank.countOfMatch == countOfMatch && rank.matchBonus == matchBonus
             } ?: throw IllegalArgumentException("[ERROR] 유효하지 않은 당첨 결과입니다.")
         }
 
