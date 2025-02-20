@@ -14,7 +14,7 @@ class LottoScanner(
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 
-    fun getCountOfMatch(lotto: Lotto): Int = winningNumbers.getNumbers().intersect(lotto.getNumbers().toSet()).size
+    private fun getCountOfMatch(lotto: Lotto): Int = winningNumbers.getNumbers().intersect(lotto.getNumbers().toSet()).size
 
-    fun getMatchBonus(lotto: Lotto): Boolean = lotto.getNumbers().contains(winningNumbers.getBonusNumber())
+    private fun getMatchBonus(lotto: Lotto): Boolean = lotto.getNumbers().contains(winningNumbers.getBonusNumber())
 }
