@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 class LottoTest {
     @Test
@@ -15,8 +17,10 @@ class LottoTest {
 
     @ParameterizedTest
     @MethodSource("lottoCasesForRankTest")
-    fun `각 로또는 해당되는 당첨 번호에 맞게 랭크가 반환된다`(matchCase: Pair<List<Int>, Rank>) {
-        val (lottoNumbers, expectedRank) = matchCase
+    fun `각 로또는 해당되는 당첨 번호에 맞게 랭크가 반환된다`(
+        lottoNumbers: List<Int>,
+        expectedRank: Rank,
+    ) {
         val lotto = Lotto(lottoNumbers)
 
         val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
@@ -40,15 +44,15 @@ class LottoTest {
 
     companion object {
         @JvmStatic
-        fun lottoCasesForRankTest(): List<Pair<List<Int>, Rank>> =
-            listOf(
-                listOf(1, 2, 3, 4, 5, 6) to Rank.FIRST,
-                listOf(1, 2, 3, 4, 5, 8) to Rank.THIRD,
-                listOf(1, 2, 3, 4, 9, 10) to Rank.FOURTH,
-                listOf(1, 2, 3, 8, 9, 10) to Rank.FIFTH,
-                listOf(1, 2, 23, 24, 25, 26) to Rank.MISS,
-                listOf(1, 22, 23, 24, 25, 26) to Rank.MISS,
-                listOf(21, 22, 23, 24, 25, 26) to Rank.MISS,
+        fun lottoCasesForRankTest(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(listOf(1, 2, 3, 4, 5, 6), Rank.FIRST),
+                Arguments.of(listOf(1, 2, 3, 4, 5, 8), Rank.THIRD),
+                Arguments.of(listOf(1, 2, 3, 4, 9, 10), Rank.FOURTH),
+                Arguments.of(listOf(1, 2, 3, 8, 9, 10), Rank.FIFTH),
+                Arguments.of(listOf(1, 2, 23, 24, 25, 26), Rank.MISS),
+                Arguments.of(listOf(1, 22, 23, 24, 25, 26), Rank.MISS),
+                Arguments.of(listOf(21, 22, 23, 24, 25, 26), Rank.MISS),
             )
     }
 }
