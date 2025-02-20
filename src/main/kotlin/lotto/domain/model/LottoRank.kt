@@ -14,7 +14,7 @@ enum class LottoRank(val matchCount: Int, val winningAmount: Int, val matchBonus
             matchCount: Int,
             matchBonus: Boolean = true,
         ): LottoRank {
-            return entries.find { it.matchCount == matchCount && it.matchBonus == matchBonus } ?: return MISS
+            return entries.find { it.matchCount == matchCount && it.matchBonus == matchBonus } ?: MISS
         }
     }
 }
