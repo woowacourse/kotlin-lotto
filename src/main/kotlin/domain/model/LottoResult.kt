@@ -7,6 +7,12 @@ class LottoResult(
             .associateWith { 0 }
             .toMutableMap(),
 ) {
+    override fun toString(): String =
+        result
+            .map {
+                getWinningMessage(it.key, it.value)
+            }.joinToString("\n")
+
     fun getProfitRate(purchasePrice: PurchasePrice): String {
         val totalPrice: Double =
             result
@@ -17,7 +23,20 @@ class LottoResult(
         return ROUND.format(totalPrice / purchasePrice.value)
     }
 
+    fun getWinningMessage(
+        rank: Rank,
+        matchCount: Int,
+    ): String =
+        when (rank) {
+            Rank.MISS -> EMPTY_VALUE
+            Rank.SECOND -> MESSAGE_BONUS_BALL_MATCH.format(rank.countOfMatch, rank.winningMoney, matchCount)
+            else -> MESSAGE_EACH_RANK_RESULT.format(rank.countOfMatch, rank.winningMoney, matchCount)
+        }
+
     companion object {
+        const val EMPTY_VALUE = ""
         const val ROUND = "%.2f"
+        const val MESSAGE_EACH_RANK_RESULT = "%d개 일치 (%d원)- %d개"
+        const val MESSAGE_BONUS_BALL_MATCH = "%d개 일치, 보너스 볼 일치(%d원) - %d개"
     }
 }
