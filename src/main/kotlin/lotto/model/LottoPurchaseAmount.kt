@@ -1,7 +1,7 @@
 package lotto.model
 
 class LottoPurchaseAmount(
-    private val money: Int,
+    val money: Int,
 ) {
     init {
         require(money in MIN_LOTTO_PURCHASE_AMOUNT..MAX_LOTTO_PURCHASE_AMOUNT) { ERROR_OUT_OF_RANGE_LOTTO_PURCHASE_AMOUNT }

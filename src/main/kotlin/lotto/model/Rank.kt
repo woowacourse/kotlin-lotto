@@ -3,7 +3,7 @@ package lotto.model
 enum class Rank(
     private val matchCount: Int,
     private val isMatchedBonus: Boolean,
-    private val prizeMoney: Int,
+    val prizeMoney: Int,
 ) {
     FIRST(6, false, 2_000_000_000),
     SECOND(5, true, 30_000_000),
