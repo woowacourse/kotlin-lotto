@@ -1,13 +1,13 @@
 package lotto.domain.model
 
 import lotto.domain.service.LottoGenerator
-import lotto.domain.value.PurchaseQuantity
+import lotto.domain.value.PurchaseAmount
 
 class LottoMachine {
     private val lottoGenerator = LottoGenerator()
 
-    fun generateLottos(purchaseQuantity: PurchaseQuantity): List<Lotto> {
-        val lottos = List(purchaseQuantity.quantity) { lottoGenerator.generateLotto() }
-        return lottos
+    fun generateLottos(purchaseAmount: PurchaseAmount): PurchaseDetail {
+        val lottos = List(purchaseAmount.getPurchaseQuantity()) { lottoGenerator.generateLotto() }
+        return PurchaseDetail(purchaseAmount, lottos)
     }
 }

@@ -3,12 +3,11 @@ package lotto.view
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoWinningStats
 import lotto.domain.value.EarningRate
-import lotto.domain.value.PurchaseQuantity
 import lotto.enums.Rank
 
 class OutputView {
-    fun printPurchaseQuantity(purchaseQuantity: PurchaseQuantity) {
-        println("${purchaseQuantity.quantity}개를 구매했습니다.")
+    fun printPurchaseQuantity(purchaseQuantity: Int) {
+        println("${purchaseQuantity}개를 구매했습니다.")
     }
 
     fun printLottos(lottos: List<Lotto>) {

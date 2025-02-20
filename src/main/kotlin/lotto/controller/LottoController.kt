@@ -5,7 +5,6 @@ import lotto.domain.model.LottoMachine
 import lotto.domain.model.LottoWinningStats
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoCalculator
-import lotto.domain.value.PurchaseQuantity
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -15,13 +14,13 @@ class LottoController(
 ) {
     fun runLotto() {
         val purchaseAmount = inputView.readPurchaseAmount()
-        val purchaseQuantity = PurchaseQuantity(purchaseAmount)
+        val purchaseQuantity = purchaseAmount.getPurchaseQuantity()
         outputView.printPurchaseQuantity(purchaseQuantity)
         val lottoMachine = LottoMachine()
-        val lottos = lottoMachine.generateLottos(purchaseQuantity)
-        outputView.printLottos(lottos)
+        val purchaseDetail = lottoMachine.generateLottos(purchaseAmount)
+        outputView.printLottos(purchaseDetail.lottos)
         val winningLotto = getWinningLotto()
-        val lottoWinningStats = getLottoWInningStats(winningLotto, lottos)
+        val lottoWinningStats = getLottoWInningStats(winningLotto, purchaseDetail.lottos)
         outputView.printLottoStats(lottoWinningStats)
         outputView.printLottoEarningRate(lottoWinningStats.calculateEarningRate())
     }

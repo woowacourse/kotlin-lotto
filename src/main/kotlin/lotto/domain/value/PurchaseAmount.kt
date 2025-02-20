@@ -1,14 +1,15 @@
 package lotto.domain.value
 
+import lotto.constants.LottoConstants
+
 @JvmInline
 value class PurchaseAmount(
     val amount: Int,
 ) {
     init {
-        require(amount >= MINIMUM_PURCHASE_AMOUNT)
+        require(amount >= LottoConstants.LOTTO_PRICE)
+        require(amount % LottoConstants.LOTTO_PRICE == 0)
     }
 
-    companion object {
-        private const val MINIMUM_PURCHASE_AMOUNT = 0
-    }
+    fun getPurchaseQuantity(): Int = amount / LottoConstants.LOTTO_PRICE
 }
