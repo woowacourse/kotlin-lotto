@@ -1,7 +1,5 @@
 package lotto
 
-import kotlin.random.Random
-
 class LottoController (
     private val lottoView:LottoView,
     private val lottoService:LottoService

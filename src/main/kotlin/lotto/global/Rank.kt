@@ -14,6 +14,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             countOfMatch: Int,
             isBonusMatched: Boolean,
         ): Rank {
+            // 5개가 맞았을 경우 보너스 번호가 맞으면 2등, 안맞으면 3등
             if (countOfMatch == 5) {
                 if (isBonusMatched) return SECOND
                 return THIRD

@@ -26,8 +26,11 @@ class LottoService(private val random: Random) {
         bonus: Int,
     ): Rank {
         var countOfMatch = 0
-        lotto.value.forEach { num -> if (num in winningLotto.value) countOfMatch++ }
-        return Rank.getRank(countOfMatch, (bonus in winningLotto.value))
+        val notHitNums = mutableListOf<Int>()
+        winningLotto.value.forEach { num -> if (num in lotto.value) {
+            countOfMatch++
+        } else notHitNums.add(num) }
+        return Rank.getRank(countOfMatch, (bonus in notHitNums))
     }
 
     fun checkRankMany(
