@@ -28,7 +28,6 @@ class LottoResult(private val winningNumber: List<Int>, private val bonusNumber:
     ) {
         if (rankState == Rank.NONE) return
         winningStats[rankState] = (winningStats[rankState] ?: DEFAULT_VALUE) + INCREASED_VALUE
-        println(winningStats[rankState])
     }
 
     fun compareLotto(lottos: List<Int>): Int {
