@@ -1,36 +1,35 @@
 package lotto.view
 
-import lotto.domain.Lotto
-import lotto.domain.LottoNumber
-import lotto.domain.LottoResult
-import lotto.domain.Lottos
-import lotto.domain.WinningLotto
-
 object View {
     fun readPrice(): Int {
         OutputView.requestPrice()
         val price: Int = InputView.readPrice()
-        val lottoCount: Int = price / Lotto.LOTTO_PRICE
-        OutputView.showLottoCount(lottoCount)
         return price
     }
 
-    fun showLottos(lottos: Lottos) {
-        OutputView.showLottos(lottos)
+    fun showLottoCount(lottoCount: Int) {
+        OutputView.showLottoCount(lottoCount)
+    }
+
+    fun showLottos(numbers: List<List<Int>>) {
+        OutputView.showLottos(numbers)
     }
 
     fun showResult(
-        lottoResults: List<LottoResult>,
+        lottoResults: List<String>,
         profitRate: Double,
     ) {
         OutputView.showResult(lottoResults, profitRate)
     }
 
-    fun readWinningLotto(): WinningLotto {
+    fun readLottoNumbers(): List<Int> {
         OutputView.requestWinningLotto()
-        val winningLotto = InputView.readWinningNumbers()
+        val winningNumbers: List<Int> = InputView.readWinningNumbers()
+        return winningNumbers
+    }
+
+    fun readBonusNumber(): Int {
         OutputView.requestBonusNumber()
-        val bonusNumber = InputView.readBonusNumber()
-        return WinningLotto(winningLotto, LottoNumber(bonusNumber))
+        return InputView.readBonusNumber()
     }
 }

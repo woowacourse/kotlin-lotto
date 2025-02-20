@@ -1,7 +1,7 @@
 package lotto.domain
 
 class Lottos(
-    val lottos: Set<Lotto>,
+    val value: Set<Lotto>,
 ) {
     companion object {
         fun buy(

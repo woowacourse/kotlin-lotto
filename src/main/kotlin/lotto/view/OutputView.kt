@@ -1,9 +1,5 @@
 package lotto.view
 
-import lotto.domain.Lotto
-import lotto.domain.LottoNumber
-import lotto.domain.LottoResult
-import lotto.domain.Lottos
 import kotlin.math.floor
 
 object OutputView {
@@ -25,10 +21,9 @@ object OutputView {
         println("$lottoCount$MESSAGE_BOUGHT")
     }
 
-    fun showLottos(lottos: Lottos) {
-        lottos.lottos.forEach { lotto: Lotto ->
-            println(lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted())
-        }
+    fun showLottos(numbers: List<List<Int>>) {
+        println(numbers.joinToString("\n"))
+        println()
     }
 
     fun requestWinningLotto() {
@@ -40,30 +35,14 @@ object OutputView {
     }
 
     fun showResult(
-        userLottoResults: List<LottoResult>,
+        userLottoResults: List<String>,
         profitRate: Double,
     ) {
+        println()
         println(MESSAGE_RESULT_HEADER)
-        LottoResult.entries.drop(1).forEach { entry: LottoResult ->
-            println(
-                "${entry.matchCount}개 일치${getBonusBallDescription(entry)} (${entry.prizeAmount}원) - ${
-                    countLottoResult(userLottoResults, entry)
-                }개",
-            )
-        }
+        println(userLottoResults.joinToString("\n"))
         println("총 수익률은 ${floor(profitRate * 100) / 100}입니다.(기준이 1이기 때문에 결과적으로 ${makeProfitRateDescription(profitRate)} 의미임)")
     }
-
-    private fun getBonusBallDescription(entry: LottoResult): String =
-        if (entry.bonusMatched == LottoResult.BonusMatched.YES) ", 보너스 볼 일치" else ""
-
-    private fun countLottoResult(
-        userLottoResults: List<LottoResult>,
-        entry: LottoResult,
-    ): Int =
-        userLottoResults.count { lottoResult: LottoResult ->
-            lottoResult == entry
-        }
 
     private fun makeProfitRateDescription(profitRate: Double): String =
         when {

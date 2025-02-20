@@ -1,8 +1,5 @@
 package lotto.view
 
-import lotto.domain.Lotto
-import lotto.domain.LottoNumber
-
 object InputView {
     private const val LOTTO_NUMBERS_DELIMITER = ","
     private const val ERROR_MESSAGE_INVALID_INPUT_STATE = "정상적으로 입력되지 않았습니다."
@@ -15,19 +12,14 @@ object InputView {
         return price
     }
 
-    fun readWinningNumbers(): Lotto {
+    fun readWinningNumbers(): List<Int> {
         val lottoInput: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
-        val wonLotto = Lotto(lottoInput.toLottoNumbers())
+        val wonLotto: List<Int> =
+            lottoInput.split(LOTTO_NUMBERS_DELIMITER).map { number: String ->
+                number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_WINNING_NUMBERS)
+            }
         return wonLotto
     }
-
-    private fun String.toLottoNumbers(): Set<LottoNumber> =
-        split(LOTTO_NUMBERS_DELIMITER)
-            .map { number: String ->
-                val number: Int =
-                    number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_WINNING_NUMBERS)
-                LottoNumber(number)
-            }.toSet()
 
     fun readBonusNumber(): Int {
         val bonusInput: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)

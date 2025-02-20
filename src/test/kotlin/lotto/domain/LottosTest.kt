@@ -18,6 +18,6 @@ class LottosTest {
                     Lotto(setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()),
                 ),
             )
-        assertThat(lottos.lottos.size).isEqualTo(wantLottoCount)
+        assertThat(lottos.value.size).isEqualTo(wantLottoCount)
     }
 }
