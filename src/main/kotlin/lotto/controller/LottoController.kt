@@ -55,7 +55,7 @@ class LottoController(
         lottoMatcher: LottoMatcher,
         publishedLotto: List<Lotto>,
     ) {
-        val result = lottoMatcher.matchingLotto(publishedLotto)
+        val result = lottoMatcher.matchLotto(publishedLotto)
         val prizeCalculator = PrizeCalculator()
         val earningRate = prizeCalculator.calculateEarningRate(amount.money, result)
         outputView.printPrize(result, earningRate)
