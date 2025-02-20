@@ -6,6 +6,7 @@ class Lotto(
     init {
         validateLottoNumbersCount(numbers)
         validateLottoNumbersRange(numbers)
+        validateLottoNumbersDuplicate(numbers)
     }
 
     private fun validateLottoNumbersCount(numbers: List<Int>) {
@@ -22,12 +23,20 @@ class Lotto(
         }
     }
 
+    private fun validateLottoNumbersDuplicate(numbers: List<Int>) {
+        require(numbers.size == numbers.toSet().size) {
+            "[ERROR] 로또 번호는 중복될 수 없습니다."
+        }
+    }
+
     fun getRank(
         winningNumbers: List<Int>,
         bonusNumber: Int,
     ): Rank {
         val countOfMatch = countMatchWinningNumbers(winningNumbers)
         val matchBonus = isHaveBonusNumber(bonusNumber)
+
+        validateLottoNumbersDuplicate(winningNumbers + listOf(bonusNumber))
 
         return Rank.fromMatchResult(countOfMatch, matchBonus)
     }
