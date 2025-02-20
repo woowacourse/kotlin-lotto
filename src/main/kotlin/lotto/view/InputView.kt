@@ -20,8 +20,10 @@ object InputView {
             Lotto(
                 lottoInput
                     .split(LOTTO_NUMBERS_DELIMITER)
-                    .map {
-                        it.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_WINNING_NUMBERS)
+                    .map { number: String ->
+                        number.trim().toIntOrNull() ?: throw IllegalArgumentException(
+                            ERROR_MESSAGE_INVALID_WINNING_NUMBERS,
+                        )
                     }.toSet(),
             )
         return wonLotto
