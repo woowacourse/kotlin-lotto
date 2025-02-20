@@ -1,6 +1,5 @@
 package lotto.domain.value
 
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -21,12 +20,5 @@ class EarningRateTest {
         assertThrows<IllegalArgumentException> {
             EarningRate(rate)
         }
-    }
-
-    @ParameterizedTest
-    @ValueSource(doubles = [0.051, 0.052, 0.053, 0.054])
-    fun `소수점 아래 2자리로 반올림한다`(rate: Double) {
-        val earningRate = EarningRate(rate)
-        assertThat(earningRate.rate).isEqualTo(0.05)
     }
 }
