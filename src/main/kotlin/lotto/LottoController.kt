@@ -2,9 +2,10 @@ package lotto
 
 import kotlin.random.Random
 
-class LottoController {
-    private val lottoView = LottoView()
-    private val lottoService = LottoService(Random(1))
+class LottoController (
+    private val lottoView:LottoView,
+    private val lottoService:LottoService
+) {
 
     fun run() {
         val lottoAmount = lottoView.getLottoAmount()

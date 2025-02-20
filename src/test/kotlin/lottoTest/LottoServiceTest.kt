@@ -19,7 +19,7 @@ class LottoServiceTest {
             assertThat(lotto)
                 .hasSize(6)
                 .allMatch({ num -> num in 1..45 })
-                .isEqualTo(lotto.toSet().toList())
+                .isEqualTo(lotto.distinct())
         }
     }
 

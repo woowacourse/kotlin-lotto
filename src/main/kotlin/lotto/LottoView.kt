@@ -7,7 +7,7 @@ import java.lang.IllegalArgumentException
 class LottoView {
     fun getLottoAmount(): Int {
         println(Message.ASK_AMOUNT.msg)
-        val userInput = checkLottoAmount(readln())
+        val userInput = requireLottoAmount(readln())
         println("${userInput}개를 구매했습니다.")
         return userInput
     }
@@ -18,12 +18,12 @@ class LottoView {
 
     fun getWinningLotto(): List<Int> {
         println(Message.ASK_WINNING_LOTTO.msg)
-        return checkValidLotto(readln())
+        return requireValidLotto(readln())
     }
 
     fun getBonusNum(): Int {
         println(Message.ASK_BONUS_BALL.msg)
-        return checkValidBonusNum(readln())
+        return requireValidBonusNum(readln())
     }
 
     fun printResult(rankMap: Map<Rank, Int>) {
@@ -43,37 +43,29 @@ class LottoView {
     }
 
     companion object {
-        fun checkLottoAmount(input: String): Int {
-            try {
-                return input.toInt() / 1000
-            } catch (e: NumberFormatException) {
-                throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
-            }
+        fun requireLottoAmount(input: String): Int {
+            require(input.toIntOrNull() != null) { Message.ERR_INVALID_FORMAT.msg }
+            return input.toInt() / 1000
         }
 
-        fun checkValidLotto(input: String): List<Int> {
-            try {
-                var winningLotto = input.split(",").map { number -> number.toInt() }
-                if (winningLotto.size != 6) throw IllegalArgumentException(Message.ERR_NOT_SIX_ELEMENTS.msg)
-                winningLotto = winningLotto.filter { number -> number in 1..45 }
-                if (winningLotto.size != 6) throw IllegalArgumentException(Message.ERR_NOT_IN_RANGE.msg)
-                winningLotto = winningLotto.toSet().toList()
-                if (winningLotto.size != 6) throw IllegalArgumentException(Message.ERR_ELEMENT_DUPLICATED.msg)
+        fun requireValidLotto(input: String): List<Int> {
 
-                return winningLotto
-            } catch (e: NumberFormatException) {
-                throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
+            var winningLotto = input.split(",").map {
+                number -> number.toIntOrNull()?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
             }
+            require (winningLotto.size == 6) { Message.ERR_NOT_SIX_ELEMENTS.msg}
+            winningLotto = winningLotto.filter { number -> number in 1..45 }
+            require (winningLotto.size == 6) { Message.ERR_NOT_IN_RANGE.msg}
+            winningLotto = winningLotto.distinct()
+            require (winningLotto.size == 6) { Message.ERR_ELEMENT_DUPLICATED.msg}
+
+            return winningLotto
         }
 
-        fun checkValidBonusNum(input: String): Int {
-            try {
-                val rawInput = input.toInt()
-                if (rawInput !in 1..45) throw IllegalArgumentException(Message.ERR_NOT_IN_RANGE.msg)
-                return rawInput
-            } catch (e: NumberFormatException) {
-                throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
-            }
+        fun requireValidBonusNum(input: String): Int {
+            val rawInput = input.toIntOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
+            require(rawInput in 1..45) { Message.ERR_NOT_IN_RANGE.msg }
+            return rawInput
         }
     }
 }
