@@ -35,8 +35,8 @@ class InputView {
     }
 
     companion object {
-        const val INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
-        const val INPUT_WINNING_LOTTO = "\n지난 주 당첨 번호를 입력해 주세요."
-        const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+        private const val INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
+        private const val INPUT_WINNING_LOTTO = "\n지난 주 당첨 번호를 입력해 주세요."
+        private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
     }
 }
