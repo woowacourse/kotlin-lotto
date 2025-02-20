@@ -18,7 +18,7 @@ class LottoController(
     fun run() {
         val purchaseMoney = getPurchaseMoney()
         val lottoCount = getLottoCount(purchaseMoney)
-        val lottos = getLottos(lottoCount)
+        val lottos = lottoMachine.createLottos(lottoCount)
 
         processIssuedLotto(lottos)
 
@@ -42,12 +42,6 @@ class LottoController(
         val lottoCount = purchaseMoney.getLottoCount()
         outputView.printLottoCount(lottoCount)
         return lottoCount
-    }
-
-    private fun getLottos(lottoCount: Int): Lottos {
-        val lottoBundle = mutableListOf<Lotto>()
-        repeat(lottoCount) { lottoBundle.add(lottoMachine.createLotto()) }
-        return Lottos(lottoBundle.toList())
     }
 
     private fun processIssuedLotto(lottos: Lottos) {
