@@ -15,21 +15,31 @@ object OutputView {
     }
 
     fun printResult(lottoResult: LottoResult) {
+        printHeader()
+        printStatistics(lottoResult)
+    }
+
+    private fun printHeader() {
         println("\n당첨 통계")
         println("---------")
+    }
 
+    private fun printStatistics(lottoResult: LottoResult) {
         Rank.entries.reversed()
             .filter { it != Rank.MISS }
             .forEach { rank ->
-                println(
-                    "${rank.countOfMatch}개 일치${if (rank == Rank.SECOND) ", 보너스 볼 일치" else ""} (${rank.winningMoney}원) - ${
-                        lottoResult.getWinningStatistics().getOrDefault(
-                            rank,
-                            0,
-                        )
-                    }개",
-                )
+                println(formatWinningMessage(rank, lottoResult))
             }
+    }
+
+    private fun formatWinningMessage(
+        rank: Rank,
+        lottoResult: LottoResult,
+    ): String {
+        val bonusText = if (rank == Rank.SECOND) ", 보너스 볼 일치" else ""
+        val count = lottoResult.getWinningStatistics().getOrDefault(rank, 0)
+
+        return "${rank.countOfMatch}개 일치$bonusText (${rank.winningMoney}원) - ${count}개"
     }
 
     fun printProfit(profitRate: Double) {
