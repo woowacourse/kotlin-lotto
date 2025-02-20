@@ -9,20 +9,27 @@ import kotlin.runCatching
 class InputView {
     fun readPurchaseAmount(): PurchaseAmount {
         println(INPUT_PURCHASE_AMOUNT)
-        val inputMessage = readln()
-        runCatching { inputMessage.toInt() }.onFailure { throw IllegalArgumentException() }
-        return PurchaseAmount(inputMessage.toInt())
+        val inputText = readln()
+        val purchaseAmount =
+            runCatching { PurchaseAmount(inputText.toInt()) }.getOrElse {
+                throw IllegalArgumentException(
+                    CAN_NOT_TO_INT.format(
+                        inputText,
+                    ),
+                )
+            }
+        return purchaseAmount
     }
 
     fun readWinningLottoWithoutBonusNumber(): Lotto {
         println(INPUT_WINNING_LOTTO)
         val inputMessage = readln()
         val lotto =
-            runCatching {
+            run {
                 Lotto(
                     inputMessage.split(",").map { LottoNumber(it.trim().toInt()) }.sortedBy { it.number },
                 )
-            }.getOrElse { throw IllegalArgumentException() }
+            }
 
         return lotto
     }
@@ -30,18 +37,20 @@ class InputView {
     fun getWinningLottoWithBonusNumber(lotto: Lotto): WinningLotto {
         println(INPUT_BONUS_NUMBER)
         val winningLotto =
-            runCatching {
+            run {
                 WinningLotto(
                     lotto,
                     LottoNumber(readln().toInt()),
                 )
-            }.getOrElse { throw IllegalArgumentException() }
+            }
         return winningLotto
     }
 
     companion object {
-        const val INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
-        const val INPUT_WINNING_LOTTO = "\n지난 주 당첨 번호를 입력해 주세요."
-        const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+        private const val INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
+        private const val INPUT_WINNING_LOTTO = "\n지난 주 당첨 번호를 입력해 주세요."
+        private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+
+        private const val CAN_NOT_TO_INT = "정수로 변환할 수 없는 입력값입니다. (입력:%s)"
     }
 }

@@ -1,14 +1,21 @@
 package lotto.domain.value
 
 import lotto.constants.LottoConstants
+import kotlin.runCatching
 
 class PurchaseQuantity(
     purchaseAmount: PurchaseAmount,
 ) {
-    val quantity = purchaseAmount.amount / LottoConstants.LOTTO_PRICE
+    val quantity =
+        runCatching { purchaseAmount.amount / LottoConstants.LOTTO_PRICE }.getOrElse {
+            throw IllegalArgumentException(
+                INDIVISIBLE_VALUE_ERROR.format(
+                    purchaseAmount.amount,
+                ),
+            )
+        }
 
-    init {
-        require(purchaseAmount.amount % LottoConstants.LOTTO_PRICE == 0)
-        require(purchaseAmount.amount >= LottoConstants.LOTTO_PRICE)
+    companion object {
+        private const val INDIVISIBLE_VALUE_ERROR = "%d는 ${LottoConstants.LOTTO_PRICE}로 나눌 수 없습니다."
     }
 }
