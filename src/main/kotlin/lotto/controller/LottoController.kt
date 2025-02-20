@@ -20,13 +20,12 @@ class LottoController(
         val lottoCount = getLottoCount(purchaseMoney)
         val lottos = getLottos(lottoCount)
 
-        lottos.lottoBundle.forEach { lotto -> outputView.printLottoNumbers(lotto) }
+        processIssuedLotto(lottos)
 
-        val winningLottoNumbers = getWinningLottoNumbers()
-        val winningLotto = getWinningLotto(winningLottoNumbers)
+        val winningLotto = getWinningLotto()
         val lottoStatistics = LottoStatistics(lottos, winningLotto, purchaseMoney)
-        outputView.printLottoStatistics(lottoStatistics.lottoStatistics)
-        outputView.printLottoRateOfReturn(lottoStatistics.getRateOfReturn(), lottoStatistics.getIsLossMoney())
+
+        processLottoStatistics(lottoStatistics)
     }
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =
@@ -45,25 +44,20 @@ class LottoController(
         return lottoCount
     }
 
-    private fun getWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
-        try {
-            val bonusNumber = getBonusNumber()
-            WinningLotto(winningLottoNumbers, bonusNumber)
-        } catch (error: IllegalArgumentException) {
-            outputView.printErrorMessage(error.message ?: "")
-            getWinningLotto(winningLottoNumbers)
-        }
-
-    private fun getBonusNumber(): LottoNumber {
-        outputView.printBonusNumberGuide()
-        val bonusNumber = LottoNumber(inputView.readBonusNumber())
-        return bonusNumber
-    }
-
     private fun getLottos(lottoCount: Int): Lottos {
         val lottoBundle = mutableListOf<Lotto>()
         repeat(lottoCount) { lottoBundle.add(lottoMachine.createLotto()) }
         return Lottos(lottoBundle.toList())
+    }
+
+    private fun processIssuedLotto(lottos: Lottos) {
+        lottos.lottoBundle.forEach { lotto -> outputView.printLottoNumbers(lotto) }
+    }
+
+    private fun getWinningLotto(): WinningLotto {
+        val winningLottoNumbers = getWinningLottoNumbers()
+        val winningLotto = createWinningLotto(winningLottoNumbers)
+        return winningLotto
     }
 
     private fun getWinningLottoNumbers(): Lotto =
@@ -75,4 +69,24 @@ class LottoController(
             outputView.printErrorMessage(error.message ?: "")
             getWinningLottoNumbers()
         }
+
+    private fun createWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
+        try {
+            val bonusNumber = getBonusNumber()
+            WinningLotto(winningLottoNumbers, bonusNumber)
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message ?: "")
+            createWinningLotto(winningLottoNumbers)
+        }
+
+    private fun getBonusNumber(): LottoNumber {
+        outputView.printBonusNumberGuide()
+        val bonusNumber = LottoNumber(inputView.readBonusNumber())
+        return bonusNumber
+    }
+
+    private fun processLottoStatistics(lottoStatistics: LottoStatistics) {
+        outputView.printLottoStatistics(lottoStatistics.lottoStatistics)
+        outputView.printLottoRateOfReturn(lottoStatistics.getRateOfReturn(), lottoStatistics.getIsLossMoney())
+    }
 }
