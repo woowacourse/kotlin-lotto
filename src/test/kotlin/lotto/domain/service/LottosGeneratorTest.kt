@@ -3,8 +3,10 @@ package lotto.domain.service
 import lotto.domain.model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.ValueSource
 
 class LottosGeneratorTest {
     @CsvSource(
@@ -33,6 +35,14 @@ class LottosGeneratorTest {
         val lotto = lottosGenerator.generate(1000).first()
 
         assertThat(lotto.numbers.map { it.number }).isEqualTo(actual)
+    }
+
+    @ValueSource(ints = [999, 0, -1000, -999])
+    @ParameterizedTest
+    fun `구매 금액이 로또 금액 미만이라면 예외가 발생한다`(purchaseAmount: Int) {
+        assertThrows<IllegalArgumentException> {
+            LottosGenerator().generate(purchaseAmount)
+        }
     }
 
     inner class FixedLottoNumbersGenerator(private val numbers: List<Int>) : LottoNumbersGenerator {
