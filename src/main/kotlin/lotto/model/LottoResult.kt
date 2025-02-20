@@ -1,7 +1,6 @@
 package lotto.model
 
 import lotto.Constants
-import lotto.Rank
 
 class LottoResult(
     private val ranks: List<Rank>,

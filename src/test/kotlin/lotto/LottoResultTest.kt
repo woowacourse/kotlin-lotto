@@ -1,6 +1,7 @@
 package lotto
 
 import lotto.model.LottoResult
+import lotto.model.Rank
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

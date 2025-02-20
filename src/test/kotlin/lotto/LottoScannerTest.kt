@@ -3,6 +3,7 @@ package lotto
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import lotto.model.LottoScanner
+import lotto.model.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

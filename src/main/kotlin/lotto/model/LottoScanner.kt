@@ -1,7 +1,5 @@
 package lotto.model
 
-import lotto.Rank
-
 class LottoScanner(
     private val winningNumbers: Lotto,
 ) {

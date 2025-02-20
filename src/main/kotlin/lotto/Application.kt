@@ -1,4 +1,4 @@
-import lotto.LottoStore
+package lotto
 
 fun main() {
     val lottoStore = LottoStore()
