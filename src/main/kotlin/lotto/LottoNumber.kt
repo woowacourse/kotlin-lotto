@@ -1,7 +1,7 @@
 package lotto
 
 class LottoNumber(
-    private val number: Int,
+    val number: Int,
 ) {
     init {
         require(number in MIN_NUMBER..MAX_NUMBER) { ERROR_OUT_OF_RANGE_NUMBERS }

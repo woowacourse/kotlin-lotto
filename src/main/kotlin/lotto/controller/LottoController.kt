@@ -16,6 +16,8 @@ class LottoController(
         val purchaseMoney = getPurchaseMoney()
         val lottoCount = getLottoCount(purchaseMoney)
         val lottos = getLottos(lottoCount)
+
+        lottos.lottoBundle.forEach { lotto -> outputView.printLottoNumbers(lotto) }
     }
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =

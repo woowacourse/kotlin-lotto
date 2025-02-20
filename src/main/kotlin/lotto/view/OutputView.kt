@@ -1,5 +1,7 @@
 package lotto.view
 
+import lotto.Lotto
+
 class OutputView {
     fun printPurchaseAmountGuide() {
         println(PURCHASE_AMOUNT_GUIDE_MESSAGE)
@@ -7,6 +9,16 @@ class OutputView {
 
     fun printLottoCount(lottoCount: Int) {
         println(LOTTO_COUNT_MESSAGE_FORMAT.format(lottoCount))
+    }
+
+    fun printLottoNumbers(lotto: Lotto) {
+        println(
+            lotto.numbers.joinToString(
+                separator = ", ",
+                prefix = "[",
+                postfix = "]",
+            ) { lottoNumber -> lottoNumber.number.toString() },
+        )
     }
 
     fun printWinningLottoNumbersGuide() {
