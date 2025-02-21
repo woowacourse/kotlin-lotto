@@ -21,7 +21,7 @@ class LottoMatcher(
         return rankMap
     }
 
-    fun calculateRank(lotto: Lotto): Rank {
+    private fun calculateRank(lotto: Lotto): Rank {
         val matchCount = countMatchingNumber(lotto)
         val matchBonus = checkBonusNumber(lotto, bonusNumber)
         return Rank.valueOf(matchCount, matchBonus)
