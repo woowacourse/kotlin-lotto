@@ -1,11 +1,7 @@
 package domain.model
 
 class LottoResult(
-    val result: MutableMap<Rank, Int> =
-        Rank.entries
-            .reversed()
-            .associateWith { 0 }
-            .toMutableMap(),
+    val result: MutableMap<Rank, Int> = DEFAULT_RESULT.toMutableMap()
 ) {
     override fun toString(): String =
         result
@@ -34,6 +30,7 @@ class LottoResult(
         }
 
     companion object {
+        val DEFAULT_RESULT : Map<Rank,Int> = Rank.entries.reversed().associateWith { 0 }
         const val EMPTY_VALUE = ""
         const val ROUND = "%.2f"
         const val MESSAGE_EACH_RANK_RESULT = "%d개 일치 (%d원)- %d개"
