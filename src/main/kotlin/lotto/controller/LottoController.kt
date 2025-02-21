@@ -8,8 +8,8 @@ import lotto.domain.WinningLotto
 import lotto.view.View
 
 class LottoController {
-    lateinit var winningLotto: WinningLotto
-    lateinit var boughtLottos: Lottos
+    private lateinit var winningLotto: WinningLotto
+    private lateinit var boughtLottos: Lottos
 
     fun buyLottos() {
         val price: Int = View.readPrice()
