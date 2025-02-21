@@ -1,13 +1,13 @@
 package controller
 
-import domain.model.BonusNumber
 import domain.model.Lotto
-import domain.model.LottoResult
-import domain.model.PurchaseLotto
+import domain.model.LottoNumber
 import domain.model.PurchasePrice
+import domain.model.Rank
 import domain.model.WinningLotto
 import domain.service.LottoGenerator
-import domain.service.LottoMatchCalculator
+import util.Messenger.getWinningMessage
+import util.Messenger.makePurchaseLottoMessage
 import util.retryWhenException
 import validator.NumericValidator
 import view.InputView
@@ -16,17 +16,19 @@ import view.OutputView
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
+    private val lottoGenerator: LottoGenerator,
 ) {
     fun run() {
         val purchasePrice = getPurchasePrice()
-        val lotto: PurchaseLotto = buyLotto(purchasePrice)
-        displayBuyLotto(lotto)
-        val winningNumbers: Lotto = getWinningNumbers()
-        val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
+        val purchaseLotto: List<Lotto> = buyLotto(purchasePrice)
+        displayBuyLotto(purchaseLotto)
 
-        val lottoResult = winningLotto.calculate(purchaseLotto)
-        val profitRate = lottoResult.getProfitRate(purchasePrice)
-        displayResult(lottoResult, profitRate)
+        val winningNumbers: Lotto = getWinningNumbers()
+        val winningLotto = getWinningLotto(winningNumbers)
+
+        val winningResult = winningLotto.calculate(purchaseLotto)
+        val profitRate = winningLotto.getProfitRate(purchasePrice, winningResult)
+        displayResult(winningResult, profitRate)
     }
 
     private fun getPurchasePrice(): PurchasePrice =
@@ -39,15 +41,13 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun buyLotto(money: PurchasePrice): PurchaseLotto {
-        val generator = LottoGenerator(money)
-        val lotto = generator.makeLotto()
-        return lotto
+    private fun buyLotto(money: PurchasePrice): List<Lotto> {
+        return lottoGenerator.generate(money)
     }
 
-    private fun displayBuyLotto(lotto: PurchaseLotto) {
-        outputView.printPurchasedLottoCount(lotto.values.size)
-        outputView.printPurchasedLotto(lotto.toString())
+    private fun displayBuyLotto(lotto: List<Lotto>) {
+        outputView.printPurchasedLottoCount(lotto.size)
+        outputView.printPurchasedLotto(makePurchaseLottoMessage(lotto))
     }
 
     private fun getWinningNumbers(): Lotto =
@@ -70,10 +70,10 @@ class LottoController(
         )
 
     private fun displayResult(
-        lottoResult: LottoResult,
+        lottoResult: Map<Rank, Int>,
         profitRate: String,
     ) {
-        outputView.printWinningResult(lottoResult.toString(), profitRate)
+        outputView.printWinningResult(getWinningMessage(lottoResult), profitRate)
         if (profitRate.toDouble() < 1) outputView.printLossMessage()
     }
 }
