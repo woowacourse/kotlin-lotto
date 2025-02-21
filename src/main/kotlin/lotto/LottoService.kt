@@ -15,7 +15,6 @@ class LottoService(
         val lotto = mutableListOf<Int>()
         while (lotto.toSet().size != MAX_LOTTO_LENGTH) {
             lotto.clear()
-
             repeat(MAX_LOTTO_LENGTH) { lotto.add(random.nextInt(MIN_RANDOM_NUM, MAX_RANDOM_NUM + 1)) }
         }
         return Lotto(lotto.toList())
@@ -32,16 +31,9 @@ class LottoService(
         winningLotto: Lotto,
         bonus: Int,
     ): Rank {
-        var countOfMatch = 0
-        val notHitNums = mutableListOf<Int>()
-        winningLotto.value.forEach { num ->
-            if (num in lotto.value) {
-                countOfMatch++
-            } else {
-                notHitNums.add(num)
-            }
-        }
-        return Rank.getRank(countOfMatch, (bonus in notHitNums))
+        val countOfMatch = winningLotto.value.count { it in lotto.value }
+        val isBonusMatched = bonus in winningLotto.value && bonus !in lotto.value
+        return Rank.getRank(countOfMatch, isBonusMatched)
     }
 
     fun checkRankMany(
@@ -49,8 +41,7 @@ class LottoService(
         winningLotto: Lotto,
         bonus: Int,
     ): Map<Rank, Int> {
-        val rankMap = mutableMapOf<Rank, Int>()
-        for (rank in Rank.entries) rankMap.putIfAbsent(rank, 0)
+        val rankMap = Rank.entries.associateWith { 0 }.toMutableMap()
         for (lotto in manyLotto) {
             val rank = checkRank(lotto, winningLotto, bonus)
             rankMap[rank] = rankMap.getOrDefault(rank, 0) + 1
@@ -60,14 +51,9 @@ class LottoService(
 
     companion object {
         fun getRate(rankMap: Map<Rank, Int>): String {
-            var total = 0
-            for (rank in rankMap.keys) {
-                total += rank.winningMoney * rankMap[rank]!!
-            }
-
-            val sum = rankMap.values.sum() * LOTTO_PRICE
-            if (sum == 0) return "0.0"
-            return String.format("%.2f", (total.toDouble() / sum.toDouble()))
+            val earned = rankMap.entries.sumOf { it.key.winningMoney * it.value }
+            val paid = rankMap.values.sum() * LOTTO_PRICE
+            return if (paid == 0) "0.0" else String.format("%.2f", earned.toDouble() / paid.toDouble())
         }
     }
 }

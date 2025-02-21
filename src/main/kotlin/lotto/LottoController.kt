@@ -5,6 +5,7 @@ class LottoController(
     private val lottoService: LottoService,
 ) {
     fun run() {
+        // 순차적으로 실행...이게 과연 최선일까?
         val lottoAmount = lottoView.getLottoAmount()
         val manyLotto = lottoService.getManyLotto(lottoAmount)
         lottoView.printLotto(manyLotto)
