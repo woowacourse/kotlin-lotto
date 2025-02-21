@@ -21,18 +21,18 @@ class LottoController {
         val price: Int = View.readPrice()
         val lottoCount: Int = price / Lotto.PRICE
         val lottoNumbers: List<List<Int>> = List(lottoCount) { makeRandomNumbers() }
-        val lottos: Lottos = convertLottos(price, lottoNumbers)
+        val lottos: Lottos = convertLottos(lottoCount, lottoNumbers)
         boughtLottos = lottos
         View.showLottoCount(boughtLottos.value.size)
         View.showLottos(lottoNumbers.map { lottoNumber: List<Int> -> lottoNumber.sorted() })
     }
 
     private fun convertLottos(
-        price: Int,
+        lottoCount: Int,
         lottoNumbers: List<List<Int>>,
     ): Lottos =
         Lottos.buy(
-            price = price,
+            count = lottoCount,
             lottos =
                 lottoNumbers
                     .map { lottoNumber: List<Int> ->
