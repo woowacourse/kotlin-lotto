@@ -13,7 +13,7 @@ class LottoTest {
                 Lotto(numbers)
             }
 
-        assertThat(exception.message).isEqualTo("로또 번호는 6개여야 합니다.")
+        assertThat(exception.message).isEqualTo("로또 번호는 6개여야 하며, 중복될 수 없습니다.")
     }
 
     @Test
@@ -24,6 +24,6 @@ class LottoTest {
                 Lotto(numbers)
             }
 
-        assertThat(exception.message).isEqualTo("로또 번호는 6개여야 합니다.")
+        assertThat(exception.message).isEqualTo("로또 번호는 6개여야 하며, 중복될 수 없습니다.")
     }
 }
