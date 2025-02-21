@@ -1,6 +1,10 @@
 package lotto
 
 import lotto.domain.Lotto
+import lotto.global.Config.LOTTO_PRICE
+import lotto.global.Config.MAX_LOTTO_LENGTH
+import lotto.global.Config.MAX_RANDOM_NUM
+import lotto.global.Config.MIN_RANDOM_NUM
 import lotto.global.Rank
 import kotlin.random.Random
 
@@ -9,10 +13,10 @@ class LottoService(
 ) {
     fun getLotto(): Lotto {
         val lotto = mutableListOf<Int>()
-
-        while (lotto.toSet().size != 6) {
+        while (lotto.toSet().size != MAX_LOTTO_LENGTH) {
             lotto.clear()
-            repeat(6) { lotto.add(random.nextInt(1, 46)) }
+
+            repeat(MAX_LOTTO_LENGTH) { lotto.add(random.nextInt(MIN_RANDOM_NUM, MAX_RANDOM_NUM + 1)) }
         }
         return Lotto(lotto.toList())
     }
@@ -61,7 +65,7 @@ class LottoService(
                 total += rank.winningMoney * rankMap[rank]!!
             }
 
-            val sum = rankMap.values.sum() * 1000
+            val sum = rankMap.values.sum() * LOTTO_PRICE
             if (sum == 0) return "0.0"
             return String.format("%.2f", (total.toDouble() / sum.toDouble()))
         }
