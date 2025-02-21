@@ -64,7 +64,8 @@ class LottoController(
 
     private fun generateLottoMachineByAmount(): LottoMachine {
         outputView.printPurchaseAmountGuide()
-        val purchaseAmount = inputView.readPurchaseAmount()
+        val rawPurchaseAmount = inputView.readPurchaseAmount()
+        val purchaseAmount = rawPurchaseAmount.validateIsNumber()
         return LottoMachine(purchaseAmount)
     }
 

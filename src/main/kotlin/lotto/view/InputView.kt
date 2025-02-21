@@ -1,7 +1,7 @@
 package lotto.view
 
 class InputView {
-    fun readPurchaseAmount(): Int = readln().toInt()
+    fun readPurchaseAmount(): String = readln()
 
     fun readWinningNumbers(): String {
         val rawWinningNumbers = readln()
