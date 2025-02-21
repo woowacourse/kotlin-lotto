@@ -1,10 +1,9 @@
 package lotto
 
 import lotto.model.LottoMachine
+import lotto.model.LottoNumber
 import lotto.model.LottoResult
 import lotto.model.LottoTicket
-import lotto.model.LottoScanner
-import lotto.model.LottoNumber
 import lotto.model.Rank
 import lotto.view.InputView
 import lotto.view.OutputView

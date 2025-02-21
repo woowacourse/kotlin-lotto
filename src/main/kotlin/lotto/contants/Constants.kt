@@ -1,4 +1,4 @@
-package lotto
+package lotto.contants
 
 object Constants {
     const val LOTTO_AMOUNT = 1_000
