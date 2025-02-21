@@ -1,6 +1,5 @@
 package domain.model
 
-import domain.model.Lotto.Companion.ROUND
 import domain.model.LottoNumber.Companion.INVALID_LOTTO_NUMBERS
 import domain.service.LottoGenerator.Companion.LOTTO_MAX
 import domain.service.LottoGenerator.Companion.LOTTO_MIN
@@ -51,6 +50,7 @@ class WinningLotto(
     }
 
     companion object {
+        const val ROUND = "%.2f"
         const val DUPLICATED_BONUS_NUMBER = "$ERROR 보너스 번호와 로또 번호는 중복될 수 없습니다."
     }
 }
