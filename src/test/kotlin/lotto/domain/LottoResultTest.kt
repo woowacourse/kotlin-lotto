@@ -5,8 +5,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoResultTest {
-    val number: Lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-    val winningNumber: Lotto = Lotto(listOf(3, 4, 5, 6, 7, 8))
+    val number: Lotto = Lotto(intToLottoNumber(listOf(1, 2, 3, 4, 5, 6)))
+    val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(3, 4, 5, 6, 7, 8)))
 
     @Test
     fun `6개 숫자를 넣으면 일치한 숫자의 개수를 알 수 있다`() {
@@ -31,12 +31,12 @@ class LottoResultTest {
 
     @Test
     fun `구입한 로또들의 당첨 통계를 알 수 있다`() {
-        val number1: Lotto = Lotto(listOf(1, 2, 3, 4, 5, 6)) // 5개 매치
-        val number2: Lotto = Lotto(listOf(2, 3, 4, 5, 6, 7)) // 6개 매치
-        val number3: Lotto = Lotto(listOf(3, 4, 5, 6, 7, 45)) // 5개 + 보너스볼 매치
+        val number1: Lotto = Lotto(intToLottoNumber(listOf(1, 2, 3, 4, 5, 6))) // 5개 매치
+        val number2: Lotto = Lotto(intToLottoNumber(listOf(2, 3, 4, 5, 6, 7))) // 6개 매치
+        val number3: Lotto = Lotto(intToLottoNumber(listOf(3, 4, 5, 6, 7, 45))) // 5개 + 보너스볼 매치
         val lottos: List<Lotto> = listOf(number1, number2, number3)
 
-        val winningNumber: Lotto = Lotto(listOf(2, 3, 4, 5, 6, 7))
+        val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(2, 3, 4, 5, 6, 7)))
         val winningBonusNumber: LottoNumber = LottoNumber(45)
 
         val lottoGame = LottoResult(winningNumber, winningBonusNumber)
@@ -55,7 +55,7 @@ class LottoResultTest {
 
     @Test
     fun `당첨 통계로 당첨 금액을 계산한다`() {
-        val winningNumber: Lotto = Lotto(listOf(2, 3, 4, 5, 6, 7))
+        val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(2, 3, 4, 5, 6, 7)))
         val winningBonusNumber: LottoNumber = LottoNumber(45)
 
         val lottoResult = LottoResult(winningNumber, winningBonusNumber)
@@ -70,11 +70,15 @@ class LottoResultTest {
         val totalPrize: Long = 5_000
         val purchaseAmount: Int = 14_000
 
-        val winningNumber: Lotto = Lotto(listOf(2, 3, 4, 5, 6, 7))
+        val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(2, 3, 4, 5, 6, 7)))
         val winningBonusNumber: LottoNumber = LottoNumber(45)
 
         val lottoResult = LottoResult(winningNumber, winningBonusNumber)
 
         assertThat(lottoResult.calculateProfit(totalPrize, purchaseAmount)).isEqualTo(totalPrize / purchaseAmount.toDouble())
+    }
+
+    private fun intToLottoNumber(numbers: List<Int>): List<LottoNumber> {
+        return numbers.map { LottoNumber(it) }
     }
 }
