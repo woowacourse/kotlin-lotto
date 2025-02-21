@@ -1,62 +1,57 @@
 package lotto.model
 
-class Lotto(
-    val numbers: List<Int>,
+class Lotto private constructor(
+    val numbers: List<LottoNumber>,
 ) {
     init {
         validateLottoNumbersCount(numbers)
-        validateLottoNumbersRange(numbers)
         validateLottoNumbersDuplicate(numbers)
     }
 
-    private fun validateLottoNumbersCount(numbers: List<Int>) {
+    private fun validateLottoNumbersCount(numbers: List<LottoNumber>) {
         require(numbers.size == LOTTO_NUMBER_SIZE) {
             "[ERROR] 로또는 ${LOTTO_NUMBER_SIZE}개의 번호만 가질 수 있습니다."
         }
     }
 
-    private fun validateLottoNumbersRange(numbers: List<Int>) {
-        numbers.forEach { number ->
-            require(number in LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE) {
-                "[ERROR] 로또 번호의 범위는 $LOTTO_NUMBER_MIN_RANGE 이상 $LOTTO_NUMBER_MAX_RANGE 이하여야 합니다."
-            }
-        }
-    }
-
-    private fun validateLottoNumbersDuplicate(numbers: List<Int>) {
+    private fun validateLottoNumbersDuplicate(numbers: List<LottoNumber>) {
         require(numbers.size == numbers.toSet().size) {
             "[ERROR] 로또 번호는 중복될 수 없습니다."
         }
     }
 
     fun getRank(
-        winningNumbers: List<Int>,
-        bonusNumber: Int,
+        winningLotto: Lotto,
+        bonusNumber: LottoNumber,
     ): Rank {
-        val countOfMatch = countMatchWinningNumbers(winningNumbers)
-        val matchBonus = isHaveBonusNumber(bonusNumber)
+        validateWinningNumberAndBonusNumberDuplicate(winningLotto, bonusNumber)
 
-        validateLottoNumbersDuplicate(winningNumbers + listOf(bonusNumber))
+        val countOfMatch = countMatchWinningNumbers(winningLotto)
+        val matchBonus = isHaveBonusNumber(lotto = this, bonusNumber)
 
         return Rank.fromMatchResult(countOfMatch, matchBonus)
     }
 
-    private fun countMatchWinningNumbers(winningNumbers: List<Int>): Int {
-        validateLottoNumbersRange(winningNumbers)
-        validateLottoNumbersCount(winningNumbers)
-
-        return numbers.count { existNumber -> winningNumbers.contains(existNumber) }
+    private fun validateWinningNumberAndBonusNumberDuplicate(
+        winningLotto: Lotto,
+        bonusNumber: LottoNumber,
+    ) {
+        require(!isHaveBonusNumber(winningLotto, bonusNumber)) {
+            "[ERROR] 우승 번호와 보너스 번호는 중복될 수 없습니다."
+        }
     }
 
-    private fun isHaveBonusNumber(bonusNumber: Int): Boolean {
-        validateLottoNumbersRange(listOf(bonusNumber))
+    private fun countMatchWinningNumbers(winningNumbers: Lotto): Int =
+        numbers.count { existNumber -> winningNumbers.numbers.contains(existNumber) }
 
-        return numbers.contains(bonusNumber)
-    }
+    private fun isHaveBonusNumber(
+        lotto: Lotto,
+        bonusNumber: LottoNumber,
+    ): Boolean = lotto.numbers.contains(bonusNumber)
 
     companion object {
         const val LOTTO_NUMBER_SIZE = 6
-        const val LOTTO_NUMBER_MIN_RANGE = 1
-        const val LOTTO_NUMBER_MAX_RANGE = 45
+
+        fun from(numbers: List<Int>): Lotto = Lotto(numbers.map { number -> LottoNumber(number) })
     }
 }

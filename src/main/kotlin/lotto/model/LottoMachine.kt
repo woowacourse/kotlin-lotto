@@ -1,8 +1,8 @@
 package lotto.model
 
-import lotto.model.Lotto.Companion.LOTTO_NUMBER_MAX_RANGE
-import lotto.model.Lotto.Companion.LOTTO_NUMBER_MIN_RANGE
 import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
+import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_MAX_RANGE
+import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_MIN_RANGE
 
 class LottoMachine(
     private val amount: Int,
@@ -27,15 +27,15 @@ class LottoMachine(
     fun getLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT
 
     fun getLottos(lottoQuantity: Int): Lottos {
-        val lottos = List<Lotto>(lottoQuantity) { Lotto(getLottoNumbers()) }
+        val lottos = List(lottoQuantity) { Lotto.from(getLottoNumbers()) }
         return Lottos(lottos)
     }
 
     private fun getLottoNumbers(): List<Int> {
-        val shuffledLottoNumbers = (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE).shuffled()
-        val selectedLottoNumbers = shuffledLottoNumbers.take(LOTTO_NUMBER_SIZE)
+        val shuffledNumbers = (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE).shuffled()
+        val selectedNumbers = shuffledNumbers.take(LOTTO_NUMBER_SIZE)
 
-        return selectedLottoNumbers.sorted()
+        return selectedNumbers.sorted()
     }
 
     fun getProfitRate(countLottoByRank: Map<Rank, Int>): Float {

@@ -1,6 +1,8 @@
 package lotto.controller
 
+import lotto.model.Lotto
 import lotto.model.LottoMachine
+import lotto.model.LottoNumber
 import lotto.model.Lottos
 import lotto.model.ProfitStatus
 import lotto.model.Rank
@@ -30,8 +32,8 @@ class LottoController(
     ): Lottos {
         val lottos = lottoMachine.getLottos(lottoQuantity)
 
-        lottos.getAllLottoNumbers().forEach { lottoNumbers ->
-            outputView.printLottoNumbers(lottoNumbers)
+        lottos.value.forEach { lotto ->
+            outputView.printLottoNumbers(lotto.numbers.map { number -> number.value })
         }
 
         return lottos
@@ -64,7 +66,11 @@ class LottoController(
         lastWeekWinningNumbers: List<Int>,
         bonusNumber: Int,
     ): Map<Rank, Int> {
-        val lottoWinningResult = lottos.countLottoByRank(lastWeekWinningNumbers, bonusNumber)
+        val lottoWinningResult =
+            lottos.countLottoByRank(
+                winningNumbers = Lotto.from(lastWeekWinningNumbers),
+                bonusNumber = LottoNumber(bonusNumber),
+            )
         outputView.printWinningResultTitle()
         lottoWinningResult.forEach { (rank, count) ->
             displayLottoWinningResult(rank, count)
