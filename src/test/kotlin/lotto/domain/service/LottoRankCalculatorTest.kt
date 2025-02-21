@@ -17,7 +17,7 @@ class LottoRankCalculatorTest {
     ) {
         val winningNumbers = WinningNumbers(listOf(1, 2, 3, 4, 5, 6), 8)
         val lottoRankCalculator = LottoRankCalculator()
-        assertThat(lottoRankCalculator.calculate(lotto, winningNumbers)).isEqualTo(actual)
+        assertThat(lottoRankCalculator.calculate(listOf(lotto), winningNumbers).lottoRanks).isEqualTo(listOf(actual))
     }
 
     companion object {
