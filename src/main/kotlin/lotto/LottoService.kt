@@ -31,8 +31,8 @@ class LottoService(
         winningLotto: Lotto,
         bonus: Int,
     ): Rank {
-        val countOfMatch = winningLotto.value.count { it in lotto.value }
-        val isBonusMatched = bonus in winningLotto.value && bonus !in lotto.value
+        val countOfMatch = winningLotto.getCountOfMatchWith(lotto)
+        val isBonusMatched = winningLotto.contains(bonus) && !lotto.contains(bonus)
         return Rank.getRank(countOfMatch, isBonusMatched)
     }
 
