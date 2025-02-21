@@ -71,6 +71,7 @@ class LottoController(
         lottoResult: LottoResult,
         profitRate: String,
     ) {
+        outputView.printResultTitle()
         outputView.printWinningResult(lottoResult, profitRate)
         if (profitRate.toDouble() < 1) outputView.printLossMessage()
     }

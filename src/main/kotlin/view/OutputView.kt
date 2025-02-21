@@ -15,6 +15,10 @@ class OutputView {
         println(purchasedLotto)
     }
 
+    fun printResultTitle(){
+        print(MESSAGE_WINNING_RESULT)
+    }
+
     fun printWinningResult(
         lottoResult: LottoResult,
         profitRate: String,
