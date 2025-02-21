@@ -9,7 +9,7 @@ class LottoScannerTest {
         val bonusNumber = LottoNumber(7)
 
         val winningNumbers =
-            Lotto(
+            LottoTicket(
                 listOf(
                     LottoNumber(1),
                     LottoNumber(2),
@@ -22,7 +22,7 @@ class LottoScannerTest {
             )
 
         val lottoTicket =
-            Lotto(
+            LottoTicket(
                 listOf(
                     LottoNumber(1),
                     LottoNumber(2),
