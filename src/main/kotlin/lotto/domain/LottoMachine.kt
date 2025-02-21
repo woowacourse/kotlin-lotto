@@ -17,7 +17,7 @@ class LottoMachine {
         return lottos.toList()
     }
 
-    fun getLottoCount(purchaseAmount: Int): Int {
+    private fun getLottoCount(purchaseAmount: Int): Int {
         return purchaseAmount / LOTTO_PRICE
     }
 
