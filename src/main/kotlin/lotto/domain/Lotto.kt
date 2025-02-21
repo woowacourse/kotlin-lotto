@@ -7,6 +7,8 @@ class Lotto(
         require(numbers.size == LOTTO_SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_DIFFERENT_NUMBERS }
     }
 
+    constructor(vararg numbers: Int): this(numbers.map { number: Int -> LottoNumber(number) }.toSet())
+
     companion object {
         const val LOTTO_PRICE = 1_000
         const val LOTTO_NUMBER_MIN = 1
