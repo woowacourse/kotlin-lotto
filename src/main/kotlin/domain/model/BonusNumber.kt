@@ -1,8 +1,8 @@
 package domain.model
 
 import domain.model.Lotto.Companion.ERROR
-import domain.service.LottoGenerator.Companion.LOTTO_MAX
-import domain.service.LottoGenerator.Companion.LOTTO_MIN
+import domain.strategy.KoreanLottoGenerator.Companion.LOTTO_MAX
+import domain.strategy.KoreanLottoGenerator.Companion.LOTTO_MIN
 
 @JvmInline
 value class BonusNumber(val value: Int) {
