@@ -1,7 +1,5 @@
 package lotto.domain.model
 
-import lotto.ERROR_PREFIX
-
 class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: LottoNumber) {
     constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber(bonusNumber))
 
@@ -16,6 +14,6 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
     fun hasBonusNumber(lotto: Lotto): Boolean = lotto.numbers.contains(bonusNumber)
 
     private companion object {
-        const val DUPLICATE_WINNING_NUMBER_MESSAGE = "${ERROR_PREFIX}보너스 번호는 당첨 번호와 중복될 수 없습니다."
+        const val DUPLICATE_WINNING_NUMBER_MESSAGE = "보너스 번호는 당첨 번호와 중복될 수 없습니다."
     }
 }

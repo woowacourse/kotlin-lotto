@@ -28,3 +28,4 @@
 - [x] LottoRank 계산 로직 변경
 - [x] LottoNumbers 책임을 Lotto로 이전
 - [x] Lotto의 numbers 타입을 Set으로 변경
+- [x] 로또 관련 상수 LottoRules Enum Class로 관리하도록 변경 
