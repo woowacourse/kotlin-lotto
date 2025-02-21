@@ -1,6 +1,6 @@
 package lotto.model
 
-import lotto.Constants.LOTTO_PICK_COUNT
+import lotto.contants.Constants.LOTTO_PICK_COUNT
 
 class WinningLotto(
     private val winningNumbers: Set<LottoNumber>,
@@ -22,7 +22,7 @@ class WinningLotto(
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 
-    private fun getCountOfMatch(lottoTicket: LottoTicket): Int = winningNumbers.intersect(lottoTicket.getNumbers().toSet()).size
+    private fun getCountOfMatch(lottoTicket: LottoTicket): Int = winningNumbers.intersect(lottoTicket.getNumbers()).size
 
     private fun getMatchBonus(lottoTicket: LottoTicket): Boolean = lottoTicket.getNumbers().contains(bonusNumber)
 }
