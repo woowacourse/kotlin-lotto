@@ -38,7 +38,7 @@ class LottoController {
                     countLottoResult(lottoResults, entry)
                 }개"
             }
-        View.showResult(lottoResults = lottoResultsDescriptions, profitRate = lottoResults.getProfitRate)
+        View.showResult(lottoResults = lottoResultsDescriptions, profitRate = lottoResults.profitRate)
     }
 
     private fun convertLottos(
@@ -67,7 +67,7 @@ class LottoController {
 
     private fun makeRandomNumbers(size: Int): List<Int> = (Lotto.LOTTO_NUMBER_MIN..Lotto.LOTTO_NUMBER_MAX).shuffled().subList(0, size)
 
-    private val List<LottoResult>.getProfitRate: Double
+    private val List<LottoResult>.profitRate: Double
         get() {
             val profit: Long = this.sumOf { lottoResult: LottoResult -> lottoResult.prizeAmount.toLong() }
             val profitRate = profit / (this.size * Lotto.LOTTO_PRICE).toDouble()
