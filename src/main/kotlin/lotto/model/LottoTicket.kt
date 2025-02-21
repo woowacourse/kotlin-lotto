@@ -14,7 +14,7 @@ class LottoTicket(
 
     fun getSize() = numbers.size
 
-    fun getNumbers() = numbers.toList()
+    fun getNumbers() = numbers
 
     fun getBonusNumber() = bonusNumber
 
