@@ -1,23 +1,14 @@
 package domain.service
 
 import domain.model.Lotto
-import domain.model.PurchaseLotto
 import domain.model.PurchasePrice
 
-class LottoGenerator(
-    private val money: PurchasePrice,
-) {
-    fun makeLotto(): PurchaseLotto {
-        val purchaseLottoCount = money.value / PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
-        return PurchaseLotto(List<Lotto>(purchaseLottoCount) { makeOneLotto() })
-    }
-
-    private fun makeOneLotto(): Lotto {
-        val newLotto = (LOTTO_MIN..LOTTO_MAX).shuffled().take(6)
-        return Lotto(newLotto)
-    }
+interface LottoGenerator {
+    fun generate(money: PurchasePrice): List<Lotto>
 
     companion object {
+        const val STANDARD_AMOUNT_UNIT = 1000
+        const val STANDARD_AMOUNT_UNIT_KOREAN = "천원"
         const val LOTTO_MIN = 1
         const val LOTTO_MAX = 45
     }
