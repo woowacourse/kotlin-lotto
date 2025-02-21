@@ -1,13 +1,23 @@
 package lotto.model
 
 import kotlin.collections.mutableListOf
+interface ShuffleStrategy{
+    fun shuffle(list:List<Int>) : List<Int>
+}
+
+class NormalShuffle:ShuffleStrategy{
+    override fun shuffle(list:List<Int>): List<Int> {
+        return list.shuffled()
+    }
+}
 
 class LottoMachine(
     private val amount: Amount,
     private val lottoPrize: Amount,
+    private val shuffle : ShuffleStrategy = NormalShuffle()
 ) {
     init {
-        require(amount.money > lottoPrize.money) { MONEY_UNDER_MIN }
+        require(amount.money >= lottoPrize.money) { MONEY_UNDER_MIN }
         require(amount.money % lottoPrize.money == 0) { MONEY_UNIT_MESSAGE }
     }
 
@@ -24,8 +34,7 @@ class LottoMachine(
 
     private fun publishLotto(): Lotto {
         val lottoNumbers =
-            numbers
-                .shuffled()
+            shuffle.shuffle(numbers)
                 .take(LOTTO_NUMBER_COUNT)
                 .sorted()
                 .map { LottoNumber(it) }
