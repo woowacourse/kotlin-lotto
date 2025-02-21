@@ -7,7 +7,7 @@ class LottoMatcher(
     private val rankMap: MutableMap<Rank, Int> = enumValues<Rank>().associateWith { 0 }.toMutableMap()
 
     init {
-        require(!winningLotto.checkBonusNumber(bonusNumber)) {
+        require(!checkBonusNumber(winningLotto, bonusNumber)) {
             BONUS_DUPLICATE_MESSAGE
         }
     }
@@ -22,10 +22,21 @@ class LottoMatcher(
     }
 
     fun calculateRank(lotto: Lotto): Rank {
-        val matchCount = lotto.countMatchingNumber(winningLotto)
-        val matchBonus = lotto.checkBonusNumber(bonusNumber)
+        val matchCount = countMatchingNumber(lotto)
+        val matchBonus = checkBonusNumber(lotto, bonusNumber)
         return Rank.valueOf(matchCount, matchBonus)
     }
+
+    private fun countMatchingNumber(lotto: Lotto): Int =
+        lotto
+            .getNumbers()
+            .intersect(winningLotto.getNumbers())
+            .size
+
+    private fun checkBonusNumber(
+        publishedLotto: Lotto,
+        bonusNumber: LottoNumber,
+    ): Boolean = publishedLotto.getNumbers().contains(bonusNumber)
 
     companion object {
         private const val BONUS_DUPLICATE_MESSAGE = "[ERROR] 당첨 번호와 보너스 볼은 중복될 수 없습니다."
