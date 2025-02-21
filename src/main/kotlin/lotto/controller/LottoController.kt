@@ -17,8 +17,8 @@ class LottoController(
 
         val lottos = displayLottos(lottoMachine, lottoQuantity)
 
-        val lastWeekLottoWinningNumbers = getLastWeekLottoWinningNumbers()
-        val lottoBonusNumber = getLottoBonusNumbers()
+        val lastWeekLottoWinningNumbers = getLastWeekLottoWinningNumbers().validateWinningNumbers()
+        val lottoBonusNumber = getLottoBonusNumbers().validateIsNumber()
 
         val lottoWinningResult = displayLottosWinningResult(lottos, lastWeekLottoWinningNumbers, lottoBonusNumber)
         displayLottoWinningProfit(lottoMachine, lottoWinningResult)
@@ -37,12 +37,27 @@ class LottoController(
         return lottos
     }
 
-    private fun getLastWeekLottoWinningNumbers(): List<Int> {
+    private fun getLastWeekLottoWinningNumbers(): String {
         outputView.printLastWeekWinningNumbersGuide()
         return inputView.readWinningNumbers()
     }
 
-    private fun getLottoBonusNumbers(): Int {
+    private fun mapToWinningNumbers(rawWinningNumbers: String): List<String> = rawWinningNumbers.split(", ")
+
+    private fun mapToNumber(rawNumber: String) = rawNumber.toIntOrNull()
+
+    private fun String.validateWinningNumbers(): List<Int> {
+        try {
+            val rawWinningNumbers = mapToWinningNumbers(this)
+            return rawWinningNumbers.map { number -> number.validateIsNumber() }
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException(e.message)
+        }
+    }
+
+    private fun String.validateIsNumber(): Int = mapToNumber(this) ?: throw IllegalArgumentException("[ERROR] 숫자를 입력해주세요.")
+
+    private fun getLottoBonusNumbers(): String {
         outputView.printBonusNumberGuide()
         return inputView.readBonusNumber()
     }
