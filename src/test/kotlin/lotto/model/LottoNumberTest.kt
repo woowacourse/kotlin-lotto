@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class LottoNumberTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 46, -1])
-    fun `로또 번호는 1에서 45 사이이다`(number: Int) {
+    fun `로또 번호가 1에서 45 범위를 벗어나면 예외를 발생시킨다`(number: Int) {
         assertThrows<IllegalArgumentException> {
             LottoNumber(number)
         }
