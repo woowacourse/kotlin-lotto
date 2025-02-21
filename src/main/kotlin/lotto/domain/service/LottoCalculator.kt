@@ -17,15 +17,7 @@ class LottoCalculator(
         return LottoWinningStats(winningStats, purchaseAmount)
     }
 
-    private fun getWinningStats(): Map<Rank, Int> {
-        val winningStats: MutableMap<Rank, Int> =
-            Rank.entries.associateWith { 0 }.toMutableMap()
-        lottos.forEach {
-            val rank = winningLotto.getRank(it)
-            winningStats[rank] = (winningStats[rank]?.plus(1)) ?: 1
-        }
-        return winningStats
-    }
+    private fun getWinningStats(): Map<Rank, Int> = lottos.map { winningLotto.getRank(it) }.groupingBy { it }.eachCount()
 
     private fun getPurchaseAmount(): PurchaseAmount {
         val amount = lottos.size * LottoConstants.LOTTO_PRICE
