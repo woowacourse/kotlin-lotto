@@ -1,5 +1,5 @@
 package lotto.domain
 
-class Lotto(randomNumbers: List<Int>) {
-    val numbers: List<Int> = randomNumbers.sorted()
+class Lotto(randomNumbers: List<LottoNumber>) {
+    val numbers: List<LottoNumber> = randomNumbers.sortedBy { it.number }
 }

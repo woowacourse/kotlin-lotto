@@ -2,7 +2,7 @@ package lotto.domain
 
 import lotto.util.Rank
 
-class LottoResult(private val winningNumber: List<Int>, private val bonusNumber: Int) {
+class LottoResult(private val winningNumber: Lotto, private val bonusNumber: LottoNumber) {
     fun matchLotto(lottos: List<Lotto>): Map<Rank, Int> {
         val winningStats: MutableMap<Rank, Int> =
             mutableMapOf(
@@ -30,11 +30,11 @@ class LottoResult(private val winningNumber: List<Int>, private val bonusNumber:
         winningStats[rankState] = (winningStats[rankState] ?: DEFAULT_VALUE) + INCREASED_VALUE
     }
 
-    fun compareLotto(lottos: List<Int>): Int {
-        return lottos.intersect(winningNumber).size
+    fun compareLotto(lottos: List<LottoNumber>): Int {
+        return lottos.intersect(winningNumber.numbers).size
     }
 
-    fun checkBonusNumber(lottos: List<Int>): Boolean {
+    fun checkBonusNumber(lottos: List<LottoNumber>): Boolean {
         return lottos.contains(bonusNumber)
     }
 

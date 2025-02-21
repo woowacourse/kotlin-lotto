@@ -1,8 +1,10 @@
 package lotto.generator
 
+import lotto.domain.LottoNumber
+
 class RandomGenerator {
-    fun getRandomNumberList(): List<Int> {
-        return (MIN_BOUND..MAX_BOUND).shuffled().take(NUMBER_OF_LOTTO_NUMBER)
+    fun getRandomNumberList(): List<LottoNumber> {
+        return (MIN_BOUND..MAX_BOUND).shuffled().take(NUMBER_OF_LOTTO_NUMBER).map { LottoNumber(it) }
     }
 
     companion object {

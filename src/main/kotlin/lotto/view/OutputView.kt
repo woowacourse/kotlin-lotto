@@ -1,14 +1,19 @@
 package lotto.view
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.util.Rank
 
 class OutputView {
     fun printPurchasedLottos(lottos: List<Lotto>) {
         println(MESSAGE_BUY_LOTTO.format(lottos.size))
         lottos.forEach { lotto ->
-            println(lotto.numbers)
+            printLottoNumber(lotto.numbers)
         }
+    }
+
+    fun printLottoNumber(numbers: List<LottoNumber>) {
+        println(numbers.map { it.number })
     }
 
     fun printWinningStats(winningStats: Map<Rank, Int>) {
