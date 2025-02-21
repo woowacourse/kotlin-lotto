@@ -65,7 +65,7 @@ class LottoController {
             lottoResult == entry
         }
 
-    private fun makeRandomNumbers(size: Int): List<Int> = (Lotto.LOTTO_NUMBER_MIN..Lotto.LOTTO_NUMBER_MAX).shuffled().subList(0, size)
+    private fun makeRandomNumbers(size: Int): List<Int> = (LottoNumber.MIN..LottoNumber.MAX).shuffled().subList(0, size)
 
     private val List<LottoResult>.profitRate: Double
         get() {
