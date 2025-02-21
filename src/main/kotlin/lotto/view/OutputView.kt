@@ -53,10 +53,10 @@ class OutputView {
     }
 
     companion object {
-        const val MESSAGE_BUY_LOTTO = "%d개를 구매했습니다."
-        const val MESSAGE_WINNING_STATS = "\n당첨 통계\n---------"
-        const val MESSAGE_MATCH_COUNT = "%d개 일치 (%d원)- %d개"
-        const val MESSAGE_MATCH_COUNT_WITH_BONUS_BALL = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
-        const val MESSAGE_PROFIT = "총 수익률은 %.2f입니다."
+        private const val MESSAGE_BUY_LOTTO = "%d개를 구매했습니다."
+        private const val MESSAGE_WINNING_STATS = "\n당첨 통계\n---------"
+        private const val MESSAGE_MATCH_COUNT = "%d개 일치 (%d원)- %d개"
+        private const val MESSAGE_MATCH_COUNT_WITH_BONUS_BALL = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
+        private const val MESSAGE_PROFIT = "총 수익률은 %.2f입니다."
     }
 }
