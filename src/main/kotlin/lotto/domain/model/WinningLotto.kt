@@ -9,11 +9,7 @@ class WinningLotto(
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(
-            !winningNumbers.lottoNumbers
-                .map { it.number }
-                .contains(bonusNumber.number),
-        ) { ErrorMessages.DUPLICATE_LOTTO_NUMBER }
+        require(!winningNumbers.contains(bonusNumber)) { ErrorMessages.DUPLICATE_LOTTO_NUMBER }
     }
 
     fun getRank(lotto: Lotto): Rank {
@@ -27,5 +23,5 @@ class WinningLotto(
             lotto.lottoNumbers.contains(it)
         }
 
-    private fun getMatchBonus(lotto: Lotto): Boolean = lotto.lottoNumbers.map { it.number }.contains(bonusNumber.number)
+    private fun getMatchBonus(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
 }

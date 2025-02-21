@@ -9,11 +9,8 @@ class Lotto(
 ) {
     init {
         require(lottoNumbers.size == LottoConstants.NUMBER_OF_LOTTO_NUMBERS) { ErrorMessages.INVALID_NUMBER_OF_LOTTO_NUMBERS }
-        require(
-            lottoNumbers
-                .map { it.number }
-                .distinct()
-                .size == LottoConstants.NUMBER_OF_LOTTO_NUMBERS,
-        ) { ErrorMessages.DUPLICATE_LOTTO_NUMBER }
+        require(lottoNumbers.toSet().size == LottoConstants.NUMBER_OF_LOTTO_NUMBERS) { ErrorMessages.DUPLICATE_LOTTO_NUMBER }
     }
+
+    fun contains(number: LottoNumber): Boolean = lottoNumbers.contains(number)
 }
