@@ -4,8 +4,6 @@ class LottoMatcher(
     private val winningLotto: Lotto,
     private val bonusNumber: LottoNumber,
 ) {
-    private val rankMap: MutableMap<Rank, Int> = enumValues<Rank>().associateWith { 0 }.toMutableMap()
-
     init {
         require(!checkBonusNumber(winningLotto, bonusNumber)) {
             BONUS_DUPLICATE_MESSAGE
@@ -13,6 +11,7 @@ class LottoMatcher(
     }
 
     fun matchLotto(publishedLotto: List<Lotto>): Map<Rank, Int> {
+        val rankMap: MutableMap<Rank, Int> = enumValues<Rank>().associateWith { 0 }.toMutableMap()
         publishedLotto
             .groupingBy { calculateRank(it) }
             .eachCount()
