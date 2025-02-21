@@ -13,9 +13,9 @@ class LottoController {
 
     fun buyLottos() {
         val price: Int = View.readPrice()
-        val lottoCount: Int = price / Lotto.LOTTO_PRICE
+        val lottoCount: Int = price / Lotto.PRICE
         View.showLottoCount(lottoCount)
-        val lottoNumbers: List<List<Int>> = List(price / Lotto.LOTTO_PRICE) { makeRandomNumbers(Lotto.LOTTO_SIZE) }
+        val lottoNumbers: List<List<Int>> = List(price / Lotto.PRICE) { makeRandomNumbers(Lotto.SIZE) }
         View.showLottos(lottoNumbers.map { lottoNumber: List<Int> -> lottoNumber.sorted() })
         val lottos: Lottos = convertLottos(price, lottoNumbers)
         boughtLottos = lottos
@@ -63,12 +63,12 @@ class LottoController {
             lottoResult == entry
         }
 
-    private fun makeRandomNumbers(size: Int): List<Int> = (Lotto.LOTTO_NUMBER_MIN..Lotto.LOTTO_NUMBER_MAX).shuffled().subList(0, size)
+    private fun makeRandomNumbers(size: Int): List<Int> = (LottoNumber.MIN..LottoNumber.MAX).shuffled().subList(0, size)
 
     private val List<LottoResult>.getProfitRate: Double
         get() {
             val profit: Long = this.sumOf { lottoResult: LottoResult -> lottoResult.prizeAmount.toLong() }
-            val profitRate = profit / (this.size * Lotto.LOTTO_PRICE).toDouble()
+            val profitRate = profit / (this.size * Lotto.PRICE).toDouble()
             return profitRate
         }
 }
