@@ -15,13 +15,10 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int) {
             isBonusMatched: Boolean,
         ): Rank {
             // 5개가 맞았을 경우 보너스 번호가 맞으면 2등, 안맞으면 3등
-            if (countOfMatch == 5) {
-                if (isBonusMatched) return SECOND
-                return THIRD
+            return when (countOfMatch) {
+                5 -> if (isBonusMatched) SECOND else THIRD
+                else -> entries.firstOrNull { it.countOfMatch == countOfMatch } ?: MISS
             }
-            val result = entries.toTypedArray().find { it.countOfMatch == countOfMatch }
-            if (result == null) return MISS
-            return result
         }
     }
 }
