@@ -7,7 +7,7 @@ class WinningLotto(
     val numbers: Set<Int> = lotto.numbers.map { number: LottoNumber -> number.value }.toSet()
 
     init {
-        require(!lotto.numbers.contains(bonusNumber)) { ERROR_MESSAGE_BONUS_NUMBER_OVERLAPS_WITH_LOTTO_NUMBERS }
+        require(bonusNumber !in lotto.numbers) { ERROR_MESSAGE_BONUS_NUMBER_OVERLAPS_WITH_LOTTO_NUMBERS }
     }
 
     companion object {
