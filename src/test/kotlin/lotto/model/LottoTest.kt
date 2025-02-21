@@ -12,7 +12,7 @@ class LottoTest {
     }
 
     @Test
-    fun `로또 번호는 서로 중복되지 않는다`() {
+    fun `로또 번호는 서로 중복되면 에러가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             LottoTicket(
                 setOf(
