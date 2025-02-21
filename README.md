@@ -21,3 +21,10 @@
 - [x] 로또 등수를 반환하는 기능 구현
 - [x] 로또 진행 흐름 구현
 - [x] 최소 로또 구매 개수 검증 기능 구현
+
+### 피드백 반영
+
+- [x] 입력 문자열 trim 처리
+- [x] LottoRank 계산 로직 변경
+- [x] LottoNumbers 책임을 Lotto로 이전
+- [x] Lotto의 numbers 타입을 Set으로 변경

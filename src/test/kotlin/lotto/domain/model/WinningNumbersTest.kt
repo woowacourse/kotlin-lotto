@@ -6,9 +6,9 @@ import org.junit.jupiter.api.assertThrows
 class WinningNumbersTest {
     @Test
     fun `당첨 번호는 6개의 숫자를 가진다`() {
-        val numbers = List(7) { LottoNumber(it + 1) }
+        val lotto = (1..7).toList()
         assertThrows<IllegalArgumentException> {
-            WinningNumbers(numbers)
+            WinningNumbers(lotto, 8)
         }
     }
 }

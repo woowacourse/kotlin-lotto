@@ -1,8 +1,6 @@
 package lotto.domain.service
 
-import lotto.domain.model.BonusNumber
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoRank
 import lotto.domain.model.WinningNumbers
 import org.assertj.core.api.Assertions.assertThat
@@ -14,27 +12,24 @@ class LottoRankCalculatorTest {
     @MethodSource("lottoRankCalculatorTest")
     @ParameterizedTest
     fun `로또 랭크를 구할 수 있다`(
-        winningNumbersData: List<Int>,
-        lottoNumbersData: List<Int>,
+        lotto: Lotto,
         actual: LottoRank,
     ) {
-        val winningNumbers = WinningNumbers(winningNumbersData.map { LottoNumber(it) })
-        val lotto = Lotto(lottoNumbersData.map { LottoNumber(it) })
-        val bonusNumber = BonusNumber(winningNumbers, LottoNumber(8))
-        val matchCount = LottoRankCalculator().calculate(lotto, winningNumbers, bonusNumber)
-        assertThat(matchCount).isEqualTo(actual)
+        val winningNumbers = WinningNumbers(listOf(1, 2, 3, 4, 5, 6), 8)
+        val lottoRankCalculator = LottoRankCalculator()
+        assertThat(lottoRankCalculator.calculate(lotto, winningNumbers)).isEqualTo(actual)
     }
 
     companion object {
         @JvmStatic
         fun lottoRankCalculatorTest(): List<Arguments> {
             return listOf(
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 5, 6), LottoRank.FIRST),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 8, 6), LottoRank.SECOND),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 7, 5, 6), LottoRank.THIRD),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 8, 12), LottoRank.FOURTH),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 22, 8, 18), LottoRank.FIFTH),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(7, 8, 9, 10, 11, 12), LottoRank.MISS),
+                Arguments.arguments(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoRank.FIRST),
+                Arguments.arguments(Lotto(listOf(1, 2, 3, 4, 8, 6)), LottoRank.SECOND),
+                Arguments.arguments(Lotto(listOf(1, 2, 3, 7, 5, 6)), LottoRank.THIRD),
+                Arguments.arguments(Lotto(listOf(1, 2, 3, 4, 8, 12)), LottoRank.FOURTH),
+                Arguments.arguments(Lotto(listOf(1, 2, 3, 22, 8, 18)), LottoRank.FIFTH),
+                Arguments.arguments(Lotto(listOf(7, 8, 9, 10, 11, 12)), LottoRank.MISS),
             )
         }
     }

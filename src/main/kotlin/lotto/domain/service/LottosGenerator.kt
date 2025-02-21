@@ -7,7 +7,6 @@ import lotto.domain.model.Lotto
 class LottosGenerator(private val generator: LottoNumbersGenerator = RandomLottoNumbersGenerator()) {
     fun generate(amount: Int): List<Lotto> {
         val count = amount / LOTTO_PRICE
-        println(count)
         require(count > MIN_LOTTO_COUNT_SIZE) { INVALID_LOTTO_COUNT_MESSAGE }
         return List(count) { Lotto(generator.generate()) }
     }

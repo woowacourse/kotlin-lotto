@@ -46,8 +46,8 @@ class LottosGeneratorTest {
     }
 
     inner class FixedLottoNumbersGenerator(private val numbers: List<Int>) : LottoNumbersGenerator {
-        override fun generate(): List<LottoNumber> {
-            return numbers.sorted().map { LottoNumber(it) }
+        override fun generate(): Set<LottoNumber> {
+            return numbers.sorted().map { LottoNumber(it) }.toSet()
         }
     }
 }

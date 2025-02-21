@@ -6,8 +6,8 @@ import lotto.LOTTO_NUMBER_SIZE
 import lotto.domain.model.LottoNumber
 
 class RandomLottoNumbersGenerator : LottoNumbersGenerator {
-    override fun generate(): List<LottoNumber> {
-        return selectLottoNumbers().sorted().map { LottoNumber(it) }
+    override fun generate(): Set<LottoNumber> {
+        return selectLottoNumbers().sorted().map { LottoNumber(it) }.toSet()
     }
 
     private fun selectLottoNumbers(): List<Int> {

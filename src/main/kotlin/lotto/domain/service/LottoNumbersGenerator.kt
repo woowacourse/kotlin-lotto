@@ -3,5 +3,5 @@ package lotto.domain.service
 import lotto.domain.model.LottoNumber
 
 interface LottoNumbersGenerator {
-    fun generate(): List<LottoNumber>
+    fun generate(): Set<LottoNumber>
 }
