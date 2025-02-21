@@ -34,6 +34,14 @@ class WinningLottoTest {
     }
 
     @Test
+    fun `일치하는 번호가 6개이면 등수는 1등이다`() {
+        val lottoNumbers = (1..6).map { LottoNumber(it) }
+        val lotto = Lotto(lottoNumbers)
+        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.FIRST)
+    }
+
+    @Test
     fun `일치하는 번호가 5개이고 보너스 번호가 일치하면 등수는 2등이다`() {
         val lottoNumbers = (1..5).map { LottoNumber(it) }.toMutableList()
         lottoNumbers.add(LottoNumber(45))
@@ -44,11 +52,26 @@ class WinningLottoTest {
 
     @Test
     fun `일치하는 번호가 5개이고 보너스 번호가 일치하지 않으면 등수는 3등이다`() {
-        val lottoNumbers = (1..5).map { LottoNumber(it) }.toMutableList()
-        lottoNumbers.add(LottoNumber(7))
+        val lottoNumbers = (2..7).map { LottoNumber(it) }
         val lotto = Lotto(lottoNumbers)
         val winningLotto = WinningLotto(winningNumbers, bonusNumber)
         assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.THIRD)
+    }
+
+    @Test
+    fun `일치하는 번호가 4개이면 등수는 4등이다`() {
+        val lottoNumbers = (3..8).map { LottoNumber(it) }
+        val lotto = Lotto(lottoNumbers)
+        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.FOURTH)
+    }
+
+    @Test
+    fun `일치하는 번호가 3개이면 등수는 5등이다`() {
+        val lottoNumbers = (4..9).map { LottoNumber(it) }
+        val lotto = Lotto(lottoNumbers)
+        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.FIFTH)
     }
 
     @Test
