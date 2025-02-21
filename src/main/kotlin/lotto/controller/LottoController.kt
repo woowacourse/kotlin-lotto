@@ -8,10 +8,16 @@ import lotto.domain.WinningLotto
 import lotto.view.View
 
 class LottoController {
-    lateinit var winningLotto: WinningLotto
-    lateinit var boughtLottos: Lottos
+    private lateinit var winningLotto: WinningLotto
+    private lateinit var boughtLottos: Lottos
 
-    fun buyLottos() {
+    fun run() {
+        buyLottos()
+        readWinningLotto()
+        showResult()
+    }
+
+    private fun buyLottos() {
         val price: Int = View.readPrice()
         val lottoCount: Int = price / Lotto.PRICE
         View.showLottoCount(lottoCount)
@@ -21,14 +27,14 @@ class LottoController {
         boughtLottos = lottos
     }
 
-    fun readWinningLotto() {
+    private fun readWinningLotto() {
         val lottoNumbers: List<Int> = View.readLottoNumbers()
         val lotto = Lotto(lottoNumbers.map { number: Int -> LottoNumber(number) }.toSet())
         val bonusNumber = LottoNumber(View.readBonusNumber())
         winningLotto = WinningLotto(lotto, bonusNumber)
     }
 
-    fun showResult() {
+    private fun showResult() {
         val lottoResults: List<LottoResult> = boughtLottos.value.map { lotto -> LottoResult.from(winningLotto, lotto) }
         val lottoResultsDescriptions: List<String> =
             LottoResult.entries.drop(1).map { entry: LottoResult ->
