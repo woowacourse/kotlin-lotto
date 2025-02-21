@@ -13,7 +13,8 @@ class LottoMatcher(
     }
 
     fun matchLotto(publishedLotto: List<Lotto>): Map<Rank, Int> {
-        publishedLotto.groupingBy { calculateRank(it) }
+        publishedLotto
+            .groupingBy { calculateRank(it) }
             .eachCount()
             .forEach { (rank, count) -> rankMap[rank] = count }
 

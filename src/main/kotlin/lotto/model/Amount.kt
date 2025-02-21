@@ -1,6 +1,8 @@
 package lotto.model
 
-class Amount(val money: Int) {
+class Amount(
+    val money: Int,
+) {
     init {
         require(money >= LOTTO_PRICE) { MONEY_UNDER_MIN }
         require(money % LOTTO_PRICE == 0) { MONEY_UNIT_MESSAGE }

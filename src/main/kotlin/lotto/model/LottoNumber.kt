@@ -1,7 +1,9 @@
 package lotto.model
 
 @JvmInline
-value class LottoNumber(val value: Int) {
+value class LottoNumber(
+    val value: Int,
+) {
     init {
         require(value in MIN_VALUE..MAX_VALUE) {
             RANGE_ERROR_MESSAGE
