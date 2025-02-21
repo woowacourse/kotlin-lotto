@@ -116,7 +116,7 @@ class LottoServiceTest {
         val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
         val bonus = 7
         val result = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
-        assertThat(result[Rank.MISS]).isEqualTo(3)
+        assertThat(result.map[Rank.MISS]).isEqualTo(3)
     }
 
     @Test
