@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class LottoTest {
+class LottoNumbersTest {
     @Test
     fun `로또 1매에는 6개의 로또 번호가 존재한다`() {
         val lottoNumbers =
@@ -15,7 +15,7 @@ class LottoTest {
                 LottoNumber(4),
                 LottoNumber(5),
             )
-        val exception = assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
+        val exception = assertThrows<IllegalArgumentException> { LottoNumbers(lottoNumbers) }
         assertThat(exception.message).isEqualTo("[ERROR] 로또 번호는 6개여야 합니다.")
     }
 
@@ -30,7 +30,7 @@ class LottoTest {
                 LottoNumber(5),
                 LottoNumber(6),
             )
-        val exception = assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
+        val exception = assertThrows<IllegalArgumentException> { LottoNumbers(lottoNumbers) }
         assertThat(exception.message).isEqualTo("[ERROR] 로또 번호는 중복될 수 없습니다.")
     }
 }

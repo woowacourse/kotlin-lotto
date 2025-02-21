@@ -5,6 +5,7 @@ import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.LottoMatcher
 import lotto.model.LottoNumber
+import lotto.model.LottoNumbers
 import lotto.model.PrizeCalculator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -41,7 +42,7 @@ class LottoController(
     private fun getWinningLotto(): Lotto {
         outputView.printWinningNumberMessage()
         val winningInput = inputView.getMultipleNumber()
-        return Lotto(winningInput.map { number -> LottoNumber(number) })
+        return Lotto(LottoNumbers(winningInput.map { number -> LottoNumber(number) }))
     }
 
     private fun getBonusNumber(): LottoNumber {

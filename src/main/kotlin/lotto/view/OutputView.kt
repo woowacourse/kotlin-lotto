@@ -14,7 +14,7 @@ class OutputView {
     ) {
         println("${quantity}개를 구매했습니다.")
         publishedLotto.forEach { lotto ->
-            val numbers = lotto.numbers.map { it.value }
+            val numbers = lotto.numbers.numberList.map { it.value }
             println(numbers)
         }
     }

@@ -76,18 +76,15 @@ class LottoMatcherTest {
         assertThat(rank).isEqualTo(Rank.MISS)
     }
 
-    private fun parseLottoNumber(numbers: List<Int>): Lotto {
-        return Lotto(numbers.map { number -> LottoNumber(number) })
-    }
+    private fun parseLottoNumber(numbers: List<Int>): Lotto = Lotto(LottoNumbers(numbers.map { number -> LottoNumber(number) }))
 
     companion object {
         @JvmStatic
-        fun failedNumbersProvider(): Stream<List<Int>> {
-            return Stream.of(
+        fun failedNumbersProvider(): Stream<List<Int>> =
+            Stream.of(
                 listOf(1, 2, 8, 9, 10, 11),
                 listOf(1, 8, 9, 10, 11, 12),
                 listOf(8, 9, 10, 11, 12, 13),
             )
-        }
     }
 }
