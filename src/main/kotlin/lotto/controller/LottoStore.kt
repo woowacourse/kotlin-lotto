@@ -1,5 +1,6 @@
-package lotto
+package lotto.controller
 
+import lotto.contants.Constants
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoResult
