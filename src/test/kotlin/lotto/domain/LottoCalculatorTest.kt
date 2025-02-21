@@ -5,11 +5,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoCalculatorTest {
-    val number: Lotto = Lotto(intToLottoNumber(listOf(1, 2, 3, 4, 5, 6)))
-    val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(3, 4, 5, 6, 7, 8)))
 
     @Test
     fun `6개 숫자를 넣으면 일치한 숫자의 개수를 알 수 있다`() {
+        val number: Lotto = Lotto(intToLottoNumber(listOf(1, 2, 3, 4, 5, 6)))
+        val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(3, 4, 5, 6, 7, 8)))
         val lottoGame = LottoCalculator(winningNumber, LottoNumber(1))
 
         assertThat(lottoGame.compareLotto(number.numbers)).isEqualTo(4)
@@ -17,6 +17,8 @@ class LottoCalculatorTest {
 
     @Test
     fun `보너스 번호가 일치하면 true를 반환한다`() {
+        val number: Lotto = Lotto(intToLottoNumber(listOf(1, 2, 3, 4, 5, 6)))
+        val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(3, 4, 5, 6, 7, 8)))
         val lottoGame = LottoCalculator(winningNumber, LottoNumber(1))
 
         assertThat(lottoGame.checkBonusNumber(number.numbers)).isTrue()
@@ -24,6 +26,8 @@ class LottoCalculatorTest {
 
     @Test
     fun `보너스 번호가 일치하지 않으면 false를 반환한다`() {
+        val number: Lotto = Lotto(intToLottoNumber(listOf(1, 2, 3, 4, 5, 6)))
+        val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(3, 4, 5, 6, 7, 8)))
         val lottoGame = LottoCalculator(winningNumber, LottoNumber(45))
 
         assertThat(lottoGame.checkBonusNumber(number.numbers)).isFalse()

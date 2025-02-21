@@ -41,6 +41,5 @@ class LottoCalculator(private val winningNumber: Lotto, private val bonusNumber:
 
     companion object {
         private const val DEFAULT_VALUE = 0
-        private const val INCREASED_VALUE = 1
     }
 }
