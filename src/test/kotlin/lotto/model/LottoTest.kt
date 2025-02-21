@@ -15,7 +15,7 @@ class LottoTest {
     fun `로또 번호는 서로 중복되지 않는다`() {
         assertThrows<IllegalArgumentException> {
             LottoTicket(
-                listOf(
+                setOf(
                     LottoNumber(1),
                     LottoNumber(2),
                     LottoNumber(3),

@@ -8,9 +8,9 @@ class LottoScannerTest {
     fun `로또 당첨을 판단한다`() {
         val bonusNumber = LottoNumber(7)
 
-        val winningNumbers =
-            Lotto(
-                listOf(
+        val winningLotto =
+            WinningLotto(
+                setOf(
                     LottoNumber(1),
                     LottoNumber(2),
                     LottoNumber(3),
@@ -22,8 +22,8 @@ class LottoScannerTest {
             )
 
         val lottoTicket =
-            Lotto(
-                listOf(
+            LottoTicket(
+                setOf(
                     LottoNumber(1),
                     LottoNumber(2),
                     LottoNumber(3),
@@ -33,8 +33,7 @@ class LottoScannerTest {
                 ),
             )
 
-        val lottoScanner = LottoScanner(winningNumbers)
-        val rank = lottoScanner.getRank(lottoTicket)
+        val rank = winningLotto.getRank(lottoTicket)
 
         assertThat(rank).isEqualTo(Rank.FIRST)
     }
