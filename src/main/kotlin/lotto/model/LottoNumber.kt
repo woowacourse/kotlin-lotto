@@ -1,6 +1,6 @@
 package lotto.model
 
-import lotto.Constants
+import lotto.contants.Constants
 
 data class LottoNumber(
     val number: Int,
