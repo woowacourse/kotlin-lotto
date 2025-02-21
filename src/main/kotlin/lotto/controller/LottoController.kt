@@ -1,13 +1,7 @@
 package lotto.controller
 
-import lotto.domain.Lotto
-import lotto.domain.LottoMachine
-import lotto.domain.LottoNumber
-import lotto.domain.LottoResult
+import lotto.domain.*
 import lotto.generator.RandomGenerator
-import lotto.validator.BonusNumberValidator
-import lotto.validator.PurchaseAmountValidator
-import lotto.validator.WinningNumberValidator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -17,40 +11,49 @@ class LottoController(
 ) {
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val lottos = LottoMachine(RandomGenerator()).buyLottos(purchaseAmount)
+        val lottos = LottoMachine(RandomGenerator()).buyLottos(purchaseAmount.value)
         outputView.printPurchasedLottos(lottos)
+
         val winningNumber = getWinningNumber()
-        val bonusNumber = getBonusNumber(winningNumber)
-        val lottoResult = LottoResult(winningNumber, bonusNumber)
+        val winningLotto = getWinningLotto(winningNumber)
+        val lottoResult = LottoResult(winningLotto.winningNumber, winningLotto.bonusNumber)
+
         val winningStats = lottoResult.matchLotto(lottos)
         outputView.printWinningStats(winningStats)
         val prize = lottoResult.calculatePrize(winningStats)
-        outputView.printProfit(lottoResult.calculateProfit(prize, purchaseAmount))
+        outputView.printProfit(lottoResult.calculateProfit(prize, purchaseAmount.value))
     }
 
-    private fun getPurchaseAmount(): Int {
+    private fun getPurchaseAmount(): PurchaseAmount {
         val purchaseAmount = inputView.getPurchaseAmount()
-        PurchaseAmountValidator(purchaseAmount)
-        return parseToInt(purchaseAmount)
-    }
-
-    private fun parseToInt(input: String): Int {
-        return input.toInt()
+        validateNumeric(purchaseAmount)
+        return PurchaseAmount(purchaseAmount.toInt())
     }
 
     private fun getWinningNumber(): Lotto {
         val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { it.trim() }
-        WinningNumberValidator(winningNumber)
-        return Lotto(winningNumber.map { LottoNumber(parseToInt(it)) })
+        validateWinningNumber(winningNumber)
+        return Lotto(winningNumber.map { LottoNumber(it.toInt()) })
     }
 
-    private fun getBonusNumber(winningNumber: Lotto): LottoNumber {
+    private fun getWinningLotto(winningNumber: Lotto): WinningLotto {
         val bonusNumber = inputView.getBonusNumber()
-        BonusNumberValidator(bonusNumber, winningNumber)
-        return LottoNumber(parseToInt(bonusNumber))
+        validateNumeric(bonusNumber)
+        return WinningLotto(winningNumber, LottoNumber(bonusNumber.toInt()))
+    }
+
+    private fun validateNumeric(input: String) {
+        input.toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_NUMBER)
+    }
+
+    private fun validateWinningNumber(winningNumber: List<String>) {
+        winningNumber.forEach {
+            validateNumeric(it)
+        }
     }
 
     companion object {
-        const val DELIMITERS = ","
+        private const val DELIMITERS = ","
+        private const val ERROR_NOT_NUMBER = "[ERROR] 양수만 입력 가능합니다."
     }
 }
