@@ -11,6 +11,12 @@ class LottoController {
     private lateinit var winningLotto: WinningLotto
     private lateinit var boughtLottos: Lottos
 
+    fun buyLotto() {
+        buyLottos()
+        readWinningLotto()
+        showResult()
+    }
+
     fun buyLottos() {
         val price: Int = View.readPrice()
         val lottoCount: Int = price / Lotto.LOTTO_PRICE
