@@ -22,11 +22,10 @@ class WinningLotto(
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 
-    private fun getCountOfMatch(lotto: Lotto): Int {
-        val winningNumbers = winningNumbers.lottoNumbers.map { it.number }.toSet()
-        val lottoNumbers = lotto.lottoNumbers.map { it.number }.toSet()
-        return winningNumbers.intersect(lottoNumbers).size
-    }
+    private fun getCountOfMatch(lotto: Lotto): Int =
+        winningNumbers.lottoNumbers.count {
+            lotto.lottoNumbers.contains(it)
+        }
 
     private fun getMatchBonus(lotto: Lotto): Boolean = lotto.lottoNumbers.map { it.number }.contains(bonusNumber.number)
 }

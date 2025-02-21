@@ -1,27 +1,38 @@
 package lotto.view
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoResult
-import lotto.domain.model.PurchaseDetail
 import lotto.domain.value.EarningRate
+import lotto.domain.value.PurchaseAmount
 import lotto.enums.Rank
 
 class OutputView {
-    fun printPurchaseDetail(purchaseDetail: PurchaseDetail) {
-        val purchaseQuantity = purchaseDetail.purchaseAmount.getPurchaseQuantity()
-        printPurchaseQuantity(purchaseQuantity)
-        printLottos(purchaseDetail.lottos)
+    fun printPurchaseDetail(
+        purchaseAmount: PurchaseAmount,
+        lottos: List<Lotto>,
+    ) {
+        val quantity = purchaseAmount.getPurchaseQuantity()
+        printPurchaseQuantity(quantity)
+        printLottos(lottos)
     }
 
-    fun printLottoResult(lottoResult: LottoResult) {
+    fun printLottoResult(
+        winningStats: Map<Rank, Int>,
+        earningRate: EarningRate,
+    ) {
         println(OUTPUT_LOTTO_RESULT)
-        lottoResult.winningStats.entries.reversed().forEach { winningStats ->
-            val bonusText = if (winningStats.key == Rank.SECOND) OUTPUT_BONUS_BALL else ""
-            val rank = winningStats.key
-            val count = winningStats.value
-            println(OUTPUT_RANK_DETAIL.format(rank.countOfMatch, bonusText, rank.winningMoney, count))
+        Rank.entries.reversed().forEach { rank ->
+            val bonusText = if (rank == Rank.SECOND) OUTPUT_BONUS_BALL else ""
+            val count = winningStats[rank] ?: 0
+            println(
+                OUTPUT_RANK_DETAIL.format(
+                    rank.countOfMatch,
+                    bonusText,
+                    rank.winningMoney,
+                    count,
+                ),
+            )
         }
-        printEarningRate(lottoResult.calculateEarningRate())
+        printEarningRate(earningRate)
     }
 
     private fun printPurchaseQuantity(quantity: Int) {

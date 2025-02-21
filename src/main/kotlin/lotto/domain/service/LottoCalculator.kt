@@ -1,30 +1,26 @@
 package lotto.domain.service
 
-import lotto.domain.model.LottoResult
-import lotto.domain.model.PurchaseDetail
+import lotto.domain.model.Lotto
 import lotto.domain.model.WinningLotto
+import lotto.domain.value.EarningRate
+import lotto.domain.value.PurchaseAmount
 import lotto.enums.Rank
 
 class LottoCalculator {
-    fun calculateLottoResult(
+    fun calculate(
         winningLotto: WinningLotto,
-        purchaseDetail: PurchaseDetail,
-    ): LottoResult {
-        val winningStats = getWinningStats(winningLotto, purchaseDetail)
-        val purchaseAmount = purchaseDetail.purchaseAmount
-        return LottoResult(winningStats, purchaseAmount)
+        lottos: List<Lotto>,
+    ): Map<Rank, Int> = lottos.groupingBy { winningLotto.getRank(it) }.eachCount()
+
+    fun calculateEarningRate(
+        lottoStats: Map<Rank, Int>,
+        purchaseAmount: PurchaseAmount,
+    ): EarningRate {
+        val winningAmount = calculateTotalWinningAmount(lottoStats)
+        val rate = winningAmount.toDouble() / purchaseAmount.amount
+        return EarningRate(rate)
     }
 
-    private fun getWinningStats(
-        winningLotto: WinningLotto,
-        purchaseDetail: PurchaseDetail,
-    ): Map<Rank, Int> {
-        val winningStats: MutableMap<Rank, Int> =
-            Rank.entries.associateWith { 0 }.toMutableMap()
-        purchaseDetail.lottos.forEach {
-            val rank = winningLotto.getRank(it)
-            winningStats[rank] = (winningStats[rank]?.plus(1)) ?: 1
-        }
-        return winningStats
-    }
+    private fun calculateTotalWinningAmount(lottoStats: Map<Rank, Int>): Int =
+        lottoStats.entries.sumOf { (rank, count) -> rank.winningMoney * count }
 }

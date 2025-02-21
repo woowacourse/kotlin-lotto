@@ -1,7 +1,6 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.PurchaseDetail
 import lotto.domain.model.WinningLotto
 import lotto.domain.value.LottoNumber
 import lotto.domain.value.PurchaseAmount
@@ -26,12 +25,10 @@ class LottoCalculatorTest {
         val firstRankNumbers = (1..6).map { LottoNumber(it) }
         val lottos = listOf(Lotto(firstRankNumbers))
 
-        val purchaseAmount = PurchaseAmount(1000)
-        val purchaseDetail = PurchaseDetail(purchaseAmount, lottos)
         val lottoCalculator = LottoCalculator()
-        val winningStats = lottoCalculator.calculateLottoResult(winningLotto, purchaseDetail)
+        val winningStats = lottoCalculator.calculate(winningLotto, lottos)
 
-        assertThat(winningStats.winningStats[Rank.FIRST]).isEqualTo(1)
+        assertThat(winningStats[Rank.FIRST]).isEqualTo(1)
     }
 
     @Test
@@ -40,11 +37,26 @@ class LottoCalculatorTest {
         val missRankNumbers = (11..16).map { LottoNumber(it) }
         val lottos = listOf(Lotto(firstRankNumbers), Lotto(missRankNumbers))
 
-        val purchaseAmount = PurchaseAmount(2000)
-        val purchaseDetail = PurchaseDetail(purchaseAmount, lottos)
         val lottoCalculator = LottoCalculator()
-        val winningStats = lottoCalculator.calculateLottoResult(winningLotto, purchaseDetail)
+        val winningStats = lottoCalculator.calculate(winningLotto, lottos)
 
-        assertThat(winningStats.winningStats[Rank.MISS]).isEqualTo(1)
+        assertThat(winningStats[Rank.MISS]).isEqualTo(1)
+    }
+
+    @Test
+    fun `당첨 수익률을 계산한다`() {
+        val thirdRankNumbers = (4..9).map { LottoNumber(it) }
+        val missRankNumbers = (11..16).map { LottoNumber(it) }
+        val lottos = mutableListOf(Lotto(thirdRankNumbers))
+        repeat(13) { lottos.add(Lotto(missRankNumbers)) }
+
+        val purchaseAmount = PurchaseAmount(14000)
+        val lottoCalculator = LottoCalculator()
+        val winningStats = lottoCalculator.calculate(winningLotto, lottos)
+
+        val earningRate = lottoCalculator.calculateEarningRate(winningStats, purchaseAmount)
+
+        val actualEarningRate = (5_000).toDouble() / purchaseAmount.amount
+        assertThat(earningRate.rate).isEqualTo(actualEarningRate)
     }
 }

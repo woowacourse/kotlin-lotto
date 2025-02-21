@@ -16,11 +16,11 @@ enum class Rank(
         fun valueOf(
             countOfMatch: Int,
             matchBonus: Boolean,
-        ): Rank {
+        ): Rank =
             if (countOfMatch == SECOND.countOfMatch && !matchBonus) {
-                return THIRD
+                THIRD
+            } else {
+                entries.find { it.countOfMatch == countOfMatch } ?: MISS
             }
-            return entries.find { it.countOfMatch == countOfMatch } ?: MISS
-        }
     }
 }
