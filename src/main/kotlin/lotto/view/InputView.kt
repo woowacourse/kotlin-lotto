@@ -1,19 +1,36 @@
 package lotto.view
 
+import lotto.constants.ErrorMessages
+
 class InputView {
-    fun readPurchaseAmount(): String {
+    fun readPurchaseAmount(): Int {
         println(INPUT_PURCHASE_AMOUNT)
-        return readln().trim()
+        val input = readln().trim()
+        return runCatching { input.toInt() }.getOrElse {
+            throw IllegalArgumentException(
+                ErrorMessages.INVALID_NUMBER_FORMAT,
+            )
+        }
     }
 
-    fun readWinningNumbers(): List<String> {
+    fun readWinningNumbers(): List<Int> {
         println(INPUT_WINNING_LOTTO)
-        return readln().split(COMMA).map { it.trim() }
+        val input = readln().split(COMMA)
+        return runCatching {
+            input.map {
+                it.trim().toInt()
+            }
+        }.getOrElse { throw IllegalArgumentException(ErrorMessages.INVALID_NUMBER_FORMAT) }
     }
 
-    fun readBonusNumber(): String {
+    fun readBonusNumber(): Int {
         println(INPUT_BONUS_NUMBER)
-        return readln().trim()
+        val input = readln().trim()
+        return runCatching { input.toInt() }.getOrElse {
+            throw IllegalArgumentException(
+                ErrorMessages.INVALID_NUMBER_FORMAT,
+            )
+        }
     }
 
     companion object {

@@ -1,6 +1,5 @@
 package lotto.controller
 
-import lotto.constants.ErrorMessages
 import lotto.domain.model.Lotto
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoCalculator
@@ -29,11 +28,7 @@ class LottoController(
     }
 
     private fun getPurchaseAmount(): PurchaseAmount {
-        val input = inputView.readPurchaseAmount()
-        val amount =
-            runCatching {
-                input.toInt()
-            }.getOrElse { throw IllegalArgumentException(ErrorMessages.INVALID_NUMBER_FORMAT) }
+        val amount = inputView.readPurchaseAmount()
         return PurchaseAmount(amount)
     }
 
@@ -44,20 +39,12 @@ class LottoController(
     }
 
     private fun getWinningNumbers(): Lotto {
-        val input = inputView.readWinningNumbers()
-        val lottoNumbers =
-            runCatching {
-                input.map { LottoNumber(it.toInt()) }
-            }.getOrElse { throw IllegalArgumentException(ErrorMessages.INVALID_NUMBER_FORMAT) }
-        return Lotto(lottoNumbers)
+        val winningNumbers = inputView.readWinningNumbers().map { LottoNumber(it) }
+        return Lotto(winningNumbers)
     }
 
     private fun getBonusNumber(): LottoNumber {
-        val input = inputView.readBonusNumber()
-        val bonusNumber =
-            runCatching {
-                input.toInt()
-            }.getOrElse { throw IllegalArgumentException(ErrorMessages.INVALID_NUMBER_FORMAT) }
+        val bonusNumber = inputView.readBonusNumber()
         return LottoNumber(bonusNumber)
     }
 }
