@@ -19,7 +19,7 @@ enum class Rank(val countOfMatch: Int, val winningMoney: Int, val requiresBonusM
             }
             return entries.find {
                 it.countOfMatch == countOfMatch && !it.requiresBonusMatch
-            } ?: Rank.MISS
+            } ?: MISS
         }
     }
 }
