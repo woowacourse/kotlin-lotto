@@ -1,17 +1,19 @@
 package lotto.model
 
 class LottoMachine(
-    count: Int,
+    private val count: Int,
 ) {
-    val lottos: List<Lotto> = generateLottos(count)
+    fun purchase(count: Int): List<LottoTicket> = List(count) { LottoTicket() }
+
+    val lottoTickets: List<LottoTicket> = generateLottoTickets(count)
 
     companion object {
-        private fun generateLottos(count: Int): List<Lotto> {
-            val lottos = mutableListOf<Lotto>()
+        private fun generateLottoTickets(count: Int): List<LottoTicket> {
+            val lottoTickets = mutableListOf<LottoTicket>()
             repeat(count) {
-                lottos.add(Lotto())
+                lottoTickets.add(LottoTicket())
             }
-            return lottos
+            return lottoTickets
         }
     }
 }

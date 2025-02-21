@@ -1,10 +1,10 @@
 package lotto
 
-import lotto.model.Lotto
 import lotto.model.LottoMachine
-import lotto.model.LottoNumber
 import lotto.model.LottoResult
+import lotto.model.LottoTicket
 import lotto.model.LottoScanner
+import lotto.model.LottoNumber
 import lotto.model.Rank
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -15,21 +15,21 @@ class LottoStore(
 ) {
     private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
-    private fun generateLottoTicket(count: Int): LottoMachine {
-        val lottoTicket = LottoMachine(count)
-        lottoTicket.lottos.map {
+    private fun generateLottoTickets(count: Int): List<LottoTicket> {
+        val lottoTickets = LottoMachine(count).lottoTickets
+        lottoTickets.map {
             outputView.printLotto(it)
         }
-        return lottoTicket
+        return lottoTickets
     }
 
     private fun calculateResult(
-        lottoTicket: LottoMachine,
+        lottoTickets: List<LottoTicket>,
         winningNumbers: List<Int>,
         bonusNumber: Int,
     ): LottoResult {
-        val winning = Lotto(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))
-        val result = LottoScanner(winning).getResult(lottoTicket.lottos)
+        val winning = LottoTicket(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))
+        val result = LottoScanner(winning).getResult(lottoTickets)
         return result
     }
 
@@ -45,7 +45,7 @@ class LottoStore(
         val amount = inputView.inputPurchaseAmount()
         val count = calculatePurchaseCount(amount)
         outputView.printPurchaseCount(count)
-        val lottoTicket = generateLottoTicket(count)
+        val lottoTicket = generateLottoTickets(count)
         val winningNumbers = inputView.inputWinningNumbers()
         val bonusNumber = inputView.inputBonusNumber()
         val result = calculateResult(lottoTicket, winningNumbers, bonusNumber)

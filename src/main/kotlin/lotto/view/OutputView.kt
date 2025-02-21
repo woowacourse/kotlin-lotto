@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.model.Lotto
+import lotto.model.LottoTicket
 import lotto.model.Rank
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -10,7 +10,7 @@ class OutputView {
         println("${count}개를 구매했습니다.")
     }
 
-    fun printLotto(lotto: Lotto) {
+    fun printLotto(lotto: LottoTicket) {
         println(lotto.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
     }
 
