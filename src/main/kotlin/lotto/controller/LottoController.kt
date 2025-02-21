@@ -37,14 +37,22 @@ class LottoController {
         val lottoResults: List<LottoResult> = boughtLottos.value.map { lotto -> LottoResult.from(winningLotto, lotto) }
         val lottoPrizeEntry: List<LottoResult> =
             LottoResult.entries.sortedBy { result: LottoResult -> result.prizeAmount }.drop(1)
-        val lottoResultsDescriptions: List<String> =
-            lottoPrizeEntry.map { entry: LottoResult ->
-                "${entry.matchCount}개 일치${getBonusBallDescription(entry)} (${entry.prizeAmount}원) - ${
-                    countLottoResult(lottoResults, entry)
-                }개"
-            }
+        val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoPrizeEntry, lottoResults)
         View.showResult(lottoResults = lottoResultsDescriptions, profitRate = lottoResults.profitRate)
     }
+
+    private fun makeLottoResultDescription(
+        lottoPrizeEntry: List<LottoResult>,
+        lottoResults: List<LottoResult>,
+    ): List<String> =
+        lottoPrizeEntry.map { entry: LottoResult ->
+            LOTTO_RESULT_DESCRIPTION_TEMPLATE.format(
+                entry.matchCount,
+                getBonusNumberDescription(entry),
+                entry.prizeAmount,
+                countLottoResult(lottoResults, entry),
+            )
+        }
 
     private fun convertToLottos(
         price: Int,
@@ -59,8 +67,8 @@ class LottoController {
                     }.toSet(),
         )
 
-    private fun getBonusBallDescription(entry: LottoResult): String =
-        if (entry.bonusMatched == LottoResult.BonusMatched.YES) ", 보너스 볼 일치" else ""
+    private fun getBonusNumberDescription(entry: LottoResult): String =
+        if (entry.bonusMatched == LottoResult.BonusMatched.YES) BONUS_NUMBER_MATCHED else ""
 
     private fun countLottoResult(
         userLottoResults: List<LottoResult>,
@@ -78,4 +86,9 @@ class LottoController {
             val profitRate = profit / (this.size * Lotto.PRICE).toDouble()
             return profitRate
         }
+
+    companion object {
+        private const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
+        private const val BONUS_NUMBER_MATCHED = ", 보너스 볼 일치"
+    }
 }
