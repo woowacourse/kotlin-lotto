@@ -1,10 +1,10 @@
 package lotto
 
-import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoResult
 import lotto.model.LottoScanner
+import lotto.model.LottoTicket
 import lotto.model.Rank
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -15,8 +15,8 @@ class LottoStore(
 ) {
     private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
-    private fun generateLottoTicket(count: Int): List<Lotto> {
-        val lottoTickets = LottoMachine(count).lottoTickets
+    private fun generateLottoTicket(count: Int): List<LottoTicket> {
+        val lottoTickets = LottoMachine().purchase(count)
         lottoTickets.map {
             outputView.printLotto(it)
         }
@@ -24,12 +24,12 @@ class LottoStore(
     }
 
     private fun calculateResult(
-        lottoTicket: List<Lotto>,
+        lottoTickets: List<LottoTicket>,
         winningNumbers: List<Int>,
         bonusNumber: Int,
     ): LottoResult {
-        val winning = Lotto(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))
-        val result = LottoScanner(winning).getResult(lottoTicket)
+        val winning = LottoTicket(winningNumbers.map { LottoNumber(it) }, LottoNumber(bonusNumber))
+        val result = LottoScanner(winning).getResult(lottoTickets)
         return result
     }
 
@@ -45,10 +45,10 @@ class LottoStore(
         val amount = inputView.inputPurchaseAmount()
         val count = calculatePurchaseCount(amount)
         outputView.printPurchaseCount(count)
-        val lottoTicket = generateLottoTicket(count)
+        val lottoTickets = generateLottoTicket(count)
         val winningNumbers = inputView.inputWinningNumbers()
         val bonusNumber = inputView.inputBonusNumber()
-        val result = calculateResult(lottoTicket, winningNumbers, bonusNumber)
+        val result = calculateResult(lottoTickets, winningNumbers, bonusNumber)
         val formattedWinningStatus = formattingWinningStatus(result)
         outputView.printResult(formattedWinningStatus)
         outputView.printProfit(result.calculateProfit())

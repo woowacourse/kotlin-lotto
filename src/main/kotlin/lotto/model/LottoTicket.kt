@@ -2,7 +2,7 @@ package lotto.model
 
 import lotto.Constants
 
-class Lotto(
+class LottoTicket(
     private val numbers: List<LottoNumber> = generateLotto(),
     private val bonusNumber: LottoNumber? = null,
 ) {
