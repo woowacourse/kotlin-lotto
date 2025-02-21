@@ -16,13 +16,12 @@ class LottoRankCalculatorTest {
     fun `로또 랭크를 구할 수 있다`(
         winningNumbersData: List<Int>,
         lottoNumbersData: List<Int>,
-        bonusNumberData: Int,
         actual: LottoRank,
     ) {
         val winningNumbers = WinningNumbers(winningNumbersData.map { LottoNumber(it) })
         val lotto = Lotto(lottoNumbersData.map { LottoNumber(it) })
-        val bonusNumber = BonusNumber(winningNumbers, LottoNumber(bonusNumberData))
-        val matchCount = LottoRankCalculator().calculate(lotto, winningNumbers, bonusNumber = bonusNumber)
+        val bonusNumber = BonusNumber(winningNumbers, LottoNumber(8))
+        val matchCount = LottoRankCalculator().calculate(lotto, winningNumbers, bonusNumber)
         assertThat(matchCount).isEqualTo(actual)
     }
 
@@ -30,12 +29,12 @@ class LottoRankCalculatorTest {
         @JvmStatic
         fun lottoRankCalculatorTest(): List<Arguments> {
             return listOf(
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 5, 6), 8, LottoRank.FIRST),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 8, 6), 8, LottoRank.SECOND),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 7, 5, 6), 8, LottoRank.THIRD),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 8, 12), 8, LottoRank.FOURTH),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 22, 8, 18), 8, LottoRank.FIFTH),
-                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(7, 8, 9, 10, 11, 12), 8, LottoRank.MISS),
+                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 5, 6), LottoRank.FIRST),
+                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 8, 6), LottoRank.SECOND),
+                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 7, 5, 6), LottoRank.THIRD),
+                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 4, 8, 12), LottoRank.FOURTH),
+                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(1, 2, 3, 22, 8, 18), LottoRank.FIFTH),
+                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), listOf(7, 8, 9, 10, 11, 12), LottoRank.MISS),
             )
         }
     }

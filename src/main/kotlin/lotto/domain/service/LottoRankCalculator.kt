@@ -12,8 +12,8 @@ class LottoRankCalculator {
         bonusNumber: BonusNumber,
     ): LottoRank {
         val matchCount = getMatchCount(lotto, winningNumbers)
-        val matchBonus = if (matchCount == LottoRank.SECOND.matchCount) hasBonusNumber(lotto, bonusNumber) else false
-        return LottoRank.calculate(matchCount, matchBonus)
+        val isMatchBonusNumber = hasBonusNumber(lotto, bonusNumber)
+        return LottoRank.calculate(matchCount, isMatchBonusNumber)
     }
 
     private fun getMatchCount(
