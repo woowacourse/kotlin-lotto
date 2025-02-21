@@ -54,7 +54,12 @@ class LottoController(
         retryWhenException(
             action = {
                 val input = inputView.readWinningNumbers()
-                Lotto(input.split(",").map { LottoNumber(it.trim().toInt()) })
+
+                Lotto(input.split(",").map {
+                    val trimInput = it.trim()
+                    NumericValidator(trimInput)
+                    LottoNumber(trimInput.toInt()) }
+                )
             },
             onError = { outputView.printErrorMessage(it) },
         )
