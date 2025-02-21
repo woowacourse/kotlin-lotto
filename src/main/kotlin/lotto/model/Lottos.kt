@@ -10,7 +10,8 @@ class Lottos(
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
 
         lottos.forEach { lotto ->
-            val rank = lotto.getRank(winningNumbers, bonusNumber)
+            val winningLotto = WinningLotto(lotto)
+            val rank = winningLotto.getRank(winningNumbers, bonusNumber)
             countResult[rank] = countResult.getValue(rank) + 1
         }
 
