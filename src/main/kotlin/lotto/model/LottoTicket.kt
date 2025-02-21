@@ -1,31 +1,25 @@
 package lotto.model
 
-import lotto.Constants
+import lotto.contants.Constants
 
 class LottoTicket(
-    private val numbers: List<LottoNumber> = generateLotto(),
-    private val bonusNumber: LottoNumber? = null,
+    private val numbers: Set<LottoNumber> = generateLotto(),
 ) {
     init {
-        require(numbers.size == LOTTO_PICK_COUNT)
-        require(numbers.size == numbers.toSet().size)
-        require(!numbers.contains(bonusNumber))
+        require(numbers.size == Constants.LOTTO_PICK_COUNT)
     }
 
     fun getSize() = numbers.size
 
-    fun getNumbers() = numbers.toList()
-
-    fun getBonusNumber() = bonusNumber
+    fun getNumbers() = numbers
 
     companion object {
-        private fun generateLotto(): List<LottoNumber> =
+        private fun generateLotto(): Set<LottoNumber> =
             (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
                 .shuffled()
-                .take(LOTTO_PICK_COUNT)
+                .take(Constants.LOTTO_PICK_COUNT)
                 .sorted()
                 .map { LottoNumber(it) }
-
-        private const val LOTTO_PICK_COUNT = 6
+                .toSet()
     }
 }
