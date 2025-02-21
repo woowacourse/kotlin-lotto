@@ -11,21 +11,19 @@ import org.junit.jupiter.api.Test
 
 class LottoCalculatorTest {
     private lateinit var winningLotto: WinningLotto
+    private val lottoCalculator = LottoCalculator()
 
     @BeforeEach
     fun setUp() {
-        val lottoNumbers = (1..6).map { LottoNumber(it) }
-        val winningNumbers = Lotto(lottoNumbers)
+        val winningNumbers = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(45)
         winningLotto = WinningLotto(winningNumbers, bonusNumber)
     }
 
     @Test
     fun `로또 1등이 한번 당첨되면 1등 당첨 횟수는 1이다`() {
-        val firstRankNumbers = (1..6).map { LottoNumber(it) }
-        val lottos = listOf(Lotto(firstRankNumbers))
-
-        val lottoCalculator = LottoCalculator()
+        val firstRankLotto = Lotto.of(1, 2, 3, 4, 5, 6)
+        val lottos = listOf(firstRankLotto)
         val winningStats = lottoCalculator.calculate(winningLotto, lottos)
 
         assertThat(winningStats[Rank.FIRST]).isEqualTo(1)
@@ -33,11 +31,9 @@ class LottoCalculatorTest {
 
     @Test
     fun `당첨되지 않은 로또가 1개이면 미당첨 횟수는 1이다`() {
-        val firstRankNumbers = (1..6).map { LottoNumber(it) }
-        val missRankNumbers = (11..16).map { LottoNumber(it) }
-        val lottos = listOf(Lotto(firstRankNumbers), Lotto(missRankNumbers))
-
-        val lottoCalculator = LottoCalculator()
+        val firstRankLotto = Lotto.of(1, 2, 3, 4, 5, 6)
+        val missRankLotto = Lotto.of(11, 12, 13, 14, 15, 16)
+        val lottos = listOf(firstRankLotto, missRankLotto)
         val winningStats = lottoCalculator.calculate(winningLotto, lottos)
 
         assertThat(winningStats[Rank.MISS]).isEqualTo(1)
@@ -45,15 +41,13 @@ class LottoCalculatorTest {
 
     @Test
     fun `당첨 수익률을 계산한다`() {
-        val thirdRankNumbers = (4..9).map { LottoNumber(it) }
-        val missRankNumbers = (11..16).map { LottoNumber(it) }
-        val lottos = mutableListOf(Lotto(thirdRankNumbers))
-        repeat(13) { lottos.add(Lotto(missRankNumbers)) }
+        val thirdRankLotto = Lotto.of(4, 5, 6, 7, 8, 9)
+        val missRankLotto = Lotto.of(11, 12, 13, 14, 15, 16)
+        val lottos = mutableListOf(thirdRankLotto)
+        repeat(13) { lottos.add(missRankLotto) }
 
         val purchaseAmount = PurchaseAmount(14000)
-        val lottoCalculator = LottoCalculator()
         val winningStats = lottoCalculator.calculate(winningLotto, lottos)
-
         val earningRate = lottoCalculator.calculateEarningRate(winningStats, purchaseAmount)
 
         val actualEarningRate = (5_000).toDouble() / purchaseAmount.amount

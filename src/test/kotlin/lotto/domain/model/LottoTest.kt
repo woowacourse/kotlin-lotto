@@ -12,32 +12,28 @@ class LottoTest {
     @Test
     fun `6개의 로또 번호를 갖는다`() {
         assertDoesNotThrow {
-            val lottoNumbers = (1..6).map { LottoNumber(it) }
-            Lotto(lottoNumbers)
+            Lotto.of(1, 2, 3, 4, 5, 6)
         }
     }
 
     @Test
     fun `로또 번호가 6개가 아니면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            val lottoNumbers = (1..5).map { LottoNumber(it) }
-            Lotto(lottoNumbers)
+            Lotto.of(1, 2, 3, 4, 5)
         }
     }
 
     @Test
     fun `로또 번호는 중복되지 않는다`() {
         assertDoesNotThrow {
-            val lottoNumbers = (1..6).map { LottoNumber(it) }
-            Lotto(lottoNumbers)
+            Lotto.of(1, 2, 3, 4, 5, 6)
         }
     }
 
     @Test
     fun `로또 번호가 중복되면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            val lottoNumbers = (1..6).map { LottoNumber(1) }
-            Lotto(lottoNumbers)
+            Lotto.of(1, 1, 1, 1, 1, 1)
         }
     }
 
@@ -47,8 +43,7 @@ class LottoTest {
         number: Int,
         expected: Boolean,
     ) {
-        val lottoNumbers = (1..6).map { LottoNumber(it) }
-        val lotto = Lotto(lottoNumbers)
+        val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         assertThat(lotto.contains(LottoNumber(number))).isEqualTo(expected)
     }
 }
