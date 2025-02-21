@@ -7,44 +7,61 @@ import java.text.DecimalFormat
 
 class OutputView {
     fun printPurchaseCount(count: Int) {
-        println("${count}개를 구매했습니다.")
+        println(MESSAGE_PURCHASE.format(count))
     }
 
     fun printLotto(lottoTicket: LottoTicket) {
-        println(lottoTicket.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
+        println(lottoTicket.getNumbers().map { it.number }.joinToString(SEPARATOR, PREFIX, POSTFIX))
     }
 
     fun printResult(results: Map<Rank, Int>) {
-        println("\n당첨 통계")
-        println("---------")
+        println(MESSAGE_RESULT_HEADER)
         for (result in results) {
             val matchMessage =
                 when (result.key) {
-                    Rank.FIRST -> "6개 일치"
-                    Rank.SECOND -> "5개 일치, 보너스 볼 일치"
-                    Rank.THIRD -> "5개 일치"
-                    Rank.FOURTH -> "4개 일치"
-                    Rank.FIFTH -> "3개 일치"
-                    Rank.MISS -> "0개 일치"
+                    Rank.FIRST -> MESSAGE_MATCH_SIX
+                    Rank.SECOND -> MESSAGE_MATCH_FIVE_BONUS
+                    Rank.THIRD -> MESSAGE_MATCH_FIVE
+                    Rank.FOURTH -> MESSAGE_MATCH_FOUR
+                    Rank.FIFTH -> MESSAGE_MATCH_THREE
+                    Rank.MISS -> MESSAGE_MATCH_MISS
                 }
             val prizeMessage =
                 when (result.key) {
-                    Rank.FIRST -> "2000000000원"
-                    Rank.SECOND -> "30000000원"
-                    Rank.THIRD -> "1500000원"
-                    Rank.FOURTH -> "50000원"
-                    Rank.FIFTH -> "5000원"
-                    Rank.MISS -> "0원"
+                    Rank.FIRST -> Rank.FIRST.winningMoney
+                    Rank.SECOND -> Rank.SECOND.winningMoney
+                    Rank.THIRD -> Rank.THIRD.winningMoney
+                    Rank.FOURTH -> Rank.FOURTH.winningMoney
+                    Rank.FIFTH -> Rank.FIFTH.winningMoney
+                    Rank.MISS -> Rank.MISS.winningMoney
                 }
 
-            println("$matchMessage ($prizeMessage) - ${result.value}개")
+            println(MESSAGE_RESULT.format(matchMessage, prizeMessage, result.value))
         }
     }
 
     fun printProfit(profit: Double) {
-        val df = DecimalFormat("#.##")
+        val df = DecimalFormat(PATTERN_DECIMAL_POINT)
         df.roundingMode = RoundingMode.DOWN
         val formattedProfit = df.format(profit)
-        println("총 수익률은 ${formattedProfit}입니다.")
+        println(MESSAGE_PROFIT.format(formattedProfit))
+    }
+
+    companion object {
+        private const val MESSAGE_PURCHASE = "%d개를 구매했습니다."
+        private const val MESSAGE_RESULT_HEADER = "\n" + "당첨 통계" + "\n" + "---------"
+        private const val MESSAGE_MATCH_SIX = "6개 일치"
+        private const val MESSAGE_MATCH_FIVE_BONUS = "5개 일치, 보너스 볼 일치"
+        private const val MESSAGE_MATCH_FIVE = "5개 일치"
+        private const val MESSAGE_MATCH_FOUR = "4개 일치"
+        private const val MESSAGE_MATCH_THREE = "3개 일치"
+        private const val MESSAGE_MATCH_MISS = "0개 일치"
+        private const val MESSAGE_RESULT = "%s (%d원) - %d개"
+        private const val MESSAGE_PROFIT = "총 수익률은 %s입니다."
+
+        private const val SEPARATOR = ", "
+        private const val PREFIX = "["
+        private const val POSTFIX = "]"
+        private const val PATTERN_DECIMAL_POINT = "#.##"
     }
 }
