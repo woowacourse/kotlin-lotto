@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.domain.*
 import lotto.generator.RandomGenerator
+import lotto.util.Rank
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -16,10 +17,10 @@ class LottoController(
 
         val winningNumber = getWinningNumber()
         val winningLotto = getWinningLotto(winningNumber)
-        val lottoResult = LottoResult(winningLotto.winningNumber, winningLotto.bonusNumber)
+        val lottoResult = LottoCalculator(winningLotto.winningNumber, winningLotto.bonusNumber)
 
-        val winningStats = lottoResult.matchLotto(lottos)
-        outputView.printWinningStats(winningStats)
+        val winningStats = lottoResult.matchLottos(lottos)
+        outputView.printWinningStats(winningStats.filter { it.key != Rank.NONE })
         val prize = lottoResult.calculatePrize(winningStats)
         outputView.printProfit(lottoResult.calculateProfit(prize, purchaseAmount.value))
     }
