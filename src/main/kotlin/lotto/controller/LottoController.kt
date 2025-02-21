@@ -2,10 +2,10 @@ package lotto.controller
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoRanks
 import lotto.domain.model.WinningNumbers
 import lotto.domain.service.LottoRankCalculator
 import lotto.domain.service.LottosGenerator
-import lotto.domain.service.TotalReturnCalculator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -13,7 +13,6 @@ class LottoController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
     private val lottosGenerator: LottosGenerator = LottosGenerator(),
-    private val totalReturnCalculator: TotalReturnCalculator = TotalReturnCalculator(),
     private val lottoRankCalculator: LottoRankCalculator = LottoRankCalculator(),
 ) {
     fun run() {
@@ -37,8 +36,8 @@ class LottoController(
         lottos: List<Lotto>,
         winningNumbers: WinningNumbers,
     ) {
-        val lottoRanks = lottos.map { lotto -> lottoRankCalculator.calculate(lotto, winningNumbers) }
+        val lottoRanks = LottoRanks(lottos.map { lotto -> lottoRankCalculator.calculate(lotto, winningNumbers) })
         outputView.printWinningResults(lottoRanks)
-        outputView.printTotalReturns(totalReturnCalculator.calculate(lottoRanks))
+        outputView.printTotalReturns(lottoRanks.calculateTotalReturn())
     }
 }

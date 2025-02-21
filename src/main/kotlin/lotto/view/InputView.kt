@@ -1,6 +1,5 @@
 package lotto.view
 
-import lotto.ERROR_PREFIX
 import java.util.Scanner
 
 class InputView {
@@ -28,6 +27,6 @@ class InputView {
         const val READ_PURCHASE_AMOUNT_MESSAGE = "구입금액을 입력해 주세요."
         const val READ_WINNING_NUMBERS_MESSAGE = "\n지난 주 당첨 번호를 입력해 주세요."
         const val READ_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
-        const val INVALID_NUMBER_MESSAGE = "${ERROR_PREFIX}숫자만 입력해 주세요.(공백 포함 x)"
+        const val INVALID_NUMBER_MESSAGE = "숫자만 입력해 주세요.(공백 포함 x)"
     }
 }

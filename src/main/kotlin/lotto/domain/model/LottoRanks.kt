@@ -1,12 +1,11 @@
-package lotto.domain.service
+package lotto.domain.model
 
 import lotto.domain.LottoRules
-import lotto.domain.model.LottoRank
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class TotalReturnCalculator {
-    fun calculate(lottoRanks: List<LottoRank>): BigDecimal {
+class LottoRanks(val lottoRanks: List<LottoRank>) {
+    fun calculateTotalReturn(): BigDecimal {
         val totalReturn = BigDecimal(lottoRanks.sumOf { it.winningAmount } / (lottoRanks.size * LottoRules.LOTTO_PRICE.value).toDouble())
         return totalReturn.setScale(SCALE_BOUND, RoundingMode.DOWN)
     }
