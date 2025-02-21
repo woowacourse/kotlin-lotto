@@ -19,8 +19,8 @@ class LottoController(
 ) {
     fun run() {
         val amount = getAmount()
-        val lottoMachine = LottoMachine(amount)
-        val publishedLotto = publishLotto(lottoMachine, amount)
+        val lottoMachine = LottoMachine(amount, Amount(LOTTO_PRIZE))
+        val publishedLotto = publishLotto(lottoMachine)
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
         val lottoMatcher = LottoMatcher(winningLotto, bonusNumber)
@@ -29,15 +29,13 @@ class LottoController(
 
     private fun getAmount(): Amount {
         val amountInput = inputView.getSingleNumber(MONEY_INPUT_MESSAGE)
-        return Amount(amountInput)
+        val amount = Amount(amountInput)
+        return amount
     }
 
-    private fun publishLotto(
-        lottoMachine: LottoMachine,
-        amount: Amount,
-    ): List<Lotto> {
+    private fun publishLotto(lottoMachine: LottoMachine): List<Lotto> {
         val publishedLotto = lottoMachine.publishLottoTickets()
-        outputView.printPublishedLotto(amount.getLottoQuantity(), publishedLotto)
+        outputView.printPublishedLotto(publishedLotto)
         return publishedLotto
     }
 
@@ -60,5 +58,9 @@ class LottoController(
         val prizeCalculator = PrizeCalculator()
         val earningRate = prizeCalculator.calculateEarningRate(amount.money, result)
         outputView.printPrize(result, earningRate)
+    }
+
+    companion object {
+        const val LOTTO_PRIZE = 1000
     }
 }

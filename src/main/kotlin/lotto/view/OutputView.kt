@@ -4,11 +4,8 @@ import lotto.model.Lotto
 import lotto.model.Rank
 
 class OutputView {
-    fun printPublishedLotto(
-        quantity: Int,
-        publishedLotto: List<Lotto>,
-    ) {
-        println("${quantity}개를 구매했습니다.")
+    fun printPublishedLotto(publishedLotto: List<Lotto>) {
+        println("${publishedLotto.size}개를 구매했습니다.")
         publishedLotto.forEach { lotto ->
             val numbers = lotto.numbers.numberList.map { it.value }
             println(numbers)
