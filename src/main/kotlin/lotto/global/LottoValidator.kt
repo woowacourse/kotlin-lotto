@@ -12,7 +12,7 @@ object LottoValidator {
     }
 
     fun requireValidLotto(input: String): String {
-        var winningLotto =
+        val winningLotto =
             input.split(",").map { number ->
                 number.toIntOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
             }

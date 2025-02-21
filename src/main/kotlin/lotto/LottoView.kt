@@ -4,7 +4,6 @@ import lotto.domain.Lotto
 import lotto.global.Config.LOTTO_PRICE
 import lotto.global.LottoValidator.requireLottoAmount
 import lotto.global.LottoValidator.requireValidBonusNum
-import lotto.global.LottoValidator.requireValidLotto
 import lotto.global.Message
 import lotto.global.Rank
 
@@ -22,7 +21,7 @@ class LottoView {
 
     fun getWinningLotto(): Lotto {
         println(Message.ASK_WINNING_LOTTO.msg)
-        return Lotto(requireValidLotto(readln()).split(",").map { it.toInt() })
+        return Lotto(readln())
     }
 
     fun getBonusNum(): Int {

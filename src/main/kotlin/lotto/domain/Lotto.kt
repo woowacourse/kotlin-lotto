@@ -9,6 +9,8 @@ import lotto.global.LottoValidator.requireValidLotto
 data class Lotto(
     val value: List<Int>,
 ) {
+    constructor(value: String) : this(requireValidLotto(value).split(",").map { it.toInt() })
+
     init {
         requireValidLotto(value)
     }
