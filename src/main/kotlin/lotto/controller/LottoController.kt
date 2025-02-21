@@ -18,10 +18,10 @@ class LottoController(
         outputView.printPurchaseAmountGuide()
         val purchaseAmount = inputView.readPurchaseAmount()
         val lottoCashier = LottoCashier(purchaseAmount)
-        val lottoMachine = LottoMachine(lottoCashier)
         val lottoQuantity = lottoCashier.getLottoQuantity()
-
         outputView.printPurchaseLottoQuantity(lottoQuantity)
+
+        val lottoMachine = LottoMachine()
         val lottos = lottoMachine.getLottos(lottoQuantity)
 
         lottos.value.forEach { lotto ->
