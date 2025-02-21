@@ -5,12 +5,12 @@ enum class LottoResult(
     val bonusMatched: BonusMatched,
     val matchCount: Int,
 ) {
-    FAIL(0, BonusMatched.IRRELEVANT, 0),
-    FIFTH(5_000, BonusMatched.IRRELEVANT, 3),
-    FOURTH(50_000, BonusMatched.IRRELEVANT, 4),
-    THIRD(1_500_000, BonusMatched.NO, 5),
-    SECOND(30_000_000, BonusMatched.YES, 5),
     FIRST(2_000_000_000, BonusMatched.IRRELEVANT, 6),
+    SECOND(30_000_000, BonusMatched.YES, 5),
+    THIRD(1_500_000, BonusMatched.NO, 5),
+    FOURTH(50_000, BonusMatched.IRRELEVANT, 4),
+    FIFTH(5_000, BonusMatched.IRRELEVANT, 3),
+    FAIL(0, BonusMatched.IRRELEVANT, 0),
     ;
 
     enum class BonusMatched {

@@ -30,8 +30,10 @@ class LottoController {
 
     fun showResult() {
         val lottoResults: List<LottoResult> = boughtLottos.value.map { lotto -> LottoResult.from(winningLotto, lotto) }
+        val lottoPrizeEntry: List<LottoResult> =
+            LottoResult.entries.sortedBy { result: LottoResult -> result.prizeAmount }.drop(1)
         val lottoResultsDescriptions: List<String> =
-            LottoResult.entries.drop(1).map { entry: LottoResult ->
+            lottoPrizeEntry.map { entry: LottoResult ->
                 "${entry.matchCount}개 일치${getBonusBallDescription(entry)} (${entry.prizeAmount}원) - ${
                     countLottoResult(lottoResults, entry)
                 }개"
