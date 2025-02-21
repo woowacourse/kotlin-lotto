@@ -31,3 +31,4 @@
 - [x] 로또 관련 상수 LottoRules Enum Class로 관리하도록 변경 
 - [x] LottoRanks 일급 컬렉션 추가
 - [x] Controller에서 Domain 로직 분리
+- [x] LottoRankCalculator 로직 LottoRanks로 이전

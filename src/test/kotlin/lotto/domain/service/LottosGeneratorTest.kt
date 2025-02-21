@@ -14,7 +14,7 @@ class LottosGeneratorTest {
         "10000, 10",
         "14000, 14",
     )
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}원으로, {1}개를 구매할 수 있다")
     fun `구매 금액으로 구매할 로또 개수를 계산할 수 있다`(
         amount: Int,
         count: Int,
@@ -39,7 +39,7 @@ class LottosGeneratorTest {
 
     @ValueSource(ints = [999, 0, -1000, -999])
     @ParameterizedTest
-    fun `구매 금액이 로또 금액 미만이라면 예외가 발생한다`(purchaseAmount: Int) {
+    fun `구매 금액이 1000원 미만이라면 예외가 발생한다`(purchaseAmount: Int) {
         assertThrows<IllegalArgumentException> {
             LottosGenerator().generate(purchaseAmount)
         }
