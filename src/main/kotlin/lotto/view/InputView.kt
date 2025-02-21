@@ -25,7 +25,7 @@ class InputView {
 
     fun inputPurchaseAmount(): Int {
         println(MESSAGE_INPUT_AMOUNT)
-        val purchaseAmount = readln()
+        val purchaseAmount = readln().trim()
         return validateAmount(purchaseAmount)
     }
 
@@ -37,7 +37,7 @@ class InputView {
 
     fun inputBonusNumber(): Int {
         println(MESSAGE_INPUT_BONUS_NUMBER)
-        val bonusNumber = readln()
+        val bonusNumber = readln().trim()
         return bonusNumber.toInt()
     }
 

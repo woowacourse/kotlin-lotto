@@ -59,7 +59,7 @@ class OutputView {
         private const val MESSAGE_MATCH_MISS = "0개 일치"
         private const val MESSAGE_RESULT = "%s (%d원) - %d개"
         private const val MESSAGE_PROFIT = "총 수익률은 %s입니다."
-        private const val MESSAGE_LOSS = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
+        private const val MESSAGE_LOSS = " (기준이 1이기 때문에 결과적으로 손해라는 의미임)"
 
         private const val SEPARATOR = ", "
         private const val PREFIX = "["
