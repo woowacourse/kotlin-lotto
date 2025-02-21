@@ -12,17 +12,29 @@ class LottoController(
 ) {
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val lottos = LottoMachine(RandomGenerator()).buyLottos(purchaseAmount.value)
-        outputView.printPurchasedLottos(lottos)
+        val lottos = getAndPrintPurchasedLottos(purchaseAmount)
+        val lottoCalculator = getWinningInfoAndCalculator()
+        val winningStats = getAndPrintWinningStats(lottoCalculator, lottos)
+        val prize = lottoCalculator.calculatePrize(winningStats)
+        outputView.printProfit(lottoCalculator.calculateProfit(prize, purchaseAmount.value))
+    }
 
+    private fun getWinningInfoAndCalculator(): LottoCalculator {
         val winningNumber = getWinningNumber()
         val winningLotto = getWinningLotto(winningNumber)
-        val lottoResult = LottoCalculator(winningLotto.winningNumber, winningLotto.bonusNumber)
+        return LottoCalculator(winningLotto.winningNumber, winningLotto.bonusNumber)
+    }
 
-        val winningStats = lottoResult.matchLottos(lottos)
+    private fun getAndPrintPurchasedLottos(purchaseAmount: PurchaseAmount): List<Lotto> {
+        val lottos = LottoMachine().buyLottos(purchaseAmount.value)
+        outputView.printPurchasedLottos(lottos)
+        return lottos
+    }
+
+    private fun getAndPrintWinningStats(lottoCalculator: LottoCalculator, lottos: List<Lotto>): Map<Rank, Int> {
+        val winningStats = lottoCalculator.matchLottos(lottos)
         outputView.printWinningStats(winningStats.filter { it.key != Rank.NONE })
-        val prize = lottoResult.calculatePrize(winningStats)
-        outputView.printProfit(lottoResult.calculateProfit(prize, purchaseAmount.value))
+        return winningStats
     }
 
     private fun getPurchaseAmount(): PurchaseAmount {
