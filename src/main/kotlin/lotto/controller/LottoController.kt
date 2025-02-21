@@ -49,25 +49,17 @@ class LottoController {
 
     private fun showResult() {
         val lottoResults: List<LottoResult> = Lottos.getResult(winningLotto, boughtLottos)
-        val lottoResultsDescriptions: List<String> =
-            LottoResult.entries.drop(1).map { entry: LottoResult ->
-                "${entry.matchCount}개 일치${getBonusBallDescription(entry)} (${entry.prizeAmount}원) - ${
-                    countLottoResult(lottoResults, entry)
-                }개"
-            }
-        View.showResult(lottoResults = lottoResultsDescriptions, profitRate = lottoResults.getProfitRate)
+        val resultTally = countResult(lottoResults)
+        View.showResult(resultTally = resultTally, profitRate = lottoResults.getProfitRate)
     }
 
-    private fun getBonusBallDescription(entry: LottoResult): String =
-        if (entry.bonusMatched == LottoResult.BonusMatched.YES) ", 보너스 볼 일치" else ""
-
-    private fun countLottoResult(
-        userLottoResults: List<LottoResult>,
-        entry: LottoResult,
-    ): Int =
-        userLottoResults.count { lottoResult: LottoResult ->
-            lottoResult == entry
+    private fun countResult(lottoResults: List<LottoResult>): Map<LottoResult, Int> {
+        val resultTally = LottoResult.entries.associateWith { 0 }.toMutableMap()
+        lottoResults.forEach { lottoResult: LottoResult ->
+            resultTally[lottoResult] = resultTally.getValue(lottoResult) + 1
         }
+        return resultTally.toMap()
+    }
 
     private fun makeRandomNumbers(): List<Int> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE)
 

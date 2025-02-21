@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.domain.LottoResult
 import kotlin.math.floor
 
 object OutputView {
@@ -35,14 +36,19 @@ object OutputView {
     }
 
     fun showResult(
-        userLottoResults: List<String>,
+        resultTally: Map<LottoResult, Int>,
         profitRate: Double,
     ) {
         println()
         println(MESSAGE_RESULT_HEADER)
-        println(userLottoResults.joinToString("\n"))
+        LottoResult.entries.drop(1).forEach { entry ->
+            println("${entry.matchCount}개 일치${getBonusBallDescription(entry)} (${entry.prizeAmount}원) - ${resultTally[entry]}개")
+        }
         println("총 수익률은 ${floor(profitRate * 100) / 100}입니다.(기준이 1이기 때문에 결과적으로 ${makeProfitRateDescription(profitRate)} 의미임)")
     }
+
+    private fun getBonusBallDescription(entry: LottoResult): String =
+        if (entry.bonusMatched == LottoResult.BonusMatched.YES) ", 보너스 볼 일치" else ""
 
     private fun makeProfitRateDescription(profitRate: Double): String =
         when {
