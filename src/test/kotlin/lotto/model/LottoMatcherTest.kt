@@ -33,7 +33,7 @@ class LottoMatcherTest {
         val numbers = listOf(1, 2, 3, 4, 5, 6)
         val publishedLotto = parseLottoNumber(numbers)
         val rank = lottoMatcher.matchLotto(listOf(publishedLotto))
-        assertThat(rank).isEqualTo(Rank.FIRST)
+        assertThat(rank[Rank.FIRST]).isEqualTo(1)
     }
 
     @Test
@@ -41,7 +41,7 @@ class LottoMatcherTest {
         val numbers = listOf(1, 2, 3, 4, 5, 7)
         val publishedLotto = parseLottoNumber(numbers)
         val rank = lottoMatcher.matchLotto(listOf(publishedLotto))
-        assertThat(rank).isEqualTo(Rank.SECOND)
+        assertThat(rank[Rank.SECOND]).isEqualTo(1)
     }
 
     @Test
@@ -49,7 +49,7 @@ class LottoMatcherTest {
         val numbers = listOf(1, 2, 3, 4, 5, 8)
         val publishedLotto = parseLottoNumber(numbers)
         val rank = lottoMatcher.matchLotto(listOf(publishedLotto))
-        assertThat(rank).isEqualTo(Rank.THIRD)
+        assertThat(rank[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
@@ -57,7 +57,7 @@ class LottoMatcherTest {
         val numbers = listOf(1, 2, 3, 4, 8, 9)
         val publishedLotto = parseLottoNumber(numbers)
         val rank = lottoMatcher.matchLotto(listOf(publishedLotto))
-        assertThat(rank).isEqualTo(Rank.FOURTH)
+        assertThat(rank[Rank.FOURTH]).isEqualTo(1)
     }
 
     @Test
@@ -65,7 +65,7 @@ class LottoMatcherTest {
         val numbers = listOf(1, 2, 3, 8, 9, 10)
         val publishedLotto = parseLottoNumber(numbers)
         val rank = lottoMatcher.matchLotto(listOf(publishedLotto))
-        assertThat(rank).isEqualTo(Rank.FIFTH)
+        assertThat(rank[Rank.FIFTH]).isEqualTo(1)
     }
 
     @ParameterizedTest
@@ -73,7 +73,7 @@ class LottoMatcherTest {
     fun `당첨 번호와 일치하는 번호가 3개 미만인 경우 탈락된다`(numbers: List<Int>) {
         val publishedLotto = parseLottoNumber(numbers)
         val rank = lottoMatcher.matchLotto(listOf(publishedLotto))
-        assertThat(rank).isEqualTo(Rank.MISS)
+        assertThat(rank[Rank.MISS]).isEqualTo(1)
     }
 
     private fun parseLottoNumber(numbers: List<Int>): Lotto = Lotto(LottoNumbers(numbers.map { number -> LottoNumber(number) }))
