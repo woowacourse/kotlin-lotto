@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoCalculatorTest {
-
     @Test
     fun `6개 숫자를 넣으면 일치한 숫자의 개수를 알 수 있다`() {
         val number: Lotto = Lotto(intToLottoNumber(listOf(1, 2, 3, 4, 5, 6)))
