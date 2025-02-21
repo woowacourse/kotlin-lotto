@@ -1,15 +1,13 @@
 package lotto.service
 
+import lotto.domain.model.Lotto
 import lotto.domain.service.LottoGenerator
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 
 class LottoGeneratorTest {
     @Test
-    fun `6개의 로또 번호를 생성한다`() {
-        assertDoesNotThrow {
-            val lottoGenerator = LottoGenerator()
-            lottoGenerator.generateLotto()
-        }
+    fun `로또 객체를 생성한다`() {
+        assertThat(LottoGenerator().generateLotto()).isExactlyInstanceOf(Lotto::class.java)
     }
 }
