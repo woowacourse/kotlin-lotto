@@ -16,7 +16,7 @@ class WinningLotto(
         return LottoResult(result)
     }
 
-    private fun getRank(lottoTicket: LottoTicket): Rank {
+    fun getRank(lottoTicket: LottoTicket): Rank {
         val countOfMatch: Int = getCountOfMatch(lottoTicket)
         val matchBonus: Boolean = getMatchBonus(lottoTicket)
         return Rank.valueOf(countOfMatch, matchBonus)
