@@ -16,7 +16,7 @@ class LottoCalculatorTest {
     @BeforeEach
     fun setUp() {
         val winningNumbers = Lotto.of(1, 2, 3, 4, 5, 6)
-        val bonusNumber = LottoNumber(45)
+        val bonusNumber = LottoNumber.from(45)
         winningLotto = WinningLotto(winningNumbers, bonusNumber)
     }
 

@@ -15,6 +15,6 @@ class Lotto(
     fun contains(number: LottoNumber): Boolean = lottoNumbers.contains(number)
 
     companion object {
-        fun of(vararg numbers: Int): Lotto = Lotto(numbers.map { LottoNumber(it) })
+        fun of(vararg numbers: Int): Lotto = Lotto(numbers.map { LottoNumber.from(it) })
     }
 }

@@ -44,6 +44,6 @@ class LottoTest {
         expected: Boolean,
     ) {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
-        assertThat(lotto.contains(LottoNumber(number))).isEqualTo(expected)
+        assertThat(lotto.contains(LottoNumber.from(number))).isEqualTo(expected)
     }
 }

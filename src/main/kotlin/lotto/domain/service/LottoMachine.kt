@@ -17,7 +17,7 @@ class LottoMachine {
                 .shuffled()
                 .take(LottoConstants.NUMBER_OF_LOTTO_NUMBERS)
                 .sorted()
-                .map { LottoNumber(it) }
+                .map { LottoNumber.from(it) }
         return Lotto(lottoNumbers)
     }
 }

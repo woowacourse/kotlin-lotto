@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertThrows
 
 class WinningLottoTest {
     private lateinit var winningNumbers: Lotto
-    private val bonusNumber = LottoNumber(45)
+    private val bonusNumber = LottoNumber.from(45)
 
     @BeforeEach
     fun setUp() {
@@ -27,7 +27,7 @@ class WinningLottoTest {
     @Test
     fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            val bonusNumber = LottoNumber(1)
+            val bonusNumber = LottoNumber.from(1)
             WinningLotto(winningNumbers, bonusNumber)
         }
     }

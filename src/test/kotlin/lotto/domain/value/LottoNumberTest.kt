@@ -10,7 +10,7 @@ class LottoNumberTest {
     @ValueSource(ints = [1, 10, 20, 30, 40, 45])
     fun `로또 번호는 1~45 사이의 숫자이다`(number: Int) {
         assertDoesNotThrow {
-            LottoNumber(number)
+            LottoNumber.from(number)
         }
     }
 
@@ -18,7 +18,7 @@ class LottoNumberTest {
     @ValueSource(ints = [0, 46])
     fun `로또 번호가 1~45 사이의 숫자가 아니면 예외가 발생한다`(number: Int) {
         assertThrows<IllegalArgumentException> {
-            LottoNumber(number)
+            LottoNumber.from(number)
         }
     }
 }

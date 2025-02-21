@@ -29,8 +29,8 @@ class OutputView {
     }
 
     private fun printLottos(lottos: List<Lotto>) {
-        lottos.forEach {
-            println(it.lottoNumbers.map { it.number })
+        lottos.forEach { lotto ->
+            println(lotto.lottoNumbers.map { it.number })
         }
     }
 
