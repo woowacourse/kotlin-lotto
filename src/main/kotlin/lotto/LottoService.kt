@@ -4,9 +4,12 @@ import lotto.domain.Lotto
 import lotto.global.Rank
 import kotlin.random.Random
 
-class LottoService(private val random: Random) {
+class LottoService(
+    private val random: Random,
+) {
     fun getLotto(): Lotto {
         val lotto = mutableListOf<Int>()
+
         while (lotto.toSet().size != 6) {
             lotto.clear()
             repeat(6) { lotto.add(random.nextInt(1, 46)) }
@@ -27,9 +30,13 @@ class LottoService(private val random: Random) {
     ): Rank {
         var countOfMatch = 0
         val notHitNums = mutableListOf<Int>()
-        winningLotto.value.forEach { num -> if (num in lotto.value) {
-            countOfMatch++
-        } else notHitNums.add(num) }
+        winningLotto.value.forEach { num ->
+            if (num in lotto.value) {
+                countOfMatch++
+            } else {
+                notHitNums.add(num)
+            }
+        }
         return Rank.getRank(countOfMatch, (bonus in notHitNums))
     }
 

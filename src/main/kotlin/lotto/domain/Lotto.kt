@@ -1,3 +1,5 @@
 package lotto.domain
 
-data class Lotto(val value:List<Int>)
+data class Lotto(
+    val value: List<Int>,
+)

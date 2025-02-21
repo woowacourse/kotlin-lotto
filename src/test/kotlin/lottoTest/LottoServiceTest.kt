@@ -122,7 +122,7 @@ class LottoServiceTest {
         val manyLotto =
             listOf(
                 Lotto(listOf(1, 2, 3, 4, 44, 45)),
-                Lotto(listOf(11, 12, 13, 14, 15, 16))
+                Lotto(listOf(11, 12, 13, 14, 15, 16)),
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7

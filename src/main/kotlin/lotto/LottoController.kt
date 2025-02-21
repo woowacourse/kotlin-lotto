@@ -1,10 +1,9 @@
 package lotto
 
-class LottoController (
-    private val lottoView:LottoView,
-    private val lottoService:LottoService
+class LottoController(
+    private val lottoView: LottoView,
+    private val lottoService: LottoService,
 ) {
-
     fun run() {
         val lottoAmount = lottoView.getLottoAmount()
         val manyLotto = lottoService.getManyLotto(lottoAmount)

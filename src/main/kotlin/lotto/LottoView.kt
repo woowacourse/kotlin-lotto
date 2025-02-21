@@ -50,15 +50,15 @@ class LottoView {
         }
 
         fun requireValidLotto(input: String): List<Int> {
-
-            var winningLotto = input.split(",").map {
-                number -> number.toIntOrNull()?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
-            }
-            require (winningLotto.size == 6) { Message.ERR_NOT_SIX_ELEMENTS.msg}
+            var winningLotto =
+                input.split(",").map { number ->
+                    number.toIntOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
+                }
+            require(winningLotto.size == 6) { Message.ERR_NOT_SIX_ELEMENTS.msg }
             winningLotto = winningLotto.filter { number -> number in 1..45 }
-            require (winningLotto.size == 6) { Message.ERR_NOT_IN_RANGE.msg}
+            require(winningLotto.size == 6) { Message.ERR_NOT_IN_RANGE.msg }
             winningLotto = winningLotto.distinct()
-            require (winningLotto.size == 6) { Message.ERR_ELEMENT_DUPLICATED.msg}
+            require(winningLotto.size == 6) { Message.ERR_ELEMENT_DUPLICATED.msg }
 
             return winningLotto
         }
