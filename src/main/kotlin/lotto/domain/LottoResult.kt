@@ -29,7 +29,7 @@ enum class LottoResult(
             val sameMatchCountResults: List<LottoResult> = findSameMatchCountResults(wonLotto, boughtLotto)
             if (sameMatchCountResults.size == 1) return sameMatchCountResults.first()
 
-            if (bonusMatched(wonLotto, boughtLotto)) {
+            if (bonusMatched(wonLotto.bonusNumber, boughtLotto)) {
                 return sameMatchCountResults.find { entry: LottoResult -> entry.bonusMatched == BonusMatched.YES }
                     ?: throw IllegalStateException(ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT)
             }
@@ -60,9 +60,9 @@ enum class LottoResult(
             }
 
         private fun bonusMatched(
-            wonLotto: WinningLotto,
+            bonusNumber: LottoNumber,
             boughtLotto: Lotto,
-        ): Boolean = boughtLotto.numbers.contains(wonLotto.bonusNumber)
+        ): Boolean = boughtLotto.containLottoNumber(bonusNumber)
 
         private const val ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT = "로또 비교에 실패했습니다."
     }
