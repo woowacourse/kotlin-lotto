@@ -20,12 +20,25 @@ class LottoController {
     private fun buyLottos() {
         val price: Int = View.readPrice()
         val lottoCount: Int = price / Lotto.PRICE
-        View.showLottoCount(lottoCount)
-        val lottoNumbers: List<List<Int>> = List(price / Lotto.PRICE) { makeRandomNumbers() }
-        View.showLottos(lottoNumbers.map { lottoNumber: List<Int> -> lottoNumber.sorted() })
+        val lottoNumbers: List<List<Int>> = List(lottoCount) { makeRandomNumbers() }
         val lottos: Lottos = convertLottos(price, lottoNumbers)
         boughtLottos = lottos
+        View.showLottoCount(boughtLottos.value.size)
+        View.showLottos(lottoNumbers.map { lottoNumber: List<Int> -> lottoNumber.sorted() })
     }
+
+    private fun convertLottos(
+        price: Int,
+        lottoNumbers: List<List<Int>>,
+    ): Lottos =
+        Lottos.buy(
+            price = price,
+            lottos =
+                lottoNumbers
+                    .map { lottoNumber: List<Int> ->
+                        Lotto(lottoNumber.map { number: Int -> LottoNumber(number) }.toSet())
+                    }.toSet(),
+        )
 
     private fun readWinningLotto() {
         val lottoNumbers: List<Int> = View.readLottoNumbers()
@@ -44,19 +57,6 @@ class LottoController {
             }
         View.showResult(lottoResults = lottoResultsDescriptions, profitRate = lottoResults.getProfitRate)
     }
-
-    private fun convertLottos(
-        price: Int,
-        lottoNumbers: List<List<Int>>,
-    ): Lottos =
-        Lottos.buy(
-            price = price,
-            lottos =
-                lottoNumbers
-                    .map { lottoNumber: List<Int> ->
-                        Lotto(lottoNumber.map { number: Int -> LottoNumber(number) }.toSet())
-                    }.toSet(),
-        )
 
     private fun getBonusBallDescription(entry: LottoResult): String =
         if (entry.bonusMatched == LottoResult.BonusMatched.YES) ", 보너스 볼 일치" else ""
