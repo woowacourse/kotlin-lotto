@@ -3,15 +3,15 @@ package lotto.model
 class LottoMachine(
     count: Int,
 ) {
-    val lottos: List<Lotto> = generateLottos(count)
+    val lottoTickets: List<Lotto> = generateLottoTicket(count)
 
     companion object {
-        private fun generateLottos(count: Int): List<Lotto> {
-            val lottos = mutableListOf<Lotto>()
+        private fun generateLottoTicket(count: Int): List<Lotto> {
+            val lottoTickets = mutableListOf<Lotto>()
             repeat(count) {
-                lottos.add(Lotto())
+                lottoTickets.add(Lotto())
             }
-            return lottos
+            return lottoTickets
         }
     }
 }
