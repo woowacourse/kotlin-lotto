@@ -9,7 +9,7 @@ class LottosTest {
         val wantLottoCount = 5
         val lottos: Lottos =
             Lottos.buy(
-                Lotto.LOTTO_PRICE * wantLottoCount,
+                Lotto.PRICE * wantLottoCount,
                 setOf(
                     Lotto(setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()),
                     Lotto(setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()),
