@@ -5,19 +5,16 @@ enum class Rank(
     val winningMoney: Int,
     val requiresBonusMatch: Boolean = false,
 ) {
-    FIRST(6, 2_000_000_000),
-    SECOND(5, 30_000_000, true),
-    THIRD(5, 1_500_000),
-    FOURTH(4, 50_000),
-    FIFTH(3, 5_000),
     MISS(0, 0),
+    FIFTH(3, 5_000),
+    FOURTH(4, 50_000),
+    THIRD(5, 1_500_000),
+    SECOND(5, 30_000_000, true),
+    FIRST(6, 2_000_000_000),
     ;
 
     companion object {
-        fun rankMap(): Map<Rank, Int> =
-            Rank.entries
-                .reversed()
-                .associateWith { 0 }
+        fun rankMap(): Map<Rank, Int> = Rank.entries.associateWith { 0 }
 
         fun valueOf(
             countOfMatch: Int,
