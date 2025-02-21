@@ -4,6 +4,7 @@ import lotto.domain.Lotto
 import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
+import lotto.generator.RandomGenerator
 import lotto.validator.BonusNumberValidator
 import lotto.validator.PurchaseAmountValidator
 import lotto.validator.WinningNumberValidator
@@ -16,7 +17,7 @@ class LottoController(
 ) {
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val lottos = LottoMachine().buyLottos(purchaseAmount)
+        val lottos = LottoMachine(RandomGenerator()).buyLottos(purchaseAmount)
         outputView.printPurchasedLottos(lottos)
         val winningNumber = getWinningNumber()
         val bonusNumber = getBonusNumber(winningNumber)

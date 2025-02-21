@@ -2,19 +2,12 @@ package lotto.domain
 
 import lotto.generator.RandomGenerator
 
-class LottoMachine {
+class LottoMachine(private val randomGenerator: RandomGenerator = RandomGenerator()) {
     val price: Int = LOTTO_PRICE
 
     fun buyLottos(purchaseAmount: Int): List<Lotto> {
-        val randomGenerator = RandomGenerator()
-
         val lottoCount = getLottoCount(purchaseAmount)
-        val lottos: MutableList<Lotto> = mutableListOf()
-
-        repeat(lottoCount) {
-            lottos.add(Lotto(randomGenerator.getRandomNumberList()))
-        }
-        return lottos.toList()
+        return List(lottoCount) { Lotto(randomGenerator.getRandomNumberList()) }
     }
 
     private fun getLottoCount(purchaseAmount: Int): Int {
