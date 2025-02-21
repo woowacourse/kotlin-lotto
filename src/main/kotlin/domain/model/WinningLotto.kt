@@ -1,5 +1,6 @@
 package domain.model
 
+import domain.model.Lotto.Companion.ROUND
 import domain.model.LottoNumber.Companion.INVALID_LOTTO_NUMBERS
 import domain.service.LottoGenerator.Companion.LOTTO_MAX
 import domain.service.LottoGenerator.Companion.LOTTO_MIN
@@ -17,13 +18,26 @@ class WinningLotto(
         require(bonusNumber in LOTTO_MIN..LOTTO_MAX) { INVALID_LOTTO_NUMBERS }
     }
 
-    fun calculate(purchaseLotto: List<Lotto>): LottoResult {
+    fun getProfitRate(
+        money: PurchasePrice,
+        lottoRank: Map<Rank, Int>,
+    ): String {
+        val totalPrice: Double =
+            lottoRank
+                .map { (rank, amount) ->
+                    rank.winningMoney * amount
+                }.sum()
+                .toDouble()
+        return ROUND.format(totalPrice / money.value)
+    }
+
+    fun calculate(purchaseLotto: List<Lotto>): Map<Rank, Int> {
         val rankResult = Rank.rankMap().toMutableMap()
         purchaseLotto.forEach { lotto ->
             val rank = getRank(lotto.numbers)
             rankResult[rank] = rankResult.getOrDefault(rank, 0) + 1
         }
-        return LottoResult(rankResult)
+        return rankResult
     }
 
     private fun getRank(buyLotto: List<LottoNumber>): Rank {
