@@ -14,7 +14,7 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val price: String = getPrice()
+        val price: Int = getPrice()
         val amount: Int = getAmount(price)
         printLottoAmount(amount)
 
@@ -28,12 +28,12 @@ class LottoController(
         printAllResult(lottos, winningLotto)
     }
 
-    fun getPrice(): String {
+    fun getPrice(): Int {
         val price = inputView.inputPurchasePrice()
         return price
     }
 
-    fun getAmount(price: String): Int {
+    fun getAmount(price: Int): Int {
         return Purchase(price).calculateAmountOfLottos()
     }
 
