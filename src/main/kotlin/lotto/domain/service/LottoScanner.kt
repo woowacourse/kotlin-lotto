@@ -1,4 +1,8 @@
-package lotto.model
+package lotto.domain.service
+
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoTicket
+import lotto.domain.model.Rank
 
 class LottoScanner(
     private val lottoTickets: List<LottoTicket>,

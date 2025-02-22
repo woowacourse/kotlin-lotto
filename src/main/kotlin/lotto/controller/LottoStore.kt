@@ -1,11 +1,12 @@
-package lotto
+package lotto.controller
 
-import lotto.model.LottoMachine
-import lotto.model.LottoNumber
-import lotto.model.LottoResult
-import lotto.model.LottoScanner
-import lotto.model.LottoTicket
-import lotto.model.Rank
+import lotto.Constants
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoTicket
+import lotto.domain.model.Rank
+import lotto.domain.service.LottoMachine
+import lotto.domain.service.LottoResult
+import lotto.domain.service.LottoScanner
 import lotto.view.InputView
 import lotto.view.OutputView
 

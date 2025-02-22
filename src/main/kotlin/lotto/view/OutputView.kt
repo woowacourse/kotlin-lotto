@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.model.LottoTicket
-import lotto.model.Rank
+import lotto.domain.model.LottoTicket
+import lotto.domain.model.Rank
 import java.math.RoundingMode
 import java.text.DecimalFormat
 

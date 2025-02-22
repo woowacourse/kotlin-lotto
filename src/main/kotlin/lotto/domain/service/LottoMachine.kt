@@ -1,6 +1,8 @@
-package lotto.model
+package lotto.domain.service
 
 import lotto.Constants
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoTicket
 
 class LottoMachine {
     fun purchase(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateLotto()) }
