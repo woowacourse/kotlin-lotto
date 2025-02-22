@@ -12,26 +12,13 @@ class WinningLotto(
         }
     }
 
-    fun getProfitRate(
-        money: PurchasePrice,
-        lottoRank: Map<Rank, Int>,
-    ): Double {
-        val totalPrice: Double =
-            lottoRank
-                .map { (rank, amount) ->
-                    rank.winningMoney * amount
-                }.sum()
-                .toDouble()
-        return totalPrice / money.value
-    }
-
-    fun calculate(purchaseLotto: List<Lotto>): Map<Rank, Int> {
+    fun calculate(purchaseLotto: List<Lotto>): LottoMatchResult {
         val rankResult = Rank.rankMap().toMutableMap()
         purchaseLotto.forEach { lotto ->
             val rank = getRank(lotto.numbers)
             rankResult[rank] = rankResult.getOrDefault(rank, 0) + 1
         }
-        return rankResult
+        return LottoMatchResult(rankResult)
     }
 
     private fun getRank(buyLotto: List<LottoNumber>): Rank {

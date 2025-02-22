@@ -21,7 +21,7 @@ class WinningLottoTest {
         val purchaseLotto = fakeLottoGenerator.generate(PurchasePrice(2000))
 
         val winningLotto = createWinningLotto(1, 3, 4, 5, 6, 7, bonus = 2)
-        val result = winningLotto.calculate(purchaseLotto)
+        val result = winningLotto.calculate(purchaseLotto).winningCountByRank
 
         assertThat(result[Rank.SECOND]).isEqualTo(2)
         assertThat(result[Rank.FOURTH]).isEqualTo(0)
@@ -43,18 +43,6 @@ class WinningLottoTest {
         assertThrows<IllegalArgumentException> {
             createWinningLotto(10, 20, 30, 40, 44, 45, bonus = value)
         }.apply { assertThat(this).hasMessage("[ERROR] 로또 번호는 1부터 45 사이입니다.") }
-    }
-
-    @ValueSource(strings = ["1,2,3,4,5,6"])
-    @ParameterizedTest
-    fun `Lotto 당첨 결과에 따른 수익률 테스트`(value: String) {
-        val values = value.split(",").map { LottoNumber(it.toInt()) }
-
-        val rank = mapOf(Rank.FIFTH to 1)
-        val profitRate =
-            WinningLotto(Lotto(values), LottoNumber(10)).getProfitRate(PurchasePrice(10_000), rank)
-
-        assertThat(profitRate).isEqualTo(0.5)
     }
 
     private fun createLotto(vararg numbers: Int): Lotto {
