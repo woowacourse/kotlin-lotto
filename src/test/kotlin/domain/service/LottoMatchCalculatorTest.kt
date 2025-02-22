@@ -1,6 +1,6 @@
 package domain.service
 
-import domain.model.BonusNumber
+import domain.model.LottoNumber
 import domain.model.Lotto
 import domain.model.PurchaseLotto
 import domain.model.Rank
@@ -17,7 +17,7 @@ class LottoMatchCalculatorTest {
                     Lotto(listOf(1, 2, 3, 4, 5, 6)),
                 ),
             )
-        val winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), BonusNumber(2))
+        val winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), LottoNumber(2))
         val calculator = LottoMatchCalculator(purchaseLotto, winningLotto)
         val result = calculator.calculate().result
 
@@ -39,7 +39,7 @@ class LottoMatchCalculatorTest {
                 ),
             )
 
-        val winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), BonusNumber(2))
+        val winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), LottoNumber(2))
         val calculator = LottoMatchCalculator(purchaseLotto, winningLotto)
         val result = calculator.calculate().result
 

@@ -1,6 +1,6 @@
 package controller
 
-import domain.model.BonusNumber
+import domain.model.LottoNumber
 import domain.model.Lotto
 import domain.model.LottoResult
 import domain.model.PurchaseLotto
@@ -64,7 +64,7 @@ class LottoController(
             action = {
                 val input = inputView.readBonusNumber()
                 NumericValidator(input)
-                val bonusNumber = BonusNumber(input.toInt())
+                val bonusNumber = LottoNumber(input.toInt())
                 WinningLotto(winningNumbers, bonusNumber)
             },
             onError = { outputView.printErrorMessage(it) },

@@ -5,7 +5,7 @@ import domain.service.LottoGenerator.Companion.LOTTO_MAX
 import domain.service.LottoGenerator.Companion.LOTTO_MIN
 
 @JvmInline
-value class BonusNumber(val value: Int) {
+value class LottoNumber(val value: Int) {
     init {
         require(value in LOTTO_MIN..LOTTO_MAX) { INVALID_BONUS_NUMBER }
     }
