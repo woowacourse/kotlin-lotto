@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 class LottosTest {
     private lateinit var winningLotto: WinningLotto
-    private lateinit var lottosHasTwoLotto: Lottos
+    private lateinit var lottosHasTwoTickets: Lottos
 
     @BeforeEach
     fun setUp() {
@@ -21,11 +21,19 @@ class LottosTest {
         winningLotto = WinningLotto(lottoWithoutBonus, bonusNumber)
 
         val lottoNumbers = (4..9).map { LottoNumber(it) }.toSet()
-        lottosHasTwoLotto = Lottos(listOf(Lotto(lottoNumbers), Lotto(lottoNumbers)))
+        lottosHasTwoTickets = Lottos(listOf(Lotto(lottoNumbers), Lotto(lottoNumbers)))
     }
 
     @Test
     fun `당첨 로또 인스턴스를 전달받아 당첨 통계 인스턴스를 반환한다`() {
-        assertThat(lottosHasTwoLotto.getLottoWinningStats(winningLotto)).isExactlyInstanceOf(LottoWinningStats::class.java)
+        // Given
+        val winningLotto = winningLotto
+        val lottosHasTwoTickets = lottosHasTwoTickets
+
+        // When
+        val winningStats = lottosHasTwoTickets.getLottoWinningStats(winningLotto)
+
+        // Then
+        assertThat(winningStats).isExactlyInstanceOf(LottoWinningStats::class.java)
     }
 }

@@ -24,13 +24,25 @@ class LottoWinningStatsTest {
 
     @Test
     fun `당첨 수익률 객체를 반환한다`() {
+        // Given
         val winningStats = lottos.getLottoWinningStats(winningLotto)
-        assertThat(winningStats.getEarningRate()).isExactlyInstanceOf(EarningRate::class.java)
+
+        // When
+        val earningRate = winningStats.getEarningRate()
+
+        // Then
+        assertThat(earningRate).isExactlyInstanceOf(EarningRate::class.java)
     }
 
     @Test
     fun `0번의 당첨을 포함한 전체 당첨 통계 정보를 반환한다`() {
+        // Given
         val winningStats = lottos.getLottoWinningStats(winningLotto)
-        assertThat(winningStats.getWinningStatsWithEmpty().size).isEqualTo(Rank.entries.size)
+
+        // When
+        val winningStatsWithEmpty = winningStats.getWinningStatsWithEmpty()
+
+        // Then
+        assertThat(winningStatsWithEmpty.size).isEqualTo(Rank.entries.size)
     }
 }

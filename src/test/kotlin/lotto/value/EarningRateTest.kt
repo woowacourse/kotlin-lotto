@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class EarningRateTest {
     @ParameterizedTest
-    @ValueSource(doubles = [0.0, 0.1, 1.0, 1000.0])
+    @ValueSource(doubles = [0.0, 0.1, 1.0, 1000000.0])
     fun `수익률은 0 이상의 실수이다`(rate: Double) {
         assertDoesNotThrow {
             EarningRate(rate)
@@ -18,7 +18,7 @@ class EarningRateTest {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = [-0.1, -1.0, -1000.0])
+    @ValueSource(doubles = [-0.0000001, -0.1, -1.0, -100000.0])
     fun `수익률이 0 이상이 아니면 예외가 발생한다`(rate: Double) {
         assertThrows<IllegalArgumentException> {
             EarningRate(rate)
@@ -36,7 +36,13 @@ class EarningRateTest {
         rate: Double,
         expected: Double,
     ) {
+        // Given
         val earningRate = EarningRate(rate)
-        assertThat(earningRate.rate).isEqualTo(expected)
+
+        // When
+        val rateValue = earningRate.rate
+
+        // Then
+        assertThat(rateValue).isEqualTo(expected)
     }
 }

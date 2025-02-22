@@ -26,9 +26,13 @@ class LottoTest {
 
     @Test
     fun `로또 번호는 오름차순으로 정렬되어 반환한다`() {
-        val lottoNumbers = listOf(4, 5, 6, 1, 2, 3).map { LottoNumber(it) }.toSet()
-        val lotto = Lotto(lottoNumbers)
+        // Given
+        val lotto = Lotto(listOf(4, 5, 6, 1, 2, 3).map { LottoNumber(it) }.toSet())
 
-        assertThat(lotto.getLottoNumbers().map { it.number }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+        // When
+        val lottoNumbers = lotto.getLottoNumbers()
+
+        // Then
+        assertThat(lottoNumbers.map { it.number }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
     }
 }
