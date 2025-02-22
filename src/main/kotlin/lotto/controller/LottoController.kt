@@ -6,6 +6,7 @@ import lotto.model.LottoMatcher
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.PrizeCalculator
+import lotto.model.Rank
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -15,8 +16,7 @@ class LottoController(
 ) {
     fun run() {
         val lottoPurchaseAmount = getLottoPurchaseAmount()
-        val lottoMachine = LottoMachine()
-        val publishedLotto = publishLotto(lottoMachine, lottoPurchaseAmount)
+        val publishedLotto = publishLotto(lottoPurchaseAmount)
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
         val lottoMatcher = LottoMatcher(winningLotto, bonusNumber)
@@ -29,12 +29,13 @@ class LottoController(
         return LottoPurchaseAmount(amountInput)
     }
 
-    private fun publishLotto(
-        lottoMachine: LottoMachine,
-        lottoPurchaseAmount: LottoPurchaseAmount,
-    ): List<Lotto> {
-        val publishedLotto = lottoMachine.publishLottoTickets(lottoPurchaseAmount.getLottoQuantity())
-        outputView.printPublishedLotto(lottoPurchaseAmount.getLottoQuantity(), publishedLotto)
+    private fun publishLotto(lottoPurchaseAmount: LottoPurchaseAmount): List<Lotto> {
+        val publishedLotto = LottoMachine().publishLottoTickets(lottoPurchaseAmount.getLottoQuantity())
+        val formattedLottoNumbers =
+            publishedLotto.map { lotto ->
+                "[${lotto.numbers.joinToString(",") { it.value.toString() }}]"
+            }
+        outputView.printPublishedLotto(lottoPurchaseAmount.getLottoQuantity(), formattedLottoNumbers)
         return publishedLotto
     }
 
@@ -56,8 +57,11 @@ class LottoController(
         publishedLotto: List<Lotto>,
     ) {
         val result = lottoMatcher.matchLotto(publishedLotto)
-        val prizeCalculator = PrizeCalculator()
-        val earningRate = prizeCalculator.calculateEarningRate(lottoPurchaseAmount.amount, result)
-        outputView.printPrize(result, earningRate)
+        val earningRate = PrizeCalculator().calculateEarningRate(lottoPurchaseAmount.amount, result)
+        val formattedResult =
+            Rank.entries.associateWith { rank ->
+                result.getOrDefault(rank, 0)
+            }
+        outputView.printPrize(formattedResult, earningRate)
     }
 }
