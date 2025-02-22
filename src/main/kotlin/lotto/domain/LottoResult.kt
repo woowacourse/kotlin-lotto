@@ -5,11 +5,7 @@ class LottoResult(
     private val winningLotto: WinningLotto,
 ) {
     fun getRanks(): List<Rank> {
-        return lottos.map { lotto ->
-            val matchCount = lotto.compareWithWinningLotto(winningLotto.winningLotto)
-            val matchBonus = lotto.compareWithBonusNumber(winningLotto.bounusNumber.toInt())
-            Rank.valueOf(matchCount, matchBonus)
-        }
+        return lottos.map { lotto -> winningLotto.getRank(lotto) }
     }
 
     fun getWinningStatistics(): Map<Rank, Int> {
