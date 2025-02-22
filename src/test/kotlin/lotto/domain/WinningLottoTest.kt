@@ -11,20 +11,19 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class WinningLottoTest {
-    private lateinit var winningNumbers: Lotto
-    private lateinit var bonusNumber: LottoNumber
+    private lateinit var winningNumbers1to6: Lotto
+    private val bonusNumber45: LottoNumber = LottoNumber(45)
 
     @BeforeEach
     fun setUp() {
         val lottoNumbers = (1..6).map { LottoNumber(it) }.toSet()
-        winningNumbers = Lotto(lottoNumbers)
-        bonusNumber = LottoNumber(45)
+        winningNumbers1to6 = Lotto(lottoNumbers)
     }
 
     @Test
     fun `당첨 번호와 보너스 번호는 중복되지 않는다`() {
         assertDoesNotThrow {
-            WinningLotto(winningNumbers, bonusNumber)
+            WinningLotto(winningNumbers1to6, bonusNumber45)
         }
     }
 
@@ -32,7 +31,7 @@ class WinningLottoTest {
     fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             val bonusNumber = LottoNumber(1)
-            WinningLotto(winningNumbers, bonusNumber)
+            WinningLotto(winningNumbers1to6, bonusNumber)
         }
     }
 
@@ -41,7 +40,7 @@ class WinningLottoTest {
         val lottoNumbers = (1..5).map { LottoNumber(it) }.toMutableSet()
         lottoNumbers.add(LottoNumber(45))
         val lotto = Lotto(lottoNumbers)
-        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        val winningLotto = WinningLotto(winningNumbers1to6, bonusNumber45)
         assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.SECOND)
     }
 
@@ -50,7 +49,7 @@ class WinningLottoTest {
         val lottoNumbers = (1..5).map { LottoNumber(it) }.toMutableSet()
         lottoNumbers.add(LottoNumber(7))
         val lotto = Lotto(lottoNumbers)
-        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        val winningLotto = WinningLotto(winningNumbers1to6, bonusNumber45)
         assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.THIRD)
     }
 
@@ -58,7 +57,7 @@ class WinningLottoTest {
     fun `일치하는 번호가 2개 이하이면 등수는 MISS이다`() {
         val lottoNumbers = (5..10).map { LottoNumber(it) }.toSet()
         val lotto = Lotto(lottoNumbers)
-        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
+        val winningLotto = WinningLotto(winningNumbers1to6, bonusNumber45)
         assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.MISS)
     }
 }
