@@ -3,7 +3,7 @@ package lotto.model
 import lotto.Constants
 
 class LottoTicket(
-    private val numbers: List<LottoNumber> = generateLotto(),
+    private val numbers: Set<LottoNumber> = generateLotto(),
     private val bonusNumber: LottoNumber? = null,
 ) {
     init {
@@ -25,12 +25,13 @@ class LottoTicket(
     fun getBonusNumber() = bonusNumber
 
     companion object {
-        private fun generateLotto(): List<LottoNumber> =
+        private fun generateLotto(): Set<LottoNumber> =
             (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
                 .shuffled()
                 .take(LOTTO_PICK_COUNT)
                 .sorted()
                 .map { LottoNumber(it) }
+                .toSet()
 
         private const val LOTTO_PICK_COUNT = 6
         private const val ERROR_LOTTO_SIZE = "로또 번호는 6개여야 합니다."
