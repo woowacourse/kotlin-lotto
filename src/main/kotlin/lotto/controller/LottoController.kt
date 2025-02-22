@@ -63,18 +63,30 @@ class LottoController(
     }
 
     private fun getPurchaseAmount(): LottoPurchaseAmount {
-        val purchaseAmount = inputView.getPurchaseAmount()
-        return LottoPurchaseAmount(purchaseAmount.toInt())
+        return retryInput {
+            LottoPurchaseAmount(inputView.getPurchaseAmount().toInt())
+        }
     }
 
     private fun getWinningNumber(): Lotto {
-        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { it.trim() }
-        return Lotto(winningNumber.map { LottoNumber(it.toInt()) })
+        return retryInput {
+            val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { it.trim() }
+            Lotto(winningNumber.map { LottoNumber(it.toInt()) })
+        }
     }
 
     private fun getWinningLotto(winningNumber: Lotto): WinningLotto {
-        val bonusNumber = inputView.getBonusNumber()
-        return WinningLotto(winningNumber, LottoNumber(bonusNumber.toInt()))
+        return retryInput {
+            val bonusNumber = inputView.getBonusNumber()
+            WinningLotto(winningNumber, LottoNumber(bonusNumber.toInt()))
+        }
+    }
+
+    private fun <T> retryInput(inputFunction: () -> T): T {
+        return runCatching { inputFunction() }
+            .getOrElse {
+                retryInput(inputFunction)
+            }
     }
 
     companion object {
