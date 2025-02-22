@@ -6,6 +6,7 @@ import lotto.model.LottoDiscriminator
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoProfitCalculator
+import lotto.model.Lottos
 import lotto.model.ProfitStatus
 import lotto.model.Rank
 import lotto.view.InputView
@@ -17,28 +18,62 @@ class LottoController(
 ) {
     fun run() {
         outputView.printPurchaseAmountGuide()
-        val purchaseAmount = inputView.readPurchaseAmount()
-        val lottoCashier = LottoCashier(purchaseAmount)
-        val lottoQuantity = lottoCashier.getLottoQuantity()
+        val lottoCashier = readyMoneyToPurchaseLotto()
+
+        val lottoQuantity = determineLottoQuantity(lottoCashier)
         outputView.printPurchaseLottoQuantity(lottoQuantity)
 
         val lottoMachine = LottoMachine()
+        val lottos = loadAndDisplayLottos(lottoMachine, lottoQuantity)
+
+        outputView.printLastWeekWinningNumbersGuide()
+        val lastWeekLottoWinningNumbers = setupLastWeekWinningNumber()
+
+        outputView.printBonusNumberGuide()
+        val lottoBonusNumber = setupLastWeekBonusNumber()
+
+        val lottoDiscriminator = LottoDiscriminator(lastWeekLottoWinningNumbers, lottoBonusNumber)
+        val lottoWinningResult = lottos.countLottoByRank(lottoDiscriminator)
+
+        displayLottosResult(lottoWinningResult)
+        calculateAndDisplayProfitRate(lottoWinningResult, lottoCashier)
+    }
+
+    private fun readyMoneyToPurchaseLotto(): LottoCashier {
+        val purchaseAmount = inputView.readPurchaseAmount()
+        val lottoCashier = LottoCashier(purchaseAmount)
+        return lottoCashier
+    }
+
+    private fun determineLottoQuantity(lottoCashier: LottoCashier): Int {
+        val lottoQuantity = lottoCashier.getLottoQuantity()
+        return lottoQuantity
+    }
+
+    private fun loadAndDisplayLottos(
+        lottoMachine: LottoMachine,
+        lottoQuantity: Int,
+    ): Lottos {
         val lottos = lottoMachine.getLottos(lottoQuantity)
 
         lottos.lottos.forEach { lotto ->
-            outputView.printLottoNumbers(lotto.numbers.map { number -> number.number })
+            outputView.printLottoNumbers(lotto.numbers.map { it.number })
         }
 
-        outputView.printLastWeekWinningNumbersGuide()
+        return lottos
+    }
+
+    private fun setupLastWeekWinningNumber(): Lotto {
         val lastWeekLottoWinningNumbers = Lotto.from(inputView.readWinningNumbers())
+        return lastWeekLottoWinningNumbers
+    }
 
-        outputView.printBonusNumberGuide()
+    private fun setupLastWeekBonusNumber(): LottoNumber {
         val lottoBonusNumber = LottoNumber(inputView.readBonusNumber())
+        return lottoBonusNumber
+    }
 
-        val lottoDiscriminator = LottoDiscriminator(lastWeekLottoWinningNumbers, lottoBonusNumber)
-
-        val lottoWinningResult = lottos.countLottoByRank(lottoDiscriminator)
-
+    private fun displayLottosResult(lottoWinningResult: Map<Rank, Int>) {
         outputView.printWinningResultTitle()
         lottoWinningResult.forEach { (rank, count) ->
             if (rank != Rank.MISS) {
@@ -50,9 +85,13 @@ class LottoController(
                 )
             }
         }
+    }
 
+    private fun calculateAndDisplayProfitRate(
+        lottoWinningResult: Map<Rank, Int>,
+        lottoCashier: LottoCashier,
+    ) {
         val lottoProfitCalculator = LottoProfitCalculator()
-
         val profitRate =
             lottoProfitCalculator.getProfitRate(
                 countLottoByRank = lottoWinningResult,
