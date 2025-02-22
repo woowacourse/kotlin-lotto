@@ -1,11 +1,15 @@
 package lotto.controller
 
 import lotto.contants.Constants
-import lotto.model.*
-import lotto.view.InputView
-import lotto.view.OutputView
+import lotto.model.LottoTicket
+import lotto.model.LottoMachine
+import lotto.model.WinningLotto
+import lotto.model.LottoResult
+import lotto.view.UserInterface
 
-class LottoController {
+class LottoController(
+    private val userInterface: UserInterface = UserInterface(),
+) {
     fun run() {
         val lottoTickets = generateLottoTickets()
         val winningLotto = getWinningLotto()
@@ -14,25 +18,25 @@ class LottoController {
     }
 
     private fun generateLottoTickets(): List<LottoTicket> {
-        val amount = InputView.inputPurchaseAmount()
+        val amount = userInterface.inputPurchaseAmount()
         val count = calculatePurchaseCount(amount)
         val lottoTickets = LottoMachine().purchase(count)
-        OutputView.printLottoTickets(lottoTickets)
+        userInterface.printLottoTickets(lottoTickets)
         return lottoTickets
     }
 
     private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
     private fun getWinningLotto(): WinningLotto {
-        val winningNumbers = InputView.inputWinningNumbers()
-        val bonusNumber = InputView.inputBonusNumber()
+        val winningNumbers = userInterface.getWinningNumbers()
+        val bonusNumber = userInterface.getBonusNumber()
         return WinningLotto(winningNumbers, bonusNumber)
     }
 
     private fun getResult(lottoResult: LottoResult) {
-        val profit = lottoResult.calculateProfit()
         val winningStatus = lottoResult.getWinningStatus()
-        OutputView.printResult(winningStatus)
-        OutputView.printProfit(profit)
+        val profit = lottoResult.calculateProfit()
+        userInterface.printResult(winningStatus)
+        userInterface.printProfit(profit)
     }
 }

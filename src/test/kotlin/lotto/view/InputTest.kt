@@ -6,13 +6,11 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class InputTest {
-    private val inputView = InputView()
-
     @ParameterizedTest
     @ValueSource(strings = [""])
     fun `구입금액에 공백이 들어오면 예외를 발생시킨다`(input: String) {
         assertThrows<IllegalArgumentException> {
-            inputView.validateAmount(input)
+            InputValidator().validateAmount(input)
         }
     }
 
@@ -20,7 +18,7 @@ class InputTest {
     @ValueSource(strings = ["가나다라", "a0"])
     fun `구입금액에 문자열이 들어오면 예외를 발생시킨다`(input: String) {
         assertThrows<IllegalArgumentException> {
-            inputView.validateAmount(input)
+            InputValidator().validateAmount(input)
         }
     }
 
@@ -28,7 +26,7 @@ class InputTest {
     @ValueSource(strings = ["0", "-1"])
     fun `구입금액에 0이나 음수가 들어오면 예외를 발생시킨다`(input: String) {
         assertThrows<IllegalArgumentException> {
-            inputView.validateAmount(input)
+            InputValidator().validateAmount(input)
         }
     }
 
@@ -36,7 +34,7 @@ class InputTest {
     @ValueSource(strings = ["500", "1234"])
     fun `구입금액이 1000으로 나누어 떨어지지 않으면 예외를 발생시킨다`(input: String) {
         assertThrows<IllegalArgumentException> {
-            inputView.validateAmount(input)
+            InputValidator().validateAmount(input)
         }
     }
 
@@ -45,7 +43,7 @@ class InputTest {
         val winningNumbers = listOf("", "a", "가나다")
 
         assertThrows<IllegalArgumentException> {
-            inputView.validateWinningNumbers(winningNumbers)
+            InputValidator().validateWinningNumbers(winningNumbers)
         }
     }
 }
