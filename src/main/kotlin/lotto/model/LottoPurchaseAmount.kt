@@ -8,7 +8,7 @@ class LottoPurchaseAmount(
         require(money % LOTTO_PRICE == NO_REMAINDER) { ERROR_EXIST_REMAINDER }
     }
 
-    fun getLottoCount(): Int = money / LOTTO_PRICE
+    fun getLottoCount(lottoPrice: Int = LOTTO_PRICE): Int = money / lottoPrice
 
     companion object {
         private const val MIN_LOTTO_PURCHASE_AMOUNT = 1_000
