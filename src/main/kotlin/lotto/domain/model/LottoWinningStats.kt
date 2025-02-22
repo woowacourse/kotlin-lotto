@@ -14,11 +14,5 @@ class LottoWinningStats(
         return EarningRate(rate)
     }
 
-    private fun calculateWinningAmount(): Int {
-        var result = 0
-        winningStats.forEach { (rank, count) ->
-            result += rank.winningMoney * count
-        }
-        return result
-    }
+    private fun calculateWinningAmount(): Int = winningStats.entries.sumOf { (rank, count) -> rank.winningMoney * count }
 }
