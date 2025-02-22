@@ -21,7 +21,7 @@ class OutputView {
 
     fun printLottoStats(lottoWinningStats: LottoWinningStats) {
         println("\n당첨 통계\n---------")
-        lottoWinningStats.winningStats.entries.reversed().forEach { winningStats ->
+        lottoWinningStats.getWinningStatsWithEmpty().entries.reversed().forEach { winningStats ->
             val bonusText = if (winningStats.key == Rank.SECOND) ", 보너스 볼 일치" else " "
             println("${winningStats.key.countOfMatch}개 일치$bonusText(${winningStats.key.winningMoney}원)- ${winningStats.value}개")
         }

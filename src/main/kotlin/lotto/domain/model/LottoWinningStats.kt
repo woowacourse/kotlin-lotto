@@ -5,7 +5,7 @@ import lotto.domain.value.LottoPayInfo
 import lotto.enums.Rank
 
 class LottoWinningStats(
-    val winningStats: Map<Rank, Int>,
+    private val winningStatsInfo: Map<Rank, Int>,
     private val lottoPayInfo: LottoPayInfo,
 ) {
     fun getEarningRate(): EarningRate {
@@ -14,5 +14,10 @@ class LottoWinningStats(
         return EarningRate(rate)
     }
 
-    private fun calculateWinningAmount(): Int = winningStats.entries.sumOf { (rank, count) -> rank.winningMoney * count }
+    fun getWinningStatsWithEmpty(): Map<Rank, Int> {
+        val emptyWinningStatus = Rank.entries.associateWith { 0 }
+        return emptyWinningStatus + winningStatsInfo
+    }
+
+    private fun calculateWinningAmount(): Int = winningStatsInfo.entries.sumOf { (rank, count) -> rank.winningMoney * count }
 }
