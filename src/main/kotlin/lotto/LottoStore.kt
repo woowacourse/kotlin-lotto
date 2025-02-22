@@ -17,7 +17,7 @@ class LottoStore(
 
     private fun generateLottoTicket(count: Int): List<LottoTicket> {
         val lottoTickets = LottoMachine().purchase(count)
-        lottoTickets.map {
+        lottoTickets.forEach {
             outputView.printLotto(it)
         }
         return lottoTickets
