@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.domain.model.Lotto
 import lotto.domain.model.LottoWinningStats
+import lotto.domain.model.Lottos
 import lotto.domain.value.EarningRate
 import lotto.domain.value.LottoPayInfo
 import lotto.enums.Rank
@@ -11,8 +11,8 @@ class OutputView {
         println("${payInfo.getLottoPurchaseQuantity()}개를 구매했습니다.")
     }
 
-    fun printLottos(lottos: List<Lotto>) {
-        lottos.forEach { lotto ->
+    fun printTicketsByLottos(lottos: Lottos) {
+        lottos.tickets.forEach { lotto ->
             println(
                 lotto.getLottoNumbers().map { it.number },
             )

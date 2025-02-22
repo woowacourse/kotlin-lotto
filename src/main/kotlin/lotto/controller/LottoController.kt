@@ -1,10 +1,8 @@
 package lotto.controller
 
-import lotto.domain.model.Lotto
 import lotto.domain.model.LottoMachine
-import lotto.domain.model.LottoWinningStats
+import lotto.domain.model.Lottos
 import lotto.domain.model.WinningLotto
-import lotto.domain.service.LottoCalculator
 import lotto.domain.value.LottoPayInfo
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -16,11 +14,11 @@ class LottoController(
     fun runLotto() {
         val lottoPayInfo = getPayInfo()
         outputView.printLottoPurchaseQuantity(lottoPayInfo)
-        val lottos = getLottoByPayInfo(lottoPayInfo)
-        outputView.printLottos(lottos)
-        val lottoWinningStats = getLottoWInningStats(lottos)
+        val lottos: Lottos = getLottosByPayInfo(lottoPayInfo)
+        outputView.printTicketsByLottos(lottos)
+        val lottoWinningStats = lottos.getLottoWinningStats(getWinningLotto())
         outputView.printLottoStats(lottoWinningStats)
-        outputView.printLottoEarningRate(lottoWinningStats.calculateEarningRate())
+        outputView.printLottoEarningRate(lottoWinningStats.getEarningRate())
     }
 
     private fun getPayInfo(): LottoPayInfo {
@@ -28,7 +26,7 @@ class LottoController(
         return LottoPayInfo(lottoPurchaseAmount)
     }
 
-    private fun getLottoByPayInfo(payInfo: LottoPayInfo): List<Lotto> {
+    private fun getLottosByPayInfo(payInfo: LottoPayInfo): Lottos {
         val lottoMachine = LottoMachine()
         return lottoMachine.generateLottos(payInfo)
     }
@@ -36,11 +34,5 @@ class LottoController(
     private fun getWinningLotto(): WinningLotto {
         val winningLottoWithoutBonus = inputView.readWinningLottoWithoutBonusNumber()
         return inputView.getWinningLottoWithBonusNumber(winningLottoWithoutBonus)
-    }
-
-    private fun getLottoWInningStats(lottos: List<Lotto>): LottoWinningStats {
-        val winningLotto = getWinningLotto()
-        val lottoCalculator = LottoCalculator(winningLotto, lottos)
-        return lottoCalculator.calculateWinningStats()
     }
 }

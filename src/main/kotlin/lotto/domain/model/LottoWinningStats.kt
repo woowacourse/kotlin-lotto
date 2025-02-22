@@ -8,7 +8,7 @@ class LottoWinningStats(
     val winningStats: Map<Rank, Int>,
     private val lottoPayInfo: LottoPayInfo,
 ) {
-    fun calculateEarningRate(): EarningRate {
+    fun getEarningRate(): EarningRate {
         val winningAmount = calculateWinningAmount()
         val rate = winningAmount.toDouble() / lottoPayInfo.lottoPurchaseAmount
         return EarningRate(rate)
