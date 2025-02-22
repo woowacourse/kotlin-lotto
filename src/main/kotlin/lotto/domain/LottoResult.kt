@@ -1,7 +1,7 @@
 package lotto.domain
 
 enum class LottoResult(
-    val prizeAmount: Int,
+    val prize: Int,
     val bonusMatched: BonusMatched,
     val matchCount: Int,
 ) {

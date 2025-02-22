@@ -2,14 +2,13 @@ package lotto.view
 
 import lotto.domain.LottoResult
 import lotto.domain.ResultClassification
-import kotlin.math.floor
 
 object OutputView {
     private const val MESSAGE_ENTER_PRICE = "구입금액을 입력해 주세요."
     private const val MESSAGE_ENTER_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
     private const val MESSAGE_ENTER_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+    private const val MESSAGE_PURCHASE_COUNT = "개를 구매했습니다."
     private const val MESSAGE_RESULT_HEADER = "당첨 통계\n---------"
-    private const val MESSAGE_BOUGHT = "개를 구매했습니다."
     private const val MESSAGE_RESULT_PER_PRIZE = "%s개 일치%s (%s원) - %s개"
     private const val MESSAGE_RESULT_SUMMARY = "총 수익률은 %s입니다.(기준이 1이기 때문에 결과적으로 %s 의미임)"
     private const val MESSAGE_PROFIT_RATE_PROFIT = "이득이라는"
@@ -21,7 +20,7 @@ object OutputView {
     }
 
     fun showLottoCount(lottoCount: Int) {
-        println("$lottoCount$MESSAGE_BOUGHT")
+        println("$lottoCount$MESSAGE_PURCHASE_COUNT")
     }
 
     fun showLottos(numbers: List<List<Int>>) {
@@ -59,7 +58,7 @@ object OutputView {
         MESSAGE_RESULT_PER_PRIZE.format(
             lottoResult.matchCount,
             if (lottoResult.bonusMatched == LottoResult.BonusMatched.YES) ", 보너스 볼 일치" else "",
-            lottoResult.prizeAmount,
+            lottoResult.prize,
             resultTally[lottoResult]
         )
 
