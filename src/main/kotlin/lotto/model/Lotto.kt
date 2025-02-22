@@ -4,7 +4,7 @@ class Lotto(
     val numbers: List<LottoNumber>,
 ) {
     init {
-        require(numbers.size == numbers.distinct().size) {
+        require(numbers.size == numbers.toSet().size) {
             val duplicatedNumber = findDuplicatedNumber()
             ERROR_DUPLICATED_LOTTO_NUMBERS.format(
                 duplicatedNumber,
