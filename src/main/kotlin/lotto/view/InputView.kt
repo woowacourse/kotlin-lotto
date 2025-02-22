@@ -27,7 +27,7 @@ class InputView {
         val lotto =
             run {
                 Lotto(
-                    inputMessage.split(",").map { LottoNumber(it.trim().toInt()) }.sortedBy { it.number },
+                    inputMessage.split(",").map { LottoNumber(it.trim().toInt()) }.toSet(),
                 )
             }
 

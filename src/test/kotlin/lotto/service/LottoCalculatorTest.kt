@@ -14,7 +14,7 @@ class LottoCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        val lottoNumbers = (1..6).map { LottoNumber(it) }
+        val lottoNumbers = (1..6).map { LottoNumber(it) }.toSet()
         val winningNumbers = Lotto(lottoNumbers)
         val bonusNumber = LottoNumber(45)
         winningLotto = WinningLotto(winningNumbers, bonusNumber)
@@ -22,7 +22,7 @@ class LottoCalculatorTest {
 
     @Test
     fun `로또 1등이 한번 당첨되면 1등 당첨 횟수는 1이다`() {
-        val firstRankNumbers = (1..6).map { LottoNumber(it) }
+        val firstRankNumbers = (1..6).map { LottoNumber(it) }.toSet()
         val lottos = listOf(Lotto(firstRankNumbers))
         val lottoCalculator = LottoCalculator(winningLotto, lottos)
         val winningStats = lottoCalculator.calculateWinningStats()
@@ -32,8 +32,8 @@ class LottoCalculatorTest {
 
     @Test
     fun `당첨되지 않은 로또가 1개이면 미당첨 횟수는 1이다`() {
-        val firstRankNumbers = (1..6).map { LottoNumber(it) }
-        val missRankNumbers = (11..16).map { LottoNumber(it) }
+        val firstRankNumbers = (1..6).map { LottoNumber(it) }.toSet()
+        val missRankNumbers = (11..16).map { LottoNumber(it) }.toSet()
         val lottos = listOf(Lotto(firstRankNumbers), Lotto(missRankNumbers))
         val lottoCalculator = LottoCalculator(winningLotto, lottos)
         val winningStats = lottoCalculator.calculateWinningStats()

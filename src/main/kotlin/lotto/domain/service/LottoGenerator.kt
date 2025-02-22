@@ -10,8 +10,8 @@ class LottoGenerator {
             (LottoConstants.LOTTO_RANGE)
                 .shuffled()
                 .take(LottoConstants.NUMBER_OF_LOTTO_NUMBERS)
-                .sorted()
                 .map { LottoNumber(it) }
+                .toSet()
         return Lotto(lottoNumbers)
     }
 }

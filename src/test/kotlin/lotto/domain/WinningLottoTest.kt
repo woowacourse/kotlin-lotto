@@ -16,7 +16,7 @@ class WinningLottoTest {
 
     @BeforeEach
     fun setUp() {
-        val lottoNumbers = (1..6).map { LottoNumber(it) }
+        val lottoNumbers = (1..6).map { LottoNumber(it) }.toSet()
         winningNumbers = Lotto(lottoNumbers)
         bonusNumber = LottoNumber(45)
     }
@@ -38,7 +38,7 @@ class WinningLottoTest {
 
     @Test
     fun `일치하는 번호가 5개이고 보너스 번호가 일치하면 등수는 2등이다`() {
-        val lottoNumbers = (1..5).map { LottoNumber(it) }.toMutableList()
+        val lottoNumbers = (1..5).map { LottoNumber(it) }.toMutableSet()
         lottoNumbers.add(LottoNumber(45))
         val lotto = Lotto(lottoNumbers)
         val winningLotto = WinningLotto(winningNumbers, bonusNumber)
@@ -47,7 +47,7 @@ class WinningLottoTest {
 
     @Test
     fun `일치하는 번호가 5개이고 보너스 번호가 일치하지 않으면 등수는 3등이다`() {
-        val lottoNumbers = (1..5).map { LottoNumber(it) }.toMutableList()
+        val lottoNumbers = (1..5).map { LottoNumber(it) }.toMutableSet()
         lottoNumbers.add(LottoNumber(7))
         val lotto = Lotto(lottoNumbers)
         val winningLotto = WinningLotto(winningNumbers, bonusNumber)
@@ -56,7 +56,7 @@ class WinningLottoTest {
 
     @Test
     fun `일치하는 번호가 2개 이하이면 등수는 MISS이다`() {
-        val lottoNumbers = (5..10).map { LottoNumber(it) }
+        val lottoNumbers = (5..10).map { LottoNumber(it) }.toSet()
         val lotto = Lotto(lottoNumbers)
         val winningLotto = WinningLotto(winningNumbers, bonusNumber)
         assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.MISS)

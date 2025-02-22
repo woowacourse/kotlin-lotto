@@ -13,7 +13,7 @@ class LottoWinningStatsTest {
 
     @BeforeEach
     fun setUp() {
-        val lottoNumbers = (1..6).map { LottoNumber(it) }
+        val lottoNumbers = (1..6).map { LottoNumber(it) }.toSet()
         val winningNumbers = Lotto(lottoNumbers)
         val bonusNumber = LottoNumber(45)
         winningLotto = WinningLotto(winningNumbers, bonusNumber)
@@ -21,8 +21,8 @@ class LottoWinningStatsTest {
 
     @Test
     fun `당첨 수익률을 계산한다`() {
-        val thirdRankNumbers = (4..9).map { LottoNumber(it) }
-        val missRankNumbers = (11..16).map { LottoNumber(it) }
+        val thirdRankNumbers = (4..9).map { LottoNumber(it) }.toSet()
+        val missRankNumbers = (11..16).map { LottoNumber(it) }.toSet()
         val lottos = mutableListOf(Lotto(thirdRankNumbers))
         repeat(13) { lottos.add(Lotto(missRankNumbers)) }
 

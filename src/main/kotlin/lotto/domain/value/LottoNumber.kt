@@ -2,7 +2,7 @@ package lotto.domain.value
 
 import lotto.constants.LottoConstants
 
-class LottoNumber(
+data class LottoNumber(
     val number: Int,
 ) {
     init {
