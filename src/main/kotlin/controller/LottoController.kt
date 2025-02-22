@@ -16,8 +16,7 @@ class LottoController(
     private val lottoGenerator: LottoGenerator,
 ) {
     fun run() {
-        val purchasePrice = getPurchasePrice()
-        val purchaseLotto: List<Lotto> = buyLotto(purchasePrice)
+        val (purchasePrice, purchaseLotto) = buyLotto()
         displayBuyLotto(purchaseLotto)
 
         val winningNumbers: Lotto = getWinningNumbers()
@@ -28,18 +27,16 @@ class LottoController(
         displayResult(winningResult, profitRate)
     }
 
-    private fun getPurchasePrice(): PurchasePrice =
+    private fun buyLotto(): Pair<PurchasePrice, List<Lotto>> =
         retryWhenException(
             action = {
                 val input = inputView.readPurchasePrice()
-                PurchasePrice(input)
+                val money = PurchasePrice(input)
+                val lottos = lottoGenerator.generate(money)
+                money to lottos
             },
             onError = { outputView.printErrorMessage(it) },
         )
-
-    private fun buyLotto(money: PurchasePrice): List<Lotto> {
-        return lottoGenerator.generate(money)
-    }
 
     private fun displayBuyLotto(lotto: List<Lotto>) {
         outputView.printPurchasedLottoCount(lotto.size)

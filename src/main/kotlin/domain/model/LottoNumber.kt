@@ -1,7 +1,7 @@
 package domain.model
 
-import domain.service.LottoGenerator.Companion.LOTTO_MAX
-import domain.service.LottoGenerator.Companion.LOTTO_MIN
+import domain.model.Lotto.Companion.LOTTO_MAX
+import domain.model.Lotto.Companion.LOTTO_MIN
 import util.ErrorConstants.ERROR
 
 @JvmInline
