@@ -1,12 +1,13 @@
 package lotto.domain
 
 class LottoFactory {
-    fun generateLottoNumbers(): List<Int> {
-        return (MIN_RANGE..MAX_RANGE).shuffled().take(LOTTO_SIZE).sorted()
+    fun generateLottoNumbers(): Lotto {
+        val lottoNumbers = (MIN_RANGE..MAX_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }
+        return Lotto(lottoNumbers)
     }
 
     fun generateLottos(amount: Int): List<Lotto> {
-        return List(amount) { Lotto(generateLottoNumbers()) }
+        return List(amount) { generateLottoNumbers() }
     }
 
     private companion object {

@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoFactory
+import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.Purchase
 import lotto.domain.WinningLotto
@@ -20,7 +21,7 @@ class LottoController(
         val lottos: List<Lotto> = getLottos(amount)
         printLottos(lottos)
 
-        val winningNumbers: List<Int> = getWinningNumbers()
+        val winningNumbers: List<LottoNumber> = getWinningNumbers()
         val bonusNumber: String = getBonusNumber()
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
 
@@ -46,11 +47,11 @@ class LottoController(
     }
 
     fun printLottos(lottos: List<Lotto>) {
-        outputView.printLottos(lottos.map { it.lottoNums })
+        outputView.printLottos(lottos)
     }
 
-    fun getWinningNumbers(): List<Int> {
-        val winningNumbers: List<Int> = inputView.inputWinningNumber()
+    fun getWinningNumbers(): List<LottoNumber> {
+        val winningNumbers: List<LottoNumber> = inputView.inputWinningNumber().map { LottoNumber(it) }
         Lotto(winningNumbers)
 
         return winningNumbers

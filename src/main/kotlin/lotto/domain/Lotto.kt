@@ -1,10 +1,9 @@
 package lotto.domain
 
-class Lotto(val lottoNums: List<Int>) {
+class Lotto(val lottoNums: List<LottoNumber>) {
     init {
-        require(lottoNums.size == DEFAULT_LOTTO_SIZE) { "로또는 6개의 숫자를 가져야 합니다" }
-        require(lottoNums.all { it in MIN_RANGE..MAX_RANGE }) { "로또 번호는 1에서 45까지의 숫자이다" }
-        require(lottoNums.size == lottoNums.toSet().size) { "로또 번호는 중복될 수 없습니다" }
+        require(lottoNums.size == DEFAULT_LOTTO_SIZE) { LOTTO_GET_SIX_NUMBER_ERROR_MESSAGE }
+        require(lottoNums.size == lottoNums.toSet().size) { LOTTO_NUM_DUPLICATE_ERROR_MESSAGE }
     }
 
     fun compareWithWinningLotto(winningLotto: Lotto): Int {
@@ -12,12 +11,12 @@ class Lotto(val lottoNums: List<Int>) {
     }
 
     fun compareWithBonusNumber(bonusNumber: Int): Boolean {
-        return lottoNums.contains(bonusNumber)
+        return lottoNums.contains(LottoNumber(bonusNumber))
     }
 
     companion object {
-        const val DEFAULT_LOTTO_SIZE = 6
-        const val MIN_RANGE = 1
-        const val MAX_RANGE = 45
+        private const val DEFAULT_LOTTO_SIZE = 6
+        private const val LOTTO_GET_SIX_NUMBER_ERROR_MESSAGE = "로또는 6개의 숫자를 가져야 합니다"
+        private const val LOTTO_NUM_DUPLICATE_ERROR_MESSAGE = "로또 번호는 중복될 수 없습니다"
     }
 }

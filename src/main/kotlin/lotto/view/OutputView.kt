@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.domain.Lotto
 import lotto.domain.LottoResult
 import lotto.domain.Profit
 import lotto.domain.Rank
@@ -9,9 +10,9 @@ object OutputView {
         println("${amount}개를 구매했습니다.")
     }
 
-    fun printLottos(lottos: List<List<Int>>) {
+    fun printLottos(lottos: List<Lotto>) {
         lottos.forEach { lotto ->
-            println(lotto.joinToString(", ", "[", "]"))
+            println(lotto.lottoNums.joinToString(separator = ", ", "[", "]") { it.lottoNumber.toString() })
         }
     }
 
