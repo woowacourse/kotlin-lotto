@@ -15,13 +15,7 @@ class LottoStore(
 ) {
     private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
-    private fun generateLottoTicket(count: Int): List<LottoTicket> {
-        val lottoTickets = LottoMachine().purchase(count)
-        lottoTickets.forEach {
-            outputView.printLotto(it)
-        }
-        return lottoTickets
-    }
+    private fun generateLottoTicket(count: Int): List<LottoTicket> = LottoMachine().purchase(count)
 
     private fun calculateResult(
         lottoTickets: List<LottoTicket>,
@@ -46,6 +40,7 @@ class LottoStore(
         val count = calculatePurchaseCount(amount)
         outputView.printPurchaseCount(count)
         val lottoTickets = generateLottoTicket(count)
+        outputView.printLotto(lottoTickets)
         val winningNumbers = inputView.inputWinningNumbers()
         val bonusNumber = inputView.inputBonusNumber()
         val result = calculateResult(lottoTickets, winningNumbers, bonusNumber)

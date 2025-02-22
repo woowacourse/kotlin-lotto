@@ -10,8 +10,10 @@ class OutputView {
         println(MESSAGE_PURCHASE.format(count))
     }
 
-    fun printLotto(lottoTicket: LottoTicket) {
-        println(lottoTicket.getNumbers().map { it.number }.joinToString(SEPARATOR, PREFIX, POSTFIX))
+    fun printLotto(lottoTickets: List<LottoTicket>) {
+        lottoTickets.forEach { ticket ->
+            println(ticket.getNumbers().map { it.number }.joinToString(SEPARATOR, PREFIX, POSTFIX))
+        }
     }
 
     fun printResult(results: Map<Rank, Int>) {
