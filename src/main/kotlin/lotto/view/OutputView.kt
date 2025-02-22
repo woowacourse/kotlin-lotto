@@ -45,9 +45,14 @@ object OutputView {
     }
 
     fun printProfit(profitRate: Double) {
-        val profitStatus = Profit.profitOf(profitRate)
+        val profit = Profit.profitOf(profitRate)
+        val profitMessage = getProfitMessage(profit)
         println(
-            "총 수익률은 ${"%.2f".format(profitRate)}입니다. (${profitStatus.message})",
+            "총 수익률은 ${"%.2f".format(profitRate)}입니다. ($profitMessage)",
         )
+    }
+
+    fun getProfitMessage(profit: Profit): String {
+        return ProfitMessage.getMessage(profit)
     }
 }
