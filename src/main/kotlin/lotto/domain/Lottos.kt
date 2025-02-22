@@ -13,7 +13,10 @@ class Lottos(
             return Lottos(lottos)
         }
 
-        fun getResult(winningLotto: WinningLotto, lottos: Lottos): LottoResults {
+        fun getResult(
+            winningLotto: WinningLotto,
+            lottos: Lottos,
+        ): LottoResults {
             return LottoResults(lottos.value.map { lotto -> LottoResult.from(winningLotto, lotto) })
         }
 
