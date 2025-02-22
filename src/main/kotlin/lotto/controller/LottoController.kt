@@ -1,6 +1,11 @@
 package lotto.controller
 
-import lotto.domain.*
+import lotto.domain.Lotto
+import lotto.domain.LottoCalculator
+import lotto.domain.LottoMachine
+import lotto.domain.LottoNumber
+import lotto.domain.PurchaseAmount
+import lotto.domain.WinningLotto
 import lotto.util.Rank
 import lotto.view.InputView
 import lotto.view.OutputView

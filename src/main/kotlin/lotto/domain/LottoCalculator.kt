@@ -2,7 +2,10 @@ package lotto.domain
 
 import lotto.util.Rank
 
-class LottoCalculator(private val winningNumber: Lotto, private val bonusNumber: LottoNumber) {
+class LottoCalculator(
+    private val winningNumber: Lotto,
+    private val bonusNumber: LottoNumber,
+) {
     fun matchLottos(lottos: List<Lotto>): Map<Rank, Int> {
         val matchResult = lottos.map { matchLotto(it) }
         return Rank.entries.associateWith { rank -> matchResult.count { it == rank } }
