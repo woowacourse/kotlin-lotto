@@ -1,12 +1,12 @@
 package lotto.model
 
-class Amount(val money: Int) {
+class LottoPurchaseAmount(val amount: Int) {
     init {
-        require(money >= LOTTO_PRICE) { MONEY_UNDER_MIN }
-        require(money % LOTTO_PRICE == 0) { MONEY_UNIT_MESSAGE }
+        require(amount >= LOTTO_PRICE) { MONEY_UNDER_MIN }
+        require(amount % LOTTO_PRICE == 0) { MONEY_UNIT_MESSAGE }
     }
 
-    fun getLottoQuantity(): Int = money / LOTTO_PRICE
+    fun getLottoQuantity(): Int = amount / LOTTO_PRICE
 
     companion object {
         const val LOTTO_PRICE = 1000
