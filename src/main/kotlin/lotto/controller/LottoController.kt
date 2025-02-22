@@ -1,11 +1,11 @@
 package lotto.controller
 
 import lotto.model.Lotto
-import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
 import lotto.model.WinningLotto
+import lotto.model.lottomachine.LottoMachine
 import lotto.view.InputView
 import lotto.view.OutputView
 
