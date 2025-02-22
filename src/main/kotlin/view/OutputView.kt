@@ -3,6 +3,7 @@ package view
 import domain.model.Lotto
 import domain.model.Rank
 import util.joinToLineBreak
+import kotlin.collections.sorted
 
 class OutputView {
     fun printErrorMessage(message: String?) {
@@ -13,8 +14,9 @@ class OutputView {
         print(MESSAGE_PURCHASE_LOTTO_COUNT.format(count))
     }
 
-    fun printPurchasedLotto(purchasedLotto: String) {
-        println(purchasedLotto)
+    fun printPurchasedLotto(purchasedLotto: List<Lotto>) {
+        val purchaseLottoMessage = makePurchaseLottoMessage(purchasedLotto)
+        println(purchaseLottoMessage)
     }
 
     fun printWinningResult(
@@ -49,6 +51,7 @@ class OutputView {
                             rank.winningMoney,
                             matchedCount,
                         )
+
                     else ->
                         MESSAGE_EACH_RANK_RESULT.format(
                             rank.countOfMatch,
@@ -57,6 +60,17 @@ class OutputView {
                         )
                 }
             }.joinToLineBreak()
+    }
+
+    private fun makePurchaseLottoMessage(purchaseLotto: List<Lotto>): String {
+        return purchaseLotto
+            .map {
+                it.numbers.map {
+                    it.value
+                }
+                    .sorted()
+            }
+            .joinToLineBreak()
     }
 
     companion object {
