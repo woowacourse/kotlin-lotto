@@ -22,8 +22,8 @@ class LottoStore(
         winningNumbers: List<Int>,
         bonusNumber: Int,
     ): LottoResult {
-        val winning = LottoTicket(winningNumbers.map { LottoNumber(it) }.toSet(), LottoNumber(bonusNumber))
-        val result = LottoScanner(winning).getResult(lottoTickets)
+        val winning = winningNumbers.map { LottoNumber(it) }.toSet()
+        val result = LottoScanner(lottoTickets, winning, LottoNumber(bonusNumber)).getResult()
         return result
     }
 

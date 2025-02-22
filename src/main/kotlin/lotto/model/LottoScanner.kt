@@ -1,9 +1,11 @@
 package lotto.model
 
 class LottoScanner(
-    private val winningNumbers: LottoTicket,
+    private val lottoTickets: List<LottoTicket>,
+    private val winningNumbers: Set<LottoNumber>,
+    private val bonusNumber: LottoNumber,
 ) {
-    fun getResult(lottoTickets: List<LottoTicket>): LottoResult {
+    fun getResult(): LottoResult {
         val result = lottoTickets.map { getRank(it) }
         return LottoResult(result)
     }
@@ -14,8 +16,7 @@ class LottoScanner(
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 
-    private fun getCountOfMatch(lottoTicket: LottoTicket): Int =
-        winningNumbers.getNumbers().intersect(lottoTicket.getNumbers().toSet()).size
+    private fun getCountOfMatch(lottoTicket: LottoTicket): Int = winningNumbers.intersect(lottoTicket.getNumbers().toSet()).size
 
-    private fun getMatchBonus(lottoTicket: LottoTicket): Boolean = lottoTicket.getNumbers().contains(winningNumbers.getBonusNumber())
+    private fun getMatchBonus(lottoTicket: LottoTicket): Boolean = lottoTicket.getNumbers().contains(bonusNumber)
 }
