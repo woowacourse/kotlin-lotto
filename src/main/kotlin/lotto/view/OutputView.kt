@@ -46,8 +46,8 @@ object OutputView {
         println(
             MESSAGE_RESULT_SUMMARY.format(
                 profitRate,
-                makeResultSummary(profitRate)
-            )
+                makeResultSummary(profitRate),
+            ),
         )
     }
 
@@ -57,9 +57,9 @@ object OutputView {
     ): String =
         MESSAGE_RESULT_PER_PRIZE.format(
             lottoResult.matchCount,
-            if (lottoResult.bonusMatched == LottoResult.BonusMatched.YES) ", 보너스 볼 일치" else "",
+            if (lottoResult.requireBonus) ", 보너스 볼 일치" else "",
             lottoResult.prize,
-            resultTally[lottoResult]
+            resultTally[lottoResult],
         )
 
     private fun makeResultSummary(profitRate: Double): String =
