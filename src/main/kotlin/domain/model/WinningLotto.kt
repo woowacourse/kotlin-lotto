@@ -7,13 +7,13 @@ class WinningLotto(
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(bonusNumber.value !in lotto.lottoNumbers.map { it.value }) { DUPLICATED_BONUS_NUMBER }
+        require(bonusNumber.value !in lotto.numbers.map { it.value }) { DUPLICATED_BONUS_NUMBER }
     }
 
-    fun match(lotto: Lotto): Rank {
-        val lottoNumbers = lotto.lottoNumbers
-        val matchCount = lottoNumbers.intersect(lotto.lottoNumbers.toSet()).size
-        val isBonusMatched = bonusNumber.value in lottoNumbers.toValues()
+    fun match(purchaseLotto: Lotto): Rank {
+        val purchaseLottoNumbers = purchaseLotto.numbers
+        val matchCount = lotto.numbers.intersect(purchaseLotto.numbers.toSet()).size
+        val isBonusMatched = bonusNumber.value in purchaseLottoNumbers.toValues()
 
         return Rank.valueOf(matchCount, isBonusMatched)
     }

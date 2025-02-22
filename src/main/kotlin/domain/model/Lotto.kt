@@ -1,14 +1,14 @@
 package domain.model
 
-class Lotto(val lottoNumbers: List<LottoNumber>) {
+class Lotto(val numbers: List<LottoNumber>) {
     init {
-        require(lottoNumbers.size == LOTTO_SIZE) { INVALID_LOTTO_SIZE }
-        require(lottoNumbers.all { it.value in (1..45) }) { INVALID_LOTTO_NUMBERS }
-        require(lottoNumbers.size == lottoNumbers.toSet().size) { DUPLICATED_LOTTO_NUMBERS }
+        require(numbers.size == LOTTO_SIZE) { INVALID_LOTTO_SIZE }
+        require(numbers.all { it.value in (1..45) }) { INVALID_LOTTO_NUMBERS }
+        require(numbers.size == numbers.toSet().size) { DUPLICATED_LOTTO_NUMBERS }
     }
 
     companion object {
-        fun of(vararg numbers: Int): Lotto = Lotto(numbers.map { LottoNumber(it) })
+        fun of(vararg inputNumbers: Int): Lotto = Lotto(inputNumbers.map { LottoNumber(it) })
 
         fun List<LottoNumber>.toValues() = this.map { it.value }
 

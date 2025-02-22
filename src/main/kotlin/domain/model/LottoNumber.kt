@@ -11,6 +11,6 @@ value class LottoNumber(val value: Int) {
     }
 
     companion object {
-        const val INVALID_BONUS_NUMBER = "$ERROR 보너스 볼 번호는 1부터 45 사이입니다."
+        const val INVALID_BONUS_NUMBER = "$ERROR 로또 번호는 1부터 45 사이입니다."
     }
 }
