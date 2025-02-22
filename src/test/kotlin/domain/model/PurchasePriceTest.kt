@@ -1,5 +1,6 @@
 package domain.model
 
+import domain.model.PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -10,7 +11,7 @@ class PurchasePriceTest {
             .assertThatThrownBy {
                 PurchasePrice(0)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 천원 이상 입력해주세요.")
+            .hasMessage("[ERROR] ${STANDARD_AMOUNT_UNIT}원 이상 입력해주세요.")
     }
 
     @Test
@@ -19,6 +20,6 @@ class PurchasePriceTest {
             .assertThatThrownBy {
                 PurchasePrice(10001)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 천원 단위로 입력해주세요.")
+            .hasMessage("[ERROR] ${STANDARD_AMOUNT_UNIT}원 단위로 입력해주세요.")
     }
 }

@@ -10,8 +10,8 @@ value class PurchasePrice(val value: Int) {
     }
 
     companion object {
-        const val INVALID_MINIMUM_PURCHASE_AMOUNT = "$ERROR 천원 이상 입력해주세요."
-        const val INVALID_THOUSAND_WON_UNIT = "$ERROR 천원 단위로 입력해주세요."
         const val STANDARD_AMOUNT_UNIT = 1000
+        const val INVALID_MINIMUM_PURCHASE_AMOUNT = "$ERROR ${STANDARD_AMOUNT_UNIT}원 이상 입력해주세요."
+        const val INVALID_THOUSAND_WON_UNIT = "$ERROR ${STANDARD_AMOUNT_UNIT}원 단위로 입력해주세요."
     }
 }
