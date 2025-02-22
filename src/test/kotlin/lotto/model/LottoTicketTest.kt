@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class LottoTicketTest {
+    private fun lotto(vararg numbers: Int): Set<LottoNumber> = numbers.map { LottoNumber(it) }.toSet()
+
     @Test
     fun `자동 생성된 로또번호의 개수는 6이다`() {
         val lotto = LottoTicket()
@@ -13,33 +15,18 @@ class LottoTicketTest {
 
     @Test
     fun `보너스 번호가 당첨 번호와 중복되면 예외를 발생시킨다`() {
-        val lottoNumbers =
-            listOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(6),
-            )
+        val winningNumbers = lotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = 6
 
         assertThrows<IllegalArgumentException> {
-            LottoTicket(lottoNumbers, LottoNumber(bonusNumber))
+            LottoTicket(winningNumbers, LottoNumber(bonusNumber))
         }
     }
 
     @Test
     fun `로또 번호가 서로 중복되면 예외를 발생시킨다`() {
         val lottoNumbers =
-            listOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(5),
-            )
+            lotto(1, 2, 3, 4, 5, 5)
 
         assertThrows<IllegalArgumentException> {
             LottoTicket(lottoNumbers)
