@@ -2,12 +2,12 @@ package domain.service
 
 import domain.model.Lotto
 import domain.model.LottoResult
-import domain.model.PurchaseLotto
+import domain.model.LottoTicket
 import domain.model.Rank
 import domain.model.WinningLotto
 
 class LottoMatchCalculator(
-    private val purchaseLotto: PurchaseLotto,
+    private val purchaseLotto: LottoTicket,
     private val winningLotto: WinningLotto,
 ) {
     fun calculate(): LottoResult {

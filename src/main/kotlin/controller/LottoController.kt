@@ -3,7 +3,7 @@ package controller
 import domain.model.LottoNumber
 import domain.model.Lotto
 import domain.model.LottoResult
-import domain.model.PurchaseLotto
+import domain.model.LottoTicket
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
 import domain.service.LottoGenerator
@@ -19,7 +19,7 @@ class LottoController(
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
-        val lotto: PurchaseLotto = buyLotto(purchasePrice)
+        val lotto: LottoTicket = buyLotto(purchasePrice)
         displayBuyLotto(lotto)
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
@@ -39,13 +39,13 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun buyLotto(money: PurchasePrice): PurchaseLotto {
+    private fun buyLotto(money: PurchasePrice): LottoTicket {
         val generator = LottoGenerator(money)
         val lotto = generator.makeLotto()
         return lotto
     }
 
-    private fun displayBuyLotto(lotto: PurchaseLotto) {
+    private fun displayBuyLotto(lotto: LottoTicket) {
         outputView.printPurchasedLottoCount(lotto.values.size)
         outputView.printPurchasedLotto(lotto.toString())
     }

@@ -2,7 +2,7 @@ package domain.service
 
 import domain.model.LottoNumber
 import domain.model.Lotto
-import domain.model.PurchaseLotto
+import domain.model.LottoTicket
 import domain.model.Rank
 import domain.model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
@@ -11,14 +11,14 @@ import org.junit.jupiter.api.Test
 class LottoMatchCalculatorTest {
     @Test
     fun `한 장의 Lotto에 대한 당첨 결과 구하기`() {
-        val purchaseLotto =
-            PurchaseLotto(
+        val lottoTicket =
+            LottoTicket(
                 listOf(
                     Lotto(listOf(1, 2, 3, 4, 5, 6)),
                 ),
             )
         val winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), LottoNumber(2))
-        val calculator = LottoMatchCalculator(purchaseLotto, winningLotto)
+        val calculator = LottoMatchCalculator(lottoTicket, winningLotto)
         val result = calculator.calculate().result
 
         assertThat(result[Rank.SECOND]).isEqualTo(1)
@@ -26,8 +26,8 @@ class LottoMatchCalculatorTest {
 
     @Test
     fun `n장의 Lotto에 대한 당첨 결과 구하기`() {
-        val purchaseLotto =
-            PurchaseLotto(
+        val lottoTicket =
+            LottoTicket(
                 listOf(
                     Lotto(listOf(1, 2, 3, 4, 5, 6)),
                     Lotto(listOf(1, 2, 3, 4, 5, 7)),
@@ -40,7 +40,7 @@ class LottoMatchCalculatorTest {
             )
 
         val winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), LottoNumber(2))
-        val calculator = LottoMatchCalculator(purchaseLotto, winningLotto)
+        val calculator = LottoMatchCalculator(lottoTicket, winningLotto)
         val result = calculator.calculate().result
 
         assertThat(result[Rank.SECOND]).isEqualTo(2)

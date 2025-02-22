@@ -1,15 +1,15 @@
 package domain.service
 
 import domain.model.Lotto
-import domain.model.PurchaseLotto
+import domain.model.LottoTicket
 import domain.model.PurchasePrice
 
 class LottoGenerator(
     private val money: PurchasePrice,
 ) {
-    fun makeLotto(): PurchaseLotto {
+    fun makeLotto(): LottoTicket {
         val purchaseLottoCount = money.value / PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
-        return PurchaseLotto(List<Lotto>(purchaseLottoCount) { makeOneLotto() })
+        return LottoTicket(List<Lotto>(purchaseLottoCount) { makeOneLotto() })
     }
 
     private fun makeOneLotto(): Lotto {
