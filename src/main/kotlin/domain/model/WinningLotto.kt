@@ -1,17 +1,19 @@
 package domain.model
 
+import domain.model.Lotto.Companion.toValues
+
 class WinningLotto(
     val lotto: Lotto,
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(bonusNumber.value !in lotto.numbers) { DUPLICATED_BONUS_NUMBER }
+        require(bonusNumber.value !in lotto.lottoNumbers.map { it.value }) { DUPLICATED_BONUS_NUMBER }
     }
 
     fun match(lotto: Lotto): Rank {
-        val lottoNumbers = lotto.numbers
-        val matchCount = lottoNumbers.intersect(lotto.numbers.toSet()).size
-        val isBonusMatched = bonusNumber.value in lottoNumbers
+        val lottoNumbers = lotto.lottoNumbers
+        val matchCount = lottoNumbers.intersect(lotto.lottoNumbers.toSet()).size
+        val isBonusMatched = bonusNumber.value in lottoNumbers.toValues()
 
         return Rank.valueOf(matchCount, isBonusMatched)
     }
