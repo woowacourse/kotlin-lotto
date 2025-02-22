@@ -23,36 +23,9 @@ class LottoStatisticsTest {
         lottos =
             Lottos(
                 listOf(
-                    Lotto(
-                        listOf(
-                            LottoNumber(1),
-                            LottoNumber(2),
-                            LottoNumber(3),
-                            LottoNumber(4),
-                            LottoNumber(5),
-                            LottoNumber(6),
-                        ),
-                    ),
-                    Lotto(
-                        listOf(
-                            LottoNumber(1),
-                            LottoNumber(2),
-                            LottoNumber(3),
-                            LottoNumber(4),
-                            LottoNumber(5),
-                            LottoNumber(7),
-                        ),
-                    ),
-                    Lotto(
-                        listOf(
-                            LottoNumber(1),
-                            LottoNumber(2),
-                            LottoNumber(3),
-                            LottoNumber(4),
-                            LottoNumber(5),
-                            LottoNumber(8),
-                        ),
-                    ),
+                    Lotto(1, 2, 3, 4, 5, 6),
+                    Lotto(1, 2, 3, 4, 5, 7),
+                    Lotto(1, 2, 3, 4, 5, 8),
                 ),
             )
 
@@ -83,16 +56,7 @@ class LottoStatisticsTest {
                 lottos = lottos,
                 winningLotto =
                     WinningLotto(
-                        Lotto(
-                            listOf(
-                                LottoNumber(1),
-                                LottoNumber(2),
-                                LottoNumber(3),
-                                LottoNumber(4),
-                                LottoNumber(5),
-                                LottoNumber(6),
-                            ),
-                        ),
+                        Lotto(1, 2, 3, 4, 5, 6),
                         LottoNumber(7),
                     ),
                 purchaseMoney = purchaseAmount,
@@ -110,16 +74,7 @@ class LottoStatisticsTest {
                 lottos = lottos,
                 winningLotto =
                     WinningLotto(
-                        Lotto(
-                            listOf(
-                                LottoNumber(1),
-                                LottoNumber(2),
-                                LottoNumber(3),
-                                LottoNumber(4),
-                                LottoNumber(5),
-                                LottoNumber(6),
-                            ),
-                        ),
+                        Lotto(1, 2, 3, 4, 5, 6),
                         LottoNumber(7),
                     ),
                 purchaseMoney = purchaseAmount,
@@ -135,48 +90,21 @@ class LottoStatisticsTest {
             Stream.of(
                 Arguments.arguments(
                     WinningLotto(
-                        Lotto(
-                            listOf(
-                                LottoNumber(1),
-                                LottoNumber(2),
-                                LottoNumber(3),
-                                LottoNumber(4),
-                                LottoNumber(5),
-                                LottoNumber(6),
-                            ),
-                        ),
+                        Lotto(1, 2, 3, 4, 5, 6),
                         LottoNumber(7),
                     ),
                     677166.6666666666,
                 ),
                 Arguments.arguments(
                     WinningLotto(
-                        Lotto(
-                            listOf(
-                                LottoNumber(10),
-                                LottoNumber(11),
-                                LottoNumber(12),
-                                LottoNumber(14),
-                                LottoNumber(15),
-                                LottoNumber(18),
-                            ),
-                        ),
+                        Lotto(10, 11, 12, 14, 15, 18),
                         LottoNumber(7),
                     ),
                     0.0,
                 ),
                 Arguments.arguments(
                     WinningLotto(
-                        Lotto(
-                            listOf(
-                                LottoNumber(1),
-                                LottoNumber(2),
-                                LottoNumber(3),
-                                LottoNumber(4),
-                                LottoNumber(10),
-                                LottoNumber(11),
-                            ),
-                        ),
+                        Lotto(1, 2, 3, 4, 10, 11),
                         LottoNumber(13),
                     ),
                     50.0,

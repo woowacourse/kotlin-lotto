@@ -15,17 +15,7 @@ class WinningLottoTest {
 
     @BeforeEach
     fun setUp() {
-        winningNumber =
-            Lotto(
-                listOf(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5),
-                    LottoNumber(6),
-                ),
-            )
+        winningNumber = Lotto(1, 2, 3, 4, 5, 6)
     }
 
     @Test
@@ -33,16 +23,7 @@ class WinningLottoTest {
         val bonusNumber = LottoNumber(7)
         val winningLotto = WinningLotto(winningNumber, bonusNumber)
 
-        assertThat(winningLotto.winningNumbers.numbers).isEqualTo(
-            listOf(
-                LottoNumber(1),
-                LottoNumber(2),
-                LottoNumber(3),
-                LottoNumber(4),
-                LottoNumber(5),
-                LottoNumber(6),
-            ),
-        )
+        assertThat(winningLotto.winningNumbers).isEqualTo(winningNumber)
         assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber(7))
     }
 
@@ -66,17 +47,7 @@ class WinningLottoTest {
 
     @Test
     fun `구입한 로또를 넣어주면, 등수를 반환한다`() {
-        val lotto =
-            Lotto(
-                listOf(
-                    LottoNumber(1),
-                    LottoNumber(2),
-                    LottoNumber(3),
-                    LottoNumber(4),
-                    LottoNumber(5),
-                    LottoNumber(6),
-                ),
-            )
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
         val bonusNumber = LottoNumber(7)
         val winningLotto = WinningLotto(winningNumber, bonusNumber)
 

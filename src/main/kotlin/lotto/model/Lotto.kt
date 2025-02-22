@@ -3,6 +3,8 @@ package lotto.model
 class Lotto(
     val numbers: List<LottoNumber>,
 ) {
+    constructor(vararg number: Int) : this(number.map { LottoNumber(it) })
+
     init {
         require(numbers.size == numbers.toSet().size) {
             val duplicatedNumber = findDuplicatedNumber()
