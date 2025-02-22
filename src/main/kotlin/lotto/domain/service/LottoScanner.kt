@@ -16,11 +16,11 @@ class LottoScanner(
 
     fun getRank(lottoTicket: LottoTicket): Rank {
         val countOfMatch: Int = getCountOfMatch(lottoTicket)
-        val matchBonus: Boolean = getMatchBonus(lottoTicket)
-        return Rank.valueOf(countOfMatch, matchBonus)
+        val hasBonusNumber: Boolean = hasBonusNumber(lottoTicket)
+        return Rank.valueOf(countOfMatch, hasBonusNumber)
     }
 
-    private fun getCountOfMatch(lottoTicket: LottoTicket): Int = winningNumbers.intersect(lottoTicket.getNumbers().toSet()).size
+    private fun getCountOfMatch(lottoTicket: LottoTicket): Int = lottoTicket.countMatchingNumbers(winningNumbers)
 
-    private fun getMatchBonus(lottoTicket: LottoTicket): Boolean = lottoTicket.getNumbers().contains(bonusNumber)
+    private fun hasBonusNumber(lottoTicket: LottoTicket): Boolean = lottoTicket.hasBonusNumber(bonusNumber)
 }
