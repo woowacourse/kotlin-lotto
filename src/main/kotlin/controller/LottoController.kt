@@ -19,13 +19,13 @@ class LottoController(
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
-        val lotto: LottoTicket = buyLotto(purchasePrice)
-        displayBuyLotto(lotto)
+        val lottoTicket: LottoTicket = purchaseLotto(purchasePrice)
+        displayLottoTicket(lottoTicket)
+
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
-        val lottoResult: LottoResult = LottoMatchCalculator().calculate(lotto, winningLotto)
+        val lottoResult: LottoResult = LottoMatchCalculator().calculate(lottoTicket, winningLotto)
         val profitRate = lottoResult.getProfitRate(purchasePrice)
-
         displayResult(lottoResult, profitRate)
     }
 
@@ -39,13 +39,13 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun buyLotto(money: PurchasePrice): LottoTicket {
+    private fun purchaseLotto(money: PurchasePrice): LottoTicket {
         val generator = LottoGenerator(money)
         val lotto = generator.makeLotto()
         return lotto
     }
 
-    private fun displayBuyLotto(lotto: LottoTicket) {
+    private fun displayLottoTicket(lotto: LottoTicket) {
         outputView.printPurchasedLottoCount(lotto.values.size)
         outputView.printPurchasedLotto(lotto.toString())
     }
