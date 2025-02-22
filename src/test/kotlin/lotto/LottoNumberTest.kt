@@ -12,7 +12,7 @@ class LottoNumberTest {
     fun `로또 번호는 1~45 사이의 숫자가 아닐 경우 예외를 발생한다`(number: Int) {
         assertThatIllegalArgumentException()
             .isThrownBy { LottoNumber(number) }
-            .withMessage("로또 번호는 1 ~ 45 사이의 숫자입니다.")
+            .withMessageContaining("는 범위를 벗어났습니다. 로또 번호는 1 ~ 45 사이의 숫자입니다.")
     }
 
     @ParameterizedTest

@@ -14,7 +14,7 @@ class LottoPurchaseAmountTest {
     fun `구입 금액은 최소 1,000원 이상 최대 100,000원 이하가 아닐 경우 예외를 발생한다`(money: Int) {
         assertThatIllegalArgumentException()
             .isThrownBy { LottoPurchaseAmount(money) }
-            .withMessage("구입 금액은 최소 1,000원 이상 최대 100,000원 이하 입니다.")
+            .withMessage("${money}원은 구입 금액 범위를 벗어났습니다. 구입 금액은 최소 1,000원 이상 최대 100,000원 이하 입니다.")
     }
 
     @ParameterizedTest
@@ -22,7 +22,7 @@ class LottoPurchaseAmountTest {
     fun `로또 구입 금액은 1,000원 단위가 아닌 경우 예외를 발생한다`(money: Int) {
         assertThatIllegalArgumentException()
             .isThrownBy { LottoPurchaseAmount(money) }
-            .withMessage("구입 금액은 1,000원 단위입니다.")
+            .withMessage("${money}원은 1,000원 단위가 아닙니다. 구입 금액은 1,000원 단위입니다.")
     }
 
     @ParameterizedTest
