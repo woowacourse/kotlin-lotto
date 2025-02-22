@@ -1,23 +1,16 @@
 package lotto.model
 
-import kotlin.collections.mutableListOf
+class LottoMachine {
+    private val numbers: List<LottoNumber> = (LottoNumber.MIN_VALUE..LottoNumber.MAX_VALUE).map(::LottoNumber)
 
-class LottoMachine(private val amount: Amount) {
-    private val numbers: List<Int> = (LottoNumber.MIN_VALUE..LottoNumber.MAX_VALUE).toList()
+    fun publishLottoTickets(lottoQuantity: Int): List<Lotto> = List(lottoQuantity) { publishLotto() }
 
-    fun publishLottoTickets(): List<Lotto> {
-        val lottoTickets = mutableListOf<Lotto>()
-        repeat(amount.getLottoQuantity()) {
-            val lotto = publishLotto()
-            lottoTickets.add(lotto)
-        }
-        return lottoTickets
-    }
-
-    private fun publishLotto(): Lotto {
-        val lottoNumbers = numbers.shuffled().take(LOTTO_NUMBER_COUNT).sorted().map { LottoNumber(it) }
-        return Lotto(lottoNumbers)
-    }
+    private fun publishLotto(): Lotto =
+        Lotto(
+            numbers.shuffled()
+                .take(LOTTO_NUMBER_COUNT)
+                .sortedBy { it.value },
+        )
 
     companion object {
         private const val LOTTO_NUMBER_COUNT = 6
