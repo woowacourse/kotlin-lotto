@@ -13,17 +13,13 @@ enum class Rank(
     ;
 
     companion object {
-        fun fromMatch(
-            matchCount: Int,
-            hasBonus: Boolean,
-        ): Rank =
-            when {
-                matchCount == 6 -> FIRST
-                matchCount == 5 && hasBonus -> SECOND
-                matchCount == 5 -> THIRD
-                matchCount == 4 -> FOURTH
-                matchCount == 3 -> FIFTH
-                else -> MISS
-            }
+        fun valueOf(
+            countOfMatch: Int,
+            matchBonus: Boolean,
+        ): Rank {
+            return entries.find { it.countOfMatch == countOfMatch }?.let { rank ->
+                if (rank == SECOND && !matchBonus) THIRD else rank
+            } ?: MISS
+        }
     }
 }
