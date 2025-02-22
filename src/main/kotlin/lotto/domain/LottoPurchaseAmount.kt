@@ -1,9 +1,9 @@
 package lotto.domain
 
-class PurchaseAmount(val value: Int) {
+class LottoPurchaseAmount(val money: Int) {
     init {
-        require(value % LOTTO_TICKET_PRICE == REMAINING) { ERROR_NOT_THOUSAND_UNIT }
-        require(value > SMALL_CHANGE) { ERROR_NOT_NEGATIVE_NUMBER }
+        require(money % LOTTO_TICKET_PRICE == REMAINING) { ERROR_NOT_THOUSAND_UNIT }
+        require(money > SMALL_CHANGE) { ERROR_NOT_NEGATIVE_NUMBER }
     }
 
     companion object {

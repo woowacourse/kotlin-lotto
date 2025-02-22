@@ -4,7 +4,7 @@ import lotto.domain.Lotto
 import lotto.domain.LottoCalculator
 import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
-import lotto.domain.PurchaseAmount
+import lotto.domain.LottoPurchaseAmount
 import lotto.domain.WinningLotto
 import lotto.util.Rank
 import lotto.view.InputView
@@ -20,7 +20,7 @@ class LottoController(
         val lottoCalculator = getWinningInfoAndCalculator()
         val winningStats = getAndPrintWinningStats(lottoCalculator, lottos)
         val prize = lottoCalculator.calculatePrize(winningStats)
-        outputView.printProfit(lottoCalculator.calculateProfit(prize, purchaseAmount.value))
+        outputView.printProfit(lottoCalculator.calculateProfit(prize, purchaseAmount.money))
     }
 
     private fun getWinningInfoAndCalculator(): LottoCalculator {
@@ -29,8 +29,8 @@ class LottoController(
         return LottoCalculator(winningLotto.winningNumber, winningLotto.bonusNumber)
     }
 
-    private fun getAndPrintPurchasedLottos(purchaseAmount: PurchaseAmount): List<Lotto> {
-        val lottos = LottoMachine().buyLottos(purchaseAmount.value)
+    private fun getAndPrintPurchasedLottos(purchaseAmount: LottoPurchaseAmount): List<Lotto> {
+        val lottos = LottoMachine().buyLottos(purchaseAmount.money)
         outputView.printPurchasedLottos(lottos)
         return lottos
     }
@@ -44,9 +44,9 @@ class LottoController(
         return winningStats
     }
 
-    private fun getPurchaseAmount(): PurchaseAmount {
+    private fun getPurchaseAmount(): LottoPurchaseAmount {
         val purchaseAmount = inputView.getPurchaseAmount()
-        return PurchaseAmount(purchaseAmount.toInt())
+        return LottoPurchaseAmount(purchaseAmount.toInt())
     }
 
     private fun getWinningNumber(): Lotto {
