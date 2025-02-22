@@ -19,7 +19,7 @@ class WinningLottoTest {
                 LottoNumber(6),
             )
         val winningLotto = Lotto(winningNumbers)
-        val bonusNum: String = "6"
+        val bonusNum: Int = 6
 
         assertThrows<IllegalArgumentException> { WinningLotto(winningLotto, bonusNum) }
     }
@@ -38,6 +38,6 @@ class WinningLottoTest {
         val lottoNums = Lotto(lottoNumbers)
         val bonusNum: String = "lotto"
 
-        assertThrows<IllegalArgumentException> { WinningLotto(lottoNums, bonusNum) }
+        assertThrows<IllegalArgumentException> { WinningLotto(lottoNums, bonusNum.toInt()) }
     }
 }

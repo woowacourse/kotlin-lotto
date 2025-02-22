@@ -75,8 +75,8 @@ class LottoTest {
                 LottoNumber(6),
             )
         val lotto = Lotto(lottoNumbers)
-        val bonusNumber = "3"
-        val result = lotto.compareWithBonusNumber(bonusNumber.toInt())
+        val bonusNumber: Int = 3
+        val result = lotto.compareWithBonusNumber(bonusNumber)
 
         assertThat(result).isTrue()
     }

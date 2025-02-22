@@ -22,7 +22,7 @@ class LottoController(
         printLottos(lottos)
 
         val winningNumbers: List<LottoNumber> = getWinningNumbers()
-        val bonusNumber: String = getBonusNumber()
+        val bonusNumber: Int = getBonusNumber()
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
 
         printAllResult(lottos, winningLotto)
@@ -57,8 +57,8 @@ class LottoController(
         return winningNumbers
     }
 
-    fun getBonusNumber(): String {
-        val bonusNumber: String = inputView.inputBonusNumber()
+    fun getBonusNumber(): Int {
+        val bonusNumber: Int = inputView.inputBonusNumber()
         return bonusNumber
     }
 

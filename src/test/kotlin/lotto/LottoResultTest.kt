@@ -31,7 +31,7 @@ class LottoResultTest {
                 LottoNumber(8),
                 LottoNumber(9),
             )
-        val bonusNumber: String = "7"
+        val bonusNumber: Int = 7
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
 
         val rank = LottoResult(listOf(lotto), winningLotto).getRanks()
@@ -60,7 +60,7 @@ class LottoResultTest {
                 LottoNumber(9),
             )
         val lotto = Lotto(lottoNumbers)
-        val bonusNumber: String = "7"
+        val bonusNumber: Int = 7
 
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
         val rank = LottoResult(listOf(lotto), winningLotto).calculateProfitRate()
