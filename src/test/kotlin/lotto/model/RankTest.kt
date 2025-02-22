@@ -1,6 +1,6 @@
 package lotto.model
 
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -17,7 +17,7 @@ class RankTest {
         val matchBonus = false
         val rankByCountOfMatch = Rank.fromMatchResult(countOfMatch, matchBonus)
 
-        Assertions.assertEquals(expectedRank, rankByCountOfMatch)
+        assertEquals(expectedRank, rankByCountOfMatch)
     }
 
     @ValueSource(booleans = [true, false])
@@ -28,7 +28,7 @@ class RankTest {
         val countOfMatch = 5
         val actualRank = Rank.fromMatchResult(countOfMatch, matchBonus)
 
-        Assertions.assertEquals(expectedRank, actualRank)
+        assertEquals(expectedRank, actualRank)
     }
 
     @ValueSource(booleans = [true, false])
@@ -39,7 +39,7 @@ class RankTest {
         val countOfMatch = 3
         val actualRank = Rank.fromMatchResult(countOfMatch, matchBonus)
 
-        Assertions.assertEquals(expectedRank, actualRank)
+        assertEquals(expectedRank, actualRank)
     }
 
     companion object {

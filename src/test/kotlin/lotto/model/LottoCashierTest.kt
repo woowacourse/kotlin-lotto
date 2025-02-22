@@ -1,6 +1,7 @@
 package lotto.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -10,10 +11,9 @@ class LottoCashierTest {
     @ValueSource(ints = [-1, 0])
     @ParameterizedTest
     fun `입력한 금액은 0원 이상만 가능하다`(amount: Int) {
-        Assertions
-            .assertThatThrownBy {
-                LottoCashier(0)
-            }.hasMessageContaining("0원 이상의 금액")
+        assertThatThrownBy {
+            LottoCashier(0)
+        }.hasMessageContaining("0원 이상의 금액")
     }
 
     @Test
@@ -26,7 +26,6 @@ class LottoCashierTest {
         val lottoCashier = LottoCashier(amount = 5000)
         val lottoQuantity = lottoCashier.getLottoQuantity()
 
-        org.junit.jupiter.api.Assertions
-            .assertEquals(5, lottoQuantity)
+        assertEquals(5, lottoQuantity)
     }
 }

@@ -1,6 +1,6 @@
 package lotto.model
 
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class LottosTest {
@@ -31,6 +31,6 @@ class LottosTest {
             )
         val actualResult = Lottos(lottos).countLottoByRank(lottoDiscriminator)
 
-        Assertions.assertEquals(expectedResult, actualResult)
+        assertEquals(expectedResult, actualResult)
     }
 }
