@@ -3,7 +3,6 @@ package controller
 import domain.model.BonusNumber
 import domain.model.Lotto
 import domain.model.LottoResult
-import domain.model.PurchaseLotto
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
 import domain.service.LottoGenerator
@@ -18,7 +17,7 @@ class LottoController(
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
-        val lotto: PurchaseLotto = buyLotto(purchasePrice)
+        val lotto: List<Lotto> = buyLotto(purchasePrice)
         displayBuyLotto(lotto)
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
@@ -37,15 +36,15 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun buyLotto(money: PurchasePrice): PurchaseLotto {
+    private fun buyLotto(money: PurchasePrice): List<Lotto> {
         val generator = LottoGenerator(money)
         val lotto = generator.makeLotto()
         return lotto
     }
 
-    private fun displayBuyLotto(lotto: PurchaseLotto) {
-        outputView.printPurchasedLottoCount(lotto.values.size)
-        outputView.printPurchasedLotto(lotto.toString())
+    private fun displayBuyLotto(lotto: List<Lotto>) {
+        outputView.printPurchasedLottoCount(lotto.size)
+        outputView.printPurchasedLotto(lotto.map { it.numbers.sorted() }.joinToString("\n"))
     }
 
     private fun getWinningNumbers(): Lotto =

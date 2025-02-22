@@ -2,17 +2,16 @@ package domain.service
 
 import domain.model.Lotto
 import domain.model.LottoResult
-import domain.model.PurchaseLotto
 import domain.model.Rank
 import domain.model.WinningLotto
 
 class LottoMatchCalculator(
-    private val purchaseLotto: PurchaseLotto,
+    private val purchaseLotto: List<Lotto>,
     private val winningLotto: WinningLotto,
 ) {
     fun calculate(): LottoResult {
         val result = LottoResult()
-        purchaseLotto.values.forEach {
+        purchaseLotto.forEach {
             result.result[getRank(it)] = result.result.getOrDefault(getRank(it), 0) + 1
         }
         return result

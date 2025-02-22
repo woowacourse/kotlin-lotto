@@ -1,7 +1,6 @@
 package domain.service
 
 import domain.model.Lotto
-import domain.model.PurchaseLotto
 import domain.model.PurchasePrice
 import domain.strategy.KoreanLottoGenerator
 import domain.strategy.LottoCountry
@@ -9,9 +8,9 @@ import domain.strategy.LottoCountry
 class LottoGenerator(
     private val money: PurchasePrice,
 ) {
-    fun makeLotto(): PurchaseLotto {
+    fun makeLotto(): List<Lotto> {
         val purchaseLottoCount = money.value / PurchasePrice.STANDARD_AMOUNT_UNIT
-        return PurchaseLotto(List(purchaseLottoCount) { makeOneLotto(KoreanLottoGenerator()) })
+        return List(purchaseLottoCount) { makeOneLotto(KoreanLottoGenerator()) }
     }
 
     private fun makeOneLotto(lottoCountry: LottoCountry): Lotto {
