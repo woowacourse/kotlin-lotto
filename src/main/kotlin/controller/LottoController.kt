@@ -1,15 +1,14 @@
 package controller
 
 import domain.model.Lotto
+import domain.model.LottoMatchResult
 import domain.model.LottoNumber
 import domain.model.PurchasePrice
-import domain.model.Rank
 import domain.model.WinningLotto
 import domain.service.LottoGenerator
-import util.Messenger.getWinningMessage
-import util.Messenger.makePurchaseLottoMessage
 import util.retryWhenException
 import view.InputView
+import view.Messenger.makePurchaseLottoMessage
 import view.OutputView
 
 class LottoController(
@@ -26,7 +25,7 @@ class LottoController(
         val winningLotto = getWinningLotto(winningNumbers)
 
         val winningResult = winningLotto.calculate(purchaseLotto)
-        val profitRate = winningLotto.getProfitRate(purchasePrice, winningResult)
+        val profitRate = winningResult.getProfitRate(purchasePrice)
         displayResult(winningResult, profitRate)
     }
 
@@ -67,10 +66,10 @@ class LottoController(
         )
 
     private fun displayResult(
-        lottoResult: Map<Rank, Int>,
+        lottoResult: LottoMatchResult,
         profitRate: Double,
     ) {
-        outputView.printWinningResult(getWinningMessage(lottoResult), profitRate)
+        outputView.printWinningResult(lottoResult.winningCountByRank, profitRate)
         if (profitRate.toDouble() < 1) outputView.printLossMessage()
     }
 }
