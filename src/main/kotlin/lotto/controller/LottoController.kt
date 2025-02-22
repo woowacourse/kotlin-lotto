@@ -1,10 +1,10 @@
 package lotto.controller
 
 import lotto.contants.Constants
-import lotto.model.LottoTicket
 import lotto.model.LottoMachine
-import lotto.model.WinningLotto
 import lotto.model.LottoResult
+import lotto.model.LottoTicket
+import lotto.model.WinningLotto
 import lotto.view.UserInterface
 
 class LottoController(

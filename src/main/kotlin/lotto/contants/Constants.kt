@@ -5,5 +5,5 @@ object Constants {
     const val MINIMUM_NUMBER = 1
     const val MAXIMUM_NUMBER = 45
     const val LOTTO_PICK_COUNT = 6
-    const val ZERO = 6
+    const val ZERO = 0
 }
