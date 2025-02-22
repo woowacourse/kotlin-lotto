@@ -15,7 +15,7 @@ class WinningLotto(
             winningNumbers.numbers.count { winningLottoNumber ->
                 lotto.numbers.contains(winningLottoNumber)
             }
-        val isMatchedBonus = lotto.numbers.contains(bonusNumber)
+        val isMatchedBonus = lotto.isMatchedBonusNumber(bonusNumber)
         return Rank.valueOf(matchCount, isMatchedBonus)
     }
 

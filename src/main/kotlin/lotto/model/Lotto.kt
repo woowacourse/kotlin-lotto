@@ -24,6 +24,8 @@ class Lotto(
         return duplicates
     }
 
+    fun isMatchedBonusNumber(bonusNumber: LottoNumber) = numbers.contains(bonusNumber)
+
     companion object {
         private const val ERROR_DUPLICATED_LOTTO_NUMBERS = "입력한 로또 번호 %s이 중복됩니다. 로또 번호는 중복될 수 없습니다."
         private const val ERROR_LOTTO_NUMBERS_SIZE = "입력한 로또 번호 개수는 %d개 입니다. 로또 번호는 6개입니다."
