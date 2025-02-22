@@ -43,7 +43,6 @@ class InputTest {
     @Test
     fun `지난주 당첨 번호에 문자열이 들어오면 예외를 발생시킨다`() {
         val winningNumbers = listOf("", "a", "가나다")
-
         assertThrows<IllegalArgumentException> {
             inputView.validateWinningNumbers(winningNumbers)
         }

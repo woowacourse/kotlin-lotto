@@ -5,20 +5,20 @@ import lotto.Constants
 class InputView {
     fun validateAmount(amount: String): Int {
         require(amount.toIntOrNull() != null) {
-            IllegalArgumentException(ERROR_INVALID_AMOUNT)
+            ERROR_INVALID_AMOUNT
         }
         require(amount.toInt() > ZERO) {
-            IllegalArgumentException(ERROR_INVALID_OVER_ZERO)
+            ERROR_INVALID_OVER_ZERO
         }
         require(amount.toInt() % Constants.LOTTO_AMOUNT == ZERO) {
-            IllegalArgumentException(ERROR_INVALID_DIVISION)
+            ERROR_INVALID_DIVISION
         }
         return amount.toInt()
     }
 
     fun validateWinningNumbers(winningNumbers: List<String>): List<Int> {
         require(winningNumbers.all { it.toIntOrNull() != null }) {
-            IllegalArgumentException(ERROR_INVALID_WINNING_TYPE)
+            ERROR_INVALID_WINNING_TYPE
         }
         return winningNumbers.map { it.toInt() }
     }

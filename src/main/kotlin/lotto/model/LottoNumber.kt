@@ -7,7 +7,7 @@ data class LottoNumber(
 ) {
     init {
         require(number in Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER) {
-            IllegalArgumentException(ERROR_INVALID_RANGE)
+            ERROR_INVALID_RANGE
         }
     }
 
