@@ -19,6 +19,6 @@ class Lotto(
         const val NUMBER_OF_LOTTO_NUMBERS = 6
 
         private const val TOO_MANY_LOTTO_NUMBERS =
-            "%d개가 아닌 \n${NUMBER_OF_LOTTO_NUMBERS}개로 구성된 번호를 입력하세요"
+            "${NUMBER_OF_LOTTO_NUMBERS}개로 구성된 번호를 중복 없이 입력하세요 (현재 중복 없는 숫자는 %d개 입니다)"
     }
 }
