@@ -7,7 +7,7 @@ class Lotto(val lottoNums: List<LottoNumber>) {
     }
 
     fun compareWithWinningLotto(winningLotto: Lotto): Int {
-        return lottoNums.count { it in winningLotto.lottoNums }
+        return lottoNums.intersect(winningLotto.lottoNums.toSet()).size
     }
 
     fun compareWithBonusNumber(bonusNumber: Int): Boolean {
