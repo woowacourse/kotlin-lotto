@@ -14,40 +14,12 @@ class Lotto private constructor(
         }
     }
 
-    private fun validateLottoNumbersDuplicate(numbers: List<LottoNumber>) {
-        require(numbers.size == numbers.toSet().size) {
+    private fun validateLottoNumbersDuplicate(lottoNumbers: List<LottoNumber>) {
+        val uniqueNumbers = lottoNumbers.map { it.number }.toSet()
+        require(uniqueNumbers.size == lottoNumbers.size) {
             "[ERROR] 로또 번호는 중복될 수 없습니다."
         }
     }
-
-    fun getRank(
-        winningLotto: Lotto,
-        bonusNumber: LottoNumber,
-    ): Rank {
-        validateWinningNumberAndBonusNumberDuplicate(winningLotto, bonusNumber)
-
-        val countOfMatch = countMatchWinningNumbers(winningLotto)
-        val matchBonus = isHaveBonusNumber(lotto = this, bonusNumber)
-
-        return Rank.fromMatchResult(countOfMatch, matchBonus)
-    }
-
-    private fun validateWinningNumberAndBonusNumberDuplicate(
-        winningLotto: Lotto,
-        bonusNumber: LottoNumber,
-    ) {
-        require(!isHaveBonusNumber(winningLotto, bonusNumber)) {
-            "[ERROR] 우승 번호와 보너스 번호는 중복될 수 없습니다."
-        }
-    }
-
-    private fun countMatchWinningNumbers(winningNumbers: Lotto): Int =
-        numbers.count { existNumber -> winningNumbers.numbers.contains(existNumber) }
-
-    private fun isHaveBonusNumber(
-        lotto: Lotto,
-        bonusNumber: LottoNumber,
-    ): Boolean = lotto.numbers.contains(bonusNumber)
 
     companion object {
         const val LOTTO_NUMBER_SIZE = 6

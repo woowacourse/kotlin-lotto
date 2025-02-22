@@ -1,16 +1,13 @@
 package lotto.model
 
 class Lottos(
-    val value: List<Lotto>,
+    val lottos: List<Lotto>,
 ) {
-    fun countLottoByRank(
-        winningNumbers: Lotto,
-        bonusNumber: LottoNumber,
-    ): Map<Rank, Int> {
+    fun countLottoByRank(lottoDiscriminator: LottoDiscriminator): Map<Rank, Int> {
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
 
-        value.forEach { lotto ->
-            val rank = lotto.getRank(winningNumbers, bonusNumber)
+        lottos.forEach { lotto ->
+            val rank = lottoDiscriminator.discriminateLotto(lotto)
             countResult[rank] = countResult.getValue(rank) + 1
         }
 

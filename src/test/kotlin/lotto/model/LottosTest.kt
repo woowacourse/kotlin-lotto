@@ -10,14 +10,15 @@ class LottosTest {
             listOf(
                 Lotto.from(listOf(1, 2, 3, 4, 5, 6)),
                 Lotto.from(listOf(1, 2, 3, 4, 5, 7)),
-                Lotto.from(listOf(1, 2, 3, 4, 5, 8)),
-                Lotto.from(listOf(1, 2, 3, 4, 8, 9)),
-                Lotto.from(listOf(1, 2, 3, 8, 9, 10)),
-                Lotto.from(listOf(8, 9, 10, 11, 12, 13)),
+                Lotto.from(listOf(1, 2, 3, 4, 5, 26)),
+                Lotto.from(listOf(1, 2, 3, 4, 25, 26)),
+                Lotto.from(listOf(1, 2, 3, 24, 25, 26)),
+                Lotto.from(listOf(1, 2, 23, 24, 25, 26)),
             )
 
         val winningNumbers = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber(7)
+        val lottoDiscriminator = LottoDiscriminator(winningNumbers, bonusNumber)
 
         val expectedResult =
             mapOf(
@@ -28,7 +29,7 @@ class LottosTest {
                 Rank.FIFTH to 1,
                 Rank.MISS to 1,
             )
-        val actualResult = Lottos(lottos).countLottoByRank(winningNumbers, bonusNumber)
+        val actualResult = Lottos(lottos).countLottoByRank(lottoDiscriminator)
 
         Assertions.assertEquals(expectedResult, actualResult)
     }

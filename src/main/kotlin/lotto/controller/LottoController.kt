@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.model.Lotto
 import lotto.model.LottoCashier
+import lotto.model.LottoDiscriminator
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoProfitCalculator
@@ -24,21 +25,19 @@ class LottoController(
         val lottoMachine = LottoMachine()
         val lottos = lottoMachine.getLottos(lottoQuantity)
 
-        lottos.value.forEach { lotto ->
-            outputView.printLottoNumbers(lotto.numbers.map { number -> number.value })
+        lottos.lottos.forEach { lotto ->
+            outputView.printLottoNumbers(lotto.numbers.map { number -> number.number })
         }
 
         outputView.printLastWeekWinningNumbersGuide()
-        val lastWeekLottoWinningNumbers = inputView.readWinningNumbers()
+        val lastWeekLottoWinningNumbers = Lotto.from(inputView.readWinningNumbers())
 
         outputView.printBonusNumberGuide()
-        val lottoBonusNumber = inputView.readBonusNumber()
+        val lottoBonusNumber = LottoNumber(inputView.readBonusNumber())
 
-        val lottoWinningResult =
-            lottos.countLottoByRank(
-                winningNumbers = Lotto.from(lastWeekLottoWinningNumbers),
-                bonusNumber = LottoNumber(lottoBonusNumber),
-            )
+        val lottoDiscriminator = LottoDiscriminator(lastWeekLottoWinningNumbers, lottoBonusNumber)
+
+        val lottoWinningResult = lottos.countLottoByRank(lottoDiscriminator)
 
         outputView.printWinningResultTitle()
         lottoWinningResult.forEach { (rank, count) ->

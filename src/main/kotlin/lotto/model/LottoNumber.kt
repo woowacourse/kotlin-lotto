@@ -1,14 +1,14 @@
 package lotto.model
 
 class LottoNumber(
-    val value: Int,
+    val number: Int,
 ) {
     init {
         validateLottoNumbersRange()
     }
 
     private fun validateLottoNumbersRange() {
-        require(value in LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE) {
+        require(number in LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE) {
             "[ERROR] 로또 번호의 범위는 $LOTTO_NUMBER_MIN_RANGE 이상 $LOTTO_NUMBER_MAX_RANGE 이하여야 합니다."
         }
     }
