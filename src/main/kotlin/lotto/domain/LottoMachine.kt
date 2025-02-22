@@ -3,8 +3,6 @@ package lotto.domain
 import lotto.generator.LottoGenerator
 
 class LottoMachine(private val randomGenerator: LottoGenerator = LottoGenerator()) {
-    val price: Int = LOTTO_PRICE
-
     fun buyLottos(purchaseAmount: Int): List<Lotto> {
         val lottoCount = getLottoCount(purchaseAmount)
         return List(lottoCount) { Lotto(randomGenerator.getRandomLottoNumbers(NUMBER_OF_LOTTO_NUMBER)) }
