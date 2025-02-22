@@ -14,12 +14,11 @@ class LottoMatchCalculatorTest {
         val lottoTicket =
             LottoTicket(
                 listOf(
-                    Lotto(listOf(1, 2, 3, 4, 5, 6)),
+                    Lotto.of(1, 2, 3, 4, 5, 6),
                 ),
             )
-        val winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), LottoNumber(2))
-        val calculator = LottoMatchCalculator(lottoTicket, winningLotto)
-        val result = calculator.calculate().result
+        val winningLotto = WinningLotto(Lotto.of(1, 3, 4, 5, 6, 7), LottoNumber(2))
+        val result = LottoMatchCalculator().calculate(lottoTicket, winningLotto).result
 
         assertThat(result[Rank.SECOND]).isEqualTo(1)
     }
@@ -29,19 +28,18 @@ class LottoMatchCalculatorTest {
         val lottoTicket =
             LottoTicket(
                 listOf(
-                    Lotto(listOf(1, 2, 3, 4, 5, 6)),
-                    Lotto(listOf(1, 2, 3, 4, 5, 7)),
-                    Lotto(listOf(1, 2, 3, 4, 8, 7)),
-                    Lotto(listOf(1, 2, 3, 9, 8, 7)),
-                    Lotto(listOf(1, 2, 10, 9, 8, 7)),
-                    Lotto(listOf(1, 11, 10, 9, 8, 7)),
-                    Lotto(listOf(12, 11, 10, 9, 8, 7)),
+                    Lotto.of(1, 2, 3, 4, 5, 6),
+                    Lotto.of(1, 2, 3, 4, 5, 7),
+                    Lotto.of(1, 2, 3, 4, 8, 7),
+                    Lotto.of(1, 2, 3, 9, 8, 7),
+                    Lotto.of(1, 2, 10, 9, 8, 7),
+                    Lotto.of(1, 11, 10, 9, 8, 7),
+                    Lotto.of(12, 11, 10, 9, 8, 7),
                 ),
             )
 
-        val winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), LottoNumber(2))
-        val calculator = LottoMatchCalculator(lottoTicket, winningLotto)
-        val result = calculator.calculate().result
+        val winningLotto = WinningLotto(Lotto.of(1, 3, 4, 5, 6, 7), LottoNumber(2))
+        val result = LottoMatchCalculator().calculate(lottoTicket, winningLotto).result
 
         assertThat(result[Rank.SECOND]).isEqualTo(2)
         assertThat(result[Rank.FOURTH]).isEqualTo(1)
