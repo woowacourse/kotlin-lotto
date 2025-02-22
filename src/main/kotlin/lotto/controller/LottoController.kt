@@ -6,7 +6,6 @@ import lotto.model.LottoMatcher
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.PrizeCalculator
-import lotto.model.Rank
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -58,10 +57,6 @@ class LottoController(
     ) {
         val result = lottoMatcher.matchLotto(publishedLotto)
         val earningRate = PrizeCalculator().calculateEarningRate(lottoPurchaseAmount.amount, result)
-        val formattedResult =
-            Rank.entries.associateWith { rank ->
-                result.getOrDefault(rank, 0)
-            }
-        outputView.printPrize(formattedResult, earningRate)
+        outputView.printPrize(result, earningRate)
     }
 }

@@ -28,16 +28,17 @@ class OutputView {
         result: Map<Rank, Int>,
         earningRate: Double,
     ) {
+        val prizeResult =
+            Rank.entries
+                .filter { it.winningMoney > 0 }
+                .map { rank ->
+                    "${rank.countOfMatch}개 일치${if (rank == Rank.SECOND) ", 보너스 볼 일치" else ""} " +
+                        "(${rank.winningMoney}원) - ${result.getOrDefault(rank, 0)}개"
+                }
         println()
         println("당첨 통계")
         println("---------")
-        Rank.entries.forEach { rank ->
-            if (rank.winningMoney > 0) {
-                println(
-                    "${rank.countOfMatch}개 일치${if (rank == Rank.SECOND) ", 보너스 볼 일치" else ""} (${rank.winningMoney}원) - ${result[rank]}개",
-                )
-            }
-        }
+        println(prizeResult)
         println("총 수익률은 ${"%.2f".format(earningRate)}입니다.")
     }
 }
