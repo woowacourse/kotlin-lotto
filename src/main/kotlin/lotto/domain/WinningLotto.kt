@@ -6,12 +6,19 @@ class WinningLotto(
 ) {
     init {
         require(!winningLotto.lottoNums.contains(LottoNumber(bounusNumber))) { BONUS_BALL_DUPLICATE_ERROR_MESSAGE }
+        validateBonusNumber(bounusNumber)
     }
 
     fun getRank(lotto: Lotto): Rank {
         val matchCount = lotto.compareWithWinningLotto(this.winningLotto)
         val matchBonus = lotto.compareWithBonusNumber(this.bounusNumber)
         return Rank.valueOf(matchCount, matchBonus)
+    }
+
+    private fun validateBonusNumber(bonusNumber: Int) {
+        require(!winningLotto.compareWithBonusNumber(bonusNumber)) {
+            BONUS_BALL_DUPLICATE_ERROR_MESSAGE
+        }
     }
 
     companion object {
