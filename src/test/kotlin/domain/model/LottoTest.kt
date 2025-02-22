@@ -13,7 +13,7 @@ class LottoTest {
             .assertThatThrownBy {
                 Lotto(values)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 로또 번호는 6개 입니다.")
+            .hasMessage(INVALID_LOTTO_SIZE)
     }
 
     @ValueSource(strings = ["1,56,2,3,4,5", "45,56,67,87,23,1"])
@@ -24,7 +24,7 @@ class LottoTest {
             .assertThatThrownBy {
                 Lotto(values)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 로또 번호는 1부터 45 사이입니다.")
+            .hasMessage(INVALID_LOTTO_NUMBERS)
     }
 
     @ValueSource(strings = ["1,2,2,3,4,5", "3,3,3,3,3,3"])
@@ -35,6 +35,12 @@ class LottoTest {
             .assertThatThrownBy {
                 Lotto(values)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 로또 번호는 중복이 없습니다.")
+            .hasMessage(DUPLICATED_LOTTO_NUMBERS)
+    }
+
+    companion object {
+        const val INVALID_LOTTO_SIZE = "[ERROR] 로또 번호는 6개 입니다."
+        const val INVALID_LOTTO_NUMBERS = "[ERROR] 로또 번호는 1부터 45 사이입니다."
+        const val DUPLICATED_LOTTO_NUMBERS = "[ERROR] 로또 번호는 중복이 없습니다."
     }
 }

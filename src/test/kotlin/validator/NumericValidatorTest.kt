@@ -12,7 +12,7 @@ class NumericValidatorTest {
             .assertThatThrownBy {
                 NumericValidator("   ")
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 빈 값을 입력하셨습니다.")
+            .hasMessage(EMPTY_INPUT_ERROR)
     }
 
     @ValueSource(strings = ["가나다, abc, ###, @we2as"])
@@ -22,6 +22,11 @@ class NumericValidatorTest {
             .assertThatThrownBy {
                 NumericValidator(value)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 숫자를 입력해야 합니다.")
+            .hasMessage(NOT_NUMERIC_ERROR)
+    }
+
+    companion object {
+        private const val EMPTY_INPUT_ERROR = "[ERROR] 빈 값을 입력하셨습니다."
+        private const val NOT_NUMERIC_ERROR = "[ERROR] 숫자를 입력해야 합니다."
     }
 }

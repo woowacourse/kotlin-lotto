@@ -12,6 +12,10 @@ class BonusNumberTest {
             .assertThatThrownBy {
                 BonusNumber(value)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 보너스 볼 번호는 1부터 45 사이입니다.")
+            .hasMessage(INVALID_BONUS_NUMBER)
+    }
+
+    companion object {
+        const val INVALID_BONUS_NUMBER = "[ERROR] 보너스 볼 번호는 1부터 45 사이입니다."
     }
 }

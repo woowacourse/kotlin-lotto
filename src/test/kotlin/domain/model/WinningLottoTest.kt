@@ -11,6 +11,10 @@ class WinningLottoTest {
             .assertThatThrownBy {
                 WinningLotto(lotto, BonusNumber(6))
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 보너스 번호는 로또 번호는 중복될 수 없습니다.")
+            .hasMessage(DUPLICATED_BONUS_NUMBER)
+    }
+
+    companion object {
+        const val DUPLICATED_BONUS_NUMBER = "[ERROR] 보너스 번호는 로또 번호는 중복될 수 없습니다."
     }
 }

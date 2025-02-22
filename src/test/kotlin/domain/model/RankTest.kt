@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class RankTest {
-
     private lateinit var resultFirst: Rank
     private lateinit var resultSecond: Rank
     private lateinit var resultThird: Rank
@@ -14,12 +13,13 @@ class RankTest {
 
     @BeforeEach
     fun setUp() {
-        resultFirst = Rank.valueOf(6,false)
+        resultFirst = Rank.valueOf(6, false)
         resultSecond = Rank.valueOf(5, true)
         resultThird = Rank.valueOf(5, false)
         resultFourthBonusFalse = Rank.valueOf(4, false)
         resultFourthBonusTrue = Rank.valueOf(4, true)
     }
+
     @Test
     fun `당첨 로또번호가 사용자가 입력한 로또 번호와 6개가 일치하면 1등 순위가 반환된다`() {
         assertThat(resultFirst).isEqualTo(Rank.FIRST)

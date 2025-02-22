@@ -10,7 +10,7 @@ class PurchasePriceTest {
             .assertThatThrownBy {
                 PurchasePrice(0)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 천원 이상 입력해주세요.")
+            .hasMessage(INVALID_MINIMUM_PURCHASE_AMOUNT)
     }
 
     @Test
@@ -19,6 +19,11 @@ class PurchasePriceTest {
             .assertThatThrownBy {
                 PurchasePrice(10001)
             }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] 천원 단위로 입력해주세요.")
+            .hasMessage(INVALID_THOUSAND_WON_UNIT)
+    }
+
+    companion object {
+        const val INVALID_MINIMUM_PURCHASE_AMOUNT = "[ERROR] 천원 이상 입력해주세요."
+        const val INVALID_THOUSAND_WON_UNIT = "[ERROR] 천원 단위로 입력해주세요."
     }
 }
