@@ -1,12 +1,12 @@
 package lotto.domain
 
 class Lottos(
-    val value: Set<Lotto>,
+    val value: List<Lotto>,
 ) {
     companion object {
         fun buy(
             count: Int,
-            lottos: Set<Lotto>,
+            lottos: List<Lotto>,
         ): Lottos {
             require(count > 0) { ERROR_MESSAGE_NOT_ENOUGH_PURCHASE }
             require(count == lottos.size) { ERROR_MESSAGE_NOT_MATCHED_MONEY_AND_LOTTOS_COUNT }

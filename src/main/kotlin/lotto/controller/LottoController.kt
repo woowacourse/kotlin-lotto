@@ -33,7 +33,7 @@ class LottoController {
                 lottoNumbers
                     .map { lottoNumber: List<Int> ->
                         Lotto(lottoNumber.map { number: Int -> LottoNumber(number) }.toSet())
-                    }.toSet(),
+                    }.toList(),
         )
 
     private fun readWinningLotto() {

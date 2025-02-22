@@ -10,7 +10,7 @@ class LottosTest {
         val lottos: Lottos =
             Lottos.buy(
                 wantLottoCount,
-                setOf(
+                listOf(
                     Lotto(1, 2, 3, 4, 5, 6),
                     Lotto(1, 2, 3, 4, 5, 6),
                     Lotto(1, 2, 3, 4, 5, 6),
