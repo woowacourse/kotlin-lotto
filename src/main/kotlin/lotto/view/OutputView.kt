@@ -19,7 +19,7 @@ class OutputView {
 
     private fun printLottoNumbers(lotto: Lotto) {
         println(
-            lotto.numbers.joinToString(
+            lotto.numbers.sortedBy { it.number }.joinToString(
                 separator = LOTTO_NUMBER_SEPARATOR,
                 prefix = LOTTO_NUMBERS_PREFIX,
                 postfix = LOTTO_NUMBERS_POSTFIX,

@@ -1,6 +1,8 @@
 package lotto.model
 
 class LottoMachine {
+    private val lottoNumbersGenerator = LottoNumbersGenerator()
+
     fun createLottos(lottoCount: Int): Lottos {
         val lottoBundle = mutableListOf<Lotto>()
         repeat(lottoCount) {
@@ -10,12 +12,7 @@ class LottoMachine {
     }
 
     private fun createLotto(): Lotto {
-        val lottoNumber =
-            (LottoNumber.MIN_NUMBER..LottoNumber.MAX_NUMBER)
-                .shuffled()
-                .take(Lotto.LOTTO_NUMBERS_COUNT)
-                .map { number -> LottoNumber(number) }
-                .sortedBy { lottoNumber -> lottoNumber.number }
-        return Lotto(lottoNumber)
+        val lottoNumbers = lottoNumbersGenerator.generateLottoNumbers()
+        return Lotto(lottoNumbers)
     }
 }
