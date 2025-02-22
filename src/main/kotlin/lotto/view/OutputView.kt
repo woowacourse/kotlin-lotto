@@ -1,11 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
-import lotto.model.LottoResult
-import lotto.model.LottoStore
-import lotto.model.RandomLottoGenerator
 import lotto.model.Rank
-import lotto.model.WinningLotto
 import java.lang.String.format
 
 class OutputView {
@@ -13,24 +9,19 @@ class OutputView {
         println(format(OUTPUT_LOTTO_COUNT_MESSAGE, number))
     }
 
-    fun printLottoBundle(input: Int): List<Lotto> {
-        val lottoBundle = LottoStore().getTickets(input, RandomLottoGenerator())
+    fun printLottoBundle(lottoBundle: List<Lotto>) {
         lottoBundle.forEach { lotto ->
             println(lotto.numbers)
         }
-        return lottoBundle
     }
 
     private fun isBonusMatch(rank: Rank) = if (rank == Rank.SECOND) OUTPUT_STATISTICS_BONUS_NUMBER_MESSAGE else " "
 
     fun printResult(
-        winningLotto: WinningLotto,
-        input: String,
-        lottoBundle: List<Lotto>,
+        winningCounts: Map<Rank, Int>,
+        profit: String,
     ) {
         println(OUTPUT_STATISTIC_GUIDE_MESSAGE)
-        val lottoResult = LottoResult()
-        val winningCounts = LottoResult().getWinningCounts(lottoBundle, winningLotto)
         winningCounts.forEach { (rank, winningCount) ->
             if (rank != Rank.MISS) {
                 println(
@@ -44,7 +35,7 @@ class OutputView {
                 )
             }
         }
-        println(format(OUTPUT_PROFIT_MESSAGE, lottoResult.calculateProfit(input, winningCounts)))
+        println(format(OUTPUT_PROFIT_MESSAGE, profit))
     }
 
     companion object {
