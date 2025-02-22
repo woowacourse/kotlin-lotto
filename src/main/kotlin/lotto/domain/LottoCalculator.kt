@@ -17,11 +17,11 @@ class LottoCalculator(
         return Rank.getRankState(count, bonus)
     }
 
-    fun compareLotto(lottos: List<LottoNumber>): Int {
+    private fun compareLotto(lottos: List<LottoNumber>): Int {
         return lottos.intersect(winningNumber.numbers).size
     }
 
-    fun checkBonusNumber(lottos: List<LottoNumber>): Boolean {
+    private fun checkBonusNumber(lottos: List<LottoNumber>): Boolean {
         return lottos.contains(bonusNumber)
     }
 
