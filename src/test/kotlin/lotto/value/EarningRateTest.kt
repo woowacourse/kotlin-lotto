@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class EarningRateTest {
@@ -25,9 +26,17 @@ class EarningRateTest {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = [0.051, 0.052, 0.053, 0.054])
-    fun `소수점 아래 2자리로 반올림한다`(rate: Double) {
+    @CsvSource(
+        "0.000001, 0.0",
+        "99.999999, 100.00",
+        "0.5049999, 0.50",
+        "0.5050000, 0.51",
+    )
+    fun `수익률은 소수점 3번째 자리에서 반올림된다`(
+        rate: Double,
+        expected: Double,
+    ) {
         val earningRate = EarningRate(rate)
-        assertThat(earningRate.rate).isEqualTo(0.05)
+        assertThat(earningRate.rate).isEqualTo(expected)
     }
 }
