@@ -17,6 +17,7 @@ class LottoController(
     fun run() {
         val purchaseMoney = getPurchaseMoney()
         val lottoCount = getLottoCount(purchaseMoney)
+        outputView.printLottoCount(lottoCount)
         val lottos = lottoMachine.createLottos(lottoCount)
         outputView.printLottos(lottos)
 
@@ -37,7 +38,6 @@ class LottoController(
 
     private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
         val lottoCount = purchaseMoney.getLottoCount()
-        outputView.printLottoCount(lottoCount)
         return lottoCount
     }
 
