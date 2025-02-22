@@ -1,7 +1,7 @@
 package domain.service
 
-import domain.model.LottoNumber
 import domain.model.Lotto
+import domain.model.LottoNumber
 import domain.model.LottoTicket
 import domain.model.Rank
 import domain.model.WinningLotto

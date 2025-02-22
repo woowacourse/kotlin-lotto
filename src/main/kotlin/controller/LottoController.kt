@@ -1,7 +1,7 @@
 package controller
 
-import domain.model.LottoNumber
 import domain.model.Lotto
+import domain.model.LottoNumber
 import domain.model.LottoResult
 import domain.model.LottoTicket
 import domain.model.PurchasePrice

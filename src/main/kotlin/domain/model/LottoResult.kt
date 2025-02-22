@@ -1,11 +1,10 @@
 package domain.model
 
 class LottoResult(
-    val result: MutableMap<Rank, Int> =
+    val result: Map<Rank, Int> =
         Rank.entries
             .reversed()
-            .associateWith { 0 }
-            .toMutableMap(),
+            .associateWith { 0 },
 ) {
     override fun toString(): String =
         result
