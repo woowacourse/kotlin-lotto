@@ -40,8 +40,23 @@ class LottoController(
         lottos: List<Lotto>,
     ): Map<Rank, Int> {
         val winningStats = lottoCalculator.matchLottos(lottos)
-        outputView.printWinningStats(winningStats.filter { it.key != Rank.NONE })
+        printWinningStats(winningStats)
         return winningStats
+    }
+
+    private fun printWinningStats(winningStats: Map<Rank, Int>) {
+        outputView.printWinningStats()
+        for ((state, count) in winningStats) {
+            printWinningStatsByRank(state, count)
+        }
+    }
+
+    private fun printWinningStatsByRank(state: Rank,count: Int) {
+        if (state == Rank.SECOND) {
+            outputView.printWinningStatWithBonusBall(state, count)
+        } else if (state != Rank.NONE) {
+            outputView.printWinningStatWIthNoBonusBall(state, count)
+        }
     }
 
     private fun getPurchaseAmount(): LottoPurchaseAmount {

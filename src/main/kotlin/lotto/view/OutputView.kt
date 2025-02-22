@@ -12,36 +12,22 @@ class OutputView {
         }
     }
 
-    fun printLottoNumber(numbers: List<LottoNumber>) {
+    private fun printLottoNumber(numbers: List<LottoNumber>) {
         println(numbers.map { it.number })
     }
 
-    fun printWinningStats(winningStats: Map<Rank, Int>) {
+    fun printWinningStats() {
         println(MESSAGE_WINNING_STATS)
-        for ((state, count) in winningStats) {
-            printWinningStat(state, count)
-        }
     }
 
-    private fun printWinningStat(
-        state: Rank,
-        count: Int,
-    ) {
-        if (state == Rank.SECOND) {
-            printWinningStatWithBonusBall(state, count)
-        } else {
-            printWinningStatWIthNoBonusBall(state, count)
-        }
-    }
-
-    private fun printWinningStatWIthNoBonusBall(
+    fun printWinningStatWIthNoBonusBall(
         state: Rank,
         count: Int,
     ) {
         println(MESSAGE_MATCH_COUNT.format(state.countOfMatch, state.price, count))
     }
 
-    private fun printWinningStatWithBonusBall(
+    fun printWinningStatWithBonusBall(
         state: Rank,
         count: Int,
     ) {
