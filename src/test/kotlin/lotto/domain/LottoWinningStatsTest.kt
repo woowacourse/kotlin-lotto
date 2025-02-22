@@ -3,7 +3,7 @@ package lotto.domain
 import lotto.domain.model.Lotto
 import lotto.domain.model.Lottos
 import lotto.domain.model.WinningLotto
-import lotto.domain.service.LottoGenerator
+import lotto.domain.service.RandomLottoGenerator
 import lotto.domain.value.EarningRate
 import lotto.domain.value.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
@@ -18,7 +18,7 @@ class LottoWinningStatsTest {
     fun setUp() {
         val lottoNumbers = (1..6).map { LottoNumber(it) }.toSet()
         winningLotto = WinningLotto(Lotto(lottoNumbers), LottoNumber(45))
-        lottos = Lottos(listOf(LottoGenerator().generateLotto()))
+        lottos = Lottos(listOf(RandomLottoGenerator().generateLotto()))
     }
 
     @Test
