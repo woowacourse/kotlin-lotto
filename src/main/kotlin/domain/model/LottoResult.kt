@@ -1,10 +1,7 @@
 package domain.model
 
 class LottoResult(
-    val result: Map<Rank, Int> =
-        Rank.entries
-            .reversed()
-            .associateWith { 0 },
+    val result: Map<Rank, Int>,
 ) {
     override fun toString(): String =
         result
