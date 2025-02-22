@@ -1,10 +1,6 @@
 package lotto.controller
 
-import lotto.domain.Lotto
-import lotto.domain.LottoNumber
-import lotto.domain.LottoResult
-import lotto.domain.Lottos
-import lotto.domain.WinningLotto
+import lotto.domain.*
 import lotto.view.View
 
 class LottoController {
@@ -48,25 +44,18 @@ class LottoController {
     }
 
     private fun showResult() {
-        val lottoResults: List<LottoResult> = Lottos.getResult(winningLotto, boughtLottos)
+        val lottoResults: LottoResults = Lottos.getResult(winningLotto, boughtLottos)
         val resultTally = countResult(lottoResults)
-        View.showResult(resultTally = resultTally, profitRate = lottoResults.getProfitRate)
+        View.showResult(resultTally = resultTally, profitRate = lottoResults.getProfitRate())
     }
 
-    private fun countResult(lottoResults: List<LottoResult>): Map<LottoResult, Int> {
+    private fun countResult(lottoResults: LottoResults): Map<LottoResult, Int> {
         val resultTally = LottoResult.entries.associateWith { 0 }.toMutableMap()
-        lottoResults.forEach { lottoResult: LottoResult ->
+        lottoResults.value.forEach { lottoResult: LottoResult ->
             resultTally[lottoResult] = resultTally.getValue(lottoResult) + 1
         }
         return resultTally.toMap()
     }
 
     private fun makeRandomNumbers(): List<Int> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE)
-
-    private val List<LottoResult>.getProfitRate: Double
-        get() {
-            val profit: Long = this.sumOf { lottoResult: LottoResult -> lottoResult.prizeAmount.toLong() }
-            val profitRate = profit / (this.size * Lotto.PRICE).toDouble()
-            return profitRate
-        }
 }
