@@ -1,6 +1,7 @@
 package domain.service
 
 import domain.model.Lotto
+import domain.model.LottoNumber
 import domain.model.LottoTicket
 import domain.model.PurchasePrice
 
@@ -13,7 +14,7 @@ class LottoGenerator(
     }
 
     private fun makeOneLotto(): Lotto {
-        val newLotto = (LOTTO_MIN..LOTTO_MAX).shuffled().take(6)
+        val newLotto = (LOTTO_MIN..LOTTO_MAX).shuffled().take(6).map { LottoNumber(it) }
         return Lotto(newLotto)
     }
 
