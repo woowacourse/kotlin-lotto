@@ -50,11 +50,11 @@ class WinningLottoTest {
     fun `Lotto 당첨 결과에 따른 수익률 테스트`(value: String) {
         val values = value.split(",").map { LottoNumber(it.toInt()) }
 
-        val rank = mapOf(Rank.FOURTH to 1)
+        val rank = mapOf(Rank.FIFTH to 1)
         val profitRate =
-            WinningLotto(Lotto(values), 10).getProfitRate(PurchasePrice(11_000_0), rank)
+            WinningLotto(Lotto(values), 10).getProfitRate(PurchasePrice(10_000), rank)
 
-        assertThat(profitRate).isEqualTo("0.45")
+        assertThat(profitRate).isEqualTo(0.5)
     }
 
     private fun createLotto(vararg numbers: Int): Lotto {

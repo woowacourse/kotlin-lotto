@@ -20,14 +20,14 @@ class WinningLotto(
     fun getProfitRate(
         money: PurchasePrice,
         lottoRank: Map<Rank, Int>,
-    ): String {
+    ): Double {
         val totalPrice: Double =
             lottoRank
                 .map { (rank, amount) ->
                     rank.winningMoney * amount
                 }.sum()
                 .toDouble()
-        return ROUND.format(totalPrice / money.value)
+        return totalPrice / money.value
     }
 
     fun calculate(purchaseLotto: List<Lotto>): Map<Rank, Int> {
@@ -50,7 +50,6 @@ class WinningLotto(
     }
 
     companion object {
-        const val ROUND = "%.2f"
         const val DUPLICATED_BONUS_NUMBER = "$ERROR 보너스 번호와 로또 번호는 중복될 수 없습니다."
     }
 }

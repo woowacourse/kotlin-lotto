@@ -68,7 +68,7 @@ class LottoController(
 
     private fun displayResult(
         lottoResult: Map<Rank, Int>,
-        profitRate: String,
+        profitRate: Double,
     ) {
         outputView.printWinningResult(getWinningMessage(lottoResult), profitRate)
         if (profitRate.toDouble() < 1) outputView.printLossMessage()
