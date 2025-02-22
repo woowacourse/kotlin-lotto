@@ -3,22 +3,21 @@ package lotto.view
 import lotto.domain.model.Lotto
 import lotto.domain.model.WinningLotto
 import lotto.domain.value.LottoNumber
-import lotto.domain.value.PurchaseAmount
 import kotlin.runCatching
 
 class InputView {
-    fun readPurchaseAmount(): PurchaseAmount {
+    fun readLottoPurchaseAmount(): Int {
         println(INPUT_PURCHASE_AMOUNT)
         val inputText = readln()
-        val purchaseAmount =
-            runCatching { PurchaseAmount(inputText.toInt()) }.getOrElse {
+        val lottoPurchaseAmount =
+            runCatching { inputText.toInt() }.getOrElse {
                 throw IllegalArgumentException(
                     CAN_NOT_TO_INT.format(
                         inputText,
                     ),
                 )
             }
-        return purchaseAmount
+        return lottoPurchaseAmount
     }
 
     fun readWinningLottoWithoutBonusNumber(): Lotto {
