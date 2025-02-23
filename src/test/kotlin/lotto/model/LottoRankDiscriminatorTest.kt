@@ -16,7 +16,7 @@ class LottoRankDiscriminatorTest {
         expectedRank: Rank,
     ) {
         val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber(7)
+        val bonusNumber = LottoNumber.from(7)
 
         val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusNumber)
         val lotto = Lotto.from(lottoNumbers)
@@ -28,7 +28,7 @@ class LottoRankDiscriminatorTest {
     @Test
     fun `보너스 번호가 일치하면서 5개의 번호가 동일한 경우 2등을 반환한다`() {
         val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber(7)
+        val bonusNumber = LottoNumber.from(7)
 
         val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusNumber)
         val userLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 7))
@@ -40,7 +40,7 @@ class LottoRankDiscriminatorTest {
     @Test
     fun `당첨 번호끼리 중복되지 않았을 때, 당첨 번호와 보너스 번호와 중복되면 오류를 반환한다`() {
         val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber(1)
+        val bonusNumber = LottoNumber.from(1)
 
         assertThrows<IllegalArgumentException> {
             LottoRankDiscriminator(winningLotto, bonusNumber)

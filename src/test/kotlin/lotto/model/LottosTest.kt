@@ -17,7 +17,7 @@ class LottosTest {
             )
 
         val winningNumbers = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber(7)
+        val bonusNumber = LottoNumber.from(7)
         val lottoRankDiscriminator = LottoRankDiscriminator(winningNumbers, bonusNumber)
 
         val expectedResult =
