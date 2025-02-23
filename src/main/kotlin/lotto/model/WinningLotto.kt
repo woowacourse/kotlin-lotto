@@ -3,16 +3,23 @@ package lotto.model
 class WinningLotto(
     val winningNumbers: Lotto,
     val bonusNumber: LottoNumber,
+    private val purchaseMoney: LottoPurchaseAmount,
 ) {
     init {
         require(!winningNumbers.contains(bonusNumber)) { ERROR_DUPLICATED_BONUS_NUMBER }
     }
 
-    fun findLottoRank(lotto: Lotto): Rank {
-        val matchCount =
-            winningNumbers.numbers.count { winningLottoNumber ->
-                lotto.contains(winningLottoNumber)
-            }
+    fun calculateStatistics(lottos: Lottos): LottoStatistics {
+        val rankStatistics: Map<Rank, Int> =
+            lottos.lottoBundle
+                .groupingBy { lotto ->
+                    findLottoRank(lotto)
+                }.eachCount()
+        return LottoStatistics(rankStatistics, purchaseMoney)
+    }
+
+    private fun findLottoRank(lotto: Lotto): Rank {
+        val matchCount = winningNumbers.matchedCount(lotto)
         val isMatchedBonus = lotto.contains(bonusNumber)
         return Rank.valueOf(matchCount, isMatchedBonus)
     }

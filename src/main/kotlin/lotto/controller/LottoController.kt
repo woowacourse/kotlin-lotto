@@ -21,8 +21,8 @@ class LottoController(
         val lottos = lottoMachine.createLottos(lottoCount)
         outputView.printLottos(lottos)
 
-        val winningLotto = getWinningLotto()
-        val lottoStatistics = LottoStatistics(lottos, winningLotto, purchaseMoney)
+        val winningLotto = getWinningLotto(purchaseMoney)
+        val lottoStatistics: LottoStatistics = winningLotto.calculateStatistics(lottos)
 
         processLottoStatistics(lottoStatistics)
     }
@@ -41,9 +41,9 @@ class LottoController(
         return lottoCount
     }
 
-    private fun getWinningLotto(): WinningLotto {
+    private fun getWinningLotto(purchaseMoney: LottoPurchaseAmount): WinningLotto {
         val winningLottoNumbers = getWinningLottoNumbers()
-        val winningLotto = createWinningLotto(winningLottoNumbers)
+        val winningLotto = createWinningLotto(winningLottoNumbers, purchaseMoney)
         return winningLotto
     }
 
@@ -56,13 +56,16 @@ class LottoController(
             getWinningLottoNumbers()
         }
 
-    private fun createWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
+    private fun createWinningLotto(
+        winningLottoNumbers: Lotto,
+        purchaseMoney: LottoPurchaseAmount,
+    ): WinningLotto =
         try {
             val bonusNumber = getBonusNumber()
-            WinningLotto(winningLottoNumbers, bonusNumber)
+            WinningLotto(winningLottoNumbers, bonusNumber, purchaseMoney)
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
-            createWinningLotto(winningLottoNumbers)
+            createWinningLotto(winningLottoNumbers, purchaseMoney)
         }
 
     private fun getBonusNumber(): LottoNumber {
@@ -71,7 +74,7 @@ class LottoController(
     }
 
     private fun processLottoStatistics(lottoStatistics: LottoStatistics) {
-        outputView.printLottoStatistics(lottoStatistics.lottoStatistics)
+        outputView.printLottoStatistics(lottoStatistics.rankStatistics)
         val rateOfReturn = lottoStatistics.getRateOfReturn()
         outputView.printLottoRateOfReturn(rateOfReturn, lottoStatistics.getIsLossMoney(rateOfReturn))
     }
