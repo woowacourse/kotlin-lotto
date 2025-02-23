@@ -46,7 +46,7 @@ class LottoController(
 
     private fun displayBuyLotto(lotto: List<Lotto>) {
         outputView.printPurchasedLottoCount(lotto.size)
-        outputView.printPurchasedLotto(lotto.map { LottoFactory().extractionNumber(it).sorted() }.joinToString("\n"))
+        outputView.printPurchasedLotto(lotto.map { LottoFactory.extractionNumber(it).sorted() }.joinToString("\n"))
     }
 
     private fun getWinningNumbers(): Lotto =

@@ -11,7 +11,7 @@ class LottoTest {
     fun `로또 번호는 6개가 아니면 예외가 발생한다`(value: String) {
         Assertions
             .assertThatThrownBy {
-                LottoFactory().lottoOf(*splitValueSource(value))
+                LottoFactory.lottoOf(*splitValueSource(value))
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(INVALID_LOTTO_SIZE)
     }
@@ -21,7 +21,7 @@ class LottoTest {
     fun `로또 번호는 1 부터 45 사이가 아니면 예외가 발생한다`(value: String) {
         Assertions
             .assertThatThrownBy {
-                LottoFactory().lottoOf(*splitValueSource(value))
+                LottoFactory.lottoOf(*splitValueSource(value))
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(INVALID_LOTTO_NUMBERS)
     }
@@ -31,7 +31,7 @@ class LottoTest {
     fun `로또 번호에 중복이 있으면 예외가 발생한다`(value: String) {
         Assertions
             .assertThatThrownBy {
-                LottoFactory().lottoOf(*splitValueSource(value))
+                LottoFactory.lottoOf(*splitValueSource(value))
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(DUPLICATED_LOTTO_NUMBERS)
     }

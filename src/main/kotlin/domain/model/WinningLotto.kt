@@ -8,7 +8,7 @@ class WinningLotto(
     val bonusNumber: BonusNumber,
 ) {
     init {
-        require(bonusNumber.value !in LottoFactory().extractionNumber(lotto)) { DUPLICATED_BONUS_NUMBER }
+        require(bonusNumber.value !in LottoFactory.extractionNumber(lotto)) { DUPLICATED_BONUS_NUMBER }
     }
 
     companion object {

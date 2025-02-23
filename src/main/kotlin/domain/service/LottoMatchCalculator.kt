@@ -19,8 +19,8 @@ class LottoMatchCalculator(
     }
 
     private fun getRank(lotto: Lotto): Rank {
-        val buyLottoNumbers = LottoFactory().extractionNumber(lotto)
-        val winningLottoNumbers = LottoFactory().extractionNumber(winningLotto.lotto)
+        val buyLottoNumbers = LottoFactory.extractionNumber(lotto)
+        val winningLottoNumbers = LottoFactory.extractionNumber(winningLotto.lotto)
 
         val lottoMatches = buyLottoNumbers.intersect(winningLottoNumbers.toSet()).size
         val isBonusMatched = winningLotto.bonusNumber.value in buyLottoNumbers
