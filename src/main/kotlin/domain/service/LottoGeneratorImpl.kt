@@ -14,7 +14,7 @@ class LottoGeneratorImpl(
 ) : LottoGenerator {
     override fun generate(money: PurchasePrice): List<Lotto> {
         validateMoney(money.value)
-        val purchaseLottoCount = money.value / standardPrice
+        val purchaseLottoCount = money.getPurchasableLottoCount()
         return List<Lotto>(purchaseLottoCount) { makeOneLotto() }
     }
 
