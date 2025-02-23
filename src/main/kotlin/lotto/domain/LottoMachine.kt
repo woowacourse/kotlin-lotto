@@ -1,12 +1,12 @@
 package lotto.domain
 
-import lotto.generator.RandomGenerator
+import lotto.generator.LottoRandomGenerator
 
 class LottoMachine {
     val price: Int = LOTTO_PRICE
 
     fun buyLottos(purchaseAmount: Int): List<Lotto> {
-        val randomGenerator = RandomGenerator()
+        val randomGenerator = LottoRandomGenerator()
 
         val lottoCount = getLottoCount(purchaseAmount)
         val lottos: MutableList<Lotto> = mutableListOf()
