@@ -20,9 +20,9 @@ class LottoStore(
     private fun generateLottoTicket(count: Int): List<LottoTicket> = LottoMachine().purchase(count)
 
     private fun inputWinningLotto(): WinningLotto {
-        val winningNumbers = inputView.inputWinningNumbers()
-        val bonusNumber = inputView.inputBonusNumber()
-        val winningLotto = WinningLotto(winningNumbers.map { LottoNumber(it) }.toSet(), LottoNumber(bonusNumber))
+        val winningNumbers = inputView.inputWinningNumbers().map { LottoNumber(it) }.toSet()
+        val bonusNumber = LottoNumber(inputView.inputBonusNumber())
+        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
         return winningLotto
     }
 
