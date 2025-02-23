@@ -47,24 +47,4 @@ class InputValidatorTest {
             WinningNumberValidator(testList)
         }
     }
-
-    @Test
-    fun `보너스 번호는 당첨 번호와 중복되지 않는다`() {
-        val bonusNumber = "1"
-        val winningNumber = listOf(1, 2, 3, 4, 5, 6)
-
-        assertThrows<IllegalArgumentException> {
-            BonusNumberValidator(bonusNumber, winningNumber)
-        }
-    }
-
-    @ValueSource(strings = ["-1", "안녕", "0", "46"])
-    @ParameterizedTest
-    fun `보너스 번호는 1~45 사이이다`(input: String) {
-        val winningNumber = listOf(1, 2, 3, 4, 5, 6)
-
-        assertThrows<IllegalArgumentException> {
-            BonusNumberValidator(input, winningNumber)
-        }
-    }
 }

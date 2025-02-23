@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.domain.LottoMachine
+import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.validator.BonusNumberValidator
 import lotto.validator.PurchaseAmountValidator
@@ -35,16 +36,16 @@ class LottoController(
         return input.toInt()
     }
 
-    private fun getWinningNumber(): List<Int> {
+    private fun getWinningNumber(): List<LottoNumber> {
         val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { it.trim() }
         WinningNumberValidator(winningNumber)
-        return winningNumber.map { parseToInt(it) }
+        return winningNumber.map { LottoNumber(it.toInt()) }
     }
 
-    private fun getBonusNumber(winningNumber: List<Int>): Int {
+    private fun getBonusNumber(winningNumber: List<LottoNumber>): LottoNumber {
         val bonusNumber = inputView.getBonusNumber()
         BonusNumberValidator(bonusNumber, winningNumber)
-        return parseToInt(bonusNumber)
+        return LottoNumber(bonusNumber.toInt())
     }
 
     companion object {
