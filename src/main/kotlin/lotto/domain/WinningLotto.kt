@@ -10,13 +10,13 @@ class WinningLotto(
     }
 
     fun getRank(lotto: Lotto): Rank {
-        val matchCount = lotto.compareWithWinningLotto(this.winningLotto)
-        val matchBonus = lotto.compareWithBonusNumber(this.bounusNumber)
+        val matchCount = lotto.lottoNums.count { number -> winningLotto.compareWithNumber(number) }
+        val matchBonus = lotto.compareWithNumber(this.bounusNumber)
         return Rank.valueOf(matchCount, matchBonus)
     }
 
     private fun validateBonusNumber(bonusNumber: LottoNumber) {
-        require(!winningLotto.compareWithBonusNumber(bonusNumber)) {
+        require(!winningLotto.compareWithNumber(bonusNumber)) {
             BONUS_BALL_DUPLICATE_ERROR_MESSAGE
         }
     }

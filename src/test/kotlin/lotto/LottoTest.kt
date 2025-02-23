@@ -22,9 +22,9 @@ class LottoTest {
     @Test
     fun `자동 생성된 로또와 당첨 번호를 비교할 수 있다`() {
         val lotto = lottoOf(1, 2, 3, 4, 5, 6)
-        val winningNumbers = lottoOf(1, 2, 3, 4, 5, 9)
+        val winningLotto = lottoOf(1, 2, 3, 4, 5, 9)
 
-        val result = lotto.compareWithWinningLotto(winningNumbers)
+        val result = lotto.lottoNums.count { number -> winningLotto.compareWithNumber(number) }
 
         assertThat(result).isEqualTo(5)
     }
@@ -34,7 +34,7 @@ class LottoTest {
         val lotto = lottoOf(1, 2, 3, 4, 5, 6)
 
         val bonusNumber: LottoNumber = LottoNumber(3)
-        val result = lotto.compareWithBonusNumber(bonusNumber)
+        val result = lotto.compareWithNumber(bonusNumber)
 
         assertThat(result).isTrue()
     }

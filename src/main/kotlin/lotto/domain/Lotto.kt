@@ -6,12 +6,8 @@ class Lotto(val lottoNums: List<LottoNumber>) {
         require(lottoNums.size == lottoNums.toSet().size) { LOTTO_NUM_DUPLICATE_ERROR_MESSAGE }
     }
 
-    fun compareWithWinningLotto(winningLotto: Lotto): Int {
-        return lottoNums.intersect(winningLotto.lottoNums.toSet()).size
-    }
-
-    fun compareWithBonusNumber(bonusNumber: LottoNumber): Boolean {
-        return lottoNums.contains(bonusNumber)
+    fun compareWithNumber(number: LottoNumber): Boolean {
+        return lottoNums.contains(number)
     }
 
     companion object {
