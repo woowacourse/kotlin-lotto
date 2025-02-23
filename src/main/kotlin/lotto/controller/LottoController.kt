@@ -76,14 +76,14 @@ class LottoController(
     private fun displayLottosResult(lottoWinningResult: Map<Rank, Int>) {
         outputView.printWinningResultTitle()
         lottoWinningResult.forEach { (rank, count) ->
-            if (rank != Rank.MISS) {
-                outputView.printWinningResult(
-                    requiredMatch = rank.countOfMatch,
-                    profit = rank.winningMoney,
-                    matchBonus = rank.matchBonus,
-                    countOfMatch = count,
-                )
-            }
+            if (rank == Rank.MISS) return@forEach
+
+            outputView.printWinningResult(
+                requiredMatch = rank.countOfMatch,
+                profit = rank.winningMoney,
+                matchBonus = rank == Rank.SECOND,
+                countOfMatch = count,
+            )
         }
     }
 

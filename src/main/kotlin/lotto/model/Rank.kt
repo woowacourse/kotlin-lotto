@@ -3,13 +3,12 @@ package lotto.model
 enum class Rank(
     val countOfMatch: Int,
     val winningMoney: Int,
-    val matchBonus: Boolean = false,
 ) {
     MISS(0, 0),
     FIFTH(3, 5_000),
     FOURTH(4, 50_000),
     THIRD(5, 1_500_000),
-    SECOND(5, 30_000_000, true),
+    SECOND(5, 30_000_000),
     FIRST(6, 2_000_000_000),
     ;
 
@@ -18,10 +17,13 @@ enum class Rank(
             countOfMatch: Int,
             matchBonus: Boolean,
         ): Rank {
-            if (isMiss(countOfMatch)) return MISS
+            when {
+                isMiss(countOfMatch) -> return MISS
+                countOfMatch == SECOND.countOfMatch && matchBonus -> return SECOND
+            }
 
             return entries.find { rank ->
-                rank.countOfMatch == countOfMatch && rank.matchBonus == matchBonus
+                rank.countOfMatch == countOfMatch
             } ?: MISS
         }
 
