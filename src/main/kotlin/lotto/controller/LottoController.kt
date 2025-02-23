@@ -37,10 +37,7 @@ class LottoController(
         return lottos
     }
 
-    private fun getLastWeekLottoWinningNumbers(): String {
-        outputView.printLastWeekWinningNumbersGuide()
-        return inputView.readWinningNumbers()
-    }
+    private fun getLastWeekLottoWinningNumbers(): String = inputView.readWinningNumbers()
 
     private fun mapToWinningNumbers(rawWinningNumbers: String): List<String> = rawWinningNumbers.split(", ")
 
@@ -57,13 +54,9 @@ class LottoController(
 
     private fun String.validateIsNumber(): Int = mapToNumber(this) ?: throw IllegalArgumentException("[ERROR] 숫자를 입력해주세요.")
 
-    private fun getLottoBonusNumbers(): String {
-        outputView.printBonusNumberGuide()
-        return inputView.readBonusNumber()
-    }
+    private fun getLottoBonusNumbers(): String = inputView.readBonusNumber()
 
     private fun generateLottoMachineByAmount(): LottoMachine {
-        outputView.printPurchaseAmountGuide()
         val rawPurchaseAmount = inputView.readPurchaseAmount()
         val purchaseAmount = rawPurchaseAmount.validateIsNumber()
         return LottoMachine(purchaseAmount)
