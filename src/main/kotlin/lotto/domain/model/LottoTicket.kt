@@ -9,8 +9,6 @@ class LottoTicket(
         }
     }
 
-    fun getSize() = numbers.size
-
     fun getNumbers() = numbers
 
     fun countMatchingNumbers(winningNumbers: Set<LottoNumber>): Int = numbers.intersect(winningNumbers).size
