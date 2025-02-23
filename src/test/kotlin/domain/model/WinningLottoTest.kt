@@ -21,11 +21,11 @@ class WinningLottoTest {
         val purchaseLotto = fakeLottoGenerator.generate(PurchasePrice(2000))
 
         val winningLotto = createWinningLotto(1, 3, 4, 5, 6, 7, bonus = 2)
-        val result = winningLotto.calculate(purchaseLotto).winningCountByRank
+        val result = winningLotto.calculate(purchaseLotto)
 
-        assertThat(result[Rank.SECOND]).isEqualTo(2)
-        assertThat(result[Rank.FOURTH]).isEqualTo(0)
-        assertThat(result[Rank.MISS]).isEqualTo(0)
+        assertThat(result.getWinningCount(Rank.SECOND)).isEqualTo(2)
+        assertThat(result.getWinningCount(Rank.FOURTH)).isEqualTo(0)
+        assertThat(result.getWinningCount(Rank.MISS)).isEqualTo(0)
     }
 
     @Test
