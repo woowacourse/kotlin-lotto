@@ -4,7 +4,9 @@ class LottoStatistics(
     val rankStatistics: Map<Rank, Int>,
     private val purchaseMoney: LottoPurchaseAmount,
 ) {
-    fun getRateOfReturn(): Double {
+    val rateOfReturn: Double = calculateRateOfReturn()
+
+    private fun calculateRateOfReturn(): Double {
         val totalPrize = getTotalPrize()
         val rateOfReturn = totalPrize / purchaseMoney.money
 
@@ -20,7 +22,7 @@ class LottoStatistics(
         return sum
     }
 
-    fun isLossMoney(rateOfReturn: Double): Boolean = rateOfReturn < 1
+    fun isLossMoney(): Boolean = rateOfReturn < 1
 
     companion object {
         private const val INITIAL_TOTAL_PRIZE = 0.0

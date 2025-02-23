@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.params.provider.ValueSource
 import java.util.stream.Stream
 
 class LottoStatisticsTest {
@@ -26,30 +25,8 @@ class LottoStatisticsTest {
         rateOfReturn: Double,
     ) {
         val lottoStatistics = LottoStatistics(rankStatistics, purchaseAmount)
-        val actual = lottoStatistics.getRateOfReturn()
+        val actual = lottoStatistics.rateOfReturn
         assertThat(actual).isEqualTo(rateOfReturn)
-    }
-
-    @ParameterizedTest
-    @ValueSource(doubles = [0.0, 0.9999999])
-    fun `수익률이 1 미만 일 경우 수익률 손해를 파악하는 메서드는 true를 반환한다`(rateOfReturn: Double) {
-        val lottoStatistics = LottoStatistics(emptyMap(), purchaseAmount)
-        val expected = true
-
-        val actual = lottoStatistics.isLossMoney(rateOfReturn)
-
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @ParameterizedTest
-    @ValueSource(doubles = [1.0, 100.0])
-    fun `수익률이 1 이상 일 경우 수익률 손해를 파악하는 메서드는 false를 반환한다`(rateOfReturn: Double) {
-        val lottoStatistics = LottoStatistics(emptyMap(), purchaseAmount)
-        val expected = false
-
-        val actual = lottoStatistics.isLossMoney(rateOfReturn)
-
-        assertThat(actual).isEqualTo(expected)
     }
 
     companion object {
