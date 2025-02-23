@@ -52,7 +52,7 @@ class OutputView {
         rank: Rank,
         lottoStatistics: Map<Rank, Int>,
     ) {
-        if (rank == Rank.SECOND) {
+        if (rank.isMatchedBonus()) {
             printLottoSecondRankStatistics(lottoStatistics[rank] ?: INITIAL_LOTTO_RANK_COUNT)
         } else {
             printLottoDefaultRankStatistics(rank, lottoStatistics)

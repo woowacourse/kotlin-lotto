@@ -14,6 +14,8 @@ enum class Rank(
 
     ;
 
+    fun isMatchedBonus(): Boolean = this.isMatchedBonus
+
     companion object {
         private const val MATCH_COUNT_OF_SECOND_OR_THIRD = 5
 
