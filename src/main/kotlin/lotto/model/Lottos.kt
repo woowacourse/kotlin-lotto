@@ -18,5 +18,5 @@ class Lottos(
         return countResult
     }
 
-    fun getAllLottoNumbers(): List<List<Int>> = lottos.map { lotto -> lotto.numbers }
+    fun getAllLottoNumbers(): List<List<LottoNumber>> = lottos.map { lotto -> lotto.numbers }
 }
