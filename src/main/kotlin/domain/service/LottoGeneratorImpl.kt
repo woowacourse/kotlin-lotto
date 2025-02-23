@@ -12,10 +12,10 @@ import util.ErrorConstants.ERROR
 class LottoGeneratorImpl(
     val standardPrice: Int = STANDARD_AMOUNT_UNIT,
 ) : LottoGenerator {
-    override fun generate(money: PurchasePrice): List<Lotto> {
-        validateMoney(money.value)
-        val purchaseLottoCount = money.getPurchasableLottoCount()
-        return List<Lotto>(purchaseLottoCount) { makeOneLotto() }
+    override fun generate(quickPickLottoAmout: Int): List<Lotto> {
+        return List<Lotto>(quickPickLottoAmout) { makeOneLotto() }
+    }
+
     }
 
     private fun makeOneLotto(): Lotto {
