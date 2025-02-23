@@ -55,10 +55,12 @@ class LottoController(
             action = {
                 val input = inputView.readWinningNumbers()
                 Lotto(
-                    input.split(",").map {
-                        NumericValidator(it)
-                        LottoNumber(it.trim().toInt())
-                    },
+                    input
+                        .split(",")
+                        .map {
+                            NumericValidator(it)
+                            LottoNumber(it.trim().toInt())
+                        }.toSet(),
                 )
             },
             onError = { outputView.printErrorMessage(it) },

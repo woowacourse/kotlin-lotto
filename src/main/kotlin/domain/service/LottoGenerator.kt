@@ -14,7 +14,12 @@ class LottoGenerator(
     }
 
     private fun makeOneLotto(): Lotto {
-        val newLotto = (LOTTO_MIN..LOTTO_MAX).shuffled().take(6).map { LottoNumber(it) }
+        val newLotto =
+            (LOTTO_MIN..LOTTO_MAX)
+                .shuffled()
+                .take(6)
+                .map { LottoNumber(it) }
+                .toSet()
         return Lotto(newLotto)
     }
 
