@@ -1,6 +1,6 @@
 package domain.model
 
-import domain.model.Lotto.Companion.ERROR
+import ERROR
 import domain.strategy.KoreanLottoGenerator.Companion.LOTTO_MAX
 import domain.strategy.KoreanLottoGenerator.Companion.LOTTO_MIN
 
