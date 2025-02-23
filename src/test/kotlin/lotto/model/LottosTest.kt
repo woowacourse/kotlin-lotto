@@ -29,7 +29,7 @@ class LottosTest {
                 Rank.FIFTH to 1,
                 Rank.MISS to 1,
             )
-        val actualResult = Lottos(lottos).countLottoByRank(lottoRankDiscriminator)
+        val actualResult = Lottos(lottos).countLottoByRank(lottoRankDiscriminator::discriminateLotto)
 
         assertEquals(expectedResult, actualResult)
     }
