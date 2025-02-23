@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 class LottoStoreTest {
     @Test
-    fun `로또를 구입 갯수만큼 발행한다 `() {
+    fun `로또를 5개 발행한다 `() {
         val lottoStore = LottoStore()
         val purchaseCount = 5
         assertThat(lottoStore.getTickets(purchaseCount, RandomLottoGenerator()).size).isEqualTo(5)
