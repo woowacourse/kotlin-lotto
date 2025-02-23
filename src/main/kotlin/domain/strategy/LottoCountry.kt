@@ -1,5 +1,7 @@
 package domain.strategy
 
+import domain.model.LottoNumber
+
 interface LottoCountry {
-    fun generateNumber(): List<Int>
+    fun generateNumber(): List<LottoNumber>
 }

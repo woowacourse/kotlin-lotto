@@ -18,8 +18,8 @@ class LottoMatchCalculator(
     }
 
     private fun getRank(lotto: Lotto): Rank {
-        val buyLottoNumbers = lotto.numbers
-        val winningLottoNumbers = winningLotto.lotto.numbers
+        val buyLottoNumbers = lotto.numbers.map { it.number }
+        val winningLottoNumbers = winningLotto.lotto.numbers.map { it.number }
 
         val lottoMatches = buyLottoNumbers.intersect(winningLottoNumbers.toSet()).size
         val isBonusMatched = winningLotto.bonusNumber.value in buyLottoNumbers

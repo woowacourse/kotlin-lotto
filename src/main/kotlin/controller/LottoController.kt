@@ -2,6 +2,7 @@ package controller
 
 import domain.model.BonusNumber
 import domain.model.Lotto
+import domain.model.LottoNumber
 import domain.model.LottoResult
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
@@ -44,14 +45,14 @@ class LottoController(
 
     private fun displayBuyLotto(lotto: List<Lotto>) {
         outputView.printPurchasedLottoCount(lotto.size)
-        outputView.printPurchasedLotto(lotto.map { it.numbers.sorted() }.joinToString("\n"))
+        outputView.printPurchasedLotto(lotto.map { it.numbers.map { num -> num.number }.sorted() }.joinToString("\n"))
     }
 
     private fun getWinningNumbers(): Lotto =
         retryWhenException(
             action = {
                 val input = inputView.readWinningNumbers()
-                Lotto(input.map { it.toInt() })
+                Lotto(input.map { LottoNumber(it.toInt()) })
             },
             onError = { outputView.printErrorMessage(it) },
         )

@@ -5,7 +5,7 @@ class WinningLotto(
     val bonusNumber: BonusNumber,
 ) {
     init {
-        require(bonusNumber.value !in lotto.numbers) { DUPLICATED_BONUS_NUMBER }
+        require(bonusNumber.value !in lotto.numbers.map { it.number }) { DUPLICATED_BONUS_NUMBER }
     }
 
     companion object {

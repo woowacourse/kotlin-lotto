@@ -1,8 +1,15 @@
 package domain.strategy
 
+import domain.model.LottoNumber
+
 class KoreanLottoGenerator : LottoCountry {
-    override fun generateNumber(): List<Int> {
-        return (LOTTO_MIN..LOTTO_MAX).shuffled().take(LOTTO_SIZE)
+    override fun generateNumber(): List<LottoNumber> {
+        val lottoMachine = (LOTTO_MIN..LOTTO_MAX).shuffled().toMutableList()
+        val lotto = mutableListOf<LottoNumber>()
+        repeat(LOTTO_SIZE) {
+            lotto.add(LottoNumber(lottoMachine.removeFirst()))
+        }
+        return lotto
     }
 
     companion object {
