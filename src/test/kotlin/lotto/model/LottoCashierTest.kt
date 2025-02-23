@@ -3,7 +3,6 @@ package lotto.model
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -18,7 +17,9 @@ class LottoCashierTest {
 
     @Test
     fun `입력한 금액이 1,000으로 나누어지지 않으면 실패한다`() {
-        assertThrows<IllegalArgumentException> { LottoCashier(1001) }
+        assertThatThrownBy {
+            LottoCashier(1001)
+        }.hasMessageContaining("단위")
     }
 
     @Test
