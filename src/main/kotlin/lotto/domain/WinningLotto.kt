@@ -8,13 +8,13 @@ class WinningLotto(private val winningLottoNumber: Lotto, private val winningBon
     }
 
     fun match(lotto: Lotto): Rank {
-        val matchedLotto: Int = lotto.getSortedLotto().intersect(winningLottoNumber.getSortedLotto().toSet()).size
-        val isMatchedBonus: Boolean = lotto.getSortedLotto().contains(winningBonusNumber)
+        val matchedLotto: Int = lotto.numbers.intersect(winningLottoNumber.numbers.toSet()).size
+        val isMatchedBonus: Boolean = lotto.numbers.contains(winningBonusNumber)
         return Rank.getRankState(matchedLotto, isMatchedBonus)
     }
 
-    private fun validateNotDuplicationNumber() {
-        require(winningLottoNumber.getSortedLotto().all { it != winningBonusNumber }) { ERROR_NOT_DUPLICATE_BONUS_NUMBER }
+    fun validateNotDuplicationNumber() {
+        require(winningLottoNumber.numbers.all { it != winningBonusNumber }) { ERROR_NOT_DUPLICATE_BONUS_NUMBER }
     }
 
     companion object {
