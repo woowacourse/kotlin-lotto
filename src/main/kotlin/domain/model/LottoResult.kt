@@ -1,13 +1,15 @@
 package domain.model
 
 class LottoResult(
-    val result: Map<Rank, Int>,
+    private val result: Map<Rank, Int>,
 ) {
     override fun toString(): String =
         result
             .map {
                 getWinningMessage(it.key, it.value)
             }.joinToString("\n")
+
+    fun getRankMatchCount(rank: Rank): Int = result[rank] ?: 0
 
     fun getProfitRate(purchasePrice: PurchasePrice): String {
         val totalPrice: Double =

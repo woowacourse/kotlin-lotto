@@ -18,9 +18,9 @@ class LottoMatchCalculatorTest {
                 ),
             )
         val winningLotto = WinningLotto(Lotto.of(1, 3, 4, 5, 6, 7), LottoNumber(2))
-        val result = LottoMatchCalculator().calculate(lottoTicket, winningLotto).result
+        val result = LottoMatchCalculator().calculate(lottoTicket, winningLotto)
 
-        assertThat(result[Rank.SECOND]).isEqualTo(1)
+        assertThat(result.getRankMatchCount(Rank.SECOND)).isEqualTo(1)
     }
 
     @Test
@@ -39,11 +39,11 @@ class LottoMatchCalculatorTest {
             )
 
         val winningLotto = WinningLotto(Lotto.of(1, 3, 4, 5, 6, 7), LottoNumber(2))
-        val result = LottoMatchCalculator().calculate(lottoTicket, winningLotto).result
+        val result = LottoMatchCalculator().calculate(lottoTicket, winningLotto)
 
-        assertThat(result[Rank.SECOND]).isEqualTo(2)
-        assertThat(result[Rank.FOURTH]).isEqualTo(1)
-        assertThat(result[Rank.FIFTH]).isEqualTo(1)
-        assertThat(result[Rank.MISS]).isEqualTo(3)
+        assertThat(result.getRankMatchCount(Rank.SECOND)).isEqualTo(2)
+        assertThat(result.getRankMatchCount(Rank.FOURTH)).isEqualTo(1)
+        assertThat(result.getRankMatchCount(Rank.FIFTH)).isEqualTo(1)
+        assertThat(result.getRankMatchCount(Rank.MISS)).isEqualTo(3)
     }
 }
