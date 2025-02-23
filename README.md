@@ -39,3 +39,8 @@
 - [x] 테스트 코드의 가독성 향상을 위한 test Fixture 적용
 - [x] 테스트 코드의 에러 메시지 상수화
 - [x] 불필요한 래핑 제거
+
+## 두번째 피드백 리팩토링
+- [x] Lotto클래스 프로퍼티의 list내 Int를 LottoNumber로 래핑
+- [x] 로또 객체 변환 및 추출 로직을 LottoFactory로 함수화
+- [x] 공통 에러 메시지를 Const 파일로 분리
