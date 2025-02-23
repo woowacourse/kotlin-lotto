@@ -5,9 +5,6 @@ import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.WinningLotto
-import lotto.validator.BonusNumberValidator
-import lotto.validator.PurchaseAmountValidator
-import lotto.validator.WinningNumberValidator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -17,36 +14,52 @@ class LottoController(
 ) {
     fun run() {
         val purchaseAmount = getPurchaseAmount()
+        val lottoTicket = prepareLottoTicket(purchaseAmount)
+        val winningLotto = readWinningLotto()
+        val lottoResult = createLottoResult(purchaseAmount, lottoTicket, winningLotto)
+        showResult(lottoResult)
+    }
+
+    private fun prepareLottoTicket(purchaseAmount: Int): List<Lotto> {
         val lottoTickets = LottoMachine().buyLottoTickets(purchaseAmount)
-        outputView.printPurchasedLottos(lottoTickets)
+        outputView.printPurchasedLottoTickets(lottoTickets)
+        return lottoTickets
+    }
+
+    private fun readWinningLotto(): WinningLotto {
         val winningNumber = getWinningNumber()
-        val bonusNumber = getBonusNumber(winningNumber)
-        val lottoResult = LottoResult(WinningLotto(winningNumber, bonusNumber))
-        lottoResult.calculateWinningStats(lottoTickets)
+        val bonusNumber = getBonusNumber()
+        return WinningLotto(winningNumber, bonusNumber)
+    }
+
+    private fun createLottoResult(
+        purchaseAmount: Int,
+        lottoTicket: List<Lotto>,
+        winningLotto: WinningLotto,
+    ): LottoResult {
+        val lottoResult = LottoResult(winningLotto)
+        lottoResult.calculateWinningStats(lottoTicket)
+        val prize = lottoResult.calculatePrize()
+        lottoResult.calculateProfit(prize, purchaseAmount)
+        return lottoResult
+    }
+
+    private fun showResult(lottoResult: LottoResult) {
         outputView.printWinningStats(lottoResult.getWinningStats())
-        lottoResult.calculatePrize()
         outputView.printProfit(lottoResult.getProfitRate())
     }
 
     private fun getPurchaseAmount(): Int {
-        val purchaseAmount = inputView.getPurchaseAmount()
-        PurchaseAmountValidator(purchaseAmount)
-        return parseToInt(purchaseAmount)
-    }
-
-    private fun parseToInt(input: String): Int {
-        return input.toInt()
+        return inputView.getPurchaseAmount().toInt()
     }
 
     private fun getWinningNumber(): Lotto {
-        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { it.trim() }
-        WinningNumberValidator(winningNumber)
-        return Lotto(winningNumber.map { LottoNumber(it.toInt()) })
+        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber(it.trim().toInt()) }
+        return Lotto(winningNumber)
     }
 
-    private fun getBonusNumber(winningNumber: Lotto): LottoNumber {
+    private fun getBonusNumber(): LottoNumber {
         val bonusNumber = inputView.getBonusNumber()
-        BonusNumberValidator(bonusNumber, winningNumber)
         return LottoNumber(bonusNumber.toInt())
     }
 

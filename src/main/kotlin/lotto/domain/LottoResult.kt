@@ -9,7 +9,7 @@ class LottoResult(private val winningLotto: WinningLotto) {
     fun calculateWinningStats(lottoTickets: List<Lotto>) {
         val winningStats =
             mutableMapOf<Rank, Int>().apply {
-                Rank.entries.forEach { this[it] = DEFAULT_VALUE }
+                Rank.entries.filterNot { it == Rank.NONE }.forEach { this[it] = DEFAULT_VALUE }
                 lottoTickets.forEach { updateWinningStats(winningLotto.match(it), this) }
             }
         this.winningStats = winningStats.toMap()

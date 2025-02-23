@@ -2,18 +2,19 @@ package lotto.view
 
 import lotto.domain.Lotto
 import lotto.util.Rank
+import kotlin.math.floor
 
 class OutputView {
-    fun printPurchasedLottos(lottos: List<Lotto>) {
+    fun printPurchasedLottoTickets(lottos: List<Lotto>) {
         println(MESSAGE_BUY_LOTTO.format(lottos.size))
         lottos.forEach { lotto ->
-            println(lotto.numbers)
+            println(lotto.toIntList().joinToString(", ", "[", "]"))
         }
     }
 
     fun printWinningStats(winningStats: Map<Rank, Int>) {
         println(MESSAGE_WINNING_STATS)
-        for ((state, count) in winningStats) {
+        for ((state, count) in winningStats.toList().reversed()) {
             printWinningStat(state, count)
         }
     }
@@ -44,7 +45,8 @@ class OutputView {
     }
 
     fun printProfit(profit: Double) {
-        println(MESSAGE_PROFIT.format(profit))
+        val formattedProfit = floor(profit * 100) / 100
+        println(MESSAGE_PROFIT.format(formattedProfit))
     }
 
     companion object {
