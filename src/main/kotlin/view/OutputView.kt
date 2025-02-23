@@ -1,6 +1,7 @@
 package view
 
 import domain.model.Lotto
+import domain.model.LottoMatchResult
 import domain.model.Rank
 import util.joinToLineBreak
 import kotlin.collections.sorted
@@ -20,7 +21,7 @@ class OutputView {
     }
 
     fun printWinningResult(
-        winningResult: Map<Rank, Int>,
+        winningResult: LottoMatchResult,
         profitRate: Double,
     ) {
         val roundedProfitRate = ROUND.format(profitRate)
@@ -35,29 +36,27 @@ class OutputView {
         println(MESSAGE_LOSS)
     }
 
-    private fun makeLottoResultMessage(lottoResult: Map<Rank, Int>): String {
-        return lottoResult.entries
-            .sortedBy {
-                it.key.winningMoney
+    private fun makeLottoResultMessage(lottoResult: LottoMatchResult): String {
+        return enumValues<Rank>().sortedBy {
+            it.countOfMatch
+        }
+            .filterNot { rank ->
+                rank == Rank.MISS
             }
-            .filterNot {
-                it.key == Rank.MISS
-            }
-            .map { (rank, matchedCount) ->
-                when (rank) {
-                    Rank.SECOND ->
-                        MESSAGE_BONUS_BALL_MATCH.format(
-                            rank.countOfMatch,
-                            rank.winningMoney,
-                            matchedCount,
-                        )
-
-                    else ->
-                        MESSAGE_EACH_RANK_RESULT.format(
-                            rank.countOfMatch,
-                            rank.winningMoney,
-                            matchedCount,
-                        )
+            .map { rank ->
+                val matchedCount = lottoResult.getWinningCount(rank)
+                if (rank.requiresBonusMatch) {
+                    MESSAGE_BONUS_BALL_MATCH.format(
+                        rank.countOfMatch,
+                        rank.winningMoney,
+                        matchedCount,
+                    )
+                } else {
+                    MESSAGE_EACH_RANK_RESULT.format(
+                        rank.countOfMatch,
+                        rank.winningMoney,
+                        matchedCount,
+                    )
                 }
             }.joinToLineBreak()
     }
