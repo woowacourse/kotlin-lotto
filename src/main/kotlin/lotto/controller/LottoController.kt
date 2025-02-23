@@ -33,7 +33,7 @@ class LottoController(
         val lottoBonusNumber = setupLastWeekBonusNumber()
 
         val lottoRankDiscriminator = LottoRankDiscriminator(lastWeekLottoWinningNumbers, lottoBonusNumber)
-        val lottoWinningResult = lottos.countLottoByRank(lottoRankDiscriminator)
+        val lottoWinningResult = lottos.countLottoByRank(lottoRankDiscriminator::discriminateLotto)
 
         displayLottosResult(lottoWinningResult)
         calculateAndDisplayProfitRate(lottoWinningResult, lottoCashier)
