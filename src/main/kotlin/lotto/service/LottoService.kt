@@ -13,6 +13,7 @@ class LottoService {
     fun getPurchaseLottos(purchaseAmount: Int): Lottos {
         val lottoCashier = LottoCashier(purchaseAmount)
         val lottoMachine = LottoMachine()
+
         return lottoMachine.getLottos(lottoCashier.getPurchaseQuantity())
     }
 
