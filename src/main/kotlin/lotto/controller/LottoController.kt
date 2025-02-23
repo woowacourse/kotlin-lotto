@@ -97,7 +97,7 @@ class LottoController(
                 countLottoByRank = lottoWinningResult,
                 purchaseAmount = lottoCashier.amount,
             )
-        val profitStatus = ProfitStatus.fromProfitStatus(profitRate)
+        val profitStatus = ProfitStatus.from(profitRate)
 
         outputView.printProfitRate(
             profitRate = profitRate,

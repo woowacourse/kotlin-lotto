@@ -13,7 +13,7 @@ class ProfitStatusTest {
         profitRate: Float,
         expectedProfitStatus: ProfitStatus,
     ) {
-        val actualProfitStatus = ProfitStatus.fromProfitStatus(profitRate)
+        val actualProfitStatus = ProfitStatus.from(profitRate)
         assertEquals(expectedProfitStatus, actualProfitStatus)
     }
 

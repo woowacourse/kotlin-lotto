@@ -9,7 +9,7 @@ enum class ProfitStatus(
     ;
 
     companion object {
-        fun fromProfitStatus(profitRate: Float): ProfitStatus =
+        fun from(profitRate: Float): ProfitStatus =
             when {
                 profitRate > 1f -> PROFIT
                 profitRate < 1f -> LOSS

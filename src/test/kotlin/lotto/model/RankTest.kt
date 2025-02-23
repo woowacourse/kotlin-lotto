@@ -15,7 +15,7 @@ class RankTest {
         expectedRank: Rank,
     ) {
         val matchBonus = false
-        val rankByCountOfMatch = Rank.fromMatchResult(countOfMatch, matchBonus)
+        val rankByCountOfMatch = Rank.from(countOfMatch, matchBonus)
 
         assertEquals(expectedRank, rankByCountOfMatch)
     }
@@ -26,7 +26,7 @@ class RankTest {
         val expectedRank = if (matchBonus) Rank.SECOND else Rank.THIRD
 
         val countOfMatch = 5
-        val actualRank = Rank.fromMatchResult(countOfMatch, matchBonus)
+        val actualRank = Rank.from(countOfMatch, matchBonus)
 
         assertEquals(expectedRank, actualRank)
     }
@@ -37,7 +37,7 @@ class RankTest {
         val expectedRank = Rank.FIFTH
 
         val countOfMatch = 3
-        val actualRank = Rank.fromMatchResult(countOfMatch, matchBonus)
+        val actualRank = Rank.from(countOfMatch, matchBonus)
 
         assertEquals(expectedRank, actualRank)
     }

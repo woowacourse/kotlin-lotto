@@ -18,7 +18,7 @@ class LottoRankDiscriminator(
         val countOfMatch = countMatchWinningNumbers(userLotto)
         val matchBonus = isHaveBonusNumber(userLotto)
 
-        return Rank.fromMatchResult(countOfMatch, matchBonus)
+        return Rank.from(countOfMatch, matchBonus)
     }
 
     private fun countMatchWinningNumbers(userLotto: Lotto): Int {

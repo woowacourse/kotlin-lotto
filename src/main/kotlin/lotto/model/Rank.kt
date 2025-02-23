@@ -14,7 +14,7 @@ enum class Rank(
     ;
 
     companion object {
-        fun fromMatchResult(
+        fun from(
             countOfMatch: Int,
             matchBonus: Boolean,
         ): Rank {
