@@ -8,7 +8,7 @@ class LottoMachine {
     fun buyLottos(purchaseAmount: Int): List<Lotto> {
         val randomGenerator = LottoRandomGenerator()
 
-        val lottoCount = getLottoCount(purchaseAmount)
+        val lottoCount = getLottoCount(LottoPayment(purchaseAmount))
         val lottos: MutableList<Lotto> = mutableListOf()
 
         repeat(lottoCount) {
@@ -17,8 +17,8 @@ class LottoMachine {
         return lottos.toList()
     }
 
-    fun getLottoCount(purchaseAmount: Int): Int {
-        return purchaseAmount / LOTTO_PRICE
+    fun getLottoCount(purchaseAmount: LottoPayment): Int {
+        return purchaseAmount.toInt() / LOTTO_PRICE
     }
 
     companion object {
