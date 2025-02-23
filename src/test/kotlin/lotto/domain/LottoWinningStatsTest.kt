@@ -3,7 +3,6 @@ package lotto.domain
 import lotto.domain.model.Lotto
 import lotto.domain.model.Lottos
 import lotto.domain.model.WinningLotto
-import lotto.domain.service.RandomLottoGenerator
 import lotto.domain.value.EarningRate
 import lotto.domain.value.LottoNumber
 import lotto.enums.Rank
@@ -17,9 +16,8 @@ class LottoWinningStatsTest {
 
     @BeforeEach
     fun setUp() {
-        val lottoNumbers = (1..6).map { LottoNumber(it) }.toSet()
-        winningLotto = WinningLotto(Lotto(lottoNumbers), LottoNumber(45))
-        lottos = Lottos(listOf(RandomLottoGenerator().generateLotto()))
+        winningLotto = WinningLotto(Lotto.createManual((1..6).toSet()), LottoNumber(45))
+        lottos = Lottos(listOf(Lotto.createRandom()))
     }
 
     @Test
