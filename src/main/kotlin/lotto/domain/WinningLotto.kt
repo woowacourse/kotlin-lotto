@@ -13,7 +13,7 @@ class WinningLotto(private val winningLottoNumber: Lotto, private val winningBon
         return Rank.getRankState(matchedLotto, isMatchedBonus)
     }
 
-    fun validateNotDuplicationNumber() {
+    private fun validateNotDuplicationNumber() {
         require(winningLottoNumber.numbers.all { it != winningBonusNumber }) { ERROR_NOT_DUPLICATE_BONUS_NUMBER }
     }
 
