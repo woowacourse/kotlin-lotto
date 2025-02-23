@@ -1,8 +1,8 @@
 package lotto.domain
 
 class WinningLotto(
-    val winningLotto: Lotto,
-    val bounusNumber: LottoNumber,
+    private val winningLotto: Lotto,
+    private val bounusNumber: LottoNumber,
 ) {
     init {
         require(!winningLotto.lottoNums.contains(bounusNumber)) { BONUS_BALL_DUPLICATE_ERROR_MESSAGE }
