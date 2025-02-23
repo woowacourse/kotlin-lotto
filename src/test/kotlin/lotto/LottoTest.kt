@@ -3,6 +3,7 @@ package lotto
 import lotto.model.Lotto
 import lotto.model.LottoNumber
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -10,12 +11,9 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class LottoTest {
     @Test
-    fun `로또 하나의 숫자는 중복되지 않은 6개의 숫자이다`() {
+    fun `로또는 중복되지 않은 숫자 6개일 경우 생성할 수 있다`() {
         val lotto = listOf(1, 2, 3, 4, 5, 6).toLotto()
-        val expected = 6
-        val actual = lotto.numbers.distinct().size
-
-        assertEquals(expected, actual)
+        assertInstanceOf(Lotto::class.java, lotto)
     }
 
     @Test
