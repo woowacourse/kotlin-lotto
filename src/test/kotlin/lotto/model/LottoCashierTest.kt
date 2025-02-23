@@ -23,7 +23,7 @@ class LottoCashierTest {
     }
 
     @Test
-    fun `구입 금액이 5000원이면 로또를 5개 반환한다`() {
+    fun `구입 금액이 5,000원이면 로또 구입 개수를 5개로 반환한다`() {
         val lottoCashier = LottoCashier(amount = 5000)
         val lottoQuantity = lottoCashier.getPurchaseQuantity()
 
