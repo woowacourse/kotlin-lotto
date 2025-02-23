@@ -31,7 +31,7 @@ class LottoController(
         val lottos = lottoMachine.getLottos(lottoQuantity)
 
         lottos.getAllLottoNumbers().forEach { lottoNumbers ->
-            outputView.printLottoNumbers(lottoNumbers)
+            outputView.printLottoNumbers(lottoNumbers.map { it.number })
         }
 
         return lottos
