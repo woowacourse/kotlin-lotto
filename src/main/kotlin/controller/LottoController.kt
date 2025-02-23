@@ -8,6 +8,7 @@ import domain.model.PurchasePrice
 import domain.model.WinningLotto
 import domain.service.LottoGenerator
 import domain.service.LottoMatchCalculator
+import util.LottoFactory
 import util.retryWhenException
 import view.InputView
 import view.OutputView
@@ -45,7 +46,7 @@ class LottoController(
 
     private fun displayBuyLotto(lotto: List<Lotto>) {
         outputView.printPurchasedLottoCount(lotto.size)
-        outputView.printPurchasedLotto(lotto.map { it.numbers.map { num -> num.number }.sorted() }.joinToString("\n"))
+        outputView.printPurchasedLotto(lotto.map { LottoFactory().extractionNumber(it).sorted() }.joinToString("\n"))
     }
 
     private fun getWinningNumbers(): Lotto =

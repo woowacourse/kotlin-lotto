@@ -2,36 +2,32 @@ package domain.service
 
 import domain.model.BonusNumber
 import domain.model.Lotto
-import domain.model.LottoNumber
 import domain.model.Rank
 import domain.model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import util.LottoFactory
 
 class LottoMatchCalculatorTest {
     private lateinit var purchaseLotto: List<Lotto>
     private lateinit var purchaseOneLotto: List<Lotto>
     private lateinit var winningLotto: WinningLotto
 
-    fun lottoOf(vararg numbers: Int): Lotto {
-        return Lotto(numbers.map { LottoNumber(it) })
-    }
-
     @BeforeEach
     fun setUp() {
         purchaseLotto =
             listOf(
-                lottoOf(1, 2, 3, 4, 5, 6),
-                lottoOf(1, 2, 3, 4, 5, 7),
-                lottoOf(1, 2, 3, 4, 8, 7),
-                lottoOf(1, 2, 3, 9, 8, 7),
-                lottoOf(1, 2, 10, 9, 8, 7),
-                lottoOf(1, 11, 10, 9, 8, 7),
-                lottoOf(12, 11, 10, 9, 8, 7),
+                LottoFactory().lottoOf(1, 2, 3, 4, 5, 6),
+                LottoFactory().lottoOf(1, 2, 3, 4, 5, 7),
+                LottoFactory().lottoOf(1, 2, 3, 4, 8, 7),
+                LottoFactory().lottoOf(1, 2, 3, 9, 8, 7),
+                LottoFactory().lottoOf(1, 2, 10, 9, 8, 7),
+                LottoFactory().lottoOf(1, 11, 10, 9, 8, 7),
+                LottoFactory().lottoOf(12, 11, 10, 9, 8, 7),
             )
-        purchaseOneLotto = listOf(lottoOf(1, 2, 3, 4, 5, 6))
-        winningLotto = WinningLotto(lottoOf(1, 3, 4, 5, 6, 7), BonusNumber(2))
+        purchaseOneLotto = listOf(LottoFactory().lottoOf(1, 2, 3, 4, 5, 6))
+        winningLotto = WinningLotto(LottoFactory().lottoOf(1, 3, 4, 5, 6, 7), BonusNumber(2))
     }
 
     @Test

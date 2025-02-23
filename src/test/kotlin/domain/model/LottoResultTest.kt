@@ -18,7 +18,4 @@ class LottoResultTest {
 
         assertThat(profitRate).isEqualTo("2064.70")
     }
-
-    companion object {
-    }
 }
