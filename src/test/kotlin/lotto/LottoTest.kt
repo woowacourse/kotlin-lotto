@@ -43,6 +43,17 @@ class LottoTest {
 
         assertEquals(expected, lotto.contains(compareLottoNumber))
     }
+
+    @Test
+    fun `로또는 다른 로또와 비교했을 때 일치하는 로또 번호 개수를 반환할 수 있다`() {
+        val lotto = listOf(1, 2, 3, 4, 5, 6).toLotto()
+        val otherLotto = listOf(3, 4, 5, 10, 12, 13).toLotto()
+        val expected = 3
+
+        val actual = lotto.matchedCount(otherLotto)
+
+        assertEquals(expected, actual)
+    }
 }
 
 // Fake Constructor
