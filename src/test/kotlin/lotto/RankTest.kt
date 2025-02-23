@@ -22,7 +22,7 @@ class RankTest {
         matchBonus: Boolean,
         expectedRank: Rank,
     ) {
-        val result = Rank.fromMatch(countOfMatch, matchBonus)
+        val result = Rank.valueOf(countOfMatch, matchBonus)
         assertThat(result).isEqualTo(expectedRank)
     }
 }
