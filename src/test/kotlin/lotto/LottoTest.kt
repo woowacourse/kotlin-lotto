@@ -2,9 +2,11 @@ package lotto
 
 import lotto.model.Lotto
 import lotto.model.LottoNumber
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class LottoTest {
     @Test
@@ -13,7 +15,7 @@ class LottoTest {
         val expected = 6
         val actual = lotto.numbers.distinct().size
 
-        Assertions.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -28,6 +30,18 @@ class LottoTest {
         assertThrows<IllegalArgumentException> {
             listOf(1, 2, 3, 4, 5).toLotto()
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["1:true", "2:true", "10:false", "30:false"], delimiter = ':')
+    fun `로또는 인자로 받은 로또 번호와의 중복 여부를 판단할 수 있다`(
+        number: Int,
+        expected: Boolean,
+    ) {
+        val lotto = listOf(1, 2, 3, 4, 5, 6).toLotto()
+        val compareLottoNumber = LottoNumber(number)
+
+        assertEquals(expected, lotto.contains(compareLottoNumber))
     }
 }
 

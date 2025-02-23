@@ -5,15 +5,15 @@ class WinningLotto(
     val bonusNumber: LottoNumber,
 ) {
     init {
-        require(winningNumbers.numbers.contains(bonusNumber).not()) { ERROR_DUPLICATED_BONUS_NUMBER }
+        require(!winningNumbers.contains(bonusNumber)) { ERROR_DUPLICATED_BONUS_NUMBER }
     }
 
     fun findLottoRank(lotto: Lotto): Rank {
         val matchCount =
             winningNumbers.numbers.count { winningLottoNumber ->
-                lotto.numbers.contains(winningLottoNumber)
+                lotto.contains(winningLottoNumber)
             }
-        val isMatchedBonus = lotto.numbers.contains(bonusNumber)
+        val isMatchedBonus = lotto.contains(bonusNumber)
         return Rank.valueOf(matchCount, isMatchedBonus)
     }
 
