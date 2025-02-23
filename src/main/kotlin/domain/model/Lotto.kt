@@ -1,7 +1,7 @@
 package domain.model
 
-import domain.strategy.KoreanLottoGenerator.Companion.LOTTO_SIZE
 import ERROR
+import domain.strategy.KoreanLottoGenerator.Companion.LOTTO_SIZE
 
 class Lotto(val numbers: List<LottoNumber>) {
     init {

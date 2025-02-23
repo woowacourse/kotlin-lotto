@@ -1,7 +1,7 @@
 package domain.model
 
-import util.LottoFactory
 import ERROR
+import util.LottoFactory
 
 class WinningLotto(
     val lotto: Lotto,
