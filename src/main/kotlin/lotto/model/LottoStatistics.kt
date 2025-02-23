@@ -20,7 +20,7 @@ class LottoStatistics(
         return sum
     }
 
-    fun getIsLossMoney(rateOfReturn: Double): Boolean = rateOfReturn < 1
+    fun isLossMoney(rateOfReturn: Double): Boolean = rateOfReturn < 1
 
     companion object {
         private const val INITIAL_TOTAL_PRIZE = 0.0

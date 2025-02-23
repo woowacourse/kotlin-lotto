@@ -76,6 +76,6 @@ class LottoController(
     private fun processLottoStatistics(lottoStatistics: LottoStatistics) {
         outputView.printLottoStatistics(lottoStatistics.rankStatistics)
         val rateOfReturn = lottoStatistics.getRateOfReturn()
-        outputView.printLottoRateOfReturn(rateOfReturn, lottoStatistics.getIsLossMoney(rateOfReturn))
+        outputView.printLottoRateOfReturn(rateOfReturn, lottoStatistics.isLossMoney(rateOfReturn))
     }
 }

@@ -36,7 +36,7 @@ class LottoStatisticsTest {
         val lottoStatistics = LottoStatistics(emptyMap(), purchaseAmount)
         val expected = true
 
-        val actual = lottoStatistics.getIsLossMoney(rateOfReturn)
+        val actual = lottoStatistics.isLossMoney(rateOfReturn)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -47,7 +47,7 @@ class LottoStatisticsTest {
         val lottoStatistics = LottoStatistics(emptyMap(), purchaseAmount)
         val expected = false
 
-        val actual = lottoStatistics.getIsLossMoney(rateOfReturn)
+        val actual = lottoStatistics.isLossMoney(rateOfReturn)
 
         assertThat(actual).isEqualTo(expected)
     }
