@@ -14,16 +14,16 @@ class LottoRankDiscriminator(
         }
     }
 
-    fun discriminateLotto(existLotto: Lotto): Rank {
-        val countOfMatch = countMatchWinningNumbers(existLotto)
-        val matchBonus = isHaveBonusNumber(existLotto)
+    fun discriminateLotto(userLotto: Lotto): Rank {
+        val countOfMatch = countMatchWinningNumbers(userLotto)
+        val matchBonus = isHaveBonusNumber(userLotto)
 
         return Rank.fromMatchResult(countOfMatch, matchBonus)
     }
 
-    private fun countMatchWinningNumbers(existLotto: Lotto): Int {
+    private fun countMatchWinningNumbers(userLotto: Lotto): Int {
         val winningNumbers = winningLotto.numbers.map { it.number }
-        return existLotto.numbers.count { it.number in winningNumbers }
+        return userLotto.numbers.count { it.number in winningNumbers }
     }
 
     private fun isHaveBonusNumber(lotto: Lotto): Boolean = bonusNumber.number in lotto.numbers.map { it.number }

@@ -31,8 +31,8 @@ class LottoRankDiscriminatorTest {
         val bonusNumber = LottoNumber(7)
 
         val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusNumber)
-        val existingLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 7))
-        val rank = lottoRankDiscriminator.discriminateLotto(existingLotto)
+        val userLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 7))
+        val rank = lottoRankDiscriminator.discriminateLotto(userLotto)
 
         Assertions.assertEquals(Rank.SECOND, rank)
     }
