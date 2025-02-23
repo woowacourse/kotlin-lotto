@@ -20,7 +20,7 @@ class LottoCashier(
         }
     }
 
-    fun getLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT
+    fun getQuantity(): Int = amount / LOTTO_EACH_AMOUNT
 
     companion object {
         private const val LOTTO_MIN_AMOUNT = 0

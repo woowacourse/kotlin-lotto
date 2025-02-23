@@ -24,7 +24,7 @@ class LottoCashierTest {
     @Test
     fun `구입 금액이 5000원이면 로또를 5개 반환한다`() {
         val lottoCashier = LottoCashier(amount = 5000)
-        val lottoQuantity = lottoCashier.getLottoQuantity()
+        val lottoQuantity = lottoCashier.getQuantity()
 
         assertEquals(5, lottoQuantity)
     }
