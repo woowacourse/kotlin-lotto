@@ -1,5 +1,7 @@
 package lotto.domain
 
+import lotto.util.Rank
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -22,5 +24,15 @@ class WinningLottoTest {
                 winningBonusNumber = LottoNumber(1),
             )
         }
+    }
+
+    @Test
+    fun `로또 번호를 넣으면 당첨 등수를 반환한다`() {
+        val winningLottoTicket =
+            Lotto(listOf(LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6)))
+        val winningBonusNumber = LottoNumber(7)
+        val winningLotto = WinningLotto(winningLottoTicket, winningBonusNumber)
+        val lotto = Lotto(listOf(LottoNumber(1), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6)))
+        assertThat(winningLotto.match(lotto)).isEqualTo(Rank.FIRST)
     }
 }

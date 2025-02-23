@@ -2,25 +2,38 @@ package lotto.domain
 
 import lotto.util.Rank
 
-class LottoResult(private val winningNumber: List<LottoNumber>, private val bonusNumber: LottoNumber) {
-    fun matchLotto(lottos: List<Lotto>): Map<Rank, Int> {
-        val winningStats: MutableMap<Rank, Int> =
-            mutableMapOf(
-                Rank.FIFTH to DEFAULT_VALUE,
-                Rank.FOURTH to DEFAULT_VALUE,
-                Rank.THIRD to DEFAULT_VALUE,
-                Rank.SECOND to DEFAULT_VALUE,
-                Rank.FIRST to DEFAULT_VALUE,
-            )
+class LottoResult(private val winningLotto: WinningLotto) {
+    private var winningStats: Map<Rank, Int> = emptyMap()
+    private var profitRate: Double = 0.0
 
-        lottos.forEach { lotto ->
-            val count: Int = compareLotto(lotto.numbers)
-            val bonus: Boolean = checkBonusNumber(lotto.numbers)
-            val rankState: Rank = Rank.getRankState(count, bonus)
-            updateWinningStats(rankState, winningStats)
-        }
-        return winningStats.toMap()
+    fun calculateWinningStats(lottoTickets: List<Lotto>) {
+        val winningStats =
+            mutableMapOf<Rank, Int>().apply {
+                Rank.entries.forEach { this[it] = DEFAULT_VALUE }
+                lottoTickets.forEach { updateWinningStats(winningLotto.match(it), this) }
+            }
+        this.winningStats = winningStats.toMap()
     }
+
+    fun calculatePrize(): Long {
+        var totalPrize: Long = DEFAULT_VALUE.toLong()
+
+        winningStats.forEach { (state, count) ->
+            totalPrize += state.price * count
+        }
+        return totalPrize
+    }
+
+    fun calculateProfit(
+        totalPrize: Long,
+        purchaseAmount: Int,
+    ) {
+        profitRate = totalPrize / purchaseAmount.toDouble()
+    }
+
+    fun getWinningStats() = winningStats
+
+    fun getProfitRate() = profitRate
 
     private fun updateWinningStats(
         rankState: Rank,
@@ -28,31 +41,6 @@ class LottoResult(private val winningNumber: List<LottoNumber>, private val bonu
     ) {
         if (rankState == Rank.NONE) return
         winningStats[rankState] = (winningStats[rankState] ?: DEFAULT_VALUE) + INCREASED_VALUE
-    }
-
-    fun compareLotto(lottos: List<LottoNumber>): Int {
-        return lottos.intersect(winningNumber).size
-    }
-
-    fun checkBonusNumber(lottos: List<LottoNumber>): Boolean {
-        return lottos.contains(bonusNumber)
-    }
-
-    fun calculatePrize(winningStats: Map<Rank, Int>): Long {
-        var totalPrize: Long = DEFAULT_VALUE.toLong()
-
-        winningStats.forEach { (state, count) ->
-            totalPrize += state.price * count
-        }
-
-        return totalPrize
-    }
-
-    fun calculateProfit(
-        totalPrize: Long,
-        purchaseAmount: Int,
-    ): Double {
-        return totalPrize / purchaseAmount.toDouble()
     }
 
     companion object {

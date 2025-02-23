@@ -1,8 +1,10 @@
 package lotto.controller
 
+import lotto.domain.Lotto
 import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
+import lotto.domain.WinningLotto
 import lotto.validator.BonusNumberValidator
 import lotto.validator.PurchaseAmountValidator
 import lotto.validator.WinningNumberValidator
@@ -19,11 +21,11 @@ class LottoController(
         outputView.printPurchasedLottos(lottoTickets)
         val winningNumber = getWinningNumber()
         val bonusNumber = getBonusNumber(winningNumber)
-        val lottoResult = LottoResult(winningNumber, bonusNumber)
-        val winningStats = lottoResult.matchLotto(lottoTickets)
-        outputView.printWinningStats(winningStats)
-        val prize = lottoResult.calculatePrize(winningStats)
-        outputView.printProfit(lottoResult.calculateProfit(prize, purchaseAmount))
+        val lottoResult = LottoResult(WinningLotto(winningNumber, bonusNumber))
+        lottoResult.calculateWinningStats(lottoTickets)
+        outputView.printWinningStats(lottoResult.getWinningStats())
+        lottoResult.calculatePrize()
+        outputView.printProfit(lottoResult.getProfitRate())
     }
 
     private fun getPurchaseAmount(): Int {
@@ -36,13 +38,13 @@ class LottoController(
         return input.toInt()
     }
 
-    private fun getWinningNumber(): List<LottoNumber> {
+    private fun getWinningNumber(): Lotto {
         val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { it.trim() }
         WinningNumberValidator(winningNumber)
-        return winningNumber.map { LottoNumber(it.toInt()) }
+        return Lotto(winningNumber.map { LottoNumber(it.toInt()) })
     }
 
-    private fun getBonusNumber(winningNumber: List<LottoNumber>): LottoNumber {
+    private fun getBonusNumber(winningNumber: Lotto): LottoNumber {
         val bonusNumber = inputView.getBonusNumber()
         BonusNumberValidator(bonusNumber, winningNumber)
         return LottoNumber(bonusNumber.toInt())
