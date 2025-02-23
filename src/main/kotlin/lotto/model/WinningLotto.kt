@@ -7,11 +7,19 @@ class WinningLotto(
         winningNumbers: List<Int>,
         bonusNumber: Int,
     ): Rank {
-        val countOfMatch = lotto.countMatchWinningNumbers(winningNumbers)
-        val matchBonus = lotto.isHaveBonusNumber(bonusNumber)
+        val countOfMatch = countMatchWinningNumbers(winningNumbers)
+        val matchBonus = isHaveBonusNumber(bonusNumber)
 
-        lotto.validateLottoNumbersDuplicate(winningNumbers + listOf(bonusNumber))
+        lotto.validateLottoNumbersDuplicate(winningNumbers.map { LottoNumber(it) } + listOf(LottoNumber(bonusNumber)))
 
         return Rank.fromMatchResult(countOfMatch, matchBonus)
     }
+
+    private fun countMatchWinningNumbers(winningNumbers: List<Int>): Int {
+        lotto.validateLottoNumbersCount(winningNumbers.map { LottoNumber(it) })
+
+        return lotto.numbers.count { existNumber -> winningNumbers.contains(existNumber.number) }
+    }
+
+    private fun isHaveBonusNumber(bonusNumber: Int): Boolean = lotto.numbers.map { it.number }.contains(bonusNumber)
 }
