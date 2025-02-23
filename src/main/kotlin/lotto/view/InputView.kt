@@ -20,6 +20,13 @@ class InputView {
         return winningNumbers.map { it.toInt() }
     }
 
+    fun validateBonusNumber(bonusNumber: String): Int {
+        require(bonusNumber.toIntOrNull() != null) {
+            ERROR_BONUS_TYPE
+        }
+        return bonusNumber.toInt()
+    }
+
     fun inputPurchaseAmount(): Int {
         println(MESSAGE_INPUT_AMOUNT)
         val purchaseAmount = readln().trim()
