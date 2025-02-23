@@ -4,6 +4,7 @@ import lotto.Constants
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
 import lotto.domain.model.Rank
+import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoMachine
 import lotto.domain.service.LottoResult
 import lotto.domain.service.LottoScanner
@@ -18,13 +19,18 @@ class LottoStore(
 
     private fun generateLottoTicket(count: Int): List<LottoTicket> = LottoMachine().purchase(count)
 
+    private fun inputWinningLotto(): WinningLotto {
+        val winningNumbers = inputView.inputWinningNumbers()
+        val bonusNumber = inputView.inputBonusNumber()
+        val winningLotto = WinningLotto(winningNumbers.map { LottoNumber(it) }.toSet(), LottoNumber(bonusNumber))
+        return winningLotto
+    }
+
     private fun calculateResult(
         lottoTickets: List<LottoTicket>,
-        winningNumbers: List<Int>,
-        bonusNumber: Int,
+        winningLotto: WinningLotto,
     ): LottoResult {
-        val winning = winningNumbers.map { LottoNumber(it) }.toSet()
-        val result = LottoScanner(lottoTickets, winning, LottoNumber(bonusNumber)).getResult()
+        val result = LottoScanner(lottoTickets, winningLotto).getResult()
         return result
     }
 
@@ -42,9 +48,8 @@ class LottoStore(
         outputView.printPurchaseCount(count)
         val lottoTickets = generateLottoTicket(count)
         outputView.printLotto(lottoTickets)
-        val winningNumbers = inputView.inputWinningNumbers()
-        val bonusNumber = inputView.inputBonusNumber()
-        val result = calculateResult(lottoTickets, winningNumbers, bonusNumber)
+        val winningLotto = inputWinningLotto()
+        val result = calculateResult(lottoTickets, winningLotto)
         val formattedWinningStatus = formattingWinningStatus(result)
         outputView.printResult(formattedWinningStatus)
         outputView.printProfit(result.calculateProfit())
