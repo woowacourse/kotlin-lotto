@@ -19,4 +19,9 @@ class LottoTest {
             Lotto.from(lottoNumbers)
         }
     }
+
+    @Test
+    fun `로또 숫자가 1 이상 45 이하이고, 6개의 숫자가 있을 경우 로또를 성공적으로 반환한다`() {
+        Lotto.from(listOf(1, 2, 3, 4, 5, 6))
+    }
 }
