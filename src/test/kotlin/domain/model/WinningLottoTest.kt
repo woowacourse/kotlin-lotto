@@ -32,17 +32,21 @@ class WinningLottoTest {
     fun `로또 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
         val lotto = createLotto(11, 22, 33, 44, 45, 7)
 
-        assertThrows<IllegalArgumentException> {
+        assertThrows<IllegalArgumentException>(
+            message = "[ERROR] 보너스 번호와 로또 번호는 중복될 수 없습니다.",
+        ) {
             WinningLotto(lotto, LottoNumber(7))
-        }.apply { assertThat(this).hasMessage("[ERROR] 보너스 번호와 로또 번호는 중복될 수 없습니다.") }
+        }
     }
 
     @ValueSource(ints = [0, 46])
     @ParameterizedTest
     fun `보너스볼 번호는 1이상 45 이하여야한다`(value: Int) {
-        assertThrows<IllegalArgumentException> {
+        assertThrows<IllegalArgumentException>(
+            message = "[ERROR] 로또 번호는 1부터 45 사이입니다.",
+        ) {
             createWinningLotto(10, 20, 30, 40, 44, 45, bonus = value)
-        }.apply { assertThat(this).hasMessage("[ERROR] 로또 번호는 1부터 45 사이입니다.") }
+        }
     }
 
     private fun createLotto(vararg numbers: Int): Lotto {
