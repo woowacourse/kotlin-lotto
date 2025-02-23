@@ -86,7 +86,7 @@ class OutputView {
         const val MESSAGE_BONUS_BALL_MATCH = "%d개 일치, 보너스 볼 일치(%d원) - %d개"
         const val MESSAGE_WINNING_RESULT = "당첨 통계\n---------\n"
         const val MESSAGE_LOSS = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
-        const val MESSAGE_TOTAL_PROFIT_RATE = "총 수익률은 %s입니다."
+        const val MESSAGE_TOTAL_PROFIT_RATE = "총 수익률은 %s%%입니다."
         const val ROUND = "%.2f"
     }
 }
