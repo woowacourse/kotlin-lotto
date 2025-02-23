@@ -1,15 +1,15 @@
 package domain.service
 
+import domain.model.Lotto
 import domain.model.LottoResult
-import domain.model.LottoTicket
 import domain.model.WinningLotto
 
-class LottoMatchCalculator() {
+class LottoMatchCalculator {
     fun calculate(
-        purchaseLotto: LottoTicket,
+        purchaseLotto: List<Lotto>,
         winningLotto: WinningLotto,
     ): LottoResult {
-        val lottoRanks = purchaseLotto.values.map { winningLotto.match(it) }
+        val lottoRanks = purchaseLotto.map { winningLotto.match(it) }
         return LottoResult(lottoRanks.groupingBy { it }.eachCount())
     }
 }

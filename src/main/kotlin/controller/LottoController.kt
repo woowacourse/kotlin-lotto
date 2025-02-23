@@ -3,10 +3,9 @@ package controller
 import domain.model.Lotto
 import domain.model.LottoNumber
 import domain.model.LottoResult
-import domain.model.LottoTicket
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
-import domain.service.LottoGenerator
+import domain.service.AutoLottoGenerator
 import domain.service.LottoMatchCalculator
 import util.retryWhenException
 import validator.NumericValidator
@@ -19,12 +18,12 @@ class LottoController(
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
-        val lottoTicket: LottoTicket = purchaseLotto(purchasePrice)
-        displayLottoTicket(lottoTicket)
+        val purchaseLottos: List<Lotto> = purchaseLotto(purchasePrice)
+        displayLottoTicket(purchaseLottos)
 
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
-        val lottoResult: LottoResult = LottoMatchCalculator().calculate(lottoTicket, winningLotto)
+        val lottoResult: LottoResult = LottoMatchCalculator().calculate(purchaseLottos, winningLotto)
         val profitRate = lottoResult.getProfitRate(purchasePrice)
         displayResult(lottoResult, profitRate)
     }
@@ -39,15 +38,15 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun purchaseLotto(money: PurchasePrice): LottoTicket {
-        val generator = LottoGenerator(money)
-        val lotto = generator.makeLotto()
-        return lotto
+    private fun purchaseLotto(money: PurchasePrice): List<Lotto> {
+        val lottoGenerator = AutoLottoGenerator()
+        val amount = money.value / PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
+        return List(amount) { lottoGenerator.makeLotto() }
     }
 
-    private fun displayLottoTicket(lotto: LottoTicket) {
-        outputView.printPurchasedLottoCount(lotto.values.size)
-        outputView.printPurchasedLotto(lotto.toString())
+    private fun displayLottoTicket(lottos: List<Lotto>) {
+        outputView.printPurchasedLottoCount(lottos.size)
+        outputView.printPurchasedLotto(lottos)
     }
 
     private fun getWinningNumbers(): Lotto =
