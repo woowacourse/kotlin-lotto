@@ -1,8 +1,7 @@
 package lotto.model
 
 import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
-import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_MAX_RANGE
-import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_MIN_RANGE
+import lotto.model.LottoNumber.Companion.ALL_LOTTO_NUMBERS
 
 class LottoMachine {
     fun getLottos(lottoQuantity: Int): Lottos {
@@ -10,10 +9,9 @@ class LottoMachine {
         return Lottos(lottos)
     }
 
-    private fun getLottoNumbers(): List<Int> {
-        val shuffledNumbers = (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE).shuffled()
-        val selectedNumbers = shuffledNumbers.take(LOTTO_NUMBER_SIZE)
-
-        return selectedNumbers.sorted()
-    }
+    private fun getLottoNumbers(): List<Int> =
+        ALL_LOTTO_NUMBERS
+            .shuffled()
+            .take(LOTTO_NUMBER_SIZE)
+            .sorted()
 }

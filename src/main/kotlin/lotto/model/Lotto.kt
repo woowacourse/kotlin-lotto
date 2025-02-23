@@ -24,6 +24,6 @@ class Lotto private constructor(
     companion object {
         const val LOTTO_NUMBER_SIZE = 6
 
-        fun from(numbers: List<Int>): Lotto = Lotto(numbers.map { number -> LottoNumber(number) })
+        fun from(numbers: List<Int>): Lotto = Lotto(numbers.map { number -> LottoNumber.from(number) })
     }
 }

@@ -69,7 +69,7 @@ class LottoController(
     }
 
     private fun setupLastWeekBonusNumber(): LottoNumber {
-        val lottoBonusNumber = LottoNumber(inputView.readBonusNumber())
+        val lottoBonusNumber = LottoNumber.from(inputView.readBonusNumber())
         return lottoBonusNumber
     }
 
