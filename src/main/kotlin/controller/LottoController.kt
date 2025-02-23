@@ -20,14 +20,16 @@ class LottoController(
     fun run() {
         val order = buyLotto()
         val pickedLotto = pickLotto(order.quickPickLottoAmount)
-        displayBuyLotto(passivityLottoAmount = order.amount.value, lotto = pickedLotto)
+        displayPickedLotto(passivityLottoAmount = order.amount.value, lotto = pickedLotto)
 
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto = getWinningLotto(winningNumbers)
-//
-//        val winningResult = winningLotto.calculate(purchaseLotto)
-//        val profitRate = winningResult.getProfitRate(purchasePrice)
-//        displayResult(winningResult, profitRate)
+
+        val combinedLotto = order.combine(pickedLotto)
+
+        val winningResult = winningLotto.calculate(combinedLotto)
+        val profitRate = winningResult.getProfitRate(order.money)
+        displayResult(winningResult, profitRate)
     }
 
     private fun buyLotto(): LottoOrderRequest {
@@ -73,7 +75,7 @@ class LottoController(
         return lottoGenerator.generate(quickPickLottoAmount)
     }
 
-    private fun displayBuyLotto(
+    private fun displayPickedLotto(
         passivityLottoAmount: Int,
         lotto: List<Lotto>,
     ) {

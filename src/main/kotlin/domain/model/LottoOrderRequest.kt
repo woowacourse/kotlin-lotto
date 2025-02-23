@@ -7,4 +7,8 @@ data class LottoOrderRequest(
 ) {
     val quickPickLottoAmount
         get() = money.getPurchasableLottoCount() - amount.value
+
+    fun combine(quickPickLottoNumbers: List<Lotto>): List<Lotto> {
+        return passiveLottoNumber + quickPickLottoNumbers
+    }
 }
