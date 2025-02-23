@@ -1,23 +1,28 @@
 package lotto.view
 
+import lotto.InputValidator
+
 class InputView {
     fun inputPurchase(): String {
         println(INPUT_PURCHASE_MESSAGE)
-        return readln()
+        return readln().also { InputValidator(it) }
     }
 
     fun inputWinningNumbers(): List<Int> {
         println("\n" + INPUT_WINNING_NUMBERS_MESSAGE)
         val input = readln()
+        InputValidator(input)
 
-        return input.split(",")
-            .map { it.trim().toInt() } // 이러면 무조건 숫자여야 되는?????
+        return input
+            .split(",")
+            .map { it.trim().toInt() }
             .toList()
     }
 
     fun inputBonusNumber(): Int {
         println(INPUT_BONUS_NUMBER_MESSAGE)
-        return readln().toInt()
+        val number = readln().also { InputValidator(it) }
+        return number.toInt()
     }
 
     companion object {
