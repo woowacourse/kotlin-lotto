@@ -19,9 +19,11 @@ class LottoController(
 ) {
     fun run() {
         val order = buyLotto()
+        val pickedLotto = pickLotto(order.quickPickLottoAmount)
+        displayBuyLotto(passivityLottoAmount = order.amount.value, lotto = pickedLotto)
 
-//        val winningNumbers: Lotto = getWinningNumbers()
-//        val winningLotto = getWinningLotto(winningNumbers)
+        val winningNumbers: Lotto = getWinningNumbers()
+        val winningLotto = getWinningLotto(winningNumbers)
 //
 //        val winningResult = winningLotto.calculate(purchaseLotto)
 //        val profitRate = winningResult.getProfitRate(purchasePrice)
@@ -39,7 +41,9 @@ class LottoController(
         retryWhenException(
             action = {
                 val input = inputView.readPurchasePrice()
-                PurchasePrice(input)
+                val money = PurchasePrice(input)
+                lottoGenerator.validateMoney(money)
+                money
             },
             onError = { outputView.printErrorMessage(it) },
         )
@@ -65,8 +69,15 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun displayBuyLotto(lotto: List<Lotto>) {
-        outputView.printPurchasedLottoCount(lotto.size)
+    private fun pickLotto(quickPickLottoAmount: Int): List<Lotto> {
+        return lottoGenerator.generate(quickPickLottoAmount)
+    }
+
+    private fun displayBuyLotto(
+        passivityLottoAmount: Int,
+        lotto: List<Lotto>,
+    ) {
+        outputView.printPurchasedLottoAmount(passivityLottoAmount, lotto.size)
         outputView.printPurchasedLotto(lotto)
     }
 

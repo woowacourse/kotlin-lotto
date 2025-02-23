@@ -11,12 +11,15 @@ class OutputView {
         println(message)
     }
 
-    fun printPassiveLottoRequest()  {
+    fun printPassiveLottoRequest() {
         println(MESSAGE_INPUT_PASSIVITY_LOTTO_NUMBERS)
     }
 
-    fun printPurchasedLottoCount(count: Int) {
-        print(MESSAGE_PURCHASE_LOTTO_COUNT.format(count))
+    fun printPurchasedLottoAmount(
+        passivityLottoAmount: Int,
+        quickPickLottoAmount: Int,
+    ) {
+        println(MESSAGE_BOUGHT_LOTTO_RESULT.format(passivityLottoAmount, quickPickLottoAmount))
     }
 
     fun printPurchasedLotto(purchasedLotto: List<Lotto>) {
@@ -78,9 +81,9 @@ class OutputView {
 
     companion object {
         private const val MESSAGE_INPUT_PASSIVITY_LOTTO_NUMBERS = "수동으로 구매할 번호를 입력해 주세요."
+        private const val MESSAGE_BOUGHT_LOTTO_RESULT = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
         const val MESSAGE_EACH_RANK_RESULT = "%d개 일치 (%d원)- %d개"
         const val MESSAGE_BONUS_BALL_MATCH = "%d개 일치, 보너스 볼 일치(%d원) - %d개"
-        const val MESSAGE_PURCHASE_LOTTO_COUNT = "%d개를 구매했습니다.\n"
         const val MESSAGE_WINNING_RESULT = "당첨 통계\n---------\n"
         const val MESSAGE_LOSS = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
         const val MESSAGE_TOTAL_PROFIT_RATE = "총 수익률은 %s입니다."
