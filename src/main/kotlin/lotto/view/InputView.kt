@@ -1,5 +1,7 @@
 package lotto.view
 
+import lotto.domain.LottoNumber
+
 object InputView {
     fun inputPurchasePrice(): Int {
         println(PRICE_INPUT_MESSAGE)
@@ -14,12 +16,12 @@ object InputView {
         return readlnOrNull()?.split(",")?.map { it.trim().toInt() } ?: emptyList()
     }
 
-    fun inputBonusNumber(): Int {
+    fun inputBonusNumber(): LottoNumber {
         println(BONUS_BALL_INPUT_MESSAGE)
         val bonusNum = readlnOrNull() ?: ""
 
         validateBonusNumber(bonusNum)
-        return bonusNum.toInt()
+        return LottoNumber(bonusNum.toInt())
     }
 
     fun validateBonusNumber(bonusNum: String) {

@@ -1,5 +1,6 @@
 package lotto
 
+import lotto.domain.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -32,7 +33,7 @@ class LottoTest {
     fun `자동 생성된 로또와 보너스 번호를 비교할 수 있다`() {
         val lotto = lottoOf(1, 2, 3, 4, 5, 6)
 
-        val bonusNumber: Int = 3
+        val bonusNumber: LottoNumber = LottoNumber(3)
         val result = lotto.compareWithBonusNumber(bonusNumber)
 
         assertThat(result).isTrue()

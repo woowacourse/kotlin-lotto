@@ -10,8 +10,8 @@ class Lotto(val lottoNums: List<LottoNumber>) {
         return lottoNums.intersect(winningLotto.lottoNums.toSet()).size
     }
 
-    fun compareWithBonusNumber(bonusNumber: Int): Boolean {
-        return lottoNums.contains(LottoNumber(bonusNumber))
+    fun compareWithBonusNumber(bonusNumber: LottoNumber): Boolean {
+        return lottoNums.contains(bonusNumber)
     }
 
     companion object {

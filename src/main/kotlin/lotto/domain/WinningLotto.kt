@@ -2,10 +2,10 @@ package lotto.domain
 
 class WinningLotto(
     val winningLotto: Lotto,
-    val bounusNumber: Int,
+    val bounusNumber: LottoNumber,
 ) {
     init {
-        require(!winningLotto.lottoNums.contains(LottoNumber(bounusNumber))) { BONUS_BALL_DUPLICATE_ERROR_MESSAGE }
+        require(!winningLotto.lottoNums.contains(bounusNumber)) { BONUS_BALL_DUPLICATE_ERROR_MESSAGE }
         validateBonusNumber(bounusNumber)
     }
 
@@ -15,7 +15,7 @@ class WinningLotto(
         return Rank.valueOf(matchCount, matchBonus)
     }
 
-    private fun validateBonusNumber(bonusNumber: Int) {
+    private fun validateBonusNumber(bonusNumber: LottoNumber) {
         require(!winningLotto.compareWithBonusNumber(bonusNumber)) {
             BONUS_BALL_DUPLICATE_ERROR_MESSAGE
         }

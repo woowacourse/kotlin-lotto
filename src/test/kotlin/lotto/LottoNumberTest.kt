@@ -31,4 +31,10 @@ class LottoNumberTest {
     fun ` 보너스 볼 번호는 정수 형태로 입력되어야 한다`(input: String) {
         assertThrows<IllegalArgumentException> { LottoNumber(input.toInt()) }
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["lotto", "seven", "1번"])
+    fun `당첨 번호는 정수 형태로 입력되어야 한다`(winningNumber: String) {
+        assertThrows<IllegalArgumentException> { LottoNumber(winningNumber.toInt()) }
+    }
 }
