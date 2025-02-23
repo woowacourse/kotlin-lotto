@@ -25,7 +25,7 @@ class WinningLotto(
         val winningLottoNumbers = winningNumbers.numbers
 
         val lottoMatches = buyLotto.intersect(winningLottoNumbers).size
-        val isBonusMatched = bonusNumber.value in buyLotto.map { it.value }
+        val isBonusMatched = buyLotto.contains(bonusNumber)
 
         val rank = Rank.valueOf(lottoMatches, isBonusMatched)
         return rank
