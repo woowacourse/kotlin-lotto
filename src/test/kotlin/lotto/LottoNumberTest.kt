@@ -15,7 +15,7 @@ class LottoNumberTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [-1, 49, 0])
+    @ValueSource(ints = [-1, 49, 0, 46])
     fun `로또 번호는 1~45 숫자 사이에 없을 경우 예외가 발생한다`(value: Int) {
         assertThrows<IllegalArgumentException> { LottoNumber(value) }
     }
