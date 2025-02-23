@@ -10,7 +10,7 @@ class LottoTest {
     fun `로또 번호는 6개가 아니면 예외가 발생한다`(value: String) {
         Assertions
             .assertThatThrownBy {
-                Lotto(splitValueSource(value))
+                Lotto(splitValueSource(value).map { LottoNumber(it) })
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(INVALID_LOTTO_SIZE)
     }
@@ -21,7 +21,7 @@ class LottoTest {
         val values = value.split(",").map { it.toInt() }
         Assertions
             .assertThatThrownBy {
-                Lotto(splitValueSource(value))
+                Lotto(splitValueSource(value).map { LottoNumber(it) })
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(INVALID_LOTTO_NUMBERS)
     }
@@ -31,7 +31,7 @@ class LottoTest {
     fun `로또 번호에 중복이 있으면 예외가 발생한다`(value: String) {
         Assertions
             .assertThatThrownBy {
-                Lotto(splitValueSource(value))
+                Lotto(splitValueSource(value).map { LottoNumber(it) })
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(DUPLICATED_LOTTO_NUMBERS)
     }
@@ -42,6 +42,5 @@ class LottoTest {
         const val DUPLICATED_LOTTO_NUMBERS = "[ERROR] 로또 번호는 중복이 없습니다."
 
         private fun splitValueSource(value: String): List<Int> = value.split(",").map { it.toInt() }
-
     }
 }

@@ -2,6 +2,7 @@ package domain.service
 
 import domain.model.BonusNumber
 import domain.model.Lotto
+import domain.model.LottoNumber
 import domain.model.Rank
 import domain.model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
@@ -13,20 +14,24 @@ class LottoMatchCalculatorTest {
     private lateinit var purchaseOneLotto: List<Lotto>
     private lateinit var winningLotto: WinningLotto
 
+    fun lottoOf(vararg numbers: Int): Lotto {
+        return Lotto(numbers.map { LottoNumber(it) })
+    }
+
     @BeforeEach
     fun setUp() {
         purchaseLotto =
-                listOf(
-                    Lotto(listOf(1, 2, 3, 4, 5, 6)),
-                    Lotto(listOf(1, 2, 3, 4, 5, 7)),
-                    Lotto(listOf(1, 2, 3, 4, 8, 7)),
-                    Lotto(listOf(1, 2, 3, 9, 8, 7)),
-                    Lotto(listOf(1, 2, 10, 9, 8, 7)),
-                    Lotto(listOf(1, 11, 10, 9, 8, 7)),
-                    Lotto(listOf(12, 11, 10, 9, 8, 7)),
+            listOf(
+                lottoOf(1, 2, 3, 4, 5, 6),
+                lottoOf(1, 2, 3, 4, 5, 7),
+                lottoOf(1, 2, 3, 4, 8, 7),
+                lottoOf(1, 2, 3, 9, 8, 7),
+                lottoOf(1, 2, 10, 9, 8, 7),
+                lottoOf(1, 11, 10, 9, 8, 7),
+                lottoOf(12, 11, 10, 9, 8, 7),
             )
-        purchaseOneLotto = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6)))
-        winningLotto = WinningLotto(Lotto(listOf(1, 3, 4, 5, 6, 7)), BonusNumber(2))
+        purchaseOneLotto = listOf(lottoOf(1, 2, 3, 4, 5, 6))
+        winningLotto = WinningLotto(lottoOf(1, 3, 4, 5, 6, 7), BonusNumber(2))
     }
 
     @Test
