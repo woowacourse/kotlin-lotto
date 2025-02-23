@@ -25,26 +25,34 @@ class InputTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["0", "-1"])
-    fun `구입금액에 0이나 음수가 들어오면 예외를 발생시킨다`(input: String) {
-        assertThrows<IllegalArgumentException> {
-            inputView.validateAmount(input)
-        }
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["500", "1234"])
-    fun `구입금액이 1000으로 나누어 떨어지지 않으면 예외를 발생시킨다`(input: String) {
+    @ValueSource(strings = ["500", "0", "-1"])
+    fun `구입금액에 1000원 미만이 들어오면 예외를 발생시킨다`(input: String) {
         assertThrows<IllegalArgumentException> {
             inputView.validateAmount(input)
         }
     }
 
     @Test
-    fun `지난주 당첨 번호에 문자열이 들어오면 예외를 발생시킨다`() {
+    fun `당첨 번호가 6개가 아니면 예외를 발생시킨다`() {
+        val winningNumbers = listOf("1", "2", "3", "4")
+        assertThrows<IllegalArgumentException> {
+            inputView.validateWinningNumbers(winningNumbers)
+        }
+    }
+
+    @Test
+    fun `당첨 번호에 문자열이 들어오면 예외를 발생시킨다`() {
         val winningNumbers = listOf("", "a", "가나다")
         assertThrows<IllegalArgumentException> {
             inputView.validateWinningNumbers(winningNumbers)
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["", " ", "a", "1a"])
+    fun `보너스 번호에 정수 이외의 값이 들어오면 예외를 발생시킨다`(input: String) {
+        assertThrows<IllegalArgumentException> {
+            inputView.validateBonusNumber(input)
         }
     }
 }
