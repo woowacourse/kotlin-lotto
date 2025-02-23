@@ -11,6 +11,10 @@ class OutputView {
         println(message)
     }
 
+    fun printPassiveLottoRequest()  {
+        println(MESSAGE_INPUT_PASSIVITY_LOTTO_NUMBERS)
+    }
+
     fun printPurchasedLottoCount(count: Int) {
         print(MESSAGE_PURCHASE_LOTTO_COUNT.format(count))
     }
@@ -73,6 +77,7 @@ class OutputView {
     }
 
     companion object {
+        private const val MESSAGE_INPUT_PASSIVITY_LOTTO_NUMBERS = "수동으로 구매할 번호를 입력해 주세요."
         const val MESSAGE_EACH_RANK_RESULT = "%d개 일치 (%d원)- %d개"
         const val MESSAGE_BONUS_BALL_MATCH = "%d개 일치, 보너스 볼 일치(%d원) - %d개"
         const val MESSAGE_PURCHASE_LOTTO_COUNT = "%d개를 구매했습니다.\n"

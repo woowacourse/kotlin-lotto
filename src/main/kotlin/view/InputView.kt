@@ -9,6 +9,10 @@ class InputView {
         return readInt(MESSAGE_INPUT_PASSIVITY_LOTTO_AMOUNT)
     }
 
+    fun readPassivityLottoNumbers(): List<Int> {
+        return readIntList()
+    }
+
     fun readWinningNumbers(): List<Int> {
         return readIntList(MESSAGE_INPUT_WINNING_NUMBER)
     }
@@ -23,8 +27,8 @@ class InputView {
         return validateAndParseInt(input)
     }
 
-    private fun readIntList(message: String): List<Int> {
-        println(message)
+    private fun readIntList(message: String? = null): List<Int> {
+        message?.let { println(message) }
         val input = readln()
         return validateAndParseToIntList(input)
     }

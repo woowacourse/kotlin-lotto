@@ -3,6 +3,7 @@ package controller
 import domain.model.Lotto
 import domain.model.LottoMatchResult
 import domain.model.LottoNumber
+import domain.model.LottoOrderRequest
 import domain.model.PassivityLottoAmount
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
@@ -17,10 +18,8 @@ class LottoController(
     private val lottoGenerator: LottoGenerator,
 ) {
     fun run() {
-        buyLotto()
-//        val (purchasePrice, purchaseLotto) = buyLotto()
-//        displayBuyLotto(purchaseLotto)
-//
+        val order = buyLotto()
+
 //        val winningNumbers: Lotto = getWinningNumbers()
 //        val winningLotto = getWinningLotto(winningNumbers)
 //
@@ -29,9 +28,11 @@ class LottoController(
 //        displayResult(winningResult, profitRate)
     }
 
-    private fun buyLotto() {
+    private fun buyLotto(): LottoOrderRequest {
         val purchasePrice = getPurchasePrice()
-        val passiveLottoCount = getPassiveLottoAmount(purchasePrice)
+        val passiveLottoAmount = getPassiveLottoAmount(purchasePrice)
+        val passiveLottoNumbers = getPassiveLottoNumbers(passiveLottoAmount)
+        return LottoOrderRequest(purchasePrice, passiveLottoAmount, passiveLottoNumbers)
     }
 
     private fun getPurchasePrice() =
@@ -52,20 +53,17 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-//    private fun buyLotto(): Pair<PurchasePrice, List<Lotto>> =
-//        retryWhenException(
-//            action = {
-//                val input = inputView.readPurchasePrice()
-//                val money = PurchasePrice(input)
-//
-//                val passive = inputView.readPassivityLottoCount()
-//                PassivityLottoAmount.create(passive, money)
-//
-//                val lottos = lottoGenerator.generate(money)
-//                money to lottos
-//            },
-//            onError = { outputView.printErrorMessage(it) },
-//        )
+    private fun getPassiveLottoNumbers(amount: PassivityLottoAmount) =
+        retryWhenException(
+            action = {
+                outputView.printPassiveLottoRequest()
+                List(amount.value) {
+                    val input = inputView.readPassivityLottoNumbers()
+                    Lotto(input.map { LottoNumber(it) })
+                }
+            },
+            onError = { outputView.printErrorMessage(it) },
+        )
 
     private fun displayBuyLotto(lotto: List<Lotto>) {
         outputView.printPurchasedLottoCount(lotto.size)
