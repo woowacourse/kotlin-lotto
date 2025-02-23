@@ -46,7 +46,7 @@ class LottoController(
     }
 
     private fun determineLottoQuantity(lottoCashier: LottoCashier): Int {
-        val lottoQuantity = lottoCashier.getQuantity()
+        val lottoQuantity = lottoCashier.getPurchaseQuantity()
         return lottoQuantity
     }
 
