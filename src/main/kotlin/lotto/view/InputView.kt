@@ -11,11 +11,10 @@ class InputView {
     fun inputWinningNumbers(): List<Int> {
         println("\n" + INPUT_WINNING_NUMBERS_MESSAGE)
         val input = readln()
-        InputValidator(input)
 
         return input
             .split(",")
-            .map { it.trim().toInt() }
+            .map { it.trim().also { InputValidator(it) }.toInt() }
             .toList()
     }
 
