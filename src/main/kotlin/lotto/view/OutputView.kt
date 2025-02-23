@@ -1,11 +1,11 @@
 package lotto.view
 
 import lotto.model.Lotto
-import lotto.model.LottoResult
 import lotto.model.LottoStore
+import lotto.model.Profit
 import lotto.model.RandomLottoGenerator
 import lotto.model.Rank
-import lotto.model.WinningLotto
+import lotto.model.WinningStatistics
 import java.lang.String.format
 
 class OutputView {
@@ -23,15 +23,9 @@ class OutputView {
 
     private fun isBonusMatch(rank: Rank) = if (rank == Rank.SECOND) OUTPUT_STATISTICS_BONUS_NUMBER_MESSAGE else " "
 
-    fun printResult(
-        winningLotto: WinningLotto,
-        input: String,
-        lottoBundle: List<Lotto>,
-    ) {
+    fun printStatistics(winningStatistics: WinningStatistics) {
         println(OUTPUT_STATISTIC_GUIDE_MESSAGE)
-        val lottoResult = LottoResult()
-        val winningCounts = LottoResult().getWinningCounts(lottoBundle, winningLotto)
-        winningCounts.forEach { (rank, winningCount) ->
+        winningStatistics.getAllStatistics().forEach { (rank, count) ->
             if (rank != Rank.MISS) {
                 println(
                     format(
@@ -39,19 +33,22 @@ class OutputView {
                         rank.countOfMatch,
                         isBonusMatch(rank),
                         rank.winningMoney,
-                        winningCount,
+                        count,
                     ),
                 )
             }
         }
-        println(format(OUTPUT_PROFIT_MESSAGE, lottoResult.calculateProfit(input, winningCounts)))
+    }
+
+    fun printProfit(profit: Profit) {
+        println(format(OUTPUT_PROFIT_MESSAGE, profit))
     }
 
     companion object {
         private const val OUTPUT_LOTTO_COUNT_MESSAGE = "%d개를 구매했습니다."
         private const val OUTPUT_STATISTIC_GUIDE_MESSAGE = "\n당첨 통계\n---------"
+        private const val OUTPUT_PROFIT_MESSAGE = "총 수익률은 %s입니다."
         private const val OUTPUT_STATISTICS_MESSAGE = "%d개 일치%s(%d원)- %d개"
         private const val OUTPUT_STATISTICS_BONUS_NUMBER_MESSAGE = ", 보너스 볼 일치"
-        private const val OUTPUT_PROFIT_MESSAGE = "총 수익률은 %s입니다."
     }
 }
