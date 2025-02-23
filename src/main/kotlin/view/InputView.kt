@@ -5,6 +5,10 @@ class InputView {
         return readInt(MESSAGE_INPUT_PURCHASE_PRICE)
     }
 
+    fun readPassivityLottoCount(): Int {
+        return readInt(MESSAGE_INPUT_PASSIVITY_LOTTO)
+    }
+
     fun readWinningNumbers(): List<Int> {
         return readIntList(MESSAGE_INPUT_WINNING_NUMBER)
     }
@@ -47,6 +51,7 @@ class InputView {
 
     companion object {
         private const val MESSAGE_INPUT_PURCHASE_PRICE = "구입금액을 입력해 주세요."
+        private const val MESSAGE_INPUT_PASSIVITY_LOTTO = "수동으로 구매할 로또 수를 입력해 주세요."
         private const val MESSAGE_INPUT_WINNING_NUMBER = "\n지난 주 당첨 번호를 입력해 주세요."
         private const val MESSAGE_INPUT_BONUS_NUMBER = "\n보너스 볼을 입력해 주세요."
 
