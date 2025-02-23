@@ -1,10 +1,8 @@
 package lotto
 
-import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
-import lotto.model.Lottos
-import lotto.model.WinningLotto
+import lotto.model.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,34 +12,20 @@ import org.junit.jupiter.params.provider.ValueSource
 import java.util.stream.Stream
 
 class LottoStatisticsTest {
-    private lateinit var lottos: Lottos
     private lateinit var purchaseAmount: LottoPurchaseAmount
 
     @BeforeEach
     fun setUp() {
-        lottos =
-            Lottos(
-                listOf(
-                    listOf(1, 2, 3, 4, 5, 6).toLotto(),
-                    listOf(1, 2, 3, 4, 5, 7).toLotto(),
-                    listOf(1, 2, 3, 4, 5, 8).toLotto(),
-                ),
-            )
         purchaseAmount = LottoPurchaseAmount(3_000)
     }
 
     @ParameterizedTest
-    @MethodSource("getWinningLottos")
-    fun `당첨 로또 금액에 대한 수익률을 게산한다`(
-        winningLotto: WinningLotto,
+    @MethodSource("getRankStatistics")
+    fun `당첨 로또 금액에 대한 수익률을 계산한다`(
+        rankStatistics: Map<Rank, Int>,
         rateOfReturn: Double,
     ) {
-        val lottoStatistics =
-            LottoStatistics(
-                lottos = lottos,
-                winningLotto = winningLotto,
-                purchaseMoney = purchaseAmount,
-            )
+        val lottoStatistics = LottoStatistics(rankStatistics, purchaseAmount)
         val actual = lottoStatistics.getRateOfReturn()
         assertThat(actual).isEqualTo(rateOfReturn)
     }
@@ -49,63 +33,40 @@ class LottoStatisticsTest {
     @ParameterizedTest
     @ValueSource(doubles = [0.0, 0.9999999])
     fun `수익률이 1 미만 일 경우 수익률 손해를 파악하는 메서드는 true를 반환한다`(rateOfReturn: Double) {
-        val lottoStatistics =
-            LottoStatistics(
-                lottos = lottos,
-                winningLotto =
-                    WinningLotto(
-                        listOf(1, 2, 3, 4, 5, 6).toLotto(),
-                        LottoNumber(7),
-                    ),
-                purchaseMoney = purchaseAmount,
-            )
+        val lottoStatistics = LottoStatistics(emptyMap(), purchaseAmount)
         val expected = true
 
-        assertThat(lottoStatistics.getIsLossMoney(rateOfReturn)).isEqualTo(expected)
+        val actual = lottoStatistics.getIsLossMoney(rateOfReturn)
+
+        assertThat(actual).isEqualTo(expected)
     }
 
     @ParameterizedTest
     @ValueSource(doubles = [1.0, 100.0])
-    fun `수익률이 1 이상 일 경우 수익률 손해를 파악하는 메서드는 false 반환한다`(rateOfReturn: Double) {
-        val lottoStatistics =
-            LottoStatistics(
-                lottos = lottos,
-                winningLotto =
-                    WinningLotto(
-                        listOf(1, 2, 3, 4, 5, 6).toLotto(),
-                        LottoNumber(7),
-                    ),
-                purchaseMoney = purchaseAmount,
-            )
+    fun `수익률이 1 이상 일 경우 수익률 손해를 파악하는 메서드는 false를 반환한다`(rateOfReturn: Double) {
+        val lottoStatistics = LottoStatistics(emptyMap(), purchaseAmount)
         val expected = false
 
-        assertThat(lottoStatistics.getIsLossMoney(rateOfReturn)).isEqualTo(expected)
+        val actual = lottoStatistics.getIsLossMoney(rateOfReturn)
+
+        assertThat(actual).isEqualTo(expected)
     }
 
     companion object {
         @JvmStatic
-        fun getWinningLottos(): Stream<Arguments> =
+        fun getRankStatistics(): Stream<Arguments> =
             Stream.of(
                 Arguments.arguments(
-                    WinningLotto(
-                        listOf(1, 2, 3, 4, 5, 6).toLotto(),
-                        LottoNumber(7),
-                    ),
+                    mapOf(Rank.FIRST to 1, Rank.SECOND to 1, Rank.THIRD to 1),
                     677166.6666666666,
                 ),
                 Arguments.arguments(
-                    WinningLotto(
-                        listOf(10, 11, 12, 14, 15, 18).toLotto(),
-                        LottoNumber(7),
-                    ),
+                    emptyMap<Rank, Int>(),
                     0.0,
                 ),
                 Arguments.arguments(
-                    WinningLotto(
-                        listOf(1, 2, 3, 4, 10, 11).toLotto(),
-                        LottoNumber(13),
-                    ),
-                    50.0,
+                    mapOf(Rank.FIFTH to 3),
+                    5.0,
                 ),
             )
     }
