@@ -38,10 +38,10 @@ class LottoResultTest {
     @Test
     fun `당첨 금액과 구입 금액으로 수익률을 계산한다`() {
         val totalPrize: Long = 5_000
-        val purchaseAmount: Int = 14_000
+        val purchaseAmount = LottoPayment(14_000)
 
         lottoResult.calculateProfit(totalPrize, purchaseAmount)
 
-        assertThat(lottoResult.getProfitRate()).isEqualTo(totalPrize / purchaseAmount.toDouble())
+        assertThat(lottoResult.getProfitRate()).isEqualTo(totalPrize / purchaseAmount.toInt().toDouble())
     }
 }

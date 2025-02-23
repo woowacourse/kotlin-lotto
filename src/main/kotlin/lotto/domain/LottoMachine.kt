@@ -5,14 +5,15 @@ import lotto.generator.LottoRandomGenerator
 class LottoMachine {
     val price: Int = LOTTO_PRICE
 
-    fun buyLottoTickets(purchaseAmount: Int): List<Lotto> {
-        val randomGenerator = LottoRandomGenerator()
-
-        val lottoCount = getLottoCount(LottoPayment(purchaseAmount))
+    fun buyLottoTickets(
+        purchaseAmount: LottoPayment,
+        lottoRandomGenerator: LottoRandomGenerator,
+    ): List<Lotto> {
+        val lottoCount = getLottoCount(purchaseAmount)
         val lottoTickets: MutableList<Lotto> = mutableListOf()
 
         repeat(lottoCount) {
-            lottoTickets.add(Lotto(randomGenerator.getRandomNumberList()))
+            lottoTickets.add(lottoRandomGenerator.getRandomNumberList())
         }
         return lottoTickets.toList()
     }

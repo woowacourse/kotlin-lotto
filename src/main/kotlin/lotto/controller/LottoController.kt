@@ -3,8 +3,10 @@ package lotto.controller
 import lotto.domain.Lotto
 import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
+import lotto.domain.LottoPayment
 import lotto.domain.LottoResult
 import lotto.domain.WinningLotto
+import lotto.generator.LottoRandomGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -13,15 +15,15 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val purchaseAmount = getPurchaseAmount()
+        val purchaseAmount = LottoPayment(getPurchaseAmount())
         val lottoTicket = prepareLottoTicket(purchaseAmount)
         val winningLotto = readWinningLotto()
         val lottoResult = createLottoResult(purchaseAmount, lottoTicket, winningLotto)
         showResult(lottoResult)
     }
 
-    private fun prepareLottoTicket(purchaseAmount: Int): List<Lotto> {
-        val lottoTickets = LottoMachine().buyLottoTickets(purchaseAmount)
+    private fun prepareLottoTicket(purchaseAmount: LottoPayment): List<Lotto> {
+        val lottoTickets = LottoMachine().buyLottoTickets(purchaseAmount, LottoRandomGenerator())
         outputView.printPurchasedLottoTickets(lottoTickets)
         return lottoTickets
     }
@@ -33,7 +35,7 @@ class LottoController(
     }
 
     private fun createLottoResult(
-        purchaseAmount: Int,
+        purchaseAmount: LottoPayment,
         lottoTicket: List<Lotto>,
         winningLotto: WinningLotto,
     ): LottoResult {
