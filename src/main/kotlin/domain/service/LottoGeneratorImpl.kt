@@ -16,15 +16,14 @@ class LottoGeneratorImpl(
         return List<Lotto>(quickPickLottoAmout) { makeOneLotto() }
     }
 
+    override fun validateMoney(price: PurchasePrice) {
+        val money = price.value
+        require(money > 0 && money >= standardPrice) { "$ERROR ${standardPrice}원 이상 입력해주세요." }
+        require(money % standardPrice == 0) { "$ERROR ${standardPrice}원 단위로 입력해주세요." }
     }
 
     private fun makeOneLotto(): Lotto {
         val newLotto = (LOTTO_MIN..LOTTO_MAX).shuffled().take(LOTTO_SIZE).map { LottoNumber(it) }
         return Lotto(newLotto)
-    }
-
-    private fun validateMoney(money: Int) {
-        require(money > 0 && money >= standardPrice) { "$ERROR ${standardPrice}원 이상 입력해주세요." }
-        require(money % standardPrice == 0) { "$ERROR ${standardPrice}원 단위로 입력해주세요." }
     }
 }

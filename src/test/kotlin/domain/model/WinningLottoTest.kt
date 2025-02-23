@@ -18,7 +18,7 @@ class WinningLottoTest {
                 ),
             )
 
-        val purchaseLotto = fakeLottoGenerator.generate(PurchasePrice(2000))
+        val purchaseLotto = fakeLottoGenerator.generate(2)
 
         val winningLotto = createWinningLotto(1, 3, 4, 5, 6, 7, bonus = 2)
         val result = winningLotto.calculate(purchaseLotto)

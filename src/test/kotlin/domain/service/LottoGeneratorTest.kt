@@ -9,20 +9,19 @@ class LottoGeneratorTest {
     @Test
     fun `구입 금액이 0 이하면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            LottoGeneratorImpl().generate(PurchasePrice(0))
+            LottoGeneratorImpl().validateMoney(PurchasePrice(0))
         }.apply { assertThat(this).hasMessage("[ERROR] 1000원 이상 입력해주세요.") }
     }
 
     @Test
     fun `구입 금액이 천원 단위가 아니면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            LottoGeneratorImpl().generate(PurchasePrice(10101010))
+            LottoGeneratorImpl().validateMoney(PurchasePrice(10101010))
         }.apply { assertThat(this).hasMessage("[ERROR] 1000원 단위로 입력해주세요.") }
     }
 
     @Test
-    fun `구입 금액이 2천원이면 로또를 2개 발행한다`() {
-        val money = PurchasePrice(2000)
-        assertThat(LottoGeneratorImpl().generate(money).size).isEqualTo(2)
+    fun `자동 로또 구매 개수가 2개면 자동 로또를 2개 발행한다`() {
+        assertThat(LottoGeneratorImpl().generate(2).size).isEqualTo(2)
     }
 }
