@@ -1,25 +1,25 @@
 package domain.model
 
 import domain.model.PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class PurchasePriceTest {
     @Test
     fun `구입 금액이 0 이하면 예외가 발생한다`() {
-        Assertions
-            .assertThatThrownBy {
-                PurchasePrice(0)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] ${STANDARD_AMOUNT_UNIT}원 이상 입력해주세요.")
+        assertThrows<IllegalArgumentException>(
+            message = "[ERROR] ${STANDARD_AMOUNT_UNIT}원 이상 입력해주세요.",
+        ) {
+            PurchasePrice(0)
+        }
     }
 
     @Test
     fun `구입 금액이 천원 단위가 아니면 예외가 발생한다`() {
-        Assertions
-            .assertThatThrownBy {
-                PurchasePrice(10001)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("[ERROR] ${STANDARD_AMOUNT_UNIT}원 단위로 입력해주세요.")
+        assertThrows<IllegalArgumentException>(
+            message = "[ERROR] ${STANDARD_AMOUNT_UNIT}원 단위로 입력해주세요",
+        ) {
+            PurchasePrice(10001)
+        }
     }
 }
