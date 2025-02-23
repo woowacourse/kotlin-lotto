@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class LottoDiscriminatorTest {
+class LottoRankDiscriminatorTest {
     @ParameterizedTest
     @MethodSource("lottoCasesForResultTest")
     fun `각 로또는 해당되는 당첨 번호에 맞게 랭크가 반환된다`(
@@ -18,9 +18,9 @@ class LottoDiscriminatorTest {
         val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber(7)
 
-        val lottoDiscriminator = LottoDiscriminator(winningLotto, bonusNumber)
+        val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusNumber)
         val lotto = Lotto.from(lottoNumbers)
-        val rank = lottoDiscriminator.discriminateLotto(lotto)
+        val rank = lottoRankDiscriminator.discriminateLotto(lotto)
 
         Assertions.assertEquals(expectedRank, rank)
     }
@@ -30,9 +30,9 @@ class LottoDiscriminatorTest {
         val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber(7)
 
-        val lottoDiscriminator = LottoDiscriminator(winningLotto, bonusNumber)
+        val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusNumber)
         val existingLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 7))
-        val rank = lottoDiscriminator.discriminateLotto(existingLotto)
+        val rank = lottoRankDiscriminator.discriminateLotto(existingLotto)
 
         Assertions.assertEquals(Rank.SECOND, rank)
     }
@@ -43,7 +43,7 @@ class LottoDiscriminatorTest {
         val bonusNumber = LottoNumber(1)
 
         assertThrows<IllegalArgumentException> {
-            LottoDiscriminator(winningLotto, bonusNumber)
+            LottoRankDiscriminator(winningLotto, bonusNumber)
         }
     }
 

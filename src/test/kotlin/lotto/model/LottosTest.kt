@@ -18,7 +18,7 @@ class LottosTest {
 
         val winningNumbers = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber(7)
-        val lottoDiscriminator = LottoDiscriminator(winningNumbers, bonusNumber)
+        val lottoRankDiscriminator = LottoRankDiscriminator(winningNumbers, bonusNumber)
 
         val expectedResult =
             mapOf(
@@ -29,7 +29,7 @@ class LottosTest {
                 Rank.FIFTH to 1,
                 Rank.MISS to 1,
             )
-        val actualResult = Lottos(lottos).countLottoByRank(lottoDiscriminator)
+        val actualResult = Lottos(lottos).countLottoByRank(lottoRankDiscriminator)
 
         assertEquals(expectedResult, actualResult)
     }

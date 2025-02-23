@@ -2,10 +2,10 @@ package lotto.controller
 
 import lotto.model.Lotto
 import lotto.model.LottoCashier
-import lotto.model.LottoDiscriminator
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoProfitCalculator
+import lotto.model.LottoRankDiscriminator
 import lotto.model.Lottos
 import lotto.model.ProfitStatus
 import lotto.model.Rank
@@ -32,8 +32,8 @@ class LottoController(
         outputView.printBonusNumberGuide()
         val lottoBonusNumber = setupLastWeekBonusNumber()
 
-        val lottoDiscriminator = LottoDiscriminator(lastWeekLottoWinningNumbers, lottoBonusNumber)
-        val lottoWinningResult = lottos.countLottoByRank(lottoDiscriminator)
+        val lottoRankDiscriminator = LottoRankDiscriminator(lastWeekLottoWinningNumbers, lottoBonusNumber)
+        val lottoWinningResult = lottos.countLottoByRank(lottoRankDiscriminator)
 
         displayLottosResult(lottoWinningResult)
         calculateAndDisplayProfitRate(lottoWinningResult, lottoCashier)

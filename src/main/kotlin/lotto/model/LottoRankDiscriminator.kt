@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoDiscriminator(
+class LottoRankDiscriminator(
     private val winningLotto: Lotto,
     private val bonusNumber: LottoNumber,
 ) {
