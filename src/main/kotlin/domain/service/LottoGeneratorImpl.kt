@@ -1,10 +1,10 @@
 package domain.service
 
 import domain.model.Lotto
-import domain.model.Lotto.Companion.LOTTO_MAX
-import domain.model.Lotto.Companion.LOTTO_MIN
 import domain.model.Lotto.Companion.LOTTO_SIZE
 import domain.model.LottoNumber
+import domain.model.LottoNumber.Companion.LOTTO_MAX
+import domain.model.LottoNumber.Companion.LOTTO_MIN
 import domain.model.PurchasePrice
 import domain.service.LottoGenerator.Companion.STANDARD_AMOUNT_UNIT
 import util.ErrorConstants.ERROR
