@@ -1,7 +1,9 @@
 package lotto.view
 
+import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
+import lotto.domain.Lottos
 import lotto.domain.ResultClassification
 
 object OutputView {
@@ -25,9 +27,9 @@ object OutputView {
         println("$lottoCount$MESSAGE_PURCHASE_COUNT")
     }
 
-    fun showLottos(numbers: List<Set<LottoNumber>>) {
-        numbers.forEach { lottoNumbers: Set<LottoNumber> ->
-            println(lottoNumbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted())
+    fun showLottos(lottos: Lottos) {
+        lottos.value.forEach { lotto: Lotto ->
+            println(lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted())
         }
         println()
     }

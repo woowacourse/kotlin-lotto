@@ -18,10 +18,9 @@ class LottoController {
     private fun buyLottos(): Lottos {
         val price: Int = View.readPrice()
         val quantity: Int = price / Lotto.PRICE
-        val lottoNumbers: List<Set<LottoNumber>> = List(quantity) { makeLottoNumbers() }
         val lottos = Lottos(List(quantity) { Lotto(makeLottoNumbers()) })
         View.showLottoCount(lottos.value.size)
-        View.showLottos(lottoNumbers.map { lottoNumber: Set<LottoNumber> -> lottoNumber })
+        View.showLottos(lottos)
         return lottos
     }
 

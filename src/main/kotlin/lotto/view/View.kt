@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
+import lotto.domain.Lottos
 
 object View {
     fun readPrice(): Int {
@@ -14,8 +14,8 @@ object View {
         OutputView.showLottoCount(lottoCount)
     }
 
-    fun showLottos(numbers: List<Set<LottoNumber>>) {
-        OutputView.showLottos(numbers)
+    fun showLottos(lottos: Lottos) {
+        OutputView.showLottos(lottos)
     }
 
     fun showResult(
