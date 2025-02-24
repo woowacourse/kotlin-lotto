@@ -5,6 +5,7 @@ import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.Lottos
 import lotto.domain.ResultClassification
+import kotlin.math.floor
 
 object OutputView {
     fun requestPrice() {
@@ -39,7 +40,7 @@ object OutputView {
         LottoResult.entries.drop(1).forEach { entry -> println(makePrizeDescription(entry, resultTally)) }
         println(
             MESSAGE_RESULT_SUMMARY.format(
-                profitRate,
+                floor(profitRate * 100) / 100,
                 makeResultSummary(profitRate),
             ),
         )

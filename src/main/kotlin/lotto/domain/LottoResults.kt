@@ -1,7 +1,5 @@
 package lotto.domain
 
-import kotlin.math.floor
-
 class LottoResults(
     private val value: List<LottoResult>,
 ) {
@@ -18,7 +16,7 @@ class LottoResults(
             value.sumOf { lottoResult: LottoResult ->
                 lottoResult.prize.toLong()
             }
-        return floor(profit / (value.size * Lotto.PRICE).toDouble() * 100) / 100
+        return profit / (value.size * Lotto.PRICE).toDouble()
     }
 
     companion object {
