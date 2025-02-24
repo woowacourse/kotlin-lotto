@@ -8,6 +8,11 @@ class InputView {
         return input
     }
 
+    fun getManualLottoNumbers(count: Int): List<String> {
+        println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
+        return List(count) { getLottoNumber() }
+    }
+
     fun getPurchaseAmount(): String {
         println(MESSAGE_INPUT_PURCHASE_AMOUNT)
         val input = readln()
@@ -17,6 +22,10 @@ class InputView {
 
     fun getWinningNumber(): String {
         println(MESSAGE_INPUT_WINNING_NUMBER)
+        return getLottoNumber()
+    }
+
+    private fun getLottoNumber(): String {
         val input = readln()
         validateNumberList(input.split(",").map { it.trim() })
         return input
@@ -43,7 +52,8 @@ class InputView {
         private const val MESSAGE_INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
         private const val MESSAGE_INPUT_WINNING_NUMBER = "\n지난 주 당첨 번호를 입력해 주세요."
         private const val MESSAGE_INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
-        private const val ERROR_NOT_NUMBER = "[ERROR] 양수만 입력 가능합니다."
         private const val MESSAGE_INPUT_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val MESSAGE_INPUT_MANUAL_LOTTO_NUMBER = "수동으로 구매할 번호를 입력해 주세요."
+        private const val ERROR_NOT_NUMBER = "[ERROR] 양수만 입력 가능합니다."
     }
 }
