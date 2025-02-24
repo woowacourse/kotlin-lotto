@@ -4,9 +4,7 @@ class LottoTicket(
     private val numbers: Set<LottoNumber>,
 ) {
     init {
-        require(numbers.size == numbers.toSet().size) {
-            ERROR_LOTTO_DUPLICATE
-        }
+        require(numbers.size == LOTTO_PICK_COUNT) { ERROR_INVALID_WINNING_COUNT }
     }
 
     fun getNumbers() = numbers
@@ -16,6 +14,7 @@ class LottoTicket(
     fun hasBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
 
     companion object {
-        private const val ERROR_LOTTO_DUPLICATE = "로또 번호는 서로 중복되면 안 됩니다."
+        private const val ERROR_INVALID_WINNING_COUNT = "당첨 번호는 6개여야 합니다."
+        private const val LOTTO_PICK_COUNT = 6
     }
 }
