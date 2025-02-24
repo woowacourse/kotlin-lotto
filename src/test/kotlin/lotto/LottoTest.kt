@@ -1,7 +1,7 @@
 package lotto
 
 import lotto.model.Lotto
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -12,7 +12,7 @@ class LottoTest {
         val expected = 6
         val actual = lotto.numbers.distinct().size
 
-        Assertions.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
