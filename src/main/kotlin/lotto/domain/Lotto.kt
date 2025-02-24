@@ -7,7 +7,7 @@ import lotto.global.LottoValidator.requireValidLotto
 // 이것까지 숨기는 것은 너무 나간 것일까..?
 // 그리고 애초에 생성자로 List를 받고 있는데 이걸 굳이 일급 컬렉션으로 만들 의미가 있을까?
 data class Lotto(
-    val value: List<Int>,
+    val value: List<LottoNumber>,
 ) {
     init {
         requireValidLotto(value)
@@ -15,5 +15,5 @@ data class Lotto(
 
     fun getCountOfMatchWith(contrast: Lotto): Int = value.count { it in contrast.value }
 
-    fun contains(element: Int): Boolean = element in value
+    fun contains(element: Int): Boolean = value.contains(LottoNumber(element))
 }

@@ -2,6 +2,7 @@ package lottoTest
 
 import lotto.LottoService
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.domain.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -22,11 +23,11 @@ class LottoServiceTest {
     fun t4() {
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 3, 4, 5, 6)),
-                Lotto(listOf(1, 2, 3, 4, 5, 6)),
-                Lotto(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }),
+                Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }),
+                Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }),
             )
-        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
+        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9).map { LottoNumber(it) })
         val bonus = 7
         val result = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
         assertThat(result.map[Rank.MISS]).isEqualTo(3)
@@ -37,11 +38,11 @@ class LottoServiceTest {
     fun t4_1() {
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 11, 10, 5, 6)),
-                Lotto(listOf(1, 2, 3, 4, 5, 6)),
-                Lotto(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto(listOf(1, 2, 11, 10, 5, 6).map { LottoNumber(it) }),
+                Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }),
+                Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }),
             )
-        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
+        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9).map { LottoNumber(it) })
         val bonus = 7
         val result = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
         assertThat(result.map[Rank.MISS]).isEqualTo(2)
@@ -53,11 +54,11 @@ class LottoServiceTest {
     fun t4_2() {
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 11, 10, 5, 6)),
-                Lotto(listOf(1, 2, 3, 4, 5, 6)),
-                Lotto(listOf(1, 2, 11, 10, 8, 9)),
+                Lotto(listOf(1, 2, 11, 10, 5, 6).map { LottoNumber(it) }),
+                Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }),
+                Lotto(listOf(1, 2, 11, 10, 8, 9).map { LottoNumber(it) }),
             )
-        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
+        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9).map { LottoNumber(it) })
         val bonus = 7
         val result = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
         assertThat(result.map[Rank.MISS]).isEqualTo(1)

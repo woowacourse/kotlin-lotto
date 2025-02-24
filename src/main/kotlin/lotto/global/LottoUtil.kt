@@ -1,6 +1,7 @@
 package lotto.global
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
 import lotto.global.Config.MAX_LOTTO_LENGTH
@@ -11,9 +12,9 @@ import java.util.LinkedList
 object LottoUtil {
     fun getLotto(): Lotto {
         // 애초에 이미 리스트를 만들고 래핑하는게 맞나? 이 로직을 lotto 내부로 숨겨야 할까?
-        val lotto = mutableListOf<Int>()
+        val lotto = mutableListOf<LottoNumber>()
         val range: LinkedList<Int> = LinkedList(IntRange(MIN_RANDOM_NUM, MAX_RANDOM_NUM).shuffled())
-        repeat(MAX_LOTTO_LENGTH) { lotto.add(range.poll()) }
+        repeat(MAX_LOTTO_LENGTH) { lotto.add(LottoNumber(range.poll())) }
 
         return Lotto(lotto.toList())
     }

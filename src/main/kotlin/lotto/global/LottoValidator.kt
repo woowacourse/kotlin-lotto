@@ -1,5 +1,6 @@
 package lotto.global
 
+import lotto.domain.LottoNumber
 import lotto.global.Config.MAX_LOTTO_LENGTH
 import lotto.global.Config.MAX_RANDOM_NUM
 import lotto.global.Config.MIN_RANDOM_NUM
@@ -13,18 +14,18 @@ object LottoValidator {
 
     fun requireValidLotto(input: String): String {
         val winningLotto =
-            input.split(",").map { number ->
-                number.toIntOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
-            }
+            input
+                .split(",")
+                .map { number ->
+                    number.toIntOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
+                }.map { number -> LottoNumber(number) }
         requireValidLotto(winningLotto)
         return input
     }
 
-    fun requireValidLotto(input: List<Int>): List<Int> {
+    fun requireValidLotto(input: List<LottoNumber>): List<LottoNumber> {
         var winningLotto = input.toList()
         require(input.size == MAX_LOTTO_LENGTH) { Message.ERR_NOT_SIX_ELEMENTS.msg }
-        winningLotto = winningLotto.filter { number -> number in MIN_RANDOM_NUM..MAX_RANDOM_NUM }
-        require(winningLotto.size == MAX_LOTTO_LENGTH) { Message.ERR_NOT_IN_RANGE.msg }
         winningLotto = winningLotto.distinct()
         require(winningLotto.size == MAX_LOTTO_LENGTH) { Message.ERR_ELEMENT_DUPLICATED.msg }
         return input

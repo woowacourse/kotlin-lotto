@@ -1,6 +1,7 @@
 package lotto
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 
 class LottoController(
     private val lottoView: LottoView,
@@ -13,7 +14,7 @@ class LottoController(
         lottoView.printLotto(manyLotto)
 
         val userInputWinningLotto = lottoView.getWinningLotto()
-        val winningLotto = Lotto(userInputWinningLotto)
+        val winningLotto = Lotto(userInputWinningLotto.map { LottoNumber(it) })
         val bonusNum = lottoView.getBonusNum()
 
         val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonusNum)

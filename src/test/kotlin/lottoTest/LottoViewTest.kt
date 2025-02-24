@@ -3,6 +3,7 @@ package lottoTest
 import lotto.LottoService
 import lotto.LottoView
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -55,7 +56,7 @@ class LottoViewTest {
     fun t2() {
         setInput("1,2,3,4,5,6")
         assertThat(lottoView.getWinningLotto())
-            .isEqualTo(Lotto(listOf(1, 2, 3, 4, 5, 6)))
+            .isEqualTo(listOf(1, 2, 3, 4, 5, 6))
     }
 
     @Test
@@ -135,10 +136,10 @@ class LottoViewTest {
         val output = setOut()
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 3, 43, 44, 45)),
-                Lotto(listOf(11, 12, 13, 14, 15, 16)),
+                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber(it) }),
+                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber(it) }),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
         val bonus = 7
         val rankMap = LottoService().getLottoRankMany(manyLotto, winningLotto, bonus)
         lottoView.printResult(rankMap)
