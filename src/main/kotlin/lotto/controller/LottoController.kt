@@ -19,7 +19,7 @@ class LottoController(
 
         val purchaseAmount = getPurchaseAmount()
         val lottos = lottoMachine.generate(purchaseAmount)
-        outputView.printPurchaseDetail(purchaseAmount, lottos)
+        outputView.printPurchaseDetail(lottos)
 
         val winningLotto = getWinningLotto()
         val lottoStats = lottoCalculator.calculate(winningLotto, lottos)

@@ -2,16 +2,11 @@ package lotto.view
 
 import lotto.domain.model.Lotto
 import lotto.domain.value.EarningRate
-import lotto.domain.value.PurchaseAmount
 import lotto.enums.Rank
 
 class OutputView {
-    fun printPurchaseDetail(
-        purchaseAmount: PurchaseAmount,
-        lottos: List<Lotto>,
-    ) {
-        val quantity = purchaseAmount.getPurchaseQuantity()
-        printPurchaseQuantity(quantity)
+    fun printPurchaseDetail(lottos: List<Lotto>) {
+        printPurchaseQuantity(lottos.size)
         printLottos(lottos)
     }
 
@@ -37,25 +32,8 @@ class OutputView {
     private fun printLottoStats(lottoStats: Map<Rank, Int>) {
         Rank.entries.reversed().forEach { rank ->
             val count = lottoStats[rank] ?: 0
-            when (rank) {
-                Rank.SECOND ->
-                    println(
-                        OUTPUT_RANK_DETAIL_BONUS.format(
-                            rank.countOfMatch,
-                            rank.winningMoney,
-                            count,
-                        ),
-                    )
-
-                else ->
-                    println(
-                        OUTPUT_RANK_DETAIL.format(
-                            rank.countOfMatch,
-                            rank.winningMoney,
-                            count,
-                        ),
-                    )
-            }
+            val message = if (rank == Rank.SECOND) OUTPUT_RANK_DETAIL_BONUS else OUTPUT_RANK_DETAIL
+            println(message.format(rank.countOfMatch, rank.winningMoney, count))
         }
     }
 
