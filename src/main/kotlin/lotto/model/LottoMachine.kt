@@ -4,9 +4,9 @@ import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
 import lotto.model.LottoNumber.Companion.ALL_LOTTO_NUMBERS
 
 class LottoMachine {
-    fun getLottos(lottoQuantity: Int): Lottos {
+    fun getLottos(lottoQuantity: Int): List<Lotto> {
         val lottos = List(lottoQuantity) { Lotto.from(getLottoNumbers()) }
-        return Lottos(lottos)
+        return lottos
     }
 
     private fun getLottoNumbers(): List<Int> =

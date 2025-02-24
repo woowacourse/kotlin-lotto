@@ -14,7 +14,18 @@ class LottoRankDiscriminator(
         }
     }
 
-    fun discriminateLotto(userLotto: Lotto): Rank {
+    fun countLottoByRank(lottos: List<Lotto>): Map<Rank, Int> {
+        val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
+
+        lottos.forEach { lotto ->
+            val rank = discriminateLotto(lotto)
+            countResult[rank] = countResult.getValue(rank) + 1
+        }
+
+        return countResult
+    }
+
+    private fun discriminateLotto(userLotto: Lotto): Rank {
         val countOfMatch = countMatchWinningNumbers(userLotto)
         val matchBonus = isHaveBonusNumber(userLotto)
 

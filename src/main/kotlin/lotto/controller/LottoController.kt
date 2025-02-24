@@ -16,8 +16,8 @@ class LottoController(
         val purchaseAmount = inputView.readPurchaseAmount()
         val lottos = lottoService.getPurchaseLottos(purchaseAmount)
 
-        outputView.printPurchaseLottoQuantity(lottos.lottos.size)
-        lottos.lottos.forEach { lotto ->
+        outputView.printPurchaseLottoQuantity(lottos.size)
+        lottos.forEach { lotto ->
             outputView.printLottoNumbers(lotto.numbers.map { it.number })
         }
 

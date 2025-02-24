@@ -45,10 +45,10 @@ class LottoRankDiscriminatorTest {
         val bonusNumber = LottoNumber.from(7)
         val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusNumber)
 
-        val lotto = Lotto.from(lottoNumbers)
-        val rank = lottoRankDiscriminator.discriminateLotto(lotto)
+        val lotto = listOf(Lotto.from(lottoNumbers))
+        val discriminateResult = lottoRankDiscriminator.countLottoByRank(lotto)
 
-        assertEquals(expectedRank, rank)
+        assertEquals(1, discriminateResult[expectedRank])
     }
 
     @Test

@@ -6,11 +6,10 @@ import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoProfitCalculator
 import lotto.model.LottoRankDiscriminator
-import lotto.model.Lottos
 import lotto.model.Rank
 
 class LottoService {
-    fun getPurchaseLottos(purchaseAmount: Int): Lottos {
+    fun getPurchaseLottos(purchaseAmount: Int): List<Lotto> {
         val lottoCashier = LottoCashier(purchaseAmount)
         val lottoMachine = LottoMachine()
 
@@ -18,7 +17,7 @@ class LottoService {
     }
 
     fun getLottosDiscriminateResult(
-        lottos: Lottos,
+        lottos: List<Lotto>,
         winningNumbers: List<Int>,
         bonusNumber: Int,
     ): Map<Rank, Int> {
@@ -26,7 +25,7 @@ class LottoService {
         val bonusLottoNumber = LottoNumber.from(bonusNumber)
         val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusLottoNumber)
 
-        return lottos.countLottoByRank(lottoRankDiscriminator::discriminateLotto)
+        return lottoRankDiscriminator.countLottoByRank(lottos)
     }
 
     fun getProfitRate(

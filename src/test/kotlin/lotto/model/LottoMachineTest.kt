@@ -9,7 +9,7 @@ class LottoMachineTest {
         val lottoMachine = LottoMachine()
 
         val expectedQuantity = 5
-        val actualQuantity = lottoMachine.getLottos(expectedQuantity).lottos.size
+        val actualQuantity = lottoMachine.getLottos(expectedQuantity).size
 
         assertEquals(expectedQuantity, actualQuantity)
     }
