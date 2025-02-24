@@ -25,7 +25,7 @@ class LottoController(
         val bonusNumber: LottoNumber = getBonusNumber()
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
 
-        printAllResult(lottos, winningLotto)
+        printAllResult(lottos, winningLotto, price)
     }
 
     fun getPrice(): Int {
@@ -72,16 +72,18 @@ class LottoController(
     fun printProfitRate(
         lottos: List<Lotto>,
         winningLotto: WinningLotto,
+        price: Int,
     ) {
-        val profitRate: Double = LottoResult(lottos, winningLotto).calculateProfitRate()
+        val profitRate: Double = LottoResult(lottos, winningLotto).calculateProfitRate(price)
         outputView.printProfit(profitRate)
     }
 
     fun printAllResult(
         lottos: List<Lotto>,
         winningLotto: WinningLotto,
+        price: Int,
     ) {
         printLottoResult(lottos, winningLotto)
-        printProfitRate(lottos, winningLotto)
+        printProfitRate(lottos, winningLotto, price)
     }
 }

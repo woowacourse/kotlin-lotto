@@ -28,7 +28,8 @@ class LottoResultTest {
         val bonusNumber: LottoNumber = LottoNumber(7)
 
         val winningLotto = WinningLotto(winningLottoNumber, bonusNumber)
-        val rank = LottoResult(listOf(lotto), winningLotto).calculateProfitRate()
+        val price = 1000
+        val rank = LottoResult(listOf(lotto), winningLotto).calculateProfitRate(price)
 
         assertThat(rank).isEqualTo(50.0)
     }
