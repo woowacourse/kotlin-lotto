@@ -4,7 +4,8 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
     constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber(bonusNumber))
 
     init {
-        require(winningLotto.numbers.contains(bonusNumber).not()) { DUPLICATE_WINNING_NUMBER_MESSAGE }
+        val duplicateBonusNumber = winningLotto.numbers.find { it == bonusNumber }
+        require(duplicateBonusNumber == null) { DUPLICATE_WINNING_NUMBER_MESSAGE.format(duplicateBonusNumber)}
     }
 
     fun calculateLottoRanks(lottos: List<Lotto>): LottoRanks {
@@ -18,6 +19,6 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
     }
 
     private companion object {
-        const val DUPLICATE_WINNING_NUMBER_MESSAGE = "보너스 번호는 당첨 번호와 중복될 수 없습니다."
+        const val DUPLICATE_WINNING_NUMBER_MESSAGE = "보너스 번호 %s은(는) 당첨 번호와 중복 될 수 없습니다."
     }
 }
