@@ -12,6 +12,9 @@ object OutputView {
     private const val MESSAGE_PROFIT_RATE_DRAW = "본전이라는"
     private const val MESSAGE_PROFIT_RATE_WIN = "이득이라는"
     private const val RESULT_DESCRIPTION_TEMPLATE = "총 수익률은 %.2f입니다.(기준이 1이기 때문에 결과적으로 %S 의미임)"
+    private const val SHOW_LOTTO_SEPARATOR = "\n"
+    private const val SHOW_LOTTO_RESULT_SEPARATOR = "\n"
+    private const val PROFIT_RATE_DRAW = 1.0
 
     fun requestPrice() {
         println(MESSAGE_ENTER_PRICE)
@@ -22,7 +25,7 @@ object OutputView {
     }
 
     fun showLottos(numbers: List<List<Int>>) {
-        println(numbers.joinToString("\n"))
+        println(numbers.joinToString(SHOW_LOTTO_SEPARATOR))
         println()
     }
 
@@ -40,7 +43,7 @@ object OutputView {
     ) {
         println()
         println(MESSAGE_RESULT_HEADER)
-        println(userLottoResults.joinToString("\n"))
+        println(userLottoResults.joinToString(SHOW_LOTTO_RESULT_SEPARATOR))
         println(
             RESULT_DESCRIPTION_TEMPLATE.format(
                 floor(profitRate * 100) / 100,
@@ -51,8 +54,8 @@ object OutputView {
 
     private fun makeProfitRateDescription(profitRate: Double): String =
         when {
-            profitRate < 1.0 -> MESSAGE_PROFIT_RATE_LOSE
-            profitRate > 1.0 -> MESSAGE_PROFIT_RATE_WIN
+            profitRate < PROFIT_RATE_DRAW -> MESSAGE_PROFIT_RATE_LOSE
+            profitRate > PROFIT_RATE_DRAW -> MESSAGE_PROFIT_RATE_WIN
             else -> MESSAGE_PROFIT_RATE_DRAW
         }
 }
