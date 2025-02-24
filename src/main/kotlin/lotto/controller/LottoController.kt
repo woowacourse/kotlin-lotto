@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.model.Lotto
 import lotto.model.LottoMatchCalculator
+import lotto.model.LottoNumber
 import lotto.model.LottoStatisticResult
 import lotto.model.LottoTicketCounter
 import lotto.model.RandomLottoGenerator
@@ -21,7 +22,7 @@ class LottoController {
         val lottoBundle = purchaseLottos(count)
         outputView.printLottoBundle(lottoBundle)
 
-        val winningLotto = WinningLotto(getWinningLotto(), getBonusNumber())
+        val winningLotto = WinningLotto(getWinningLotto(), LottoNumber(getBonusNumber()))
         val lottoMatchResult = LottoMatchCalculator().getWinningCounts(lottoBundle, winningLotto)
 
         val lottoStatisticResult = LottoStatisticResult().calculateProfit(purchase.toInt(), lottoMatchResult)
@@ -29,7 +30,11 @@ class LottoController {
         outputView.printResult(lottoMatchResult, lottoStatisticResult)
     }
 
-    private fun getWinningLotto(): Lotto = Lotto(inputView.inputWinningNumbers())
+    private fun getWinningLotto(): Lotto {
+        val input = inputView.inputWinningNumbers()
+        val lottoNumber = input.map { LottoNumber(it) }
+        return Lotto(lottoNumber)
+    }
 
     private fun getBonusNumber(): Int = inputView.inputBonusNumber()
 

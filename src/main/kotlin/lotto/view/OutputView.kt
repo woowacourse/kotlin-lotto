@@ -11,7 +11,7 @@ class OutputView {
 
     fun printLottoBundle(lottoBundle: List<Lotto>) {
         lottoBundle.forEach { lotto ->
-            println(lotto.numbers)
+            println(lotto.numbers.map { it.number })
         }
     }
 

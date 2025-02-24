@@ -11,7 +11,7 @@ class InputView {
         val input = readln()
 
         return input.split(",")
-            .map { it.trim().toInt() } // 이러면 무조건 숫자여야 되는?????
+            .map { it.trim().toInt() }
             .toList()
     }
 
