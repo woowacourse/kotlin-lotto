@@ -39,7 +39,7 @@ class LottoController(
         outputView.printBonusNumberGuide()
         val bonusNumber = inputView.readBonusNumber()
 
-        val lottoWinningResult = getLottosDiscriminateResult(lottos, winningNumbers, bonusNumber)
+        val lottoWinningResult = getLottosWinningResult(lottos, winningNumbers, bonusNumber)
 
         outputView.printWinningResultTitle()
         lottoWinningResult.forEach { (rank, count) ->
@@ -80,7 +80,7 @@ class LottoController(
         )
     }
 
-    private fun getLottosDiscriminateResult(
+    private fun getLottosWinningResult(
         lottos: List<Lotto>,
         winningNumbers: List<Int>,
         bonusNumber: Int,
