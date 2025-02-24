@@ -1,4 +1,4 @@
-package lottoTest
+package lottoTest.global
 
 import lotto.global.LottoValidator.requireLottoAmount
 import lotto.global.LottoValidator.requireValidBonusNum
