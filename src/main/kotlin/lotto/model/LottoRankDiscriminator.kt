@@ -26,5 +26,5 @@ class LottoRankDiscriminator(
         return userLotto.numbers.count { it.number in winningNumbers }
     }
 
-    private fun isHaveBonusNumber(lotto: Lotto): Boolean = lotto.isHaveBonus(bonusNumber)
+    private fun isHaveBonusNumber(lotto: Lotto): Boolean = lotto.isHaveNumber(bonusNumber)
 }
