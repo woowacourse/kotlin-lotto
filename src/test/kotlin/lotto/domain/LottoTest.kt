@@ -1,5 +1,6 @@
 package lotto.domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -17,5 +18,17 @@ class LottoTest {
     @Test
     fun `로또 번호가 중복되면 안 된다`() {
         assertThrows<IllegalArgumentException> { Lotto(setOf(1, 2, 3, 1, 2, 3).map { LottoNumber(it) }.toSet()) }
+    }
+
+    @Test
+    fun `구입금액만큼 로또를 생성한다`() {
+        val wantLottoCount = 5
+        val wantedNumbers = List(wantLottoCount) { setOf(1, 2, 3, 4, 5, 6) }
+        val lottos: List<Lotto> =
+            Lotto.buyLottos(
+                wantLottoCount,
+                wantedNumbers,
+            )
+        assertThat(lottos.size).isEqualTo(wantLottoCount)
     }
 }

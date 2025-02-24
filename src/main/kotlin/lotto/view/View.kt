@@ -1,7 +1,7 @@
 package lotto.view
 
 object View {
-    fun readPrice(): Int {
+    fun readPay(): Int {
         OutputView.requestPrice()
         val price: Int = InputView.readPrice()
         return price
