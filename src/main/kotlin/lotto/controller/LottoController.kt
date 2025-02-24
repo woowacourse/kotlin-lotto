@@ -41,7 +41,7 @@ class LottoController(
 
     private fun getWinningLotto(): Lotto {
         val winningInput = inputView.getMultipleNumber(WINNING_LOTTO_INPUT_MESSAGE)
-        return Lotto(LottoNumbers(winningInput.map { number -> LottoNumber(number) }))
+        return Lotto(LottoNumbers(winningInput.map { number -> LottoNumber(number) }), Amount(LOTTO_PRIZE))
     }
 
     private fun getBonusNumber(): LottoNumber {

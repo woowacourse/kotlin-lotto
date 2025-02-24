@@ -80,5 +80,5 @@ class LottoMatcherTest {
         assertThat(rank[Rank.MISS]).isEqualTo(1)
     }
 
-    fun Lotto(numbers: List<Int>): Lotto = Lotto(LottoNumbers(numbers.map { number -> LottoNumber(number) }))
+    fun Lotto(numbers: List<Int>): Lotto = Lotto(LottoNumbers(numbers.map { number -> LottoNumber(number) }), Amount(1000))
 }

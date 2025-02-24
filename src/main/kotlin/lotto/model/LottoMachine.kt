@@ -25,20 +25,21 @@ class LottoMachine(
 
     fun publishLottoTickets(): List<Lotto> {
         val lottoTickets = mutableListOf<Lotto>()
-        repeat(amount.money / lottoPrize.money) {
-            val lotto = publishLotto()
+        val moneyList = amount.moneySplit(lottoPrize)
+        repeat(moneyList.size) {
+            val lotto = publishLotto(lottoPrize)
             lottoTickets.add(lotto)
         }
         return lottoTickets
     }
 
-    private fun publishLotto(): Lotto {
+    private fun publishLotto(prize: Amount): Lotto {
         val lottoNumbers =
             shuffle.shuffle(numbers)
                 .take(LOTTO_NUMBER_COUNT)
                 .sorted()
                 .map { LottoNumber(it) }
-        return Lotto(LottoNumbers(lottoNumbers))
+        return Lotto(LottoNumbers(lottoNumbers), prize)
     }
 
     companion object {
