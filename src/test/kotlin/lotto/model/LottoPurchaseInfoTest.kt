@@ -28,4 +28,10 @@ class LottoPurchaseInfoTest {
         val amount = LottoPurchaseInfo(10000, 3)
         assertThat(amount.getAutoLottoQuantity()).isEqualTo((10000 / LottoPurchaseInfo.LOTTO_PRICE) - 3)
     }
+
+    @Test
+    fun `수동 로또 수량이 총 구매 수량보다 큰 경우 예외가 발생한다`() {
+        val exception = assertThrows<IllegalArgumentException> { LottoPurchaseInfo(1000, 2) }
+        assertThat(exception.message).isEqualTo("[ERROR] 수동 구매 수량은 총 구매 수량보다 클 수 없습니다.")
+    }
 }
