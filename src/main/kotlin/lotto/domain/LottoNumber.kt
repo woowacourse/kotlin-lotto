@@ -1,7 +1,7 @@
 package lotto.domain
 
 data class LottoNumber(
-    private val value: Int,
+    val value: Int,
 ) {
     init {
         require(value in MIN..MAX) { ERROR_MESSAGE_LOTTO_NUMBER_SHOULD_BE_IN_1_TO_45 }

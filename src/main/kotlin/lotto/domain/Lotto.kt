@@ -1,7 +1,7 @@
 package lotto.domain
 
 class Lotto(
-    private val numbers: Set<LottoNumber>,
+    val numbers: Set<LottoNumber>,
 ) {
     init {
         require(numbers.size == NUMBERS_SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_DIFFERENT_NUMBERS }
@@ -28,8 +28,19 @@ class Lotto(
             val lottoTicketCount: Int = pay / PRICE
             require(lottoTicketCount == wantedNumbers.size) { ERROR_MESSAGE_NOT_MATCHED_MONEY_AND_LOTTOS_COUNT }
 
-            val lottos: List<Lotto> = wantedNumbers.map { numbers: Set<Int> -> this.Lotto(numbers) }
+            val lottos: List<Lotto> = wantedNumbers.map { numbers: Set<Int> -> Lotto(numbers) }
             return lottos
         }
+
+        fun buyRandomLottos(pay: Int): List<Lotto> {
+            val lottoNumbers: List<Set<Int>> = List(pay / PRICE) { makeRandomLottoNumbers() }
+            return buyLottos(pay, lottoNumbers)
+        }
+
+        private fun makeRandomLottoNumbers(): Set<Int> =
+            (LottoNumber.MIN..LottoNumber.MAX)
+                .shuffled()
+                .subList(0, NUMBERS_SIZE)
+                .toSet()
     }
 }

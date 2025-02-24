@@ -19,11 +19,14 @@ class LottoController {
         showResult()
     }
 
-    private fun makeLotto(price: Int) {
-        val lottoNumbers: List<Set<Int>> = List(price / Lotto.PRICE) { makeRandomNumbers(Lotto.NUMBERS_SIZE) }
-        View.showLottos(lottoNumbers.map { lottoNumber: Set<Int> -> lottoNumber.sorted() })
-        val lottos: List<Lotto> = convertToLottos(price, lottoNumbers)
+    private fun makeLotto(pay: Int) {
+        val lottos: List<Lotto> = Lotto.buyRandomLottos(pay)
         boughtLottos = lottos
+        View.showLottos(
+            boughtLottos.map { lotto: Lotto ->
+                lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted()
+            },
+        )
     }
 
     private fun readWinningLotto() {
@@ -57,11 +60,6 @@ class LottoController {
             )
         }
 
-    private fun convertToLottos(
-        pay: Int,
-        lottoNumbers: List<Set<Int>>,
-    ): List<Lotto> = Lotto.buyLottos(pay, lottoNumbers)
-
     private fun getBonusNumberDescription(entry: LottoResult): String =
         if (entry.bonusMatched == LottoResult.BonusMatched.YES) BONUS_NUMBER_MATCHED else ""
 
@@ -72,8 +70,6 @@ class LottoController {
         userLottoResults.count { lottoResult: LottoResult ->
             lottoResult == entry
         }
-
-    private fun makeRandomNumbers(size: Int): Set<Int> = (LottoNumber.MIN..LottoNumber.MAX).shuffled().subList(0, size).toSet()
 
     companion object {
         private const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
