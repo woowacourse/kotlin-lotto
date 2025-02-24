@@ -2,11 +2,10 @@ package lotto.model
 
 class LottoCalculator {
     fun getRateOfReturn(
-        totalPrizeMoney: Double,
+        totalPrizeMoney: Long,
         purchaseMoney: Int,
     ): Double {
-        val rateOfReturn: Double = totalPrizeMoney / purchaseMoney
-
+        val rateOfReturn: Double = totalPrizeMoney / purchaseMoney.toDouble()
         return rateOfReturn
     }
 

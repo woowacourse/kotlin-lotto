@@ -15,17 +15,10 @@ class Lottos(
         }
     }
 
-    fun getTotalPrizeMoney(): Double {
-        var a = INITIAL_TOTAL_PRIZE
-        ranks.forEach { (rank, count) ->
-            a += rank.prizeMoney * count
-        }
-        return a
-    } // TODO: 확장함수 사용해서 수정해보기
+    fun getTotalPrizeMoney(): Long = ranks.asIterable().sumOf { (rank, count) -> rank.prizeMoney * count }.toLong()
 
     companion object {
         private const val INITIAL_LOTTO_RANK_COUNT = 0
         private const val INCREMENT_COUNT_UNIT = 1
-        private const val INITIAL_TOTAL_PRIZE = 0.0
     }
 }
