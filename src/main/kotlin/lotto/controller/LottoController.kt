@@ -11,6 +11,7 @@ import lotto.view.OutputView
 class LottoController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
+    private val lottoMachine: LottoMachine = LottoMachine(),
 ) {
     fun run() {
         val lottoBundle = purchaseLotto()
@@ -23,7 +24,7 @@ class LottoController(
 
     private fun purchaseLotto(): LottoBundle {
         val purchasePrice = inputView.readPurchaseAmount()
-        val lottoBundle = LottoMachine().generateLottoBundle(purchasePrice)
+        val lottoBundle = lottoMachine.generateLottoBundle(purchasePrice)
         outputView.printPurchaseLottoCount(lottoBundle.lottos.size)
         lottoBundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
         return lottoBundle
@@ -35,6 +36,6 @@ class LottoController(
     ) {
         val lottoRanks = winningNumbers.calculateLottoRanks(lottoBundle)
         outputView.printWinningResults(lottoRanks)
-        outputView.printTotalReturns(lottoRanks.calculateTotalReturn())
+        outputView.printTotalReturns(lottoRanks.calculateTotalReturn(lottoMachine.lottoPrice))
     }
 }

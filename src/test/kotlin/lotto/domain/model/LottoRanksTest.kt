@@ -12,7 +12,7 @@ class LottoRanksTest {
         lottoRanks: List<LottoRank>,
         expectedReturn: Double,
     ) {
-        val totalReturn = LottoRanks(lottoRanks).calculateTotalReturn()
+        val totalReturn = LottoRanks(lottoRanks).calculateTotalReturn(1000)
         assertThat(totalReturn.toDouble()).isEqualTo(expectedReturn)
     }
 

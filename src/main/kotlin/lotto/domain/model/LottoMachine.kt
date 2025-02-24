@@ -4,7 +4,7 @@ import lotto.domain.service.LottoNumbersGenerator
 import lotto.domain.service.RandomLottoNumbersGenerator
 
 class LottoMachine(
-    private val lottoPrice: Int = 1000,
+    val lottoPrice: Int = 1000,
     private val generator: LottoNumbersGenerator = RandomLottoNumbersGenerator(),
 ) {
     fun generateLottoBundle(purchaseAmount: Int): LottoBundle {
