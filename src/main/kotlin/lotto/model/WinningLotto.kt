@@ -1,6 +1,6 @@
 package lotto.model
 
-import lotto.contants.Constants.LOTTO_PICK_COUNT
+import lotto.contants.LottoRuleConstants.LOTTO_PICK_COUNT
 
 class WinningLotto(
     private val winningNumbers: Set<LottoNumber>,

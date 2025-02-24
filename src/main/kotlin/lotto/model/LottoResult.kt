@@ -1,6 +1,6 @@
 package lotto.model
 
-import lotto.contants.Constants
+import lotto.contants.LottoRuleConstants
 
 class LottoResult(
     private val ranks: List<Rank>,
@@ -9,6 +9,6 @@ class LottoResult(
 
     fun calculateProfit(): Double {
         val totalWinningMoney = ranks.sumOf { it.winningMoney }
-        return totalWinningMoney / (ranks.size * Constants.LOTTO_AMOUNT).toDouble()
+        return totalWinningMoney / (ranks.size * LottoRuleConstants.LOTTO_AMOUNT).toDouble()
     }
 }

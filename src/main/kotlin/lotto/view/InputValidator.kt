@@ -1,16 +1,16 @@
 package lotto.view
 
-import lotto.contants.Constants
+import lotto.contants.LottoRuleConstants
 
 class InputValidator {
     fun validateAmount(amount: String) {
         require(amount.toIntOrNull() != null) {
             IllegalArgumentException(ERROR_INVALID_AMOUNT)
         }
-        require(amount.toInt() > Constants.ZERO) {
+        require(amount.toInt() > LottoRuleConstants.ZERO) {
             IllegalArgumentException(ERROR_INVALID_OVER_ZERO)
         }
-        require(amount.toInt() % Constants.LOTTO_AMOUNT == Constants.ZERO) {
+        require(amount.toInt() % LottoRuleConstants.LOTTO_AMOUNT == LottoRuleConstants.ZERO) {
             IllegalArgumentException(ERROR_INVALID_DIVISION)
         }
     }

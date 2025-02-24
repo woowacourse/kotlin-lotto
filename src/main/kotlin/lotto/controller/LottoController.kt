@@ -1,6 +1,6 @@
 package lotto.controller
 
-import lotto.contants.Constants
+import lotto.contants.LottoRuleConstants
 import lotto.model.LottoMachine
 import lotto.model.LottoResult
 import lotto.model.LottoTicket
@@ -25,7 +25,7 @@ class LottoController(
         return lottoTickets
     }
 
-    private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
+    private fun calculatePurchaseCount(amount: Int) = amount / LottoRuleConstants.LOTTO_AMOUNT
 
     private fun getWinningLotto(): WinningLotto {
         val winningNumbers = userInterface.getWinningNumbers()

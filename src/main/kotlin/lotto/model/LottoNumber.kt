@@ -1,12 +1,12 @@
 package lotto.model
 
-import lotto.contants.Constants
+import lotto.contants.LottoRuleConstants
 
 data class LottoNumber(
     val number: Int,
 ) {
     init {
-        require(number in Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER) {
+        require(number in LottoRuleConstants.MINIMUM_NUMBER..LottoRuleConstants.MAXIMUM_NUMBER) {
             IllegalArgumentException(ERROR_INVALID_RANGE)
         }
     }
