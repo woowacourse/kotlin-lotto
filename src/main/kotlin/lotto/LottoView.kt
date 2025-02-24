@@ -1,13 +1,14 @@
 package lotto
 
 import lotto.domain.Lotto
+import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
 import lotto.global.Config.LOTTO_PRICE
+import lotto.global.LottoUtil
 import lotto.global.LottoValidator.requireLottoAmount
 import lotto.global.LottoValidator.requireValidBonusNum
 import lotto.global.LottoValidator.requireValidLotto
 import lotto.global.Message
-import lotto.global.Rank
 
 class LottoView {
     fun getLottoAmount(): Int {
@@ -32,7 +33,7 @@ class LottoView {
     }
 
     fun printResult(scoreRankMap: ScoreRankMap) {
-        val rate = LottoService.getRate(scoreRankMap)
+        val rate = LottoUtil.getRate(scoreRankMap)
         println(
             """
             당첨 통계

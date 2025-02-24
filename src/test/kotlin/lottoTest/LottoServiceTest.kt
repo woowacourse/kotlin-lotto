@@ -2,7 +2,7 @@ package lottoTest
 
 import lotto.LottoService
 import lotto.domain.Lotto
-import lotto.global.Rank
+import lotto.domain.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -33,33 +33,35 @@ class LottoServiceTest {
     }
 
     @Test
-    @DisplayName("복권의 구매액과 총 당첨 정보를 입력받아 수익률을 반환한다")
-    fun t5() {
+    @DisplayName("복권을 구매한 숫자만큼 복권의 당첨 등수를 반환한다")
+    fun t4_1() {
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 3, 4, 44, 45)),
-                Lotto(listOf(11, 12, 13, 14, 15, 16)),
+                Lotto(listOf(1, 2, 11, 10, 5, 6)),
+                Lotto(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto(listOf(1, 2, 3, 4, 5, 6)),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
         val bonus = 7
-        val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
-        val result = LottoService.getRate(rankMap)
-        assertThat(result).isEqualTo("25.00")
+        val result = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
+        assertThat(result.map[Rank.MISS]).isEqualTo(2)
+        assertThat(result.map[Rank.FOURTH]).isEqualTo(1)
     }
 
     @Test
-    @DisplayName("수익률의 기준은 (수익금) / (구매액) 을 소수 둘 째 자리까지 반올림한 값이다")
-    fun t5_1() {
+    @DisplayName("복권을 구매한 숫자만큼 복권의 당첨 등수를 반환한다")
+    fun t4_2() {
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 3, 43, 44, 45)),
-                Lotto(listOf(11, 12, 13, 14, 15, 16)),
-                Lotto(listOf(1, 2, 3, 43, 44, 45)),
+                Lotto(listOf(1, 2, 11, 10, 5, 6)),
+                Lotto(listOf(1, 2, 3, 4, 5, 6)),
+                Lotto(listOf(1, 2, 11, 10, 8, 9)),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
         val bonus = 7
-        val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
-        val result = LottoService.getRate(rankMap)
-        assertThat(result).isEqualTo("3.33")
+        val result = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
+        assertThat(result.map[Rank.MISS]).isEqualTo(1)
+        assertThat(result.map[Rank.FOURTH]).isEqualTo(1)
+        assertThat(result.map[Rank.FIRST]).isEqualTo(1)
     }
 }

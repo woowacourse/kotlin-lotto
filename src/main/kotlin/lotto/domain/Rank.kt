@@ -1,4 +1,4 @@
-package lotto.global
+package lotto.domain
 
 enum class Rank(
     val countOfMatch: Int,

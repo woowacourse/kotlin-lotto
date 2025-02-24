@@ -1,10 +1,10 @@
 package lotto
 
 import lotto.domain.Lotto
+import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
 import lotto.global.LottoUtil.getLotto
 import lotto.global.LottoUtil.getLottoRank
-import lotto.global.Rank
 
 class LottoService {
     fun getManyLotto(iterates: Int): List<Lotto> {
@@ -24,13 +24,5 @@ class LottoService {
             rankMap[rank] = rankMap.getOrDefault(rank, 0) + 1
         }
         return ScoreRankMap(rankMap.toMap())
-    }
-
-    companion object {
-        fun getRate(scoreRankMap: ScoreRankMap): String {
-            val earned = scoreRankMap.getEarned()
-            val paid = scoreRankMap.getPaid()
-            return if (paid == 0) "0.0" else String.format("%.2f", earned.toDouble() / paid.toDouble())
-        }
     }
 }

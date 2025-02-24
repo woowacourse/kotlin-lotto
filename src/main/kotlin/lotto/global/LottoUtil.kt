@@ -1,6 +1,8 @@
 package lotto.global
 
 import lotto.domain.Lotto
+import lotto.domain.Rank
+import lotto.domain.ScoreRankMap
 import lotto.global.Config.MAX_LOTTO_LENGTH
 import lotto.global.Config.MAX_RANDOM_NUM
 import lotto.global.Config.MIN_RANDOM_NUM
@@ -24,5 +26,11 @@ object LottoUtil {
         val countOfMatch = winningLotto.getCountOfMatchWith(lotto)
         val isBonusMatched = winningLotto.contains(bonus) && !lotto.contains(bonus)
         return Rank.getRank(countOfMatch, isBonusMatched)
+    }
+
+    fun getRate(scoreRankMap: ScoreRankMap): String {
+        val earned = scoreRankMap.getEarned()
+        val paid = scoreRankMap.getPaid()
+        return if (paid == 0) "0.0" else String.format("%.2f", earned.toDouble() / paid.toDouble())
     }
 }
