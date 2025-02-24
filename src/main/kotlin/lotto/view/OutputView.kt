@@ -8,7 +8,7 @@ import lotto.enums.Rank
 
 class OutputView {
     fun printLottoPurchaseQuantity(payInfo: LottoPayInfo) {
-        println("${payInfo.getLottoPurchaseQuantity()}개를 구매했습니다.")
+        println("\n수동으로 ${payInfo.manualLottoQuantity}장, 자동으로 ${payInfo.autoLottoQuantity}개를 구매했습니다.")
     }
 
     fun printTicketsByLottos(lottos: Lottos) {

@@ -4,10 +4,10 @@ import lotto.constants.LottoConstants.LOTTO_PRICE
 
 class LottoPayInfo(
     val lottoPurchaseAmount: Int,
-    private val manualLottoQuantity: Int,
+    val manualLottoQuantity: Int,
 ) {
     val autoLottoQuantity: Int
-        get() = (lottoPurchaseAmount / LOTTO_PRICE) - manualLottoQuantity
+        get() = getTotalLottoQuantity() - manualLottoQuantity
 
     init {
         require(lottoPurchaseAmount % LOTTO_PRICE == 0) {
@@ -22,7 +22,7 @@ class LottoPayInfo(
         }
     }
 
-    fun getLottoPurchaseQuantity(): Int {
+    private fun getTotalLottoQuantity(): Int {
         val quantity =
             runCatching { lottoPurchaseAmount / LOTTO_PRICE }.getOrElse {
                 throw IllegalArgumentException(

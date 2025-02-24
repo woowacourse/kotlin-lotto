@@ -15,8 +15,8 @@ class LottoController(
 ) {
     fun runLotto() {
         val lottoPayInfo = getPayInfo()
-        outputView.printLottoPurchaseQuantity(lottoPayInfo)
         val lottos: Lottos = getLottosByPayInfo(lottoPayInfo)
+        outputView.printLottoPurchaseQuantity(lottoPayInfo)
         outputView.printTicketsByLottos(lottos)
         val lottoWinningStats = lottos.getLottoWinningStats(getWinningLotto())
         outputView.printLottoStats(lottoWinningStats)
@@ -31,7 +31,8 @@ class LottoController(
 
     private fun getLottosByPayInfo(payInfo: LottoPayInfo): Lottos {
         val lottoMachine = LottoMachine()
-        return lottoMachine.generateLottos(payInfo)
+        val manualTicketsNumbers = inputView.readManualLottoNumbers(payInfo)
+        return lottoMachine.generateLottos(payInfo, manualTicketsNumbers)
     }
 
     private fun getWinningLotto(): WinningLotto {
