@@ -26,6 +26,11 @@ class Lotto(
         return duplicates
     }
 
+    fun getMatchCount(winningNumbers: Lotto): Int =
+        numbers.count { number ->
+            winningNumbers.numbers.contains(number)
+        }
+
     fun isMatchedBonusNumber(bonusNumber: LottoNumber) = numbers.contains(bonusNumber)
 
     companion object {
