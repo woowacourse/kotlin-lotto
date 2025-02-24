@@ -18,10 +18,7 @@ class WinningLotto(
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 
-    private fun getCountOfMatch(lotto: Lotto): Int =
-        winningNumbers.lottoNumbers.count {
-            lotto.lottoNumbers.contains(it)
-        }
+    private fun getCountOfMatch(lotto: Lotto): Int = lotto.count(winningNumbers)
 
     private fun getMatchBonus(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
 }

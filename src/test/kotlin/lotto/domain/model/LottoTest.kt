@@ -46,4 +46,13 @@ class LottoTest {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         assertThat(lotto.contains(LottoNumber.from(number))).isEqualTo(expected)
     }
+
+    @Test
+    fun `다른 로또와 일치하는 번호의 개수를 구한다`() {
+        val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
+        val other = Lotto.of(4, 5, 6, 7, 8, 9)
+
+        val countOfMatch = lotto.count(other)
+        assertThat(countOfMatch).isEqualTo(3)
+    }
 }
