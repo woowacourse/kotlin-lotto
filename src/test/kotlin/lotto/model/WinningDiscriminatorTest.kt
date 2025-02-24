@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class LottoRankDiscriminatorTest {
+class WinningDiscriminatorTest {
     @Test
     fun `6개의 번호가 일치하면 1등을 반환한다`() {
         testRank(listOf(1, 2, 3, 4, 5, 6), Rank.FIRST)
@@ -43,10 +43,10 @@ class LottoRankDiscriminatorTest {
     ) {
         val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber.from(7)
-        val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusNumber)
+        val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
 
         val lotto = listOf(Lotto.from(lottoNumbers))
-        val discriminateResult = lottoRankDiscriminator.countLottoByRank(lotto)
+        val discriminateResult = winningDiscriminator.getResult(lotto)
 
         assertEquals(1, discriminateResult[expectedRank])
     }
@@ -57,7 +57,7 @@ class LottoRankDiscriminatorTest {
         val bonusNumber = LottoNumber.from(1)
 
         assertThrows<IllegalArgumentException> {
-            LottoRankDiscriminator(winningLotto, bonusNumber)
+            WinningDiscriminator(winningLotto, bonusNumber)
         }
     }
 
@@ -67,7 +67,7 @@ class LottoRankDiscriminatorTest {
         val bonusNumber = LottoNumber.from(1)
 
         assertThrows<IllegalArgumentException> {
-            LottoRankDiscriminator(winningLotto, bonusNumber)
+            WinningDiscriminator(winningLotto, bonusNumber)
         }
     }
 }

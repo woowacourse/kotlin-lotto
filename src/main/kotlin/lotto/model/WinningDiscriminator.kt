@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoRankDiscriminator(
+class WinningDiscriminator(
     private val winningLotto: Lotto,
     private val bonusNumber: LottoNumber,
 ) {
@@ -14,7 +14,7 @@ class LottoRankDiscriminator(
         }
     }
 
-    fun countLottoByRank(lottos: List<Lotto>): Map<Rank, Int> {
+    fun getResult(lottos: List<Lotto>): Map<Rank, Int> {
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
 
         lottos.forEach { lotto ->
@@ -25,12 +25,11 @@ class LottoRankDiscriminator(
         return countResult
     }
 
-    private fun discriminateLotto(userLotto: Lotto): Rank {
-        val countOfMatch = countMatchWinningNumbers(userLotto)
-        val matchBonus = isHaveBonusNumber(userLotto)
-
-        return Rank.from(countOfMatch, matchBonus)
-    }
+    private fun discriminateLotto(userLotto: Lotto): Rank =
+        Rank.from(
+            countOfMatch = countMatchWinningNumbers(userLotto),
+            matchBonus = isHaveBonusNumber(userLotto),
+        )
 
     private fun countMatchWinningNumbers(userLotto: Lotto): Int = userLotto.countMatchNumbers(winningLotto)
 

@@ -5,8 +5,8 @@ import lotto.model.LottoCashier
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoProfitCalculator
-import lotto.model.LottoRankDiscriminator
 import lotto.model.Rank
+import lotto.model.WinningDiscriminator
 
 class LottoService {
     fun getPurchaseLottos(purchaseAmount: Int): List<Lotto> {
@@ -23,9 +23,9 @@ class LottoService {
     ): Map<Rank, Int> {
         val winningLotto = Lotto.from(winningNumbers)
         val bonusLottoNumber = LottoNumber.from(bonusNumber)
-        val lottoRankDiscriminator = LottoRankDiscriminator(winningLotto, bonusLottoNumber)
+        val winningDiscriminator = WinningDiscriminator(winningLotto, bonusLottoNumber)
 
-        return lottoRankDiscriminator.countLottoByRank(lottos)
+        return winningDiscriminator.getResult(lottos)
     }
 
     fun getProfitRate(
