@@ -27,14 +27,14 @@ class LottoNumberTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1번", "seven", "-1"])
-    fun ` 보너스 볼 번호는 정수 형태로 입력되어야 한다`(input: String) {
-        assertThrows<IllegalArgumentException> { LottoNumber(input.toInt()) }
+    @ValueSource(ints = [1, 7, 9, 44])
+    fun ` 보너스 볼 번호는 정수 형태로 입력되어야 한다`(input: Int) {
+        assertDoesNotThrow { LottoNumber(input) }
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["lotto", "seven", "1번"])
-    fun `당첨 번호는 정수 형태로 입력되어야 한다`(winningNumber: String) {
-        assertThrows<IllegalArgumentException> { LottoNumber(winningNumber.toInt()) }
+    @ValueSource(ints = [-1, 48, 0, 46, 90])
+    fun ` 보너스 볼 번호는 1~45 숫자 사이에 해당한다`(input: Int) {
+        assertThrows<IllegalArgumentException> { LottoNumber(input) }
     }
 }
