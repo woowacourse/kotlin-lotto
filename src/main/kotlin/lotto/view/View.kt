@@ -18,13 +18,6 @@ object View {
         OutputView.showLottos(lottos)
     }
 
-    fun showResult(
-        resultTally: Map<LottoResult, Int>,
-        profitRate: Double,
-    ) {
-        OutputView.showResult(resultTally, profitRate)
-    }
-
     fun readLottoNumbers(): List<Int> {
         OutputView.requestWinningLotto()
         val winningNumbers: List<Int> = InputView.readWinningNumbers()
@@ -34,5 +27,12 @@ object View {
     fun readBonusNumber(): Int {
         OutputView.requestBonusNumber()
         return InputView.readBonusNumber()
+    }
+
+    fun showResult(
+        resultTally: Map<LottoResult, Int>,
+        profitRate: Double,
+    ) {
+        OutputView.showResult(resultTally, profitRate)
     }
 }
