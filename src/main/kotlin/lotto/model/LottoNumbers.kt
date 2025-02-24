@@ -12,6 +12,8 @@ class LottoNumbers(
         }
     }
 
+    fun include(number: LottoNumber): Boolean = numberList.contains(number)
+
     companion object {
         const val LOTTO_NUMBER_SIZE = 6
         private const val SIZE_ERROR_MESSAGE = "[ERROR] 로또 번호는 6개여야 합니다."
