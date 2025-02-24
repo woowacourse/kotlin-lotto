@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.domain.LottoResult
 import lotto.domain.LottoResults
 import lotto.domain.Lottos
 import lotto.domain.WinningLotto
@@ -38,16 +37,9 @@ class LottoController {
         winningLotto: WinningLotto,
         userLottos: Lottos,
     ) {
-        val lottoResults: LottoResults = Lottos.getResult(winningLotto, userLottos)
-        val resultTally = countResult(lottoResults)
-        View.showResult(resultTally = resultTally, profitRate = lottoResults.getProfitRate())
-    }
-
-    private fun countResult(lottoResults: LottoResults): Map<LottoResult, Int> {
-        val resultTally = LottoResult.entries.associateWith { 0 }.toMutableMap()
-        lottoResults.value.forEach { lottoResult: LottoResult ->
-            resultTally[lottoResult] = resultTally.getValue(lottoResult) + 1
-        }
-        return resultTally.toMap()
+        val lottoResults: LottoResults = LottoResults.from(winningLotto, userLottos)
+        val tally = lottoResults.getTally()
+        val profitRate = lottoResults.getProfitRate()
+        View.showResult(tally, profitRate)
     }
 }
