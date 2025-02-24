@@ -7,9 +7,6 @@ import lotto.model.LottoMatcher
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
 import lotto.model.PrizeCalculator
-import lotto.view.InputMessage.BONUS_NUMBER_INPUT_MESSAGE
-import lotto.view.InputMessage.MONEY_INPUT_MESSAGE
-import lotto.view.InputMessage.WINNING_LOTTO_INPUT_MESSAGE
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -27,11 +24,7 @@ class LottoController(
         showEarningRate(amount, lottoMatcher, publishedLotto)
     }
 
-    private fun getAmount(): Amount {
-        val amountInput = inputView.getSingleNumber(MONEY_INPUT_MESSAGE)
-        val amount = Amount(amountInput)
-        return amount
-    }
+    private fun getAmount(): Amount = Amount(inputView.getMoney())
 
     private fun publishLotto(lottoMachine: LottoMachine): List<Lotto> {
         val publishedLotto = lottoMachine.publishLottoTickets(Amount(LOTTO_PRIZE))
@@ -40,14 +33,11 @@ class LottoController(
     }
 
     private fun getWinningLotto(): Lotto {
-        val winningInput = inputView.getMultipleNumber(WINNING_LOTTO_INPUT_MESSAGE)
+        val winningInput = inputView.getWinningLotto()
         return Lotto(LottoNumbers(winningInput.map { number -> LottoNumber(number) }), Amount(LOTTO_PRIZE))
     }
 
-    private fun getBonusNumber(): LottoNumber {
-        val bonusInput = inputView.getSingleNumber(BONUS_NUMBER_INPUT_MESSAGE)
-        return LottoNumber(bonusInput)
-    }
+    private fun getBonusNumber(): LottoNumber = LottoNumber(inputView.getBonusNumber())
 
     private fun showEarningRate(
         amount: Amount,

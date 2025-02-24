@@ -1,5 +1,9 @@
 package lotto.view
 
+import lotto.view.InputMessage.BONUS_NUMBER_INPUT_MESSAGE
+import lotto.view.InputMessage.MONEY_INPUT_MESSAGE
+import lotto.view.InputMessage.WINNING_LOTTO_INPUT_MESSAGE
+
 object InputMessage {
     const val MONEY_INPUT_MESSAGE = "구입금액을 입력해 주세요."
     const val WINNING_LOTTO_INPUT_MESSAGE = "\n지난 주 당첨 번호를 입력해 주세요."
@@ -7,14 +11,20 @@ object InputMessage {
 }
 
 class InputView {
-    fun getSingleNumber(message: String): Int {
+    fun getMoney(): Int = getSingleNumber(MONEY_INPUT_MESSAGE)
+
+    fun getWinningLotto(): List<Int> = getMultipleNumber(WINNING_LOTTO_INPUT_MESSAGE)
+
+    fun getBonusNumber(): Int = getSingleNumber(BONUS_NUMBER_INPUT_MESSAGE)
+
+    private fun getSingleNumber(message: String): Int {
         println(message)
         val input = readln()
         validateSingleInput(input)
         return input.toInt()
     }
 
-    fun getMultipleNumber(message: String): List<Int> {
+    private fun getMultipleNumber(message: String): List<Int> {
         println(message)
         val input = readln()
         validateMultipleInput(input)
