@@ -18,7 +18,9 @@ class LottoController(
     fun run() {
         outputView.printPurchaseAmountGuide()
         val purchaseAmount = inputView.readPurchaseAmount()
-        val lottos = getPurchaseLottos(purchaseAmount)
+
+        // TODO: 수동 입력 추가
+        val lottos = getPurchaseLottos(emptyList(), purchaseAmount)
 
         outputView.printPurchaseLottoQuantity(lottos.size)
         lottos.forEach { lotto ->
@@ -51,11 +53,14 @@ class LottoController(
         outputView.printProfitRate(profitRate, profitStatus.krDescription)
     }
 
-    private fun getPurchaseLottos(purchaseAmount: Int): List<Lotto> {
+    private fun getPurchaseLottos(
+        manualLottos: List<Lotto>,
+        purchaseAmount: Int,
+    ): List<Lotto> {
         val lottoCashier = LottoCashier(purchaseAmount)
         val lottoMachine = LottoMachine()
 
-        return lottoMachine.getLottos(lottoCashier.getPurchaseQuantity())
+        return lottoMachine.getTotalLottos(manualLottos, lottoCashier.getPurchaseQuantity())
     }
 
     private fun getLottosDiscriminateResult(
