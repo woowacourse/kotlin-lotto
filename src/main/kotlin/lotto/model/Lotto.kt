@@ -1,7 +1,7 @@
 package lotto.model
 
 class Lotto private constructor(
-    val numbers: List<LottoNumber>,
+    private val numbers: List<LottoNumber>,
 ) {
     init {
         validateLottoNumbersCount(numbers)
@@ -24,6 +24,8 @@ class Lotto private constructor(
     fun countMatchNumbers(otherLotto: Lotto): Int = numbers.count { number -> number in otherLotto.numbers }
 
     fun isHaveNumber(number: LottoNumber): Boolean = numbers.contains(number)
+
+    fun getRawNumbers(): List<Int> = this.numbers.map { it.number }
 
     companion object {
         const val LOTTO_NUMBER_SIZE = 6

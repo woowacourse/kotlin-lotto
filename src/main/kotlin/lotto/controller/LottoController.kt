@@ -29,9 +29,7 @@ class LottoController(
         val lottos = getPurchaseLottos(manualLottos, autoLottoQuantity)
 
         outputView.printPurchaseLottoQuantity(manualLottoQuantity, autoLottoQuantity)
-        lottos.forEach { lotto ->
-            outputView.printLottoNumbers(lotto.numbers.map { it.number })
-        }
+        outputView.printLottos(lottos)
 
         outputView.printWinningNumbersGuide()
         val winningNumbers = inputView.readLottoNumbers()
@@ -42,16 +40,7 @@ class LottoController(
         val lottoWinningResult = getLottosWinningResult(lottos, winningNumbers, bonusNumber)
 
         outputView.printWinningResultTitle()
-        lottoWinningResult.forEach { (rank, count) ->
-            if (rank == Rank.MISS) return@forEach
-
-            outputView.printWinningResult(
-                requiredMatch = rank.countOfMatch,
-                profit = rank.winningMoney,
-                matchBonus = rank == Rank.SECOND,
-                countOfMatch = count,
-            )
-        }
+        outputView.printWinningLottoResult(lottoWinningResult)
 
         val profitRate = getProfitRate(lottoWinningResult, purchaseAmount)
         val profitStatus = ProfitStatus.from(profitRate)
@@ -64,8 +53,8 @@ class LottoController(
         manualLottoQuantity: Int,
     ): Int {
         val lottoCashier = LottoCashier(purchaseAmount, manualLottoQuantity)
-        val autoLottoQuantity = lottoCashier.getPurchaseAutoQuantity()
-        return autoLottoQuantity
+
+        return lottoCashier.getPurchaseAutoQuantity()
     }
 
     private fun getPurchaseLottos(

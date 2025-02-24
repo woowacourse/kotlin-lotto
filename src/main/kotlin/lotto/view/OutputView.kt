@@ -1,9 +1,11 @@
 package lotto.view
 
+import lotto.model.Lotto
 import lotto.model.ProfitStatus
 import lotto.model.ProfitStatus.BREAK_EVEN
 import lotto.model.ProfitStatus.LOSS
 import lotto.model.ProfitStatus.PROFIT
+import lotto.model.Rank
 
 class OutputView {
     fun printPurchaseAmountGuide() {
@@ -25,8 +27,10 @@ class OutputView {
         println("수동으로 ${manualQuantity}장, 자동으로 ${autoQuantity}장을 구매했습니다.")
     }
 
-    fun printLottoNumbers(lottoNumbers: List<Int>) {
-        println(lottoNumbers)
+    fun printLottos(lottos: List<Lotto>) {
+        lottos.forEach { lotto ->
+            println(lotto.getRawNumbers())
+        }
     }
 
     fun printWinningNumbersGuide() {
@@ -42,7 +46,20 @@ class OutputView {
         println("---------")
     }
 
-    fun printWinningResult(
+    fun printWinningLottoResult(lottoWinningResult: Map<Rank, Int>) {
+        lottoWinningResult.forEach { (rank, count) ->
+            if (rank == Rank.MISS) return@forEach
+
+            printWinningQuantity(
+                requiredMatch = rank.countOfMatch,
+                profit = rank.winningMoney,
+                matchBonus = rank == Rank.SECOND,
+                countOfMatch = count,
+            )
+        }
+    }
+
+    private fun printWinningQuantity(
         requiredMatch: Int,
         profit: Int,
         countOfMatch: Int,
