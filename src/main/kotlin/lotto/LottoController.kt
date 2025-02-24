@@ -1,5 +1,7 @@
 package lotto
 
+import lotto.domain.Lotto
+
 class LottoController(
     private val lottoView: LottoView,
     private val lottoService: LottoService,
@@ -9,7 +11,9 @@ class LottoController(
         val lottoAmount = lottoView.getLottoAmount()
         val manyLotto = lottoService.getManyLotto(lottoAmount)
         lottoView.printLotto(manyLotto)
-        val winningLotto = lottoView.getWinningLotto()
+
+        val userInputWinningLotto = lottoView.getWinningLotto()
+        val winningLotto = Lotto(userInputWinningLotto)
         val bonusNum = lottoView.getBonusNum()
 
         val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonusNum)

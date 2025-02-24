@@ -22,9 +22,9 @@ class LottoView {
         for (lotto in manyLotto) println(lotto)
     }
 
-    fun getWinningLotto(): Lotto {
+    fun getWinningLotto(): List<Int> {
         println(Message.ASK_WINNING_LOTTO.msg)
-        return Lotto(requireValidLotto(readln()).split(",").map { it.toInt() })
+        return requireValidLotto(readln()).split(",").map { it.toInt() }
     }
 
     fun getBonusNum(): Int {
