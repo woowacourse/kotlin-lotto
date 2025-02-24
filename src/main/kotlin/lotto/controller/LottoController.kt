@@ -79,7 +79,7 @@ class LottoController(
         lottoResult: LottoResult,
         purchasedAmount: LottoPurchaseAmount,
     ) {
-        outputView.printLottoStatistics(lottoResult.ranks)
+        outputView.printLottoResult(lottoResult)
         val rateOfReturn: Double = lottoResult.getRateOfReturn(purchasedAmount.money)
         outputView.printLottoRateOfReturn(rateOfReturn, lottoResult.getIsLossMoney(rateOfReturn))
     }

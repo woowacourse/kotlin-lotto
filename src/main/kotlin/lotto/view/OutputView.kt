@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.LottoResult
 import lotto.model.Lottos
 import lotto.model.Rank
 
@@ -40,34 +41,34 @@ class OutputView {
         println(ERROR_FORMAT.format(message ?: DEFAULT_ERROR_MESSAGE))
     }
 
-    fun printLottoStatistics(lottoStatistics: Map<Rank, Int>) {
+    fun printLottoResult(lottoResult: LottoResult) {
         println()
         println(LOTTO_STATISTICS_TITLE)
         Rank.entries.reversed().drop(EXCLUDE_MISS_LANK).forEach { rank ->
-            printRankStatistics(rank, lottoStatistics)
+            printRanksResult(rank, lottoResult)
         }
     }
 
-    private fun printRankStatistics(
+    private fun printRanksResult(
         rank: Rank,
-        lottoStatistics: Map<Rank, Int>,
+        lottoResult: LottoResult,
     ) {
         if (rank == Rank.SECOND) {
-            printLottoSecondRankStatistics(lottoStatistics[rank] ?: INITIAL_LOTTO_RANK_COUNT)
-        } else {
-            printLottoDefaultRankStatistics(rank, lottoStatistics)
+            printLottoSecondRankStatistics(lottoResult.ranks[rank] ?: INITIAL_LOTTO_RANK_COUNT)
+            return
         }
+        printLottoDefaultRankStatistics(rank, lottoResult)
     }
 
     private fun printLottoDefaultRankStatistics(
         rank: Rank,
-        lottoStatistics: Map<Rank, Int>,
+        lottoResult: LottoResult,
     ) {
         println(
             DEFAULT_RANK_STATISTICS_MESSAGE_FORMAT.format(
                 rank.matchCount,
                 rank.prizeMoney,
-                lottoStatistics[rank] ?: INITIAL_LOTTO_RANK_COUNT,
+                lottoResult.ranks[rank] ?: INITIAL_LOTTO_RANK_COUNT,
             ),
         )
     }
