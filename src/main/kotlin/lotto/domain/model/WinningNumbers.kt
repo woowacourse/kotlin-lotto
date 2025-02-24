@@ -12,8 +12,8 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
     }
 
     private fun calculateLottoRank(lotto: Lotto): LottoRank {
-        val matchCount = lotto.numbers.count { number -> winningLotto.numbers.contains(number) }
-        val isMatchBonusNumber = lotto.numbers.contains(bonusNumber)
+        val matchCount = lotto.calculateMatchLottoNumberCount(winningLotto)
+        val isMatchBonusNumber = lotto.isMatchBonusNumber(bonusNumber)
         return LottoRank.calculate(matchCount, isMatchBonusNumber)
     }
 
