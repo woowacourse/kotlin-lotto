@@ -46,8 +46,9 @@ class LottosGeneratorTest {
     }
 
     inner class FixedLottoGenerator(private val numbers: List<Int>) : LottoGenerator {
-        override fun generate(): Lotto {
-            return Lotto(numbers.sorted())
+        override fun generate(lottoSize: Int): Lotto {
+            val lottoNumbers = numbers.take(6)
+            return Lotto(lottoNumbers)
         }
     }
 }

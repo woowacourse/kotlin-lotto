@@ -11,12 +11,13 @@ class WinningNumbersTest {
     @Test
     fun `보너스 번호가 당첨 번호와 중복되면 예외가 발생한다`() {
         val lotto = listOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 6
         val exception =
             assertThrows<IllegalArgumentException> {
-                WinningNumbers(lotto, 6)
+                WinningNumbers(lotto, bonusNumber)
             }
 
-        assertThat(exception.message).isEqualTo("보너스 번호는 당첨 번호와 중복될 수 없습니다.")
+        assertThat(exception.message).isEqualTo("보너스 번호 ${bonusNumber}은(는) 당첨 번호와 중복 될 수 없습니다.")
     }
 
     @MethodSource("calculateLottoRanksTest")

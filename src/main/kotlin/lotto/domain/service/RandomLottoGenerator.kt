@@ -1,20 +1,22 @@
 package lotto.domain.service
 
-import lotto.domain.LottoRules
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoNumber.Companion.LOTTO_MAX_NUMBER
+import lotto.domain.model.LottoNumber.Companion.LOTTO_MIN_NUMBER
 
-class RandomLottoGenerator : LottoGenerator {
+class RandomLottoGenerator(minNumber: Int = LOTTO_MIN_NUMBER, maxNumber: Int = LOTTO_MAX_NUMBER) :
+    LottoGenerator {
     private val lottoNumbers =
-        (LottoRules.INVALID_LOTTO_MIN_NUMBER.value..LottoRules.INVALID_LOTTO_MAX_NUMBER.value).map { LottoNumber(it) }
+        (minNumber..maxNumber).map { LottoNumber(it) }
 
-    override fun generate(): Lotto {
-        val lotto = getLottoNumbers().sorted()
+    override fun generate(lottoSize: Int): Lotto {
+        val lotto = getLottoNumbers(lottoSize).sorted()
         return Lotto(lotto.toSet())
     }
 
-    private fun getLottoNumbers(): List<LottoNumber> {
+    private fun getLottoNumbers(lottoNumbersSize: Int): List<LottoNumber> {
         val randomLottoNumbers = lottoNumbers.shuffled()
-        return randomLottoNumbers.take(LottoRules.LOTTO_NUMBER_SIZE.value)
+        return randomLottoNumbers.take(lottoNumbersSize)
     }
 }

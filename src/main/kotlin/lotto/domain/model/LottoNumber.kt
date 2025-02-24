@@ -1,10 +1,9 @@
 package lotto.domain.model
 
-import lotto.domain.LottoRules
-
 data class LottoNumber(val number: Int) : Comparable<LottoNumber> {
+
     init {
-        require(number in LottoRules.INVALID_LOTTO_MIN_NUMBER.value..LottoRules.INVALID_LOTTO_MAX_NUMBER.value) {
+        require(number in LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER) {
             INVALID_LOTTO_NUMBER_RANGE_MESSAGE.format(number)
         }
     }
@@ -17,7 +16,9 @@ data class LottoNumber(val number: Int) : Comparable<LottoNumber> {
         return this.number.toString()
     }
 
-    private companion object {
-        const val INVALID_LOTTO_NUMBER_RANGE_MESSAGE = "로또의 번호가 %d 입니다. 로또의 각 번호는 1~45이하의 숫자만 가집니다."
+    companion object {
+        const val LOTTO_MIN_NUMBER = 1
+        const val LOTTO_MAX_NUMBER = 45
+        private const val INVALID_LOTTO_NUMBER_RANGE_MESSAGE = "로또의 번호가 %d 입니다. 로또의 각 번호는 1~45이하의 숫자만 가집니다."
     }
 }
