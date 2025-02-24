@@ -16,12 +16,11 @@ class LottoController(
     private val lottoMachine: LottoMachine,
 ) {
     fun run() {
-        val purchaseMoney = getPurchaseMoney()
-        val lottoCount = getLottoCount(purchaseMoney)
-        val lottos = Lottos(List(lottoCount) { lottoMachine.createLotto() })
+        val purchaseMoney: LottoPurchaseAmount = getPurchaseMoney()
+        val lottos: Lottos = createLottos(purchaseMoney)
         outputView.printLottos(lottos)
 
-        val winningLotto = getWinningLotto()
+        val winningLotto: WinningLotto = getWinningLotto()
         val lottoResult: LottoResult = lottos.calculateLottoResult(winningLotto)
         processLottoStatistics(lottoResult, purchaseMoney)
     }
@@ -35,15 +34,21 @@ class LottoController(
             getPurchaseMoney()
         }
 
+    private fun createLottos(purchaseMoney: LottoPurchaseAmount): Lottos {
+        val lottoCount: Int = getLottoCount(purchaseMoney)
+        val lottos = Lottos(List(lottoCount) { lottoMachine.createLotto() })
+        return lottos
+    }
+
     private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
-        val lottoCount = purchaseMoney.getLottoCount()
+        val lottoCount: Int = purchaseMoney.getLottoCount()
         outputView.printLottoCount(lottoCount)
         return lottoCount
     }
 
     private fun getWinningLotto(): WinningLotto {
-        val winningLottoNumbers = getWinningLottoNumbers()
-        val winningLotto = createWinningLotto(winningLottoNumbers)
+        val winningLottoNumbers: Lotto = getWinningLottoNumbers()
+        val winningLotto: WinningLotto = createWinningLotto(winningLottoNumbers)
         return winningLotto
     }
 
@@ -58,7 +63,7 @@ class LottoController(
 
     private fun createWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
         try {
-            val bonusNumber = getBonusNumber()
+            val bonusNumber: LottoNumber = getBonusNumber()
             WinningLotto(winningLottoNumbers, bonusNumber)
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
