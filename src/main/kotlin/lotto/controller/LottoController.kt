@@ -36,7 +36,9 @@ class LottoController {
     private fun showResult() {
         val lottoResults: List<LottoResult> = boughtLottos.value.map { lotto -> LottoResult.from(winningLotto, lotto) }
         val lottoPrizeEntry: List<LottoResult> =
-            LottoResult.entries.sortedBy { result: LottoResult -> result.prizeAmount }.drop(1)
+            LottoResult.entries
+                .filterNot { result: LottoResult -> result.prizeAmount == 0 }
+                .sortedBy { result: LottoResult -> result.prizeAmount }
         val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoPrizeEntry, lottoResults)
         View.showResult(lottoResults = lottoResultsDescriptions, profitRate = lottoResults.profitRate)
     }
