@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.domain.service
 
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
