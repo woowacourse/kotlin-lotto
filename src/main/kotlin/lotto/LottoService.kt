@@ -6,18 +6,15 @@ import lotto.global.Config.MAX_LOTTO_LENGTH
 import lotto.global.Config.MAX_RANDOM_NUM
 import lotto.global.Config.MIN_RANDOM_NUM
 import lotto.global.Rank
-import kotlin.random.Random
+import java.util.LinkedList
 
-class LottoService(
-    private val random: Random,
-) {
+class LottoService {
     fun getLotto(): Lotto {
         // 애초에 이미 리스트를 만들고 래핑하는게 맞나? 이 로직을 lotto 내부로 숨겨야 할까?
         val lotto = mutableListOf<Int>()
-        while (lotto.toSet().size != MAX_LOTTO_LENGTH) {
-            lotto.clear()
-            repeat(MAX_LOTTO_LENGTH) { lotto.add(random.nextInt(MIN_RANDOM_NUM, MAX_RANDOM_NUM + 1)) }
-        }
+        val range: LinkedList<Int> = LinkedList(IntRange(MIN_RANDOM_NUM, MAX_RANDOM_NUM).shuffled())
+        repeat(MAX_LOTTO_LENGTH) { lotto.add(range.poll()) }
+
         return Lotto(lotto.toList())
     }
 
