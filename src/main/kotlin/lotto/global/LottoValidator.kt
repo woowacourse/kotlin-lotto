@@ -18,7 +18,7 @@ object LottoValidator {
                 .split(",")
                 .map { number ->
                     number.toIntOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
-                }.map { number -> LottoNumber(number) }
+                }.map { number -> LottoNumber.of(number) }
         requireValidLotto(winningLotto)
         return input
     }

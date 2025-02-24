@@ -15,5 +15,5 @@ data class Lotto(
 
     fun getCountOfMatchWith(contrast: Lotto): Int = value.count { it in contrast.value }
 
-    fun contains(element: Int): Boolean = value.contains(LottoNumber(element))
+    fun contains(element: Int): Boolean = value.contains(LottoNumber.of(element))
 }

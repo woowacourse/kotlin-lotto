@@ -15,8 +15,8 @@ class LottoUtilTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
         val bonus = 7
         val result = LottoUtil.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FIRST)
@@ -25,8 +25,8 @@ class LottoUtilTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_1() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber(it) })
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber.of(it) })
         val bonus = 7
         val result = LottoUtil.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.THIRD)
@@ -35,8 +35,8 @@ class LottoUtilTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_2() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) })
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber.of(it) })
         val bonus = 7
         val result = LottoUtil.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.SECOND)
@@ -45,8 +45,8 @@ class LottoUtilTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_2_1() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber(it) })
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber.of(it) })
         val bonus = 5
         val result = LottoUtil.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.THIRD)
@@ -55,8 +55,8 @@ class LottoUtilTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_3() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 8, 9).map { LottoNumber(it) })
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 8, 9).map { LottoNumber.of(it) })
         val bonus = 7
         val result = LottoUtil.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FOURTH)
@@ -65,8 +65,8 @@ class LottoUtilTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_4() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
-        val winningLotto = Lotto(listOf(1, 2, 3, 10, 8, 9).map { LottoNumber(it) })
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto(listOf(1, 2, 3, 10, 8, 9).map { LottoNumber.of(it) })
         val bonus = 7
         val result = LottoUtil.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FIFTH)
@@ -75,8 +75,8 @@ class LottoUtilTest {
     @Test
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3_5() {
-        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
-        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9).map { LottoNumber(it) })
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9).map { LottoNumber.of(it) })
         val bonus = 7
         val result = LottoUtil.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.MISS)
@@ -87,10 +87,10 @@ class LottoUtilTest {
     fun t5() {
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 3, 4, 44, 45).map { LottoNumber(it) }),
-                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber(it) }),
+                Lotto(listOf(1, 2, 3, 4, 44, 45).map { LottoNumber.of(it) }),
+                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber.of(it) }),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
         val bonus = 7
         val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
         val result = LottoUtil.getRate(rankMap)
@@ -102,11 +102,11 @@ class LottoUtilTest {
     fun t5_1() {
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber(it) }),
-                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber(it) }),
-                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber(it) }),
+                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
+                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber.of(it) }),
+                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
         val bonus = 7
         val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
         val result = LottoUtil.getRate(rankMap)

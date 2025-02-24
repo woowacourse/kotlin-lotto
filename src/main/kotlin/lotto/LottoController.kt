@@ -14,7 +14,7 @@ class LottoController(
         lottoView.printLotto(manyLotto)
 
         val userInputWinningLotto = lottoView.getWinningLotto()
-        val winningLotto = Lotto(userInputWinningLotto.map { LottoNumber(it) })
+        val winningLotto = Lotto(userInputWinningLotto.map { LottoNumber.of(it) })
         val bonusNum = lottoView.getBonusNum()
 
         val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonusNum)
