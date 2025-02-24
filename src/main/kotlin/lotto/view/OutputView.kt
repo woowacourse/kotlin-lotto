@@ -2,7 +2,6 @@ package lotto.view
 
 import lotto.model.Lotto
 import lotto.model.LottoStore
-import lotto.model.Profit
 import lotto.model.RandomLottoGenerator
 import lotto.model.Rank
 import lotto.model.WinningStatistics
@@ -40,7 +39,7 @@ class OutputView {
         }
     }
 
-    fun printProfit(profit: Profit) {
+    fun printProfit(profit: String) {
         println(format(OUTPUT_PROFIT_MESSAGE, profit))
     }
 

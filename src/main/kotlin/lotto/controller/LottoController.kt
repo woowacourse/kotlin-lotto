@@ -21,7 +21,7 @@ class LottoController {
         val winningLotto = WinningLotto(getWinningLotto(), getBonusNumber())
         val winningStatistics = WinningStatistics(lottoBundle, winningLotto)
         outputView.printStatistics(winningStatistics)
-        val profit = Profit.calculateProfit(purchase, winningStatistics)
+        val profit = Profit().calculateProfit(purchase, winningStatistics)
         outputView.printProfit(profit)
     }
 
