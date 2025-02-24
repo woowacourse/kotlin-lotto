@@ -13,18 +13,7 @@ class LottoStatistics(
         return rateOfReturn
     }
 
-    private fun getTotalPrize(): Double {
-        var sum = INITIAL_TOTAL_PRIZE
-        rankStatistics.forEach { (rank, count) ->
-            sum += rank.prizeMoney * count
-        }
-
-        return sum
-    }
+    private fun getTotalPrize(): Double = rankStatistics.asIterable().sumOf { (rank, count) -> rank.prizeMoney * count }.toDouble()
 
     fun isLossMoney(): Boolean = rateOfReturn < 1
-
-    companion object {
-        private const val INITIAL_TOTAL_PRIZE = 0.0
-    }
 }
