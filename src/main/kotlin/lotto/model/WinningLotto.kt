@@ -13,7 +13,7 @@ class WinningLotto(
     fun findLottoRank(lotto: Lotto): Rank {
         val matchCount = lotto.getMatchCount(winningNumbers)
         val isMatchedBonus = lotto.isMatchedBonusNumber(bonusNumber)
-        return Rank.valueOf(matchCount, isMatchedBonus)
+        return Rank.findRank(matchCount, isMatchedBonus)
     }
 
     companion object {
