@@ -6,12 +6,12 @@ import lotto.model.LottoTicketCounter
 import lotto.model.Profit
 import lotto.model.WinningLotto
 import lotto.model.WinningStatistics
-import lotto.view.InputView
-import lotto.view.OutputView
+import lotto.view.LottoInputView
+import lotto.view.LottoOutputView
 
 class LottoController {
-    private val inputView = InputView()
-    private val outputView = OutputView()
+    private val inputView = LottoInputView()
+    private val outputView = LottoOutputView()
 
     fun play() {
         val purchase = inputView.inputPurchase()

@@ -7,7 +7,7 @@ import lotto.model.Rank
 import lotto.model.WinningStatistics
 import java.lang.String.format
 
-class OutputView {
+class LottoOutputView {
     fun printLottoCount(number: Int) {
         println(format(OUTPUT_LOTTO_COUNT_MESSAGE, number))
     }

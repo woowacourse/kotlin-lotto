@@ -2,7 +2,7 @@ package lotto.view
 
 import lotto.InputValidator
 
-class InputView {
+class LottoInputView {
     fun inputPurchase(): String {
         println(INPUT_PURCHASE_MESSAGE)
         return readln().also { InputValidator(it) }
