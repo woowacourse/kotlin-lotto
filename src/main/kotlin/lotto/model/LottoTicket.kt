@@ -6,7 +6,7 @@ class LottoTicket(
     private val numbers: Set<LottoNumber> = generateLotto(),
 ) {
     init {
-        require(numbers.size == LottoRuleConstants.LOTTO_PICK_COUNT.value)
+        require(numbers.size == LottoRuleConstants.LOTTO_PICK_COUNT.value) { ERROR_NUMBERS_COUNT }
     }
 
     fun getSize() = numbers.size
@@ -21,5 +21,7 @@ class LottoTicket(
                 .sorted()
                 .map { LottoNumber(it) }
                 .toSet()
+
+        private const val ERROR_NUMBERS_COUNT = "로또 번호의 개수는 6개입니다."
     }
 }

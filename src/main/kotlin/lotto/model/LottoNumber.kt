@@ -6,9 +6,7 @@ data class LottoNumber(
     val number: Int,
 ) {
     init {
-        require(number in LottoRuleConstants.MINIMUM_NUMBER.value..LottoRuleConstants.MAXIMUM_NUMBER.value) {
-            IllegalArgumentException(ERROR_INVALID_RANGE)
-        }
+        require(number in LottoRuleConstants.MINIMUM_NUMBER.value..LottoRuleConstants.MAXIMUM_NUMBER.value) { ERROR_INVALID_RANGE }
     }
 
     companion object {
