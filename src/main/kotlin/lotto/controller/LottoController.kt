@@ -41,19 +41,20 @@ class LottoController {
     }
 
     private fun showResult() {
-        val lottoResults: List<LottoResult> = boughtLottos.map { lotto -> LottoResult.from(winLotto, lotto) }
-        val lottoPrizeEntry: List<LottoResult> =
+        val lottoResults: List<LottoResult> =
+            boughtLottos.map { boughtLotto -> LottoResult.from(winLotto, boughtLotto) }
+        val lottoPrizeEntries: List<LottoResult> =
             LottoResult.entries
                 .filterNot { result: LottoResult -> result.prizeAmount == 0 }
                 .sortedBy { result: LottoResult -> result.prizeAmount }
-        val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoPrizeEntry, lottoResults)
+        val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoResults, lottoPrizeEntries)
         val profitRate: Double = ProfitCalculator.calculateProfitRate(lottoResults)
         View.showResult(lottoResultsDescriptions, profitRate)
     }
 
     private fun makeLottoResultDescription(
-        lottoPrizeEntry: List<LottoResult>,
         lottoResults: List<LottoResult>,
+        lottoPrizeEntry: List<LottoResult>,
     ): List<String> =
         lottoPrizeEntry.map { entry: LottoResult ->
             LOTTO_RESULT_DESCRIPTION_TEMPLATE.format(
