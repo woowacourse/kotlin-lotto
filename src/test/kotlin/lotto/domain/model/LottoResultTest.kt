@@ -5,14 +5,14 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class LottoRanksTest {
+class LottoResultTest {
     @ParameterizedTest
     @MethodSource("calculateTotalReturnTest")
     fun `총 수익률을 계산할 수 있다`(
         lottoRanks: List<LottoRank>,
         expectedReturn: Double,
     ) {
-        val totalReturn = LottoRanks(lottoRanks).calculateTotalReturn(1000)
+        val totalReturn = LottoResult(lottoRanks).calculateTotalReturn(1000)
         assertThat(totalReturn.toDouble()).isEqualTo(expectedReturn)
     }
 

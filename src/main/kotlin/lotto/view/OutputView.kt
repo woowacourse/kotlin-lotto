@@ -2,7 +2,7 @@ package lotto.view
 
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoRank
-import lotto.domain.model.LottoRanks
+import lotto.domain.model.LottoResult
 import java.math.BigDecimal
 
 class OutputView {
@@ -14,7 +14,7 @@ class OutputView {
         println(lottoNumbers.map { it.number })
     }
 
-    fun printWinningResults(ranks: LottoRanks) {
+    fun printWinningResults(ranks: LottoResult) {
         println(PRINT_WINNING_RESULT_HEADER)
         LottoRank.entries.reversed().drop(DROP_MISS_RANK_INDEX).forEach { lottoRank ->
             printWinningResultFormat(lottoRank, ranks)
@@ -23,7 +23,7 @@ class OutputView {
 
     private fun printWinningResultFormat(
         lottoRank: LottoRank,
-        ranks: LottoRanks,
+        ranks: LottoResult,
     ) {
         val bonusComment = if (lottoRank == LottoRank.SECOND) BONUS_COMMENT else " "
         println(

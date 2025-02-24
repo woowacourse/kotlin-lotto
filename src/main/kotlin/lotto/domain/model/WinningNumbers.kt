@@ -7,8 +7,8 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
         require(winningLotto.numbers.contains(bonusNumber).not()) { DUPLICATE_WINNING_NUMBER_MESSAGE }
     }
 
-    fun calculateLottoRanks(lottoBundle: LottoBundle): LottoRanks {
-        return LottoRanks(lottoBundle.lottos.map { lotto -> calculateLottoRank(lotto) })
+    fun calculateLottoRanks(lottoBundle: LottoBundle): LottoResult {
+        return LottoResult(lottoBundle.lottos.map { lotto -> calculateLottoRank(lotto) })
     }
 
     private fun calculateLottoRank(lotto: Lotto): LottoRank {

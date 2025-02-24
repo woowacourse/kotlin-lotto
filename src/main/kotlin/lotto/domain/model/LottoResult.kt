@@ -3,7 +3,7 @@ package lotto.domain.model
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class LottoRanks(val lottoRanks: List<LottoRank>) {
+class LottoResult(val lottoRanks: List<LottoRank>) {
     fun calculateTotalReturn(lottoPrice: Int): BigDecimal {
         val totalWinningAmount = lottoRanks.sumOf { it.winningAmount.toBigDecimal() }
         val totalSpent = (lottoRanks.size * lottoPrice).toBigDecimal()
