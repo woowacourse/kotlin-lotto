@@ -7,6 +7,7 @@ import lotto.domain.LottoMachine.Companion.LOTTO_PRICE
 import lotto.domain.LottoNumber
 import lotto.domain.LottoPurchaseAmount
 import lotto.domain.ManualLottoCount
+import lotto.domain.OrderSheet
 import lotto.domain.WinningLotto
 import lotto.util.Rank
 import lotto.view.InputView
@@ -19,14 +20,20 @@ class LottoController(
     private val lottoMachine = LottoMachine()
 
     fun run() {
-        val purchaseAmount = getPurchaseAmount()
-        val manualLottoCount = getManualLottoCount(purchaseAmount.purchasableCount)
-        val manualLottoNumber = getManualLottoNumbers(manualLottoCount.lottoCount)
-        val lottos = getAndPrintPurchasedLottos(manualLottoNumber, purchaseAmount, manualLottoCount.lottoCount)
+        val orderSheet = getOrderSheet()
+        val lottos = getAndPrintPurchasedLottos(orderSheet)
         val lottoCalculator = getWinningInfoAndCalculator()
         val winningStats = getAndPrintWinningStats(lottoCalculator, lottos)
         val prize = lottoCalculator.calculatePrize(winningStats)
-        outputView.printProfit(lottoCalculator.calculateProfit(prize, purchaseAmount.money))
+        outputView.printProfit(lottoCalculator.calculateProfit(prize, orderSheet.purchaseAmount.money))
+    }
+
+    private fun getOrderSheet(): OrderSheet {
+        val purchaseAmount = getPurchaseAmount()
+        val manualLottoCount = getManualLottoCount(purchaseAmount.purchasableCount)
+        val manualLottoNumber = getManualLottoNumbers(manualLottoCount.lottoCount)
+
+        return OrderSheet(purchaseAmount, manualLottoCount, manualLottoNumber)
     }
 
     private fun getPurchaseAmount(): LottoPurchaseAmount {
@@ -44,25 +51,14 @@ class LottoController(
     private fun getManualLottoNumbers(purchaseCount: Int): List<Lotto> {
         return retryInput {
             val lottos = inputView.getManualLottoNumbers(purchaseCount)
-            val manualLottos = lottos.map { Lotto(stringToLottoNumber(it)) }
-            manualLottos
+            lottoMachine.buyManualLottos(lottos)
         }
     }
 
-    private fun stringToLottoNumber(string: String): List<LottoNumber> {
-        val splitString = string.split(",").map { it.trim() }
-        return splitString.map { LottoNumber(it.toInt()) }
-    }
-
-    private fun getAndPrintPurchasedLottos(
-        manualLotto: List<Lotto>,
-        purchaseAmount: LottoPurchaseAmount,
-        manualLottoCount: Int,
-    ): List<Lotto> {
-        val autoLottoCount = purchaseAmount.purchasableCount - manualLottoCount
-        val lottos = lottoMachine.buyLottos(autoLottoCount)
-        outputView.printPurchasedLottos(manualLotto + lottos, manualLottoCount, autoLottoCount)
-        return manualLotto + lottos
+    private fun getAndPrintPurchasedLottos(orderSheet: OrderSheet): List<Lotto> {
+        val lottos = lottoMachine.buyLottos(orderSheet)
+        outputView.printPurchasedLottos(lottos, orderSheet.manualLottoCount.lottoCount, orderSheet.autoCount)
+        return lottos
     }
 
     private fun getWinningInfoAndCalculator(): LottoCalculator {
