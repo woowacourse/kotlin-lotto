@@ -30,8 +30,8 @@ class WinningNumbersTest {
         assertThat(
             winningNumbers.calculateLottoRanks(
                 LottoMachine(generator = FixedLottoNumbersGenerator(lottoNumbers)).generateLottoBundle(1),
-            ).lottoRanks,
-        ).isEqualTo(listOf(actual))
+            ).lottoRanks.keys.first(),
+        ).isEqualTo(actual)
     }
 
     companion object {

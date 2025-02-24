@@ -8,7 +8,12 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
     }
 
     fun calculateLottoRanks(lottoBundle: LottoBundle): LottoResult {
-        return LottoResult(lottoBundle.lottos.map { lotto -> calculateLottoRank(lotto) })
+        return LottoResult(
+            lottoBundle.lottos
+                .map { lotto -> calculateLottoRank(lotto) }
+                .groupingBy { it }
+                .eachCount(),
+        )
     }
 
     private fun calculateLottoRank(lotto: Lotto): LottoRank {
