@@ -6,9 +6,7 @@ class LottoResult(
 ) {
     fun getRanks(): List<Rank> {
         return lottos.map { lotto ->
-            val matchCount = lotto.compareWithWinningLotto(winningLotto.winningLotto)
-            val matchBonus = lotto.compareWithBonusNumber(winningLotto.bounusNumber.toInt())
-            Rank.valueOf(matchCount, matchBonus)
+            lotto.getRank(winningLotto)
         }
     }
 

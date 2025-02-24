@@ -1,6 +1,7 @@
 package lotto
 
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.Rank
 import lotto.domain.WinningLotto
@@ -10,9 +11,9 @@ import org.junit.jupiter.api.Test
 class LottoResultTest {
     @Test
     fun `당첨 등수를 확인할 수 있다`() {
-        val lotto = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6)))
-        val bonusNumber: String = "7"
-        val winningLotto = WinningLotto(Lotto(listOf(1, 2, 8, 4, 5, 9)), bonusNumber)
+        val lotto = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }))
+        val bonusNumber: LottoNumber = LottoNumber(7)
+        val winningLotto = WinningLotto(Lotto(listOf(1, 2, 8, 4, 5, 9).map { LottoNumber(it) }), bonusNumber)
 
         val rank = LottoResult(lotto, winningLotto).getRanks()
 
@@ -21,9 +22,9 @@ class LottoResultTest {
 
     @Test
     fun `당첨 수익률을 계산할 수 있다`() {
-        val lotto = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6)))
-        val bonusNumber: String = "7"
-        val winningLotto = WinningLotto(Lotto(listOf(1, 2, 8, 4, 5, 9)), bonusNumber)
+        val lotto = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }))
+        val bonusNumber: LottoNumber = LottoNumber(7)
+        val winningLotto = WinningLotto(Lotto(listOf(1, 2, 8, 4, 5, 9).map { LottoNumber(it) }), bonusNumber)
 
         val rank = LottoResult(lotto, winningLotto).calculateProfitRate()
 
