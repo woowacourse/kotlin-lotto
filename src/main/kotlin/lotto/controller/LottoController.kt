@@ -19,7 +19,7 @@ class LottoController(
 ) {
     fun run() {
         val amount = getAmount()
-        val lottoMachine = LottoMachine(amount, Amount(LOTTO_PRIZE))
+        val lottoMachine = LottoMachine(amount)
         val publishedLotto = publishLotto(lottoMachine)
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
@@ -34,7 +34,7 @@ class LottoController(
     }
 
     private fun publishLotto(lottoMachine: LottoMachine): List<Lotto> {
-        val publishedLotto = lottoMachine.publishLottoTickets()
+        val publishedLotto = lottoMachine.publishLottoTickets(Amount(LOTTO_PRIZE))
         outputView.printPublishedLotto(publishedLotto)
         return publishedLotto
     }
