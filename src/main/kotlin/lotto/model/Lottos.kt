@@ -4,7 +4,7 @@ class Lottos(
     private val lottos: List<Lotto>,
 ) {
     fun countLottoByRank(
-        winningNumbers: List<Int>,
+        winningNumbers: Set<Int>,
         bonusNumber: Int,
     ): Map<Rank, Int> {
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
@@ -18,5 +18,5 @@ class Lottos(
         return countResult
     }
 
-    fun getAllLottoNumbers(): List<List<LottoNumber>> = lottos.map { lotto -> lotto.numbers }
+    fun getAllLottoNumbers(): List<Set<LottoNumber>> = lottos.map { lotto -> lotto.numbers }
 }

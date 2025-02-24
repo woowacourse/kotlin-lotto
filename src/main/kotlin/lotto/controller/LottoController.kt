@@ -39,14 +39,14 @@ class LottoController(
 
     private fun getLastWeekLottoWinningNumbers(): String = inputView.readWinningNumbers()
 
-    private fun mapToWinningNumbers(rawWinningNumbers: String): List<String> = rawWinningNumbers.split(", ")
+    private fun mapToWinningNumbers(rawWinningNumbers: String): Set<String> = rawWinningNumbers.split(", ").toSet()
 
     private fun mapToNumber(rawNumber: String) = rawNumber.toIntOrNull()
 
-    private fun String.validateWinningNumbers(): List<Int> {
+    private fun String.validateWinningNumbers(): Set<Int> {
         try {
             val rawWinningNumbers = mapToWinningNumbers(this)
-            return rawWinningNumbers.map { number -> number.validateIsNumber() }
+            return rawWinningNumbers.map { number -> number.validateIsNumber() }.toSet()
         } catch (e: IllegalArgumentException) {
             throw IllegalArgumentException(e.message)
         }
@@ -70,7 +70,7 @@ class LottoController(
 
     private fun displayLottosWinningResult(
         lottos: Lottos,
-        lastWeekWinningNumbers: List<Int>,
+        lastWeekWinningNumbers: Set<Int>,
         bonusNumber: Int,
     ): Map<Rank, Int> {
         val lottoWinningResult = lottos.countLottoByRank(lastWeekWinningNumbers, bonusNumber)

@@ -27,7 +27,7 @@ class LottoMachine(
     fun getLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT
 
     fun getLottos(lottoQuantity: Int): Lottos {
-        val lottos = List<Lotto>(lottoQuantity) { Lotto(getLottoNumbers().map { LottoNumber((it)) }) }
+        val lottos = List<Lotto>(lottoQuantity) { Lotto(getLottoNumbers().map { LottoNumber((it)) }.toSet()) }
         return Lottos(lottos)
     }
 

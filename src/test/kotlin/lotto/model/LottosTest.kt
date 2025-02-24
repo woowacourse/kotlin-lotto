@@ -8,15 +8,15 @@ class LottosTest {
     fun `각 랭크별 당첨된 로또 개수를 정확하게 반환한다`() {
         val lottos =
             listOf(
-                Lotto.from(listOf(1, 2, 3, 4, 5, 6)),
-                Lotto.from(listOf(1, 2, 3, 4, 5, 7)),
-                Lotto.from(listOf(1, 2, 3, 4, 5, 8)),
-                Lotto.from(listOf(1, 2, 3, 4, 8, 9)),
-                Lotto.from(listOf(1, 2, 3, 8, 9, 10)),
-                Lotto.from(listOf(8, 9, 10, 11, 12, 13)),
+                Lotto.from(setOf(1, 2, 3, 4, 5, 6)),
+                Lotto.from(setOf(1, 2, 3, 4, 5, 7)),
+                Lotto.from(setOf(1, 2, 3, 4, 5, 8)),
+                Lotto.from(setOf(1, 2, 3, 4, 8, 9)),
+                Lotto.from(setOf(1, 2, 3, 8, 9, 10)),
+                Lotto.from(setOf(8, 9, 10, 11, 12, 13)),
             )
 
-        val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
+        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = 7
 
         val expectedResult =
