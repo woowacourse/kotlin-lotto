@@ -11,11 +11,14 @@ class LottoMatchCalculator(
     private val winningLotto: WinningLotto,
 ) {
     fun calculate(): LottoResult {
-        val result = LottoResult()
+        val resultMap = LottoResult.DEFAULT_RESULT.toMutableMap()
+
         purchaseLotto.forEach {
-            result.result[getRank(it)] = result.result.getOrDefault(getRank(it), 0) + 1
+            val rank = getRank(it)
+            resultMap[rank] = resultMap.getOrDefault(rank, 0) + 1
         }
-        return result
+
+        return LottoResult(resultMap)
     }
 
     private fun getRank(lotto: Lotto): Rank {
@@ -24,7 +27,6 @@ class LottoMatchCalculator(
 
         val lottoMatches = buyLottoNumbers.intersect(winningLottoNumbers.toSet()).size
         val isBonusMatched = winningLotto.bonusNumber.value in buyLottoNumbers
-        val rank = Rank.valueOf(lottoMatches, isBonusMatched)
-        return rank
+        return Rank.valueOf(lottoMatches, isBonusMatched)
     }
 }

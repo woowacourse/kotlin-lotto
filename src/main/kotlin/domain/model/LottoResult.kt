@@ -1,7 +1,7 @@
 package domain.model
 
 class LottoResult(
-    val result: MutableMap<Rank, Int> = DEFAULT_RESULT.toMutableMap(),
+    val result: Map<Rank, Int>
 ) {
     override fun toString(): String =
         result
