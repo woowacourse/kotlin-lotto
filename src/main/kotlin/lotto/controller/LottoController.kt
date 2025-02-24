@@ -25,7 +25,8 @@ class LottoController(
 
     private fun getPayInfo(): LottoPayInfo {
         val lottoPurchaseAmount = inputView.readLottoPurchaseAmount()
-        return LottoPayInfo(lottoPurchaseAmount)
+        val manualLottoQuantity = inputView.readManualLottoQuantity()
+        return LottoPayInfo(lottoPurchaseAmount, manualLottoQuantity)
     }
 
     private fun getLottosByPayInfo(payInfo: LottoPayInfo): Lottos {

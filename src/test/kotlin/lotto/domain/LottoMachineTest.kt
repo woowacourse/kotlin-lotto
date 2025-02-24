@@ -10,7 +10,7 @@ class LottoMachineTest {
     @Test
     fun `로또 구매 수량에 해당하는 만큼의 로또를 발급한다`() {
         // Given
-        val lottoPayInfo = LottoPayInfo(5000)
+        val lottoPayInfo = LottoPayInfo(5000, 0)
         val lottoMachine = LottoMachine()
         val lottos: Lottos = lottoMachine.generateLottos(lottoPayInfo)
 

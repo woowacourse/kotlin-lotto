@@ -4,7 +4,11 @@ import lotto.constants.LottoConstants.LOTTO_PRICE
 
 class LottoPayInfo(
     val lottoPurchaseAmount: Int,
+    private val manualLottoQuantity: Int,
 ) {
+    val autoLottoQuantity: Int
+        get() = (lottoPurchaseAmount / LOTTO_PRICE) - manualLottoQuantity
+
     init {
         require(lottoPurchaseAmount % LOTTO_PRICE == 0) {
             INDIVISIBLE_PURCHASE_AMOUNT_VALUE_ERROR.format(

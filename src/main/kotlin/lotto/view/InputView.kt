@@ -5,16 +5,23 @@ import kotlin.runCatching
 class InputView {
     fun readLottoPurchaseAmount(): Int {
         println(INPUT_PURCHASE_AMOUNT)
+        return readSingleNumber()
+    }
+
+    fun readManualLottoQuantity(): Int {
+        println(INPUT_MANUAL_LOTTO_QUANTITY)
+        return readSingleNumber()
+    }
+
+    private fun readSingleNumber(): Int {
         val inputText = readln()
-        val lottoPurchaseAmount =
-            runCatching { inputText.toInt() }.getOrElse {
-                throw IllegalArgumentException(
-                    CAN_NOT_TO_INT.format(
-                        inputText,
-                    ),
-                )
-            }
-        return lottoPurchaseAmount
+        return runCatching { inputText.toInt() }.getOrElse {
+            throw IllegalArgumentException(
+                CAN_NOT_TO_INT.format(
+                    inputText,
+                ),
+            )
+        }
     }
 
     fun readWinningLottoNumbersWithoutBonus(): List<Int> {
@@ -43,6 +50,7 @@ class InputView {
 
     companion object {
         private const val INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
+        private const val INPUT_MANUAL_LOTTO_QUANTITY = "수동으로 구매할 로또 수를 입력해 주세요."
         private const val INPUT_WINNING_LOTTO = "\n지난 주 당첨 번호를 입력해 주세요."
         private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
 

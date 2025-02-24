@@ -6,11 +6,10 @@ import lotto.enums.Rank
 
 data class Lottos(
     val tickets: List<Lotto>,
+    val lottoPayInfo: LottoPayInfo = LottoPayInfo(tickets.size * LottoConstants.LOTTO_PRICE, 0),
 ) {
     fun getLottoWinningStats(winningLotto: WinningLotto): LottoWinningStats =
-        LottoWinningStats(getWinningStatsInfo(winningLotto), getLottoPayInfo())
-
-    private fun getLottoPayInfo(): LottoPayInfo = LottoPayInfo(tickets.size * LottoConstants.LOTTO_PRICE)
+        LottoWinningStats(getWinningStatsInfo(winningLotto), lottoPayInfo)
 
     private fun getWinningStatsInfo(winningLotto: WinningLotto): Map<Rank, Int> =
         tickets.map { winningLotto.getRank(it) }.groupingBy { it }.eachCount()
