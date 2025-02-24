@@ -25,7 +25,7 @@ class LottoController(
         return lottoTickets
     }
 
-    private fun calculatePurchaseCount(amount: Int) = amount / LottoRuleConstants.LOTTO_AMOUNT
+    private fun calculatePurchaseCount(amount: Int) = amount / LottoRuleConstants.LOTTO_AMOUNT.value
 
     private fun getWinningLotto(): WinningLotto {
         val winningNumbers = userInterface.getWinningNumbers()

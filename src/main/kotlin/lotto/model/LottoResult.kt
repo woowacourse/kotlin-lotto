@@ -9,6 +9,6 @@ class LottoResult(
 
     fun calculateProfit(): Double {
         val totalWinningMoney = ranks.sumOf { it.winningMoney }
-        return totalWinningMoney / (ranks.size * LottoRuleConstants.LOTTO_AMOUNT).toDouble()
+        return totalWinningMoney / (ranks.size * LottoRuleConstants.LOTTO_AMOUNT.value).toDouble()
     }
 }

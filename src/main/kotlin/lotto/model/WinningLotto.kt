@@ -7,7 +7,7 @@ class WinningLotto(
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(winningNumbers.size == LOTTO_PICK_COUNT)
+        require(winningNumbers.size == LOTTO_PICK_COUNT.value)
         require(!winningNumbers.contains(bonusNumber))
     }
 
