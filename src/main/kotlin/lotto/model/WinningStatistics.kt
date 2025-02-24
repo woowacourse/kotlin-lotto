@@ -13,7 +13,7 @@ class WinningStatistics(
         val result = Rank.entries.associateWith { 0 }.toMutableMap()
         lottoBundle.forEach { lotto ->
             val rank = Rank.fromMatch(winningLotto.getCountOfMatch(lotto), winningLotto.isBonusNumberMatch(lotto))
-            result[rank] = result[rank]!! + 1
+            result[rank] = result.getOrDefault(rank, 0)
         }
         return result
     }
