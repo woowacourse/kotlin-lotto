@@ -9,7 +9,7 @@ class LottoMachineTest {
     private val lottoMachine = LottoMachine()
 
     @Test
-    fun `로또 구매 수량에 해당하는 만큼의 로또를 발급한다`() {
+    fun `구매 금액 5000원에 대해 5장의 로또를 발급한다`() {
         val purchaseAmount = PurchaseAmount(5000)
         val lottos: List<Lotto> = lottoMachine.generate(purchaseAmount)
         assertThat(lottos.size).isEqualTo(5)
