@@ -5,11 +5,8 @@ import lotto.model.Lottos
 
 class RandomLottoMachine : LottoMachine {
     override fun createLottos(lottoCount: Int): Lottos {
-        val lottoBundle = mutableListOf<Lotto>()
-        repeat(lottoCount) {
-            lottoBundle.add(createLotto())
-        }
-        return Lottos(lottoBundle.toList())
+        val lottoBundle = List(lottoCount) { createLotto() }
+        return Lottos(lottoBundle)
     }
 
     override fun createLotto(): Lotto {
