@@ -26,7 +26,7 @@ enum class LottoResult(
         ): LottoResult =
             entries
                 .filterNot { result: LottoResult ->
-                    val bonusMatched: Boolean = boughtLotto.containLottoNumber(winLotto.bonusNumber)
+                    val bonusMatched: Boolean = winLotto.bonusNumberMatched(boughtLotto)
                     if (bonusMatched) {
                         result.bonusMatched == BonusMatched.NO
                     } else {
