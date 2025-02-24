@@ -1,6 +1,6 @@
 package lotto.domain.model
 
-import lotto.domain.value.EarningRate
+import lotto.domain.value.EarningInfo
 import lotto.domain.value.LottoPayInfo
 import lotto.enums.Rank
 
@@ -8,10 +8,10 @@ class LottoWinningStats(
     private val winningStatsInfo: Map<Rank, Int>,
     private val lottoPayInfo: LottoPayInfo,
 ) {
-    fun getEarningRate(): EarningRate {
+    fun getEarningRate(): EarningInfo {
         val winningAmount = calculateWinningAmount()
         val rate = winningAmount.toDouble() / lottoPayInfo.lottoPurchaseAmount
-        return EarningRate(rate)
+        return EarningInfo(rate)
     }
 
     fun getWinningStatsWithEmpty(): Map<Rank, Int> {

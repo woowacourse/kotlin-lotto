@@ -2,7 +2,7 @@ package lotto.view
 
 import lotto.domain.model.LottoWinningStats
 import lotto.domain.model.Lottos
-import lotto.domain.value.EarningRate
+import lotto.domain.value.EarningInfo
 import lotto.domain.value.LottoPayInfo
 import lotto.enums.Rank
 
@@ -27,8 +27,7 @@ class OutputView {
         }
     }
 
-    fun printLottoEarningRate(earningRate: EarningRate) {
-        val gainLossText = if (earningRate.rate > 1) "이득이라는" else (if (earningRate.rate == 1.0) "본전이라는" else "손해라는")
-        println("총 수익률은 ${earningRate.rate}입니다.(기준이 1이기 때문에 결과적으로 $gainLossText 의미임)")
+    fun printLottoEarningRate(earningInfo: EarningInfo) {
+        println("총 수익률은 ${earningInfo.rate}입니다.(기준이 1이기 때문에 결과적으로 ${earningInfo.gainLoss.fullText} 의미임)")
     }
 }

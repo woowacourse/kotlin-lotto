@@ -3,7 +3,7 @@ package lotto.domain
 import lotto.domain.model.Lotto
 import lotto.domain.model.Lottos
 import lotto.domain.model.WinningLotto
-import lotto.domain.value.EarningRate
+import lotto.domain.value.EarningInfo
 import lotto.domain.value.LottoNumber
 import lotto.enums.Rank
 import org.assertj.core.api.Assertions.assertThat
@@ -29,7 +29,7 @@ class LottoWinningStatsTest {
         val earningRate = winningStats.getEarningRate()
 
         // Then
-        assertThat(earningRate).isExactlyInstanceOf(EarningRate::class.java)
+        assertThat(earningRate).isExactlyInstanceOf(EarningInfo::class.java)
     }
 
     @Test
