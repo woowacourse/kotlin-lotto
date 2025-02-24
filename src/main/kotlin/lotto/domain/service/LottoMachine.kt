@@ -8,7 +8,7 @@ class LottoMachine {
     fun purchase(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateLotto()) }
 
     private fun generateLotto(): Set<LottoNumber> =
-        (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
+        LOTTO_RANGE
             .shuffled()
             .take(LOTTO_PICK_COUNT)
             .sorted()
@@ -17,5 +17,6 @@ class LottoMachine {
 
     companion object {
         private const val LOTTO_PICK_COUNT = 6
+        private val LOTTO_RANGE = (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
     }
 }
