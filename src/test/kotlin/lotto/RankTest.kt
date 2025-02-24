@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource
 class RankTest {
     @ParameterizedTest
     @MethodSource("getStatistics")
-    fun `당첨번호와 보너스볼 매치 갯수에 따라 당첨 등수 확인 `(
+    fun `당첨번호와 보너스볼 매치 갯수에 따라 당첨 등수 확인`(
         countOfMatch: Int,
         matchBonus: Boolean,
         rank: Rank,
