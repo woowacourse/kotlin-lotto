@@ -3,19 +3,17 @@ package lotto.domain.model
 import lotto.domain.service.FixedLottoNumbersGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
 
 class LottoMachineTest {
     @CsvSource(
-        "1000, 1",
-        "10000, 10",
-        "14000, 14",
+        "1, 1",
+        "10, 10",
+        "14, 14",
     )
-    @ParameterizedTest(name = "{0}원으로, {1}개를 구매할 수 있다")
-    fun `구매 금액으로 구매할 로또 개수를 계산할 수 있다`(
+    @ParameterizedTest(name = "count가 {0}일 때, {1}개의 로또를 생성할 수 있다.")
+    fun `제시한 생성 개수 만큼 로또를 생성할 수 있다`(
         amount: Int,
         count: Int,
     ) {
@@ -30,16 +28,8 @@ class LottoMachineTest {
         val actual = listOf(1, 2, 3, 4, 5, 6)
 
         val numberGenerator = FixedLottoNumbersGenerator(numbers)
-        val lotto = LottoMachine(generator = numberGenerator).generateLottoBundle(1000).lottos.first()
+        val lotto = LottoMachine(generator = numberGenerator).generateLottoBundle(1).lottos.first()
 
         assertThat(lotto.numbers.map { it.number }).isEqualTo(actual)
-    }
-
-    @ValueSource(ints = [999, 0, -1000, -999])
-    @ParameterizedTest
-    fun `구매 금액이 1000원 미만이라면 예외가 발생한다`(purchaseAmount: Int) {
-        assertThrows<IllegalArgumentException> {
-            LottoMachine().generateLottoBundle(purchaseAmount)
-        }
     }
 }

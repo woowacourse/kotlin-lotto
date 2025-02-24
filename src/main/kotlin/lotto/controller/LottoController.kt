@@ -4,6 +4,7 @@ import lotto.domain.model.Lotto
 import lotto.domain.model.LottoBundle
 import lotto.domain.model.LottoMachine
 import lotto.domain.model.LottoNumber
+import lotto.domain.model.PurchaseAmount
 import lotto.domain.model.WinningNumbers
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -11,23 +12,32 @@ import lotto.view.OutputView
 class LottoController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val lottoMachine: LottoMachine = LottoMachine(),
 ) {
     fun run() {
         val lottoBundle = purchaseLotto()
-        val winningLotto = Lotto(inputView.readWinningNumbers())
-        val bonusNumber = LottoNumber(inputView.readBonusNumber())
-        val winningNumbers = WinningNumbers(winningLotto, bonusNumber)
+        printLottoBundle(lottoBundle)
 
+        val winningNumbers = generateWinningNumbers()
         printWinningResults(lottoBundle, winningNumbers)
     }
 
     private fun purchaseLotto(): LottoBundle {
-        val purchasePrice = inputView.readPurchaseAmount()
-        val lottoBundle = lottoMachine.generateLottoBundle(purchasePrice)
-        outputView.printPurchaseLottoCount(lottoBundle.lottos.size)
-        lottoBundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
+        val purchasePrice = PurchaseAmount(inputView.readPurchaseAmount())
+        val purchaseLottoCount = purchasePrice.calculatePurchaseLottoCount(LottoMachine.LOTTO_PRICE)
+        val lottoBundle = LottoMachine().generateLottoBundle(purchaseLottoCount)
+
         return lottoBundle
+    }
+
+    private fun printLottoBundle(bundle: LottoBundle) {
+        outputView.printPurchaseLottoCount(bundle.lottos.size)
+        bundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
+    }
+
+    private fun generateWinningNumbers(): WinningNumbers {
+        val winningLotto = Lotto(inputView.readWinningNumbers())
+        val bonusNumber = LottoNumber(inputView.readBonusNumber())
+        return WinningNumbers(winningLotto, bonusNumber)
     }
 
     private fun printWinningResults(
@@ -36,6 +46,6 @@ class LottoController(
     ) {
         val lottoRanks = winningNumbers.calculateLottoRanks(lottoBundle)
         outputView.printWinningResults(lottoRanks)
-        outputView.printTotalReturns(lottoRanks.calculateTotalReturn(lottoMachine.lottoPrice))
+        outputView.printTotalReturns(lottoRanks.calculateTotalReturn(LottoMachine.LOTTO_PRICE))
     }
 }

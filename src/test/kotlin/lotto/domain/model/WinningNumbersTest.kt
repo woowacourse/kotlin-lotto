@@ -29,7 +29,7 @@ class WinningNumbersTest {
         val winningNumbers = WinningNumbers(listOf(1, 2, 3, 4, 5, 6), 8)
         assertThat(
             winningNumbers.calculateLottoRanks(
-                LottoMachine(generator = FixedLottoNumbersGenerator(lottoNumbers)).generateLottoBundle(1000),
+                LottoMachine(generator = FixedLottoNumbersGenerator(lottoNumbers)).generateLottoBundle(1),
             ).lottoRanks,
         ).isEqualTo(listOf(actual))
     }
