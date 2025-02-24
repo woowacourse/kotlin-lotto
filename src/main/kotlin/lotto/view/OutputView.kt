@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.domain.model.LottoTicket
+import lotto.domain.model.ProfitStatus
 import lotto.domain.model.Rank
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -47,8 +48,15 @@ class OutputView {
         df.roundingMode = RoundingMode.DOWN
         val formattedProfit = df.format(profit)
         print(MESSAGE_PROFIT.format(formattedProfit))
-        if (profit < STANDARD_PROFIT_LOSS) println(MESSAGE_LOSS)
+        println(getProfitStatus(profit))
     }
+
+    private fun getProfitStatus(profit: Double) =
+        when (ProfitStatus.getMessage(profit)) {
+            ProfitStatus.GAIN -> MESSAGE_PROFIT_GAIN
+            ProfitStatus.BREAKEVEN -> MESSAGE_PROFIT_BREAKEVEN
+            ProfitStatus.LOSS -> MESSAGE_PROFIT_LOSS
+        }
 
     companion object {
         private const val MESSAGE_PURCHASE = "%d개를 구매했습니다."
@@ -61,12 +69,13 @@ class OutputView {
         private const val MESSAGE_MATCH_MISS = "0개 일치"
         private const val MESSAGE_RESULT = "%s (%d원) - %d개"
         private const val MESSAGE_PROFIT = "총 수익률은 %s입니다."
-        private const val MESSAGE_LOSS = " (기준이 1이기 때문에 결과적으로 손해라는 의미임)"
+        private const val MESSAGE_PROFIT_GAIN = " (기준이 1이기 때문에 결과적으로 이득이라는 의미임)"
+        private const val MESSAGE_PROFIT_BREAKEVEN = " (기준이 1이기 때문에 결과적으로 본전이라는 의미임)"
+        private const val MESSAGE_PROFIT_LOSS = " (기준이 1이기 때문에 결과적으로 손해라는 의미임)"
 
         private const val SEPARATOR = ", "
         private const val PREFIX = "["
         private const val POSTFIX = "]"
         private const val PATTERN_DECIMAL_POINT = "#.##"
-        private const val STANDARD_PROFIT_LOSS = 1.00
     }
 }
