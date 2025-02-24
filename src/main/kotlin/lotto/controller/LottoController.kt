@@ -31,7 +31,8 @@ class LottoController(
 
     private fun getLottosByPayInfo(payInfo: LottoPayInfo): Lottos {
         val lottoMachine = LottoMachine()
-        val manualTicketsNumbers = inputView.readManualLottoNumbers(payInfo)
+        val manualTicketsNumbers =
+            if (payInfo.manualLottoQuantity > 0) inputView.readManualLottoNumbers(payInfo) else null
         return lottoMachine.generateLottos(payInfo, manualTicketsNumbers)
     }
 
