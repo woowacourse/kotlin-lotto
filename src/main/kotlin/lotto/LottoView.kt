@@ -1,9 +1,9 @@
 package lotto
 
+import lotto.domain.LOTTO_PRICE
 import lotto.domain.Lotto
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
-import lotto.global.Config.LOTTO_PRICE
 import lotto.global.LottoUtil
 import lotto.global.LottoValidator.requireLottoAmount
 import lotto.global.LottoValidator.requireValidBonusNum

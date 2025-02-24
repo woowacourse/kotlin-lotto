@@ -2,11 +2,11 @@ package lotto.global
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
+import lotto.domain.MAX_LOTTO_LENGTH
+import lotto.domain.MAX_RANDOM_NUM
+import lotto.domain.MIN_RANDOM_NUM
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
-import lotto.global.Config.MAX_LOTTO_LENGTH
-import lotto.global.Config.MAX_RANDOM_NUM
-import lotto.global.Config.MIN_RANDOM_NUM
 import java.util.LinkedList
 
 object LottoUtil {

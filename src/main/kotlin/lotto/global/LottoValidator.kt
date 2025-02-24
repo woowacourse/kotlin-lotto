@@ -1,9 +1,9 @@
 package lotto.global
 
 import lotto.domain.LottoNumber
-import lotto.global.Config.MAX_LOTTO_LENGTH
-import lotto.global.Config.MAX_RANDOM_NUM
-import lotto.global.Config.MIN_RANDOM_NUM
+import lotto.domain.MAX_LOTTO_LENGTH
+import lotto.domain.MAX_RANDOM_NUM
+import lotto.domain.MIN_RANDOM_NUM
 import java.lang.IllegalArgumentException
 
 object LottoValidator {

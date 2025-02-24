@@ -1,7 +1,5 @@
 package lotto.domain
 
-import lotto.global.Config.LOTTO_PRICE
-
 // 각 등수 : 나온 숫자 의 맵을 저장하는 일급컬렉션
 class ScoreRankMap(
     val map: Map<Rank, Int>,
