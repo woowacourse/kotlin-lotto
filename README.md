@@ -36,6 +36,7 @@
 
 ### 2차 피드백 수정 사항
 
+- refactor: WinningNumbers 로또 등수 계산 결과 Map으로 변경
 - refactor: LottoResult List -> Map으로 자료구조 변경
 - refactor: Scanner 대신 ConsoleKt readlnOrNull 사용
 - refactor: Lotto 객체로 일치하는 번호 수 계산 & 보너스 번호 존재 여부 확인 로직 이동
