@@ -39,7 +39,7 @@ class LottoController(
         return LottoOrderRequest(purchasePrice, passiveLottoAmount, passiveLottoNumbers)
     }
 
-    private fun getPurchasePrice() =
+    private fun getPurchasePrice(): PurchasePrice =
         retryWhenException(
             action = {
                 val input = inputView.readPurchasePrice()
@@ -50,7 +50,7 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun getPassiveLottoAmount(money: PurchasePrice) =
+    private fun getPassiveLottoAmount(money: PurchasePrice): PassivityLottoAmount =
         retryWhenException(
             action = {
                 val passive = inputView.readPassivityLottoAmount()
@@ -59,7 +59,7 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun getPassiveLottoNumbers(amount: PassivityLottoAmount) =
+    private fun getPassiveLottoNumbers(amount: PassivityLottoAmount): List<Lotto> =
         retryWhenException(
             action = {
                 outputView.printPassiveLottoRequest()
