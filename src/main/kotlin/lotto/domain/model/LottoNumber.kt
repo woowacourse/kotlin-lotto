@@ -2,11 +2,15 @@ package lotto.domain.model
 
 import lotto.domain.LottoRules
 
-data class LottoNumber(val number: Int) {
+data class LottoNumber(val number: Int) : Comparable<LottoNumber> {
     init {
         require(number in LottoRules.INVALID_LOTTO_MIN_NUMBER.value..LottoRules.INVALID_LOTTO_MAX_NUMBER.value) {
             INVALID_LOTTO_NUMBER_RANGE_MESSAGE.format(number)
         }
+    }
+
+    override fun compareTo(other: LottoNumber): Int {
+        return this.number - other.number
     }
 
     override fun toString(): String {

@@ -3,11 +3,11 @@ package lotto.domain.service
 import lotto.domain.LottoRules
 import lotto.domain.model.Lotto
 
-class LottosGenerator(private val generator: LottoNumbersGenerator = RandomLottoNumbersGenerator()) {
+class LottosGenerator(private val generator: LottoGenerator = RandomLottoGenerator()) {
     fun generate(amount: Int): List<Lotto> {
         val count = amount / LottoRules.LOTTO_PRICE.value
         require(count > MIN_LOTTO_COUNT_SIZE) { INVALID_LOTTO_COUNT_MESSAGE.format(amount) }
-        return List(count) { Lotto(generator.generate()) }
+        return List(count) { generator.generate() }
     }
 
     private companion object {

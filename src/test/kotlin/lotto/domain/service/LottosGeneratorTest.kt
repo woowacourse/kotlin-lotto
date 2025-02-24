@@ -1,6 +1,6 @@
 package lotto.domain.service
 
-import lotto.domain.model.LottoNumber
+import lotto.domain.model.Lotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -30,7 +30,7 @@ class LottosGeneratorTest {
         val numbers = listOf(2, 1, 5, 4, 6, 3)
         val actual = listOf(1, 2, 3, 4, 5, 6)
 
-        val numberGenerator = FixedLottoNumbersGenerator(numbers)
+        val numberGenerator = FixedLottoGenerator(numbers)
         val lottosGenerator = LottosGenerator(numberGenerator)
         val lotto = lottosGenerator.generate(1000).first()
 
@@ -45,9 +45,9 @@ class LottosGeneratorTest {
         }
     }
 
-    inner class FixedLottoNumbersGenerator(private val numbers: List<Int>) : LottoNumbersGenerator {
-        override fun generate(): Set<LottoNumber> {
-            return numbers.sorted().map { LottoNumber(it) }.toSet()
+    inner class FixedLottoGenerator(private val numbers: List<Int>) : LottoGenerator {
+        override fun generate(): Lotto {
+            return Lotto(numbers.sorted())
         }
     }
 }
