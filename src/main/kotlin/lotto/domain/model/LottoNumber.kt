@@ -1,7 +1,6 @@
 package lotto.domain.model
 
 data class LottoNumber(val number: Int) : Comparable<LottoNumber> {
-
     init {
         require(number in LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER) {
             INVALID_LOTTO_NUMBER_RANGE_MESSAGE.format(number)

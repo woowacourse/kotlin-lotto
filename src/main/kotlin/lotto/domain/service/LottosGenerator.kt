@@ -4,9 +4,12 @@ import lotto.domain.model.Lotto
 import lotto.domain.model.Lotto.Companion.LOTTO_PRICE
 
 class LottosGenerator(
-    private val generator: LottoGenerator = RandomLottoGenerator()
+    private val generator: LottoGenerator = RandomLottoGenerator(),
 ) {
-    fun generate(amount: Int, lottoPrice: Int = LOTTO_PRICE): List<Lotto> {
+    fun generate(
+        amount: Int,
+        lottoPrice: Int = LOTTO_PRICE,
+    ): List<Lotto> {
         val count = amount / lottoPrice
         require(count >= MIN_LOTTO_COUNT_SIZE) { INVALID_LOTTO_COUNT_MESSAGE.format(amount) }
         return List(count) { generator.generate(LOTTO_SIZE) }

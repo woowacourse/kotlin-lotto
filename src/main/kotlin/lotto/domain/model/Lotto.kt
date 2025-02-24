@@ -9,9 +9,14 @@ class Lotto(val numbers: Set<LottoNumber>) {
         }
     }
 
-    fun getMatchCount(winningLotto: Lotto) = numbers.count { number -> winningLotto.numbers.contains(number) }
-
-    fun isMatchBonusNumber(bonusNumber: LottoNumber) = numbers.contains(bonusNumber)
+    fun getLottoRank(
+        winningLotto: Lotto,
+        bonusNumber: LottoNumber,
+    ): LottoRank {
+        val matchCount = numbers.count { number -> winningLotto.numbers.contains(number) }
+        val isMatchBonusNumber = numbers.contains(bonusNumber)
+        return LottoRank.calculate(matchCount, isMatchBonusNumber)
+    }
 
     override fun toString(): String {
         return this.numbers.joinToString(",") { it.number.toString() }

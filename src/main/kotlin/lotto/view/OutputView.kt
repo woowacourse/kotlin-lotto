@@ -16,7 +16,7 @@ class OutputView {
 
     fun printWinningResults(ranks: LottoRanks) {
         println(PRINT_WINNING_RESULT_HEADER)
-        LottoRank.entries.reversed().drop(DROP_MISS_RANK_INDEX).forEach { lottoRank ->
+        ranks.lottoRanks.keys.sortedBy { it.winningAmount }.drop(DROP_MISS_RANK_INDEX).forEach { lottoRank ->
             printWinningResultFormat(lottoRank, ranks)
         }
     }
@@ -31,7 +31,7 @@ class OutputView {
                 lottoRank.matchCount,
                 bonusComment,
                 lottoRank.winningAmount,
-                ranks.lottoRanks.count { it.name == lottoRank.name },
+                ranks.lottoRanks[lottoRank] ?: 0,
             ),
         )
     }
