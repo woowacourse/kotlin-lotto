@@ -9,7 +9,7 @@ class WinningDiscriminatorTest {
     fun `6개의 번호가 일치하면 1등을 반환한다`() {
         // given
         val lottoNumbers = listOf(1, 2, 3, 4, 5, 6)
-        val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
+        val winningLotto = Lotto.from(lottoNumbers)
         val bonusNumber = LottoNumber.from(7)
         val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
         val lotto = listOf(Lotto.from(lottoNumbers))
