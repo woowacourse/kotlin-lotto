@@ -27,27 +27,33 @@
 
 ## 세부 구현
 
+### class `LottoNumber`
+
+- 로또 번호를 보관할 `lottoNumber: Int`를 가짐
+
 ### class `Lotto`
 
-- 프로퍼티 `Set<Int>`을 가짐
-- 상수 로또 1장 가격(1000)
+- 로또 번호들을 보관할 프로퍼티 `numbers: Set<Int>`를 가짐
+- 로또 한 장의 가격을 나타내는 상수를 가짐
+- 로또 번호의 개수를 나타내는 상수를 가짐
+- 로또 번호의 개수가 유효함을 검증함
 
 ### class `Lottos`
 
-- 프로퍼티 `Set<Lotto>`을 가짐
-- 정적 함수 `buy(amount: Int): Lottos` 정의
-
-### enum `LottoResult`
-
-- 1등, 2등, 3등, 4등, 5등, 낙첨에 대한 상수 모음
-    - 각 상수에는 당첨금액 프로퍼티가 있어야 함.
-- 정적 함수 `from(wonLotto: Lotto, boughtLotto: Lotto): LottoResult`
+- 구매한 로또들을 보관할 프로퍼티 `List<Lotto>`를 가짐
+- 로또가 적어도 한 개 있음을 검증함
 
 ### class `WinningLotto`
 
-- 프로퍼티 `Lotto`을 가짐
-- 프로퍼티 `bonusNumber: Int`를 가짐
+- 당첨 로또를 보관할 `lotto: Lotto`를 가짐
+- 보너스 번호를 보관할 `bonusNumber: LottoNumber`를 가짐
 
-### class `LottoNumber`
+### enum `LottoResult`
 
-- 프로퍼티 `lottoNumber`를 가짐
+- 로또 결과(1등, 2등, 3등, 4등, 5등, 낙첨)에 대한 상수 모음 
+  - 당첨 금액, 보너스 번호 일치 여부 및 일치하는 번호의 개수를 가짐
+- 정적 함수 `from(wonLotto: Lotto, boughtLotto: Lotto): LottoResult`
+
+### class `LottoResults`
+
+- 로또 결과들을 보관할 프로퍼티 `List<LottoResult>`를 가짐
