@@ -9,7 +9,7 @@ class Lottos(
     fun calculateLottoResult(winningLotto: WinningLotto): LottoResult {
         val ranks =
             lottoBundle
-                .groupingBy { winningLotto.findLottoRank(it) }
+                .groupingBy { lotto -> winningLotto.findLottoRank(lotto) }
                 .eachCount()
         return LottoResult(ranks)
     }
