@@ -9,5 +9,6 @@ class LottoMachine(private val randomGenerator: LottoGenerator = LottoGenerator(
 
     companion object {
         private const val NUMBER_OF_LOTTO_NUMBER: Int = 6
+        const val LOTTO_PRICE: Int = 1_000
     }
 }

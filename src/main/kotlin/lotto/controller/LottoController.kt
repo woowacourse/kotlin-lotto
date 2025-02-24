@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.domain.Lotto
 import lotto.domain.LottoCalculator
 import lotto.domain.LottoMachine
+import lotto.domain.LottoMachine.Companion.LOTTO_PRICE
 import lotto.domain.LottoNumber
 import lotto.domain.LottoPurchaseAmount
 import lotto.domain.ManualLottoCount
@@ -30,7 +31,7 @@ class LottoController(
 
     private fun getPurchaseAmount(): LottoPurchaseAmount {
         return retryInput {
-            LottoPurchaseAmount(inputView.getPurchaseAmount().toInt())
+            LottoPurchaseAmount(inputView.getPurchaseAmount().toInt(), LOTTO_PRICE)
         }
     }
 
@@ -58,8 +59,9 @@ class LottoController(
         purchaseAmount: LottoPurchaseAmount,
         manualLottoCount: Int,
     ): List<Lotto> {
-        val lottos = lottoMachine.buyLottos(purchaseAmount.purchasableCount - manualLottoCount)
-        outputView.printPurchasedLottos(manualLotto + lottos, manualLottoCount, purchaseAmount.purchasableCount - manualLottoCount)
+        val autoLottoCount = purchaseAmount.purchasableCount - manualLottoCount
+        val lottos = lottoMachine.buyLottos(autoLottoCount)
+        outputView.printPurchasedLottos(manualLotto + lottos, manualLottoCount, autoLottoCount)
         return manualLotto + lottos
     }
 
