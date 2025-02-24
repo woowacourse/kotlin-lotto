@@ -1,10 +1,10 @@
 package lotto.controller
 
 import lotto.model.Lotto
+import lotto.model.LottoCalculator
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
-import lotto.model.LottoStatistics
 import lotto.model.Lottos
 import lotto.model.WinningLotto
 import lotto.view.InputView
@@ -22,9 +22,9 @@ class LottoController(
         outputView.printLottos(lottos)
 
         val winningLotto = getWinningLotto()
-        val lottoStatistics = LottoStatistics(lottos, winningLotto, purchaseMoney)
-
-        processLottoStatistics(lottoStatistics)
+        lottos.getRanks(winningLotto)
+        val lottoCalculator = LottoCalculator()
+        processLottoStatistics(lottoCalculator, lottos, purchaseMoney)
     }
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =
@@ -71,9 +71,14 @@ class LottoController(
         return inputView.readBonusNumber()
     }
 
-    private fun processLottoStatistics(lottoStatistics: LottoStatistics) {
-        outputView.printLottoStatistics(lottoStatistics.lottoStatistics)
-        val rateOfReturn = lottoStatistics.getRateOfReturn()
-        outputView.printLottoRateOfReturn(rateOfReturn, lottoStatistics.getIsLossMoney(rateOfReturn))
+    private fun processLottoStatistics(
+        lottoCalculator: LottoCalculator,
+        lottos: Lottos,
+        purchasedAmount: LottoPurchaseAmount,
+    ) {
+        outputView.printLottoStatistics(lottos.ranks)
+        val totalPrizeMoney: Double = lottos.getTotalPrizeMoney()
+        val rateOfReturn: Double = lottoCalculator.getRateOfReturn(totalPrizeMoney, purchasedAmount.money)
+        outputView.printLottoRateOfReturn(rateOfReturn, lottoCalculator.getIsLossMoney(rateOfReturn))
     }
 }
