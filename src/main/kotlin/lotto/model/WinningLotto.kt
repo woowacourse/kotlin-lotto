@@ -3,18 +3,19 @@ package lotto.model
 class WinningLotto(
     val winningNumbers: Lotto,
     val bonusNumber: LottoNumber,
-    private val purchaseMoney: LottoPurchaseAmount,
 ) {
     init {
         require(!winningNumbers.contains(bonusNumber)) { ERROR_DUPLICATED_BONUS_NUMBER }
     }
 
-    fun calculateStatistics(lottos: Lottos): LottoStatistics {
+    fun calculateStatistics(
+        lottos: Lottos,
+        purchaseMoney: LottoPurchaseAmount,
+    ): LottoStatistics {
         val rankStatistics: Map<Rank, Int> =
             lottos.lottoBundle
-                .groupingBy { lotto ->
-                    findLottoRank(lotto)
-                }.eachCount()
+                .groupingBy { lotto -> findLottoRank(lotto) }
+                .eachCount()
         return LottoStatistics(rankStatistics, purchaseMoney)
     }
 
