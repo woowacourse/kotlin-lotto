@@ -14,6 +14,8 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
+    private val lottoMachine = LottoMachine()
+
     fun run() {
         val purchaseAmount = LottoPayment(getPurchaseAmount())
         val lottoTicket = prepareLottoTicket(purchaseAmount)
@@ -23,7 +25,7 @@ class LottoController(
     }
 
     private fun prepareLottoTicket(purchaseAmount: LottoPayment): List<Lotto> {
-        val lottoTickets = LottoMachine().buyLottoTickets(purchaseAmount, LottoRandomGenerator())
+        val lottoTickets = lottoMachine.buyLottoTickets(purchaseAmount, LottoRandomGenerator())
         outputView.printPurchasedLottoTickets(lottoTickets)
         return lottoTickets
     }
