@@ -21,6 +21,8 @@ class Lotto private constructor(
         }
     }
 
+    fun countMatchNumbers(otherLotto: Lotto): Int = numbers.count { number -> number in otherLotto.numbers }
+
     fun isHaveNumber(number: LottoNumber): Boolean = numbers.contains(number)
 
     companion object {
