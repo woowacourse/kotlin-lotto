@@ -4,6 +4,7 @@ import domain.model.Lotto
 import domain.model.LottoNumber
 import domain.model.LottoResult
 import domain.model.PurchasePrice
+import domain.model.PurchasePrice.Companion.toAmount
 import domain.model.WinningLotto
 import domain.service.AutoLottoGenerator
 import domain.service.LottoMatchCalculator
@@ -15,6 +16,7 @@ import view.OutputView
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
+    private val lottoGenerator: AutoLottoGenerator,
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
@@ -38,11 +40,7 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun purchaseLotto(money: PurchasePrice): List<Lotto> {
-        val lottoGenerator = AutoLottoGenerator()
-        val amount = money.value / PurchasePrice.Companion.STANDARD_AMOUNT_UNIT
-        return List(amount) { lottoGenerator.makeLotto() }
-    }
+    private fun purchaseLotto(money: PurchasePrice): List<Lotto> = List(money.toAmount()) { lottoGenerator.makeLotto() }
 
     private fun displayLottoTicket(lottos: List<Lotto>) {
         outputView.printPurchasedLottoCount(lottos.size)
