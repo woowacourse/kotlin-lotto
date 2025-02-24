@@ -15,6 +15,7 @@ class LottoController {
         val pay: Int = View.readPay()
         View.showLottoCount(pay / Lotto.PRICE)
         makeLotto(pay)
+        showBoughtLottos()
         readWinningLotto()
         showResult()
     }
@@ -22,6 +23,9 @@ class LottoController {
     private fun makeLotto(pay: Int) {
         val lottos: List<Lotto> = Lotto.buyRandomLottos(pay)
         boughtLottos = lottos
+    }
+
+    private fun showBoughtLottos() {
         View.showLottos(
             boughtLottos.map { lotto: Lotto ->
                 lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted()
