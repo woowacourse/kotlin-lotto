@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test
 
 class LottoMachineTest {
     @Test
-    fun `구입 금액을 넣으면 몇 개의 로또를 구매했는지 알 수 있다`() {
+    fun `구입할 로또의 개수를 입력하면 입력한 개수만큼 로또를 반환한다`() {
         val lottoMachine = LottoMachine()
-        assertThat(lottoMachine.buyLottos(1_000).size).isEqualTo(1)
+        assertThat(lottoMachine.buyLottos(5).size).isEqualTo(5)
     }
 }

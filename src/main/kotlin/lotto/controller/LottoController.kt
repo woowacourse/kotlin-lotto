@@ -1,11 +1,6 @@
 package lotto.controller
 
-import lotto.domain.Lotto
-import lotto.domain.LottoCalculator
-import lotto.domain.LottoMachine
-import lotto.domain.LottoNumber
-import lotto.domain.LottoPurchaseAmount
-import lotto.domain.WinningLotto
+import lotto.domain.*
 import lotto.util.Rank
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -14,9 +9,11 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
+    private val lottoMachine = LottoMachine()
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val lottos = getAndPrintPurchasedLottos(purchaseAmount)
+        val manualLottoCount = getManualLottoCount(purchaseAmount.purchasableCount)
+        val lottos = getAndPrintPurchasedLottos(purchaseAmount, manualLottoCount.lottoCount)
         val lottoCalculator = getWinningInfoAndCalculator()
         val winningStats = getAndPrintWinningStats(lottoCalculator, lottos)
         val prize = lottoCalculator.calculatePrize(winningStats)
@@ -29,8 +26,8 @@ class LottoController(
         return LottoCalculator(winningLotto.winningNumber, winningLotto.bonusNumber)
     }
 
-    private fun getAndPrintPurchasedLottos(purchaseAmount: LottoPurchaseAmount): List<Lotto> {
-        val lottos = LottoMachine().buyLottos(purchaseAmount.money)
+    private fun getAndPrintPurchasedLottos(purchaseAmount: LottoPurchaseAmount, manualLottoCount: Int): List<Lotto> {
+        val lottos = lottoMachine.buyLottos(purchaseAmount.purchasableCount - manualLottoCount)
         outputView.printPurchasedLottos(lottos)
         return lottos
     }
@@ -65,6 +62,12 @@ class LottoController(
     private fun getPurchaseAmount(): LottoPurchaseAmount {
         return retryInput {
             LottoPurchaseAmount(inputView.getPurchaseAmount().toInt())
+        }
+    }
+
+    private fun getManualLottoCount(purchasableCount: Int): ManualLottoCount {
+        return retryInput {
+            ManualLottoCount(inputView.getManualLottoCount().toInt(), purchasableCount)
         }
     }
 
