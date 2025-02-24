@@ -8,10 +8,10 @@ class LottoNumber private constructor(
         private const val LOTTO_NUMBER_MAX_RANGE = 45
 
         val ALL_LOTTO_NUMBERS = (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE)
-        private val CACHE = ALL_LOTTO_NUMBERS.associateWith { LottoNumber(it) }
+        private val CACHE_LOTTO_NUMBER = ALL_LOTTO_NUMBERS.associateWith { LottoNumber(it) }
 
         fun from(number: Int): LottoNumber =
-            CACHE[number]
+            CACHE_LOTTO_NUMBER[number]
                 ?: throw IllegalArgumentException("[ERROR] 로또 번호의 범위는 $LOTTO_NUMBER_MIN_RANGE 이상 $LOTTO_NUMBER_MAX_RANGE 이하여야 합니다.")
     }
 }
