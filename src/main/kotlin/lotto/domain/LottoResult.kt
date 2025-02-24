@@ -24,46 +24,32 @@ enum class LottoResult(
             wonLotto: WinningLotto,
             boughtLotto: Lotto,
         ): LottoResult {
-            if (isFailLotto(wonLotto, boughtLotto)) return FAIL
-
-            val sameMatchCountResults: List<LottoResult> = findSameMatchCountResults(wonLotto, boughtLotto)
-            if (sameMatchCountResults.size == 1) return sameMatchCountResults.first()
-
             if (bonusMatched(wonLotto.bonusNumber, boughtLotto)) {
-                return sameMatchCountResults.find { entry: LottoResult -> entry.bonusMatched == BonusMatched.YES }
-                    ?: throw IllegalStateException(ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT)
+                return entries
+                    .filterNot { result: LottoResult -> result.bonusMatched == BonusMatched.NO }
+                    .calculateHighestPrize(wonLotto, boughtLotto)
             }
-            return sameMatchCountResults.find { entry: LottoResult -> entry.bonusMatched == BonusMatched.NO }
-                ?: throw IllegalStateException(ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT)
+
+            return entries
+                .filterNot { result: LottoResult -> result.bonusMatched == BonusMatched.YES }
+                .calculateHighestPrize(wonLotto, boughtLotto)
         }
-
-        private fun calculateMatchCount(
-            wonLotto: WinningLotto,
-            boughtLotto: Lotto,
-        ): Int = boughtLotto.numbers.count { lottoNumber: LottoNumber -> lottoNumber.value in wonLotto.numbers }
-
-        private fun isFailLotto(
-            wonLotto: WinningLotto,
-            boughtLotto: Lotto,
-        ): Boolean = calculateMatchCount(wonLotto, boughtLotto) < entries.minus(FAIL).minOf { it.matchCount }
-
-        private fun findSameMatchCountResults(
-            wonLotto: WinningLotto,
-            boughtLotto: Lotto,
-        ): List<LottoResult> =
-            entries.filter { entry: LottoResult ->
-                entry.matchCount ==
-                    calculateMatchCount(
-                        wonLotto,
-                        boughtLotto,
-                    )
-            }
 
         private fun bonusMatched(
             bonusNumber: LottoNumber,
             boughtLotto: Lotto,
         ): Boolean = boughtLotto.containLottoNumber(bonusNumber)
 
-        private const val ERROR_MESSAGE_NO_SUCH_LOTTO_RESULT = "로또 비교에 실패했습니다."
+        private fun List<LottoResult>.calculateHighestPrize(
+            wonLotto: WinningLotto,
+            boughtLotto: Lotto,
+        ): LottoResult =
+            filter { result: LottoResult -> result.matchCount <= calculateMatchCount(wonLotto, boughtLotto) }
+                .maxBy { result: LottoResult -> result.prizeAmount }
+
+        private fun calculateMatchCount(
+            wonLotto: WinningLotto,
+            boughtLotto: Lotto,
+        ): Int = boughtLotto.numbers.count { lottoNumber: LottoNumber -> lottoNumber.value in wonLotto.numbers }
     }
 }
