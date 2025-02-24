@@ -22,7 +22,7 @@ class LottoController(
         outputView.printManualLottoQuantityGuide()
         val manualLottoQuantity = inputView.readManualLottoQuantity()
 
-        outputView.printManualLottoNumbersGuide()
+        if (manualLottoQuantity > 0) outputView.printManualLottoNumbersGuide()
         val manualLottos = List(manualLottoQuantity) { Lotto.from(inputView.readLottoNumbers()) }
 
         val autoLottoQuantity = getAutoLottoQuantity(purchaseAmount, manualLottoQuantity)

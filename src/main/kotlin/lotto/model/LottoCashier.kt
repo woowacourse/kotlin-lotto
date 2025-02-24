@@ -24,7 +24,7 @@ class LottoCashier(
 
     private fun validateManualLottoQuantity() {
         require(amount - manualQuantity * LOTTO_EACH_AMOUNT >= 0) {
-            "[ERROR] 낸 금액보다 많은 수동 로또를 살 수 없습니다. 금액: $amount, 수동 로또: ${manualQuantity}개"
+            "[ERROR] 낸 금액보다 많은 수동 로또를 살 수 없습니다. 금액: $amount, 수동 로또: ${manualQuantity}장"
         }
     }
 
