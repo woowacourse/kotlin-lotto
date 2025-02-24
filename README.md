@@ -32,3 +32,19 @@
 - [x] LottoRanks 일급 컬렉션 추가
 - [x] Controller에서 Domain 로직 분리
 - [x] LottoRankCalculator 로직 LottoRanks로 이전
+
+
+### 2차 피드백 수정 사항
+
+- refactor: LottoResult List -> Map으로 자료구조 변경
+- refactor: Scanner 대신 ConsoleKt readlnOrNull 사용
+- refactor: Lotto 객체로 일치하는 번호 수 계산 & 보너스 번호 존재 여부 확인 로직 이동
+- refactor: 로또 결과 출력 로직 수정
+- refactor: LottoMachine에서 구매 금액에 대한 책임 분리
+- feat: PurchaseAmount 추가
+- chore: LottoMachine의 로또 가격 상수화
+- refactor: LottoNumber Instance 재사용
+- chore: LottoRanks -> LottoResult로 클래스명 변경
+- refactor: LottoRules에서 로또 가격 제거
+- feat: LottoGenerator 역할 분리
+- feat: 로또 생성 성공 테스트 추가
