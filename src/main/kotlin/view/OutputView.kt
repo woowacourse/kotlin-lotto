@@ -44,28 +44,37 @@ class OutputView {
     }
 
     private fun makeLottoResultMessage(lottoResult: LottoMatchResult): String {
-        return enumValues<Rank>().sortedBy {
-            it.countOfMatch
-        }
+        return enumValues<Rank>()
+            .sortedBy {
+                it.countOfMatch
+            }
             .filterNot { rank ->
                 rank == Rank.MISS
             }
             .map { rank ->
                 val matchedCount = lottoResult.getWinningCount(rank)
-                if (rank.requiresBonusMatch) {
-                    MESSAGE_BONUS_BALL_MATCH.format(
-                        rank.countOfMatch,
-                        rank.winningMoney,
-                        matchedCount,
-                    )
-                } else {
-                    MESSAGE_EACH_RANK_RESULT.format(
-                        rank.countOfMatch,
-                        rank.winningMoney,
-                        matchedCount,
-                    )
-                }
-            }.joinToLineBreak()
+                getMatchedResultMessage(rank, matchedCount)
+            }
+            .joinToLineBreak()
+    }
+
+    private fun getMatchedResultMessage(
+        rank: Rank,
+        matchedCount: Int,
+    ): String {
+        return if (rank.requiresBonusMatch) {
+            MESSAGE_BONUS_BALL_MATCH.format(
+                rank.countOfMatch,
+                rank.winningMoney,
+                matchedCount,
+            )
+        } else {
+            MESSAGE_EACH_RANK_RESULT.format(
+                rank.countOfMatch,
+                rank.winningMoney,
+                matchedCount,
+            )
+        }
     }
 
     private fun makePurchaseLottoMessage(purchaseLotto: List<Lotto>): String {
