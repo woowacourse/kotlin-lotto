@@ -9,10 +9,7 @@ class LottoMachine {
         autoQuantity: Int,
     ): List<Lotto> = manualLottos.plus(getAutoLottos(autoQuantity))
 
-    private fun getAutoLottos(quantity: Int): List<Lotto> {
-        val lottos = List(quantity) { Lotto.from(getLottoNumbers()) }
-        return lottos
-    }
+    private fun getAutoLottos(quantity: Int): List<Lotto> = List(quantity) { Lotto.from(getLottoNumbers()) }
 
     private fun getLottoNumbers(): List<Int> =
         ALL_LOTTO_NUMBERS
