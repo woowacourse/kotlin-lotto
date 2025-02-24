@@ -14,9 +14,10 @@ class LottoWinningStats(
         return EarningInfo(rate)
     }
 
-    fun getWinningStatsWithEmpty(): Map<Rank, Int> {
+    fun getWinningStatsWithEmptyWithoutMiss(): Map<Rank, Int> {
         val emptyWinningStatus = Rank.entries.associateWith { 0 }
-        return emptyWinningStatus + winningStatsInfo
+        val withMiss = emptyWinningStatus + winningStatsInfo
+        return withMiss.filter { (key, _) -> key != Rank.MISS }
     }
 
     private fun calculateWinningAmount(): Int = winningStatsInfo.entries.sumOf { (rank, count) -> rank.winningMoney * count }

@@ -33,14 +33,14 @@ class LottoWinningStatsTest {
     }
 
     @Test
-    fun `0번의 당첨을 포함한 전체 당첨 통계 정보를 반환한다`() {
+    fun `MISS를 제외한 전체 당첨 통계 정보를 반환한다`() {
         // Given
         val winningStats = lottos.getLottoWinningStats(winningLotto)
 
         // When
-        val winningStatsWithEmpty = winningStats.getWinningStatsWithEmpty()
+        val winningStatsWithEmpty = winningStats.getWinningStatsWithEmptyWithoutMiss()
 
         // Then
-        assertThat(winningStatsWithEmpty.size).isEqualTo(Rank.entries.size)
+        assertThat(winningStatsWithEmpty.size).isEqualTo(Rank.entries.size - 1)
     }
 }
