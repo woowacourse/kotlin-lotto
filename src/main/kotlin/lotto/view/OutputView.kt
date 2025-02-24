@@ -1,5 +1,10 @@
 package lotto.view
 
+import lotto.model.ProfitStatus
+import lotto.model.ProfitStatus.BREAK_EVEN
+import lotto.model.ProfitStatus.LOSS
+import lotto.model.ProfitStatus.PROFIT
+
 class OutputView {
     fun printPurchaseAmountGuide() {
         println("구입금액을 입력해 주세요.")
@@ -51,10 +56,17 @@ class OutputView {
 
     fun printProfitRate(
         profitRate: Float,
-        profitDescription: String,
+        profitStatus: ProfitStatus,
     ) {
-        println("총 수익률은 ${profitRate.formatToTwoDecimal()}입니다.(기준이 1이기 때문에 결과적으로 $profitDescription(이)라는 의미임)")
+        println("총 수익률은 ${profitRate.formatToTwoDecimal()}입니다. (기준이 1이기 때문에 결과적으로 ${getProfitMessage(profitStatus)}(이)라는 의미임)")
     }
 
     private fun Float.formatToTwoDecimal() = "%.2f".format(this)
+
+    private fun getProfitMessage(profitStatus: ProfitStatus): String =
+        when (profitStatus) {
+            PROFIT -> "이득"
+            LOSS -> "손해"
+            BREAK_EVEN -> "본전"
+        }
 }

@@ -1,11 +1,9 @@
 package lotto.model
 
-enum class ProfitStatus(
-    val krDescription: String,
-) {
-    PROFIT("이득"),
-    LOSS("손해"),
-    BREAK_EVEN("본전"),
+enum class ProfitStatus {
+    PROFIT,
+    LOSS,
+    BREAK_EVEN,
     ;
 
     companion object {

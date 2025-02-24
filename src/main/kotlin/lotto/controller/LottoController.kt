@@ -56,7 +56,7 @@ class LottoController(
         val profitRate = getProfitRate(lottoWinningResult, purchaseAmount)
         val profitStatus = ProfitStatus.from(profitRate)
 
-        outputView.printProfitRate(profitRate, profitStatus.krDescription)
+        outputView.printProfitRate(profitRate, profitStatus)
     }
 
     private fun getAutoLottoQuantity(
