@@ -1,7 +1,7 @@
 package lotto
 
 import lotto.domain.Lotto
-import lotto.domain.RankMap
+import lotto.domain.ScoreRankMap
 import lotto.global.Config.MAX_LOTTO_LENGTH
 import lotto.global.Config.MAX_RANDOM_NUM
 import lotto.global.Config.MIN_RANDOM_NUM
@@ -41,19 +41,19 @@ class LottoService(
         manyLotto: List<Lotto>,
         winningLotto: Lotto,
         bonus: Int,
-    ): RankMap {
+    ): ScoreRankMap {
         val rankMap = Rank.entries.associateWith { 0 }.toMutableMap()
         for (lotto in manyLotto) {
             val rank = checkRank(lotto, winningLotto, bonus)
             rankMap[rank] = rankMap.getOrDefault(rank, 0) + 1
         }
-        return RankMap(rankMap.toMap())
+        return ScoreRankMap(rankMap.toMap())
     }
 
     companion object {
-        fun getRate(rankMap: RankMap): String {
-            val earned = rankMap.getEarned()
-            val paid = rankMap.getPaid()
+        fun getRate(scoreRankMap: ScoreRankMap): String {
+            val earned = scoreRankMap.getEarned()
+            val paid = scoreRankMap.getPaid()
             return if (paid == 0) "0.0" else String.format("%.2f", earned.toDouble() / paid.toDouble())
         }
     }
