@@ -51,6 +51,6 @@ class LottoCalculatorTest {
         val earningRate = lottoCalculator.calculateEarningRate(winningStats, purchaseAmount)
 
         val actualEarningRate = (5_000).toDouble() / purchaseAmount.amount
-        assertThat(earningRate.rate).isEqualTo(actualEarningRate)
+        assertThat(earningRate).isEqualTo(actualEarningRate)
     }
 }

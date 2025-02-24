@@ -1,7 +1,6 @@
 package lotto.view
 
 import lotto.domain.model.Lotto
-import lotto.domain.value.EarningRate
 import lotto.enums.Rank
 
 class OutputView {
@@ -12,7 +11,7 @@ class OutputView {
 
     fun printLottoResult(
         lottoStats: Map<Rank, Int>,
-        earningRate: EarningRate,
+        earningRate: Double,
     ) {
         println(OUTPUT_LOTTO_RESULT)
         printLottoStats(lottoStats)
@@ -37,8 +36,8 @@ class OutputView {
         }
     }
 
-    private fun printEarningRate(earningRate: EarningRate) {
-        println(OUTPUT_EARNING_RATE.format(earningRate.rate))
+    private fun printEarningRate(earningRate: Double) {
+        println(OUTPUT_EARNING_RATE.format(earningRate))
     }
 
     companion object {

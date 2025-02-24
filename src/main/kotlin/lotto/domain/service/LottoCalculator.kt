@@ -2,7 +2,6 @@ package lotto.domain.service
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.WinningLotto
-import lotto.domain.value.EarningRate
 import lotto.domain.value.PurchaseAmount
 import lotto.enums.Rank
 
@@ -15,10 +14,10 @@ class LottoCalculator {
     fun calculateEarningRate(
         lottoStats: Map<Rank, Int>,
         purchaseAmount: PurchaseAmount,
-    ): EarningRate {
+    ): Double {
         val winningAmount = calculateTotalWinningAmount(lottoStats)
         val rate = winningAmount.toDouble() / purchaseAmount.amount
-        return EarningRate(rate)
+        return rate
     }
 
     private fun calculateTotalWinningAmount(lottoStats: Map<Rank, Int>): Int =
