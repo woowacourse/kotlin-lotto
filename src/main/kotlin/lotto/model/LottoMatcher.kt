@@ -5,7 +5,7 @@ class LottoMatcher(
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(winningLotto.getNumbers().contains(bonusNumber)) {
+        require(!winningLotto.getNumbers().contains(bonusNumber)) {
             BONUS_DUPLICATE_MESSAGE
         }
     }
@@ -20,22 +20,11 @@ class LottoMatcher(
         return rankMap
     }
 
-    private fun calculateRank(lotto: Lotto): Rank {
-        val matchCount = countMatchingNumber(lotto)
-        val matchBonus = checkBonusNumber(lotto, bonusNumber)
+    private fun calculateRank(other: Lotto): Rank {
+        val matchCount = winningLotto.countMatchedNumber(other)
+        val matchBonus = other.findNumber(bonusNumber)
         return Rank.valueOf(matchCount, matchBonus)
     }
-
-    private fun countMatchingNumber(lotto: Lotto): Int =
-        lotto
-            .getNumbers()
-            .intersect(winningLotto.getNumbers())
-            .size
-
-    private fun checkBonusNumber(
-        publishedLotto: Lotto,
-        bonusNumber: LottoNumber,
-    ): Boolean = publishedLotto.getNumbers().contains(bonusNumber)
 
     companion object {
         private const val BONUS_DUPLICATE_MESSAGE = "[ERROR] 당첨 번호와 보너스 볼은 중복될 수 없습니다."
