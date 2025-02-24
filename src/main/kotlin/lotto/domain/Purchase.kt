@@ -4,7 +4,7 @@ class Purchase(
     val amountOfPurchase: Int,
 ) {
     init {
-        require(amountOfPurchase % LOTTO_PRICE == 0) { "로또는 1000원 단위로 구입할 수 있습니다." }
+        require(amountOfPurchase >= LOTTO_PRICE) { LOTTO_PRICE_ERROR_MESSAGE }
     }
 
     fun calculateAmountOfLottos(): Int {
@@ -13,5 +13,6 @@ class Purchase(
 
     companion object {
         const val LOTTO_PRICE = 1000
+        const val LOTTO_PRICE_ERROR_MESSAGE = "구입 금액은 1000원 이상이어야 합니다"
     }
 }
