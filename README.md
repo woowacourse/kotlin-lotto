@@ -44,3 +44,4 @@
 - [x] Lotto클래스 프로퍼티의 list내 Int를 LottoNumber로 래핑
 - [x] 로또 객체 변환 및 추출 로직을 LottoFactory로 함수화
 - [x] 공통 에러 메시지를 Const 파일로 분리
+- [x] LottoResult의 result를 Immutable Map으로 변경
