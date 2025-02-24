@@ -5,7 +5,7 @@ class LottoMatcher(
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(!checkBonusNumber(winningLotto, bonusNumber)) {
+        require(winningLotto.getNumbers().contains(bonusNumber)) {
             BONUS_DUPLICATE_MESSAGE
         }
     }
