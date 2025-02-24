@@ -43,9 +43,11 @@ enum class LottoResult(
         private fun List<LottoResult>.calculateHighestPrize(
             wonLotto: WinningLotto,
             boughtLotto: Lotto,
-        ): LottoResult =
-            filter { result: LottoResult -> result.matchCount <= calculateMatchCount(wonLotto, boughtLotto) }
+        ): LottoResult {
+            val matchCount = calculateMatchCount(wonLotto, boughtLotto)
+            return filter { result: LottoResult -> result.matchCount <= matchCount }
                 .maxBy { result: LottoResult -> result.prizeAmount }
+        }
 
         private fun calculateMatchCount(
             wonLotto: WinningLotto,
