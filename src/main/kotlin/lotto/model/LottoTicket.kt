@@ -6,7 +6,8 @@ class LottoTicket(
     private val numbers: Set<LottoNumber> = generateLotto(),
 ) {
     init {
-        require(numbers.size == LottoRuleConstants.LOTTO_PICK_COUNT.value) { ERROR_NUMBERS_COUNT }
+        require(numbers.size == LottoRuleConstants.LOTTO_PICK_COUNT.value)
+        { ERROR_NUMBERS_COUNT }
     }
 
     fun getSize() = numbers.size
@@ -14,6 +15,8 @@ class LottoTicket(
     fun getNumbers() = numbers
 
     companion object {
+        private const val ERROR_NUMBERS_COUNT = "로또 번호의 개수는 6개입니다."
+
         private fun generateLotto(): Set<LottoNumber> =
             (LottoRuleConstants.MINIMUM_NUMBER.value..LottoRuleConstants.MAXIMUM_NUMBER.value)
                 .shuffled()
@@ -22,6 +25,6 @@ class LottoTicket(
                 .map { LottoNumber(it) }
                 .toSet()
 
-        private const val ERROR_NUMBERS_COUNT = "로또 번호의 개수는 6개입니다."
+            fun create(vararg lottoNumbers: LottoNumber): LottoTicket = LottoTicket(lottoNumbers.toSet())
     }
 }
