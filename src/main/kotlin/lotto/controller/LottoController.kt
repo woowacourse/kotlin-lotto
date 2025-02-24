@@ -4,6 +4,7 @@ import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.Lottos
+import lotto.domain.ProfitCalculator
 import lotto.domain.WinLotto
 import lotto.view.View
 
@@ -40,7 +41,8 @@ class LottoController {
                 .filterNot { result: LottoResult -> result.prizeAmount == 0 }
                 .sortedBy { result: LottoResult -> result.prizeAmount }
         val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoPrizeEntry, lottoResults)
-        View.showResult(lottoResults = lottoResultsDescriptions, profitRate = lottoResults.profitRate)
+        val profitRate: Double = ProfitCalculator.calculateProfitRate(lottoResults)
+        View.showResult(lottoResultsDescriptions, profitRate)
     }
 
     private fun makeLottoResultDescription(
@@ -81,13 +83,6 @@ class LottoController {
         }
 
     private fun makeRandomNumbers(size: Int): List<Int> = (LottoNumber.MIN..LottoNumber.MAX).shuffled().subList(0, size)
-
-    private val List<LottoResult>.profitRate: Double
-        get() {
-            val profit: Long = this.sumOf { lottoResult: LottoResult -> lottoResult.prizeAmount.toLong() }
-            val profitRate = profit / (this.size * Lotto.PRICE).toDouble()
-            return profitRate
-        }
 
     companion object {
         private const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
