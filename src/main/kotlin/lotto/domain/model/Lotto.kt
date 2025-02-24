@@ -19,7 +19,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
     }
 
     override fun toString(): String {
-        return this.numbers.joinToString(",") { it.number.toString() }
+        return this.numbers.toString()
     }
 
     companion object {

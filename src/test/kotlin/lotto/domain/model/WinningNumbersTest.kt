@@ -1,8 +1,8 @@
 package lotto.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -12,12 +12,8 @@ class WinningNumbersTest {
     fun `보너스 번호가 당첨 번호와 중복되면 예외가 발생한다`() {
         val lotto = listOf(1, 2, 3, 4, 5, 6)
         val bonusNumber = 6
-        val exception =
-            assertThrows<IllegalArgumentException> {
-                WinningNumbers(lotto, bonusNumber)
-            }
-
-        assertThat(exception.message).isEqualTo("보너스 번호 ${bonusNumber}은(는) 당첨 번호와 중복 될 수 없습니다.")
+        assertThatThrownBy { WinningNumbers(lotto, bonusNumber) }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("보너스 번호 ${bonusNumber}은(는) 당첨 번호와 중복 될 수 없습니다.")
     }
 
     @MethodSource("calculateLottoRanksTest")

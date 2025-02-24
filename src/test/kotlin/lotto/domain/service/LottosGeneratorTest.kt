@@ -2,8 +2,8 @@ package lotto.domain.service
 
 import lotto.domain.model.Lotto
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
@@ -40,9 +40,8 @@ class LottosGeneratorTest {
     @ValueSource(ints = [999, 0, -1000, -999])
     @ParameterizedTest
     fun `구매 금액이 1000원 미만이라면 예외가 발생한다`(purchaseAmount: Int) {
-        assertThrows<IllegalArgumentException> {
-            LottosGenerator().generate(purchaseAmount)
-        }
+        assertThatThrownBy { LottosGenerator().generate(purchaseAmount) }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("${purchaseAmount}원으로 로또를 구매하지 못했습니다 로또는 한 장 이상 구매해야 합니다.")
     }
 
     inner class FixedLottoGenerator(private val numbers: List<Int>) : LottoGenerator {
