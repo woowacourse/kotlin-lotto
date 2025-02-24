@@ -1,5 +1,6 @@
 package lotto.domain.model
 
+import lotto.domain.service.FixedLottoNumbersGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -22,23 +23,27 @@ class WinningNumbersTest {
     @MethodSource("calculateLottoRanksTest")
     @ParameterizedTest
     fun `로또 랭크를 구할 수 있다`(
-        lotto: Lotto,
+        lottoNumbers: List<Int>,
         actual: LottoRank,
     ) {
         val winningNumbers = WinningNumbers(listOf(1, 2, 3, 4, 5, 6), 8)
-        assertThat(winningNumbers.calculateLottoRanks(listOf(lotto)).lottoRanks).isEqualTo(listOf(actual))
+        assertThat(
+            winningNumbers.calculateLottoRanks(
+                LottoMachine(generator = FixedLottoNumbersGenerator(lottoNumbers)).generateLottoBundle(1000),
+            ).lottoRanks,
+        ).isEqualTo(listOf(actual))
     }
 
     companion object {
         @JvmStatic
         fun calculateLottoRanksTest(): List<Arguments> {
             return listOf(
-                Arguments.arguments(Lotto(listOf(1, 2, 3, 4, 5, 6)), LottoRank.FIRST),
-                Arguments.arguments(Lotto(listOf(1, 2, 3, 4, 8, 6)), LottoRank.SECOND),
-                Arguments.arguments(Lotto(listOf(1, 2, 3, 7, 5, 6)), LottoRank.THIRD),
-                Arguments.arguments(Lotto(listOf(1, 2, 3, 4, 8, 12)), LottoRank.FOURTH),
-                Arguments.arguments(Lotto(listOf(1, 2, 3, 22, 8, 18)), LottoRank.FIFTH),
-                Arguments.arguments(Lotto(listOf(7, 8, 9, 10, 11, 12)), LottoRank.MISS),
+                Arguments.arguments(listOf(1, 2, 3, 4, 5, 6), LottoRank.FIRST),
+                Arguments.arguments(listOf(1, 2, 3, 4, 8, 6), LottoRank.SECOND),
+                Arguments.arguments(listOf(1, 2, 3, 7, 5, 6), LottoRank.THIRD),
+                Arguments.arguments(listOf(1, 2, 3, 4, 8, 12), LottoRank.FOURTH),
+                Arguments.arguments(listOf(1, 2, 3, 22, 8, 18), LottoRank.FIFTH),
+                Arguments.arguments(listOf(7, 8, 9, 10, 11, 12), LottoRank.MISS),
             )
         }
     }

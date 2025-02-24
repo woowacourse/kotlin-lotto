@@ -1,39 +1,39 @@
 package lotto.controller
 
 import lotto.domain.model.Lotto
+import lotto.domain.model.LottoBundle
+import lotto.domain.model.LottoMachine
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.WinningNumbers
-import lotto.domain.service.LottosGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val lottosGenerator: LottosGenerator = LottosGenerator(),
 ) {
     fun run() {
-        val lottos = purchaseLotto()
+        val lottoBundle = purchaseLotto()
         val winningLotto = Lotto(inputView.readWinningNumbers())
         val bonusNumber = LottoNumber(inputView.readBonusNumber())
         val winningNumbers = WinningNumbers(winningLotto, bonusNumber)
 
-        printWinningResults(lottos, winningNumbers)
+        printWinningResults(lottoBundle, winningNumbers)
     }
 
-    private fun purchaseLotto(): List<Lotto> {
+    private fun purchaseLotto(): LottoBundle {
         val purchasePrice = inputView.readPurchaseAmount()
-        val lottos = lottosGenerator.generate(purchasePrice)
-        outputView.printPurchaseLottoCount(lottos.size)
-        lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
-        return lottos
+        val lottoBundle = LottoMachine().generateLottoBundle(purchasePrice)
+        outputView.printPurchaseLottoCount(lottoBundle.lottos.size)
+        lottoBundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
+        return lottoBundle
     }
 
     private fun printWinningResults(
-        lottos: List<Lotto>,
+        lottoBundle: LottoBundle,
         winningNumbers: WinningNumbers,
     ) {
-        val lottoRanks = winningNumbers.calculateLottoRanks(lottos)
+        val lottoRanks = winningNumbers.calculateLottoRanks(lottoBundle)
         outputView.printWinningResults(lottoRanks)
         outputView.printTotalReturns(lottoRanks.calculateTotalReturn())
     }

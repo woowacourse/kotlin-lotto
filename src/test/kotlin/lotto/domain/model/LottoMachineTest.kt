@@ -1,6 +1,6 @@
-package lotto.domain.service
+package lotto.domain.model
 
-import lotto.domain.model.LottoNumber
+import lotto.domain.service.FixedLottoNumbersGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
-class LottosGeneratorTest {
+class LottoMachineTest {
     @CsvSource(
         "1000, 1",
         "10000, 10",
@@ -19,20 +19,18 @@ class LottosGeneratorTest {
         amount: Int,
         count: Int,
     ) {
-        val lottosGenerator = LottosGenerator()
-        val lottos = lottosGenerator.generate(amount)
+        val lottoBundle = LottoMachine().generateLottoBundle(amount)
 
-        assertThat(lottos.size).isEqualTo(count)
+        assertThat(lottoBundle.lottos.size).isEqualTo(count)
     }
 
     @Test
-    fun `로또 번호는 정렬되어야 한다`() {
+    fun `생성된 로또 번호는 정렬되어야 한다`() {
         val numbers = listOf(2, 1, 5, 4, 6, 3)
         val actual = listOf(1, 2, 3, 4, 5, 6)
 
         val numberGenerator = FixedLottoNumbersGenerator(numbers)
-        val lottosGenerator = LottosGenerator(numberGenerator)
-        val lotto = lottosGenerator.generate(1000).first()
+        val lotto = LottoMachine(generator = numberGenerator).generateLottoBundle(1000).lottos.first()
 
         assertThat(lotto.numbers.map { it.number }).isEqualTo(actual)
     }
@@ -41,13 +39,7 @@ class LottosGeneratorTest {
     @ParameterizedTest
     fun `구매 금액이 1000원 미만이라면 예외가 발생한다`(purchaseAmount: Int) {
         assertThrows<IllegalArgumentException> {
-            LottosGenerator().generate(purchaseAmount)
-        }
-    }
-
-    inner class FixedLottoNumbersGenerator(private val numbers: List<Int>) : LottoNumbersGenerator {
-        override fun generate(): Set<LottoNumber> {
-            return numbers.sorted().map { LottoNumber(it) }.toSet()
+            LottoMachine().generateLottoBundle(purchaseAmount)
         }
     }
 }
