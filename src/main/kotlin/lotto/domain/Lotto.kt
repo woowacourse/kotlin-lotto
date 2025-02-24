@@ -9,6 +9,8 @@ class Lotto(
 
     fun containLottoNumber(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
 
+    fun calculateMatchCount(winLotto: WinLotto): Int = numbers.count { lottoNumber: LottoNumber -> lottoNumber.value in winLotto.numbers }
+
     companion object {
         const val PRICE = 1_000
         const val NUMBERS_SIZE = 6
