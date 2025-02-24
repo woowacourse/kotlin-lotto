@@ -2,8 +2,8 @@ package lotto.global
 
 import lotto.domain.LottoNumber
 import lotto.domain.MAX_LOTTO_LENGTH
-import lotto.domain.MAX_RANDOM_NUM
-import lotto.domain.MIN_RANDOM_NUM
+import lotto.domain.MAX_LOTTO_NUMBER
+import lotto.domain.MIN_LOTTO_NUMBER
 import java.lang.IllegalArgumentException
 
 object LottoValidator {
@@ -33,7 +33,7 @@ object LottoValidator {
 
     fun requireValidBonusNum(input: String): String {
         val rawInput = input.toIntOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
-        require(rawInput in MIN_RANDOM_NUM..MAX_RANDOM_NUM) { Message.ERR_NOT_IN_RANGE.msg }
+        require(rawInput in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER) { Message.ERR_NOT_IN_RANGE.msg }
         return input
     }
 }
