@@ -1,7 +1,7 @@
 package lotto.model
 
 class LottoCashier(
-    val amount: Int,
+    private val amount: Int,
 ) {
     init {
         validateAmountMinimumRange()
