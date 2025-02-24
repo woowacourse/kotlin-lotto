@@ -2,10 +2,12 @@ package lotto.model
 
 class LottoCashier(
     private val amount: Int,
+    private val manualQuantity: Int,
 ) {
     init {
         validateAmountMinimumRange()
         validateAmountUnit()
+        validateManualLottoQuantity()
     }
 
     private fun validateAmountMinimumRange() {
@@ -20,7 +22,13 @@ class LottoCashier(
         }
     }
 
-    fun getPurchaseQuantity(): Int = amount / LOTTO_EACH_AMOUNT
+    private fun validateManualLottoQuantity() {
+        require(amount - manualQuantity * LOTTO_EACH_AMOUNT >= 0) {
+            "[ERROR] 낸 금액보다 많은 수동 로또를 살 수 없습니다. 금액: $amount, 수동 로또: ${manualQuantity}개"
+        }
+    }
+
+    fun getPurchaseAutoQuantity(): Int = amount / LOTTO_EACH_AMOUNT - manualQuantity
 
     companion object {
         private const val LOTTO_MIN_AMOUNT = 0

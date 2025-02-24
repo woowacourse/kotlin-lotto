@@ -5,8 +5,19 @@ class OutputView {
         println("구입금액을 입력해 주세요.")
     }
 
-    fun printPurchaseLottoQuantity(quantity: Int) {
-        println("${quantity}개를 구매했습니다.")
+    fun printManualLottoQuantityGuide() {
+        println("수동으로 구매할 로또 수를 입력해 주세요.")
+    }
+
+    fun printManualLottoNumbersGuide() {
+        println("수동으로 구매할 번호를 입력해 주세요.")
+    }
+
+    fun printPurchaseLottoQuantity(
+        manualQuantity: Int,
+        autoQuantity: Int,
+    ) {
+        println("수동으로 ${manualQuantity}장, 자동으로 ${autoQuantity}장을 구매했습니다.")
     }
 
     fun printLottoNumbers(lottoNumbers: List<Int>) {

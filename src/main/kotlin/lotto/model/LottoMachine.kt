@@ -6,11 +6,8 @@ import lotto.model.LottoNumber.Companion.ALL_LOTTO_NUMBERS
 class LottoMachine {
     fun getTotalLottos(
         manualLottos: List<Lotto>,
-        totalQuantity: Int,
-    ): List<Lotto> {
-        val autoQuantity = totalQuantity - manualLottos.size
-        return manualLottos.plus(getAutoLottos(autoQuantity))
-    }
+        autoQuantity: Int,
+    ): List<Lotto> = manualLottos.plus(getAutoLottos(autoQuantity))
 
     private fun getAutoLottos(quantity: Int): List<Lotto> {
         val lottos = List(quantity) { Lotto.from(getLottoNumbers()) }

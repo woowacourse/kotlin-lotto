@@ -19,16 +19,22 @@ class LottoController(
         outputView.printPurchaseAmountGuide()
         val purchaseAmount = inputView.readPurchaseAmount()
 
-        // TODO: 수동 입력 추가
-        val lottos = getPurchaseLottos(emptyList(), purchaseAmount)
+        outputView.printManualLottoQuantityGuide()
+        val manualLottoQuantity = inputView.readManualLottoQuantity()
 
-        outputView.printPurchaseLottoQuantity(lottos.size)
+        outputView.printManualLottoNumbersGuide()
+        val manualLottos = List(manualLottoQuantity) { Lotto.from(inputView.readLottoNumbers()) }
+
+        val autoLottoQuantity = getAutoLottoQuantity(purchaseAmount, manualLottoQuantity)
+        val lottos = getPurchaseLottos(manualLottos, autoLottoQuantity)
+
+        outputView.printPurchaseLottoQuantity(manualLottoQuantity, autoLottoQuantity)
         lottos.forEach { lotto ->
             outputView.printLottoNumbers(lotto.numbers.map { it.number })
         }
 
         outputView.printWinningNumbersGuide()
-        val winningNumbers = inputView.readWinningNumbers()
+        val winningNumbers = inputView.readLottoNumbers()
 
         outputView.printBonusNumberGuide()
         val bonusNumber = inputView.readBonusNumber()
@@ -53,14 +59,25 @@ class LottoController(
         outputView.printProfitRate(profitRate, profitStatus.krDescription)
     }
 
+    private fun getAutoLottoQuantity(
+        purchaseAmount: Int,
+        manualLottoQuantity: Int,
+    ): Int {
+        val lottoCashier = LottoCashier(purchaseAmount, manualLottoQuantity)
+        val autoLottoQuantity = lottoCashier.getPurchaseAutoQuantity()
+        return autoLottoQuantity
+    }
+
     private fun getPurchaseLottos(
         manualLottos: List<Lotto>,
-        purchaseAmount: Int,
+        autoLottoQuantity: Int,
     ): List<Lotto> {
-        val lottoCashier = LottoCashier(purchaseAmount)
         val lottoMachine = LottoMachine()
 
-        return lottoMachine.getTotalLottos(manualLottos, lottoCashier.getPurchaseQuantity())
+        return lottoMachine.getTotalLottos(
+            manualLottos = manualLottos,
+            autoQuantity = autoLottoQuantity,
+        )
     }
 
     private fun getLottosDiscriminateResult(

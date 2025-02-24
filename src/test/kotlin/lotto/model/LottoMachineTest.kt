@@ -19,14 +19,15 @@ class LottoMachineTest {
     }
 
     @Test
-    fun `3장의 수동 로또를 입력하고 총 10장을 요청하면 7장의 로또를 반환한다`() {
+    fun `3장의 수동 로또를 입력하고 7장의 자동 로또를 요청하면 10장의 로또를 반환한다`() {
         // given
         val lottoMachine = LottoMachine()
         val manualLottos = List(3) { Lotto.from(listOf(1, 2, 3, 4, 5, 6)) }
-        val expectedQuantity = 7
+        val autoQuantity = 7
+        val expectedQuantity = 10
 
         // when
-        val actualQuantity = lottoMachine.getTotalLottos(manualLottos, expectedQuantity).size
+        val actualQuantity = lottoMachine.getTotalLottos(manualLottos, autoQuantity).size
 
         // then
         assertEquals(expectedQuantity, actualQuantity)
