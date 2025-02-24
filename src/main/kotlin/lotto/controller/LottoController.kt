@@ -1,9 +1,12 @@
 package lotto.controller
 
+import lotto.controller.ViewMapper.mapToLottoCount
+import lotto.controller.ViewMapper.mapToLottoResultsDescriptions
+import lotto.controller.ViewMapper.mapToOutput
+import lotto.controller.ViewMapper.mapToProfitRate
+import lotto.controller.ViewMapper.mapToRandomLottos
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.domain.LottoResult
-import lotto.domain.ProfitCalculator
 import lotto.domain.WinLotto
 import lotto.view.View
 
@@ -13,7 +16,7 @@ class LottoController {
 
     fun buyLotto() {
         val pay: Int = View.readPay()
-        View.showLottoCount(pay / Lotto.PRICE)
+        View.showLottoCount(mapToLottoCount(pay))
         makeLotto(pay)
         showBoughtLottos()
         readWinningLotto()
@@ -21,63 +24,23 @@ class LottoController {
     }
 
     private fun makeLotto(pay: Int) {
-        val lottos: List<Lotto> = Lotto.buyRandomLottos(pay)
+        val lottos: List<Lotto> = mapToRandomLottos(pay)
         boughtLottos = lottos
     }
 
     private fun showBoughtLottos() {
-        View.showLottos(
-            boughtLottos.map { lotto: Lotto ->
-                lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted()
-            },
-        )
+        View.showLottos(mapToOutput(boughtLottos))
     }
 
     private fun readWinningLotto() {
-        val lottoNumbers: List<Int> = View.readLottoNumbers()
-        val lotto = Lotto(lottoNumbers)
+        val lotto = Lotto(View.readLottoNumbers())
         val bonusNumber = LottoNumber(View.readBonusNumber())
         winLotto = WinLotto(lotto, bonusNumber)
     }
 
     private fun showResult() {
-        val lottoResults: List<LottoResult> =
-            boughtLottos.map { boughtLotto -> LottoResult.from(winLotto, boughtLotto) }
-        val lottoPrizeEntries: List<LottoResult> =
-            LottoResult.entries
-                .filterNot { result: LottoResult -> result.prizeAmount == 0 }
-                .sortedBy { result: LottoResult -> result.prizeAmount }
-        val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoResults, lottoPrizeEntries)
-        val profitRate: Double = ProfitCalculator.calculateProfitRate(lottoResults)
+        val lottoResultsDescriptions: List<String> = mapToLottoResultsDescriptions(boughtLottos, winLotto)
+        val profitRate: Double = mapToProfitRate(boughtLottos, winLotto)
         View.showResult(lottoResultsDescriptions, profitRate)
-    }
-
-    private fun makeLottoResultDescription(
-        lottoResults: List<LottoResult>,
-        lottoPrizeEntry: List<LottoResult>,
-    ): List<String> =
-        lottoPrizeEntry.map { entry: LottoResult ->
-            LOTTO_RESULT_DESCRIPTION_TEMPLATE.format(
-                entry.matchCount,
-                getBonusNumberDescription(entry),
-                entry.prizeAmount,
-                countLottoResult(lottoResults, entry),
-            )
-        }
-
-    private fun getBonusNumberDescription(entry: LottoResult): String =
-        if (entry.bonusMatched == LottoResult.BonusMatched.YES) BONUS_NUMBER_MATCHED else ""
-
-    private fun countLottoResult(
-        userLottoResults: List<LottoResult>,
-        entry: LottoResult,
-    ): Int =
-        userLottoResults.count { lottoResult: LottoResult ->
-            lottoResult == entry
-        }
-
-    companion object {
-        private const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
-        private const val BONUS_NUMBER_MATCHED = ", 보너스 볼 일치"
     }
 }
