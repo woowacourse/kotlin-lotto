@@ -16,9 +16,9 @@ class OutputView {
 
     fun printWinningResults(ranks: LottoResult) {
         println(PRINT_WINNING_RESULT_HEADER)
-        LottoRank.entries.reversed().drop(DROP_MISS_RANK_INDEX).forEach { lottoRank ->
-            printWinningResultFormat(lottoRank, ranks)
-        }
+        LottoRank.entries.sortedBy { it.winningAmount }
+            .filterNot { it == LottoRank.MISS }
+            .forEach { lottoRank -> printWinningResultFormat(lottoRank, ranks) }
     }
 
     private fun printWinningResultFormat(
@@ -48,7 +48,6 @@ class OutputView {
         const val PRINT_TOTAL_RETURNS_FORMAT = "총 수익률은 %s입니다.%s"
         const val RETURN_COMMENT = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
         const val BONUS_COMMENT = ", 보너스 볼 일치"
-        const val DROP_MISS_RANK_INDEX = 1
         const val LOSS_THRESHOLD = 1
     }
 }
