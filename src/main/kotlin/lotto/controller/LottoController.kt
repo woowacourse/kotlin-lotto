@@ -51,7 +51,7 @@ class LottoController(
     }
 
     fun getWinningNumbers(): List<LottoNumber> {
-        val winningNumbers: List<LottoNumber> = inputView.inputWinningNumber().map { LottoNumber(it) }
+        val winningNumbers: List<LottoNumber> = inputView.inputWinningNumber().map { LottoNumber.of(it) }
         Lotto(winningNumbers)
 
         return winningNumbers

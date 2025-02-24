@@ -2,7 +2,7 @@ package lotto.domain
 
 class LottoFactory {
     private fun generateLottoNumbers(): Lotto {
-        val lottoNumbers = (MIN_RANGE..MAX_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }
+        val lottoNumbers = (MIN_RANGE..MAX_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber.of(it) }
         return Lotto(lottoNumbers)
     }
 

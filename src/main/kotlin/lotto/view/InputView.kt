@@ -21,7 +21,7 @@ object InputView {
         val bonusNum = readlnOrNull() ?: ""
 
         validateBonusNumber(bonusNum)
-        return LottoNumber(bonusNum.toInt())
+        return LottoNumber.of(bonusNum.toInt())
     }
 
     fun validateBonusNumber(bonusNum: String) {
