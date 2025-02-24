@@ -23,17 +23,16 @@ enum class LottoResult(
         fun from(
             winLotto: WinLotto,
             boughtLotto: Lotto,
-        ): LottoResult {
-            if (boughtLotto.containLottoNumber(winLotto.bonusNumber)) {
-                return entries
-                    .filterNot { result: LottoResult -> result.bonusMatched == BonusMatched.NO }
-                    .calculateHighestPrize(winLotto, boughtLotto)
-            }
-
-            return entries
-                .filterNot { result: LottoResult -> result.bonusMatched == BonusMatched.YES }
-                .calculateHighestPrize(winLotto, boughtLotto)
-        }
+        ): LottoResult =
+            entries
+                .filterNot { result: LottoResult ->
+                    val bonusMatched: Boolean = boughtLotto.containLottoNumber(winLotto.bonusNumber)
+                    if (bonusMatched) {
+                        result.bonusMatched == BonusMatched.NO
+                    } else {
+                        result.bonusMatched == BonusMatched.YES
+                    }
+                }.calculateHighestPrize(winLotto, boughtLotto)
 
         private fun List<LottoResult>.calculateHighestPrize(
             winLotto: WinLotto,
