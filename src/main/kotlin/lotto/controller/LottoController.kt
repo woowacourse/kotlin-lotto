@@ -1,20 +1,24 @@
 package lotto.controller
 
+import lotto.model.Lotto
+import lotto.model.LottoCashier
+import lotto.model.LottoMachine
+import lotto.model.LottoNumber
+import lotto.model.LottoProfitCalculator
 import lotto.model.ProfitStatus
 import lotto.model.Rank
-import lotto.service.LottoService
+import lotto.model.WinningDiscriminator
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val lottoService: LottoService,
 ) {
     fun run() {
         outputView.printPurchaseAmountGuide()
         val purchaseAmount = inputView.readPurchaseAmount()
-        val lottos = lottoService.getPurchaseLottos(purchaseAmount)
+        val lottos = getPurchaseLottos(purchaseAmount)
 
         outputView.printPurchaseLottoQuantity(lottos.size)
         lottos.forEach { lotto ->
@@ -27,7 +31,7 @@ class LottoController(
         outputView.printBonusNumberGuide()
         val bonusNumber = inputView.readBonusNumber()
 
-        val lottoWinningResult = lottoService.getLottosDiscriminateResult(lottos, winningNumbers, bonusNumber)
+        val lottoWinningResult = getLottosDiscriminateResult(lottos, winningNumbers, bonusNumber)
 
         outputView.printWinningResultTitle()
         lottoWinningResult.forEach { (rank, count) ->
@@ -41,9 +45,33 @@ class LottoController(
             )
         }
 
-        val profitRate = lottoService.getProfitRate(lottoWinningResult, purchaseAmount)
+        val profitRate = getProfitRate(lottoWinningResult, purchaseAmount)
         val profitStatus = ProfitStatus.from(profitRate)
 
         outputView.printProfitRate(profitRate, profitStatus.krDescription)
     }
+
+    private fun getPurchaseLottos(purchaseAmount: Int): List<Lotto> {
+        val lottoCashier = LottoCashier(purchaseAmount)
+        val lottoMachine = LottoMachine()
+
+        return lottoMachine.getLottos(lottoCashier.getPurchaseQuantity())
+    }
+
+    private fun getLottosDiscriminateResult(
+        lottos: List<Lotto>,
+        winningNumbers: List<Int>,
+        bonusNumber: Int,
+    ): Map<Rank, Int> {
+        val winningLotto = Lotto.from(winningNumbers)
+        val bonusLottoNumber = LottoNumber.from(bonusNumber)
+        val winningDiscriminator = WinningDiscriminator(winningLotto, bonusLottoNumber)
+
+        return winningDiscriminator.getResult(lottos)
+    }
+
+    private fun getProfitRate(
+        lottoWinningResult: Map<Rank, Int>,
+        purchaseAmount: Int,
+    ): Float = LottoProfitCalculator().getProfitRate(lottoWinningResult, purchaseAmount)
 }
