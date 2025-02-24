@@ -16,6 +16,6 @@ data class Amount(
 
     companion object {
         const val MONEY_UNDER_ZERO = "[ERROR] 금액은 양수이어야 합니다."
-        const val MONEY_SPILT_ERROR = "[ERROR] 해당 금액에 맞게 나눌 수 없습니다"
+        const val MONEY_SPILT_ERROR = "[ERROR] 로또 금액에 맞게 나눌 수 없습니다"
     }
 }
