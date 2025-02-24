@@ -23,7 +23,7 @@ class LottoServiceTest {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7
-        val result = lottoService.checkRank(lotto, winningLotto, bonus)
+        val result = lottoService.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FIRST)
     }
 
@@ -33,7 +33,7 @@ class LottoServiceTest {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 8))
         val bonus = 7
-        val result = lottoService.checkRank(lotto, winningLotto, bonus)
+        val result = lottoService.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.THIRD)
     }
 
@@ -43,7 +43,7 @@ class LottoServiceTest {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7))
         val bonus = 7
-        val result = lottoService.checkRank(lotto, winningLotto, bonus)
+        val result = lottoService.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.SECOND)
     }
 
@@ -53,7 +53,7 @@ class LottoServiceTest {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7))
         val bonus = 5
-        val result = lottoService.checkRank(lotto, winningLotto, bonus)
+        val result = lottoService.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.THIRD)
     }
 
@@ -63,7 +63,7 @@ class LottoServiceTest {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 8, 9))
         val bonus = 7
-        val result = lottoService.checkRank(lotto, winningLotto, bonus)
+        val result = lottoService.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FOURTH)
     }
 
@@ -73,7 +73,7 @@ class LottoServiceTest {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val winningLotto = Lotto(listOf(1, 2, 3, 10, 8, 9))
         val bonus = 7
-        val result = lottoService.checkRank(lotto, winningLotto, bonus)
+        val result = lottoService.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.FIFTH)
     }
 
@@ -83,7 +83,7 @@ class LottoServiceTest {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
         val bonus = 7
-        val result = lottoService.checkRank(lotto, winningLotto, bonus)
+        val result = lottoService.getLottoRank(lotto, winningLotto, bonus)
         assertThat(result).isEqualTo(Rank.MISS)
     }
 
@@ -98,7 +98,7 @@ class LottoServiceTest {
             )
         val winningLotto = Lotto(listOf(1, 2, 11, 10, 8, 9))
         val bonus = 7
-        val result = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
+        val result = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
         assertThat(result.map[Rank.MISS]).isEqualTo(3)
     }
 
@@ -112,7 +112,7 @@ class LottoServiceTest {
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7
-        val rankMap = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
+        val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
         val result = LottoService.getRate(rankMap)
         assertThat(result).isEqualTo("25.00")
     }
@@ -128,7 +128,7 @@ class LottoServiceTest {
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7
-        val rankMap = lottoService.checkRankMany(manyLotto, winningLotto, bonus)
+        val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonus)
         val result = LottoService.getRate(rankMap)
         assertThat(result).isEqualTo("3.33")
     }

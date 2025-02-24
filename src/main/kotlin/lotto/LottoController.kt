@@ -12,7 +12,7 @@ class LottoController(
         val winningLotto = lottoView.getWinningLotto()
         val bonusNum = lottoView.getBonusNum()
 
-        val rankMap = lottoService.checkRankMany(manyLotto, winningLotto, bonusNum)
+        val rankMap = lottoService.getLottoRankMany(manyLotto, winningLotto, bonusNum)
         lottoView.printResult(rankMap)
     }
 }

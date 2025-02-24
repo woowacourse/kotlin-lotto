@@ -140,7 +140,7 @@ class LottoViewTest {
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7
-        val rankMap = LottoService().checkRankMany(manyLotto, winningLotto, bonus)
+        val rankMap = LottoService().getLottoRankMany(manyLotto, winningLotto, bonus)
         lottoView.printResult(rankMap)
         assertThat(output.toString()).contains(
             """

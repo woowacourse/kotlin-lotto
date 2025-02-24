@@ -24,7 +24,7 @@ class LottoService {
         return manyLotto.toList()
     }
 
-    fun checkRank(
+    fun getLottoRank(
         lotto: Lotto,
         winningLotto: Lotto,
         bonus: Int,
@@ -34,14 +34,14 @@ class LottoService {
         return Rank.getRank(countOfMatch, isBonusMatched)
     }
 
-    fun checkRankMany(
+    fun getLottoRankMany(
         manyLotto: List<Lotto>,
         winningLotto: Lotto,
         bonus: Int,
     ): ScoreRankMap {
         val rankMap = Rank.entries.associateWith { 0 }.toMutableMap()
         for (lotto in manyLotto) {
-            val rank = checkRank(lotto, winningLotto, bonus)
+            val rank = getLottoRank(lotto, winningLotto, bonus)
             rankMap[rank] = rankMap.getOrDefault(rank, 0) + 1
         }
         return ScoreRankMap(rankMap.toMap())
