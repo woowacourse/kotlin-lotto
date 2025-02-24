@@ -43,7 +43,7 @@ class OutputView {
     fun printLottoStatistics(lottoStatistics: Map<Rank, Int>) {
         println()
         println(LOTTO_STATISTICS_TITLE)
-        Rank.entries.reversed().drop(EXCLUDE_MISS_LANK).forEach { rank ->
+        Rank.entries.reversed().filter { rank -> rank != Rank.MISS }.forEach { rank ->
             printRankStatistics(rank, lottoStatistics)
         }
     }
@@ -103,7 +103,6 @@ class OutputView {
         private const val ERROR_FORMAT = "[ERROR] %s"
         private const val DEFAULT_ERROR_MESSAGE = "알 수 없는 에러가 발생했습니다."
         private const val LOTTO_STATISTICS_TITLE = "당첨 통계\n---------"
-        private const val EXCLUDE_MISS_LANK = 1
         private const val INITIAL_LOTTO_RANK_COUNT = 0
         private const val DEFAULT_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치 (%d원)- %d개"
         private const val SECOND_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
