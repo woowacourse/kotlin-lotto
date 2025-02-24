@@ -31,7 +31,7 @@ class OutputView {
                 lottoRank.matchCount,
                 bonusComment,
                 lottoRank.winningAmount,
-                ranks.lottoRanks.count { it.name == lottoRank.name },
+                ranks.lottoRanks.getOrDefault(lottoRank, DEFAULT_RESULT_VALUE),
             ),
         )
     }
@@ -49,5 +49,6 @@ class OutputView {
         const val RETURN_COMMENT = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
         const val BONUS_COMMENT = ", 보너스 볼 일치"
         const val LOSS_THRESHOLD = 1
+        const val DEFAULT_RESULT_VALUE = 0
     }
 }
