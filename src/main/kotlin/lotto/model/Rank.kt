@@ -27,6 +27,6 @@ enum class Rank(
             } ?: MISS
         }
 
-        private fun isMiss(countOfMatch: Int): Boolean = countOfMatch <= 2
+        private fun isMiss(countOfMatch: Int): Boolean = countOfMatch < FIFTH.countOfMatch
     }
 }

@@ -7,10 +7,12 @@ enum class ProfitStatus {
     ;
 
     companion object {
+        private const val DEFAULT_PROFIT_CRITERIA = 1f
+
         fun from(profitRate: Float): ProfitStatus =
             when {
-                profitRate > 1f -> PROFIT
-                profitRate < 1f -> LOSS
+                profitRate > DEFAULT_PROFIT_CRITERIA -> PROFIT
+                profitRate < DEFAULT_PROFIT_CRITERIA -> LOSS
                 else -> BREAK_EVEN
             }
     }

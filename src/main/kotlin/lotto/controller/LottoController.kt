@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.model.Lotto
 import lotto.model.LottoCashier
 import lotto.model.LottoMachine
+import lotto.model.LottoMachine.Companion.EMPTY_LOTTO_QUANTITY
 import lotto.model.LottoNumber
 import lotto.model.LottoProfitCalculator
 import lotto.model.ProfitStatus
@@ -22,7 +23,7 @@ class LottoController(
         outputView.printManualLottoQuantityGuide()
         val manualLottoQuantity = inputView.readManualLottoQuantity()
 
-        if (manualLottoQuantity > 0) outputView.printManualLottoNumbersGuide()
+        if (manualLottoQuantity > EMPTY_LOTTO_QUANTITY) outputView.printManualLottoNumbersGuide()
         val manualLottos = List(manualLottoQuantity) { Lotto.from(inputView.readLottoNumbers()) }
 
         val autoLottoQuantity = getAutoLottoQuantity(purchaseAmount, manualLottoQuantity)

@@ -16,4 +16,8 @@ class LottoMachine {
             .shuffled()
             .take(LOTTO_NUMBER_SIZE)
             .sorted()
+
+    companion object {
+        const val EMPTY_LOTTO_QUANTITY = 0
+    }
 }
