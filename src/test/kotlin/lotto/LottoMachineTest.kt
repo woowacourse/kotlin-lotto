@@ -1,18 +1,18 @@
 package lotto
 
 import lotto.model.LottoMachine
-import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class LottoMachineTest {
     private val lottoMachine = LottoMachine()
 
     @Test
-    fun `발행해야 할 로또 개수 만큼 로또를 발행한다`() {
-        val lottoCount = 5
+    fun `중복되지 않는 6개의 숫자를 가진 로또를 발행한다`() {
+        val lotto = lottoMachine.createLotto()
 
-        val lottos = lottoMachine.createLottos(5)
+        val actual = lotto.numbers.toSet().size
 
-        assertThat(lottoCount).isEqualTo(lottos.size)
+        assertEquals(6, actual)
     }
 }
