@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.model.Lotto
+import lotto.model.LottoNumber
 import lotto.model.LottoTicketCounter
 import lotto.model.Profit
 import lotto.model.WinningLotto
@@ -26,5 +27,5 @@ class LottoController {
 
     private fun getWinningLotto(): Lotto = Lotto(inputView.inputWinningNumbers())
 
-    private fun getBonusNumber(): Int = inputView.inputBonusNumber()
+    private fun getBonusNumber(): LottoNumber = LottoNumber(inputView.inputBonusNumber())
 }
