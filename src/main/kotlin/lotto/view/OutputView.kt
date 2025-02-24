@@ -16,7 +16,7 @@ class OutputView {
     fun printLottoBundle(input: Int): List<Lotto> {
         val lottoBundle = LottoStore().getTickets(input, RandomLottoGenerator())
         lottoBundle.forEach { lotto ->
-            println(lotto.numbers)
+            println(lotto.numbers.map { it.number })
         }
         return lottoBundle
     }
