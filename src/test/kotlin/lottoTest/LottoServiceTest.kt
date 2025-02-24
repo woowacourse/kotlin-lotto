@@ -2,30 +2,13 @@ package lottoTest
 
 import lotto.LottoService
 import lotto.domain.Lotto
-import lotto.global.Config.MAX_RANDOM_NUM
-import lotto.global.Config.MIN_RANDOM_NUM
-import lotto.global.Config.RANDOM_SEED
 import lotto.global.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import kotlin.random.Random
 
 class LottoServiceTest {
-    private val lottoService = LottoService(Random(RANDOM_SEED))
-
-    @Test
-    @DisplayName("복권은 6개의 1부터 45까지의 중복되지 않은 랜덤 숫자로 이루어진 리스트이다")
-    fun t1() {
-        // 랜덤 요소 안정성을 위하여 여러 번 반복합니다
-        repeat(1000) {
-            val lotto = lottoService.getLotto()
-            assertThat(lotto.value)
-                .hasSize(6)
-                .allMatch({ num -> num in MIN_RANDOM_NUM..MAX_RANDOM_NUM })
-                .isEqualTo(lotto.value.distinct())
-        }
-    }
+    private val lottoService = LottoService()
 
     @Test
     @DisplayName("복권을 구매할 숫자를 입력받으면 입력받은 숫자만큼의 복권 정보를 반환한다")

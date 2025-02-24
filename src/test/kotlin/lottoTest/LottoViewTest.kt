@@ -11,7 +11,6 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.PrintStream
-import kotlin.random.Random
 
 class LottoViewTest {
     private fun setInput(input: String) {
@@ -141,7 +140,7 @@ class LottoViewTest {
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonus = 7
-        val rankMap = LottoService(Random(1)).checkRankMany(manyLotto, winningLotto, bonus)
+        val rankMap = LottoService().checkRankMany(manyLotto, winningLotto, bonus)
         lottoView.printResult(rankMap)
         assertThat(output.toString()).contains(
             """
