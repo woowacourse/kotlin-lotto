@@ -3,6 +3,7 @@ package controller
 import domain.model.Lotto
 import domain.model.LottoNumber
 import domain.model.LottoResult
+import domain.model.ManualLottoAmount
 import domain.model.PurchasePrice
 import domain.model.PurchasePrice.Companion.toAmount
 import domain.model.WinningLotto
@@ -20,6 +21,7 @@ class LottoController(
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
+        val manualLottoAmount: ManualLottoAmount = getManualLottoAmount(purchasePrice)
         val purchaseLottos: List<Lotto> = purchaseLotto(purchasePrice)
         displayLottoTicket(purchaseLottos)
 
@@ -36,6 +38,16 @@ class LottoController(
                 val input = inputView.readPurchasePrice()
                 NumericValidator(input)
                 PurchasePrice(input.toInt())
+            },
+            onError = { outputView.printErrorMessage(it) },
+        )
+
+    private fun getManualLottoAmount(purchasePrice: PurchasePrice): ManualLottoAmount =
+        retryWhenException(
+            action = {
+                val input = inputView.readManualLottoAmount()
+                NumericValidator(input)
+                ManualLottoAmount(input.toInt(), purchasePrice.toAmount())
             },
             onError = { outputView.printErrorMessage(it) },
         )
