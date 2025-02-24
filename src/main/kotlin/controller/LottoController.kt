@@ -22,12 +22,12 @@ class LottoController(
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
         val manualLottoAmount: ManualLottoAmount = getManualLottoAmount(purchasePrice)
-        val purchaseLottos: List<Lotto> = purchaseLotto(purchasePrice)
-        displayLottoTicket(purchaseLottos)
+        val autoLotto: List<Lotto> = purchaseAutoLotto(purchasePrice.toAmount(), manualLottoAmount)
+        displayLottoTicket(autoLotto)
 
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
-        val lottoResult: LottoResult = LottoMatchCalculator().calculate(purchaseLottos, winningLotto)
+        val lottoResult: LottoResult = LottoMatchCalculator().calculate(autoLotto, winningLotto)
         val profitRate = lottoResult.getProfitRate(purchasePrice)
         displayResult(lottoResult, profitRate)
     }
@@ -52,7 +52,13 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun purchaseLotto(money: PurchasePrice): List<Lotto> = List(money.toAmount()) { lottoGenerator.makeLotto() }
+    private fun purchaseAutoLotto(
+        totalAmount: Int,
+        manualLottoAmount: ManualLottoAmount,
+    ): List<Lotto> =
+        List(totalAmount - manualLottoAmount.value) {
+            lottoGenerator.makeLotto()
+        }
 
     private fun displayLottoTicket(lottos: List<Lotto>) {
         outputView.printPurchasedLottoCount(lottos.size)
