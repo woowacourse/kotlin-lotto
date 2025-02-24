@@ -1,6 +1,6 @@
 package lotto.domain
 
-class WinningLotto(
+class WinLotto(
     lotto: Lotto,
     val bonusNumber: LottoNumber,
 ) {
