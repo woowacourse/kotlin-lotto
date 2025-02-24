@@ -14,7 +14,7 @@ class LottoController {
     private lateinit var winLotto: WinLotto
     private lateinit var boughtLottos: List<Lotto>
 
-    fun buyLotto() {
+    fun start() {
         val pay: Int = View.readPay()
         View.showLottoCount(mapToLottoCount(pay))
         makeLotto(pay)

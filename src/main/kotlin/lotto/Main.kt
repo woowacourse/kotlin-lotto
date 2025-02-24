@@ -11,6 +11,6 @@ class LottoApplication {
     val controller = LottoController()
 
     fun run() {
-        controller.buyLotto()
+        controller.start()
     }
 }
