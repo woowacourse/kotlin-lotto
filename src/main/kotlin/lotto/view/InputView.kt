@@ -54,6 +54,6 @@ class InputView {
         private const val MESSAGE_INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
         private const val MESSAGE_INPUT_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요."
         private const val MESSAGE_INPUT_MANUAL_LOTTO_NUMBER = "수동으로 구매할 번호를 입력해 주세요."
-        private const val ERROR_NOT_NUMBER = "[ERROR] 양수만 입력 가능합니다."
+        private const val ERROR_NOT_NUMBER = "[ERROR] 숫자만 입력 가능합니다."
     }
 }
