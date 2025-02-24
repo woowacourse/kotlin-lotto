@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 
 object View {
@@ -13,7 +14,7 @@ object View {
         OutputView.showLottoCount(lottoCount)
     }
 
-    fun showLottos(numbers: List<List<Int>>) {
+    fun showLottos(numbers: List<Set<LottoNumber>>) {
         OutputView.showLottos(numbers)
     }
 

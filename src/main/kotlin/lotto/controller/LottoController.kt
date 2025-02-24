@@ -17,25 +17,16 @@ class LottoController {
 
     private fun buyLottos(): Lottos {
         val price: Int = View.readPrice()
-        val lottoCount: Int = price / Lotto.PRICE
-        val lottoNumbers: List<List<Int>> = List(lottoCount) { makeRandomNumbers() }
-        val lottos: Lottos = convertLottos(lottoCount, lottoNumbers)
+        val quantity: Int = price / Lotto.PRICE
+        val lottoNumbers: List<Set<LottoNumber>> = List(quantity) { makeLottoNumbers() }
+        val lottos = Lottos(List(quantity) { Lotto(makeLottoNumbers()) })
         View.showLottoCount(lottos.value.size)
-        View.showLottos(lottoNumbers.map { lottoNumber: List<Int> -> lottoNumber.sorted() })
+        View.showLottos(lottoNumbers.map { lottoNumber: Set<LottoNumber> -> lottoNumber })
         return lottos
     }
 
-    private fun convertLottos(
-        lottoCount: Int,
-        lottoNumbers: List<List<Int>>,
-    ): Lottos =
-        Lottos.buy(
-            count = lottoCount,
-            lottos =
-                lottoNumbers.map { lottoNumber: List<Int> ->
-                    Lotto(lottoNumber.map { number: Int -> LottoNumber(number) }.toSet())
-                }.toList(),
-        )
+    private fun makeLottoNumbers(): Set<LottoNumber> =
+        LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map { number: Int -> LottoNumber(number) }.toSet()
 
     private fun readWinningLotto(): WinningLotto {
         val lottoNumbers: List<Int> = View.readLottoNumbers()
@@ -60,6 +51,4 @@ class LottoController {
         }
         return resultTally.toMap()
     }
-
-    private fun makeRandomNumbers(): List<Int> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE)
 }
