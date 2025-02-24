@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class WinningLottoTest {
     private lateinit var winningNumber: Lotto
@@ -23,8 +24,10 @@ class WinningLottoTest {
         val bonusNumber = LottoNumber(7)
         val winningLotto = WinningLotto(winningNumber, bonusNumber)
 
-        assertThat(winningLotto.winningNumbers).isEqualTo(winningNumber)
-        assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber(7))
+        assertAll(
+            { assertThat(winningLotto.winningNumbers).isEqualTo(winningNumber) },
+            { assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber(7)) },
+        )
     }
 
     @Test
