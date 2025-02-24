@@ -39,5 +39,7 @@ class Lotto(
         const val LOTTO_NUMBERS_COUNT = 6
         private const val RIGHT_NUMBER_COUNT = 1
         private const val DUPLICATED_NUMBER_DELIMITER = ", "
+
+        fun create(lottoNumbers: List<LottoNumber>): Lotto = Lotto(lottoNumbers)
     }
 }
