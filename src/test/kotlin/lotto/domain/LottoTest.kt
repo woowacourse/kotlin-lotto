@@ -24,11 +24,8 @@ class LottoTest {
     fun `구입금액만큼 로또를 생성한다`() {
         val wantLottoCount = 5
         val wantedNumbers = List(wantLottoCount) { setOf(1, 2, 3, 4, 5, 6) }
-        val lottos: List<Lotto> =
-            Lotto.buyLottos(
-                wantLottoCount,
-                wantedNumbers,
-            )
+        val wantPay = wantLottoCount * Lotto.PRICE
+        val lottos: List<Lotto> = Lotto.buyLottos(wantPay, wantedNumbers)
         assertThat(lottos.size).isEqualTo(wantLottoCount)
     }
 }
