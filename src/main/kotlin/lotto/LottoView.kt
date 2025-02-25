@@ -5,15 +5,13 @@ import lotto.domain.Lotto
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
 import lotto.global.LottoUtil
-import lotto.global.LottoValidator.requireLottoAmount
-import lotto.global.LottoValidator.requireValidBonusNum
-import lotto.global.LottoValidator.requireValidLotto
+import lotto.global.LottoValidator
 import lotto.global.Message
 
 class LottoView {
     fun getLottoAmount(): Int {
         println(Message.ASK_AMOUNT.msg)
-        val userInput = requireLottoAmount(readln()).toInt() / LOTTO_PRICE
+        val userInput = LottoValidator.requireLottoAmount(readln()).toInt() / LOTTO_PRICE
         println("${userInput}개를 구매했습니다.")
         return userInput
     }
@@ -24,12 +22,12 @@ class LottoView {
 
     fun getWinningLotto(): List<Int> {
         println(Message.ASK_WINNING_LOTTO.msg)
-        return requireValidLotto(readln()).split(",").map { it.toInt() }
+        return LottoValidator.requireValidLotto(readln()).split(",").map { it.toInt() }
     }
 
     fun getBonusNum(): Int {
         println(Message.ASK_BONUS_BALL.msg)
-        return requireValidBonusNum(readln()).toInt()
+        return LottoValidator.requireValidBonusNum(readln()).toInt()
     }
 
     fun printResult(scoreRankMap: ScoreRankMap) {
