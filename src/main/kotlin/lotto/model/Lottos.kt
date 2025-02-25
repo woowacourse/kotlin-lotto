@@ -4,8 +4,8 @@ class Lottos(
     private val lottos: List<Lotto>,
 ) {
     fun countLottoByRank(
-        winningNumbers: Set<Int>,
-        bonusNumber: Int,
+        winningNumbers: Set<LottoNumber>,
+        bonusNumber: LottoNumber,
     ): Map<Rank, Int> {
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
 
