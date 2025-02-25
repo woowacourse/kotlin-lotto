@@ -10,6 +10,12 @@ object View {
         return price
     }
 
+    fun readManualQuantity(): Int {
+        OutputView.requestManualQuantity()
+        val manualQuantity: Int = InputView.readManualQuantity()
+        return manualQuantity
+    }
+
     fun showLottoCount(lottoCount: Int) {
         OutputView.showLottoCount(lottoCount)
     }
