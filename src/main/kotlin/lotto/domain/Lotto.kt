@@ -1,15 +1,17 @@
 package lotto.domain
 
 class Lotto(
-    val numbers: Set<LottoNumber>,
+    private val _numbers: Set<LottoNumber>,
 ) {
+    val numbers: List<Int> = _numbers.map { number: LottoNumber -> number.value }
+
     init {
-        require(numbers.size == NUMBERS_SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_DIFFERENT_NUMBERS }
+        require(_numbers.size == NUMBERS_SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_DIFFERENT_NUMBERS }
     }
 
-    fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
+    fun contains(lottoNumber: LottoNumber): Boolean = _numbers.contains(lottoNumber)
 
-    fun countMatch(winLotto: WinLotto): Int = numbers.count { lottoNumber: LottoNumber -> winLotto.hasNumber(lottoNumber) }
+    fun countMatch(winLotto: WinLotto): Int = _numbers.count { lottoNumber: LottoNumber -> winLotto.hasNumber(lottoNumber) }
 
     companion object {
         const val PRICE = 1_000

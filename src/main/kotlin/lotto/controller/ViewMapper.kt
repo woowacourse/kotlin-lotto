@@ -1,7 +1,6 @@
 package lotto.controller
 
 import lotto.domain.Lotto
-import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.ProfitCalculator
 import lotto.domain.WinLotto
@@ -16,7 +15,7 @@ object ViewMapper {
 
     fun mapToOutput(boughtLottos: List<Lotto>): List<List<Int>> =
         boughtLottos.map { lotto: Lotto ->
-            lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted()
+            lotto.numbers.sorted()
         }
 
     fun mapToLottoResultsDescriptions(
