@@ -20,6 +20,7 @@ class LottoController(
     private val outputView: OutputView,
     private val autoLottoGenerator: AutoLottoGenerator,
     private val manualLottoGenerator: ManualLottoGenerator,
+    private val lottoMatchCalculator: LottoMatchCalculator,
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
@@ -30,7 +31,7 @@ class LottoController(
 
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
-        val lottoResult: LottoResult = LottoMatchCalculator().calculate(manualLotto + autoLotto, winningLotto)
+        val lottoResult: LottoResult = lottoMatchCalculator.calculate(manualLotto + autoLotto, winningLotto)
         val profitRate = lottoResult.getProfitRate(purchasePrice)
         displayResult(lottoResult, profitRate)
     }
