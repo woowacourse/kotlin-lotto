@@ -1,11 +1,7 @@
 package lotto.model
 
 class LottoTicketCounter(purchase: String) {
-    private val ticketCount: Int = purchase.toInt() / PURCHASE_STANDARD
-
-    fun count(): Int {
-        return ticketCount
-    }
+    val ticketCount: Int = purchase.toInt() / PURCHASE_STANDARD
 
     init {
         require(purchase.isNotBlank()) { "구입 금액은 공백일 수 없습니다." }

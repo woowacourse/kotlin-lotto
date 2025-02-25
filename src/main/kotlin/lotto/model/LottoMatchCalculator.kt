@@ -21,7 +21,3 @@ class LottoMatchCalculator {
         return Rank.valueOf(matchResult.matchCount, matchResult.isBonusMatch)
     }
 }
-
-// return lottoBundle.groupingBy { lotto ->
-//    determineRank(lotto, winningLotto)
-// }.eachCount().withDefault { 0 }
