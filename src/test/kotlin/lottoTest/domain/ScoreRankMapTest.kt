@@ -2,7 +2,8 @@ package lottoTest.domain
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.domain.service.LottoRankFinder
+import lotto.domain.WinningLottoTicket
+import lotto.service.LottoRankFinder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -19,8 +20,8 @@ class ScoreRankMapTest {
                 Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber.of(it) }),
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
-        val bonus = 7
-        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, winningLotto, bonus)
+        val bonus = LottoNumber.of(7)
+        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
         val result = rankMap.getRate()
         assertThat(result).isEqualTo("25.00")
     }
@@ -35,8 +36,8 @@ class ScoreRankMapTest {
                 Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
-        val bonus = 7
-        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, winningLotto, bonus)
+        val bonus = LottoNumber.of(7)
+        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
         val result = rankMap.getRate()
         assertThat(result).isEqualTo("3.33")
     }
@@ -51,8 +52,8 @@ class ScoreRankMapTest {
                 Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
-        val bonus = 7
-        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, winningLotto, bonus)
+        val bonus = LottoNumber.of(7)
+        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
         assertThat(rankMap.getEarned()).isEqualTo(10000)
     }
 
@@ -66,8 +67,8 @@ class ScoreRankMapTest {
                 Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
-        val bonus = 7
-        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, winningLotto, bonus)
+        val bonus = LottoNumber.of(7)
+        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
         assertThat(rankMap.getPaid()).isEqualTo(3000)
     }
 }

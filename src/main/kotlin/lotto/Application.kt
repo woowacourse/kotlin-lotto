@@ -1,7 +1,7 @@
 package lotto
 
-import lotto.domain.service.LottoGenerator
-import lotto.domain.service.LottoRankFinder
+import lotto.service.LottoGenerator
+import lotto.service.LottoRankFinder
 import lotto.view.LottoView
 
 fun main() {

@@ -1,7 +1,7 @@
 package lottoTest
 
 import lotto.domain.Lotto
-import lotto.domain.service.LottoGenerator
+import lotto.service.LottoGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

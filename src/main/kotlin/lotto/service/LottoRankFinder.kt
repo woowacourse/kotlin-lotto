@@ -1,18 +1,18 @@
-package lotto.domain.service
+package lotto.service
 
 import lotto.domain.Lotto
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
+import lotto.domain.WinningLottoTicket
 
 class LottoRankFinder {
     fun findLottoRanks(
         manyLotto: List<Lotto>,
-        winningLotto: Lotto,
-        bonus: Int,
+        winningLottoTicket: WinningLottoTicket,
     ): ScoreRankMap {
         val rankMap = Rank.entries.associateWith { 0 }.toMutableMap()
         for (lotto in manyLotto) {
-            val rank = findLottoRank(lotto, winningLotto, bonus)
+            val rank = findLottoRank(lotto, winningLottoTicket)
             rankMap[rank] = rankMap.getOrDefault(rank, 0) + 1
         }
         return ScoreRankMap(rankMap.toMap())
@@ -20,11 +20,10 @@ class LottoRankFinder {
 
     fun findLottoRank(
         lotto: Lotto,
-        winningLotto: Lotto,
-        bonus: Int,
+        winningLottoTicket: WinningLottoTicket,
     ): Rank {
-        val countOfMatch = winningLotto.getCountOfMatchWith(lotto)
-        val isBonusMatched = winningLotto.contains(bonus) && !lotto.contains(bonus)
+        val countOfMatch = winningLottoTicket.getCountOfMatchWith(lotto)
+        val isBonusMatched = winningLottoTicket.isMatchedBonusWith(lotto)
         return Rank.getRank(countOfMatch, isBonusMatched)
     }
 }

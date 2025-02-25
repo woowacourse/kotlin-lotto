@@ -2,7 +2,8 @@ package lottoTest
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.domain.service.LottoRankFinder
+import lotto.domain.WinningLottoTicket
+import lotto.service.LottoRankFinder
 import lotto.view.LottoView
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -140,8 +141,8 @@ class LottoViewTest {
                 Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber.of(it) }),
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
-        val bonus = 7
-        val rankMap = LottoRankFinder().findLottoRanks(manyLotto, winningLotto, bonus)
+        val bonus = LottoNumber.of(7)
+        val rankMap = LottoRankFinder().findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
         lottoView.printResult(rankMap)
         assertThat(output.toString()).contains(
             """
