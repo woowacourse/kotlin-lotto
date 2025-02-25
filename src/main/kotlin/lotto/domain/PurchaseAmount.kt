@@ -1,6 +1,6 @@
 package lotto.domain
 
-class Purchase(
+class PurchaseAmount(
     val amountOfPurchase: String,
 ) {
     init {
