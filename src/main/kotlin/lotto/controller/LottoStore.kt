@@ -23,7 +23,7 @@ class LottoStore(
         outputView.printLotto(manualLottoTickets)
         outputView.printLotto(autoLottoTickets)
         val winningLotto = inputWinningLotto()
-        val result = calculateResult(autoLottoTickets, winningLotto)
+        val result = calculateResult(manualLottoTickets, autoLottoTickets, winningLotto)
         val formattedWinningStatus = formattingWinningStatus(result)
         outputView.printResult(formattedWinningStatus)
         outputView.printProfit(result.calculateProfit())
@@ -49,10 +49,11 @@ class LottoStore(
     }
 
     private fun calculateResult(
-        lottoTickets: List<LottoTicket>,
+        manualLottoTickets: List<LottoTicket>,
+        autoLottoTickets: List<LottoTicket>,
         winningLotto: WinningLotto,
     ): LottoResult {
-        val result = winningLotto.getResult(lottoTickets)
+        val result = winningLotto.getResult(manualLottoTickets, autoLottoTickets)
         return result
     }
 
