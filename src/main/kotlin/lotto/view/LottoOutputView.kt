@@ -4,7 +4,6 @@ import lotto.model.Lotto
 import lotto.model.LottoStore
 import lotto.model.RandomLottoGenerator
 import lotto.model.Rank
-import lotto.model.WinningStatistics
 import java.lang.String.format
 
 class LottoOutputView {
@@ -22,9 +21,9 @@ class LottoOutputView {
 
     private fun isBonusMatch(rank: Rank) = if (rank == Rank.SECOND) OUTPUT_STATISTICS_BONUS_NUMBER_MESSAGE else " "
 
-    fun printStatistics(winningStatistics: WinningStatistics) {
+    fun printStatistics(winningStatistics: Map<Rank, Int>) {
         println(OUTPUT_STATISTIC_GUIDE_MESSAGE)
-        winningStatistics.getAllStatistics().forEach { (rank, count) ->
+        winningStatistics.forEach { (rank, count) ->
             if (rank != Rank.MISS) {
                 println(
                     format(

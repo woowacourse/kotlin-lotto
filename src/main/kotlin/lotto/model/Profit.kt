@@ -6,10 +6,10 @@ class Profit {
     companion object {
         fun calculateProfit(
             purchase: Double,
-            winningStatistics: WinningStatistics,
+            winningStatistics: Map<Rank, Int>,
         ): String {
             val sum =
-                winningStatistics.getAllStatistics().entries.sumOf { (rank, winningCount) ->
+                winningStatistics.entries.sumOf { (rank, winningCount) ->
                     winningCount * rank.winningMoney
                 }
             val profit = floor((sum.toDouble() / purchase) * PERCENT_FACTOR) / PERCENT_FACTOR
