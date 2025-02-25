@@ -37,37 +37,42 @@ class InputView {
 
     private fun getSingleNumber(message: String): Int {
         println(message)
-        val input = readln()
-        validateSingleInput(input)
+        val input = validateSingleInput(readln())
         return input.toInt()
     }
 
     private fun getMultipleNumber(message: String?): List<Int> {
         if (message != null) println(message)
-        val input = readln()
-        validateMultipleInput(input)
+        val input = validateMultipleInput(readln())
         return input.split(",").map { it.trim().toInt() }
     }
 
-    private fun validateSingleInput(input: String) {
-        validateEmptyInput(input)
-        validateNumber(input)
-    }
-
-    private fun validateMultipleInput(input: String) {
-        validateEmptyInput(input)
-        input.split(",").forEach { validateNumber(it.trim()) }
-    }
-
-    private fun validateEmptyInput(input: String) {
-        require(input.trim().isNotEmpty()) {
-            "[ERROR] 입력이 존재하지 않습니다."
+    private fun validateSingleInput(input: String): String {
+        if ((validateEmptyInput(input) && validateNumber(input)) == false) {
+            return validateSingleInput(readln())
         }
+        return input
     }
 
-    private fun validateNumber(input: String) {
-        require(input.toIntOrNull() != null) {
-            "[ERROR] 입력이 정수가 아닙니다: $input"
+    private fun validateMultipleInput(input: String): String {
+        if (!validateEmptyInput(input)) return validateMultipleInput(readln())
+        input.split(",").forEach { if (!validateNumber(it.trim())) return validateMultipleInput(readln()) }
+        return input
+    }
+
+    private fun validateEmptyInput(input: String): Boolean {
+        if (input.trim().isEmpty()) {
+            println("[ERROR] 입력이 존재하지 않습니다.")
+            return false
         }
+        return true
+    }
+
+    private fun validateNumber(input: String): Boolean {
+        if (input.toIntOrNull() == null) {
+            println("[ERROR] 입력이 정수가 아닙니다: $input")
+            return false
+        }
+        return true
     }
 }
