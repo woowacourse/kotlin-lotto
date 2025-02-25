@@ -24,14 +24,25 @@ class OutputView {
         println(MESSAGE_WINNING_STATS)
     }
 
-    fun printWinningStatWIthNoBonusBall(
+    fun printWinningStatsByRank(
+        state: Rank,
+        count: Int,
+    ) {
+        if (state == Rank.SECOND) {
+            printWinningStatWithBonusBall(state, count)
+        } else if (state != Rank.NONE) {
+            printWinningStatWIthNoBonusBall(state, count)
+        }
+    }
+
+    private fun printWinningStatWIthNoBonusBall(
         state: Rank,
         count: Int,
     ) {
         println(MESSAGE_MATCH_COUNT.format(state.countOfMatch, state.price, count))
     }
 
-    fun printWinningStatWithBonusBall(
+    private fun printWinningStatWithBonusBall(
         state: Rank,
         count: Int,
     ) {

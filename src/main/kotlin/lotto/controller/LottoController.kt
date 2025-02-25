@@ -85,18 +85,7 @@ class LottoController(
     private fun printWinningStats(winningStats: Map<Rank, Int>) {
         outputView.printWinningStats()
         for ((state, count) in winningStats) {
-            printWinningStatsByRank(state, count)
-        }
-    }
-
-    private fun printWinningStatsByRank(
-        state: Rank,
-        count: Int,
-    ) {
-        if (state == Rank.SECOND) {
-            outputView.printWinningStatWithBonusBall(state, count)
-        } else if (state != Rank.NONE) {
-            outputView.printWinningStatWIthNoBonusBall(state, count)
+            outputView.printWinningStatsByRank(state, count)
         }
     }
 
