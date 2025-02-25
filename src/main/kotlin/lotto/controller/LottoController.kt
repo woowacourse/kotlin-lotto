@@ -37,7 +37,7 @@ class LottoController {
 
     private fun makeLottosManually(quantity: Int): Lottos {
         View.requestManualNumbers()
-        val lottosList = List(quantity) { Lotto(View.readManualNumbers().map(::LottoNumber).toSet()) }
+        val lottosList = List(quantity) { Lotto(View.readManualNumbers().map(::LottoNumber)) }
         return Lottos(lottosList)
     }
 
@@ -46,11 +46,11 @@ class LottoController {
         return Lottos(lottosList)
     }
 
-    private fun makeLottoNumbers(): Set<LottoNumber> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map(::LottoNumber).toSet()
+    private fun makeLottoNumbers(): List<LottoNumber> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map(::LottoNumber)
 
     private fun readWinningLotto(): WinningLotto {
         val lottoNumbers: List<LottoNumber> = View.readWinningNumbers().map(::LottoNumber)
-        val lotto = Lotto(lottoNumbers.toSet())
+        val lotto = Lotto(lottoNumbers)
         val bonusNumber = LottoNumber(View.readBonusNumber())
         return WinningLotto(lotto, bonusNumber)
     }
