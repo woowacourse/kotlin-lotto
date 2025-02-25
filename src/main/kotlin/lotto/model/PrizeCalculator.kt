@@ -17,6 +17,9 @@ class PrizeCalculator(
             val rank = winningLotto.findRank(it)
             result[rank] = result.getOrDefault(rank, 0) + 1
         }
+        Rank.entries.forEach {
+            result[it] = result.getOrDefault(it, 0)
+        }
         return result
     }
 
