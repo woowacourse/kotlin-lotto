@@ -5,7 +5,7 @@ class OutputView {
         println("${quantity}개를 구매했습니다.")
     }
 
-    fun printLottoNumbers(lottoNumbers: List<Int>) {
+    fun printLottoNumbers(lottoNumbers: Set<Int>) {
         println(lottoNumbers)
     }
 
