@@ -1,29 +1,33 @@
 package lotto.controller
 
 import lotto.domain.Lotto
-import lotto.domain.LottoManager
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResults
 import lotto.domain.Lottos
+import lotto.domain.Order
 import lotto.domain.WinningLotto
 import lotto.view.View
 
 class LottoController {
     fun run() {
-        val userLottos: Lottos = buyLottos()
+        val order: Order = placeOrder()
+        val userLottos: Lottos = makeLottos(order)
         val winningLotto: WinningLotto = readWinningLotto()
         showResult(winningLotto, userLottos)
     }
 
-    private fun buyLottos(): Lottos {
+    private fun placeOrder(): Order {
         val payment: Int = View.readPayment()
-        val totalQuantity: Int = payment / Lotto.PRICE
         val manualQuantity: Int = View.readManualQuantity()
-        val automaticQuantity: Int = totalQuantity - manualQuantity
+        return Order(payment, manualQuantity)
+    }
 
-        val lottoManager = LottoManager(manualQuantity, automaticQuantity)
-        val manualLottos: Lottos = buyLottosManually(lottoManager)
-        val automaticLottos: Lottos = buyLottosAutomatically(lottoManager)
+    private fun makeLottos(order: Order): Lottos {
+        val totalQuantity: Int = order.payment / Lotto.PRICE
+        val manualQuantity: Int = order.manualQuantity
+        val automaticQuantity: Int = totalQuantity - manualQuantity
+        val manualLottos: Lottos = makeLottosManually(manualQuantity)
+        val automaticLottos: Lottos = makeLottosAutomatically(automaticQuantity)
 
         View.showLottoCount(manualQuantity, automaticQuantity)
         val allLottos = Lottos(manualLottos.value + automaticLottos.value)
@@ -31,14 +35,14 @@ class LottoController {
         return allLottos
     }
 
-    private fun buyLottosManually(lottoManager: LottoManager): Lottos {
+    private fun makeLottosManually(quantity: Int): Lottos {
         View.requestManualNumbers()
-        val lottosList = List(lottoManager.manualQuantity) { Lotto(View.readManualNumbers().map(::LottoNumber).toSet()) }
+        val lottosList = List(quantity) { Lotto(View.readManualNumbers().map(::LottoNumber).toSet()) }
         return Lottos(lottosList)
     }
 
-    private fun buyLottosAutomatically(lottoManager: LottoManager): Lottos {
-        val lottosList = List(lottoManager.automaticQuantity) { Lotto(makeLottoNumbers()) }
+    private fun makeLottosAutomatically(quantity: Int): Lottos {
+        val lottosList = List(quantity) { Lotto(makeLottoNumbers()) }
         return Lottos(lottosList)
     }
 
