@@ -5,7 +5,7 @@ import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
 import lotto.domain.WinningLottoTicket
 
-class LottoRankFinder {
+object LottoRankFinder {
     fun findLottoRanks(
         manyLotto: List<Lotto>,
         winningLottoTicket: WinningLottoTicket,
