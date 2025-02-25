@@ -1,6 +1,8 @@
 package lotto.domain.model
 
 import lotto.domain.value.LottoCount
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -25,5 +27,19 @@ class LottoOrderTest {
             val manualLottoCount = LottoCount(count)
             LottoOrder(totalLottoCount, manualLottoCount)
         }
+    }
+
+    @Test
+    fun `총 로또 수가 10이고 수동 로또 수가 4이면 자동 로또 수는 6이다`() {
+        // given
+        val totalLottoCount = LottoCount(10)
+        val manualLottoCount = LottoCount(4)
+        val lottoOrder = LottoOrder(totalLottoCount, manualLottoCount)
+
+        // when
+        val automaticLottoCount = lottoOrder.getAutomaticLottoCount()
+
+        // then
+        assertThat(automaticLottoCount.count).isEqualTo(6)
     }
 }

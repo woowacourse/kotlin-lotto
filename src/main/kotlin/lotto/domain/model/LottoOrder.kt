@@ -11,4 +11,6 @@ class LottoOrder(
     init {
         require(totalLottoCount.count >= manualLottoCount.count) { ErrorMessages.INVALID_MANUAL_LOTTO_COUNT }
     }
+
+    fun getAutomaticLottoCount(): LottoCount = LottoCount(totalLottoCount.count - manualLottoCount.count)
 }
