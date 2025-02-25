@@ -13,4 +13,5 @@ object ErrorMessages {
     const val INVALID_PURCHASE_AMOUNT = "$ERROR 구입 금액은 1,000원 단위여야 합니다."
 
     const val INVALID_LOTTO_COUNT_RANGE = "$ERROR 로또 수는 0 이상이어야 합니다."
+    const val INVALID_MANUAL_LOTTO_COUNT = "$ERROR 수동 로또 수는 전체 로또 수보다 그면 안됩니다."
 }
