@@ -20,18 +20,11 @@ class LottoController {
         val totalQuantity: Int = price / Lotto.PRICE
         val manualQuantity: Int = View.readManualQuantity()
         val lottoGenerator = LottoGenerator(totalQuantity, manualQuantity)
-        readManualLottos(manualQuantity)
-        val lottos = Lottos(List(totalQuantity) { Lotto(makeLottoNumbers()) })
-        View.showLottoCount(lottos.value.size)
-        View.showLottos(lottos)
-        return lottos
-    }
-
-    private fun makeLottoNumbers(): Set<LottoNumber> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map(::LottoNumber).toSet()
-
-    private fun readManualLottos(quantity: Int): Lottos {
-        val manualNumbers: List<Set<LottoNumber>> = View.readManualNumbers(quantity).map { it.map(::LottoNumber).toSet() }
-        return Lottos(manualNumbers.map(::Lotto))
+        val manualLottos = lottoGenerator.makeManualLottos()
+        val automaticLottos = lottoGenerator.makeAutomaticLottos()
+        View.showLottoCount(automaticLottos.value.size)
+        View.showLottos(automaticLottos)
+        return automaticLottos
     }
 
     private fun readWinningLotto(): WinningLotto {

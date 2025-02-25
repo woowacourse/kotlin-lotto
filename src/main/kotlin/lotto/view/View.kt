@@ -16,17 +16,20 @@ object View {
         return manualQuantity
     }
 
+    fun requestManualNumbers() {
+        OutputView.requestManualNumbers()
+    }
+
+    fun readManualNumbers(): List<Int> {
+        return InputView.readLottoNumbers()
+    }
+
     fun showLottoCount(lottoCount: Int) {
         OutputView.showLottoCount(lottoCount)
     }
 
     fun showLottos(lottos: Lottos) {
         OutputView.showLottos(lottos)
-    }
-
-    fun readManualNumbers(quantity: Int): List<List<Int>> {
-        OutputView.requestManualNumbers()
-        return List(quantity) { InputView.readLottoNumbers() }
     }
 
     fun readWinningNumbers(): List<Int> {
