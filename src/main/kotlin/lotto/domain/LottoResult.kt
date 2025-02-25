@@ -38,7 +38,7 @@ enum class LottoResult(
             winLotto: WinLotto,
             boughtLotto: Lotto,
         ): LottoResult {
-            val matchCount = boughtLotto.calculateMatchCount(winLotto)
+            val matchCount = boughtLotto.countMatch(winLotto)
             return filter { result: LottoResult -> result.matchCount <= matchCount }
                 .maxBy { result: LottoResult -> result.prizeAmount }
         }

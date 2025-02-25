@@ -7,9 +7,9 @@ class Lotto(
         require(numbers.size == NUMBERS_SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_DIFFERENT_NUMBERS }
     }
 
-    fun containLottoNumber(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
+    fun contains(lottoNumber: LottoNumber): Boolean = numbers.contains(lottoNumber)
 
-    fun calculateMatchCount(winLotto: WinLotto): Int = numbers.count { lottoNumber: LottoNumber -> winLotto.hasNumber(lottoNumber) }
+    fun countMatch(winLotto: WinLotto): Int = numbers.count { lottoNumber: LottoNumber -> winLotto.hasNumber(lottoNumber) }
 
     companion object {
         const val PRICE = 1_000
