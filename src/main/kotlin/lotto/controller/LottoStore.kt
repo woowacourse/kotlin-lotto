@@ -17,6 +17,7 @@ class LottoStore(
 ) {
     fun run() {
         val amount = inputView.inputPurchaseAmount()
+        val manualCount = inputView.inputManualCount()
         val count = calculatePurchaseCount(amount)
         outputView.printPurchaseCount(count)
         val lottoTickets = generateLottoTicket(count)
