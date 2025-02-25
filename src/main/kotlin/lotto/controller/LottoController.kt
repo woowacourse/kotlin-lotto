@@ -1,7 +1,7 @@
 package lotto.controller
 
 import lotto.domain.Lotto
-import lotto.domain.LottoGenerator
+import lotto.domain.LottoManager
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResults
 import lotto.domain.Lottos
@@ -16,26 +16,30 @@ class LottoController {
     }
 
     private fun buyLottos(): Lottos {
-        val price: Int = View.readPrice()
-        val totalQuantity: Int = price / Lotto.PRICE
+        val payment: Int = View.readPayment()
+        val totalQuantity: Int = payment / Lotto.PRICE
         val manualQuantity: Int = View.readManualQuantity()
         val automaticQuantity: Int = totalQuantity - manualQuantity
-        val lottoGenerator = LottoGenerator(manualQuantity, automaticQuantity)
-        val manualLottos: Lottos = makeManualLottos(manualQuantity)
-        val automaticLottos: Lottos = makeAutomaticLottos(automaticQuantity)
+
+        val lottoManager = LottoManager(manualQuantity, automaticQuantity)
+        val manualLottos: Lottos = buyLottosManually(lottoManager)
+        val automaticLottos: Lottos = buyLottosAutomatically(lottoManager)
+
         View.showLottoCount(manualQuantity, automaticQuantity)
         val allLottos = Lottos(manualLottos.value + automaticLottos.value)
         View.showLottos(allLottos)
         return allLottos
     }
 
-    fun makeManualLottos(quantity: Int): Lottos {
+    private fun buyLottosManually(lottoManager: LottoManager): Lottos {
         View.requestManualNumbers()
-        return Lottos(List(quantity) { Lotto(View.readManualNumbers().map(::LottoNumber).toSet()) })
+        val lottosList = List(lottoManager.manualQuantity) { Lotto(View.readManualNumbers().map(::LottoNumber).toSet()) }
+        return Lottos(lottosList)
     }
 
-    fun makeAutomaticLottos(quantity: Int): Lottos {
-        return Lottos(List(quantity) { Lotto(makeLottoNumbers()) })
+    private fun buyLottosAutomatically(lottoManager: LottoManager): Lottos {
+        val lottosList = List(lottoManager.automaticQuantity) { Lotto(makeLottoNumbers()) }
+        return Lottos(lottosList)
     }
 
     private fun makeLottoNumbers(): Set<LottoNumber> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map(::LottoNumber).toSet()

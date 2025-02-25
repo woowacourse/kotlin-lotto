@@ -1,12 +1,12 @@
 package lotto.domain
 
-class LottoGenerator(
-    private val manualQuantity: Int,
-    private val automaticQuantity: Int,
+class LottoManager(
+    val manualQuantity: Int,
+    val automaticQuantity: Int,
 ) {
     init {
         require(manualQuantity >= 0) { ERROR_MESSAGE_NOT_ENOUGH_MANUAL_LOTTOS }
-        require(automaticQuantity >= 0) { ERROR_MESSAGE_TOO_MANY_MANUAL_LOTTOS }
+        require(automaticQuantity + manualQuantity >= manualQuantity) { ERROR_MESSAGE_TOO_MANY_MANUAL_LOTTOS }
     }
 
     companion object {

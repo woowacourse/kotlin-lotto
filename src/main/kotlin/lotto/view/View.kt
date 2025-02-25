@@ -4,10 +4,10 @@ import lotto.domain.LottoResult
 import lotto.domain.Lottos
 
 object View {
-    fun readPrice(): Int {
-        OutputView.requestPrice()
-        val price: Int = InputView.readPrice()
-        return price
+    fun readPayment(): Int {
+        OutputView.requestPayment()
+        val payment: Int = InputView.readPayment()
+        return payment
     }
 
     fun readManualQuantity(): Int {

@@ -1,10 +1,10 @@
 package lotto.view
 
 object InputView {
-    fun readPrice(): Int {
-        val priceInput: String = readln()
-        val price: Int = priceInput.toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
-        return price
+    fun readPayment(): Int {
+        val paymentInput: String = readln()
+        val payment: Int = paymentInput.toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
+        return payment
     }
 
     fun readManualQuantity(): Int {
