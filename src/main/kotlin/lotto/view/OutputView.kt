@@ -8,7 +8,7 @@ class OutputView {
     fun printPurchasedLottoTickets(lottos: List<Lotto>) {
         println(MESSAGE_BUY_LOTTO.format(lottos.size))
         lottos.forEach { lotto ->
-            println(lotto.toIntList().joinToString(", ", "[", "]"))
+            println(lotto.getSortedLotto().map { it.toInt() }.joinToString(", ", "[", "]"))
         }
     }
 

@@ -5,11 +5,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoResultTest {
-    val number1 = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }) // 5개 매치
-    val number2 = Lotto(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber(it) }) // 6개 매치
-    val number3 = Lotto(listOf(3, 4, 5, 6, 7, 45).map { LottoNumber(it) })
+    val number1 = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()) // 5개 매치
+    val number2 = Lotto(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber(it) }.toSet()) // 6개 매치
+    val number3 = Lotto(listOf(3, 4, 5, 6, 7, 45).map { LottoNumber(it) }.toSet())
     val lottos = listOf(number1, number2, number3)
-    val winningNumber = Lotto(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber(it) })
+    val winningNumber = Lotto(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber(it) }.toSet())
     val winningBonusNumber = LottoNumber(45)
     val lottoResult = LottoResult(WinningLotto(winningNumber, winningBonusNumber))
 
