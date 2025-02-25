@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.model.LottoMachine
+import lotto.model.LottoNumber
 import lotto.model.Lottos
 import lotto.model.ProfitStatus
 import lotto.model.Rank
@@ -20,7 +21,8 @@ class LottoController(
         val lastWeekLottoWinningNumbers = getLastWeekLottoWinningNumbers().validateWinningNumbers()
         val lottoBonusNumber = getLottoBonusNumbers().validateIsNumber()
 
-        val lottoWinningResult = displayLottosWinningResult(lottos, lastWeekLottoWinningNumbers, lottoBonusNumber)
+        val lottoWinningResult =
+            displayLottosWinningResult(lottos, lastWeekLottoWinningNumbers, LottoNumber(lottoBonusNumber))
         displayLottoWinningProfit(lottoMachine, lottoWinningResult)
     }
 
@@ -43,10 +45,10 @@ class LottoController(
 
     private fun mapToNumber(rawNumber: String) = rawNumber.toIntOrNull()
 
-    private fun String.validateWinningNumbers(): Set<Int> {
+    private fun String.validateWinningNumbers(): Set<LottoNumber> {
         try {
             val rawWinningNumbers = mapToWinningNumbers(this)
-            return rawWinningNumbers.map { number -> number.validateIsNumber() }.toSet()
+            return rawWinningNumbers.map { number -> LottoNumber(number.validateIsNumber()) }.toSet()
         } catch (e: IllegalArgumentException) {
             throw IllegalArgumentException(e.message)
         }
@@ -70,8 +72,8 @@ class LottoController(
 
     private fun displayLottosWinningResult(
         lottos: Lottos,
-        lastWeekWinningNumbers: Set<Int>,
-        bonusNumber: Int,
+        lastWeekWinningNumbers: Set<LottoNumber>,
+        bonusNumber: LottoNumber,
     ): Map<Rank, Int> {
         val lottoWinningResult = lottos.countLottoByRank(lastWeekWinningNumbers, bonusNumber)
         outputView.printWinningResultTitle()

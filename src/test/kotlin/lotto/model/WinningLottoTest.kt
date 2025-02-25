@@ -18,8 +18,8 @@ class WinningLottoTest {
         val lotto = Lotto.from(lottoNumbers)
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
+        val winningNumbers = toLottoNumbers(setOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(7)
 
         val rank = winningLotto.getRank(winningNumbers, bonusNumber)
 
@@ -28,8 +28,8 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호가 일치하면서 5개의 번호가 동일한 경우 2등을 반환한다`() {
-        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
+        val winningNumbers = toLottoNumbers(setOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(7)
 
         val lotto = Lotto.from(setOf(1, 2, 3, 4, 5, 7))
         val winningLotto = WinningLotto(lotto)
@@ -44,8 +44,8 @@ class WinningLottoTest {
         val lotto = Lotto.from(lottoNumbers)
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = setOf(1, 1, 2, 3, 4, 5)
-        val bonusNumber = 6
+        val winningNumbers = toLottoNumbers(setOf(1, 1, 2, 3, 4, 5))
+        val bonusNumber = LottoNumber(6)
 
         assertThrows<IllegalArgumentException> {
             winningLotto.getRank(winningNumbers, bonusNumber)
@@ -58,8 +58,8 @@ class WinningLottoTest {
         val lotto = Lotto.from(lottoNumbers)
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 1
+        val winningNumbers = toLottoNumbers(setOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(1)
 
         assertThrows<IllegalArgumentException> {
             winningLotto.getRank(winningNumbers, bonusNumber)
@@ -78,5 +78,7 @@ class WinningLottoTest {
                 Arguments.of(setOf(1, 22, 23, 24, 25, 26), Rank.MISS),
                 Arguments.of(setOf(21, 22, 23, 24, 25, 26), Rank.MISS),
             )
+
+        fun toLottoNumbers(winningNumbers: Set<Int>): Set<LottoNumber> = winningNumbers.map { LottoNumber(it) }.toSet()
     }
 }

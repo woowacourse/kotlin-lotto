@@ -16,8 +16,8 @@ class LottosTest {
                 Lotto.from(setOf(8, 9, 10, 11, 12, 13)),
             )
 
-        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
+        val winningNumbers = setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()
+        val bonusNumber = LottoNumber(7)
 
         val expectedResult =
             mapOf(
