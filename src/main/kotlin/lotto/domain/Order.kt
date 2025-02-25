@@ -4,6 +4,8 @@ class Order(
     val payment: Int,
     val manualQuantity: Int,
 ) {
+    val automaticQuantity: Int = payment / Lotto.PRICE - manualQuantity
+
     init {
         require(payment >= Lotto.PRICE) { ERROR_MESSAGE_NOT_ENOUGH_MONEY }
         require(manualQuantity >= 0) { ERROR_MESSAGE_NOT_ENOUGH_MANUAL_LOTTOS }
