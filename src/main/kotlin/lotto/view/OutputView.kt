@@ -7,8 +7,11 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class OutputView {
-    fun printPurchaseCount(count: Int) {
-        println(MESSAGE_PURCHASE.format(count))
+    fun printPurchaseCount(
+        manualCount: Int,
+        autoCount: Int,
+    ) {
+        println(MESSAGE_PURCHASE.format(manualCount, autoCount))
     }
 
     fun printLotto(lottoTickets: List<LottoTicket>) {
@@ -51,7 +54,7 @@ class OutputView {
         }
 
     companion object {
-        private const val MESSAGE_PURCHASE = "%d개를 구매했습니다."
+        private const val MESSAGE_PURCHASE = "수동으로 %d장, 자동으로 %d장을 구매했습니다."
         private const val MESSAGE_RESULT_HEADER = "\n" + "당첨 통계" + "\n" + "---------"
         private const val MESSAGE_MATCH_SIX = "6개 일치"
         private const val MESSAGE_MATCH_FIVE_BONUS = "5개 일치, 보너스 볼 일치"
