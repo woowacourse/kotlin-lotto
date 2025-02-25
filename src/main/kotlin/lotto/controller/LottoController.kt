@@ -1,6 +1,8 @@
 package lotto.controller
 
 import lotto.model.Lotto
+import lotto.model.LottoCount
+import lotto.model.LottoCount.Companion.ERROR_EXCEED_LOTTO_COUNT
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
@@ -17,6 +19,9 @@ class LottoController(
     fun run() {
         val purchaseMoney = getPurchaseMoney()
         val lottoCount = getLottoCount(purchaseMoney)
+
+        val manualLottoCount = getPurchaseManualLottoCount(lottoCount)
+
         outputView.printLottoCount(lottoCount)
         val lottos = lottoMachine.createLottos(lottoCount)
         outputView.printLottos(lottos)
@@ -27,6 +32,17 @@ class LottoController(
         processLottoStatistics(lottoStatistics)
     }
 
+    private fun getPurchaseManualLottoCount(wholeLottoCount: LottoCount): LottoCount =
+        try {
+            outputView.printPurchaseManualLottoCountGuide()
+            val manualLottoCount = inputView.readManualLottoPurchaseCount()
+            require(wholeLottoCount.isAvailPurchaseLottoCount(manualLottoCount)) { ERROR_EXCEED_LOTTO_COUNT }
+            manualLottoCount
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message)
+            getPurchaseManualLottoCount(wholeLottoCount)
+        }
+
     private fun getPurchaseMoney(): LottoPurchaseAmount =
         try {
             outputView.printPurchaseAmountGuide()
@@ -36,7 +52,7 @@ class LottoController(
             getPurchaseMoney()
         }
 
-    private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
+    private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount {
         val lottoCount = purchaseMoney.getLottoCount()
         return lottoCount
     }
