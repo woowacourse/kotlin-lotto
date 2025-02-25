@@ -31,7 +31,7 @@ object OutputView {
     }
 
     fun showLottos(lottos: Lottos) {
-        lottos.value.forEach { lotto: Lotto ->
+        lottos.list.forEach { lotto: Lotto ->
             println(lotto.numbers.map(LottoNumber::value).sorted())
         }
     }

@@ -1,11 +1,9 @@
 package lotto.domain
 
 class WinningLotto(
-    lotto: Lotto,
+    val lotto: Lotto,
     val bonusNumber: LottoNumber,
 ) {
-    val numbers: Set<Int> = lotto.numbers.map(LottoNumber::value).toSet()
-
     init {
         require(bonusNumber !in lotto.numbers) { ERROR_MESSAGE_BONUS_NUMBER_OVERLAPS_WITH_LOTTO_NUMBERS }
     }

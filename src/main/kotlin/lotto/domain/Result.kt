@@ -15,11 +15,11 @@ enum class Result(
 
     companion object {
         fun from(
-            wonLotto: WinningLotto,
-            boughtLotto: Lotto,
+            winningLotto: WinningLotto,
+            userLotto: Lotto,
         ): Result {
-            val matchCount = calculateMatchCount(wonLotto, boughtLotto)
-            val hasBonus = bonusMatched(wonLotto, boughtLotto)
+            val matchCount = calculateMatchCount(winningLotto, userLotto)
+            val hasBonus = bonusMatched(winningLotto, userLotto)
             val result: Result =
                 Result.entries.find { result: Result ->
                     matchCount == result.matchCount && hasBonus == result.requireBonus
@@ -30,16 +30,16 @@ enum class Result(
         }
 
         private fun calculateMatchCount(
-            wonLotto: WinningLotto,
-            boughtLotto: Lotto,
+            winningLotto: WinningLotto,
+            userLotto: Lotto,
         ): Int =
-            boughtLotto.numbers.count { lottoNumber: LottoNumber ->
-                lottoNumber.value in wonLotto.numbers
+            userLotto.numbers.count { lottoNumber: LottoNumber ->
+                lottoNumber in winningLotto.lotto.numbers
             }
 
         private fun bonusMatched(
-            wonLotto: WinningLotto,
-            boughtLotto: Lotto,
-        ): Boolean = boughtLotto.numbers.contains(wonLotto.bonusNumber)
+            winningLotto: WinningLotto,
+            userLotto: Lotto,
+        ): Boolean = userLotto.numbers.contains(winningLotto.bonusNumber)
     }
 }

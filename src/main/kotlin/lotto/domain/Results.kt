@@ -41,7 +41,7 @@ class Results(
             userLottos: Lottos,
         ): Results =
             Results(
-                userLottos.value.map { userLotto: Lotto ->
+                userLottos.list.map { userLotto: Lotto ->
                     Result.from(winningLotto, userLotto)
                 },
             )
