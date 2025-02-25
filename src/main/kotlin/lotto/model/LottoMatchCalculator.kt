@@ -17,6 +17,11 @@ class LottoMatchCalculator {
         lotto: Lotto,
         winningLotto: WinningLotto,
     ): Rank {
-        return Rank.valueOf(winningLotto.getCountOfMatch(lotto), winningLotto.isBonusNumberMatch(lotto))
+        val matchResult = winningLotto.match(lotto)
+        return Rank.valueOf(matchResult.matchCount, matchResult.isBonusMatch)
     }
 }
+
+// return lottoBundle.groupingBy { lotto ->
+//    determineRank(lotto, winningLotto)
+// }.eachCount().withDefault { 0 }

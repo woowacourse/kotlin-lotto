@@ -1,12 +1,14 @@
 package lotto.model
 
 class Lotto(
-    val numbers: List<LottoNumber>,
+    private val numbers: List<LottoNumber>,
 ) {
     init {
         require(numbers.size == numbers.distinct().size) { LOTTO_DISTINCT_MESSAGE }
         require(numbers.size == LOTTO_NUMBERS_SIZE) { LOTTO_COUNT_MESSAGE }
     }
+
+    fun getNumbers(): List<LottoNumber> = numbers
 
     companion object {
         const val LOTTO_NUMBERS_SIZE: Int = 6
