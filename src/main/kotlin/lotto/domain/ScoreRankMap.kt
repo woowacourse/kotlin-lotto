@@ -1,7 +1,7 @@
 package lotto.domain
 
 // 각 등수 : 나온 숫자 의 맵을 저장하는 일급컬렉션
-class ScoreRankMap(
+data class ScoreRankMap(
     val map: Map<Rank, Int>,
 ) {
     init {
