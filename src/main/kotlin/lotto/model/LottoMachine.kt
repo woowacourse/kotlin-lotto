@@ -22,11 +22,10 @@ class LottoMachine(
         return true
     }
 
-    fun publishManualLottoList(lottoNumberList: List<List<Int>>): List<Lotto> = lottoNumberList.mapNotNull { publishManualLotto(it) }
-
-    private fun publishManualLotto(numberList: List<Int>): Lotto? {
-        val lottoNumbers: LottoNumbers? = LottoNumbers.create(numberList.mapNotNull { it -> LottoNumber.create(it) })
-        return lottoNumbers?.let { Lotto(lottoNumbers) }
+    fun publishManualLotto(numberList: List<Int>): Lotto? {
+        var lottoNumbers: LottoNumbers? = LottoNumbers.create(numberList.mapNotNull { it -> LottoNumber.create(it) })
+        if (lottoNumbers == null) return null
+        return Lotto(lottoNumbers)
     }
 
     fun publishAutoTickets(lottoPrize: Amount): List<Lotto> {

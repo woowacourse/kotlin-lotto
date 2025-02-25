@@ -24,10 +24,7 @@ class InputView {
 
     fun getManualCount(): Int = getSingleNumber(COUNT_INPUT_MESSAGE)
 
-    fun getManualLottoList(count: Int): List<List<Int>> {
-        printMessage(ALERT_INPUT_LOTTO)
-        return List<List<Int>>(count) { getManualLotto() }
-    }
+    fun lottoInputMessage() = printMessage(ALERT_INPUT_LOTTO)
 
     fun getManualLotto(): List<Int> = getMultipleNumber(null)
 

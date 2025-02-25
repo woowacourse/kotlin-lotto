@@ -17,7 +17,7 @@ class LottoController(
     fun run() {
         val amount = getAmount()
         val lottoMachine = LottoMachine(amount)
-        val publishedLotto = validatePublishLotto(lottoMachine) + autoPublishLotto(lottoMachine)
+        val publishedLotto = validatePublishLottoList(lottoMachine) + autoPublishLotto(lottoMachine)
         val winningLotto = validateWinningLotto(getWinningLotto(), getBonusNumber())
         val prizeCalculator = PrizeCalculator(winningLotto, publishedLotto, amount)
         showEarningRate(prizeCalculator)
@@ -36,13 +36,26 @@ class LottoController(
         return WinningLotto(number, bonus)
     }
 
-    private fun validatePublishLotto(lottoMachine: LottoMachine): List<Lotto> {
+    private fun validatePublishLotto(lottoMachine: LottoMachine): Lotto {
+        var lotto = lottoMachine.publishManualLotto(inputView.getManualLotto())
+        while (lotto == null) {
+            outputView.inputLottoError()
+            lotto = lottoMachine.publishManualLotto(inputView.getManualLotto())
+        }
+        return lotto
+    }
+
+    private fun validatePublishLottoList(lottoMachine: LottoMachine): List<Lotto> {
         var count = inputView.getManualCount()
         while (lottoMachine.useMoney(Amount(count * LOTTO_PRIZE)) == false) {
             outputView.inputCountError()
             count = inputView.getManualCount()
         }
-        val lottoList = lottoMachine.publishManualLottoList(inputView.getManualLottoList(count))
+        val lottoList = mutableListOf<Lotto>()
+        inputView.lottoInputMessage()
+        for (i in 1..count) {
+            lottoList.add(validatePublishLotto(lottoMachine))
+        }
         outputView.printManualLotto(count)
         return lottoList
     }

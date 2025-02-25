@@ -39,4 +39,8 @@ class OutputView {
     fun inputCountError() {
         println("[ERROR] 수동 입력 로또 총 금액이 입력 금액을 초과합니다.")
     }
+
+    fun inputLottoError() {
+        println("[ERROR] 로또 번호가 올바르지 않습니다. 다시 입력하세요.")
+    }
 }
