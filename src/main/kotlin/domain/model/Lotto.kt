@@ -16,9 +16,5 @@ class Lotto(val numbers: List<LottoNumber>) {
         fun from(vararg numbers: Int): Lotto {
             return Lotto(numbers.map { LottoNumber(it) })
         }
-
-        fun extractionNumber(lotto: Lotto): List<Int> {
-            return lotto.numbers.map { it.number }
-        }
     }
 }
