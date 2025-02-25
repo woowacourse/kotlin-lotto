@@ -8,16 +8,16 @@ import domain.strategy.LottoCountry
 class LottoGenerator(
     private val money: PurchasePrice,
 ) {
-    fun getAutoLottoAmount(purchaseManualLottoCount: Int): Int {
-        val purchaseLottoCount = money.value / PurchasePrice.STANDARD_AMOUNT_UNIT
-        return purchaseLottoCount - purchaseManualLottoCount
+    fun getAutoLottoAmount(manualLottoAmount: Int): Int {
+        val lottoAmount = money.value / PurchasePrice.STANDARD_AMOUNT_UNIT
+        return lottoAmount - manualLottoAmount
     }
 
     fun makeLottos(
-        purchaseManualLottoCount: Int,
+        manualLottoAmount: Int,
         manualLottoNumber: List<Lotto>,
     ): List<Lotto> {
-        return manualLottoNumber + List(getAutoLottoAmount(purchaseManualLottoCount)) { makeLotto(KoreanLottoGenerator()) }
+        return manualLottoNumber + List(getAutoLottoAmount(manualLottoAmount)) { makeLotto(KoreanLottoGenerator()) }
     }
 
     private fun makeLotto(lottoCountry: LottoCountry): Lotto {
