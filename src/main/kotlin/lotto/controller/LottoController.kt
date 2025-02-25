@@ -23,7 +23,8 @@ class LottoController(
 
     fun run() {
         val orderSheet = getOrderSheet()
-        val lottos = getAndPrintPurchasedLottos(orderSheet)
+        val manualLottoNumber = getManualLottoNumbers(orderSheet.manualLottoCount.lottoCount)
+        val lottos = getAndPrintPurchasedLottos(orderSheet, manualLottoNumber)
         val lottoCalculator = getWinningInfoAndCalculator()
         val winningStats = getAndPrintWinningStats(lottoCalculator, lottos)
         val prize = lottoCalculator.calculatePrize(winningStats)
@@ -33,9 +34,8 @@ class LottoController(
     private fun getOrderSheet(): OrderSheet {
         val purchaseAmount = getPurchaseAmount()
         val manualLottoCount = getManualLottoCount(purchaseAmount.purchasableCount)
-        val manualLottoNumber = getManualLottoNumbers(manualLottoCount.lottoCount)
 
-        return OrderSheet(purchaseAmount, manualLottoCount, manualLottoNumber)
+        return OrderSheet(purchaseAmount, manualLottoCount)
     }
 
     private fun getPurchaseAmount(): LottoPurchaseAmount {
@@ -58,8 +58,11 @@ class LottoController(
         }
     }
 
-    private fun getAndPrintPurchasedLottos(orderSheet: OrderSheet): List<Lotto> {
-        val lottos = orderSheet.manualLottoNumber + lottoMachine.buyLottos(AutoLottoGenerator(orderSheet.autoCount))
+    private fun getAndPrintPurchasedLottos(
+        orderSheet: OrderSheet,
+        manualLottos: List<Lotto>,
+    ): List<Lotto> {
+        val lottos = manualLottos + lottoMachine.buyLottos(AutoLottoGenerator(orderSheet.autoCount))
         outputView.printPurchasedLottos(lottos, orderSheet.manualLottoCount.lottoCount, orderSheet.autoCount)
         return lottos
     }
