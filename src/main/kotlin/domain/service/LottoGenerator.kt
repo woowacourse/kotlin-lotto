@@ -13,14 +13,14 @@ class LottoGenerator(
         return purchaseLottoCount - purchaseManualLottoCount
     }
 
-    fun makeLotto(
+    fun makeLottos(
         purchaseManualLottoCount: Int,
         manualLottoNumber: List<Lotto>,
     ): List<Lotto> {
-        return manualLottoNumber + List(getAutoLottoAmount(purchaseManualLottoCount)) { makeOneLotto(KoreanLottoGenerator()) }
+        return manualLottoNumber + List(getAutoLottoAmount(purchaseManualLottoCount)) { makeLotto(KoreanLottoGenerator()) }
     }
 
-    private fun makeOneLotto(lottoCountry: LottoCountry): Lotto {
+    private fun makeLotto(lottoCountry: LottoCountry): Lotto {
         val newLotto = lottoCountry.generateNumber()
         return Lotto(newLotto)
     }

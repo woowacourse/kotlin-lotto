@@ -22,12 +22,12 @@ class LottoGeneratorTest {
     @Test
     fun `구입 금액이 3천원이고 수동 로또가 2개면 로또를 3개 발행한다`() {
         val money = PurchasePrice(3000)
-        assertThat(LottoGenerator(money).makeLotto(2, manualLottoNumbers).size).isEqualTo(3)
+        assertThat(LottoGenerator(money).makeLottos(2, manualLottoNumbers).size).isEqualTo(3)
     }
 
     @Test
     fun `구입 금액이 3천원이고 수동 로또가 2개면 해당 로또에 수동 로또 번호가 포함된다`() {
         val money = PurchasePrice(3000)
-        assertTrue(LottoGenerator(money).makeLotto(2, manualLottoNumbers).containsAll(manualLottoNumbers))
+        assertTrue(LottoGenerator(money).makeLottos(2, manualLottoNumbers).containsAll(manualLottoNumbers))
     }
 }
