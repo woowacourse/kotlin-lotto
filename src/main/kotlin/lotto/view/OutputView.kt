@@ -10,6 +10,10 @@ object OutputView {
         println("${amount}개를 구매했습니다.")
     }
 
+    fun printManualLottoHeader() {
+        println(MANUAL_LOTTO_NUMBER_MESSAGE)
+    }
+
     fun printLottos(lottos: List<Lotto>) {
         lottos.forEach { lotto ->
             println(lotto.lottoNums.joinToString(separator = ", ", "[", "]") { it.lottoNumber.toString() })
@@ -55,4 +59,6 @@ object OutputView {
     fun getProfitMessage(profit: Profit): String {
         return ProfitMessage.getMessage(profit)
     }
+
+    private const val MANUAL_LOTTO_NUMBER_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
 }

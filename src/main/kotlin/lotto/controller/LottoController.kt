@@ -17,9 +17,13 @@ class LottoController(
         val price: Int = getPrice()
         val manualAmount: Int = getManualLottoAmount()
         val amount: Int = getAmount(price)
-        Validator.manualAmountValidator(manualAmount, amount)
-        printLottoAmount(amount)
 
+        Validator.manualAmountValidator(manualAmount, amount)
+
+        outputView.printManualLottoHeader()
+        repeat(manualAmount) { Lotto(inputView.inputManualLottoNumbers().map { LottoNumber.of(it) }) }
+
+        printLottoAmount(amount)
         val lottos: List<Lotto> = getLottos(amount)
         printLottos(lottos)
 
