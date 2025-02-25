@@ -26,4 +26,11 @@ class LottoTest {
         val lottos: List<Lotto> = Lotto.buyLottos(wantPay, wantedNumbers)
         assertThat(lottos.size).isEqualTo(wantLottoCount)
     }
+
+    @Test
+    fun `사용자가 원하는 번호로 로또를 살 수 있다`() {
+        val wantedNumbers: List<Int> = List(Lotto.NUMBERS_SIZE) { index -> index + 1 }
+        val lotto: List<Lotto> = Lotto.buyLottos(Lotto.PRICE, listOf(wantedNumbers))
+        assertThat(lotto.first().numbers).isEqualTo(wantedNumbers)
+    }
 }
