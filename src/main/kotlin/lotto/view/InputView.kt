@@ -1,12 +1,21 @@
 package lotto.view
 
 import lotto.Constants
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoTicket
 
 class InputView {
     fun validateAmount(amount: String): Int {
         require(amount.toIntOrNull() != null) { ERROR_INVALID_AMOUNT }
         require(amount.toInt() >= Constants.LOTTO_AMOUNT) { ERROR_INVALID_MINIMUM_AMOUNT }
         return amount.toInt()
+    }
+
+    fun validateManualNumbers(manualNumbers: List<String>): List<Int> {
+        require(manualNumbers.all { it.toIntOrNull() != null }) { ERROR_INVALID_WINNING_TYPE }
+        require(manualNumbers.size == LOTTO_PICK_COUNT) { ERROR_INVALID_WINNING_COUNT }
+        require(manualNumbers.size == manualNumbers.distinct().size) { ERROR_WINNING_DUPLICATE }
+        return manualNumbers.map { it.toInt() }
     }
 
     fun validateWinningNumbers(winningNumbers: List<String>): List<Int> {
@@ -33,10 +42,14 @@ class InputView {
         return manualCount.toInt()
     }
 
-    fun inputManualNumbers(): List<Int> {
+    fun inputManualNumbers(count: Int): List<LottoTicket> {
         println(MESSAGE_INPUT_MANUAL_NUMBERS)
-        val manualNumbers = readln().split(COMMA).map { it.trim() }
-        return manualNumbers.map { it.toInt() }
+        val manualTickets = mutableListOf<LottoTicket>()
+        repeat(count) {
+            val manualNumbers = readln().split(COMMA).map { it.trim() }
+            manualTickets.add(LottoTicket(validateManualNumbers(manualNumbers).map { LottoNumber(it) }.toSet()))
+        }
+        return manualTickets
     }
 
     fun inputWinningNumbers(): List<Int> {

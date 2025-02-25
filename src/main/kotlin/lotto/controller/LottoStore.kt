@@ -15,37 +15,32 @@ class LottoStore(
     private val outputView: OutputView = OutputView(),
 ) {
     private val lottoMachine = LottoMachine()
-    private lateinit var lottoTickets: MutableList<LottoTicket>
 
     fun run() {
-        val autoCount = inputLottoInfo()
-        val autoLottoTickets = generateLottoTicket(autoCount)
-        lottoTickets.addAll(autoLottoTickets)
-        outputView.printLotto(lottoTickets)
+        val (manualCount, autoCount) = inputLottoCount()
+        val manualLottoTickets = generateManualLottoTicket(manualCount)
+        val autoLottoTickets = generateAutoLottoTicket(autoCount)
+        outputView.printPurchaseCount(manualCount, autoCount)
+        outputView.printLotto(manualLottoTickets)
+        outputView.printLotto(autoLottoTickets)
         val winningLotto = inputWinningLotto()
-        val result = calculateResult(lottoTickets, winningLotto)
+        val result = calculateResult(autoLottoTickets, winningLotto)
         val formattedWinningStatus = formattingWinningStatus(result)
         outputView.printResult(formattedWinningStatus)
         outputView.printProfit(result.calculateProfit())
     }
 
-    private fun inputLottoInfo(): Int {
+    private fun inputLottoCount(): List<Int> {
         val amount = inputView.inputPurchaseAmount()
         val totalCount = lottoMachine.calculateTotalCount(amount)
         val manualCount = inputView.inputManualCount()
-        val manualTickets = generateManualLottoTicket(manualCount)
-        lottoTickets = manualTickets.toMutableList()
         val autoCount = lottoMachine.calculateAutoCount(totalCount, manualCount)
-        outputView.printPurchaseCount(manualCount, autoCount)
-        return autoCount
+        return listOf(manualCount, autoCount)
     }
 
-    private fun generateManualLottoTicket(count: Int): List<LottoTicket> =
-        List(count) {
-            LottoTicket(inputView.inputManualNumbers().map { LottoNumber(it) }.toSet())
-        }
+    private fun generateManualLottoTicket(count: Int): List<LottoTicket> = inputView.inputManualNumbers(count)
 
-    private fun generateLottoTicket(count: Int): List<LottoTicket> = LottoMachine().purchase(count)
+    private fun generateAutoLottoTicket(count: Int): List<LottoTicket> = LottoMachine().purchase(count)
 
     private fun inputWinningLotto(): WinningLotto {
         val winningNumbers = inputView.inputWinningNumbers().map { LottoNumber(it) }.toSet()
