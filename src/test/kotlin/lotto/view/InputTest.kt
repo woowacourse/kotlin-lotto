@@ -48,6 +48,14 @@ class InputTest {
         }
     }
 
+    @Test
+    fun `당첨 번호가 서로 중복되면 예외를 발생시킨다`() {
+        val winningNumbers = listOf("1", "2", "3", "4", "5", "5")
+        assertThrows<IllegalArgumentException> {
+            inputView.validateWinningNumbers(winningNumbers)
+        }
+    }
+
     @ParameterizedTest
     @ValueSource(strings = ["", " ", "a", "1a"])
     fun `보너스 번호에 정수 이외의 값이 들어오면 예외를 발생시킨다`(input: String) {
