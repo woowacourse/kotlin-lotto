@@ -1,8 +1,10 @@
 package domain.model
 
 class LottoNumber private constructor(
-    private val value: Int,
+    val value: Int,
 ) {
+    override fun toString(): String = value.toString()
+
     companion object {
         private const val MINIMUM_NUMBER = 1
         private const val MAXIMUM_NUMBER = 45

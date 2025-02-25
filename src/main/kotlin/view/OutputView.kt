@@ -16,7 +16,7 @@ class OutputView {
     }
 
     fun printPurchasedLotto(purchasedLotto: List<Lotto>) {
-        println(purchasedLotto.map { it.numbers }.joinToString("\n"))
+        println(purchasedLotto.map { lotto -> lotto.numbers.sortedBy { it.value } }.joinToString("\n"))
     }
 
     fun printWinningResult(
