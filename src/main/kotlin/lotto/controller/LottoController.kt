@@ -34,7 +34,7 @@ object LottoController {
         automaticLottos: List<Lotto>,
     ) {
         View.showLottoCount(manualLottos.size, automaticLottos.size)
-        View.showLottos(manualLottos + automaticLottos)
+        View.showLottos(manualLottos, automaticLottos)
     }
 
     private fun readManualLottoNumbers(): List<LottoNumber> {

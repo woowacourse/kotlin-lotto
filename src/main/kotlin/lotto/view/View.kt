@@ -31,8 +31,10 @@ object View {
         OutputView.showLottoCount(manualQuantity, automaticQuantity)
     }
 
-    fun showLottos(lottos: List<Lotto>) {
-        OutputView.showLottos(lottos)
+    fun showLottos(vararg allLottos: List<Lotto>) {
+        allLottos.forEach { lottos: List<Lotto> ->
+            OutputView.showLottos(lottos)
+        }
     }
 
     fun readWinningNumbers(): List<Int> {
