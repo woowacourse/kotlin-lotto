@@ -33,7 +33,7 @@ class LottoMachine(
                 .take(LOTTO_NUMBER_COUNT)
                 .sorted()
                 .map { LottoNumber(it) }
-        return Lotto(LottoNumbers(lottoNumbers), prize)
+        return Lotto(LottoNumbers(lottoNumbers))
     }
 
     companion object {
