@@ -7,6 +7,18 @@ object View {
         return price
     }
 
+    fun readManualLottoCount(): Int {
+        OutputView.requestManualLottoCount()
+        return InputView.readNumber()
+    }
+
+    fun readManualLottoNumbers(size: Int): List<List<Int>>? {
+        if (size == 0) return null
+        OutputView.requestManualLotto()
+        val manualNumbers: List<List<Int>> = InputView.readLottosNumbers()
+        return manualNumbers
+    }
+
     fun showLottoCount(lottoCount: Int) {
         OutputView.showLottoCount(lottoCount)
     }
@@ -30,6 +42,6 @@ object View {
 
     fun readBonusNumber(): Int {
         OutputView.requestBonusNumber()
-        return InputView.readBonusNumber()
+        return InputView.readNumber()
     }
 }

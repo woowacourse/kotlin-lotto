@@ -21,10 +21,10 @@ object InputView {
         return wonLotto
     }
 
-    fun readBonusNumber(): Int {
-        val bonusInput: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
-        val bonusNumber: Int =
-            bonusInput.toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
-        return bonusNumber
+    fun readNumber(): Int {
+        val input: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
+        val number: Int =
+            input.toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
+        return number
     }
 }

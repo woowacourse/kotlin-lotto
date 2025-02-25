@@ -58,4 +58,8 @@ object OutputView {
             profitRate > PROFIT_RATE_DRAW -> MESSAGE_PROFIT_RATE_WIN
             else -> MESSAGE_PROFIT_RATE_DRAW
         }
+
+    fun requestManualLottoCount() {
+        println("수동으로 구매할 로또 수를 입력해 주세요.")
+    }
 }
