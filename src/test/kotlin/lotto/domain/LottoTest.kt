@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class LottoTest {
     @Test
-    fun `로또 번호가 중복되면 IllegalArgumentException이 일어난다`() {
+    fun `로또 번호가 중복되면 예외가 발생한다`() {
         val lottoNumbers = listOf(1, 1, 2, 2, 3, 3)
         assertThrows<IllegalArgumentException> {
             Lotto(lottoNumbers.map { LottoNumber(it) })
@@ -24,7 +24,7 @@ class LottoTest {
 
     @ValueSource(ints = [1, 2, 3, 4, 5])
     @ParameterizedTest
-    fun `당첨 번호가 6개가 아니면 IllegalArgumentException이 일어난다`(input: Int) {
+    fun `당첨 번호가 6개가 아니면 예외가 발생한다`(input: Int) {
         val testList = List(input) { 1 }
         assertThrows<IllegalArgumentException> {
             Lotto(testList.map { LottoNumber(it) })

@@ -1,7 +1,7 @@
 package lotto.domain
 
 class LottoPurchaseAmount(val money: Int, lottoPrice: Int) {
-    var purchasableCount: Int
+    val purchasableCount: Int
 
     init {
         require(money % lottoPrice == REMAINING) { ERROR_NOT_THOUSAND_UNIT }
