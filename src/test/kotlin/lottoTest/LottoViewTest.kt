@@ -1,6 +1,6 @@
 package lottoTest
 
-import lotto.LottoService
+import lotto.LottoRankFinder
 import lotto.LottoView
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
@@ -141,7 +141,7 @@ class LottoViewTest {
             )
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
         val bonus = 7
-        val rankMap = LottoService().getLottoRankMany(manyLotto, winningLotto, bonus)
+        val rankMap = LottoRankFinder().findLottoRanks(manyLotto, winningLotto, bonus)
         lottoView.printResult(rankMap)
         assertThat(output.toString()).contains(
             """
