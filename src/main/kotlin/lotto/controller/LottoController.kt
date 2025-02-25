@@ -1,10 +1,10 @@
 package lotto.controller
 
-import lotto.controller.ViewMapper.mapToLottoCount
-import lotto.controller.ViewMapper.mapToLottoResultsDescriptions
-import lotto.controller.ViewMapper.mapToOutput
-import lotto.controller.ViewMapper.mapToProfitRate
-import lotto.controller.ViewMapper.mapToRandomLottos
+import lotto.controller.Mapper.mapToLottoCount
+import lotto.controller.Mapper.mapToLottoResultsDescriptions
+import lotto.controller.Mapper.mapToOutput
+import lotto.controller.Mapper.mapToProfitRate
+import lotto.controller.Mapper.mapToRandomLottos
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.WinLotto

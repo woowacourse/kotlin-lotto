@@ -5,7 +5,7 @@ import lotto.domain.LottoResult
 import lotto.domain.ProfitCalculator
 import lotto.domain.WinLotto
 
-object ViewMapper {
+object Mapper {
     const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
     const val BONUS_NUMBER_MATCHED = ", 보너스 볼 일치"
 
