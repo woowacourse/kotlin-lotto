@@ -21,10 +21,22 @@ class LottoController(
         Validator.manualAmountValidator(manualAmount, amount)
 
         outputView.printManualLottoHeader()
-        repeat(manualAmount) { Lotto(inputView.inputManualLottoNumbers().map { LottoNumber.of(it) }) }
 
-        printLottoAmount(amount)
-        val lottos: List<Lotto> = getLottos(amount)
+        // n개 만큼 입력받기
+        // 입력 받은거를 변환하기
+        val manualLottos: List<Lotto> =
+            (0 until manualAmount).map {
+                val lotto =
+                    inputView.inputManualLottoNumbers()
+                        .map { LottoNumber.of(it) }
+                Lotto(lotto)
+            }
+
+        getManualLottos(manualLottos)
+        printLottoAmount(amount, manualAmount)
+        printLottos(manualLottos)
+
+        val lottos: List<Lotto> = getLottos(amount - manualAmount)
         printLottos(lottos)
 
         val winningNumbers: List<LottoNumber> = getWinningNumbers()
@@ -48,12 +60,20 @@ class LottoController(
         return Purchase(price).calculateAmountOfLottos()
     }
 
-    fun printLottoAmount(amount: Int) {
-        outputView.printLottoAmount(amount)
+    fun printLottoAmount(
+        amount: Int,
+        manualAmount: Int,
+    ) {
+        outputView.printLottoAmount(amount, manualAmount)
     }
 
     fun getLottos(amount: Int): List<Lotto> {
         val lottos: List<Lotto> = LottoFactory().generateLottos(amount)
+        return lottos
+    }
+
+    fun getManualLottos(manualLottos: List<Lotto>): List<Lotto> {
+        val lottos: List<Lotto> = LottoFactory().generateManualLotto(manualLottos)
         return lottos
     }
 

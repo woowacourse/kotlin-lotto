@@ -10,6 +10,10 @@ class LottoFactory {
         return List(amount) { generateLottoNumbers() }
     }
 
+    fun generateManualLotto(manualLotto: List<Lotto>): List<Lotto> {
+        return manualLotto
+    }
+
     companion object {
         private const val MIN_RANGE = 1
         private const val MAX_RANGE = 45

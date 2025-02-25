@@ -6,12 +6,15 @@ import lotto.domain.Profit
 import lotto.domain.Rank
 
 object OutputView {
-    fun printLottoAmount(amount: Int) {
-        println("${amount}개를 구매했습니다.")
-    }
-
     fun printManualLottoHeader() {
         println(MANUAL_LOTTO_NUMBER_MESSAGE)
+    }
+
+    fun printLottoAmount(
+        amount: Int,
+        manualAmount: Int,
+    ) {
+        println("수동으로 ${manualAmount}개, 자동으로 ${amount - manualAmount}개를 구매했습니다.")
     }
 
     fun printLottos(lottos: List<Lotto>) {
