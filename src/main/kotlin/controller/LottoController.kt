@@ -44,7 +44,6 @@ class LottoController(
             action = {
                 val manualLottoAmount = inputView.readManualLottoAmount().toInt()
                 LottoGenerator(purchasePrice).getAutoLottoAmount(manualLottoAmount).also { ManualLottoAmountValidator(it) }
-                manualLottoAmount
             },
             onError = { outputView.printErrorMessage(it) },
         )
@@ -58,9 +57,7 @@ class LottoController(
             action = {
                 inputView.askForManualLottoNumber()
                 val manualLottoNumbers = List(manualLottoAmount) { inputView.readManualLottoNumber() }
-                val generator = LottoGenerator(money)
-                val lotto = generator.makeLotto(manualLottoAmount, manualLottoNumbers)
-                lotto
+                LottoGenerator(money).makeLotto(manualLottoAmount, manualLottoNumbers)
             },
             onError = { outputView.printErrorMessage(it) },
         )
