@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.domain.Lottos
 import lotto.domain.Order
 import lotto.domain.Results
 import lotto.domain.WinningLotto
@@ -11,7 +10,7 @@ import lotto.view.View
 object LottoController {
     fun run() {
         val order: Order = placeOrder()
-        val userLottos: Lottos = makeLottos(order)
+        val userLottos: List<Lotto> = makeLottos(order)
         val winningLotto: WinningLotto = readWinningLotto()
         showResult(winningLotto, userLottos)
     }
@@ -22,28 +21,26 @@ object LottoController {
         return Order(payment, manualQuantity)
     }
 
-    private fun makeLottos(order: Order): Lottos {
+    private fun makeLottos(order: Order): List<Lotto> {
         val totalQuantity: Int = order.payment / Lotto.PRICE
         val manualQuantity: Int = order.manualQuantity
         val automaticQuantity: Int = totalQuantity - manualQuantity
 
-        val manualLottos: Lottos = makeLottosManually(manualQuantity)
-        val automaticLottos: Lottos = makeLottosAutomatically(automaticQuantity)
+        val manualLottos: List<Lotto> = makeLottosManually(manualQuantity)
+        val automaticLottos: List<Lotto> = makeLottosAutomatically(automaticQuantity)
         View.showLottoCount(manualQuantity, automaticQuantity)
-        val allLottos = Lottos(manualLottos.list + automaticLottos.list)
+        val allLottos = manualLottos + automaticLottos
         View.showLottos(allLottos)
         return allLottos
     }
 
-    private fun makeLottosManually(quantity: Int): Lottos {
+    private fun makeLottosManually(quantity: Int): List<Lotto> {
         if (quantity > 0) View.requestManualNumbers()
-        val lottoList = List(quantity) { Lotto(View.readManualNumbers().map(::LottoNumber)) }
-        return Lottos(lottoList)
+        return List(quantity) { Lotto(View.readManualNumbers().map(::LottoNumber)) }
     }
 
-    private fun makeLottosAutomatically(quantity: Int): Lottos {
-        val lottoList = List(quantity) { Lotto(makeRandomNumbers()) }
-        return Lottos(lottoList)
+    private fun makeLottosAutomatically(quantity: Int): List<Lotto> {
+        return List(quantity) { Lotto(makeRandomNumbers()) }
     }
 
     private fun makeRandomNumbers(): List<LottoNumber> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map(::LottoNumber)
@@ -57,7 +54,7 @@ object LottoController {
 
     private fun showResult(
         winningLotto: WinningLotto,
-        userLottos: Lottos,
+        userLottos: List<Lotto>,
     ) {
         val results: Results = Results.from(winningLotto, userLottos)
         val tally = results.getTally()

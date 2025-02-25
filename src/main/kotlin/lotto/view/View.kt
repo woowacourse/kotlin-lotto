@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.domain.Lottos
+import lotto.domain.Lotto
 import lotto.domain.Result
 
 object View {
@@ -31,7 +31,7 @@ object View {
         OutputView.showLottoCount(manualQuantity, automaticQuantity)
     }
 
-    fun showLottos(lottos: Lottos) {
+    fun showLottos(lottos: List<Lotto>) {
         OutputView.showLottos(lottos)
     }
 

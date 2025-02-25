@@ -38,10 +38,10 @@ class Results(
     companion object {
         fun from(
             winningLotto: WinningLotto,
-            userLottos: Lottos,
+            userLottos: List<Lotto>,
         ): Results =
             Results(
-                userLottos.list.map { userLotto: Lotto ->
+                userLottos.map { userLotto: Lotto ->
                     Result.from(winningLotto, userLotto)
                 },
             )

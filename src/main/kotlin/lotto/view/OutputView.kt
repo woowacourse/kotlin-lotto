@@ -2,7 +2,6 @@ package lotto.view
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.domain.Lottos
 import lotto.domain.Result
 import lotto.domain.Results
 import kotlin.math.floor
@@ -30,8 +29,8 @@ object OutputView {
         println(MESSAGE_RESULT_PURCHASE_QUANTITY.format(manualQuantity, automaticQuantity))
     }
 
-    fun showLottos(lottos: Lottos) {
-        lottos.list.forEach { lotto: Lotto ->
+    fun showLottos(lottos: List<Lotto>) {
+        lottos.forEach { lotto: Lotto ->
             println(lotto.numbers.map(LottoNumber::value).sorted())
         }
     }
