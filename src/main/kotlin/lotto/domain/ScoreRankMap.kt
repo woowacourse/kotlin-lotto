@@ -12,6 +12,12 @@ class ScoreRankMap(
 
     fun getPaid() = map.values.sum() * LOTTO_PRICE
 
+    fun getRate(): String {
+        val earned = getEarned()
+        val paid = getPaid()
+        return if (paid == 0) "0.0" else String.format("%.2f", earned.toDouble() / paid.toDouble())
+    }
+
     private fun requireRankMap() {
         val missingKeys = Rank.entries.filter { it !in map }
         require(missingKeys.isEmpty()) { IllegalArgumentException("올바르지 않은 값입니다") }

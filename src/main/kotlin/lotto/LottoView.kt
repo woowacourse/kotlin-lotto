@@ -4,7 +4,6 @@ import lotto.domain.LOTTO_PRICE
 import lotto.domain.Lotto
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
-import lotto.global.LottoUtil
 import lotto.global.LottoValidator
 import lotto.global.Message
 
@@ -31,7 +30,7 @@ class LottoView {
     }
 
     fun printResult(scoreRankMap: ScoreRankMap) {
-        val rate = LottoUtil.getRate(scoreRankMap)
+        val rate = scoreRankMap.getRate()
         println(
             """
             당첨 통계
