@@ -8,7 +8,7 @@ import lotto.domain.Results
 import lotto.domain.WinningLotto
 import lotto.view.View
 
-class LottoController {
+object LottoController {
     fun run() {
         val order: Order = placeOrder()
         val userLottos: Lottos = makeLottos(order)
