@@ -17,29 +17,21 @@ class OutputView {
         }
     }
 
+    private fun getMatchMessage(rank: Rank): String =
+        when (rank) {
+            Rank.FIRST -> MESSAGE_MATCH_SIX
+            Rank.SECOND -> MESSAGE_MATCH_FIVE_BONUS
+            Rank.THIRD -> MESSAGE_MATCH_FIVE
+            Rank.FOURTH -> MESSAGE_MATCH_FOUR
+            Rank.FIFTH -> MESSAGE_MATCH_THREE
+            Rank.MISS -> MESSAGE_MATCH_MISS
+        }
+
     fun printResult(results: Map<Rank, Int>) {
         println(MESSAGE_RESULT_HEADER)
-        for (result in results) {
-            val matchMessage =
-                when (result.key) {
-                    Rank.FIRST -> MESSAGE_MATCH_SIX
-                    Rank.SECOND -> MESSAGE_MATCH_FIVE_BONUS
-                    Rank.THIRD -> MESSAGE_MATCH_FIVE
-                    Rank.FOURTH -> MESSAGE_MATCH_FOUR
-                    Rank.FIFTH -> MESSAGE_MATCH_THREE
-                    Rank.MISS -> MESSAGE_MATCH_MISS
-                }
-            val prizeMessage =
-                when (result.key) {
-                    Rank.FIRST -> Rank.FIRST.winningMoney
-                    Rank.SECOND -> Rank.SECOND.winningMoney
-                    Rank.THIRD -> Rank.THIRD.winningMoney
-                    Rank.FOURTH -> Rank.FOURTH.winningMoney
-                    Rank.FIFTH -> Rank.FIFTH.winningMoney
-                    Rank.MISS -> Rank.MISS.winningMoney
-                }
-
-            println(MESSAGE_RESULT.format(matchMessage, prizeMessage, result.value))
+        results.forEach { (rank, count) ->
+            val matchMessage = getMatchMessage(rank)
+            println(MESSAGE_RESULT.format(matchMessage, rank.winningMoney, count))
         }
     }
 
