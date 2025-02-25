@@ -17,16 +17,16 @@ class LottoMatchCalculatorTest {
     fun setUp() {
         purchaseLotto =
             listOf(
-                Lotto.lottoOf(1, 2, 3, 4, 5, 6),
-                Lotto.lottoOf(1, 2, 3, 4, 5, 7),
-                Lotto.lottoOf(1, 2, 3, 4, 8, 7),
-                Lotto.lottoOf(1, 2, 3, 9, 8, 7),
-                Lotto.lottoOf(1, 2, 10, 9, 8, 7),
-                Lotto.lottoOf(1, 11, 10, 9, 8, 7),
-                Lotto.lottoOf(12, 11, 10, 9, 8, 7),
+                Lotto.from(1, 2, 3, 4, 5, 6),
+                Lotto.from(1, 2, 3, 4, 5, 7),
+                Lotto.from(1, 2, 3, 4, 8, 7),
+                Lotto.from(1, 2, 3, 9, 8, 7),
+                Lotto.from(1, 2, 10, 9, 8, 7),
+                Lotto.from(1, 11, 10, 9, 8, 7),
+                Lotto.from(12, 11, 10, 9, 8, 7),
             )
-        purchaseOneLotto = listOf(Lotto.lottoOf(1, 2, 3, 4, 5, 6))
-        winningLotto = WinningLotto(Lotto.lottoOf(1, 3, 4, 5, 6, 7), BonusNumber(2))
+        purchaseOneLotto = listOf(Lotto.from(1, 2, 3, 4, 5, 6))
+        winningLotto = WinningLotto(Lotto.from(1, 3, 4, 5, 6, 7), BonusNumber(2))
     }
 
     @Test

@@ -13,7 +13,7 @@ class Lotto(val numbers: List<LottoNumber>) {
         const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 ${LOTTO_SIZE}개 입니다."
         const val DUPLICATED_LOTTO_NUMBERS = "$ERROR 로또 번호는 중복이 없습니다."
 
-        fun lottoOf(vararg numbers: Int): Lotto {
+        fun from(vararg numbers: Int): Lotto {
             return Lotto(numbers.map { LottoNumber(it) })
         }
 

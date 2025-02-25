@@ -14,8 +14,8 @@ class LottoGeneratorTest {
     fun setup() {
         manualLottoNumbers =
             listOf(
-                Lotto.lottoOf(1, 3, 4, 5, 6, 7),
-                Lotto.lottoOf(1, 2, 3, 4, 5, 6),
+                Lotto.from(1, 3, 4, 5, 6, 7),
+                Lotto.from(1, 2, 3, 4, 5, 6),
             )
     }
 
