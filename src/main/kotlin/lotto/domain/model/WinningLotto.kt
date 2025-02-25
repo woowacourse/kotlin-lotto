@@ -16,7 +16,7 @@ class WinningLotto(
 
     private fun getCountOfMatch(lottoTicket: LottoTicket): Int = lottoTicket.countMatchingNumbers(winningNumbers)
 
-    private fun hasBonusNumber(lottoTicket: LottoTicket): Boolean = lottoTicket.hasBonusNumber(bonusNumber)
+    private fun hasBonusNumber(lottoTicket: LottoTicket): Boolean = lottoTicket.hasNumber(bonusNumber)
 
     companion object {
         private const val ERROR_BONUS_DUPLICATE = "보너스 번호는 당첨 번호와 중복되면 안 됩니다."

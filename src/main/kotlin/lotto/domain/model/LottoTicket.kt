@@ -7,5 +7,5 @@ class LottoTicket(
 
     fun countMatchingNumbers(winningNumbers: Set<LottoNumber>): Int = numbers.intersect(winningNumbers).size
 
-    fun hasBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
+    fun hasNumber(number: LottoNumber): Boolean = numbers.contains(number)
 }
