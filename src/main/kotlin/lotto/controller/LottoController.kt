@@ -5,6 +5,7 @@ import lotto.domain.model.LottoOrder
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.AutomaticLottoMachine
 import lotto.domain.service.LottoCalculator
+import lotto.domain.service.ManualLottoMachine
 import lotto.domain.value.LottoNumber
 import lotto.domain.value.PurchaseAmount
 import lotto.view.InputView
@@ -14,24 +15,30 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    fun runLotto() {
-        val lottoMachine = AutomaticLottoMachine()
-        val lottoCalculator = LottoCalculator()
+    fun run() {
+        val manualLottoMachine = ManualLottoMachine()
+        val automaticLottoMachine = AutomaticLottoMachine()
 
         val purchaseAmount = getPurchaseAmount()
-        val quantity = purchaseAmount.getPurchaseQuantity()
+        val totalLottoCount = purchaseAmount.getPurchaseQuantity()
 
         val manualLottoCount = getManualLottoCount()
         val manualLottoNumbers = getManualLottoNumbers(manualLottoCount)
-
         val manualLottoOrder = LottoOrder(manualLottoCount, manualLottoNumbers)
 
-        val lottoOrder = LottoOrder(quantity)
-        val lottos = lottoMachine.generate(lottoOrder)
-        outputView.printPurchaseDetail(lottos)
+        val automaticLottoCount = totalLottoCount - manualLottoCount
+        val automaticLottoOrder = LottoOrder(automaticLottoCount)
+
+        val manualLottos = manualLottoMachine.generate(manualLottoOrder)
+        val automaticLottos = automaticLottoMachine.generate(automaticLottoOrder)
+
+        val totalLottos = manualLottos + automaticLottos
+        outputView.printPurchaseDetail(manualLottoCount, automaticLottoCount, totalLottos)
+
+        val lottoCalculator = LottoCalculator()
 
         val winningLotto = getWinningLotto()
-        val lottoStats = lottoCalculator.calculate(winningLotto, lottos)
+        val lottoStats = lottoCalculator.calculate(winningLotto, totalLottos)
         val earningRate = lottoCalculator.calculateEarningRate(lottoStats, purchaseAmount)
         outputView.printLottoResult(lottoStats, earningRate)
     }

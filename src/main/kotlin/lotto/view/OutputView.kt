@@ -4,8 +4,12 @@ import lotto.domain.model.Lotto
 import lotto.enums.Rank
 
 class OutputView {
-    fun printPurchaseDetail(lottos: List<Lotto>) {
-        printPurchaseQuantity(lottos.size)
+    fun printPurchaseDetail(
+        manualLottoCount: Int,
+        automaticLottoCount: Int,
+        lottos: List<Lotto>,
+    ) {
+        printPurchaseQuantity(manualLottoCount, automaticLottoCount)
         printLottos(lottos)
     }
 
@@ -18,8 +22,11 @@ class OutputView {
         printEarningRate(earningRate)
     }
 
-    private fun printPurchaseQuantity(quantity: Int) {
-        println(OUTPUT_PURCHASE_QUANTITY.format(quantity))
+    private fun printPurchaseQuantity(
+        manualLottoCount: Int,
+        automaticLottoCount: Int,
+    ) {
+        println(OUTPUT_PURCHASE_QUANTITY.format(manualLottoCount, automaticLottoCount))
     }
 
     private fun printLottos(lottos: List<Lotto>) {
@@ -41,7 +48,7 @@ class OutputView {
     }
 
     companion object {
-        private const val OUTPUT_PURCHASE_QUANTITY = "%d개를 구매했습니다."
+        private const val OUTPUT_PURCHASE_QUANTITY = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val OUTPUT_LOTTO_RESULT = "\n당첨 통계\n---------"
         private const val OUTPUT_RANK_DETAIL = "%d개 일치 (%d원) - %d개"
         private const val OUTPUT_RANK_DETAIL_BONUS = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
