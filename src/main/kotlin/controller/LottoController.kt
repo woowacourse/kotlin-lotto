@@ -9,6 +9,7 @@ import domain.model.PurchasePrice.Companion.toAmount
 import domain.model.WinningLotto
 import domain.service.AutoLottoGenerator
 import domain.service.LottoMatchCalculator
+import domain.service.ManualLottoGenerator
 import util.retryWhenException
 import validator.NumericValidator
 import view.InputView
@@ -17,17 +18,20 @@ import view.OutputView
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val lottoGenerator: AutoLottoGenerator,
+    private val autoLottoGenerator: AutoLottoGenerator,
+    private val manualLottoGenerator: ManualLottoGenerator,
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
         val manualLottoAmount: ManualLottoAmount = getManualLottoAmount(purchasePrice)
+        val manualLotto: List<Lotto> = purchaseManualLotto(manualLottoAmount)
         val autoLotto: List<Lotto> = purchaseAutoLotto(purchasePrice.toAmount(), manualLottoAmount)
-        displayLottoTicket(autoLotto)
+        val lotto = manualLotto + autoLotto
+        displayLottoTicket(lotto)
 
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
-        val lottoResult: LottoResult = LottoMatchCalculator().calculate(autoLotto, winningLotto)
+        val lottoResult: LottoResult = LottoMatchCalculator().calculate(lotto, winningLotto)
         val profitRate = lottoResult.getProfitRate(purchasePrice)
         displayResult(lottoResult, profitRate)
     }
@@ -52,12 +56,31 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
+    private fun purchaseManualLotto(manualLottoAmount: ManualLottoAmount): List<Lotto> =
+        List(manualLottoAmount.value) { getManualLottoNumbers() }
+
+    private fun getManualLottoNumbers(): Lotto =
+        retryWhenException(
+            action = {
+                val input = inputView.readManualLottoNumbers()
+                Lotto(
+                    input
+                        .split(",")
+                        .map {
+                            NumericValidator(it)
+                            LottoNumber(it.trim().toInt())
+                        }.toSet(),
+                )
+            },
+            onError = { outputView.printErrorMessage(it) },
+        )
+
     private fun purchaseAutoLotto(
         totalAmount: Int,
         manualLottoAmount: ManualLottoAmount,
     ): List<Lotto> =
         List(totalAmount - manualLottoAmount.value) {
-            lottoGenerator.makeLotto()
+            autoLottoGenerator.makeLotto()
         }
 
     private fun displayLottoTicket(lottos: List<Lotto>) {
