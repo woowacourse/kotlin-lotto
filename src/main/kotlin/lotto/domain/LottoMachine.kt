@@ -8,7 +8,9 @@ class LottoMachine {
     fun buyLottoTickets(
         purchaseAmount: LottoPayment,
         lottoRandomGenerator: LottoRandomGenerator,
+        purchaseAmount: Int,
     ): List<Lotto> {
+        require(purchaseAmount >= LOTTO_PRICE) { ERROR_UNDER_THOUSAND }
         val lottoCount = getLottoCount(purchaseAmount)
         val lottoTickets: MutableList<Lotto> = mutableListOf()
 

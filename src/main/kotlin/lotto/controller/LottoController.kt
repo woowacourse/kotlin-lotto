@@ -3,7 +3,6 @@ package lotto.controller
 import lotto.domain.Lotto
 import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
-import lotto.domain.LottoPayment
 import lotto.domain.LottoResult
 import lotto.domain.WinningLotto
 import lotto.generator.LottoRandomGenerator
@@ -17,14 +16,18 @@ class LottoController(
     private val lottoMachine = LottoMachine()
 
     fun run() {
-        val purchaseAmount = LottoPayment(getPurchaseAmount())
+        val purchaseAmount = getPurchaseAmount()
         val lottoTicket = prepareLottoTicket(purchaseAmount)
         val winningLotto = readWinningLotto()
         val lottoResult = createLottoResult(purchaseAmount, lottoTicket, winningLotto)
         showResult(lottoResult)
     }
 
-    private fun prepareLottoTicket(purchaseAmount: LottoPayment): List<Lotto> {
+    private fun getPurchaseAmount(): Int {
+        return inputView.getPurchaseAmount().toInt()
+    }
+
+    private fun prepareLottoTicket(purchaseAmount: Int): List<Lotto> {
         val lottoTickets = lottoMachine.buyLottoTickets(purchaseAmount, LottoRandomGenerator())
         outputView.printPurchasedLottoTickets(lottoTickets)
         return lottoTickets
@@ -37,7 +40,7 @@ class LottoController(
     }
 
     private fun createLottoResult(
-        purchaseAmount: LottoPayment,
+        purchaseAmount: Int,
         lottoTicket: List<Lotto>,
         winningLotto: WinningLotto,
     ): LottoResult {
@@ -51,10 +54,6 @@ class LottoController(
     private fun showResult(lottoResult: LottoResult) {
         outputView.printWinningStats(lottoResult.getWinningStats())
         outputView.printProfit(lottoResult.getProfitRate())
-    }
-
-    private fun getPurchaseAmount(): Int {
-        return inputView.getPurchaseAmount().toInt()
     }
 
     private fun getWinningNumber(): Lotto {
