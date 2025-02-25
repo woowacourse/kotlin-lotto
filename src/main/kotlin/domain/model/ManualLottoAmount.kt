@@ -5,7 +5,7 @@ class ManualLottoAmount(
     totalPurchaseAmount: Int,
 ) {
     init {
-        require(value <= totalPurchaseAmount)
+        require(value <= totalPurchaseAmount) { CANNOT_MORE_THAN_TOTAL_PURCHASE_AMOUNT }
     }
 
     companion object {
