@@ -6,6 +6,7 @@ import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.PurchaseAmount
 import lotto.domain.WinningLotto
+import lotto.service.LottoGenerator
 import lotto.util.retryWhenException
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -19,7 +20,9 @@ class LottoController(
         val amount = PurchaseAmount(price).calculateAmountOfLottos()
         outputView.printLottoAmount(amount)
 
-        val lottos: List<Lotto> = LottoFactory().generateLottos(amount)
+        val lottoFactory = LottoFactory(LottoGenerator())
+        val lottos = lottoFactory.generateLottos(amount)
+
         outputView.printLottos(lottos)
 
         val winningNumbers: Lotto = getWinningNumbers()

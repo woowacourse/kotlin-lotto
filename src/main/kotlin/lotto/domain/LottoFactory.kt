@@ -1,18 +1,14 @@
 package lotto.domain
 
-class LottoFactory {
+import lotto.service.LottoNumberGenerator
+
+class LottoFactory(private val lottoNumberGenerator: LottoNumberGenerator) {
     fun generateLottoNumbers(): Lotto {
-        val lottoNumbers = (MIN_RANGE..MAX_RANGE).shuffled().take(LOTTO_SIZE).sorted().map { LottoNumber(it) }
+        val lottoNumbers = lottoNumberGenerator.generate()
         return Lotto(lottoNumbers)
     }
 
     fun generateLottos(amount: Int): List<Lotto> {
         return List(amount) { generateLottoNumbers() }
-    }
-
-    private companion object {
-        const val MIN_RANGE = 1
-        const val MAX_RANGE = 45
-        const val LOTTO_SIZE = 6
     }
 }
