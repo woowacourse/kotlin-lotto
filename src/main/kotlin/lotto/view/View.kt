@@ -24,8 +24,11 @@ object View {
         return InputView.readLottoNumbers()
     }
 
-    fun showLottoCount(lottoCount: Int) {
-        OutputView.showLottoCount(lottoCount)
+    fun showLottoCount(
+        manualQuantity: Int,
+        automaticQuantity: Int,
+    ) {
+        OutputView.showLottoCount(manualQuantity, automaticQuantity)
     }
 
     fun showLottos(lottos: Lottos) {

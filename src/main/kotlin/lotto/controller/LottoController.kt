@@ -19,10 +19,11 @@ class LottoController {
         val price: Int = View.readPrice()
         val totalQuantity: Int = price / Lotto.PRICE
         val manualQuantity: Int = View.readManualQuantity()
+        val automaticQuantity: Int = totalQuantity - manualQuantity
         val lottoGenerator = LottoGenerator(totalQuantity, manualQuantity)
         val manualLottos = lottoGenerator.makeManualLottos()
         val automaticLottos = lottoGenerator.makeAutomaticLottos()
-        View.showLottoCount(automaticLottos.value.size)
+        View.showLottoCount(manualQuantity, automaticQuantity)
         View.showLottos(automaticLottos)
         return automaticLottos
     }
