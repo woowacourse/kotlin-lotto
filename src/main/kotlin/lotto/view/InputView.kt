@@ -27,4 +27,17 @@ object InputView {
             input.toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
         return number
     }
+
+    fun readLottosNumbers(size: Int): List<List<Int>> {
+        val lottoNumbers: List<List<Int>> =
+            (1..size).map {
+                val input: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
+                val lottoNumber: List<Int> =
+                    input.split(LOTTO_NUMBERS_DELIMITER).map { lottoNumber: String ->
+                        lottoNumber.toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
+                    }
+                lottoNumber
+            }
+        return lottoNumbers
+    }
 }

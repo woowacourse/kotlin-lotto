@@ -12,11 +12,11 @@ object View {
         return InputView.readNumber()
     }
 
-    fun readManualLottoNumbers(size: Int): List<List<Int>>? {
+    fun readManualLottosNumbers(size: Int): List<List<Int>>? {
         if (size == 0) return null
-        OutputView.requestManualLotto()
-        val manualNumbers: List<List<Int>> = InputView.readLottosNumbers()
-        return manualNumbers
+        OutputView.requestManualLottosNumbers()
+        val manualLottoNumbers: List<List<Int>> = InputView.readLottosNumbers(size)
+        return manualLottoNumbers
     }
 
     fun showLottoCount(lottoCount: Int) {

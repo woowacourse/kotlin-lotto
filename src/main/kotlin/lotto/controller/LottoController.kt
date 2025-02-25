@@ -17,6 +17,7 @@ class LottoController {
     fun start() {
         val pay: Int = View.readPay()
         val manualLottoCount: Int = View.readManualLottoCount()
+        val manualLottos: List<List<Int>>? = View.readManualLottosNumbers(manualLottoCount)
         View.showLottoCount(mapToLottoCount(pay))
         makeLotto(pay)
         showBoughtLottos()
