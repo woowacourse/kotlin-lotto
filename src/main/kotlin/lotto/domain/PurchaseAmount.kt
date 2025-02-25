@@ -1,15 +1,14 @@
 package lotto.domain
 
 class PurchaseAmount(
-    val amountOfPurchase: String,
+    val amountOfPurchase: Int,
 ) {
     init {
-        require(amountOfPurchase.all { it.isDigit() }) { "구입 금액은 숫자로 입력해주세요" }
         require(amountOfPurchase.toInt() % LOTTO_PRICE == 0) { "로또는 1000원 단위로 구입해주세요" }
     }
 
     fun calculateAmountOfLottos(): Int {
-        return amountOfPurchase.toInt() / LOTTO_PRICE
+        return amountOfPurchase / LOTTO_PRICE
     }
 
     companion object {
