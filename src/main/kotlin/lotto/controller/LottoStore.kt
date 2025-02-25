@@ -1,6 +1,5 @@
 package lotto.controller
 
-import lotto.Constants
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
 import lotto.domain.model.Rank
@@ -20,6 +19,7 @@ class LottoStore(
     fun run() {
         val amount = inputView.inputPurchaseAmount()
         val manualCount = inputView.inputManualCount()
+        val manualTickets = inputView.inputManualNumbers(manualCount)
         val autoCount = calculateAutoCount(amount, manualCount)
         outputView.printPurchaseCount(manualCount, autoCount)
         val lottoTickets = generateLottoTicket(autoCount)
@@ -35,8 +35,6 @@ class LottoStore(
         purchaseAmount: Int,
         manualCount: Int,
     ) = lottoMachine.calculateAutoCount(purchaseAmount, manualCount)
-
-    private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
     private fun generateLottoTicket(count: Int): List<LottoTicket> = LottoMachine().purchase(count)
 

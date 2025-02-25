@@ -1,6 +1,8 @@
 package lotto.view
 
 import lotto.Constants
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoTicket
 
 class InputView {
     fun validateAmount(amount: String): Int {
@@ -39,6 +41,11 @@ class InputView {
         return manualCount.toInt()
     }
 
+    fun inputManualNumbers(count: Int): List<LottoTicket> {
+        println(MESSAGE_INPUT_MANUAL_NUMBERS)
+        return List(count) { LottoTicket(readln().split(COMMA).map { LottoNumber(it.trim().toInt()) }.toSet()) }
+    }
+
     fun inputWinningNumbers(): List<Int> {
         println(MESSAGE_INPUT_WINNING_NUMBERS)
         val winningNumbers = readln().split(COMMA).map { it.trim() }
@@ -54,6 +61,7 @@ class InputView {
     companion object {
         private const val MESSAGE_INPUT_AMOUNT = "구입금액을 입력해 주세요."
         private const val MESSAGE_INPUT_MANUAL_COUNT = "\n수동으로 구매할 로또 수를 입력해 주세요."
+        private const val MESSAGE_INPUT_MANUAL_NUMBERS = "\n수동으로 구매할 번호를 입력해 주세요."
         private const val MESSAGE_INPUT_WINNING_NUMBERS = "\n지난 주 당첨 번호를 입력해 주세요."
         private const val MESSAGE_INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
 
