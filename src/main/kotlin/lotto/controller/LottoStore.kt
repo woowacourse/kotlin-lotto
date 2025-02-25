@@ -22,6 +22,7 @@ class LottoStore(
         val manualTickets = inputView.inputManualNumbers(manualCount)
         val autoCount = calculateAutoCount(amount, manualCount)
         outputView.printPurchaseCount(manualCount, autoCount)
+        outputView.printLotto(manualTickets)
         val lottoTickets = generateLottoTicket(autoCount)
         outputView.printLotto(lottoTickets)
         val winningLotto = inputWinningLotto()
