@@ -12,7 +12,7 @@ class ResultTest {
         boughtLotto: Lotto,
         expectedResult: Result,
     ) {
-        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), bonusNumber = LottoNumber(7))
+        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), LottoNumber(7))
         assertThat(Result.from(winningLotto, boughtLotto)).isEqualTo(expectedResult)
     }
 
