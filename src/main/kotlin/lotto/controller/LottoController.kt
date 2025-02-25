@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.model.Lotto
 import lotto.model.LottoCount
-import lotto.model.LottoCount.Companion.ERROR_EXCEED_LOTTO_COUNT
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
@@ -36,7 +35,7 @@ class LottoController(
         try {
             outputView.printPurchaseManualLottoCountGuide()
             val manualLottoCount = inputView.readManualLottoPurchaseCount()
-            require(wholeLottoCount.isAvailPurchaseLottoCount(manualLottoCount)) { ERROR_EXCEED_LOTTO_COUNT }
+            wholeLottoCount.validateLottoCount(manualLottoCount)
             manualLottoCount
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
