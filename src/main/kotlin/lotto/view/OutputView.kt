@@ -21,6 +21,17 @@ object OutputView {
         printStatistics(lottoResult)
     }
 
+    fun printProfit(profitRate: Double) {
+        val profitStatus = Profit.profitOf(profitRate)
+        println(
+            "총 수익률은 ${"%.2f".format(profitRate)}입니다. (${profitStatus.message})",
+        )
+    }
+
+    fun printErrorMessage(message: String?) {
+        println(message)
+    }
+
     private fun printHeader() {
         println("\n당첨 통계")
         println("---------")
@@ -42,12 +53,5 @@ object OutputView {
         val count = lottoResult.getWinningStatistics().getOrDefault(rank, 0)
 
         return "${rank.countOfMatch}개 일치$bonusText (${rank.winningMoney}원) - ${count}개"
-    }
-
-    fun printProfit(profitRate: Double) {
-        val profitStatus = Profit.profitOf(profitRate)
-        println(
-            "총 수익률은 ${"%.2f".format(profitRate)}입니다. (${profitStatus.message})",
-        )
     }
 }
