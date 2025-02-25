@@ -26,9 +26,9 @@ class LottoResult(private val winningLotto: WinningLotto) {
 
     fun calculateProfit(
         totalPrize: Long,
-        purchaseAmount: LottoPayment,
+        purchaseAmount: Int,
     ) {
-        profitRate = totalPrize / purchaseAmount.toInt().toDouble()
+        profitRate = totalPrize / purchaseAmount.toDouble()
     }
 
     fun getWinningStats() = winningStats
