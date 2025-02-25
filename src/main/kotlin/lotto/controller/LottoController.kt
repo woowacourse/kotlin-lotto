@@ -15,15 +15,16 @@ import lotto.view.LottoOutputView
 class LottoController {
     private val inputView = LottoInputView()
     private val outputView = LottoOutputView()
+    private val manualLottoGenerator = ManualLottoGenerator()
 
     fun play() {
         val purchase = inputView.inputPurchase()
         val manualPurchase = inputView.inputManualPurchase()
         val count = LottoTicketCounter(purchase, manualPurchase).manualCount()
-        val manual = inputView.inputManualLotto(count[0])
+        val manualLotto = inputView.inputManualLotto(count[0], manualLottoGenerator)
         outputView.printLottoCount(count)
         val lottoBundle = LottoStore().getTickets(count[1], RandomLottoGenerator())
-        val manualLottoBundle = LottoStore().getTickets(count[0], ManualLottoGenerator(manual))
+        val manualLottoBundle = LottoStore().getTickets(count[0], manualLotto)
         outputView.printManualLottoBundle(manualLottoBundle)
         outputView.printLottoBundle(lottoBundle)
         val allLottoBundle = lottoBundle + manualLottoBundle
