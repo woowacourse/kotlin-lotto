@@ -36,7 +36,7 @@ object LottoController {
     }
 
     private fun makeLottosManually(quantity: Int): Lottos {
-        View.requestManualNumbers()
+        if (quantity > 0) View.requestManualNumbers()
         val lottoList = List(quantity) { Lotto(View.readManualNumbers().map(::LottoNumber)) }
         return Lottos(lottoList)
     }
