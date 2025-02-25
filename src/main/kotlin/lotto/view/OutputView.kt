@@ -4,7 +4,7 @@ import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.Lottos
 import lotto.domain.Result
-import lotto.domain.ResultClassification
+import lotto.domain.Results
 import kotlin.math.floor
 
 object OutputView {
@@ -73,10 +73,10 @@ object OutputView {
         )
 
     private fun makeResultSummary(profitRate: Double): String =
-        when (ResultClassification.from(profitRate)) {
-            ResultClassification.PROFIT -> MESSAGE_PROFIT_RATE_PROFIT
-            ResultClassification.LOSS -> MESSAGE_PROFIT_RATE_LOSS
-            ResultClassification.BREAKEVEN -> MESSAGE_PROFIT_RATE_BREAKEVEN
+        when (Results.Classification.from(profitRate)) {
+            Results.Classification.PROFIT -> MESSAGE_PROFIT_RATE_PROFIT
+            Results.Classification.LOSS -> MESSAGE_PROFIT_RATE_LOSS
+            Results.Classification.BREAKEVEN -> MESSAGE_PROFIT_RATE_BREAKEVEN
         }
 
     private const val MESSAGE_ENTER_PAYMENT = "구입금액을 입력해 주세요."

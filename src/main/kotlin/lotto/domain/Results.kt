@@ -3,6 +3,22 @@ package lotto.domain
 class Results(
     private val value: List<Result>,
 ) {
+    enum class Classification {
+        PROFIT,
+        LOSS,
+        BREAKEVEN,
+        ;
+
+        companion object {
+            fun from(profitRate: Double): Classification =
+                when {
+                    profitRate > 1.0 -> PROFIT
+                    profitRate < 1.0 -> LOSS
+                    else -> BREAKEVEN
+                }
+        }
+    }
+
     fun getTally(): Map<Result, Int> {
         val tally = Result.entries.associateWith { 0 }.toMutableMap()
         value.forEach { result: Result ->
