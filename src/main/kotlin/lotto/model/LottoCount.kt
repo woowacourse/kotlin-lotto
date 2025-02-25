@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoCount(
+data class LottoCount(
     val number: Int,
 ) {
     init {

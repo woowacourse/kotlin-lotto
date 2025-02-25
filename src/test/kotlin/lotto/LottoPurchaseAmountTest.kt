@@ -1,5 +1,6 @@
 package lotto
 
+import lotto.model.LottoCount
 import lotto.model.LottoPurchaseAmount
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
@@ -33,6 +34,6 @@ class LottoPurchaseAmountTest {
     ) {
         assertThat(
             LottoPurchaseAmount(money).getLottoCount(),
-        ).isEqualTo(expectedLottoCount)
+        ).isEqualTo(LottoCount(expectedLottoCount))
     }
 }
