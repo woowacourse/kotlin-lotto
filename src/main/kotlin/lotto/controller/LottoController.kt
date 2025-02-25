@@ -1,7 +1,6 @@
 package lotto.controller
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoOrder
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.AutomaticLottoMachine
 import lotto.domain.service.LottoCalculator
@@ -26,13 +25,11 @@ class LottoController(
 
         val manualLottoCount = getManualLottoCount()
         val manualLottoNumbers = getManualLottoNumbers(manualLottoCount)
-        val manualLottoOrder = LottoOrder(manualLottoCount, manualLottoNumbers)
 
         val automaticLottoCount = totalLottoCount - manualLottoCount
-        val automaticLottoOrder = LottoOrder(automaticLottoCount)
 
-        val manualLottos = store.sell(manualLottoMachine, manualLottoOrder)
-        val automaticLottos = store.sell(automaticLottoMachine, automaticLottoOrder)
+        val manualLottos = store.sell(manualLottoMachine, manualLottoCount, manualLottoNumbers)
+        val automaticLottos = store.sell(automaticLottoMachine, automaticLottoCount)
 
         val totalLottos = manualLottos + automaticLottos
         outputView.printPurchaseDetail(manualLottoCount, automaticLottoCount, totalLottos)

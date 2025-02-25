@@ -1,11 +1,11 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoOrder
 
 class LottoStore {
     fun sell(
         lottoMachine: LottoMachine,
-        order: LottoOrder,
-    ): List<Lotto> = lottoMachine.generate(order)
+        lottoCount: Int,
+        lottoNumbers: List<List<Int>>? = null,
+    ): List<Lotto> = lottoMachine.generate(lottoCount, lottoNumbers)
 }

@@ -1,8 +1,10 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoOrder
 
 interface LottoMachine {
-    fun generate(order: LottoOrder): List<Lotto>
+    fun generate(
+        count: Int,
+        lottoNumbers: List<List<Int>>? = null,
+    ): List<Lotto>
 }

@@ -1,8 +1,10 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoOrder
 
 class AutomaticLottoMachine : LottoMachine {
-    override fun generate(order: LottoOrder): List<Lotto> = List(order.count) { Lotto.create() }
+    override fun generate(
+        count: Int,
+        lottoNumbers: List<List<Int>>?,
+    ): List<Lotto> = List(count) { Lotto.create() }
 }
