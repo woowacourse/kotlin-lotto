@@ -16,7 +16,7 @@ class OutputView {
     }
 
     fun printLottoCount(lottoCount: LottoCount) {
-        println(LOTTO_COUNT_MESSAGE_FORMAT.format(lottoCount))
+        println(LOTTO_COUNT_MESSAGE_FORMAT.format(lottoCount.number))
     }
 
     fun printLottos(lottos: Lottos) {

@@ -7,7 +7,7 @@ class LottoPurchaseAmount(
         require(money in MIN_LOTTO_PURCHASE_AMOUNT..MAX_LOTTO_PURCHASE_AMOUNT) { ERROR_OUT_OF_RANGE_LOTTO_PURCHASE_AMOUNT }
     }
 
-    fun getLottoCount(lottoPrice: Int = LOTTO_PRICE): Int = money / lottoPrice
+    fun getLottoCount(lottoPrice: Int = LOTTO_PRICE): LottoCount = LottoCount(money / lottoPrice)
 
     companion object {
         private const val MIN_LOTTO_PURCHASE_AMOUNT = 1_000
