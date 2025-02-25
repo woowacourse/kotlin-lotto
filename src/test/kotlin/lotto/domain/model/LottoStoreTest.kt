@@ -1,6 +1,6 @@
 package lotto.domain.model
 
-import lotto.domain.service.PurchaseCalculator
+import lotto.domain.service.LottoStore
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
@@ -8,12 +8,12 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
-class PurchaseCalculatorTest {
-    private lateinit var purchaseCalculator: PurchaseCalculator
+class LottoStoreTest {
+    private lateinit var lottoStore: LottoStore
 
     @BeforeEach
     fun setUp() {
-        purchaseCalculator = PurchaseCalculator()
+        lottoStore = LottoStore()
     }
 
     @CsvSource(
@@ -26,14 +26,14 @@ class PurchaseCalculatorTest {
         amount: Int,
         count: Int,
     ) {
-        val lottoCount = purchaseCalculator.getLottoCount(amount)
+        val lottoCount = lottoStore.getLottoCount(amount)
         assertThat(lottoCount).isEqualTo(count)
     }
 
     @ValueSource(ints = [999, 0, -1000, -999])
     @ParameterizedTest
     fun `구매 금액이 1000원 미만이라면 예외가 발생한다`(purchaseAmount: Int) {
-        assertThatThrownBy { purchaseCalculator.getLottoCount(purchaseAmount) }.isInstanceOf(IllegalArgumentException::class.java)
+        assertThatThrownBy { lottoStore.getLottoCount(purchaseAmount) }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("${purchaseAmount}원으로 로또를 구매하지 못했습니다 로또는 한 장 이상 구매해야 합니다.")
     }
 }

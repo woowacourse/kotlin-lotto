@@ -5,8 +5,8 @@ import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoNumber.Companion.LOTTO_MAX_NUMBER
 import lotto.domain.model.LottoNumber.Companion.LOTTO_MIN_NUMBER
 
-class RandomLottoGenerator(minNumber: Int = LOTTO_MIN_NUMBER, maxNumber: Int = LOTTO_MAX_NUMBER) :
-    LottoGenerator {
+class RandomLottoMachine(minNumber: Int = LOTTO_MIN_NUMBER, maxNumber: Int = LOTTO_MAX_NUMBER) :
+    LottoMachine {
     private val lottoNumbers =
         (minNumber..maxNumber).map { LottoNumber(it) }
 

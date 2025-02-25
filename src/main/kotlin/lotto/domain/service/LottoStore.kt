@@ -2,7 +2,7 @@ package lotto.domain.service
 
 import lotto.domain.model.Lotto
 
-class PurchaseCalculator {
+class LottoStore {
     fun getLottoCount(
         amount: Int,
         lottoPrice: Int = Lotto.LOTTO_PRICE,

@@ -2,8 +2,8 @@ package lotto.domain.service
 
 import lotto.domain.model.Lotto
 
-class LottosGenerator(
-    private val generator: LottoGenerator = RandomLottoGenerator(),
+class LottosMachine(
+    private val generator: LottoMachine = RandomLottoMachine(),
 ) {
     fun generate(count: Int): List<Lotto> {
         return List(count) { generator.generate(LOTTO_SIZE) }
