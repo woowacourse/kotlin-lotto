@@ -20,13 +20,13 @@ class LottoMachine(
         val lottoTickets = mutableListOf<Lotto>()
         val moneyList = amount.moneySplit(lottoPrize)
         repeat(moneyList.size) {
-            val lotto = publishLotto(lottoPrize)
+            val lotto = publishLotto()
             lottoTickets.add(lotto)
         }
         return lottoTickets
     }
 
-    private fun publishLotto(prize: Amount): Lotto {
+    private fun publishLotto(): Lotto {
         val lottoNumbers =
             shuffle
                 .shuffle(numbers)

@@ -19,10 +19,10 @@ class OutputView {
         println()
         println("당첨 통계")
         println("---------")
-        result.entries.sortedBy { it.key.winningMoney }.filter { it.key != Rank.MISS }.forEach { (rank, value) ->
+        Rank.entries.sortedBy { it.printSequence }.filter { it.printSequence != null }.forEach { rank ->
             print("${rank.countOfMatch}개 일치")
-            if (rank.name == "SECOND") print(", 보너스 볼 일치")
-            print(" (${rank.winningMoney}원) - ${value}개")
+            if (rank.bonusRequired) print(", 보너스 볼 일치")
+            print(" (${rank.winningMoney}원) - ${result.getOrDefault(rank,0)}개")
             println()
         }
         println("총 수익률은 ${String.format("%.2f", earningRate)}입니다.")

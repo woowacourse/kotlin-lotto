@@ -3,10 +3,10 @@ package lotto.controller
 import lotto.model.Amount
 import lotto.model.Lotto
 import lotto.model.LottoMachine
-import lotto.model.LottoMatcher
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
 import lotto.model.PrizeCalculator
+import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -18,10 +18,11 @@ class LottoController(
         val amount = getAmount()
         val lottoMachine = LottoMachine(amount)
         val publishedLotto = publishLotto(lottoMachine)
-        val winningLotto = getWinningLotto()
+        val winningLottoNumber = getWinningLotto()
         val bonusNumber = getBonusNumber()
-        val lottoMatcher = LottoMatcher(winningLotto, bonusNumber)
-        showEarningRate(amount, lottoMatcher, publishedLotto)
+        val winningLotto = WinningLotto(winningLottoNumber, bonusNumber)
+        val prizeCalculator = PrizeCalculator(winningLotto, publishedLotto, amount)
+        showEarningRate(prizeCalculator)
     }
 
     private fun getAmount(): Amount = Amount(inputView.getMoney())
@@ -32,21 +33,16 @@ class LottoController(
         return publishedLotto
     }
 
-    private fun getWinningLotto(): Lotto {
+    private fun getWinningLotto(): LottoNumbers {
         val winningInput = inputView.getWinningLotto()
-        return Lotto(LottoNumbers(winningInput.map { number -> LottoNumber(number) }))
+        return LottoNumbers(winningInput.map { number -> LottoNumber(number) })
     }
 
     private fun getBonusNumber(): LottoNumber = LottoNumber(inputView.getBonusNumber())
 
-    private fun showEarningRate(
-        amount: Amount,
-        lottoMatcher: LottoMatcher,
-        publishedLotto: List<Lotto>,
-    ) {
-        val result = lottoMatcher.matchLotto(publishedLotto)
-        val prizeCalculator = PrizeCalculator()
-        val earningRate = prizeCalculator.calculateEarningRate(amount.money, result)
+    private fun showEarningRate(prizeCalculator: PrizeCalculator) {
+        val result = prizeCalculator.result
+        val earningRate = prizeCalculator.calculateEarningRate()
         outputView.printPrize(result, earningRate)
     }
 
