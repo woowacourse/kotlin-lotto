@@ -6,6 +6,8 @@ import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
 
 class LottoMachine(
     private val amount: Int,
+    val passiveLottoQuantity: Int,
+    private val passiveLottoNumbers: List<Lotto>,
 ) {
     init {
         validateAmountMinimumRange()
@@ -24,12 +26,14 @@ class LottoMachine(
         }
     }
 
-    fun getLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT
+    fun getActiveLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT - passiveLottoQuantity
 
-    fun getLottos(lottoQuantity: Int): Lottos {
+    fun getActiveLottos(lottoQuantity: Int): Lottos {
         val lottos = List<Lotto>(lottoQuantity) { Lotto(getLottoNumbers().map { LottoNumber((it)) }.toSet()) }
         return Lottos(lottos)
     }
+
+    fun getTotalLottos(lottoQuantity: Int): Lottos = Lottos(passiveLottoNumbers).plus(getActiveLottos(lottoQuantity))
 
     private fun getLottoNumbers(): List<Int> {
         val shuffledLottoNumbers = (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE).shuffled()
