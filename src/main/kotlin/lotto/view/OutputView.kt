@@ -2,8 +2,8 @@ package lotto.view
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.domain.LottoResult
 import lotto.domain.Lottos
+import lotto.domain.Result
 import lotto.domain.ResultClassification
 import kotlin.math.floor
 
@@ -47,12 +47,12 @@ object OutputView {
     }
 
     fun showResult(
-        resultTally: Map<LottoResult, Int>,
+        resultTally: Map<Result, Int>,
         profitRate: Double,
     ) {
         println()
         println(MESSAGE_RESULT_HEADER)
-        LottoResult.entries.drop(1).forEach { entry: LottoResult -> println(makePrizeDescription(entry, resultTally)) }
+        Result.entries.drop(1).forEach { entry: Result -> println(makePrizeDescription(entry, resultTally)) }
         println(
             MESSAGE_RESULT_SUMMARY.format(
                 floor(profitRate * 100) / 100,
@@ -62,14 +62,14 @@ object OutputView {
     }
 
     private fun makePrizeDescription(
-        lottoResult: LottoResult,
-        resultTally: Map<LottoResult, Int>,
+        result: Result,
+        resultTally: Map<Result, Int>,
     ): String =
         MESSAGE_RESULT_PER_PRIZE.format(
-            lottoResult.matchCount,
-            if (lottoResult.requireBonus) MESSAGE_BONUS_NUMBER_DESCRIPTION else "",
-            lottoResult.prize,
-            resultTally[lottoResult],
+            result.matchCount,
+            if (result.requireBonus) MESSAGE_BONUS_NUMBER_DESCRIPTION else "",
+            result.prize,
+            resultTally[result],
         )
 
     private fun makeResultSummary(profitRate: Double): String =

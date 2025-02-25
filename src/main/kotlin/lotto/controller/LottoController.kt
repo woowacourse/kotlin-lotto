@@ -2,9 +2,9 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
-import lotto.domain.LottoResults
 import lotto.domain.Lottos
 import lotto.domain.Order
+import lotto.domain.Results
 import lotto.domain.WinningLotto
 import lotto.view.View
 
@@ -59,9 +59,9 @@ class LottoController {
         winningLotto: WinningLotto,
         userLottos: Lottos,
     ) {
-        val lottoResults: LottoResults = LottoResults.from(winningLotto, userLottos)
-        val tally = lottoResults.getTally()
-        val profitRate = lottoResults.getProfitRate()
+        val results: Results = Results.from(winningLotto, userLottos)
+        val tally = results.getTally()
+        val profitRate = results.getProfitRate()
         View.showResult(tally, profitRate)
     }
 }

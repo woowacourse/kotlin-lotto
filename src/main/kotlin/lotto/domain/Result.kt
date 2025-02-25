@@ -1,6 +1,6 @@
 package lotto.domain
 
-enum class LottoResult(
+enum class Result(
     val prize: Int,
     val requireBonus: Boolean,
     val matchCount: Int,
@@ -17,13 +17,13 @@ enum class LottoResult(
         fun from(
             wonLotto: WinningLotto,
             boughtLotto: Lotto,
-        ): LottoResult {
+        ): Result {
             val matchCount = calculateMatchCount(wonLotto, boughtLotto)
             val hasBonus = bonusMatched(wonLotto, boughtLotto)
-            val result: LottoResult =
-                LottoResult.entries.find { result: LottoResult ->
+            val result: Result =
+                Result.entries.find { result: Result ->
                     matchCount == result.matchCount && hasBonus == result.requireBonus
-                } ?: LottoResult.entries.find { result: LottoResult ->
+                } ?: Result.entries.find { result: Result ->
                     matchCount == result.matchCount
                 } ?: FAIL
             return result
