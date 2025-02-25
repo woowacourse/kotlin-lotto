@@ -40,4 +40,34 @@ class ScoreRankMapTest {
         val result = rankMap.getRate()
         assertThat(result).isEqualTo("3.33")
     }
+
+    @Test
+    @DisplayName("총 수익 금액을 반환할 수 있다")
+    fun t2() {
+        val manyLotto =
+            listOf(
+                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
+                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber.of(it) }),
+                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
+            )
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val bonus = 7
+        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, winningLotto, bonus)
+        assertThat(rankMap.getEarned()).isEqualTo(10000)
+    }
+
+    @Test
+    @DisplayName("총 지출 금액을 반환할 수 있다")
+    fun t3() {
+        val manyLotto =
+            listOf(
+                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
+                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber.of(it) }),
+                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
+            )
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val bonus = 7
+        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, winningLotto, bonus)
+        assertThat(rankMap.getPaid()).isEqualTo(3000)
+    }
 }

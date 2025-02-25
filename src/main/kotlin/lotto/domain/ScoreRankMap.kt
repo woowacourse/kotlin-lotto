@@ -8,15 +8,15 @@ class ScoreRankMap(
         requireRankMap()
     }
 
-    fun getEarned() = map.entries.sumOf { it.key.winningMoney * it.value }
-
-    fun getPaid() = map.values.sum() * LOTTO_PRICE
-
     fun getRate(): String {
         val earned = getEarned()
         val paid = getPaid()
         return if (paid == 0) "0.0" else String.format("%.2f", earned.toDouble() / paid.toDouble())
     }
+
+    fun getEarned() = map.entries.sumOf { it.key.winningMoney * it.value }
+
+    fun getPaid() = map.values.sum() * LOTTO_PRICE
 
     private fun requireRankMap() {
         val missingKeys = Rank.entries.filter { it !in map }
