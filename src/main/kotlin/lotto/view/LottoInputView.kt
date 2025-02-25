@@ -3,9 +3,10 @@ package lotto.view
 import lotto.InputValidator
 
 class LottoInputView {
-    fun inputPurchase(): String {
+    fun inputPurchase(): Double {
         println(INPUT_PURCHASE_MESSAGE)
-        return readln().also { InputValidator(it) }
+        val purchase = readln().also { InputValidator(it) }
+        return purchase.toDouble()
     }
 
     fun inputWinningNumbers(): List<Int> {

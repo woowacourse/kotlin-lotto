@@ -5,15 +5,14 @@ import kotlin.math.floor
 class Profit {
     companion object {
         fun calculateProfit(
-            input: String,
+            purchase: Double,
             winningStatistics: WinningStatistics,
         ): String {
-            val purchaseAmount = input.toDouble()
             val sum =
                 winningStatistics.getAllStatistics().entries.sumOf { (rank, winningCount) ->
                     winningCount * rank.winningMoney
                 }
-            val profit = floor((sum.toDouble() / purchaseAmount) * PERCENT_FACTOR) / PERCENT_FACTOR
+            val profit = floor((sum.toDouble() / purchase) * PERCENT_FACTOR) / PERCENT_FACTOR
             return profit.toString()
         }
 

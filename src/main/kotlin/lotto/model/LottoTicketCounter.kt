@@ -1,7 +1,7 @@
 package lotto.model
 
 class LottoTicketCounter(
-    private val purchase: String,
+    private val purchase: Double,
 ) {
     fun count(): Int = purchase.toInt() / PURCHASE_STANDARD
 
