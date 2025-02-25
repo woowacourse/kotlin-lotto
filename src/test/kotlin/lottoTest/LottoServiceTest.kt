@@ -12,13 +12,6 @@ class LottoServiceTest {
     private val lottoService = LottoService()
 
     @Test
-    @DisplayName("복권을 구매할 숫자를 입력받으면 입력받은 숫자만큼의 복권 정보를 반환한다")
-    fun t2() {
-        val manyLotto = lottoService.getManyLotto(15)
-        assertThat(manyLotto).hasSize(15)
-    }
-
-    @Test
     @DisplayName("복권을 구매한 숫자만큼 복권의 당첨 등수를 반환한다")
     fun t4() {
         val manyLotto =

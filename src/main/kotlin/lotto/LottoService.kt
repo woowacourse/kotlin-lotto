@@ -3,16 +3,9 @@ package lotto
 import lotto.domain.Lotto
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
-import lotto.global.LottoUtil.getLotto
 import lotto.global.LottoUtil.getLottoRank
 
 class LottoService {
-    fun getManyLotto(iterates: Int): List<Lotto> {
-        val manyLotto = mutableListOf<Lotto>()
-        repeat(iterates) { manyLotto.add(getLotto()) }
-        return manyLotto.toList()
-    }
-
     fun getLottoRankMany(
         manyLotto: List<Lotto>,
         winningLotto: Lotto,

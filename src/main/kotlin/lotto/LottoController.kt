@@ -6,11 +6,12 @@ import lotto.domain.LottoNumber
 class LottoController(
     private val lottoView: LottoView,
     private val lottoService: LottoService,
+    private val lottoGenerator: LottoGenerator,
 ) {
     fun run() {
         // 순차적으로 실행...이게 과연 최선일까?
         val lottoAmount = lottoView.getLottoAmount()
-        val manyLotto = lottoService.getManyLotto(lottoAmount)
+        val manyLotto = lottoGenerator.genManyLotto(lottoAmount)
         lottoView.printLotto(manyLotto)
 
         val userInputWinningLotto = lottoView.getWinningLotto()
