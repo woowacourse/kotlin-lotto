@@ -3,6 +3,8 @@ package lotto.model
 class Lottos(
     private val lottos: List<Lotto>,
 ) {
+    operator fun plus(other: Lottos): Lottos = Lottos(this.lottos + other.lottos)
+
     fun countLottoByRank(
         winningNumbers: Set<LottoNumber>,
         bonusNumber: LottoNumber,
