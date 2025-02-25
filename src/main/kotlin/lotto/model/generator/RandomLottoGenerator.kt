@@ -1,4 +1,6 @@
-package lotto.model
+package lotto.model.generator
+
+import lotto.model.Lotto
 
 class RandomLottoGenerator : LottoGenerator {
     override fun generate(count: Int): List<Lotto> =
