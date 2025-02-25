@@ -16,7 +16,7 @@ class LottoController(
 ) {
     fun run() {
         val lottos = purchaseLotto()
-        val winningLotto = Lotto(inputView.readWinningNumbers())
+        val winningLotto = Lotto(inputView.readLottoNumbers())
         val bonusNumber = LottoNumber(inputView.readBonusNumber())
         val winningNumbers = WinningNumbers(winningLotto, bonusNumber)
 

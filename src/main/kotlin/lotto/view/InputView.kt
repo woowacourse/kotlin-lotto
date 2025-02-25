@@ -15,10 +15,10 @@ class InputView {
         return requireNotNull(scanner.nextLine().trim().toIntOrNull()) { INVALID_NUMBER_MESSAGE }
     }
 
-    fun readWinningNumbers(): List<Int> {
+    fun readLottoNumbers(): List<Int> {
         println(READ_WINNING_NUMBERS_MESSAGE)
-        val winningNumbersInput = scanner.nextLine().split(WINNING_NUMBERS_DELIMITER).map { it.trim() }
-        return winningNumbersInput.map { requireNotNull(it.toIntOrNull()) { INVALID_NUMBER_MESSAGE } }
+        val lottoNumbersInput = scanner.nextLine().split(WINNING_NUMBERS_DELIMITER).map { it.trim() }
+        return lottoNumbersInput.map { requireNotNull(it.toIntOrNull()) { INVALID_NUMBER_MESSAGE } }
     }
 
     fun readBonusNumber(): Int {
