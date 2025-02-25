@@ -1,18 +1,31 @@
 package lotto.model
 
 class LottoMachine {
-    private val numbers: List<LottoNumber> = (LottoNumber.MIN_VALUE..LottoNumber.MAX_VALUE).map(::LottoNumber)
+    private val numbers: List<Int> = (LottoNumber.MIN_VALUE..LottoNumber.MAX_VALUE).toList()
 
-    fun publishLottoTickets(lottoQuantity: Int): List<Lotto> = List(lottoQuantity) { publishLotto() }
+    fun publishLottoTickets(
+        lottoPurchaseInfo: LottoPurchaseInfo,
+        manualNumbers: List<Int>? = null,
+    ): List<Lotto> {
+        if (manualNumbers == null) {
+            return publishLottoByAuto(lottoPurchaseInfo.getAutoLottoQuantity())
+        }
+        return publishLottoByManual(manualNumbers) + publishLottoByAuto(lottoPurchaseInfo.getAutoLottoQuantity())
+    }
 
-    private fun publishLotto(): Lotto =
-        Lotto(
+    private fun publishLottoByManual(manualNumbers: List<Int>): List<Lotto> {
+        return manualNumbers.chunked(Lotto.NUMBER_COUNT).map { numbers ->
+            Lotto.from(numbers)
+        }
+    }
+
+    private fun publishLottoByAuto(quantity: Int): List<Lotto> = List(quantity) { publishOneLottoByAuto() }
+
+    private fun publishOneLottoByAuto(): Lotto {
+        return Lotto.from(
             numbers.shuffled()
-                .take(LOTTO_NUMBER_COUNT)
-                .sortedBy { it.value },
+                .take(Lotto.NUMBER_COUNT)
+                .sorted(),
         )
-
-    companion object {
-        private const val LOTTO_NUMBER_COUNT = 6
     }
 }
