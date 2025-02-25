@@ -16,13 +16,18 @@ class LottoMachine(
 ) {
     private val numbers: List<Int> = (LottoNumber.MIN_VALUE..LottoNumber.MAX_VALUE).toList()
 
-    fun useMoney(inputMoney: Amount) {
+    fun useMoney(inputMoney: Amount): Boolean {
+        if (inputMoney.money > amount.money) return false
         amount.payMoney(inputMoney)
+        return true
     }
 
-    fun publishManualLottoList(lottoNumberList: List<List<Int>>): List<Lotto> = lottoNumberList.map { publishManualLotto(it) }
+    fun publishManualLottoList(lottoNumberList: List<List<Int>>): List<Lotto> = lottoNumberList.mapNotNull { publishManualLotto(it) }
 
-    private fun publishManualLotto(numberList: List<Int>): Lotto = Lotto(LottoNumbers(numberList.map { it -> LottoNumber(it) }))
+    private fun publishManualLotto(numberList: List<Int>): Lotto? {
+        val lottoNumbers: LottoNumbers? = LottoNumbers.create(numberList.mapNotNull { it -> LottoNumber.create(it) })
+        return lottoNumbers?.let { Lotto(lottoNumbers) }
+    }
 
     fun publishAutoTickets(lottoPrize: Amount): List<Lotto> {
         val lottoTickets = mutableListOf<Lotto>()

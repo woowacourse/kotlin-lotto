@@ -17,17 +17,31 @@ class LottoController(
     fun run() {
         val amount = getAmount()
         val lottoMachine = LottoMachine(amount)
-        val publishedLotto = manuallyPublishLotto(lottoMachine) + autoPublishLotto(lottoMachine)
-        val winningLotto = WinningLotto(getWinningLotto(), getBonusNumber())
+        val publishedLotto = validatePublishLotto(lottoMachine) + autoPublishLotto(lottoMachine)
+        val winningLotto = validateWinningLotto(getWinningLotto(), getBonusNumber())
         val prizeCalculator = PrizeCalculator(winningLotto, publishedLotto, amount)
         showEarningRate(prizeCalculator)
     }
 
     private fun getAmount(): Amount = Amount(inputView.getMoney())
 
-    private fun manuallyPublishLotto(lottoMachine: LottoMachine): List<Lotto> {
-        val count = inputView.getManualCount()
-        lottoMachine.useMoney(Amount(count * LOTTO_PRIZE))
+    private fun validateWinningLotto(
+        number: LottoNumbers?,
+        bonus: LottoNumber?,
+    ): WinningLotto {
+        if (number == null || bonus == null) {
+            outputView.inputWinningError()
+            return validateWinningLotto(getWinningLotto(), getBonusNumber())
+        }
+        return WinningLotto(number, bonus)
+    }
+
+    private fun validatePublishLotto(lottoMachine: LottoMachine): List<Lotto> {
+        var count = inputView.getManualCount()
+        while (lottoMachine.useMoney(Amount(count * LOTTO_PRIZE)) == false) {
+            outputView.inputCountError()
+            count = inputView.getManualCount()
+        }
         val lottoList = lottoMachine.publishManualLottoList(inputView.getManualLottoList(count))
         outputView.printManualLotto(count)
         return lottoList
@@ -39,12 +53,12 @@ class LottoController(
         return publishedLotto
     }
 
-    private fun getWinningLotto(): LottoNumbers {
+    private fun getWinningLotto(): LottoNumbers? {
         val winningInput = inputView.getWinningLotto()
-        return LottoNumbers(winningInput.map { number -> LottoNumber(number) })
+        return LottoNumbers.create(winningInput.mapNotNull { number -> LottoNumber.create(number) })
     }
 
-    private fun getBonusNumber(): LottoNumber = LottoNumber(inputView.getBonusNumber())
+    private fun getBonusNumber(): LottoNumber? = LottoNumber.create(inputView.getBonusNumber())
 
     private fun showEarningRate(prizeCalculator: PrizeCalculator) {
         val result = prizeCalculator.result

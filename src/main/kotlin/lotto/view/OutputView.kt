@@ -31,4 +31,12 @@ class OutputView {
         }
         println("총 수익률은 ${String.format("%.2f", earningRate)}입니다.")
     }
+
+    fun inputWinningError() {
+        println("[ERROR] 당첨 번호 입력이 잘못되었습니다. 다시 입력해 주세요.")
+    }
+
+    fun inputCountError() {
+        println("[ERROR] 수동 입력 로또 총 금액이 입력 금액을 초과합니다.")
+    }
 }
