@@ -11,6 +11,4 @@ object ErrorMessages {
 
     const val INVALID_PURCHASE_AMOUNT_RANGE = "$ERROR 구입 금액은 1,000원 이상이어야 합니다."
     const val INVALID_PURCHASE_AMOUNT = "$ERROR 구입 금액은 1,000원 단위여야 합니다."
-
-    const val INVALID_EARNING_RATE_RANGE = "$ERROR 수익률은 0 이상이어야 합니다."
 }
