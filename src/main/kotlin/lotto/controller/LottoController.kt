@@ -9,6 +9,8 @@ import lotto.domain.LottoPurchaseAmount
 import lotto.domain.ManualLottoCount
 import lotto.domain.OrderSheet
 import lotto.domain.WinningLotto
+import lotto.generator.AutoLottoGenerator
+import lotto.generator.ManualLottoGenerator
 import lotto.util.Rank
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -50,13 +52,14 @@ class LottoController(
 
     private fun getManualLottoNumbers(purchaseCount: Int): List<Lotto> {
         return retryInput {
-            val lottos = inputView.getManualLottoNumbers(purchaseCount)
-            lottoMachine.buyManualLottos(lottos)
+            val input = inputView.getManualLottoNumbers(purchaseCount)
+            val lottos = input.map { it.split(DELIMITERS).map { it.trim().toInt() } }
+            lottoMachine.buyLottos(ManualLottoGenerator(lottos))
         }
     }
 
     private fun getAndPrintPurchasedLottos(orderSheet: OrderSheet): List<Lotto> {
-        val lottos = lottoMachine.buyLottos(orderSheet)
+        val lottos = orderSheet.manualLottoNumber + lottoMachine.buyLottos(AutoLottoGenerator(orderSheet.autoCount))
         outputView.printPurchasedLottos(lottos, orderSheet.manualLottoCount.lottoCount, orderSheet.autoCount)
         return lottos
     }
