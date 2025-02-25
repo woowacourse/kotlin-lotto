@@ -1,7 +1,6 @@
 package view
 
 import domain.model.Lotto
-import domain.model.Lotto.Companion.toValues
 import domain.model.LottoResult
 
 class OutputView {
@@ -17,7 +16,7 @@ class OutputView {
     }
 
     fun printPurchasedLotto(purchasedLotto: List<Lotto>) {
-        println(purchasedLotto.map { it.numbers.toValues().sorted() }.joinToString("\n"))
+        println(purchasedLotto.map { it.numbers }.joinToString("\n"))
     }
 
     fun printWinningResult(

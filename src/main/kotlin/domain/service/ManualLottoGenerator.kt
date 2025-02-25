@@ -12,5 +12,5 @@ class ManualLottoGenerator : LottoNumbersGenerator {
 
     fun makeLotto(): Lotto = Lotto(makeLottoNumbers())
 
-    override fun makeLottoNumbers(): Set<LottoNumber> = manualLottoNumbers.map { LottoNumber(it) }.toSet()
+    override fun makeLottoNumbers(): Set<LottoNumber> = manualLottoNumbers.map { LottoNumber.from(it) }.toSet()
 }

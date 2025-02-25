@@ -13,6 +13,6 @@ class ManualLottoGeneratorTest {
         lottoGenerator.setManualLottoNumbers(manualLottoNumbers)
         val lotto: Lotto = lottoGenerator.makeLotto()
 
-        assertThat(lotto.numbers.map { it.value }).isEqualTo(listOf(1, 2, 3, 4, 5, 6))
+        assertThat(lotto).isEqualTo(Lotto.of(1, 2, 3, 4, 5, 6))
     }
 }

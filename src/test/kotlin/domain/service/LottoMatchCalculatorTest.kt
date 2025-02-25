@@ -14,7 +14,7 @@ class LottoMatchCalculatorTest {
             listOf(
                 Lotto.of(1, 2, 3, 4, 5, 6),
             )
-        val winningLotto = WinningLotto(Lotto.of(1, 3, 4, 5, 6, 7), LottoNumber(2))
+        val winningLotto = WinningLotto(Lotto.of(1, 3, 4, 5, 6, 7), LottoNumber.from(2))
         val result = LottoMatchCalculator().calculate(lottos, winningLotto)
 
         assertThat(result.getRankMatchCount(Rank.SECOND)).isEqualTo(1)
@@ -33,7 +33,7 @@ class LottoMatchCalculatorTest {
                 Lotto.of(12, 11, 10, 9, 8, 7),
             )
 
-        val winningLotto = WinningLotto(Lotto.of(1, 3, 4, 5, 6, 7), LottoNumber(2))
+        val winningLotto = WinningLotto(Lotto.of(1, 3, 4, 5, 6, 7), LottoNumber.from(2))
         val result = LottoMatchCalculator().calculate(lottos, winningLotto)
 
         assertThat(result.getRankMatchCount(Rank.SECOND)).isEqualTo(2)

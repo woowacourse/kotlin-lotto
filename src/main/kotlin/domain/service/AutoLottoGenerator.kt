@@ -10,7 +10,7 @@ class AutoLottoGenerator : LottoNumbersGenerator {
         (LOTTO_MIN..LOTTO_MAX)
             .shuffled()
             .take(6)
-            .map { LottoNumber(it) }
+            .map { LottoNumber.from(it) }
             .toSet()
 
     companion object {

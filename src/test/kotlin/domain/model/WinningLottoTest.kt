@@ -10,7 +10,7 @@ class WinningLottoTest {
         assertThrows<IllegalArgumentException>(
             message = "[ERROR] 보너스 번호는 로또 번호는 중복될 수 없습니다.",
         ) {
-            WinningLotto(lotto, LottoNumber(6))
+            WinningLotto(lotto, LottoNumber.from(6))
         }
     }
 }
