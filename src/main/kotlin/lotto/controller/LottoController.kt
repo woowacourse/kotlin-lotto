@@ -5,6 +5,7 @@ import lotto.domain.model.LottoOrder
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.AutomaticLottoMachine
 import lotto.domain.service.LottoCalculator
+import lotto.domain.service.LottoStore
 import lotto.domain.service.ManualLottoMachine
 import lotto.domain.value.LottoNumber
 import lotto.domain.value.PurchaseAmount
@@ -16,6 +17,7 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun run() {
+        val store = LottoStore()
         val manualLottoMachine = ManualLottoMachine()
         val automaticLottoMachine = AutomaticLottoMachine()
 
@@ -29,8 +31,8 @@ class LottoController(
         val automaticLottoCount = totalLottoCount - manualLottoCount
         val automaticLottoOrder = LottoOrder(automaticLottoCount)
 
-        val manualLottos = manualLottoMachine.generate(manualLottoOrder)
-        val automaticLottos = automaticLottoMachine.generate(automaticLottoOrder)
+        val manualLottos = store.sell(manualLottoMachine, manualLottoOrder)
+        val automaticLottos = store.sell(automaticLottoMachine, automaticLottoOrder)
 
         val totalLottos = manualLottos + automaticLottos
         outputView.printPurchaseDetail(manualLottoCount, automaticLottoCount, totalLottos)
