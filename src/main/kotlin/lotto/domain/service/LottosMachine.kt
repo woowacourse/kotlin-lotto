@@ -3,13 +3,9 @@ package lotto.domain.service
 import lotto.domain.model.Lotto
 
 class LottosMachine(
-    private val generator: LottoMachine = RandomLottoMachine(),
+    private val generator: LottoMachine = LottoMachineImpl(),
 ) {
     fun generate(count: Int): List<Lotto> {
-        return List(count) { generator.generate(LOTTO_SIZE) }
-    }
-
-    private companion object {
-        const val LOTTO_SIZE = 6
+        return List(count) { generator.generateRandomLottoNumbers() }
     }
 }

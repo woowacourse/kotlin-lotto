@@ -3,5 +3,7 @@ package lotto.domain.service
 import lotto.domain.model.Lotto
 
 interface LottoMachine {
-    fun generate(lottoSize: Int): Lotto
+    fun generateRandomLottoNumbers(): Lotto
+
+    fun generateRandomLottoNumbers(numbers: List<Int>): Lotto
 }

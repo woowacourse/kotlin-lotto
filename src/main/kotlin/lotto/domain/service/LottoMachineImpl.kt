@@ -1,0 +1,32 @@
+package lotto.domain.service
+
+import lotto.domain.model.Lotto
+import lotto.domain.model.Lotto.Companion.LOTTO_NUMBER_SIZE
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoNumber.Companion.LOTTO_MAX_NUMBER
+import lotto.domain.model.LottoNumber.Companion.LOTTO_MIN_NUMBER
+
+class LottoMachineImpl(minNumber: Int = LOTTO_MIN_NUMBER, maxNumber: Int = LOTTO_MAX_NUMBER) :
+    LottoMachine {
+    private val lottoNumbers =
+        (minNumber..maxNumber).map { LottoNumber(it) }
+
+    override fun generateRandomLottoNumbers(): Lotto {
+        val lotto = getRandomLottoNumbers().sorted()
+        return Lotto(lotto.toSet())
+    }
+
+    private fun getRandomLottoNumbers(): List<LottoNumber> {
+        val randomLottoNumbers = lottoNumbers.shuffled()
+        return randomLottoNumbers.take(LOTTO_NUMBER_SIZE)
+    }
+
+    override fun generateRandomLottoNumbers(numbers: List<Int>): Lotto {
+        val lotto = getManualLottoNumbers(numbers).sorted()
+        return Lotto(lotto.toSet())
+    }
+
+    private fun getManualLottoNumbers(numbers: List<Int>): List<LottoNumber> {
+        return numbers.map { LottoNumber(it) }
+    }
+}
