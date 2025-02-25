@@ -58,7 +58,7 @@ class LottoController(
     }
 
     private fun getWinningNumber(): Lotto {
-        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber(it.trim().toInt()) }
+        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber(it.trim().toInt()) }.toSet()
         return Lotto(winningNumber)
     }
 
