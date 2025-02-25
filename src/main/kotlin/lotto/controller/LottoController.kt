@@ -10,9 +10,9 @@ import lotto.view.View
 object LottoController {
     fun run() {
         val order: Order = placeOrder()
-        val userLottos: List<Lotto> = makeLottos(order)
+        val userLottos: List<Lotto> = processOrder(order)
         val winningLotto: WinningLotto = readWinningLotto()
-        showResult(winningLotto, userLottos)
+        showResults(winningLotto, userLottos)
     }
 
     private fun placeOrder(): Order {
@@ -21,15 +21,15 @@ object LottoController {
         return Order(payment, manualQuantity)
     }
 
-    private fun makeLottos(order: Order): List<Lotto> {
-        val totalQuantity: Int = order.payment / Lotto.PRICE
+    private fun processOrder(order: Order): List<Lotto> {
         val manualQuantity: Int = order.manualQuantity
-        val automaticQuantity: Int = totalQuantity - manualQuantity
-
         val manualLottos: List<Lotto> = makeLottosManually(manualQuantity)
+
+        val automaticQuantity: Int = order.payment / Lotto.PRICE - manualQuantity
         val automaticLottos: List<Lotto> = makeLottosAutomatically(automaticQuantity)
+
         View.showLottoCount(manualQuantity, automaticQuantity)
-        val allLottos = manualLottos + automaticLottos
+        val allLottos: List<Lotto> = manualLottos + automaticLottos
         View.showLottos(allLottos)
         return allLottos
     }
@@ -52,13 +52,11 @@ object LottoController {
         return WinningLotto(lotto, bonusNumber)
     }
 
-    private fun showResult(
+    private fun showResults(
         winningLotto: WinningLotto,
         userLottos: List<Lotto>,
     ) {
         val results: Results = Results.from(winningLotto, userLottos)
-        val tally = results.getTally()
-        val profitRate = results.getProfitRate()
-        View.showResult(tally, profitRate)
+        View.showResult(results)
     }
 }

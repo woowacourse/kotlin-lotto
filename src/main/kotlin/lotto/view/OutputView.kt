@@ -4,7 +4,6 @@ import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.Result
 import lotto.domain.Results
-import kotlin.math.floor
 
 object OutputView {
     fun requestPayment() {
@@ -45,34 +44,33 @@ object OutputView {
         println(MESSAGE_ENTER_BONUS_NUMBER)
     }
 
-    fun showResult(
-        resultTally: Map<Result, Int>,
-        profitRate: Double,
-    ) {
+    fun showResults(results: Results) {
         println()
         println(MESSAGE_RESULT_HEADER)
-        Result.entries.drop(1).forEach { entry: Result -> println(makePrizeDescription(entry, resultTally)) }
+        results.tally.forEach { (result, count) ->
+            if (result != Result.FAIL) println(makePrizeDescription(result, count))
+        }
         println(
             MESSAGE_RESULT_SUMMARY.format(
-                floor(profitRate * 100) / 100,
-                makeResultSummary(profitRate),
+                "%.2f".format(results.profitRate),
+                makeResultSummary(results.classification),
             ),
         )
     }
 
     private fun makePrizeDescription(
         result: Result,
-        resultTally: Map<Result, Int>,
+        count: Int,
     ): String =
         MESSAGE_RESULT_PER_PRIZE.format(
             result.matchCount,
             if (result.requireBonus) MESSAGE_BONUS_NUMBER_DESCRIPTION else "",
             result.prize,
-            resultTally[result],
+            count,
         )
 
-    private fun makeResultSummary(profitRate: Double): String =
-        when (Results.Classification.from(profitRate)) {
+    private fun makeResultSummary(classification: Results.Classification): String =
+        when (classification) {
             Results.Classification.PROFIT -> MESSAGE_PROFIT_RATE_PROFIT
             Results.Classification.LOSS -> MESSAGE_PROFIT_RATE_LOSS
             Results.Classification.BREAKEVEN -> MESSAGE_PROFIT_RATE_BREAKEVEN

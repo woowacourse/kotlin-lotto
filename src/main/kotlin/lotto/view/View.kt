@@ -1,7 +1,7 @@
 package lotto.view
 
 import lotto.domain.Lotto
-import lotto.domain.Result
+import lotto.domain.Results
 
 object View {
     fun readPayment(): Int {
@@ -46,10 +46,7 @@ object View {
         return InputView.readBonusNumber()
     }
 
-    fun showResult(
-        resultTally: Map<Result, Int>,
-        profitRate: Double,
-    ) {
-        OutputView.showResult(resultTally, profitRate)
+    fun showResult(results: Results) {
+        OutputView.showResults(results)
     }
 }

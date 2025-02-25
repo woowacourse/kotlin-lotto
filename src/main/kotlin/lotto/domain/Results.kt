@@ -1,8 +1,12 @@
 package lotto.domain
 
 class Results(
-    private val value: List<Result>,
+    private val list: List<Result>,
 ) {
+    val profitRate: Double = this.calculateProfitRate()
+    val tally: Map<Result, Int> = this.makeTally()
+    val classification: Classification = Classification.from(profitRate)
+
     enum class Classification {
         PROFIT,
         LOSS,
@@ -19,20 +23,20 @@ class Results(
         }
     }
 
-    fun getTally(): Map<Result, Int> {
+    private fun makeTally(): Map<Result, Int> {
         val tally = Result.entries.associateWith { 0 }.toMutableMap()
-        value.forEach { result: Result ->
+        list.forEach { result: Result ->
             tally[result] = tally.getValue(result) + 1
         }
         return tally.toMap()
     }
 
-    fun getProfitRate(): Double {
+    private fun calculateProfitRate(): Double {
         val profit: Long =
-            value.sumOf { result: Result ->
+            list.sumOf { result: Result ->
                 result.prize.toLong()
             }
-        return profit / (value.size * Lotto.PRICE).toDouble()
+        return profit / (list.size * Lotto.PRICE).toDouble()
     }
 
     companion object {
