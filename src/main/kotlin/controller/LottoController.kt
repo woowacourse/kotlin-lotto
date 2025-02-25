@@ -10,6 +10,7 @@ import domain.service.LottoGenerator
 import domain.service.LottoMatchCalculator
 import util.LottoFactory
 import util.retryWhenException
+import validator.ManualLottoAmountValidator
 import view.InputView
 import view.OutputView
 
@@ -19,7 +20,7 @@ class LottoController(
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
-        val lotto: List<Lotto> = buyLotto(purchasePrice)
+        val lotto: List<Lotto> = buyLotto(purchasePrice, getManualLottoAmount(purchasePrice))
         displayBuyLotto(lotto)
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
@@ -38,10 +39,31 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun buyLotto(money: PurchasePrice): List<Lotto> {
-        val generator = LottoGenerator(money)
-        val lotto = generator.makeLotto()
-        return lotto
+    private fun getManualLottoAmount(purchasePrice: PurchasePrice): Int {
+        return retryWhenException(
+            action = {
+                val manualLottoAmount = inputView.readManualLottoAmount().toInt()
+                LottoGenerator(purchasePrice).getAutoLottoAmount(manualLottoAmount).also { ManualLottoAmountValidator(it) }
+                manualLottoAmount
+            },
+            onError = { outputView.printErrorMessage(it) },
+        )
+    }
+
+    private fun buyLotto(
+        money: PurchasePrice,
+        manualLottoAmount: Int,
+    ): List<Lotto> {
+        return retryWhenException(
+            action = {
+                inputView.askForManualLottoNumber()
+                val manualLottoNumbers = List(manualLottoAmount) { inputView.readManualLottoNumber() }
+                val generator = LottoGenerator(money)
+                val lotto = generator.makeLotto(manualLottoAmount, manualLottoNumbers)
+                lotto
+            },
+            onError = { outputView.printErrorMessage(it) },
+        )
     }
 
     private fun displayBuyLotto(lotto: List<Lotto>) {
