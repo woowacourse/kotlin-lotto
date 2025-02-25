@@ -15,12 +15,15 @@ class LottoStore(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {
+    private val lottoMachine = LottoMachine()
+
     fun run() {
         val amount = inputView.inputPurchaseAmount()
         val manualCount = inputView.inputManualCount()
-        val count = calculatePurchaseCount(amount)
-        outputView.printPurchaseCount(count)
-        val lottoTickets = generateLottoTicket(count)
+        val autoCount = calculateAutoCount(amount, manualCount)
+//        val count = calculatePurchaseCount(amount)
+        outputView.printPurchaseCount(autoCount)
+        val lottoTickets = generateLottoTicket(autoCount)
         outputView.printLotto(lottoTickets)
         val winningLotto = inputWinningLotto()
         val result = calculateResult(lottoTickets, winningLotto)
@@ -28,6 +31,11 @@ class LottoStore(
         outputView.printResult(formattedWinningStatus)
         outputView.printProfit(result.calculateProfit())
     }
+
+    private fun calculateAutoCount(
+        purchaseAmount: Int,
+        manualCount: Int,
+    ) = lottoMachine.calculateAutoCount(purchaseAmount, manualCount)
 
     private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
 
