@@ -1,6 +1,6 @@
 package lotto.domain
 
-import lotto.generator.LottoRandomGenerator
+import lotto.generator.LottoManualGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -17,6 +17,7 @@ class LottoMachineTest {
     @ValueSource(ints = [1000, 3500, 14000, 50000])
     @ParameterizedTest
     fun `로또 머신에 돈을 넣으면 로또가 발행된다`(input: Int) {
-        assertThat(lottoMachine.buyLottoTickets(LottoPayment(input), LottoRandomGenerator())).hasSize(input / 1000)
+        val expected = List(input / 1000) { Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()) }
+        assertThat(lottoMachine.buyLottoTickets((input), LottoManualGenerator())).isEqualTo(expected)
     }
 }
