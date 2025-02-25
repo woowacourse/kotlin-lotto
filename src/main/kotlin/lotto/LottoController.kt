@@ -2,6 +2,9 @@ package lotto
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
+import lotto.domain.service.LottoGenerator
+import lotto.domain.service.LottoRankFinder
+import lotto.view.LottoView
 
 class LottoController(
     private val lottoView: LottoView,

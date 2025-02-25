@@ -1,5 +1,5 @@
 
-package lotto
+package lotto.domain.service
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber

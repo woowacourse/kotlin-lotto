@@ -1,4 +1,4 @@
-package lotto
+package lotto.view
 
 import lotto.domain.LOTTO_PRICE
 import lotto.domain.Lotto

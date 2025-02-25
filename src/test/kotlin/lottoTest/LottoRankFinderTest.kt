@@ -1,9 +1,9 @@
 package lottoTest
 
-import lotto.LottoRankFinder
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.Rank
+import lotto.domain.service.LottoRankFinder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
