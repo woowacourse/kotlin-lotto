@@ -18,7 +18,7 @@ object OutputView {
 
     fun showLottos(lottos: Lottos) {
         lottos.value.forEach { lotto: Lotto ->
-            println(lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted())
+            println(lotto.numbers.map(LottoNumber::value).sorted())
         }
         println()
     }
@@ -37,7 +37,7 @@ object OutputView {
     ) {
         println()
         println(MESSAGE_RESULT_HEADER)
-        LottoResult.entries.drop(1).forEach { entry -> println(makePrizeDescription(entry, resultTally)) }
+        LottoResult.entries.drop(1).forEach { entry: LottoResult -> println(makePrizeDescription(entry, resultTally)) }
         println(
             MESSAGE_RESULT_SUMMARY.format(
                 floor(profitRate * 100) / 100,

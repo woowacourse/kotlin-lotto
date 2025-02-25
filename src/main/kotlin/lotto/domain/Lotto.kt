@@ -7,7 +7,7 @@ class Lotto(
         require(numbers.size == SIZE) { ERROR_MESSAGE_LOTTO_NEEDS_6_DISTINCT_NUMBERS }
     }
 
-    constructor(vararg numbers: Int) : this(numbers.map { number: Int -> LottoNumber(number) }.toSet())
+    constructor(vararg numbers: Int) : this(numbers.map(::LottoNumber).toSet())
 
     companion object {
         const val PRICE = 1_000
