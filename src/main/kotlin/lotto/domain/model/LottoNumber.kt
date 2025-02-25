@@ -2,7 +2,8 @@ package lotto.domain.model
 
 import lotto.Constants
 
-data class LottoNumber(
+@JvmInline
+value class LottoNumber(
     val number: Int,
 ) {
     init {
