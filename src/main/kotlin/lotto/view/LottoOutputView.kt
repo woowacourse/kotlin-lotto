@@ -2,8 +2,9 @@ package lotto.view
 
 import lotto.model.Lotto
 import lotto.model.LottoStore
-import lotto.model.RandomLottoGenerator
 import lotto.model.Rank
+import lotto.model.generator.ManualLottoGenerator
+import lotto.model.generator.RandomLottoGenerator
 import java.lang.String.format
 
 class LottoOutputView {
@@ -17,6 +18,17 @@ class LottoOutputView {
             println(lotto.numbers.map { it.number })
         }
         return lottoBundle
+    }
+
+    fun printManualLottoBundle(
+        input: Int,
+        lottoBundle: List<List<Int>>,
+    ): List<Lotto> {
+        val manualLottoBundle = LottoStore().getTickets(input, ManualLottoGenerator(lottoBundle))
+        manualLottoBundle.forEach { lotto ->
+            println(lotto.numbers.map { it.number })
+        }
+        return manualLottoBundle
     }
 
     private fun isBonusMatch(rank: Rank) = if (rank == Rank.SECOND) OUTPUT_STATISTICS_BONUS_NUMBER_MESSAGE else " "
