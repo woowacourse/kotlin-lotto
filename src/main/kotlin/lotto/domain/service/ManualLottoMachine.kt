@@ -4,8 +4,8 @@ import lotto.domain.model.Lotto
 import lotto.domain.model.LottoOrder
 import lotto.domain.value.LottoNumber
 
-class ManualLottoMachine {
-    fun generate(order: LottoOrder): List<Lotto> =
+class ManualLottoMachine : LottoMachine {
+    override fun generate(order: LottoOrder): List<Lotto> =
         order.numbers.map { numbers ->
             Lotto(numbers.map { LottoNumber.from(it) })
         }

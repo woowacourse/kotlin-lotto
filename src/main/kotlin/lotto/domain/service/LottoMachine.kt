@@ -1,11 +1,8 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
-import lotto.domain.value.PurchaseAmount
+import lotto.domain.model.LottoOrder
 
-class LottoMachine {
-    fun generate(purchaseAmount: PurchaseAmount): List<Lotto> {
-        val quantity = purchaseAmount.getPurchaseQuantity()
-        return List(quantity) { Lotto.create() }
-    }
+interface LottoMachine {
+    fun generate(order: LottoOrder): List<Lotto>
 }
