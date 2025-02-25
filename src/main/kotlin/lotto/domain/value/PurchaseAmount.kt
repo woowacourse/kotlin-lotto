@@ -12,5 +12,5 @@ value class PurchaseAmount(
         require(amount % LottoConstants.LOTTO_PRICE == 0) { ErrorMessages.INVALID_PURCHASE_AMOUNT }
     }
 
-    fun getPurchaseQuantity(): Int = amount / LottoConstants.LOTTO_PRICE
+    fun getPurchaseQuantity(): LottoCount = LottoCount(amount / LottoConstants.LOTTO_PRICE)
 }

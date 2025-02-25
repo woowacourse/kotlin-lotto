@@ -8,7 +8,7 @@ value class LottoNumber private constructor(
     val number: Int,
 ) {
     companion object {
-        private val lottoNumbers: Map<Int, LottoNumber> =
+        val lottoNumbers: Map<Int, LottoNumber> =
             (LottoConstants.MINIMUM_LOTTO_NUMBER..LottoConstants.MAXIMUM_LOTTO_NUMBER).associateWith {
                 LottoNumber(it)
             }

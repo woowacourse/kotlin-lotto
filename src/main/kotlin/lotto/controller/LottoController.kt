@@ -1,11 +1,13 @@
 package lotto.controller
 
 import lotto.domain.model.Lotto
+import lotto.domain.model.LottoOrder
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.AutomaticLottoMachine
 import lotto.domain.service.LottoCalculator
 import lotto.domain.service.LottoStore
 import lotto.domain.service.ManualLottoMachine
+import lotto.domain.value.LottoCount
 import lotto.domain.value.LottoNumber
 import lotto.domain.value.PurchaseAmount
 import lotto.view.InputView
@@ -26,10 +28,12 @@ class LottoController(
         val manualLottoCount = getManualLottoCount()
         val manualLottoNumbers = getManualLottoNumbers(manualLottoCount)
 
-        val automaticLottoCount = totalLottoCount - manualLottoCount
+        val lottoOrder = LottoOrder(totalLottoCount, manualLottoCount, manualLottoNumbers)
 
-        val manualLottos = store.sell(manualLottoMachine, manualLottoCount, manualLottoNumbers)
-        val automaticLottos = store.sell(automaticLottoMachine, automaticLottoCount)
+        val automaticLottoCount = lottoOrder.getAutomaticLottoCount()
+
+        val manualLottos = store.purchase(manualLottoMachine, manualLottoCount, manualLottoNumbers)
+        val automaticLottos = store.purchase(automaticLottoMachine, automaticLottoCount)
 
         val totalLottos = manualLottos + automaticLottos
         outputView.printPurchaseDetail(manualLottoCount, automaticLottoCount, totalLottos)
@@ -47,13 +51,13 @@ class LottoController(
         return PurchaseAmount(amount)
     }
 
-    private fun getManualLottoCount(): Int {
+    private fun getManualLottoCount(): LottoCount {
         val count = inputView.readManualLottoCount()
-        return count
+        return LottoCount(count)
     }
 
-    private fun getManualLottoNumbers(count: Int): List<List<Int>> {
-        val lottoNumbers = inputView.readManualLottoNumbers(count)
+    private fun getManualLottoNumbers(lottoCount: LottoCount): List<List<Int>> {
+        val lottoNumbers = inputView.readManualLottoNumbers(lottoCount.count)
         return lottoNumbers
     }
 

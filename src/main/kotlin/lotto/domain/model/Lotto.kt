@@ -21,11 +21,18 @@ class Lotto(
 
         fun create(): Lotto {
             val lottoNumbers =
-                (LottoConstants.MINIMUM_LOTTO_NUMBER..LottoConstants.MAXIMUM_LOTTO_NUMBER)
+                LottoNumber.lottoNumbers.values
                     .shuffled()
-                    .take(LottoConstants.NUMBER_OF_LOTTO_NUMBERS)
-                    .sorted()
-                    .map { LottoNumber.from(it) }
+                    .take(
+                        LottoConstants.NUMBER_OF_LOTTO_NUMBERS,
+                    ).sortedBy { it.number }
+
+//            val lottoNumbers =
+//                (LottoConstants.MINIMUM_LOTTO_NUMBER..LottoConstants.MAXIMUM_LOTTO_NUMBER)
+//                    .shuffled()
+//                    .take(LottoConstants.NUMBER_OF_LOTTO_NUMBERS)
+//                    .sorted()
+//                    .map { LottoNumber.from(it) }
             return Lotto(lottoNumbers)
         }
     }

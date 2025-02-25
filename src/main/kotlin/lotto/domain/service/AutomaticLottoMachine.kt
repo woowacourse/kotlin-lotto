@@ -1,10 +1,11 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
+import lotto.domain.value.LottoCount
 
 class AutomaticLottoMachine : LottoMachine {
     override fun generate(
-        count: Int,
+        lottoCount: LottoCount,
         lottoNumbers: List<List<Int>>?,
-    ): List<Lotto> = List(count) { Lotto.create() }
+    ): List<Lotto> = List(lottoCount.count) { Lotto.create() }
 }

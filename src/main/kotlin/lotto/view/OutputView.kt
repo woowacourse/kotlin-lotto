@@ -1,12 +1,13 @@
 package lotto.view
 
 import lotto.domain.model.Lotto
+import lotto.domain.value.LottoCount
 import lotto.enums.Rank
 
 class OutputView {
     fun printPurchaseDetail(
-        manualLottoCount: Int,
-        automaticLottoCount: Int,
+        manualLottoCount: LottoCount,
+        automaticLottoCount: LottoCount,
         lottos: List<Lotto>,
     ) {
         printPurchaseQuantity(manualLottoCount, automaticLottoCount)
@@ -23,10 +24,10 @@ class OutputView {
     }
 
     private fun printPurchaseQuantity(
-        manualLottoCount: Int,
-        automaticLottoCount: Int,
+        manualLottoCount: LottoCount,
+        automaticLottoCount: LottoCount,
     ) {
-        println(OUTPUT_PURCHASE_QUANTITY.format(manualLottoCount, automaticLottoCount))
+        println(OUTPUT_PURCHASE_QUANTITY.format(manualLottoCount.count, automaticLottoCount.count))
     }
 
     private fun printLottos(lottos: List<Lotto>) {
