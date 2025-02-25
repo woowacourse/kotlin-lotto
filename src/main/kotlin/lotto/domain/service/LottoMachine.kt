@@ -14,16 +14,14 @@ class LottoMachine {
 
     fun calculateTotalCount(purchaseAmount: Int) = purchaseAmount / Constants.LOTTO_AMOUNT
 
-    private fun generateLotto(): Set<LottoNumber> =
+    private fun generateLotto(): List<LottoNumber> =
         LOTTO_RANGE
             .shuffled()
-            .take(LOTTO_PICK_COUNT)
+            .take(Constants.LOTTO_PICK_COUNT)
             .sorted()
             .map { LottoNumber(it) }
-            .toSet()
 
     companion object {
-        private const val LOTTO_PICK_COUNT = 6
         private val LOTTO_RANGE = (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
     }
 }
