@@ -2,7 +2,6 @@ package controller
 
 import domain.model.BonusNumber
 import domain.model.Lotto
-import domain.model.LottoNumber
 import domain.model.LottoResult
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
@@ -34,7 +33,7 @@ class LottoController(
         retryWhenException(
             action = {
                 val input = inputView.readPurchasePrice()
-                PurchasePrice(input.toInt())
+                PurchasePrice(input)
             },
             onError = { outputView.printErrorMessage(it) },
         )
@@ -42,7 +41,7 @@ class LottoController(
     private fun getManualLottoAmount(purchasePrice: PurchasePrice): Int {
         return retryWhenException(
             action = {
-                val manualLottoAmount = inputView.readManualLottoAmount().toInt()
+                val manualLottoAmount = inputView.readManualLottoAmount()
                 LottoGenerator(purchasePrice).getAutoLottoAmount(manualLottoAmount).also { ManualLottoAmountValidator(it) }
                 manualLottoAmount
             },
@@ -72,8 +71,7 @@ class LottoController(
     private fun getWinningNumbers(): Lotto =
         retryWhenException(
             action = {
-                val input = inputView.readWinningNumbers()
-                Lotto(input.map { LottoNumber(it.toInt()) })
+                inputView.readWinningNumbers()
             },
             onError = { outputView.printErrorMessage(it) },
         )
@@ -82,7 +80,7 @@ class LottoController(
         retryWhenException(
             action = {
                 val input = inputView.readBonusNumber()
-                val bonusNumber = BonusNumber(input.toInt())
+                val bonusNumber = BonusNumber(input)
                 WinningLotto(winningNumbers, bonusNumber)
             },
             onError = { outputView.printErrorMessage(it) },

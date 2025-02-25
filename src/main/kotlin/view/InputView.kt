@@ -5,25 +5,25 @@ import domain.model.LottoNumber
 import validator.NumericValidator
 
 class InputView {
-    fun readPurchasePrice(): String {
+    fun readPurchasePrice(): Int {
         println(MESSAGE_INPUT_PURCHASE_PRICE)
-        return readln().also { NumericValidator(it) }
+        return readln().also { NumericValidator(it) }.toInt()
     }
 
-    fun readWinningNumbers(): List<String> {
+    fun readWinningNumbers(): Lotto {
         println(MESSAGE_INPUT_WINNING_NUMBER)
         val lotto = readln().split(",").map { it.trim().also { lottoNumber -> NumericValidator(lottoNumber) } }
-        return lotto
+        return Lotto(lotto.map { LottoNumber(it.toInt()) })
     }
 
-    fun readBonusNumber(): String {
+    fun readBonusNumber(): Int {
         println(MESSAGE_INPUT_BONUS_NUMBER)
-        return readln().also { NumericValidator(it) }
+        return readln().also { NumericValidator(it) }.toInt()
     }
 
-    fun readManualLottoAmount(): String {
+    fun readManualLottoAmount(): Int {
         println(MESSAGE_INPUT_MANUAL_LOTTO_AMOUNT)
-        return readln().also { NumericValidator(it) }
+        return readln().also { NumericValidator(it) }.toInt()
     }
 
     fun askForManualLottoNumber() {
