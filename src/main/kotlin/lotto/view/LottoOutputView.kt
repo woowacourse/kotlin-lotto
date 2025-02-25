@@ -1,10 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
-import lotto.model.LottoStore
 import lotto.model.Rank
-import lotto.model.generator.ManualLottoGenerator
-import lotto.model.generator.RandomLottoGenerator
 import java.lang.String.format
 
 class LottoOutputView {
@@ -12,19 +9,14 @@ class LottoOutputView {
         println(format(OUTPUT_LOTTO_COUNT_MESSAGE, numbers[0], numbers[1]))
     }
 
-    fun printLottoBundle(input: Int): List<Lotto> {
-        val lottoBundle = LottoStore().getTickets(input, RandomLottoGenerator())
+    fun printLottoBundle(lottoBundle: List<Lotto>): List<Lotto> {
         lottoBundle.forEach { lotto ->
             println(lotto.numbers.map { it.number })
         }
         return lottoBundle
     }
 
-    fun printManualLottoBundle(
-        input: Int,
-        lottoBundle: List<List<Int>>,
-    ): List<Lotto> {
-        val manualLottoBundle = LottoStore().getTickets(input, ManualLottoGenerator(lottoBundle))
+    fun printManualLottoBundle(manualLottoBundle: List<Lotto>): List<Lotto> {
         manualLottoBundle.forEach { lotto ->
             println(lotto.numbers.map { it.number })
         }
