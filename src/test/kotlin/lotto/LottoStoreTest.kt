@@ -1,7 +1,7 @@
 package lotto
 
 import lotto.model.LottoStore
-import lotto.model.RandomLottoGenerator
+import lotto.model.generator.RandomLottoGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
