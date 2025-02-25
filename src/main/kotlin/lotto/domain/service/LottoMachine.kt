@@ -6,14 +6,13 @@ import lotto.domain.model.LottoTicket
 
 class LottoMachine {
     fun calculateAutoCount(
-        purchaseAmount: Int,
+        totalCount: Int,
         manualCount: Int,
-    ): Int {
-        val totalCount = purchaseAmount / Constants.LOTTO_AMOUNT
-        return totalCount - manualCount
-    }
+    ): Int = totalCount - manualCount
 
     fun purchase(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateLotto()) }
+
+    fun calculateTotalCount(purchaseAmount: Int) = purchaseAmount / Constants.LOTTO_AMOUNT
 
     private fun generateLotto(): Set<LottoNumber> =
         LOTTO_RANGE
