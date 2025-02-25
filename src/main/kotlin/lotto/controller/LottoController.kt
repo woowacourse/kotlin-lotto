@@ -15,7 +15,8 @@ class LottoController {
 
     fun play() {
         val purchase = inputView.inputPurchase()
-        val count = LottoTicketCounter(purchase).count()
+        val manualPurchase = inputView.inputManualPurchase()
+        val count = LottoTicketCounter(purchase, manualPurchase).count()
         outputView.printLottoCount(count)
         val lottoBundle = outputView.printLottoBundle(count)
         val winningLotto = WinningLotto(getWinningLotto(), getBonusNumber())
