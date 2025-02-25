@@ -4,25 +4,22 @@ object InputView {
     fun readPrice(): Int {
         val priceInput: String = readln()
         val price: Int = priceInput.toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
-        println()
         return price
     }
 
     fun readManualQuantity(): Int {
         val manualQuantityInput: String = readln()
         val manualQuantity = manualQuantityInput.toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
-        println()
         return manualQuantity
     }
 
-    fun readWinningNumbers(): List<Int> {
-        val winningNumbersInput: String = readln()
-        val winningNumbers: List<Int> =
-            winningNumbersInput.split(LOTTO_NUMBERS_DELIMITER).map { number: String ->
+    fun readLottoNumbers(): List<Int> {
+        val lottoNumbersInput: String = readln()
+        val lottoNumbers: List<Int> =
+            lottoNumbersInput.split(LOTTO_NUMBERS_DELIMITER).map { number: String ->
                 number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_WINNING_NUMBERS)
             }
-        println()
-        return winningNumbers
+        return lottoNumbers
     }
 
     fun readBonusNumber(): Int {

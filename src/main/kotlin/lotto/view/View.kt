@@ -24,9 +24,14 @@ object View {
         OutputView.showLottos(lottos)
     }
 
-    fun readLottoNumbers(): List<Int> {
+    fun readManualNumbers(quantity: Int): List<List<Int>> {
+        OutputView.requestManualNumbers()
+        return List(quantity) { InputView.readLottoNumbers() }
+    }
+
+    fun readWinningNumbers(): List<Int> {
         OutputView.requestWinningLotto()
-        val winningNumbers: List<Int> = InputView.readWinningNumbers()
+        val winningNumbers: List<Int> = InputView.readLottoNumbers()
         return winningNumbers
     }
 

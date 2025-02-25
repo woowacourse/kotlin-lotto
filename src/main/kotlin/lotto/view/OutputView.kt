@@ -13,10 +13,17 @@ object OutputView {
     }
 
     fun requestManualQuantity() {
+        println()
         println(MESSAGE_ENTER_MANUAL_PURCHASE_QUANTITY)
     }
 
+    fun requestManualNumbers() {
+        println()
+        println(MESSAGE_ENTER_MANUAL_LOTTO_NUMBERS)
+    }
+
     fun showLottoCount(lottoCount: Int) {
+        println()
         println("$lottoCount$MESSAGE_RESULT_PURCHASE_QUANTITY")
     }
 
@@ -24,14 +31,15 @@ object OutputView {
         lottos.value.forEach { lotto: Lotto ->
             println(lotto.numbers.map(LottoNumber::value).sorted())
         }
-        println()
     }
 
     fun requestWinningLotto() {
+        println()
         println(MESSAGE_ENTER_WINNING_NUMBERS)
     }
 
     fun requestBonusNumber() {
+        println()
         println(MESSAGE_ENTER_BONUS_NUMBER)
     }
 
@@ -70,6 +78,7 @@ object OutputView {
 
     private const val MESSAGE_ENTER_PRICE = "구입금액을 입력해 주세요."
     private const val MESSAGE_ENTER_MANUAL_PURCHASE_QUANTITY = "수동으로 구매할 로또 수를 입력해 주세요."
+    private const val MESSAGE_ENTER_MANUAL_LOTTO_NUMBERS = "수동으로 구매할 번호를 입력해 주세요."
     private const val MESSAGE_ENTER_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
     private const val MESSAGE_ENTER_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
 
