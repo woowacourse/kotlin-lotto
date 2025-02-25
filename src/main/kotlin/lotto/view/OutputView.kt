@@ -11,6 +11,8 @@ object OutputView {
     private const val MESSAGE_PROFIT_RATE_LOSE = "손해라는"
     private const val MESSAGE_PROFIT_RATE_DRAW = "본전이라는"
     private const val MESSAGE_PROFIT_RATE_WIN = "이득이라는"
+    private const val MESSAGE_ENTER_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요."
+    private const val MESSAGE_ENTER_MANUAL_LOTTO = "수동으로 구매할 번호를 입력해 주세요."
     private const val RESULT_DESCRIPTION_TEMPLATE = "총 수익률은 %.2f입니다.(기준이 1이기 때문에 결과적으로 %S 의미임)"
     private const val SHOW_LOTTO_SEPARATOR = "\n"
     private const val SHOW_LOTTO_RESULT_SEPARATOR = "\n"
@@ -60,10 +62,10 @@ object OutputView {
         }
 
     fun requestManualLottoCount() {
-        println("수동으로 구매할 로또 수를 입력해 주세요.")
+        println(MESSAGE_ENTER_MANUAL_LOTTO_COUNT)
     }
 
     fun requestManualLottosNumbers() {
-        println("수동으로 구매할 번호를 입력해 주세요.")
+        println(MESSAGE_ENTER_MANUAL_LOTTO)
     }
 }
