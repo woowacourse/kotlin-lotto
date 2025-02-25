@@ -1,8 +1,11 @@
 package lotto.view
 
 class OutputView {
-    fun printPurchaseLottoQuantity(quantity: Int) {
-        println("${quantity}개를 구매했습니다.")
+    fun printPurchaseLottoQuantity(
+        passiveQuantity: Int,
+        activeQuantity: Int,
+    ) {
+        println("수동으로 ${passiveQuantity}장, 자동으로 ${activeQuantity}개를 구매했습니다.")
     }
 
     fun printLottoNumbers(lottoNumbers: Set<Int>) {
