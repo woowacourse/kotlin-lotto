@@ -1,11 +1,18 @@
 package lotto.domain.model
 
+import lotto.domain.service.LottoResult
+
 class WinningLotto(
     private val winningNumbers: Set<LottoNumber>,
     private val bonusNumber: LottoNumber,
 ) {
     init {
         require(bonusNumber !in winningNumbers) { ERROR_BONUS_DUPLICATE }
+    }
+
+    fun getResult(lottoTickets: List<LottoTicket>): LottoResult {
+        val result = lottoTickets.map { getRank(it) }
+        return LottoResult(result)
     }
 
     fun getRank(lottoTicket: LottoTicket): Rank {

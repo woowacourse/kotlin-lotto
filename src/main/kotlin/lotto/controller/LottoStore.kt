@@ -6,7 +6,6 @@ import lotto.domain.model.Rank
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoMachine
 import lotto.domain.service.LottoResult
-import lotto.domain.service.LottoScanner
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -53,7 +52,7 @@ class LottoStore(
         lottoTickets: List<LottoTicket>,
         winningLotto: WinningLotto,
     ): LottoResult {
-        val result = LottoScanner(lottoTickets, winningLotto).getResult()
+        val result = winningLotto.getResult(lottoTickets)
         return result
     }
 
