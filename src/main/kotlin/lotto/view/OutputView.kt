@@ -4,8 +4,12 @@ import lotto.model.Lotto
 import lotto.model.Rank
 
 class OutputView {
+    fun printManualLotto(count: Int) {
+        print("수동으로 ${count}장, ")
+    }
+
     fun printPublishedLotto(publishedLotto: List<Lotto>) {
-        println("${publishedLotto.size}개를 구매했습니다.")
+        println("자동으로 ${publishedLotto.size}장를 구매했습니다.")
         publishedLotto.forEach { lotto ->
             val numbers = lotto.numbers.numberList.map { it.value }
             println(numbers)
