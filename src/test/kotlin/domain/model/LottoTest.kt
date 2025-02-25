@@ -3,7 +3,6 @@ package domain.model
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import util.LottoFactory
 
 class LottoTest {
     @ValueSource(strings = ["1,2,3,4,5,6,7", "1,2,3,4", "1,2,3,4,5"])
@@ -11,7 +10,7 @@ class LottoTest {
     fun `로또 번호는 6개가 아니면 예외가 발생한다`(value: String) {
         Assertions
             .assertThatThrownBy {
-                LottoFactory.lottoOf(*splitValueSource(value))
+                Lotto.lottoOf(*splitValueSource(value))
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(INVALID_LOTTO_SIZE)
     }
@@ -21,7 +20,7 @@ class LottoTest {
     fun `로또 번호는 1 부터 45 사이가 아니면 예외가 발생한다`(value: String) {
         Assertions
             .assertThatThrownBy {
-                LottoFactory.lottoOf(*splitValueSource(value))
+                Lotto.lottoOf(*splitValueSource(value))
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(INVALID_LOTTO_NUMBERS)
     }
@@ -31,7 +30,7 @@ class LottoTest {
     fun `로또 번호에 중복이 있으면 예외가 발생한다`(value: String) {
         Assertions
             .assertThatThrownBy {
-                LottoFactory.lottoOf(*splitValueSource(value))
+                Lotto.lottoOf(*splitValueSource(value))
             }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(DUPLICATED_LOTTO_NUMBERS)
     }

@@ -6,17 +6,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import util.LottoFactory
 
 class LottoGeneratorTest {
     private lateinit var manualLottoNumbers: List<Lotto>
 
     @BeforeEach
-    fun setup()  {
+    fun setup() {
         manualLottoNumbers =
             listOf(
-                LottoFactory.lottoOf(1, 3, 4, 5, 6, 7),
-                LottoFactory.lottoOf(1, 2, 3, 4, 5, 6),
+                Lotto.lottoOf(1, 3, 4, 5, 6, 7),
+                Lotto.lottoOf(1, 2, 3, 4, 5, 6),
             )
     }
 
