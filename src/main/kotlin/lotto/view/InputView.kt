@@ -6,12 +6,8 @@ import lotto.domain.model.LottoTicket
 
 class InputView {
     fun validateAmount(amount: String): Int {
-        require(amount.toIntOrNull() != null) {
-            ERROR_INVALID_AMOUNT
-        }
-        require(amount.toInt() >= Constants.LOTTO_AMOUNT) {
-            ERROR_INVALID_MINIMUM_AMOUNT
-        }
+        require(amount.toIntOrNull() != null) { ERROR_INVALID_AMOUNT }
+        require(amount.toInt() >= Constants.LOTTO_AMOUNT) { ERROR_INVALID_MINIMUM_AMOUNT }
         return amount.toInt()
     }
 
@@ -23,9 +19,7 @@ class InputView {
     }
 
     fun validateBonusNumber(bonusNumber: String): Int {
-        require(bonusNumber.toIntOrNull() != null) {
-            ERROR_BONUS_TYPE
-        }
+        require(bonusNumber.toIntOrNull() != null) { ERROR_BONUS_TYPE }
         return bonusNumber.toInt()
     }
 
