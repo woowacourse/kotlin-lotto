@@ -30,4 +30,10 @@ class PurchaseTest {
         val amountOfPurchase = 9500
         assertThat(Purchase(amountOfPurchase).calculateAmountOfLottos()).isEqualTo(9)
     }
+
+    @Test
+    fun `구입한 로또의 개수에 맞는 실제 구매 금액을 계산할 수 있다`() {
+        val amountOfPurchase = 19500
+        assertThat(Purchase(amountOfPurchase).getPrice()).isEqualTo(19000)
+    }
 }

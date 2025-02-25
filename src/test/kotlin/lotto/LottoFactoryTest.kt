@@ -10,4 +10,15 @@ class LottoFactoryTest {
         val amountOfLotto = 10
         assertThat(LottoFactory().generateLottos(amountOfLotto).size).isEqualTo(10)
     }
+
+    @Test
+    fun `수동 로또를 n개 발급 할 수 있다`() {
+        val manualLottos =
+            listOf(
+                lottoOf(1, 2, 3, 4, 5, 6),
+                lottoOf(1, 2, 3, 4, 5, 6),
+                lottoOf(1, 2, 3, 4, 5, 6),
+            )
+        assertThat(LottoFactory().generateManualLotto(manualLottos).size).isEqualTo(3)
+    }
 }

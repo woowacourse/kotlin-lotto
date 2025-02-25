@@ -13,8 +13,8 @@ class LottoResult(
     }
 
     fun calculateProfitRate(price: Int): Double {
-        val totalWinningMoney = getRanks().sumOf { it.winningMoney }
-        val totalCost = Purchase(price).getPrice()
+        val totalWinningMoney = getRanks().sumOf { it.winningMoney.toLong() }
+        val totalCost = Purchase(price).getPrice().toLong()
         return totalWinningMoney.toDouble() / totalCost
     }
 }

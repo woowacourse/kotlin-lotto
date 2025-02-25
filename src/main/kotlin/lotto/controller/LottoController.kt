@@ -22,8 +22,6 @@ class LottoController(
 
         outputView.printManualLottoHeader()
 
-        // n개 만큼 입력받기
-        // 입력 받은거를 변환하기
         val manualLottos: List<Lotto> =
             (0 until manualAmount).map {
                 val lotto =
@@ -34,16 +32,16 @@ class LottoController(
 
         getManualLottos(manualLottos)
         printLottoAmount(amount, manualAmount)
-        printLottos(manualLottos)
 
         val lottos: List<Lotto> = getLottos(amount - manualAmount)
-        printLottos(lottos)
+        var allLottos: List<Lotto> = manualLottos + lottos
+        printLottos(allLottos)
 
         val winningNumbers: List<LottoNumber> = getWinningNumbers()
         val bonusNumber: LottoNumber = getBonusNumber()
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
 
-        printAllResult(lottos, winningLotto, price)
+        printAllResult(allLottos, winningLotto, price)
     }
 
     fun getPrice(): Int {
