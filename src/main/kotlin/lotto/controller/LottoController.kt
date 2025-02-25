@@ -15,7 +15,9 @@ class LottoController(
 ) {
     fun run() {
         val price: Int = getPrice()
+        val manualAmount: Int = getManualLottoAmount()
         val amount: Int = getAmount(price)
+        Validator.manualAmountValidator(manualAmount, amount)
         printLottoAmount(amount)
 
         val lottos: List<Lotto> = getLottos(amount)
@@ -31,6 +33,11 @@ class LottoController(
     fun getPrice(): Int {
         val price = inputView.inputPurchasePrice()
         return price
+    }
+
+    fun getManualLottoAmount(): Int {
+        val manualAmount = inputView.inputAmountOfManualLotto()
+        return manualAmount
     }
 
     fun getAmount(price: Int): Int {
