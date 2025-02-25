@@ -11,10 +11,11 @@ class InputView {
         return readln()
     }
 
-    fun readManualLottoNumbers(): String {
+    fun printReadManualLottoNumbers() {
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
-        return readln()
     }
+
+    fun readManualLottoNumbers(): String = readln()
 
     fun readWinningNumbers(): String {
         println(MESSAGE_INPUT_WINNING_NUMBER)

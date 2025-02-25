@@ -56,12 +56,20 @@ class LottoController(
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun purchaseManualLotto(manualLottoAmount: ManualLottoAmount): List<Lotto> =
-        List(manualLottoAmount.value) {
-            val manualLottoNumbers = getManualLottoNumbers()
-            manualLottoGenerator.setManualLottoNumbers(manualLottoNumbers)
-            manualLottoGenerator.makeLotto()
-        }
+    private fun purchaseManualLotto(manualLottoAmount: ManualLottoAmount): List<Lotto> {
+        inputView.printReadManualLottoNumbers()
+        return List(manualLottoAmount.value) { getManualLotto() }
+    }
+
+    private fun getManualLotto(): Lotto =
+        retryWhenException(
+            action = {
+                val manualLottoNumbers = getManualLottoNumbers()
+                manualLottoGenerator.setManualLottoNumbers(manualLottoNumbers)
+                manualLottoGenerator.makeLotto()
+            },
+            onError = { outputView.printErrorMessage(it) },
+        )
 
     private fun getManualLottoNumbers(): Set<Int> =
         retryWhenException(
