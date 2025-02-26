@@ -5,8 +5,11 @@ import lotto.util.Rank
 import kotlin.math.floor
 
 class OutputView {
-    fun printPurchasedLottoTickets(lottos: List<Lotto>) {
-        println(MESSAGE_BUY_LOTTO.format(lottos.size))
+    fun printPurchasedLottoTickets(
+        manualLottoCount: Int,
+        lottos: List<Lotto>,
+    ) {
+        println(MESSAGE_BUY_LOTTO.format(manualLottoCount, lottos.size - manualLottoCount))
         lottos.forEach { lotto ->
             println(lotto.getSortedLotto().map { it.toInt() }.joinToString(", ", "[", "]"))
         }
@@ -50,7 +53,7 @@ class OutputView {
     }
 
     companion object {
-        const val MESSAGE_BUY_LOTTO = "%d개를 구매했습니다."
+        const val MESSAGE_BUY_LOTTO = "\n수동으로 %d개, 자동으로 %d개를 구매했습니다."
         const val MESSAGE_WINNING_STATS = "\n당첨 통계\n---------"
         const val MESSAGE_MATCH_COUNT = "%d개 일치 (%d원)- %d개"
         const val MESSAGE_MATCH_COUNT_WITH_BONUS_BALL = "%d개 일치, 보너스 볼 일치(%d원)- %d개"

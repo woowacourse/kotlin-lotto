@@ -5,6 +5,7 @@ import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.WinningLotto
+import lotto.generator.LottoManualGenerator
 import lotto.generator.LottoRandomGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -13,8 +14,6 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val lottoMachine = LottoMachine()
-
     fun run() {
         val purchaseAmount = getPurchaseAmount()
         val lottoTicket = prepareLottoTicket(purchaseAmount)
@@ -28,13 +27,22 @@ class LottoController(
     }
 
     private fun prepareLottoTicket(purchaseAmount: Int): List<Lotto> {
-        val lottoTickets = lottoMachine.buyLottoTickets(purchaseAmount, LottoRandomGenerator())
-        outputView.printPurchasedLottoTickets(lottoTickets)
+        val lottoMachine = LottoMachine(purchaseAmount)
+        val manualLottoCount = getManualLottoCount()
+        val autoLottoCount = LottoMachine(purchaseAmount).getAutoLottoCount(manualLottoCount)
+        inputView.getManualLottoTickets()
+        repeat(manualLottoCount) {
+            val lotto = inputView.getManualLotto()
+            lottoMachine.buyLottoTickets(1, LottoManualGenerator(lotto))
+        }
+        lottoMachine.buyLottoTickets(autoLottoCount, LottoRandomGenerator())
+        val lottoTickets = lottoMachine.getLottoTickets()
+        outputView.printPurchasedLottoTickets(manualLottoCount, lottoTickets)
         return lottoTickets
     }
 
     private fun readWinningLotto(): WinningLotto {
-        val winningNumber = getWinningNumber()
+        val winningNumber = getLotto()
         val bonusNumber = getBonusNumber()
         return WinningLotto(winningNumber, bonusNumber)
     }
@@ -56,7 +64,12 @@ class LottoController(
         outputView.printProfit(lottoResult.getProfitRate())
     }
 
-    private fun getWinningNumber(): Lotto {
+    private fun getManualLottoCount(): Int {
+        val manualLottoCount = inputView.getManualLottoCount()
+        return manualLottoCount.toInt()
+    }
+
+    private fun getLotto(): Lotto {
         val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber(it.trim().toInt()) }.toSet()
         return Lotto(winningNumber)
     }

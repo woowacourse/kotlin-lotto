@@ -2,23 +2,31 @@ package lotto.domain
 
 import lotto.generator.LottoGenerator
 
-class LottoMachine {
-    val price: Int = LOTTO_PRICE
+class LottoMachine(private val purchaseAmount: Int) {
+    init {
+        require(purchaseAmount >= LOTTO_PRICE) { ERROR_UNDER_THOUSAND }
+    }
+
+    private val lottoTickets: MutableList<Lotto> = mutableListOf()
 
     fun buyLottoTickets(
-        purchaseAmount: Int,
+        lottoCount: Int,
         lottoGenerator: LottoGenerator,
-    ): List<Lotto> {
-        require(purchaseAmount >= LOTTO_PRICE) { ERROR_UNDER_THOUSAND }
-        val lottoCount = getLottoCount(purchaseAmount)
-        val lottoTickets: MutableList<Lotto> = mutableListOf()
+    ) {
         repeat(lottoCount) {
             lottoTickets.add(lottoGenerator.generateLottoNumbers())
         }
+    }
+
+    fun getLottoTickets(): List<Lotto> {
         return lottoTickets.toList()
     }
 
-    private fun getLottoCount(purchaseAmount: Int): Int {
+    fun getAutoLottoCount(manualLottoCount: Int): Int {
+        return getTotalLottoCount(purchaseAmount) - manualLottoCount
+    }
+
+    private fun getTotalLottoCount(purchaseAmount: Int): Int {
         return purchaseAmount / LOTTO_PRICE
     }
 

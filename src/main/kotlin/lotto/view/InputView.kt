@@ -19,15 +19,16 @@ class InputView {
         return getManualLottoCount()
     }
 
-    fun getManualLottoTickets(count: Int): String {
+    fun getManualLottoTickets() {
         println(MESSAGE_INPUT_MANUAL_LOTTO_TICKETS)
-        repeat(count) {
-            val input = readln()
-            if (validateInteger(input)) {
-                return input
-            }
+    }
+
+    fun getManualLotto(): String {
+        val input = readln()
+        if (validateListInteger(input)) {
+            return input
         }
-        return getManualLottoTickets(count)
+        return getManualLotto()
     }
 
     fun getWinningNumber(): String {
