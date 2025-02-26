@@ -15,6 +15,16 @@ class LottoController {
     private lateinit var boughtLottos: List<Lotto>
 
     fun start() {
+        runCatching(::run)
+            .onSuccess {
+                showResult()
+            }.onFailure { error: Throwable ->
+                View.showError(error)
+                start()
+            }
+    }
+
+    private fun run() {
         val pay: Int = View.readPay()
         val manualLottoCount: Int = View.readManualLottoCount()
         val manualLottos: List<List<Int>> = View.readManualLottosNumbers(manualLottoCount)
@@ -22,7 +32,6 @@ class LottoController {
         makeLotto(pay, manualLottos)
         showBoughtLottos()
         readWinningLotto()
-        showResult()
     }
 
     private fun makeLotto(

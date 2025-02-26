@@ -44,4 +44,8 @@ object View {
         OutputView.requestBonusNumber()
         return InputView.readNumber()
     }
+
+    fun showError(error: Throwable) {
+        println(error.message)
+    }
 }
