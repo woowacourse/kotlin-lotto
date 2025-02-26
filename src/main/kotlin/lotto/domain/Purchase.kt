@@ -1,20 +1,20 @@
 package lotto.domain
 
 class Purchase(
-    val lottoPrice: Int,
+    private val price: Int,
 ) {
     init {
-        require(lottoPrice >= LOTTO_PRICE) { LOTTO_PRICE_ERROR_MESSAGE }
+        require(price >= LOTTO_PRICE) { LOTTO_PRICE_ERROR_MESSAGE }
     }
 
     fun calculateAmountOfLottos(): LottoAmount {
-        val amount = lottoPrice / LOTTO_PRICE
+        val amount = price / LOTTO_PRICE
         require(amount > 0) { LOTTO_TOTAL_AMOUNT_ERROR_MESSAGE }
         return LottoAmount(amount)
     }
 
     fun getPrice(): Int {
-        return lottoPrice - (lottoPrice % LOTTO_PRICE)
+        return price - (price % LOTTO_PRICE)
     }
 
     companion object {
