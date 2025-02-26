@@ -5,7 +5,7 @@ import lotto.domain.model.Lotto
 class LottosMachine(
     private val generator: LottoMachine = LottoMachineImpl(),
 ) {
-    fun generate(count: Int): List<Lotto> {
+    fun generateRandomLottos(count: Int): List<Lotto> {
         return List(count) { generator.generateRandomLottoNumbers() }
     }
 }
