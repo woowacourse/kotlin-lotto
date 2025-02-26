@@ -8,10 +8,7 @@ import lotto.domain.WinLotto
 class ViewMapper {
     val profitCalculator = ProfitCalculator()
 
-    fun mapToOutput(boughtLottos: List<Lotto>): List<List<Int>> =
-        boughtLottos.map { lotto: Lotto ->
-            lotto.numbers.sorted()
-        }
+    fun mapToOutput(boughtLottos: List<Lotto>): List<List<Int>> = boughtLottos.map(::sorted)
 
     fun mapToLottoResultsDescriptions(
         boughtLottos: List<Lotto>,
@@ -35,6 +32,13 @@ class ViewMapper {
             boughtLottos.map { boughtLotto -> LottoResult.from(winLotto, boughtLotto) }
         return profitCalculator.calculateProfitRate(lottoResults)
     }
+
+    private fun sorted(lotto: Lotto): List<Int> = lotto.toList().sorted()
+
+    private fun List<LottoResult>.sortedPrizes(): List<LottoResult> =
+        LottoResult.entries
+            .filterNot { result: LottoResult -> result.prizeAmount == 0 }
+            .sortedBy { result: LottoResult -> result.prizeAmount }
 
     private fun makeLottoResultDescription(
         lottoResults: List<LottoResult>,
