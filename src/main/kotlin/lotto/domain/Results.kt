@@ -4,7 +4,7 @@ class Results(
     private val list: List<Result>,
 ) {
     val profitRate: Double = this.calculateProfitRate()
-    val tally: Map<Result, Int> = this.makeTally()
+    val tally: Map<Result, Int> = list.groupingBy { it }.eachCount()
     val classification: Classification = Classification.from(profitRate)
 
     enum class Classification {
@@ -21,14 +21,6 @@ class Results(
                     else -> BREAKEVEN
                 }
         }
-    }
-
-    private fun makeTally(): Map<Result, Int> {
-        val tally = Result.entries.associateWith { 0 }.toMutableMap()
-        list.forEach { result: Result ->
-            tally[result] = tally.getValue(result) + 1
-        }
-        return tally.toMap()
     }
 
     private fun calculateProfitRate(): Double {
