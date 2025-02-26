@@ -21,13 +21,13 @@ class LottoMachineTest {
     ) {
         val lottoBundle = LottoMachine().generateLottoBundle(amount)
 
-        assertThat(lottoBundle.lottos.size).isEqualTo(count)
+        assertThat(lottoBundle?.lottos?.size).isEqualTo(count)
     }
 
     @RepeatedTest(5)
     fun `생성된 로또 번호는 정렬되어야 한다`() {
-        val lotto = LottoMachine().generateLottoBundle(1).lottos.first()
-        val actual = lotto.numbers.map { it.number }
+        val lotto = LottoMachine().generateLottoBundle(1)?.lottos?.first()
+        val actual = lotto?.numbers?.map { it.number }
         assertThat(actual).isSorted
     }
 
@@ -40,8 +40,8 @@ class LottoMachineTest {
         val generator = ManualLottoNumbersGenerator(listOf(numbers))
         val lottoMachine = LottoMachine(generator)
 
-        val lotto = lottoMachine.generateLottoBundle(1).lottos.first()
-        val actual = lotto.numbers.map { it.number }
+        val lotto = lottoMachine.generateLottoBundle(1)?.lottos?.first()
+        val actual = lotto?.numbers?.map { it.number }
 
         assertThat(actual).isEqualTo(expected)
     }

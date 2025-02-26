@@ -10,10 +10,10 @@ class LottoBundle(val lottos: List<Lotto>) {
         private const val MIN_LOTTO_COUNT_SIZE = 0
 
         fun combine(
-            bundle1: LottoBundle,
-            bundle2: LottoBundle,
+            bundle1: LottoBundle?,
+            bundle2: LottoBundle?,
         ): LottoBundle {
-            val combinedLottos = bundle1.lottos + bundle2.lottos
+            val combinedLottos = (bundle1?.lottos ?: emptyList()) + (bundle2?.lottos ?: emptyList())
             return LottoBundle(combinedLottos)
         }
     }

@@ -24,40 +24,41 @@ class LottoController(
         printWinningResults(combinedLottoBundle, winningNumbers)
     }
 
-    private fun purchaseLotto(): Pair<LottoBundle, LottoBundle> {
-        val purchasePrice = PurchaseAmount(inputView.readPurchaseAmount())
-        val totalPurchaseAmount = purchasePrice.calculatePurchaseLottoCount(LottoMachine.LOTTO_PRICE)
+    private fun purchaseLotto(): Pair<LottoBundle?, LottoBundle?> {
+        val purchaseAmount = PurchaseAmount(inputView.readPurchaseAmount())
 
-        val manualLottoAmount = inputView.readManualLottoAmount()
-        val manualLottoBundle = purchaseManualLotto(totalPurchaseAmount, manualLottoAmount)
-
-        val autoLottoBundle = purchaseAutoLotto(totalPurchaseAmount - manualLottoAmount)
+        val manualLottoBundle = purchaseManualLotto(purchaseAmount)
+        val autoLottoBundle = purchaseAutoLotto(purchaseAmount)
 
         return Pair(manualLottoBundle, autoLottoBundle)
     }
 
-    private fun purchaseManualLotto(
-        totalPurchaseAmount: Int,
-        purchaseAmount: Int,
-    ): LottoBundle {
-        if (totalPurchaseAmount < purchaseAmount) throw IllegalArgumentException()
+    private fun purchaseManualLotto(purchaseAmount: PurchaseAmount): LottoBundle? {
+        val manualLottoAmount = inputView.readManualLottoAmount()
+        purchaseAmount.reducePurchaseAmount(manualLottoAmount * LottoMachine.LOTTO_PRICE)
 
-        val manualLottoNumbers = List(purchaseAmount) { inputView.readManualLottoNumbers() }
+        val manualLottoNumbers = List(manualLottoAmount) { inputView.readManualLottoNumbers() }
         val generator = ManualLottoNumbersGenerator(manualLottoNumbers)
-        return LottoMachine(generator).generateLottoBundle(purchaseAmount)
+        return LottoMachine(generator).generateLottoBundle(manualLottoAmount)
     }
 
-    private fun purchaseAutoLotto(purchaseAmount: Int): LottoBundle {
-        return LottoMachine().generateLottoBundle(purchaseAmount)
+    private fun purchaseAutoLotto(purchaseAmount: PurchaseAmount): LottoBundle? {
+        val autoLottoAmount = purchaseAmount.calculatePurchaseLottoCount(LottoMachine.LOTTO_PRICE)
+        purchaseAmount.reducePurchaseAmount(autoLottoAmount * LottoMachine.LOTTO_PRICE)
+
+        return LottoMachine().generateLottoBundle(autoLottoAmount)
     }
 
     private fun printLottoBundle(
-        manualLottoBundle: LottoBundle,
-        autoLottoBundle: LottoBundle,
+        manualLottoBundle: LottoBundle?,
+        autoLottoBundle: LottoBundle?,
     ) {
-        outputView.printPurchaseLottoCount(manualLottoBundle.lottos.size, autoLottoBundle.lottos.size)
-        manualLottoBundle.printLottoNumbers()
-        autoLottoBundle.printLottoNumbers()
+        outputView.printPurchaseLottoCount(
+            manualLottoBundle?.lottos?.size ?: 0,
+            autoLottoBundle?.lottos?.size ?: 0,
+        )
+        manualLottoBundle?.printLottoNumbers()
+        autoLottoBundle?.printLottoNumbers()
     }
 
     private fun LottoBundle.printLottoNumbers() {

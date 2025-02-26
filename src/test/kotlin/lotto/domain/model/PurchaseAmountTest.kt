@@ -1,6 +1,7 @@
 package lotto.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -38,5 +39,23 @@ class PurchaseAmountTest {
         val actual = PurchaseAmount(amount).calculatePurchaseLottoCount(1000)
 
         assertThat(actual).isEqualTo(count)
+    }
+
+    @Test
+    fun `초기 구매 금액 3000원에서 1000원 사용하면 2000원이 남아야 한다`() {
+        val purchaseAmount = PurchaseAmount(3000)
+        purchaseAmount.reducePurchaseAmount(1000)
+        val expected = 2000
+
+        assertThat(purchaseAmount.amount).isEqualTo(expected)
+    }
+
+    @Test
+    fun `초기 구매 금액 1000원에서 2000원 사용하면 예외가 발생한다`() {
+        val purchaseAmount = PurchaseAmount(1000)
+
+        assertThrows<IllegalArgumentException> {
+            purchaseAmount.reducePurchaseAmount(2000)
+        }
     }
 }
