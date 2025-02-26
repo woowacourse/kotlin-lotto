@@ -28,7 +28,7 @@ class LottoStatisticsTest {
             Stream.of(
                 Arguments.arguments(
                     mapOf(Rank.FIRST to 1, Rank.SECOND to 1, Rank.THIRD to 1),
-                    677166.6666666666,
+                    677166.66,
                 ),
                 Arguments.arguments(
                     emptyMap<Rank, Int>(),
