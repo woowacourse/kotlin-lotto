@@ -1,7 +1,7 @@
 package lotto.view
 
 class View {
-    val inputView = InputView()
+    val inputView = InputView(onInvalidInput = ::println)
     val outputView = OutputView()
 
     fun readPay(): Int {

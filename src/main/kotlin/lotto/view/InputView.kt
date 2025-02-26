@@ -1,6 +1,8 @@
 package lotto.view
 
-class InputView {
+class InputView(
+    private val onInvalidInput: (String) -> Unit,
+) {
     fun readNumber(): Int {
         val input: String = readUntilValid()
         val number: Int =
@@ -31,7 +33,7 @@ class InputView {
     private fun readUntilValid(): String {
         var input: String? = readLine()
         while (input == null) {
-            println(ERROR_MESSAGE_INVALID_INPUT_STATE)
+            onInvalidInput(ERROR_MESSAGE_INVALID_INPUT_STATE)
             input = readLine()
         }
         return input
