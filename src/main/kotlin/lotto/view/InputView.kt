@@ -12,7 +12,8 @@ class InputView {
     }
 
     fun validateManualCount(count: String): Int {
-        require(count.toIntOrNull() != null) { ERROR_INVALID_COUNT }
+        require(count.toIntOrNull() != null) { ERROR_INVALID_COUNT_TYPE }
+        require(count.toInt() >= 0) { ERROR_INVALID_COUNT_RANGE }
         return count.toInt()
     }
 
@@ -73,7 +74,8 @@ class InputView {
         private const val MESSAGE_INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
 
         private const val ERROR_INVALID_AMOUNT = "구입금액은 정수를 입력해야 합니다."
-        private const val ERROR_INVALID_COUNT = "구매할 로또 수는 정수를 입력해야 합니다."
+        private const val ERROR_INVALID_COUNT_TYPE = "구매할 로또 수는 정수를 입력해야 합니다."
+        private const val ERROR_INVALID_COUNT_RANGE = "구매할 로또 수는 0보다 커야 합니다."
         private const val ERROR_INVALID_MINIMUM_AMOUNT = "구입금액은 로또 1장 가격(1000원)보다 커야 합니다."
         private const val ERROR_INVALID_WINNING_TYPE = "당첨번호는 정수를 입력해야 합니다."
         private const val ERROR_BONUS_TYPE = "보너스 번호는 정수를 입력해야 합니다."

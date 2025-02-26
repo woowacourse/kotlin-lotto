@@ -25,6 +25,30 @@ class InputTest {
     }
 
     @ParameterizedTest
+    @ValueSource(strings = [" ", "", "a1", "A"])
+    fun `수동 구매 개수에 정수 이외의 값이 들어오면 예외를 발생시킨다`(input: String) {
+        assertThrows<IllegalArgumentException> {
+            inputView.validateManualCount(input)
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["-1", "-99", "-99999"])
+    fun `수동 구매 개수에 0미만의 값이 들어오면 예외를 발생시킨다`(input: String) {
+        assertThrows<IllegalArgumentException> {
+            inputView.validateManualCount(input)
+        }
+    }
+
+    @Test
+    fun `수동 구매 번호에 정수 이외의 값이 들어오면 예외를 발생시킨다`() {
+        val winningNumbers = listOf("1", "2", "a", "4", "5", "b")
+        assertThrows<IllegalArgumentException> {
+            inputView.validateManualNumbers(winningNumbers)
+        }
+    }
+
+    @ParameterizedTest
     @ValueSource(strings = ["500", "0", "-1"])
     fun `구입금액에 1000원 미만이 들어오면 예외를 발생시킨다`(input: String) {
         assertThrows<IllegalArgumentException> {
