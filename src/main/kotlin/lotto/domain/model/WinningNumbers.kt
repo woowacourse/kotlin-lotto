@@ -4,7 +4,7 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
     constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber(bonusNumber))
 
     init {
-        val duplicateBonusNumber = winningLotto.numbers.find { it == bonusNumber }
+        val duplicateBonusNumber = winningLotto.numbers.find { it == bonusNumber.number }
         require(duplicateBonusNumber == null) { DUPLICATE_WINNING_NUMBER_MESSAGE.format(duplicateBonusNumber) }
     }
 

@@ -21,7 +21,7 @@ class LottoMachineImpl(minNumber: Int = LOTTO_MIN_NUMBER, maxNumber: Int = LOTTO
         return randomLottoNumbers.take(LOTTO_NUMBER_SIZE)
     }
 
-    override fun generateRandomLottoNumbers(numbers: List<Int>): Lotto {
+    override fun generateManualLottoNumbers(numbers: List<Int>): Lotto {
         val lotto = getManualLottoNumbers(numbers).sorted()
         return Lotto(lotto.toSet())
     }

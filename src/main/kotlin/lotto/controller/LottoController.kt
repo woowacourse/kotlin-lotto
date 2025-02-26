@@ -28,7 +28,7 @@ class LottoController(
         val lottoCount = lottoStore.getLottoCount(purchasePrice)
         val lottos = lottosMachine.generate(lottoCount)
         outputView.printPurchaseLottoCount(lottos.size)
-        lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
+        lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers) }
         return lottos
     }
 

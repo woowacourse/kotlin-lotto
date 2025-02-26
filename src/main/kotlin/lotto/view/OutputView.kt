@@ -1,6 +1,5 @@
 package lotto.view
 
-import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoRank
 import lotto.domain.model.LottoRanks
 import java.math.BigDecimal
@@ -10,8 +9,8 @@ class OutputView {
         println(PRINT_PURCHASE_LOTTO_COUNT_FORMAT.format(purchaseLottoCount))
     }
 
-    fun printPurchaseLottoNumbers(lottoNumbers: List<LottoNumber>) {
-        println(lottoNumbers.map { it.number })
+    fun printPurchaseLottoNumbers(lottoNumbers: List<Int>) {
+        println(lottoNumbers)
     }
 
     fun printWinningResults(ranks: LottoRanks) {

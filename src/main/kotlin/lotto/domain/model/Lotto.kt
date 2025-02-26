@@ -1,10 +1,12 @@
 package lotto.domain.model
 
-data class Lotto(val numbers: Set<LottoNumber>) {
+data class Lotto(private val _numbers: Set<LottoNumber>) {
+    val numbers get() = _numbers.map { it.number }
+
     constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) }.toSet())
 
     init {
-        require(numbers.size == LOTTO_NUMBER_SIZE) {
+        require(_numbers.size == LOTTO_NUMBER_SIZE) {
             INVALID_LOTTO_NUMBER_SIZE_MESSAGE.format(this)
         }
     }
@@ -13,13 +15,13 @@ data class Lotto(val numbers: Set<LottoNumber>) {
         winningLotto: Lotto,
         bonusNumber: LottoNumber,
     ): LottoRank {
-        val matchCount = numbers.count { number -> winningLotto.numbers.contains(number) }
-        val isMatchBonusNumber = numbers.contains(bonusNumber)
+        val matchCount = _numbers.count { number -> winningLotto._numbers.contains(number) }
+        val isMatchBonusNumber = _numbers.contains(bonusNumber)
         return LottoRank.calculate(matchCount, isMatchBonusNumber)
     }
 
     override fun toString(): String {
-        return this.numbers.toString()
+        return this._numbers.toString()
     }
 
     companion object {
