@@ -33,7 +33,7 @@ class OutputView {
 
     private fun printLottos(lottos: List<Lotto>) {
         lottos.forEach { lotto ->
-            println(lotto.lottoNumbers.map { it.number })
+            println(lotto.lottoNumbers.map { it.number }.sorted())
         }
     }
 
