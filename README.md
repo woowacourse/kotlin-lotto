@@ -64,5 +64,6 @@
 - [x] Lotto의 isMatchBonusNumber 함수를 재사용 가능하도록 변경
 - [x] LottoNumber 인스턴스 재사용 방식 변경
 - [x] WinningNumbers 검증 시 기존 함수 활용하도록 변경
+- [x] 테스트 코드 형식 변경 (give / when /then)
 
 ### 기능 요구 사항
