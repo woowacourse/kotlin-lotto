@@ -6,6 +6,7 @@ import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
 import lotto.model.PrizeCalculator
+import lotto.model.Rank
 import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -74,7 +75,13 @@ class LottoController(
     private fun getBonusNumber(): LottoNumber? = LottoNumber.create(inputView.getBonusNumber())
 
     private fun showEarningRate(prizeCalculator: PrizeCalculator) {
-        val result = prizeCalculator.result
+        val result =
+            prizeCalculator.result
+                .filter { it.key != Rank.MISS }
+                .toList()
+                .sortedBy { it.first.ordinal }
+                .reversed()
+                .toMap()
         val earningRate = prizeCalculator.calculateEarningRate()
         outputView.printPrize(result, earningRate)
     }

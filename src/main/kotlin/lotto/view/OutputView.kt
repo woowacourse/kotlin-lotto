@@ -23,7 +23,7 @@ class OutputView {
         println()
         println("당첨 통계")
         println("---------")
-        result.toList().sortedBy { it.first.printSequence }.filter { it.first.printSequence != null }.forEach { (rank, count) ->
+        result.forEach { (rank, count) ->
             print("${rank.countOfMatch}개 일치")
             if (rank.bonusRequired) print(", 보너스 볼 일치")
             print(" (${rank.winningMoney}원) - ${count}개")
