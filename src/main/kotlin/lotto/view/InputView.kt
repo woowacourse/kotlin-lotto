@@ -2,18 +2,30 @@ package lotto.view
 
 class InputView {
     fun readNumber(): Int {
-        val input: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
+        var input: String? = null
+        while (input == null) {
+            println(ERROR_MESSAGE_INVALID_INPUT_STATE)
+            input = readLine()
+        }
         val number: Int =
-            input.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
+            input
+                .trim()
+                .toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
         return number
     }
 
     fun readNumbers(): List<Int> {
-        val input: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
+        var input: String? = null
+        while (input == null) {
+            println(ERROR_MESSAGE_INVALID_INPUT_STATE)
+            input = readLine()
+        }
         val numbers: List<Int> =
-            input.split(LOTTO_NUMBERS_DELIMITER).map { number: String ->
-                number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_LOTTO_NUMBERS)
-            }
+            input
+                .split(LOTTO_NUMBERS_DELIMITER)
+                .map { number: String ->
+                    number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_LOTTO_NUMBERS)
+                }
         return numbers
     }
 
