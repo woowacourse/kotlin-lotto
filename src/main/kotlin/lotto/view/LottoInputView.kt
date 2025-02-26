@@ -1,7 +1,6 @@
 package lotto.view
 
 import lotto.InputValidator
-import lotto.model.generator.ManualLottoGenerator
 
 class LottoInputView {
     fun inputPurchase(): Double {
@@ -16,16 +15,13 @@ class LottoInputView {
         return manualPurchase.toInt()
     }
 
-    fun inputManualLotto(
-        input: Int,
-        manualLottoGenerator: ManualLottoGenerator,
-    ): ManualLottoGenerator {
+    fun inputManualLotto(input: Int): List<List<Int>> {
         println(INPUT_MANUAL_LOTTO_MESSAGE)
+        val manualLotto = mutableListOf<List<Int>>()
         repeat(input) {
-            val numbers = manualLotto()
-            manualLottoGenerator.addLotto(numbers)
+            manualLotto.add(manualLotto())
         }
-        return manualLottoGenerator
+        return manualLotto
     }
 
     private fun manualLotto(): List<Int> {
@@ -34,6 +30,7 @@ class LottoInputView {
         return input
             .split(",")
             .map { it.trim().also { InputValidator(it) }.toInt() }
+            .toList()
     }
 
     fun inputWinningNumbers(): List<Int> {
