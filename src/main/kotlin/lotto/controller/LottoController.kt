@@ -36,7 +36,7 @@ class LottoController(
 
     private fun generateWinningNumbers(): WinningNumbers {
         val winningLotto = Lotto(inputView.readWinningNumbers())
-        val bonusNumber = LottoNumber(inputView.readBonusNumber())
+        val bonusNumber = LottoNumber.from(inputView.readBonusNumber())
         return WinningNumbers(winningLotto, bonusNumber)
     }
 

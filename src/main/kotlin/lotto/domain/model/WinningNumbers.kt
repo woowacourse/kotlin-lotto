@@ -1,7 +1,7 @@
 package lotto.domain.model
 
 class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: LottoNumber) {
-    constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber(bonusNumber))
+    constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber.from(bonusNumber))
 
     init {
         require(winningLotto.numbers.contains(bonusNumber).not()) { DUPLICATE_WINNING_NUMBER_MESSAGE }

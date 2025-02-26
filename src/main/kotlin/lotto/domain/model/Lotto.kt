@@ -1,7 +1,7 @@
 package lotto.domain.model
 
 class Lotto(val numbers: Set<LottoNumber>) {
-    constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) }.toSet())
+    constructor(numbers: List<Int>) : this(numbers.map { LottoNumber.from(it) }.toSet())
 
     init {
         require(numbers.size == LOTTO_NUMBER_SIZE) { INVALID_LOTTO_NUMBER_SIZE_MESSAGE }

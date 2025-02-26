@@ -3,11 +3,9 @@ package lotto.domain.service
 import lotto.domain.model.LottoNumber
 
 class RandomLottoNumbersGenerator : LottoNumbersGenerator {
-    private val numbers: List<LottoNumber> = (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).map { LottoNumber(it) }
-
     override fun generate(): Set<LottoNumber> {
         val selectedNumbers = selectLottoNumbers().sorted()
-        return numbers.filter { selectedNumbers.contains(it.number) }.toSet()
+        return selectedNumbers.map { LottoNumber.from(it) }.toSet()
     }
 
     private fun selectLottoNumbers(): List<Int> {

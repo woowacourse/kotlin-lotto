@@ -48,7 +48,7 @@ class LottoTest {
     @Test
     fun `보너스 번호가 로또에 존재하면 true를 반환한다`() {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber(1)
+        val bonusNumber = LottoNumber.from(1)
 
         val expected = true
         val actual = lotto.isMatchNumber(bonusNumber)
@@ -59,7 +59,7 @@ class LottoTest {
     @Test
     fun `보너스 번호가 로또에 존재하지 않으면 false를 반환한다`() {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber(9)
+        val bonusNumber = LottoNumber.from(9)
 
         val expected = false
         val actual = lotto.isMatchNumber(bonusNumber)
