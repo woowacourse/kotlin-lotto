@@ -14,13 +14,15 @@ data class Lotto(
 
     fun contains(element: LottoNumber): Boolean = value.contains(element)
 
+    private fun requireValidLotto(input: List<LottoNumber>): List<LottoNumber> {
+        var winningLotto = input.toList()
+        require(input.size == MAX_LOTTO_LENGTH) { Message.ERR_NOT_SIX_ELEMENTS.msg }
+        winningLotto = winningLotto.distinct()
+        require(winningLotto.size == MAX_LOTTO_LENGTH) { Message.ERR_ELEMENT_DUPLICATED.msg }
+        return input
+    }
+
     companion object {
-        private fun requireValidLotto(input: List<LottoNumber>): List<LottoNumber> {
-            var winningLotto = input.toList()
-            require(input.size == MAX_LOTTO_LENGTH) { Message.ERR_NOT_SIX_ELEMENTS.msg }
-            winningLotto = winningLotto.distinct()
-            require(winningLotto.size == MAX_LOTTO_LENGTH) { Message.ERR_ELEMENT_DUPLICATED.msg }
-            return input
-        }
+        fun of(vararg numbers: Int): Lotto = Lotto(numbers.map { LottoNumber.of(it) })
     }
 }

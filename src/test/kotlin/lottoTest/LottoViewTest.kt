@@ -88,10 +88,10 @@ class LottoViewTest {
         val output = setOut()
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
-                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber.of(it) }),
+                Lotto.of(1, 2, 3, 43, 44, 45),
+                Lotto.of(11, 12, 13, 14, 15, 16),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
         val rankMap = LottoRankFinder().findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
         lottoView.printResult(rankMap)
