@@ -1,7 +1,6 @@
 package lotto
 
 import lotto.controller.LottoController
-import lotto.model.lottomachine.AutomaticLottoMachine
 import lotto.view.InputView
 import lotto.view.OutputView
 
