@@ -1,59 +1,55 @@
 package lotto.controller
 
-import lotto.controller.Mapper.mapToLottoCount
-import lotto.controller.Mapper.mapToLottoResultsDescriptions
-import lotto.controller.Mapper.mapToLottos
-import lotto.controller.Mapper.mapToOutput
-import lotto.controller.Mapper.mapToProfitRate
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
+import lotto.domain.LottoShop
 import lotto.domain.WinLotto
 import lotto.view.View
 
 class LottoController {
-    private lateinit var winLotto: WinLotto
-    private lateinit var boughtLottos: List<Lotto>
+    val view = View()
+    val viewMapper = ViewMapper()
 
     fun start() {
-        runCatching(::run)
-            .onSuccess {
-                showResult()
-            }.onFailure { error: Throwable ->
-                View.showError(error)
-                start()
-            }
+        runCatching(::run).onFailure { error: Throwable ->
+            view.showError(error)
+            start()
+        }
     }
 
     private fun run() {
-        val pay: Int = View.readPay()
-        val manualLottoCount: Int = View.readManualLottoCount()
-        val manualLottos: List<List<Int>> = View.readManualLottosNumbers(manualLottoCount)
-        View.showLottoCount(mapToLottoCount(pay))
-        makeLotto(pay, manualLottos)
-        showBoughtLottos()
-        readWinningLotto()
+        val lottoShop: LottoShop = makeLottoShop()
+        val boughtLottos: List<Lotto> = buyLottos(lottoShop)
+        val winLotto: WinLotto = makeWinLotto()
+        showResult(boughtLottos, winLotto)
     }
 
-    private fun makeLotto(
-        pay: Int,
-        manualLottos: List<List<Int>>,
+    private fun buyLottos(lottoShop: LottoShop): List<Lotto> {
+        val manualLottos: List<List<Int>> = view.readManualLottosNumbers(lottoShop.manualCount)
+        view.showLottoCount(lottoShop.manualCount, lottoShop.randomCount)
+        val boughtLottos: List<Lotto> = lottoShop.buyLottos(manualLottos)
+        view.showLottos(viewMapper.mapToOutput(boughtLottos))
+        return boughtLottos
+    }
+
+    private fun makeLottoShop(): LottoShop {
+        val pay: Int = view.readPay()
+        val manualLottoCount: Int = view.readManualLottoCount()
+        return LottoShop(pay, manualLottoCount)
+    }
+
+    private fun makeWinLotto(): WinLotto {
+        val lotto = Lotto(view.readLottoNumbers())
+        val bonusNumber = LottoNumber(view.readBonusNumber())
+        return WinLotto(lotto, bonusNumber)
+    }
+
+    private fun showResult(
+        boughtLottos: List<Lotto>,
+        winLotto: WinLotto,
     ) {
-        boughtLottos = mapToLottos(pay, manualLottos)
-    }
-
-    private fun showBoughtLottos() {
-        View.showLottos(mapToOutput(boughtLottos))
-    }
-
-    private fun readWinningLotto() {
-        val lotto = Lotto(View.readLottoNumbers())
-        val bonusNumber = LottoNumber(View.readBonusNumber())
-        winLotto = WinLotto(lotto, bonusNumber)
-    }
-
-    private fun showResult() {
-        val lottoResultsDescriptions: List<String> = mapToLottoResultsDescriptions(boughtLottos, winLotto)
-        val profitRate: Double = mapToProfitRate(boughtLottos, winLotto)
-        View.showResult(lottoResultsDescriptions, profitRate)
+        val lottoResultsDescriptions: List<String> = viewMapper.mapToLottoResultsDescriptions(boughtLottos, winLotto)
+        val profitRate: Double = viewMapper.mapToProfitRate(boughtLottos, winLotto)
+        view.showResult(lottoResultsDescriptions, profitRate)
     }
 }

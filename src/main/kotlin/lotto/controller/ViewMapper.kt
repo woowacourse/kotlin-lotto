@@ -2,25 +2,16 @@ package lotto.controller
 
 import lotto.domain.Lotto
 import lotto.domain.LottoResult
-import lotto.domain.LottoShop
 import lotto.domain.ProfitCalculator
 import lotto.domain.WinLotto
 
-object Mapper {
-    const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
-    const val BONUS_NUMBER_MATCHED = ", 보너스 볼 일치"
-
-    fun mapToLottoCount(pay: Int): Int = LottoShop.countLotto(pay)
+class ViewMapper {
+    val profitCalculator = ProfitCalculator()
 
     fun mapToOutput(boughtLottos: List<Lotto>): List<List<Int>> =
         boughtLottos.map { lotto: Lotto ->
             lotto.numbers.sorted()
         }
-
-    fun mapToLottos(
-        pay: Int,
-        manualLottos: List<List<Int>>,
-    ): List<Lotto> = LottoShop().buyLottos(pay, manualLottos)
 
     fun mapToLottoResultsDescriptions(
         boughtLottos: List<Lotto>,
@@ -42,7 +33,7 @@ object Mapper {
     ): Double {
         val lottoResults: List<LottoResult> =
             boughtLottos.map { boughtLotto -> LottoResult.from(winLotto, boughtLotto) }
-        return ProfitCalculator.calculateProfitRate(lottoResults)
+        return profitCalculator.calculateProfitRate(lottoResults)
     }
 
     private fun makeLottoResultDescription(
@@ -68,4 +59,9 @@ object Mapper {
         userLottoResults.count { lottoResult: LottoResult ->
             lottoResult == entry
         }
+
+    companion object {
+        const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
+        const val BONUS_NUMBER_MATCHED = ", 보너스 볼 일치"
+    }
 }
