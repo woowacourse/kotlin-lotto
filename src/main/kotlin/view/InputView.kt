@@ -1,61 +1,60 @@
 package view
 
 class InputView {
-    fun readPurchasePrice(): Int {
-        return readInt(MESSAGE_INPUT_PURCHASE_PRICE)
-    }
+    fun readPurchasePrice(): Int = readInt(MESSAGE_INPUT_PURCHASE_PRICE)
 
-    fun readPassivityLottoAmount(): Int {
-        return readInt(MESSAGE_INPUT_PASSIVITY_LOTTO_AMOUNT)
-    }
+    fun readManualLottoAmount(): Int = readInt(MESSAGE_INPUT_MANUAL_LOTTO_AMOUNT)
 
-    fun readPassivityLottoNumbers(): List<Int> {
-        return readIntList()
-    }
+    fun readManualLottoNumbers(): List<Int> = readIntList()
 
-    fun readWinningNumbers(): List<Int> {
-        return readIntList(MESSAGE_INPUT_WINNING_NUMBER)
-    }
+    fun readWinningNumbers(): List<Int> = readIntList(MESSAGE_INPUT_WINNING_NUMBER)
 
-    fun readBonusNumber(): Int {
-        return readInt(MESSAGE_INPUT_BONUS_NUMBER)
-    }
+    fun readBonusNumber(): Int = readInt(MESSAGE_INPUT_BONUS_NUMBER)
 
     private fun readInt(message: String): Int {
-        println(message)
-        val input = readln()
-        return validateAndParseInt(input)
+        while (true) {
+            println(message)
+            val input = readln()
+            val number = validateAndParseInt(input)
+            if (number != null) return number
+        }
     }
 
     private fun readIntList(message: String? = null): List<Int> {
-        message?.let { println(message) }
-        val input = readln()
-        return validateAndParseToIntList(input)
+        while (true) {
+            message?.let { println(message) }
+            val input = readln()
+            val result = validateAndParseToIntList(input)
+            if (input.split(",").size == result.size) return result
+        }
     }
 
-    private fun validateAndParseInt(input: String): Int {
-        validateEmpty(input)
-        validateNumeric(input)
-        return input.toInt()
+    private fun validateAndParseInt(input: String): Int? {
+        if (validateEmpty(input)) return null
+        val value = input.toIntOrNull()
+        if (value == null) {
+            println(NOT_NUMERIC_ERROR)
+        }
+        return value
     }
 
     private fun validateAndParseToIntList(input: String): List<Int> {
-        validateEmpty(input)
         return input.split(",")
-            .map { number -> validateAndParseInt(number) }
+            .mapNotNull { validateAndParseInt(it) }
     }
 
-    private fun validateEmpty(input: String) {
-        require(input.isNotBlank()) { EMPTY_INPUT_ERROR }
-    }
-
-    private fun validateNumeric(input: String) {
-        require(input.toIntOrNull() != null) { NOT_NUMERIC_ERROR }
+    private fun validateEmpty(input: String): Boolean {
+        if (input.isBlank()) {
+            println(EMPTY_INPUT_ERROR)
+            return true
+        }
+        return false
     }
 
     companion object {
         private const val MESSAGE_INPUT_PURCHASE_PRICE = "구입금액을 입력해 주세요."
-        private const val MESSAGE_INPUT_PASSIVITY_LOTTO_AMOUNT = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val MESSAGE_INPUT_MANUAL_LOTTO_AMOUNT = "수동으로 구매할 로또 수를 입력해 주세요."
+
         private const val MESSAGE_INPUT_WINNING_NUMBER = "\n지난 주 당첨 번호를 입력해 주세요."
         private const val MESSAGE_INPUT_BONUS_NUMBER = "\n보너스 볼을 입력해 주세요."
 

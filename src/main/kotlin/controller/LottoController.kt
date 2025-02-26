@@ -4,10 +4,11 @@ import domain.model.Lotto
 import domain.model.LottoMatchResult
 import domain.model.LottoNumber
 import domain.model.LottoOrderRequest
-import domain.model.PassivityLottoAmount
+import domain.model.ManualLottoAmount
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
-import domain.service.LottoGenerator
+import domain.service.AutoLottoMachine
+import domain.service.ManualLottoMachine
 import util.retryWhenException
 import view.InputView
 import view.OutputView
@@ -15,70 +16,72 @@ import view.OutputView
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val lottoGenerator: LottoGenerator,
 ) {
     fun run() {
-        val order = buyLotto()
-        val pickedLotto = pickLotto(order.quickPickLottoAmount)
-        displayPickedLotto(passivityLottoAmount = order.amount.value, lotto = pickedLotto)
+        val order: LottoOrderRequest = getOrder()
+        val autoLotto = buyAutoLotto(order.autoLottoAmount)
+        val allLotto = order.combine(autoLotto)
+        displayPickedLotto(manualLottoAmount = order.amount.value, lotto = allLotto)
 
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto = getWinningLotto(winningNumbers)
 
-        val combinedLotto = order.combine(pickedLotto)
-
-        val winningResult = winningLotto.calculate(combinedLotto)
+        val winningResult = winningLotto.calculate(allLotto)
         val profitRate = winningResult.getProfitRate(order.money)
         displayResult(winningResult, profitRate)
     }
 
-    private fun buyLotto(): LottoOrderRequest {
+    private fun getOrder(): LottoOrderRequest {
         val purchasePrice = getPurchasePrice()
-        val passiveLottoAmount = getPassiveLottoAmount(purchasePrice)
-        val passiveLottoNumbers = getPassiveLottoNumbers(passiveLottoAmount)
-        return LottoOrderRequest(purchasePrice, passiveLottoAmount, passiveLottoNumbers)
+        val manualLottoAmount = getManualLottoAmount(purchasePrice)
+        val manualLotto = getManualLottoNumbers(manualLottoAmount)
+        return LottoOrderRequest(
+            money = purchasePrice,
+            amount = manualLottoAmount,
+            manualLotto = manualLotto,
+        )
     }
 
-    private fun getPurchasePrice(): PurchasePrice =
+    private fun getPurchasePrice(): PurchasePrice {
+        return retryWhenException(
+            action = { PurchasePrice(inputView.readPurchasePrice()) },
+            onError = { outputView.printErrorMessage(it) },
+        )
+    }
+
+    private fun getManualLottoAmount(money: PurchasePrice): ManualLottoAmount =
         retryWhenException(
             action = {
-                val input = inputView.readPurchasePrice()
-                PurchasePrice(input)
+                val input = inputView.readManualLottoAmount()
+                ManualLottoAmount(input, money)
             },
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun getPassiveLottoAmount(money: PurchasePrice): PassivityLottoAmount =
+    private fun getManualLottoNumbers(amount: ManualLottoAmount): List<Lotto> =
         retryWhenException(
             action = {
-                val passive = inputView.readPassivityLottoAmount()
-                PassivityLottoAmount.create(passive, money)
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
-
-    private fun getPassiveLottoNumbers(amount: PassivityLottoAmount): List<Lotto> =
-        retryWhenException(
-            action = {
-                outputView.printPassiveLottoRequest()
+                outputView.printManualLottoRequest()
                 List(amount.value) {
-                    val input = inputView.readPassivityLottoNumbers()
-                    Lotto(input.map { LottoNumber(it) })
+                    val input = inputView.readManualLottoNumbers()
+                    ManualLottoMachine(input).generate()
                 }
             },
             onError = { outputView.printErrorMessage(it) },
         )
 
-    private fun pickLotto(quickPickLottoAmount: Int): List<Lotto> {
-        return lottoGenerator.generate(quickPickLottoAmount)
-    }
-
     private fun displayPickedLotto(
-        passivityLottoAmount: Int,
+        manualLottoAmount: Int,
         lotto: List<Lotto>,
     ) {
-        outputView.printPurchasedLottoAmount(passivityLottoAmount, lotto.size)
+        outputView.printPurchasedLottoAmount(manualLottoAmount, lotto.size)
         outputView.printPurchasedLotto(lotto)
+    }
+
+    private fun buyAutoLotto(autoLottoAmount: Int): List<Lotto> {
+        return List(autoLottoAmount) {
+            AutoLottoMachine.generate()
+        }
     }
 
     private fun getWinningNumbers(): Lotto =
