@@ -17,7 +17,7 @@ class WinningLottoTest {
     fun `당첨 번호와 일치하는 번호가 6개인 경우 1등이 된다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
-        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
+        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto))
         assertThat(prizeCalculator.rankCount[Rank.FIRST]).isEqualTo(1)
     }
 
@@ -25,7 +25,7 @@ class WinningLottoTest {
     fun `당첨 번호와 일치하는 번호가 5개이고, 보너스 번호가 일치할 경우 2등이 된다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 7))
-        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
+        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto))
         assertThat(prizeCalculator.rankCount[Rank.SECOND]).isEqualTo(1)
     }
 
@@ -33,7 +33,7 @@ class WinningLottoTest {
     fun `당첨 번호와 일치하는 번호가 5개인 경우 3등이 된다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 9))
-        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
+        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto))
         assertThat(prizeCalculator.rankCount[Rank.THIRD]).isEqualTo(1)
     }
 
@@ -41,7 +41,7 @@ class WinningLottoTest {
     fun `당첨 번호와 일치하는 번호가 4개인 경우 4등이 된다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 4, 8, 9))
-        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
+        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto))
         assertThat(prizeCalculator.rankCount[Rank.FOURTH]).isEqualTo(1)
     }
 
@@ -49,7 +49,7 @@ class WinningLottoTest {
     fun `당첨 번호와 일치하는 번호가 3개인 경우 5등이 된다`() {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 7, 8, 9))
-        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
+        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto))
         assertThat(prizeCalculator.rankCount[Rank.FIFTH]).isEqualTo(1)
     }
 
@@ -62,7 +62,7 @@ class WinningLottoTest {
     fun `당첨 번호와 일치하는 번호가 3개 미만인 경우 탈락된다`(numbers: String) {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(numbers.split(",").map { it.trim().toInt() })
-        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
+        val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto))
         assertThat(prizeCalculator.rankCount[Rank.MISS]).isEqualTo(1)
     }
 

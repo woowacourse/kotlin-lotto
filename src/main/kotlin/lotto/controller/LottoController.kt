@@ -27,7 +27,7 @@ class LottoController(
                 validatePublishLotto(inputView.getWinningLotto()),
                 validateBonusNumber(inputView.getBonusNumber()),
             )
-        val prizeCalculator = PrizeCalculator(winningLotto, publishedLotto, money)
+        val prizeCalculator = PrizeCalculator(winningLotto, publishedLotto)
         showEarningRate(prizeCalculator)
     }
 
@@ -43,6 +43,7 @@ class LottoController(
                 validateBonusNumber(inputView.getBonusNumberRepeat()),
             )
         }
+
         return WinningLotto(numbers, bonus)
     }
 
@@ -64,7 +65,9 @@ class LottoController(
                     inputView.getManualLottoRepeat(),
                 )
 
-            else -> LottoNumbers(input.map { it -> LottoNumber(it) })
+            else -> {
+                LottoNumbers(input.map { it -> LottoNumber(it) })
+            }
         }
     }
 
@@ -83,6 +86,7 @@ class LottoController(
 
     private fun autoPublishLotto(): List<Lotto> {
         val publishedLotto = lottoMachine.publishAutoTickets(money)
+        money = money.payMoney(Amount(publishedLotto.size * LOTTO_PRIZE))
         outputView.printPublishedLotto(publishedLotto)
         return publishedLotto
     }
@@ -103,7 +107,7 @@ class LottoController(
                 .reversed()
                 .toMap()
         val earningRate = prizeCalculator.calculateEarningRate()
-        outputView.printPrize(result, earningRate)
+        outputView.printPrize(result, earningRate, money)
     }
 
     companion object {

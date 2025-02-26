@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.model.Amount
 import lotto.model.Lotto
 import lotto.model.Rank
 
@@ -19,6 +20,7 @@ class OutputView {
     fun printPrize(
         result: Map<Rank, Int>,
         earningRate: Double,
+        leftMoney: Amount,
     ) {
         println()
         println("당첨 통계")
@@ -30,6 +32,7 @@ class OutputView {
             println()
         }
         println("총 수익률은 ${String.format("%.2f", earningRate)}입니다.")
+        if (leftMoney.money != 0) println("거스름돈은 ${leftMoney.money}원 입니다.")
     }
 
     fun inputWinningError() {

@@ -3,7 +3,6 @@ package lotto.model
 class PrizeCalculator(
     val winningLotto: WinningLotto,
     val publishedLotto: List<Lotto>,
-    val amount: Amount,
 ) {
     val rankCount: Map<Rank, Int>
 
@@ -23,7 +22,11 @@ class PrizeCalculator(
         return result
     }
 
-    fun calculateEarningRate(): Double = calculateTotalPrize(rankCount).toDouble() / amount.money.toDouble()
+    fun calculateEarningRate(): Double = calculateTotalPrize(rankCount).toDouble() / (LOTTO_PRIZE * publishedLotto.size).toDouble()
 
     private fun calculateTotalPrize(result: Map<Rank, Int>): Int = result.entries.sumOf { (rank, count) -> rank.winningMoney * count }
+
+    companion object {
+        const val LOTTO_PRIZE = 1000
+    }
 }
