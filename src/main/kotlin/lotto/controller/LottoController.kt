@@ -15,7 +15,7 @@ class LottoController(
 ) {
     fun run() {
         val purchaseMoney = getPurchaseMoney()
-        val wholeLottoCount = getLottoCount(purchaseMoney)
+        val wholeLottoCount = getWholeLottoCount(purchaseMoney)
 
         val manualLottoCount = getPurchaseManualLottoCount(lottoCount)
 
@@ -49,7 +49,7 @@ class LottoController(
             getPurchaseMoney()
         }
 
-    private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount {
+    private fun getWholeLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount {
         val lottoCount = purchaseMoney.getLottoCount()
         return lottoCount
     }
