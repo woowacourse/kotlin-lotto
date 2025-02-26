@@ -17,6 +17,6 @@ class LottoNumberTest {
     @ValueSource(ints = [-1, 0, 46, 47])
     fun `로또 번호가 1~45 사이가 아닌 경우 예외가 발생한다`(numbers: Int) {
         val exception = assertThrows<IllegalArgumentException> { LottoNumber(numbers) }
-        assertThat(exception.message).isEqualTo("[ERROR] 로또 번호는 1~45 사이여야 합니다.")
+        assertThat(exception.message).isEqualTo("[ERROR] 로또 숫자가 범위를 벗어났습니다.")
     }
 }

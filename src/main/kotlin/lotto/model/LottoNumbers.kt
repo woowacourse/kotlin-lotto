@@ -15,7 +15,7 @@ class LottoNumbers(
     companion object {
         const val LOTTO_NUMBER_SIZE = 6
         const val NUMBER_SIZE_ERROR = "[ERROR] 로또 번호의 갯수가 ${LOTTO_NUMBER_SIZE}개가 아닙니다"
-        const val NUMBER_DUPLICATE_ERROR = "[ERROR] 로또 번호가 중복되었습니다"
+        const val NUMBER_DUPLICATE_ERROR = "[ERROR] 로또 번호가 중복되었습니다."
 
         fun validation(numberList: List<Int>): ValidationResult {
             when {

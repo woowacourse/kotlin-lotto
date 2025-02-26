@@ -1,5 +1,6 @@
 package lotto.model
 
+import lotto.model.LottoNumbers.Companion.LOTTO_NUMBER_SIZE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -16,7 +17,7 @@ class LottoNumbersTest {
                 LottoNumber(5),
             )
         val exception = assertThrows<IllegalArgumentException> { LottoNumbers(lottoNumbers) }
-        assertThat(exception.message).isEqualTo("[ERROR] 로또 번호는 6개여야 합니다.")
+        assertThat(exception.message).isEqualTo("[ERROR] 로또 번호의 갯수가 ${LOTTO_NUMBER_SIZE}개가 아닙니다")
     }
 
     @Test
@@ -31,6 +32,6 @@ class LottoNumbersTest {
                 LottoNumber(6),
             )
         val exception = assertThrows<IllegalArgumentException> { LottoNumbers(lottoNumbers) }
-        assertThat(exception.message).isEqualTo("[ERROR] 로또 번호는 중복될 수 없습니다.")
+        assertThat(exception.message).isEqualTo("[ERROR] 로또 번호가 중복되었습니다.")
     }
 }
