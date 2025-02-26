@@ -26,7 +26,7 @@ class PurchaseAmountTest {
     ) {
         purchaseAmount = PurchaseAmount(amount)
         val lottoAmount = count * Lotto.LOTTO_PRICE
-        assertThatThrownBy { purchaseAmount.purchaseLotto(count) }.isInstanceOf(IllegalArgumentException::class.java)
+        assertThatThrownBy { purchaseAmount.getPurchaseLottoCount(count) }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("선택하신 개수의 금액은 $lottoAmount 입니다. 구매하시는 금액은 현재 구매할 ${amount}원 보다 적어야 합니다.")
     }
 

@@ -23,7 +23,7 @@ class WinningNumbersTest {
         actual: LottoRank,
     ) {
         val winningNumbers = WinningNumbers(listOf(1, 2, 3, 4, 5, 6), 8)
-        assertThat(winningNumbers.calculateLottoRanks(listOf(lotto)).lottoRanks).isEqualTo(listOf(actual))
+        assertThat(winningNumbers.calculateLottoRanks(Lottos()).lottoRanks).isEqualTo(listOf(actual))
     }
 
     companion object {

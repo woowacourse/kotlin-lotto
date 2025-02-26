@@ -7,7 +7,7 @@ class PurchaseAmount(private var _amount: Int) {
         require(amount >= Lotto.LOTTO_PRICE) { INVALID_MIN_AMOUNT_MESSAGE.format(amount) }
     }
 
-    fun purchaseLotto(
+    fun getPurchaseLottoCount(
         purchaseCount: Int,
         lottoPrice: Int = Lotto.LOTTO_PRICE,
     ): Int {
@@ -15,6 +15,12 @@ class PurchaseAmount(private var _amount: Int) {
         require(purchaseAmount <= amount) { INVALID_PURCHASE_LOTTO_AMOUNT_MESSAGE.format(purchaseAmount, amount) }
         _amount -= purchaseAmount
         return purchaseCount
+    }
+
+    fun getPurchaseRemainLottoCount(lottoPrice: Int = Lotto.LOTTO_PRICE): Int {
+        val remainLottoCount = amount / lottoPrice
+        _amount -= lottoPrice * remainLottoCount
+        return remainLottoCount
     }
 
     private companion object {

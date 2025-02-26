@@ -10,19 +10,17 @@ class InputView {
         return requireNotNull(scanner.nextLine().trim().toIntOrNull()) { INVALID_NUMBER_MESSAGE }
     }
 
-    fun readPassivityLottoCount(): Int {
+    fun readManualLottoCount(): Int {
         println(READ_PASSIVITY_LOTTO_COUNT)
         return requireNotNull(scanner.nextLine().trim().toIntOrNull()) { INVALID_NUMBER_MESSAGE }
     }
 
     fun readLottoNumbers(): List<Int> {
-        println(READ_WINNING_NUMBERS_MESSAGE)
         val lottoNumbersInput = scanner.nextLine().split(WINNING_NUMBERS_DELIMITER).map { it.trim() }
         return lottoNumbersInput.map { requireNotNull(it.toIntOrNull()) { INVALID_NUMBER_MESSAGE } }
     }
 
     fun readBonusNumber(): Int {
-        println(READ_BONUS_NUMBER_MESSAGE)
         val bonusNumberInput = scanner.nextLine().trim()
         return requireNotNull(bonusNumberInput.toIntOrNull()) { INVALID_NUMBER_MESSAGE }
     }
@@ -31,8 +29,6 @@ class InputView {
         const val WINNING_NUMBERS_DELIMITER = ','
         const val READ_PURCHASE_AMOUNT_MESSAGE = "구입금액을 입력해 주세요."
         const val READ_PASSIVITY_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요."
-        const val READ_WINNING_NUMBERS_MESSAGE = "\n지난 주 당첨 번호를 입력해 주세요."
-        const val READ_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
         const val INVALID_NUMBER_MESSAGE = "숫자만 입력해 주세요.(공백 포함 x)"
     }
 }

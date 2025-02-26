@@ -8,16 +8,16 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
         require(duplicateBonusNumber == null) { DUPLICATE_WINNING_NUMBER_MESSAGE.format(duplicateBonusNumber) }
     }
 
-    fun calculateLottoRanks(lottos: List<Lotto>): LottoRanks {
+    fun calculateLottoRanks(lottos: Lottos): LottoRanks {
         val ranks = LottoRank.entries.associateWith { rank -> getLottoRankCount(lottos, rank) }
         return LottoRanks(ranks)
     }
 
     private fun getLottoRankCount(
-        lottos: List<Lotto>,
+        lottos: Lottos,
         rank: LottoRank,
     ): Int {
-        return lottos.count { lotto -> lotto.getLottoRank(winningLotto, bonusNumber) == rank }
+        return lottos.lottos.count { lotto -> lotto.getLottoRank(winningLotto, bonusNumber) == rank }
     }
 
     private companion object {
