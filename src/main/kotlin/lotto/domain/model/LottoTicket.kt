@@ -13,7 +13,7 @@ class LottoTicket(
         this.numbers = numbers.toSet()
     }
 
-    fun getNumbers() = numbers
+    fun toSet(): Set<LottoNumber> = numbers
 
     fun countMatchingNumbers(winningNumbers: Set<LottoNumber>): Int = numbers.intersect(winningNumbers).size
 

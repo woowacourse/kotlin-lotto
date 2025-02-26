@@ -14,9 +14,11 @@ class OutputView {
         println(MESSAGE_PURCHASE.format(manualCount, autoCount))
     }
 
+    fun printManualNumbersGuide() = println(MESSAGE_OUTPUT_MANUAL_NUMBERS)
+
     fun printLotto(lottoTickets: List<LottoTicket>) {
         lottoTickets.forEach { ticket ->
-            println(ticket.getNumbers().map { it.number }.joinToString(SEPARATOR, PREFIX, POSTFIX))
+            println(ticket.toSet().map { it.number }.joinToString(SEPARATOR, PREFIX, POSTFIX))
         }
     }
 
@@ -54,6 +56,7 @@ class OutputView {
         }
 
     companion object {
+        private const val MESSAGE_OUTPUT_MANUAL_NUMBERS = "\n수동으로 구매할 번호를 입력해 주세요."
         private const val MESSAGE_PURCHASE = "\n수동으로 %d장, 자동으로 %d장을 구매했습니다."
         private const val MESSAGE_RESULT_HEADER = "\n" + "당첨 통계" + "\n" + "---------"
         private const val MESSAGE_MATCH_SIX = "6개 일치"
