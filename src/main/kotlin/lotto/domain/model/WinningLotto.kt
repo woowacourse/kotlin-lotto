@@ -12,13 +12,16 @@ class WinningLotto(
         require(!winningNumbers.contains(bonusNumber)) { ErrorMessages.DUPLICATE_LOTTO_NUMBER }
     }
 
-    fun getRank(lotto: Lotto): Rank {
-        val countOfMatch = getCountOfMatch(lotto)
-        val matchBonus = getMatchBonus(lotto)
-        return Rank.valueOf(countOfMatch, matchBonus)
+    fun getLottoResult(lottos: List<Lotto>): LottoResult {
+        val winningStats = getWinningStats(lottos)
+        return LottoResult(winningStats)
     }
 
-    private fun getCountOfMatch(lotto: Lotto): Int = lotto.count(winningNumbers)
+    private fun getWinningStats(lottos: List<Lotto>): Map<Rank, Int> = lottos.groupingBy { getRank(it) }.eachCount()
 
-    private fun getMatchBonus(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
+    private fun getRank(lotto: Lotto): Rank {
+        val countOfMatch = lotto.count(winningNumbers)
+        val matchBonus = lotto.contains(bonusNumber)
+        return Rank.valueOf(countOfMatch, matchBonus)
+    }
 }
