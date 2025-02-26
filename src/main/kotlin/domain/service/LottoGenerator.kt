@@ -1,9 +1,11 @@
 package domain.service
 
 import domain.model.Lotto
+import domain.model.LottoNumber
 import domain.model.PurchasePrice
-import domain.strategy.KoreanLottoGenerator
-import domain.strategy.LottoCountry
+import domain.strategy.AutoLottoGenerator
+import domain.strategy.LottoGeneratorType
+import domain.strategy.ManualLottoGenerator
 
 class LottoGenerator(
     private val money: PurchasePrice,
@@ -15,13 +17,10 @@ class LottoGenerator(
 
     fun makeLottos(
         manualLottoAmount: Int,
-        manualLottoNumber: List<Lotto>,
+        manualLottoNumber: List<List<LottoNumber>>,
     ): List<Lotto> {
-        return manualLottoNumber + List(getAutoLottoAmount(manualLottoAmount)) { makeLotto(KoreanLottoGenerator()) }
+        return lottoType(ManualLottoGenerator(manualLottoNumber)) + lottoType(AutoLottoGenerator(getAutoLottoAmount(manualLottoAmount)))
     }
 
-    private fun makeLotto(lottoCountry: LottoCountry): Lotto {
-        val newLotto = lottoCountry.generateNumber()
-        return Lotto(newLotto)
-    }
+    private fun lottoType(lottoCountry: LottoGeneratorType): List<Lotto> = lottoCountry.generateNumber()
 }

@@ -58,7 +58,7 @@ class LottoController(
             action = {
                 inputView.askForManualLottoNumber()
                 val manualLottoNumbers =
-                    List(manualLottoAmount) { Lotto(inputView.readManualLottoNumber().map { LottoNumber(it.toInt()) }) }
+                    List(manualLottoAmount) { inputView.readManualLottoNumber().map { LottoNumber(it.toInt()) } }
                 LottoGenerator(money).makeLottos(manualLottoAmount, manualLottoNumbers)
             },
             onError = { outputView.printErrorMessage(it) },

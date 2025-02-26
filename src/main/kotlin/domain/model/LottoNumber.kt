@@ -1,8 +1,8 @@
 package domain.model
 
 import ERROR
-import domain.strategy.KoreanLottoGenerator.Companion.LOTTO_MAX
-import domain.strategy.KoreanLottoGenerator.Companion.LOTTO_MIN
+import domain.strategy.AutoLottoGenerator.Companion.LOTTO_MAX
+import domain.strategy.AutoLottoGenerator.Companion.LOTTO_MIN
 
 @JvmInline
 value class LottoNumber(val number: Int) {
