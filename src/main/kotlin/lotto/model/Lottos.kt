@@ -7,4 +7,6 @@ class Lottos(
     fun getManualLottoCount(): LottoCount = LottoCount(manualLottoBundle.size)
 
     fun getAutomaticLottoCount(): LottoCount = LottoCount(automaticLottoBundle.size)
+
+    fun getAllLottoBundle(): List<Lotto> = manualLottoBundle + automaticLottoBundle
 }

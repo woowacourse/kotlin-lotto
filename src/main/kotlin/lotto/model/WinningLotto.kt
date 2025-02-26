@@ -13,9 +13,7 @@ class WinningLotto(
         purchaseMoney: LottoPurchaseAmount,
     ): LottoStatistics {
         val rankStatistics: Map<Rank, Int> =
-            lottos.lottoBundle
-                .groupingBy { lotto -> findLottoRank(lotto) }
-                .eachCount()
+            lottos.getAllLottoBundle().groupingBy { lotto -> findLottoRank(lotto) }.eachCount()
         return LottoStatistics(rankStatistics, purchaseMoney)
     }
 
