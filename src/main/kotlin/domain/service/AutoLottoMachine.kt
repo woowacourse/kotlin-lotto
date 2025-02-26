@@ -1,10 +1,10 @@
 package domain.service
 
-import domain.model.Lotto
-import domain.model.Lotto.Companion.LOTTO_SIZE
 import domain.model.LottoNumber
 import domain.model.LottoNumber.Companion.LOTTO_MAX
 import domain.model.LottoNumber.Companion.LOTTO_MIN
+import domain.model.lotto.Lotto
+import domain.model.lotto.Lotto.Companion.LOTTO_SIZE
 import kotlin.collections.shuffled
 
 object AutoLottoMachine : LottoMachine {

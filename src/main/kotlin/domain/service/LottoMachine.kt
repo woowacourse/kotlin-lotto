@@ -1,6 +1,6 @@
 package domain.service
 
-import domain.model.Lotto
+import domain.model.lotto.Lotto
 
 fun interface LottoMachine {
     fun generate(): Lotto

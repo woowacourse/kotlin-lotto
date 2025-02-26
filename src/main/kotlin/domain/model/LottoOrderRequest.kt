@@ -1,5 +1,6 @@
 package domain.model
 
+import domain.model.lotto.Lotto
 import domain.model.price.PurchasePrice
 
 data class LottoOrderRequest(

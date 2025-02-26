@@ -1,8 +1,8 @@
 package view
 
-import domain.model.Lotto
 import domain.model.LottoMatchResult
 import domain.model.Rank
+import domain.model.lotto.Lotto
 import util.joinToLineBreak
 import kotlin.collections.sorted
 

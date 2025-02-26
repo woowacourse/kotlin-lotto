@@ -1,6 +1,6 @@
 package domain.service
 
-import domain.model.Lotto
+import domain.model.lotto.Lotto
 
 class FakeAutoLottoMachine(private val fixedNumber: Lotto) : LottoMachine {
     override fun generate(): Lotto {

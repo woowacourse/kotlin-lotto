@@ -1,5 +1,7 @@
 package domain.model
 
+import domain.model.lotto.Lotto
+import domain.model.lotto.LottoException
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -10,7 +12,7 @@ class LottoTest {
     fun `로또 번호는 6개가 아니면 예외가 발생한다`(value: String) {
         val values = value.split(",").map { LottoNumber(it.toInt()) }
 
-        assertThrows<IllegalArgumentException>(
+        assertThrows<LottoException.InvalidLottoSize>(
             message = "[ERROR] 로또 번호는 6개 입니다.",
         ) {
             Lotto(values)
@@ -22,7 +24,7 @@ class LottoTest {
     fun `로또 번호에 중복이 있으면 예외가 발생한다`(value: String) {
         val values = value.split(",").map { LottoNumber(it.toInt()) }
 
-        assertThrows<IllegalArgumentException>(
+        assertThrows<LottoException.DuplicatedLottoSize>(
             message = "[ERROR] 로또 번호는 중복될 수 없습니다.",
         ) {
             Lotto(values)
