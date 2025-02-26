@@ -1,8 +1,6 @@
 package lotto.domain
 
-class Lotto(randomNumbers: List<LottoNumber>) {
-    val numbers: List<LottoNumber> = randomNumbers.sortedBy { it.number }
-
+class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == MAX_LOTTO_SIZE) { ERROR_NOT_SIX }
         require(numbers.toSet().size == numbers.size) { ERROR_NOT_DUPLICATE_NUMBER }

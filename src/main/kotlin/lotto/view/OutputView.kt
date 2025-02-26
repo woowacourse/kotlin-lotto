@@ -17,7 +17,7 @@ class OutputView {
     }
 
     private fun printLottoNumber(numbers: List<LottoNumber>) {
-        println(numbers.map { it.number })
+        println(numbers.sortedBy { it.number }.map { it.number })
     }
 
     fun printWinningStats() {
