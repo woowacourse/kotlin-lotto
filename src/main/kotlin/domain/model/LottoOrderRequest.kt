@@ -1,5 +1,7 @@
 package domain.model
 
+import domain.model.price.PurchasePrice
+
 data class LottoOrderRequest(
     val money: PurchasePrice,
     val amount: ManualLottoAmount,

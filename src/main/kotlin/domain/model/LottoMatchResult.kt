@@ -1,5 +1,7 @@
 package domain.model
 
+import domain.model.price.PurchasePrice
+
 class LottoMatchResult(
     private val winningCountByRank: Map<Rank, Int>,
 ) {

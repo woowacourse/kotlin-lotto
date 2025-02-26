@@ -1,5 +1,7 @@
 package domain.model
 
+import domain.model.price.PurchasePrice
+
 @JvmInline
 value class ManualLottoAmount private constructor(val value: Int) {
     constructor(

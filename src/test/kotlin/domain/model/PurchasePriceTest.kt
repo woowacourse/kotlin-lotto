@@ -1,5 +1,7 @@
 package domain.model
 
+import domain.model.price.PurchasePrice
+import domain.model.price.PurchasePriceException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -13,14 +15,14 @@ class PurchasePriceTest {
 
     @Test
     fun `구입 금액이 0 이하면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
+        assertThrows<PurchasePriceException.OverStandardPriceException> {
             PurchasePrice(0)
         }.apply { assertThat(this).hasMessage("[ERROR] 1000원 이상 입력해주세요.") }
     }
 
     @Test
     fun `구입 금액이 천원 단위가 아니면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
+        assertThrows<PurchasePriceException.InvalidUnitException> {
             PurchasePrice(10101010)
         }.apply { assertThat(this).hasMessage("[ERROR] 1000원 단위로 입력해주세요.") }
     }

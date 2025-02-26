@@ -5,7 +5,7 @@ import domain.model.LottoMatchResult
 import domain.model.LottoNumber
 import domain.model.LottoOrderRequest
 import domain.model.ManualLottoAmount
-import domain.model.PurchasePrice
+import domain.model.price.PurchasePrice
 import domain.model.WinningLotto
 import domain.service.AutoLottoMachine
 import domain.service.ManualLottoMachine
@@ -43,10 +43,12 @@ class LottoController(
     }
 
     private fun getPurchasePrice(): PurchasePrice {
-        return retryWhenException(
-            action = { PurchasePrice(inputView.readPurchasePrice()) },
-            onError = { outputView.printErrorMessage(it) },
-        )
+        return runCatching {
+            PurchasePrice(inputView.readPurchasePrice())
+        }.getOrElse { e ->
+            println(e.message)
+            getPurchasePrice()
+        }
     }
 
     private fun getManualLottoAmount(money: PurchasePrice): ManualLottoAmount =
