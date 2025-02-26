@@ -13,106 +13,39 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    fun run() {
-        val price: Int = getPrice()
-        val manualAmount: Int = getManualLottoAmount()
-        val amount: Int = getAmount(price)
+    private val lottoFactory = LottoFactory()
 
-        Validator.manualAmountValidator(manualAmount, amount)
+    fun run() {
+        val price = inputView.inputPurchasePrice()
+        val manualAmount = inputView.inputAmountOfManualLotto()
+        val totalAmount = Purchase(price).calculateAmountOfLottos()
+
+        Validator.manualAmountValidator(manualAmount, totalAmount)
 
         outputView.printManualLottoHeader()
 
-        val manualLottos: List<Lotto> =
-            (0 until manualAmount).map {
-                val lotto =
-                    inputView.inputManualLottoNumbers()
-                        .map { LottoNumber.of(it) }
-                Lotto(lotto)
-            }
+        val manualNumbers = getManualLottoNumbers(manualAmount)
+        val manualLottos = lottoFactory.generateManualLottos(manualNumbers)
+        val autoLottos = lottoFactory.generateLottos(totalAmount - manualAmount)
 
-        getManualLottos(manualLottos)
-        printLottoAmount(amount, manualAmount)
+        val allLottos = manualLottos + autoLottos
 
-        val lottos: List<Lotto> = getLottos(amount - manualAmount)
-        var allLottos: List<Lotto> = manualLottos + lottos
-        printLottos(allLottos)
+        outputView.printLottoAmount(totalAmount, manualAmount)
+        outputView.printLottos(allLottos)
 
-        val winningNumbers: List<LottoNumber> = getWinningNumbers()
-        val bonusNumber: LottoNumber = getBonusNumber()
+        val winningNumbers = inputView.inputWinningNumber().map { LottoNumber.of(it) }
+        val bonusNumber = inputView.inputBonusNumber()
+
         val winningLotto = WinningLotto(Lotto(winningNumbers), bonusNumber)
+        val lottoResult = LottoResult(allLottos, winningLotto)
 
-        printAllResult(allLottos, winningLotto, price)
+        outputView.printResult(lottoResult)
+        outputView.printProfit(lottoResult.calculateProfitRate(price))
     }
 
-    fun getPrice(): Int {
-        val price = inputView.inputPurchasePrice()
-        return price
-    }
-
-    fun getManualLottoAmount(): Int {
-        val manualAmount = inputView.inputAmountOfManualLotto()
-        return manualAmount
-    }
-
-    fun getAmount(price: Int): Int {
-        return Purchase(price).calculateAmountOfLottos()
-    }
-
-    fun printLottoAmount(
-        amount: Int,
-        manualAmount: Int,
-    ) {
-        outputView.printLottoAmount(amount, manualAmount)
-    }
-
-    fun getLottos(amount: Int): List<Lotto> {
-        val lottos: List<Lotto> = LottoFactory().generateLottos(amount)
-        return lottos
-    }
-
-    fun getManualLottos(manualLottos: List<Lotto>): List<Lotto> {
-        val lottos: List<Lotto> = LottoFactory().generateManualLotto(manualLottos)
-        return lottos
-    }
-
-    fun printLottos(lottos: List<Lotto>) {
-        outputView.printLottos(lottos)
-    }
-
-    fun getWinningNumbers(): List<LottoNumber> {
-        val winningNumbers: List<LottoNumber> = inputView.inputWinningNumber().map { LottoNumber.of(it) }
-        Lotto(winningNumbers)
-
-        return winningNumbers
-    }
-
-    fun getBonusNumber(): LottoNumber {
-        val bonusNumber: LottoNumber = inputView.inputBonusNumber()
-        return bonusNumber
-    }
-
-    fun printLottoResult(
-        lottos: List<Lotto>,
-        winningLotto: WinningLotto,
-    ) {
-        outputView.printResult(LottoResult(lottos, winningLotto))
-    }
-
-    fun printProfitRate(
-        lottos: List<Lotto>,
-        winningLotto: WinningLotto,
-        price: Int,
-    ) {
-        val profitRate: Double = LottoResult(lottos, winningLotto).calculateProfitRate(price)
-        outputView.printProfit(profitRate)
-    }
-
-    fun printAllResult(
-        lottos: List<Lotto>,
-        winningLotto: WinningLotto,
-        price: Int,
-    ) {
-        printLottoResult(lottos, winningLotto)
-        printProfitRate(lottos, winningLotto, price)
+    private fun getManualLottoNumbers(manualAmount: Int): List<List<Int>> {
+        return (0 until manualAmount).map {
+            inputView.inputManualLottoNumbers() // 사용자 입력만 받음!
+        }
     }
 }

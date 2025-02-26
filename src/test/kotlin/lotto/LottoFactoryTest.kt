@@ -13,12 +13,12 @@ class LottoFactoryTest {
 
     @Test
     fun `수동 로또를 n개 발급 할 수 있다`() {
-        val manualLottos =
+        val manualLottoNumbers =
             listOf(
-                lottoOf(1, 2, 3, 4, 5, 6),
-                lottoOf(1, 2, 3, 4, 5, 6),
-                lottoOf(1, 2, 3, 4, 5, 6),
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(1, 2, 3, 4, 5, 6),
             )
-        assertThat(LottoFactory().generateManualLotto(manualLottos).size).isEqualTo(3)
+        assertThat(LottoFactory().generateManualLottos(manualLottoNumbers).size).isEqualTo(3)
     }
 }
