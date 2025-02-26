@@ -8,7 +8,7 @@ import lotto.domain.MAX_LOTTO_NUMBER
 import lotto.domain.MIN_LOTTO_NUMBER
 import java.util.LinkedList
 
-object LottoGenerator {
+class LottoGenerator {
     fun genLotto(): Lotto {
         val lotto = mutableListOf<LottoNumber>()
         val range: LinkedList<Int> = LinkedList(IntRange(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER).shuffled())
