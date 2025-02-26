@@ -2,11 +2,7 @@ package lotto.view
 
 class InputView {
     fun readNumber(): Int {
-        var input: String? = null
-        while (input == null) {
-            println(ERROR_MESSAGE_INVALID_INPUT_STATE)
-            input = readLine()
-        }
+        val input: String = readUntilValid()
         val number: Int =
             input
                 .trim()
@@ -15,11 +11,7 @@ class InputView {
     }
 
     fun readNumbers(): List<Int> {
-        var input: String? = null
-        while (input == null) {
-            println(ERROR_MESSAGE_INVALID_INPUT_STATE)
-            input = readLine()
-        }
+        val input: String = readUntilValid()
         val numbers: List<Int> =
             input
                 .split(LOTTO_NUMBERS_DELIMITER)
@@ -34,6 +26,15 @@ class InputView {
 
         val lottoNumbers: List<List<Int>> = (1..size).map { readNumbers() }
         return lottoNumbers
+    }
+
+    private fun readUntilValid(): String {
+        var input: String? = readLine()
+        while (input == null) {
+            println(ERROR_MESSAGE_INVALID_INPUT_STATE)
+            input = readLine()
+        }
+        return input
     }
 
     companion object {
