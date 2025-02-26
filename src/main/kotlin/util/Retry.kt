@@ -1,14 +1,8 @@
 package util
 
-fun <T> retryWhenException(
-    action: () -> T,
-    onError: (String?) -> Unit,
-): T {
+fun <T> retryWhileNull(action: () -> T): T {
     while (true) {
-        runCatching {
-            return action()
-        }.onFailure { e ->
-            onError(e.message)
-        }
+        val result = action() ?: continue
+        return result
     }
 }
