@@ -1,48 +1,54 @@
 package lotto.view
 
-object View {
+class View {
+    val inputView = InputView()
+    val outputView = OutputView()
+
     fun readPay(): Int {
-        OutputView.requestPrice()
-        val price: Int = InputView.readNumber()
+        outputView.requestPrice()
+        val price: Int = inputView.readNumber()
         return price
     }
 
     fun readManualLottoCount(): Int {
-        OutputView.requestManualLottoCount()
-        return InputView.readNumber()
+        outputView.requestManualLottoCount()
+        return inputView.readNumber()
     }
 
     fun readManualLottosNumbers(size: Int): List<List<Int>> {
         if (size == 0) return emptyList()
-        OutputView.requestManualLottosNumbers()
-        val manualLottoNumbers: List<List<Int>> = InputView.readLottosNumbers(size)
+        outputView.requestManualLottosNumbers()
+        val manualLottoNumbers: List<List<Int>> = inputView.readLottosNumbers(size)
         return manualLottoNumbers
     }
 
-    fun showLottoCount(lottoCount: Int) {
-        OutputView.showLottoCount(lottoCount)
+    fun showLottoCount(
+        manual: Int,
+        random: Int,
+    ) {
+        outputView.showLottoCount(manual, random)
     }
 
     fun showLottos(numbers: List<List<Int>>) {
-        OutputView.showLottos(numbers)
+        outputView.showLottos(numbers)
     }
 
     fun showResult(
         lottoResults: List<String>,
         profitRate: Double,
     ) {
-        OutputView.showResult(lottoResults, profitRate)
+        outputView.showResult(lottoResults, profitRate)
     }
 
     fun readLottoNumbers(): List<Int> {
-        OutputView.requestWinningLotto()
-        val winningNumbers: List<Int> = InputView.readNumbers()
+        outputView.requestWinningLotto()
+        val winningNumbers: List<Int> = inputView.readNumbers()
         return winningNumbers
     }
 
     fun readBonusNumber(): Int {
-        OutputView.requestBonusNumber()
-        return InputView.readNumber()
+        outputView.requestBonusNumber()
+        return inputView.readNumber()
     }
 
     fun showError(error: Throwable) {
