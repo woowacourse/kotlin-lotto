@@ -7,8 +7,11 @@ class OutputView {
         println(MESSAGE_ENTER_PRICE)
     }
 
-    fun showLottoCount(lottoCount: Int) {
-        println("$lottoCount$MESSAGE_BOUGHT")
+    fun showLottoCount(
+        manual: Int,
+        random: Int,
+    ) {
+        println(MESSAGE_BOUGHT_LOTTO_COUNT.format(manual, random))
     }
 
     fun showLottos(numbers: List<List<Int>>) {
