@@ -16,7 +16,7 @@ class InputView {
         return LottoCount(count)
     }
 
-    fun readManualLotto(): List<LottoNumber> = readln().toLottoNumbersOrException()
+    fun readManualLottoNumbers(): List<LottoNumber> = readln().toLottoNumbersOrException()
 
     fun readWinningLottoNumbersOfLastWeek(): Lotto {
         val lottoNumbersOfLastWeek = readln().toLottoNumbersOrException()
