@@ -1,7 +1,5 @@
 package view
 
-import domain.model.Lotto
-import domain.model.LottoNumber
 import validator.NumericValidator
 
 class InputView {
@@ -10,10 +8,10 @@ class InputView {
         return readln().also { NumericValidator(it) }.toInt()
     }
 
-    fun readWinningNumbers(): Lotto {
+    fun readWinningNumbers(): List<String> {
         println(MESSAGE_INPUT_WINNING_NUMBER)
         val lotto = readln().split(",").map { it.trim().also { lottoNumber -> NumericValidator(lottoNumber) } }
-        return Lotto(lotto.map { LottoNumber(it.toInt()) })
+        return lotto
     }
 
     fun readBonusNumber(): Int {
@@ -30,9 +28,9 @@ class InputView {
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
     }
 
-    fun readManualLottoNumber(): Lotto {
+    fun readManualLottoNumber(): List<String> {
         val manualLottoNumbers = readln().split(",").map { it.trim().also { lottoNumber -> NumericValidator(lottoNumber) } }
-        return Lotto(manualLottoNumbers.map { LottoNumber(it.toInt()) })
+        return manualLottoNumbers
     }
 
     companion object {
