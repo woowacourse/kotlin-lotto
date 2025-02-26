@@ -63,5 +63,6 @@
 - [x] 함수 매개변수 네이밍 수정
 - [x] Lotto의 isMatchBonusNumber 함수를 재사용 가능하도록 변경
 - [x] LottoNumber 인스턴스 재사용 방식 변경
+- [x] WinningNumbers 검증 시 기존 함수 활용하도록 변경
 
 ### 기능 요구 사항
