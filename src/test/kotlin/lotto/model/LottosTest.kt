@@ -1,5 +1,6 @@
 package lotto.model
 
+import lotto.model.LottoTest.Companion.makeTestLotto
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -8,12 +9,12 @@ class LottosTest {
     fun `각 랭크별 당첨된 로또 개수를 정확하게 반환한다`() {
         val lottos =
             listOf(
-                Lotto.from(setOf(1, 2, 3, 4, 5, 6)),
-                Lotto.from(setOf(1, 2, 3, 4, 5, 7)),
-                Lotto.from(setOf(1, 2, 3, 4, 5, 8)),
-                Lotto.from(setOf(1, 2, 3, 4, 8, 9)),
-                Lotto.from(setOf(1, 2, 3, 8, 9, 10)),
-                Lotto.from(setOf(8, 9, 10, 11, 12, 13)),
+                Lotto(makeTestLotto(setOf(1, 2, 3, 4, 5, 6))),
+                Lotto(makeTestLotto(setOf(1, 2, 3, 4, 5, 7))),
+                Lotto(makeTestLotto(setOf(1, 2, 3, 4, 5, 8))),
+                Lotto(makeTestLotto(setOf(1, 2, 3, 4, 8, 9))),
+                Lotto(makeTestLotto(setOf(1, 2, 3, 8, 9, 10))),
+                Lotto(makeTestLotto(setOf(8, 9, 10, 11, 12, 13))),
             )
 
         val winningNumbers = setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()
