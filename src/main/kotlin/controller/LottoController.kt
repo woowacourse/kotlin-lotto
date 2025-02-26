@@ -9,7 +9,6 @@ import domain.model.price.PurchasePrice
 import domain.model.winning.WinningLotto
 import domain.service.AutoLottoMachine
 import domain.service.ManualLottoMachine
-import util.retryWhenException
 import view.InputView
 import view.OutputView
 
