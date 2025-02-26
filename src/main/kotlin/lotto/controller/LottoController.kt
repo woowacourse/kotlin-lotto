@@ -24,7 +24,7 @@ class LottoController(
     }
 
     private fun purchaseLotto(): Pair<LottoBundle?, LottoBundle?> {
-        val purchaseAmount = PurchaseAmount(inputView.readPurchaseAmount())
+        val purchaseAmount = readPurchaseAmount()
 
         val manualLottoBundle = purchaseManualLotto(purchaseAmount)
         val autoLottoBundle = purchaseAutoLotto(purchaseAmount)
@@ -32,9 +32,14 @@ class LottoController(
         return Pair(manualLottoBundle, autoLottoBundle)
     }
 
+    private fun readPurchaseAmount(): PurchaseAmount =
+        retryWhenException {
+            PurchaseAmount(inputView.readPurchaseAmount())
+        }
+
     private fun purchaseManualLotto(purchaseAmount: PurchaseAmount): LottoBundle? {
         val manualLottoAmount = inputView.readManualLottoAmount()
-        purchaseAmount.reducePurchaseAmount(manualLottoAmount * LottoMachine.LOTTO_PRICE)
+        reducePurchaseAmount(purchaseAmount, manualLottoAmount)
 
         val manualLottoNumbers = List(manualLottoAmount) { inputView.readManualLottoNumbers() }
         val generator = ManualLottoNumbersGenerator(manualLottoNumbers)
@@ -43,9 +48,16 @@ class LottoController(
 
     private fun purchaseAutoLotto(purchaseAmount: PurchaseAmount): LottoBundle? {
         val autoLottoAmount = purchaseAmount.calculatePurchaseLottoCount(LottoMachine.LOTTO_PRICE)
-        purchaseAmount.reducePurchaseAmount(autoLottoAmount * LottoMachine.LOTTO_PRICE)
+        reducePurchaseAmount(purchaseAmount, autoLottoAmount)
 
         return LottoMachine().generateLottoBundle(autoLottoAmount)
+    }
+
+    private fun reducePurchaseAmount(
+        purchaseAmount: PurchaseAmount,
+        reduceAmount: Int,
+    ) = retryWhenException {
+        purchaseAmount.reducePurchaseAmount(reduceAmount * LottoMachine.LOTTO_PRICE)
     }
 
     private fun printLottoBundle(
@@ -65,9 +77,34 @@ class LottoController(
     }
 
     private fun generateWinningNumbers(): WinningNumbers {
-        val winningLotto = Lotto(inputView.readWinningNumbers())
-        val bonusNumber = LottoNumber.from(inputView.readBonusNumber())
-        return WinningNumbers(winningLotto, bonusNumber)
+        val winningLotto = readWinningLotto()
+        while (true) {
+            val bonusNumber = readBonusNumber()
+
+            val winningNumbers = makeWinningNumbers(winningLotto, bonusNumber)
+            if (winningNumbers != null) return winningNumbers
+        }
+    }
+
+    private fun readWinningLotto() =
+        retryWhenException {
+            Lotto(inputView.readWinningNumbers())
+        }
+
+    private fun readBonusNumber() =
+        retryWhenException {
+            LottoNumber.from(inputView.readBonusNumber())
+        }
+
+    private fun makeWinningNumbers(
+        winningLotto: Lotto,
+        bonusNumber: LottoNumber,
+    ): WinningNumbers? {
+        return runCatching {
+            WinningNumbers(winningLotto, bonusNumber)
+        }.onFailure {
+            outputView.printErrorMessage(it.message)
+        }.getOrNull()
     }
 
     private fun printWinningResults(
@@ -77,5 +114,15 @@ class LottoController(
         val lottoRanks = winningNumbers.calculateLottoRanks(lottoBundle)
         outputView.printWinningResults(lottoRanks)
         outputView.printTotalReturns(lottoRanks.calculateTotalReturn(LottoMachine.LOTTO_PRICE))
+    }
+
+    private fun <T> retryWhenException(action: () -> T): T {
+        while (true) {
+            runCatching {
+                return action()
+            }.onFailure { e ->
+                outputView.printErrorMessage(e.message)
+            }
+        }
     }
 }

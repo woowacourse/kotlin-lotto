@@ -44,6 +44,8 @@ class OutputView {
         println(PRINT_TOTAL_RETURNS_FORMAT.format(totalReturns, returnComment))
     }
 
+    fun printErrorMessage(message: String?) = println(ERROR_MESSAGE_PREFIX.format(message ?: UNKNOWN_ERROR_MESSAGE))
+
     companion object {
         private const val PRINT_WINNING_RESULT_HEADER = "\n당첨 통계\n---------"
         private const val PRINT_PURCHASE_LOTTO_COUNT_FORMAT = "수동으로 %s장, 자동으로 %s개 구매했습니다."
@@ -53,5 +55,7 @@ class OutputView {
         private const val BONUS_COMMENT = ", 보너스 볼 일치"
         private const val LOSS_THRESHOLD = 1
         private const val DEFAULT_RESULT_VALUE = 0
+        private const val ERROR_MESSAGE_PREFIX = "[ERROR] %s"
+        private const val UNKNOWN_ERROR_MESSAGE = "Unknown error"
     }
 }
