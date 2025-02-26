@@ -37,7 +37,7 @@ class LottoTest {
         expected: Boolean,
     ) {
         val lotto = listOf(1, 2, 3, 4, 5, 6).toLotto()
-        val compareLottoNumber = LottoNumber(number)
+        val compareLottoNumber = LottoNumber.from(number)
 
         assertEquals(expected, lotto.contains(compareLottoNumber))
     }
@@ -55,4 +55,4 @@ class LottoTest {
 }
 
 // Fake Constructor
-fun List<Int>.toLotto() = Lotto(this.map { number -> LottoNumber(number) })
+fun List<Int>.toLotto() = Lotto(this.map { number -> LottoNumber.from(number) })

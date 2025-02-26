@@ -25,7 +25,7 @@ class InputView {
 
     fun readBonusNumber(): LottoNumber {
         val bonusNumber = readln().toIntOrException()
-        return LottoNumber(bonusNumber)
+        return LottoNumber.from(bonusNumber)
     }
 
     private fun String.toIntOrException(): Int = this.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER)
@@ -34,7 +34,7 @@ class InputView {
         this
             .split(LOTTO_NUMBER_DELIMITER)
             .map { number -> number.toIntOrException() }
-            .map { number -> LottoNumber(number) }
+            .map { number -> LottoNumber.from(number) }
 
     companion object {
         private const val ERROR_NOT_A_NUMBER = "숫자만 입력 가능합니다."

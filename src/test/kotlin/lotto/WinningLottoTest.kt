@@ -19,16 +19,16 @@ class WinningLottoTest {
 
     @Test
     fun `당첨 로또는 당첨번호와 보너스 번호를 갖는다`() {
-        val bonusNumber = LottoNumber(7)
+        val bonusNumber = LottoNumber.from(7)
         val winningLotto = WinningLotto(winningNumber, bonusNumber)
 
         assertThat(winningLotto.winningNumbers).isInstanceOf(Lotto::class.java)
-        assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber(7))
+        assertThat(winningLotto.bonusNumber).isEqualTo(LottoNumber.from(7))
     }
 
     @Test
     fun `당첨 로또는 당첨 번호와 보너스 번호가 중복될 경우 예외를 발생한다`() {
-        val bonusNumber = LottoNumber(6)
+        val bonusNumber = LottoNumber.from(6)
 
         assertThatIllegalArgumentException()
             .isThrownBy {
@@ -38,7 +38,7 @@ class WinningLottoTest {
 
     @Test
     fun `당첨 로또는 당첨 번호와 보너스 번호가 중복되지 않은 경우 예외를 발생하지 않는다`() {
-        val bonusNumber = LottoNumber(7)
+        val bonusNumber = LottoNumber.from(7)
         assertDoesNotThrow {
             WinningLotto(winningNumber, bonusNumber)
         }
