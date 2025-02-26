@@ -38,7 +38,7 @@ class OutputView {
     }
 
     private fun printLottoStats(lottoStats: Map<Rank, Int>) {
-        Rank.entries.reversed().forEach { rank ->
+        Rank.entries.sortedBy { it.countOfMatch }.filter { it != Rank.MISS }.forEach { rank ->
             val count = lottoStats[rank] ?: 0
             val message = if (rank == Rank.SECOND) OUTPUT_RANK_DETAIL_BONUS else OUTPUT_RANK_DETAIL
             println(message.format(rank.countOfMatch, rank.winningMoney, count))
@@ -46,7 +46,16 @@ class OutputView {
     }
 
     private fun printEarningRate(earningRate: Double) {
-        println(OUTPUT_EARNING_RATE.format(earningRate))
+        val message =
+            if (earningRate < 1) {
+                StringBuilder()
+                    .append(OUTPUT_EARNING_RATE.format(earningRate))
+                    .append(OUTPUT_RESULT_LOSS)
+                    .toString()
+            } else {
+                OUTPUT_EARNING_RATE.format(earningRate)
+            }
+        println(message)
     }
 
     companion object {
@@ -55,5 +64,6 @@ class OutputView {
         private const val OUTPUT_RANK_DETAIL = "%d개 일치 (%d원) - %d개"
         private const val OUTPUT_RANK_DETAIL_BONUS = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
         private const val OUTPUT_EARNING_RATE = "총 수익률은 %.2f입니다."
+        private const val OUTPUT_RESULT_LOSS = " (기준이 1이기 때문에 결과적으로 손해라는 의미임)"
     }
 }
