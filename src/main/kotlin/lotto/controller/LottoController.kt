@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.model.Lotto
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
 import lotto.model.Lottos
@@ -14,23 +15,24 @@ class LottoController(
 ) {
     fun run() {
         val lottoMachine = generateLottoMachineByAmount()
-        val lottoQuantity = getLottoQuantity(lottoMachine)
+        val lottos = displayLottos(lottoMachine)
 
-        val lottos = displayLottos(lottoMachine, lottoQuantity)
-
-        val lastWeekLottoWinningNumbers = getLastWeekLottoWinningNumbers().validateWinningNumbers()
-        val lottoBonusNumber = getLottoBonusNumbers().validateIsNumber()
+        val lastWeekLottoWinningNumbers = inputView.readWinningNumbers()
+        val lottoBonusNumber = inputView.readBonusNumber()
 
         val lottoWinningResult =
-            displayLottosWinningResult(lottos, lastWeekLottoWinningNumbers, LottoNumber(lottoBonusNumber))
+            displayLottosWinningResult(
+                lottos,
+                mapToLottoNumber(lastWeekLottoWinningNumbers),
+                LottoNumber(lottoBonusNumber),
+            )
         displayLottoWinningProfit(lottoMachine, lottoWinningResult)
     }
 
-    private fun displayLottos(
-        lottoMachine: LottoMachine,
-        lottoQuantity: Int,
-    ): Lottos {
-        val lottos = lottoMachine.getLottos(lottoQuantity)
+    private fun displayLottos(lottoMachine: LottoMachine): Lottos {
+        val activeLottoQuantity = lottoMachine.getActiveLottoQuantity()
+        outputView.printPurchaseLottoQuantity(lottoMachine.passiveLottoQuantity, activeLottoQuantity)
+        val lottos = lottoMachine.getTotalLottos(activeLottoQuantity)
 
         lottos.getAllLottoNumbers().forEach { lottoNumbers ->
             outputView.printLottoNumbers(lottoNumbers)
@@ -39,35 +41,15 @@ class LottoController(
         return lottos
     }
 
-    private fun getLastWeekLottoWinningNumbers(): String = inputView.readWinningNumbers()
+    private fun List<Set<Int>>.mapToLotto(): List<Lotto> = this.map { Lotto(mapToLottoNumber(it)) }
 
-    private fun mapToWinningNumbers(rawWinningNumbers: String): Set<String> = rawWinningNumbers.split(", ").toSet()
-
-    private fun mapToNumber(rawNumber: String) = rawNumber.toIntOrNull()
-
-    private fun String.validateWinningNumbers(): Set<LottoNumber> {
-        try {
-            val rawWinningNumbers = mapToWinningNumbers(this)
-            return rawWinningNumbers.map { number -> LottoNumber(number.validateIsNumber()) }.toSet()
-        } catch (e: IllegalArgumentException) {
-            throw IllegalArgumentException(e.message)
-        }
-    }
-
-    private fun String.validateIsNumber(): Int = mapToNumber(this) ?: throw IllegalArgumentException("[ERROR] 숫자를 입력해주세요.")
-
-    private fun getLottoBonusNumbers(): String = inputView.readBonusNumber()
+    private fun mapToLottoNumber(lottoNumbers: Set<Int>): Set<LottoNumber> = lottoNumbers.map { LottoNumber(it) }.toSet()
 
     private fun generateLottoMachineByAmount(): LottoMachine {
-        val rawPurchaseAmount = inputView.readPurchaseAmount()
-        val purchaseAmount = rawPurchaseAmount.validateIsNumber()
-        return LottoMachine(purchaseAmount)
-    }
-
-    private fun getLottoQuantity(lottoMachine: LottoMachine): Int {
-        val lottoQuantity = lottoMachine.getLottoQuantity()
-        outputView.printPurchaseLottoQuantity(lottoQuantity)
-        return lottoQuantity
+        val purchaseAmount = inputView.readPurchaseAmount()
+        val passiveLottoQuantity = inputView.readPassivePurchaseQuantity()
+        val passiveLottoNumbers = inputView.readPassiveLottoNumbers(passiveLottoQuantity)
+        return LottoMachine(purchaseAmount, passiveLottoQuantity, passiveLottoNumbers.mapToLotto())
     }
 
     private fun displayLottosWinningResult(
