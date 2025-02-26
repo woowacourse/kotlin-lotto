@@ -14,8 +14,8 @@ class LottoController(
 ) {
     fun run() {
         // 순차적으로 실행...이게 과연 최선일까?
-        val lottoAmount = lottoView.getLottoAmount()
-        val manyLotto = lottoGenerator.genManyLotto(lottoAmount)
+        val userInput = lottoView.getLottoAmount()
+        val manyLotto = lottoGenerator.genManyLotto(userInput.automaticLottoCount)
         lottoView.printLotto(manyLotto)
 
         val userInputWinningLotto = lottoView.getWinningLotto()

@@ -1,18 +1,33 @@
 package lotto.view
 
-import lotto.domain.LOTTO_PRICE
 import lotto.domain.Lotto
+import lotto.domain.LottoNumber
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
+import lotto.domain.UserInput
 import lotto.global.LottoValidator
 import lotto.global.Message
 
 class LottoView {
-    fun getLottoAmount(): Int {
+    fun getLottoAmount(): UserInput {
         println(Message.ASK_AMOUNT.msg)
-        val userInput = LottoValidator.requireLottoAmount(readln()).toInt() / LOTTO_PRICE
-        println("${userInput}개를 구매했습니다.")
-        return userInput
+        return UserInput(getBuyAmount(), getManualLottoCount(), getManualLotto())
+    }
+
+    private fun getBuyAmount(): Int {
+        println(Message.ASK_AMOUNT.msg)
+        return LottoValidator.requireLottoAmount(readln()).toInt()
+    }
+
+    private fun getManualLottoCount(): Int {
+        println(Message.ASK_MANUAL_LOTTO_AMOUNT)
+        return LottoValidator.requireLottoAmount(readln()).toInt()
+    }
+
+    private fun getManualLotto(): List<Lotto> {
+        println(Message.ASK_MANUAL_LOTTO.msg)
+        val userInput = LottoValidator.requireValidLotto(readln())
+        return listOf(Lotto(userInput.split(",").map { LottoNumber.of(it.toInt()) }))
     }
 
     fun printLotto(manyLotto: List<Lotto>) {

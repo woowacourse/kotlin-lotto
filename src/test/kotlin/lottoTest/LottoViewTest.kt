@@ -2,6 +2,7 @@ package lottoTest
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
+import lotto.domain.UserInput
 import lotto.domain.WinningLottoTicket
 import lotto.service.LottoRankFinder
 import lotto.view.LottoView
@@ -30,17 +31,12 @@ class LottoViewTest {
     private val lottoView = LottoView()
 
     @Test
-    @DisplayName("로또의 금액을 입력받는다, 로또의 금액은 1000원이며, 최대한 살 수 있는 만큼 구매한다")
+    @DisplayName("로또의 금액, 수동 로또 개수, 수동 로또 정보를 입력받는다")
     fun t1() {
-        setInput("5000")
-        assertThat(lottoView.getLottoAmount()).isEqualTo(5)
-    }
-
-    @Test
-    @DisplayName("예를 들어 14500원을 입력받는다면 14000으로 로또 14개를 살 수 있으니 14개를 구매한다")
-    fun t1_1() {
-        setInput("14500")
-        assertThat(lottoView.getLottoAmount()).isEqualTo(14)
+        setInput("5000\n1\n1,2,3,4,5,6")
+        assertThat(lottoView.getLottoAmount()).isEqualTo(
+            UserInput(5000, 1, listOf(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) }))),
+        )
     }
 
     @Test
