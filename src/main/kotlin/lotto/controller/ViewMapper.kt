@@ -14,7 +14,7 @@ class ViewMapper {
         boughtLottos: List<Lotto>,
         win: WinLotto,
     ): List<String> {
-        val lottoResults: List<LottoResult> = boughtLottos.map { lotto: Lotto -> LottoResult.from(win, lotto) }
+        val lottoResults: List<LottoResult> = boughtLottos.toResults(win)
         val lottoPrizeEntries: List<LottoResult> = LottoResult.entries.sortedPrizes()
         val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoResults, lottoPrizeEntries)
         return lottoResultsDescriptions
@@ -24,7 +24,7 @@ class ViewMapper {
         boughtLottos: List<Lotto>,
         win: WinLotto,
     ): Double {
-        val lottoResults: List<LottoResult> = boughtLottos.map { boughtLotto -> LottoResult.from(win, boughtLotto) }
+        val lottoResults: List<LottoResult> = boughtLottos.toResults(win)
         return profitCalculator.calculateProfitRate(lottoResults)
     }
 
@@ -34,6 +34,8 @@ class ViewMapper {
         LottoResult.entries
             .filterNot { result: LottoResult -> result.prizeAmount == 0 }
             .sortedBy { result: LottoResult -> result.prizeAmount }
+
+    private fun List<Lotto>.toResults(win: WinLotto): List<LottoResult> = map { lotto: Lotto -> LottoResult.from(win, lotto) }
 
     private fun makeLottoResultDescription(
         lottoResults: List<LottoResult>,
