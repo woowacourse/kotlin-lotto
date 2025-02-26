@@ -3,8 +3,8 @@ package domain.model
 import util.ErrorConstants.ERROR
 
 class WinningLotto(
-    val winningNumbers: Lotto,
-    val bonusNumber: LottoNumber,
+    private val winningNumbers: Lotto,
+    private val bonusNumber: LottoNumber,
 ) {
     init {
         require(bonusNumber.value !in winningNumbers.numbers.map { it.value }) {
