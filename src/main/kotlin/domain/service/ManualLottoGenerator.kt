@@ -3,14 +3,14 @@ package domain.service
 import domain.model.Lotto
 import domain.model.LottoNumber
 
-class ManualLottoGenerator : LottoNumbersGenerator {
-    private var manualLottoNumbers = setOf<Int>()
+class ManualLottoGenerator(
+    private val manualLottoInput: List<String>,
+) : LottoGenerator {
+    override fun getLottoNumbers(lottoNumbers: Set<Int>): Set<LottoNumber> = lottoNumbers.map { LottoNumber.from(it) }.toSet()
 
-    fun setManualLottoNumbers(inputLottoNumbers: Set<Int>) {
-        manualLottoNumbers = inputLottoNumbers
+    override fun makeLotto(amount: Int): List<Lotto> = manualLottoInput.map { Lotto(getLottoNumbers(it.toIntSet())) }
+
+    companion object {
+        private fun String.toIntSet() = this.split(',').map { it.toInt() }.toSet()
     }
-
-    fun makeLotto(): Lotto = Lotto(makeLottoNumbers())
-
-    override fun makeLottoNumbers(): Set<LottoNumber> = manualLottoNumbers.map { LottoNumber.from(it) }.toSet()
 }
