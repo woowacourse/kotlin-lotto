@@ -6,18 +6,16 @@ import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
 import lotto.model.WinningLotto
-import lotto.model.lottomachine.LottoMachine
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val lottoMachine: LottoMachine,
 ) {
     fun run() {
         val purchaseMoney = getPurchaseMoney()
-        val lottoCount = getLottoCount(purchaseMoney)
+        val wholeLottoCount = getLottoCount(purchaseMoney)
 
         val manualLottoCount = getPurchaseManualLottoCount(lottoCount)
 
