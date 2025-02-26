@@ -3,7 +3,7 @@ package lotto.view
 object View {
     fun readPay(): Int {
         OutputView.requestPrice()
-        val price: Int = InputView.readPrice()
+        val price: Int = InputView.readNumber()
         return price
     }
 
@@ -36,7 +36,7 @@ object View {
 
     fun readLottoNumbers(): List<Int> {
         OutputView.requestWinningLotto()
-        val winningNumbers: List<Int> = InputView.readLottoNumbers()
+        val winningNumbers: List<Int> = InputView.readNumbers()
         return winningNumbers
     }
 
