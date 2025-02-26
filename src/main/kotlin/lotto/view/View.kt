@@ -36,7 +36,7 @@ object View {
 
     fun readLottoNumbers(): List<Int> {
         OutputView.requestWinningLotto()
-        val winningNumbers: List<Int> = InputView.readWinningNumbers()
+        val winningNumbers: List<Int> = InputView.readLottoNumbers()
         return winningNumbers
     }
 
