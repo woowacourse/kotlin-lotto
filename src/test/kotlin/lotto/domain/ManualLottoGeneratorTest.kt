@@ -9,6 +9,6 @@ class ManualLottoGeneratorTest {
         val wantedNumbers: List<Int> = listOf(1, 2, 3, 4, 5, 6)
         val generator = ManualLottoGenerator(wantedNumbers)
         val lotto: Lotto? = generator.generate().firstOrNull()
-        assertThat(lotto?.numbers).isEqualTo(Lotto(wantedNumbers).numbers)
+        assertThat(lotto?.toList()).isEqualTo(Lotto(wantedNumbers).toList())
     }
 }

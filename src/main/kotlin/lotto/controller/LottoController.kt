@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.LottoShop
+import lotto.domain.Money
 import lotto.domain.WinLotto
 import lotto.view.View
 
@@ -33,7 +34,7 @@ class LottoController {
     }
 
     private fun createLottoShop(): LottoShop {
-        val pay: Int = view.readPay()
+        val pay = Money(view.readPay())
         val manualLottoCount: Int = view.readManualLottoCount()
         return LottoShop(pay, manualLottoCount)
     }
