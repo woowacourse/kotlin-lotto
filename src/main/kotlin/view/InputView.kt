@@ -8,9 +8,9 @@ class InputView {
         return readln().also { NumericValidator(it) }.toInt()
     }
 
-    fun readWinningNumbers(): List<String> {
+    fun readWinningNumbers(): List<Int> {
         println(MESSAGE_INPUT_WINNING_NUMBER)
-        val lotto = readln().split(",").map { it.trim().also { lottoNumber -> NumericValidator(lottoNumber) } }
+        val lotto = readln().split(",").map { it.trim().also { lottoNumber -> NumericValidator(lottoNumber) }.toInt() }
         return lotto
     }
 
@@ -28,8 +28,8 @@ class InputView {
         println(MESSAGE_INPUT_MANUAL_LOTTO_NUMBER)
     }
 
-    fun readManualLottoNumber(): List<String> {
-        val manualLottoNumbers = readln().split(",").map { it.trim().also { lottoNumber -> NumericValidator(lottoNumber) } }
+    fun readManualLottoNumber(): List<Int> {
+        val manualLottoNumbers = readln().split(",").map { it.trim().also { lottoNumber -> NumericValidator(lottoNumber) }.toInt() }
         return manualLottoNumbers
     }
 
