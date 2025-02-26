@@ -11,15 +11,15 @@ class OutputView {
         println(message)
     }
 
-    fun printPassiveLottoRequest() {
+    fun printManualLottoRequest() {
         println(MESSAGE_INPUT_PASSIVITY_LOTTO_NUMBERS)
     }
 
     fun printPurchasedLottoAmount(
         passivityLottoAmount: Int,
-        quickPickLottoAmount: Int,
+        autoLottoAmount: Int,
     ) {
-        println(MESSAGE_BOUGHT_LOTTO_RESULT.format(passivityLottoAmount, quickPickLottoAmount))
+        println(MESSAGE_BOUGHT_LOTTO_RESULT.format(passivityLottoAmount, autoLottoAmount))
     }
 
     fun printPurchasedLotto(purchasedLotto: List<Lotto>) {
