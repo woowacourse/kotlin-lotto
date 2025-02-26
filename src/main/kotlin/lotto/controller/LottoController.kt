@@ -26,9 +26,9 @@ class LottoController(
         outputView.printLottos(lottos)
 
         val winningLotto = getWinningLotto()
-//        val lottoStatistics: LottoStatistics = winningLotto.calculateStatistics(lottos, purchaseMoney)
+        val lottoStatistics: LottoStatistics = winningLotto.calculateStatistics(lottos, purchaseMoney)
 
-//        processLottoStatistics(lottoStatistics)
+        processLottoStatistics(lottoStatistics)
     }
 
     private fun getLottos(wholeLottoCount: LottoCount): Lottos {
