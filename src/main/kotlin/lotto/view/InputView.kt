@@ -16,18 +16,10 @@ class InputView {
         return LottoCount(count)
     }
 
-    fun readManualLotto(): List<LottoNumber> =
-        readln()
-            .split(LOTTO_NUMBER_DELIMITER)
-            .map { number -> number.toIntOrException() }
-            .map { number -> LottoNumber(number) }
+    fun readManualLotto(): List<LottoNumber> = readln().toLottoNumbersOrException()
 
     fun readWinningLottoNumbersOfLastWeek(): Lotto {
-        val lottoNumbersOfLastWeek =
-            readln()
-                .split(LOTTO_NUMBER_DELIMITER)
-                .map { number -> number.toIntOrException() }
-                .map { number -> LottoNumber(number) }
+        val lottoNumbersOfLastWeek = readln().toLottoNumbersOrException()
         return Lotto(lottoNumbersOfLastWeek)
     }
 
@@ -37,6 +29,12 @@ class InputView {
     }
 
     private fun String.toIntOrException(): Int = this.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER)
+
+    private fun String.toLottoNumbersOrException(): List<LottoNumber> =
+        this
+            .split(LOTTO_NUMBER_DELIMITER)
+            .map { number -> number.toIntOrException() }
+            .map { number -> LottoNumber(number) }
 
     companion object {
         private const val ERROR_NOT_A_NUMBER = "숫자만 입력 가능합니다."
