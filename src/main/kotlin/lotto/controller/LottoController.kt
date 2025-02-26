@@ -28,9 +28,11 @@ class LottoController(
         val lottoCalculator = LottoCalculator()
 
         val winningLotto = getWinningLotto()
-        val lottoStats = lottoCalculator.calculate(winningLotto, totalLottos)
-        val earningRate = lottoCalculator.calculateEarningRate(lottoStats, purchaseAmount)
-        outputView.printLottoResult(lottoStats, earningRate)
+
+        val lottoResult = lottoCalculator.calculate(winningLotto, totalLottos)
+        val earningRate = lottoResult.getEarningRate(purchaseAmount)
+
+        outputView.printLottoResult(lottoResult, earningRate)
     }
 
     private fun getPurchaseAmount(): PurchaseAmount {
