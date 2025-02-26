@@ -19,7 +19,7 @@ class WinningLottoTest {
         val lotto = Lotto(makeTestLotto(lottoNumbers))
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = toLottoNumbers(setOf(1, 2, 3, 4, 5, 6))
+        val winningNumbers = makeTestLotto(setOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber(7)
 
         val rank = winningLotto.getRank(winningNumbers, bonusNumber)
@@ -29,7 +29,7 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호가 일치하면서 5개의 번호가 동일한 경우 2등을 반환한다`() {
-        val winningNumbers = toLottoNumbers(setOf(1, 2, 3, 4, 5, 6))
+        val winningNumbers = makeTestLotto(setOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber(7)
 
         val lotto = Lotto(makeTestLotto(setOf(1, 2, 3, 4, 5, 7)))
@@ -45,7 +45,7 @@ class WinningLottoTest {
         val lotto = Lotto(makeTestLotto(lottoNumbers))
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = toLottoNumbers(setOf(1, 1, 2, 3, 4, 5))
+        val winningNumbers = makeTestLotto(setOf(1, 1, 2, 3, 4, 5))
         val bonusNumber = LottoNumber(6)
 
         assertThrows<IllegalArgumentException> {
@@ -59,7 +59,7 @@ class WinningLottoTest {
         val lotto = Lotto(makeTestLotto(lottoNumbers))
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = toLottoNumbers(setOf(1, 2, 3, 4, 5, 6))
+        val winningNumbers = makeTestLotto(setOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber(1)
 
         assertThrows<IllegalArgumentException> {
@@ -79,7 +79,5 @@ class WinningLottoTest {
                 Arguments.of(setOf(1, 22, 23, 24, 25, 26), Rank.MISS),
                 Arguments.of(setOf(21, 22, 23, 24, 25, 26), Rank.MISS),
             )
-
-        fun toLottoNumbers(winningNumbers: Set<Int>): Set<LottoNumber> = winningNumbers.map { LottoNumber(it) }.toSet()
     }
 }
