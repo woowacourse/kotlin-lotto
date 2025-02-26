@@ -1,6 +1,6 @@
 package lotto.domain
 
-class LottoAmount(private val value: Int) {
+data class LottoAmount(private val value: Int) {
     init {
         require(value >= 0) { MANUAL_LOTTO_AMOUNT_ERROR_MESSAGE }
     }

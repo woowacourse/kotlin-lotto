@@ -19,7 +19,7 @@ class LottoController(
     fun run() {
         val price = inputView.inputPurchasePrice()
         val manualAmount = LottoAmount(inputView.inputAmountOfManualLotto())
-        val totalAmount = LottoAmount(Purchase(price).calculateAmountOfLottos())
+        val totalAmount = Purchase(price).calculateAmountOfLottos()
 
         Validator.manualAmountValidator(manualAmount, totalAmount)
 
