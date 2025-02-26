@@ -24,5 +24,7 @@ data class Lotto(
 
     companion object {
         fun of(vararg numbers: Int): Lotto = Lotto(numbers.map { LottoNumber.of(it) })
+
+        fun of(numbers: List<Int>): Lotto = Lotto(numbers.map { LottoNumber.of(it) })
     }
 }
