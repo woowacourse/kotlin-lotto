@@ -1,8 +1,7 @@
 package lotto.domain.model
 
-import lotto.domain.service.FixedLottoNumbersGenerator
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -22,14 +21,10 @@ class LottoMachineTest {
         assertThat(lottoBundle.lottos.size).isEqualTo(count)
     }
 
-    @Test
+    @RepeatedTest(5)
     fun `생성된 로또 번호는 정렬되어야 한다`() {
-        val numbers = listOf(2, 1, 5, 4, 6, 3)
-        val actual = listOf(1, 2, 3, 4, 5, 6)
-
-        val numberGenerator = FixedLottoNumbersGenerator(numbers)
-        val lotto = LottoMachine(generator = numberGenerator).generateLottoBundle(1).lottos.first()
-
-        assertThat(lotto.numbers.map { it.number }).isEqualTo(actual)
+        val lotto = LottoMachine().generateLottoBundle(1).lottos.first()
+        val actual = lotto.numbers.map { it.number }
+        assertThat(actual).isSorted
     }
 }
