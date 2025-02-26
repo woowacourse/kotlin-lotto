@@ -34,16 +34,16 @@ class LottoController(
     private fun getAmount(): Amount = Amount(inputView.getMoney())
 
     private fun publishWinningLotto(
-        number: LottoNumbers,
+        numbers: LottoNumbers,
         bonus: LottoNumber,
     ): WinningLotto {
-        if (WinningLotto.validation(number, bonus) == ValidationResult.Error.DuplicateError) {
+        if (WinningLotto.validation(numbers, bonus) == ValidationResult.Error.DuplicateError) {
             return publishWinningLotto(
-                validatePublishLotto(inputView.getWinningLotto()),
-                validateBonusNumber(inputView.getBonusNumber()),
+                numbers,
+                validateBonusNumber(inputView.getBonusNumberRepeat()),
             )
         }
-        return WinningLotto(number, bonus)
+        return WinningLotto(numbers, bonus)
     }
 
     private fun validatePublishLotto(input: List<Int>): LottoNumbers {
@@ -51,17 +51,17 @@ class LottoController(
         return when (validationResult) {
             ValidationResult.Error.NumberRangeError ->
                 validatePublishLotto(
-                    inputView.getManualLotto(),
+                    inputView.getManualLottoRepeat(),
                 )
 
             ValidationResult.Error.DuplicateError ->
                 validatePublishLotto(
-                    inputView.getManualLotto(),
+                    inputView.getManualLottoRepeat(),
                 )
 
             ValidationResult.Error.NumberSizeError ->
                 validatePublishLotto(
-                    inputView.getManualLotto(),
+                    inputView.getManualLottoRepeat(),
                 )
 
             else -> LottoNumbers(input.map { it -> LottoNumber(it) })
@@ -70,7 +70,7 @@ class LottoController(
 
     private fun publishLottoList(count: Int): List<Lotto> {
         val useMoney = Amount(count * LOTTO_PRIZE)
-        if (money.validate(useMoney) == ValidationResult.Error.OverMoneyError) return publishLottoList(inputView.getManualCount())
+        if (money.validate(useMoney) == ValidationResult.Error.OverMoneyError) return publishLottoList(inputView.getManualCountRepeat())
         money = money.payMoney(useMoney)
         inputView.lottoInputMessage()
         var lottoList: MutableList<Lotto> = mutableListOf()
@@ -89,7 +89,7 @@ class LottoController(
 
     private fun validateBonusNumber(input: Int): LottoNumber {
         if (LottoNumber.validation(input) == ValidationResult.Error.NumberRangeError) {
-            return validateBonusNumber(inputView.getBonusNumber())
+            return validateBonusNumber(inputView.getBonusNumberRepeat())
         }
         return LottoNumber(input)
     }
