@@ -6,7 +6,7 @@ class ManualLottoNumbersGenerator(private val numbers: List<List<Int>>) : LottoN
     private var count: Int = 0
 
     override fun generate(): Set<LottoNumber> {
-        if (count >= numbers.size) throw IllegalArgumentException(INVALID_MANUAL_LOTTO_NUMBERS_SIZE_MESSAGE)
+        require(count < numbers.size) { INVALID_MANUAL_LOTTO_NUMBERS_SIZE_MESSAGE }
 
         return numbers[count++].sorted().map { LottoNumber.from(it) }.toSet()
     }
