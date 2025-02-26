@@ -8,10 +8,10 @@ class Lotto(val numbers: Set<LottoNumber>) {
     }
 
     fun calculateMatchLottoNumberCount(lotto: Lotto): Int {
-        return numbers.count { number -> lotto.numbers.contains(number) }
+        return numbers.count { number -> lotto.isMatchNumber(number) }
     }
 
-    fun isMatchBonusNumber(number: LottoNumber): Boolean {
+    fun isMatchNumber(number: LottoNumber): Boolean {
         return numbers.contains(number)
     }
 

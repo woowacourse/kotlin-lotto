@@ -51,7 +51,7 @@ class LottoTest {
         val bonusNumber = LottoNumber(1)
 
         val expected = true
-        val actual = lotto.isMatchBonusNumber(bonusNumber)
+        val actual = lotto.isMatchNumber(bonusNumber)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -62,7 +62,7 @@ class LottoTest {
         val bonusNumber = LottoNumber(9)
 
         val expected = false
-        val actual = lotto.isMatchBonusNumber(bonusNumber)
+        val actual = lotto.isMatchNumber(bonusNumber)
 
         assertThat(actual).isEqualTo(expected)
     }
