@@ -16,10 +16,8 @@ class LottoShop(
 
     fun buyLottos(manualLottosNumbers: List<List<Int>> = emptyList()): List<Lotto> {
         val lottoMachine = LottoMachine()
-        val manualLottos: List<Lotto> =
-            lottoMachine.makeLotto(ManualLottoGenerator(manualLottosNumbers))
-        val randomLottos: List<Lotto> =
-            lottoMachine.makeLotto(RandomLottoGenerator(randomCount))
+        val manualLottos: List<Lotto> = lottoMachine.produce(ManualLottoGenerator(manualLottosNumbers))
+        val randomLottos: List<Lotto> = lottoMachine.produce(RandomLottoGenerator(randomCount))
         return manualLottos + randomLottos
     }
 
