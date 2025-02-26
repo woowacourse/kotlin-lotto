@@ -2,6 +2,7 @@ package domain.model
 
 import domain.model.lotto.Lotto
 import domain.model.lotto.LottoException
+import domain.model.number.LottoNumber
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

@@ -1,11 +1,11 @@
 package controller
 
 import domain.model.LottoMatchResult
-import domain.model.LottoNumber
 import domain.model.LottoOrderRequest
 import domain.model.ManualLottoAmount
 import domain.model.WinningLotto
 import domain.model.lotto.Lotto
+import domain.model.number.LottoNumber
 import domain.model.price.PurchasePrice
 import domain.service.AutoLottoMachine
 import domain.service.ManualLottoMachine
@@ -96,14 +96,15 @@ class LottoController(
         }
     }
 
-    private fun getWinningLotto(winningNumbers: Lotto): WinningLotto =
-        retryWhenException(
-            action = {
-                val input = inputView.readBonusNumber()
-                WinningLotto(winningNumbers, LottoNumber(input))
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
+    private fun getWinningLotto(winningNumbers: Lotto): WinningLotto {
+        return runCatching {
+            val input = inputView.readBonusNumber()
+            WinningLotto(winningNumbers, LottoNumber(input))
+        }.getOrElse { e ->
+            outputView.printErrorMessage(e.message)
+            getWinningLotto(winningNumbers)
+        }
+    }
 
     private fun displayResult(
         lottoResult: LottoMatchResult,

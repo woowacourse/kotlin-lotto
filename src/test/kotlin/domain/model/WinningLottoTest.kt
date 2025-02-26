@@ -2,6 +2,8 @@ package domain.model
 
 import domain.fixture.createLotto
 import domain.fixture.createWinningLotto
+import domain.model.number.LottoNumber
+import domain.model.number.LottoNumberException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -40,7 +42,7 @@ class WinningLottoTest {
     @ValueSource(ints = [0, 46])
     @ParameterizedTest
     fun `보너스볼 번호는 1이상 45 이하여야한다`(value: Int) {
-        assertThrows<IllegalArgumentException>(
+        assertThrows<LottoNumberException.InvalidLottoNumberRange>(
             message = "[ERROR] 로또 번호는 1부터 45 사이입니다.",
         ) {
             createWinningLotto(10, 20, 30, 40, 44, 45, bonus = value)

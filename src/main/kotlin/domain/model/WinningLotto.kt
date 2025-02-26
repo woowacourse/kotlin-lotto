@@ -1,6 +1,7 @@
 package domain.model
 
 import domain.model.lotto.Lotto
+import domain.model.number.LottoNumber
 import util.ErrorConstants.ERROR
 
 class WinningLotto(
