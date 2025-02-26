@@ -6,6 +6,7 @@ import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
 import lotto.model.WinningLotto
+import lotto.model.lottomachine.AutomaticLottoMachine
 import lotto.model.lottomachine.ManualLottoMachine
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -20,6 +21,8 @@ class LottoController(
         val manualLottoCount = getPurchaseManualLottoCount(wholeLottoCount)
 
         val manualLottoBundle = getManualLottoBundle(manualLottoCount)
+        val automaticLottoCount = wholeLottoCount.minus(manualLottoCount)
+        val automaticLottoBundle = getAutomaticLottoBundle(automaticLottoCount)
 
         val winningLotto = getWinningLotto()
 //        val lottoStatistics: LottoStatistics = winningLotto.calculateStatistics(lottos, purchaseMoney)
@@ -50,6 +53,14 @@ class LottoController(
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getPurchaseManualLottoCount(wholeLottoCount)
+        }
+
+    private fun getAutomaticLottoBundle(automaticLottoCount: LottoCount): List<Lotto> =
+        try {
+            AutomaticLottoMachine.createLottoBundle(automaticLottoCount)
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message)
+            getAutomaticLottoBundle(automaticLottoCount)
         }
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =
