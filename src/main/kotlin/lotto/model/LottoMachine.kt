@@ -28,7 +28,7 @@ class LottoMachine(
 
     fun getActiveLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT - passiveLottoQuantity
 
-    fun getActiveLottos(lottoQuantity: Int): Lottos {
+    private fun getActiveLottos(lottoQuantity: Int): Lottos {
         val lottos = List<Lotto>(lottoQuantity) { Lotto(getLottoNumbers().map { LottoNumber((it)) }.toSet()) }
         return Lottos(lottos)
     }
