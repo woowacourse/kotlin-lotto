@@ -7,6 +7,7 @@ import lotto.model.LottoNumber
 import lotto.model.LottoNumbers
 import lotto.model.PrizeCalculator
 import lotto.model.Rank
+import lotto.model.ValidationResult
 import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -15,68 +16,87 @@ class LottoController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {
+    val lottoMachine = LottoMachine()
+    lateinit var money: Amount
+
     fun run() {
-        val amount = getAmount()
-        val lottoMachine = LottoMachine(amount)
-        val publishedLotto = validatePublishLottoList(lottoMachine) + autoPublishLotto(lottoMachine)
-        val winningLotto = validateWinningLotto(getWinningLotto(), getBonusNumber())
-        val prizeCalculator = PrizeCalculator(winningLotto, publishedLotto, amount)
+        money = getAmount()
+        val publishedLotto = publishLottoList(inputView.getManualCount()) + autoPublishLotto()
+        val winningLotto =
+            publishWinningLotto(
+                validatePublishLotto(inputView.getWinningLotto()),
+                validateBonusNumber(inputView.getBonusNumber()),
+            )
+        val prizeCalculator = PrizeCalculator(winningLotto, publishedLotto, money)
         showEarningRate(prizeCalculator)
     }
 
     private fun getAmount(): Amount = Amount(inputView.getMoney())
 
-    private fun validateWinningLotto(
-        number: LottoNumbers?,
-        bonus: LottoNumber?,
+    private fun publishWinningLotto(
+        number: LottoNumbers,
+        bonus: LottoNumber,
     ): WinningLotto {
-        if (number == null || bonus == null) {
-            outputView.inputWinningError()
-            return validateWinningLotto(getWinningLotto(), getBonusNumber())
+        if (WinningLotto.validation(number, bonus) == ValidationResult.Error.DuplicateError) {
+            return publishWinningLotto(
+                validatePublishLotto(inputView.getWinningLotto()),
+                validateBonusNumber(inputView.getBonusNumber()),
+            )
         }
         return WinningLotto(number, bonus)
     }
 
-    private fun validatePublishLotto(lottoMachine: LottoMachine): Lotto {
-        var lotto = lottoMachine.publishManualLotto(inputView.getManualLotto())
-        while (lotto == null) {
-            outputView.inputLottoError()
-            lotto = lottoMachine.publishManualLotto(inputView.getManualLotto())
+    private fun validatePublishLotto(input: List<Int>): LottoNumbers {
+        val validationResult = LottoNumbers.validation(input)
+        return when (validationResult) {
+            ValidationResult.Error.NumberRangeError ->
+                validatePublishLotto(
+                    inputView.getManualLotto(),
+                )
+
+            ValidationResult.Error.DuplicateError ->
+                validatePublishLotto(
+                    inputView.getManualLotto(),
+                )
+
+            ValidationResult.Error.NumberSizeError ->
+                validatePublishLotto(
+                    inputView.getManualLotto(),
+                )
+
+            else -> LottoNumbers(input.map { it -> LottoNumber(it) })
         }
-        return lotto
     }
 
-    private fun validatePublishLottoList(lottoMachine: LottoMachine): List<Lotto> {
-        var count = inputView.getManualCount()
-        while (lottoMachine.useMoney(Amount(count * LOTTO_PRIZE)) == false) {
-            outputView.inputCountError()
-            count = inputView.getManualCount()
-        }
-        val lottoList = mutableListOf<Lotto>()
+    private fun publishLottoList(count: Int): List<Lotto> {
+        val useMoney = Amount(count * LOTTO_PRIZE)
+        if (money.validate(useMoney) == ValidationResult.Error.OverMoneyError) return publishLottoList(inputView.getManualCount())
+        money = money.payMoney(useMoney)
         inputView.lottoInputMessage()
-        for (i in 1..count) {
-            lottoList.add(validatePublishLotto(lottoMachine))
+        var lottoList: MutableList<Lotto> = mutableListOf()
+        repeat(count) {
+            lottoList.add(Lotto(validatePublishLotto(inputView.getManualLotto())))
         }
         outputView.printManualLotto(count)
         return lottoList
     }
 
-    private fun autoPublishLotto(lottoMachine: LottoMachine): List<Lotto> {
-        val publishedLotto = lottoMachine.publishAutoTickets(Amount(LOTTO_PRIZE))
+    private fun autoPublishLotto(): List<Lotto> {
+        val publishedLotto = lottoMachine.publishAutoTickets(money)
         outputView.printPublishedLotto(publishedLotto)
         return publishedLotto
     }
 
-    private fun getWinningLotto(): LottoNumbers? {
-        val winningInput = inputView.getWinningLotto()
-        return LottoNumbers.create(winningInput.mapNotNull { number -> LottoNumber.create(number) })
+    private fun validateBonusNumber(input: Int): LottoNumber {
+        if (LottoNumber.validation(input) == ValidationResult.Error.NumberRangeError) {
+            return validateBonusNumber(inputView.getBonusNumber())
+        }
+        return LottoNumber(input)
     }
-
-    private fun getBonusNumber(): LottoNumber? = LottoNumber.create(inputView.getBonusNumber())
 
     private fun showEarningRate(prizeCalculator: PrizeCalculator) {
         val result =
-            prizeCalculator.result
+            prizeCalculator.rankCount
                 .filter { it.key != Rank.MISS }
                 .toList()
                 .sortedBy { it.first.ordinal }

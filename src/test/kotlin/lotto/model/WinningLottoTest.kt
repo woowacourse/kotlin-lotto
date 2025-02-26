@@ -18,7 +18,7 @@ class WinningLottoTest {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
-        assertThat(prizeCalculator.result[Rank.FIRST]).isEqualTo(1)
+        assertThat(prizeCalculator.rankCount[Rank.FIRST]).isEqualTo(1)
     }
 
     @Test
@@ -26,7 +26,7 @@ class WinningLottoTest {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 7))
         val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
-        assertThat(prizeCalculator.result[Rank.SECOND]).isEqualTo(1)
+        assertThat(prizeCalculator.rankCount[Rank.SECOND]).isEqualTo(1)
     }
 
     @Test
@@ -34,7 +34,7 @@ class WinningLottoTest {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 4, 5, 9))
         val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
-        assertThat(prizeCalculator.result[Rank.THIRD]).isEqualTo(1)
+        assertThat(prizeCalculator.rankCount[Rank.THIRD]).isEqualTo(1)
     }
 
     @Test
@@ -42,7 +42,7 @@ class WinningLottoTest {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 4, 8, 9))
         val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
-        assertThat(prizeCalculator.result[Rank.FOURTH]).isEqualTo(1)
+        assertThat(prizeCalculator.rankCount[Rank.FOURTH]).isEqualTo(1)
     }
 
     @Test
@@ -50,7 +50,7 @@ class WinningLottoTest {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(listOf(1, 2, 3, 7, 8, 9))
         val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
-        assertThat(prizeCalculator.result[Rank.FIFTH]).isEqualTo(1)
+        assertThat(prizeCalculator.rankCount[Rank.FIFTH]).isEqualTo(1)
     }
 
     @ParameterizedTest
@@ -63,7 +63,7 @@ class WinningLottoTest {
         val winningLotto = WinningLotto(listOf(1, 2, 3, 4, 5, 6), 7)
         val publishedLotto = Lotto(numbers.split(",").map { it.trim().toInt() })
         val prizeCalculator = PrizeCalculator(winningLotto, listOf(publishedLotto), Amount(1000))
-        assertThat(prizeCalculator.result[Rank.MISS]).isEqualTo(1)
+        assertThat(prizeCalculator.rankCount[Rank.MISS]).isEqualTo(1)
     }
 
     fun WinningLotto(

@@ -11,27 +11,13 @@ class NormalShuffle : ShuffleStrategy {
 }
 
 class LottoMachine(
-    var amount: Amount,
     private val shuffle: ShuffleStrategy = NormalShuffle(),
 ) {
     private val numbers: List<Int> = (LottoNumber.MIN_VALUE..LottoNumber.MAX_VALUE).toList()
 
-    fun useMoney(inputMoney: Amount): Boolean {
-        if (inputMoney.money > amount.money) return false
-        amount.payMoney(inputMoney)
-        return true
-    }
-
-    fun publishManualLotto(numberList: List<Int>): Lotto? {
-        var lottoNumbers: LottoNumbers? = LottoNumbers.create(numberList.mapNotNull { it -> LottoNumber.create(it) })
-        if (lottoNumbers == null) return null
-        return Lotto(lottoNumbers)
-    }
-
-    fun publishAutoTickets(lottoPrize: Amount): List<Lotto> {
+    fun publishAutoTickets(money: Amount): List<Lotto> {
         val lottoTickets = mutableListOf<Lotto>()
-        val moneyList = amount.moneySplit(lottoPrize)
-        repeat(moneyList.size) {
+        repeat(money.moneySplit(LOTTO_PRIZE).size) {
             val lotto = publishLotto()
             lottoTickets.add(lotto)
         }
@@ -50,5 +36,6 @@ class LottoMachine(
 
     companion object {
         private const val LOTTO_NUMBER_COUNT = 6
+        private val LOTTO_PRIZE = Amount(1000)
     }
 }

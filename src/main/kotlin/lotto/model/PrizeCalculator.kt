@@ -5,10 +5,10 @@ class PrizeCalculator(
     val publishedLotto: List<Lotto>,
     val amount: Amount,
 ) {
-    val result: Map<Rank, Int>
+    val rankCount: Map<Rank, Int>
 
     init {
-        result = makeResult()
+        rankCount = makeResult()
     }
 
     private fun makeResult(): Map<Rank, Int> {
@@ -23,7 +23,7 @@ class PrizeCalculator(
         return result
     }
 
-    fun calculateEarningRate(): Double = calculateTotalPrize(result).toDouble() / amount.money.toDouble()
+    fun calculateEarningRate(): Double = calculateTotalPrize(rankCount).toDouble() / amount.money.toDouble()
 
     private fun calculateTotalPrize(result: Map<Rank, Int>): Int = result.entries.sumOf { (rank, count) -> rank.winningMoney * count }
 }
