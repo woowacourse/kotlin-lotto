@@ -1,6 +1,6 @@
 package domain.model
 
-import domain.service.LottoGenerator.Companion.STANDARD_AMOUNT_UNIT
+import domain.service.LottoMachine.Companion.STANDARD_AMOUNT_UNIT
 import util.ErrorConstants.ERROR
 
 class PurchasePrice(

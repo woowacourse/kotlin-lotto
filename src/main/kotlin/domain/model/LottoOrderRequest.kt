@@ -2,13 +2,13 @@ package domain.model
 
 data class LottoOrderRequest(
     val money: PurchasePrice,
-    val amount: PassivityLottoAmount,
-    val passiveLottoNumber: List<Lotto>,
+    val amount: ManualLottoAmount,
+    val manualLotto: List<Lotto>,
 ) {
-    val quickPickLottoAmount
+    val autoLottoAmount
         get() = money.getPurchasableLottoCount() - amount.value
 
-    fun combine(quickPickLottoNumbers: List<Lotto>): List<Lotto> {
-        return passiveLottoNumber + quickPickLottoNumbers
+    fun combine(autoLottoNumbers: List<Lotto>): List<Lotto> {
+        return manualLotto + autoLottoNumbers
     }
 }

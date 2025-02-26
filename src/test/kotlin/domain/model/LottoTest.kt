@@ -21,6 +21,7 @@ class LottoTest {
     @ParameterizedTest
     fun `로또 번호에 중복이 있으면 예외가 발생한다`(value: String) {
         val values = value.split(",").map { LottoNumber(it.toInt()) }
+
         assertThrows<IllegalArgumentException>(
             message = "[ERROR] 로또 번호는 중복될 수 없습니다.",
         ) {

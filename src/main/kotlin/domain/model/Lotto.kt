@@ -2,7 +2,7 @@ package domain.model
 
 import util.ErrorConstants.ERROR
 
-class Lotto(val numbers: List<LottoNumber>) {
+data class Lotto(val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == LOTTO_SIZE) { INVALID_LOTTO_SIZE }
         require(numbers.size == numbers.toSet().size) { DUPLICATED_LOTTO_NUMBERS }
