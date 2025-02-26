@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.domain.Lotto
+import lotto.domain.LottoAmount
 import lotto.domain.LottoResult
 import lotto.domain.Profit
 import lotto.domain.Rank
@@ -11,10 +12,10 @@ object OutputView {
     }
 
     fun printLottoAmount(
-        amount: Int,
-        manualAmount: Int,
+        amount: LottoAmount,
+        manualAmount: LottoAmount,
     ) {
-        println("수동으로 ${manualAmount}개, 자동으로 ${amount - manualAmount}개를 구매했습니다.")
+        println("수동으로 ${manualAmount.toInt()}개, 자동으로 ${amount.toInt() - manualAmount.toInt()}개를 구매했습니다.")
     }
 
     fun printLottos(lottos: List<Lotto>) {

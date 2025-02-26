@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.domain.Lotto
+import lotto.domain.LottoAmount
 import lotto.domain.LottoFactory
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
@@ -17,8 +18,8 @@ class LottoController(
 
     fun run() {
         val price = inputView.inputPurchasePrice()
-        val manualAmount = inputView.inputAmountOfManualLotto()
-        val totalAmount = Purchase(price).calculateAmountOfLottos()
+        val manualAmount = LottoAmount(inputView.inputAmountOfManualLotto())
+        val totalAmount = LottoAmount(Purchase(price).calculateAmountOfLottos())
 
         Validator.manualAmountValidator(manualAmount, totalAmount)
 
@@ -26,7 +27,7 @@ class LottoController(
 
         val manualNumbers = getManualLottoNumbers(manualAmount)
         val manualLottos = lottoFactory.generateManualLottos(manualNumbers)
-        val autoLottos = lottoFactory.generateLottos(totalAmount - manualAmount)
+        val autoLottos = lottoFactory.generateLottos(totalAmount.toInt() - manualAmount.toInt())
 
         val allLottos = manualLottos + autoLottos
 
@@ -43,8 +44,8 @@ class LottoController(
         outputView.printProfit(lottoResult.calculateProfitRate(price))
     }
 
-    private fun getManualLottoNumbers(manualAmount: Int): List<List<Int>> {
-        return (0 until manualAmount).map {
+    private fun getManualLottoNumbers(manualAmount: LottoAmount): List<List<Int>> {
+        return (0 until manualAmount.toInt()).map {
             inputView.inputManualLottoNumbers() // 사용자 입력만 받음!
         }
     }
