@@ -1,11 +1,10 @@
 package domain.service
 
 import domain.model.Lotto
+import domain.model.LottoNumber
 
 interface LottoGenerator {
-    fun getLottoNumbers(): Set<Int>
+    fun getLottoNumbers(lottoNumbers: Set<Int>): Set<LottoNumber>
 
-    fun makeLotto(): Lotto
-
-    fun makeLottos(amount: Int): List<Lotto>
+    fun makeLotto(amount: Int): List<Lotto>
 }
