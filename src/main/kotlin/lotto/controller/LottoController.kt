@@ -40,7 +40,7 @@ class LottoController(
     }
 
     private fun getManualLottoBundle(manualLottoCount: LottoCount): List<Lotto> {
-        outputView.printManualLottoNumbersGuide()
+        if (manualLottoCount.isPositive()) outputView.printManualLottoNumbersGuide()
         return List(manualLottoCount.number) { getManualLotto() }
     }
 

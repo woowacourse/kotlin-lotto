@@ -7,6 +7,8 @@ data class LottoCount(
         require(number >= 0) { ERROR_NEGATIVE_COUNT }
     }
 
+    fun isPositive(): Boolean = number > 0
+
     fun validateLottoCount(lottoCount: LottoCount) {
         require(isAvailPurchaseLottoCount(lottoCount)) { ERROR_EXCEED_LOTTO_COUNT }
     }
