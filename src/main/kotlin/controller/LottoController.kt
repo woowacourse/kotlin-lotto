@@ -61,17 +61,18 @@ class LottoController(
         }
     }
 
-    private fun getManualLottoNumbers(amount: ManualLottoAmount): List<Lotto> =
-        retryWhenException(
-            action = {
-                outputView.printManualLottoRequest()
-                List(amount.value) {
-                    val input = inputView.readManualLottoNumbers()
-                    ManualLottoMachine(input).generate()
-                }
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
+    private fun getManualLottoNumbers(amount: ManualLottoAmount): List<Lotto> {
+        return runCatching {
+            outputView.printManualLottoRequest()
+            List(amount.value) {
+                val input = inputView.readManualLottoNumbers()
+                ManualLottoMachine(input).generate()
+            }
+        }.getOrElse {
+            outputView.printErrorMessage(it.message)
+            getManualLottoNumbers(amount)
+        }
+    }
 
     private fun displayPickedLotto(
         manualLottoAmount: Int,
