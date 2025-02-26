@@ -5,14 +5,8 @@ import lotto.model.LottoCount
 import lotto.model.LottoNumber
 import lotto.model.LottoNumber.Companion.MAX_NUMBER
 import lotto.model.LottoNumber.Companion.MIN_NUMBER
-import lotto.model.Lottos
 
-class AutomaticLottoMachine {
-    fun createLottos(lottoCount: LottoCount): Lottos {
-        val lottoBundle = List(lottoCount.number) { createLotto() }
-        return Lottos(lottoBundle)
-    }
-
+object AutomaticLottoMachine {
     fun createLotto(): Lotto {
         val lottoNumber =
             (MIN_NUMBER..MAX_NUMBER)
@@ -22,4 +16,6 @@ class AutomaticLottoMachine {
                 .sortedBy { lottoNumber -> lottoNumber.number }
         return Lotto(lottoNumber)
     }
+
+    fun createLottoBundle(lottoCount: LottoCount): List<Lotto> = List(lottoCount.number) { createLotto() }
 }
