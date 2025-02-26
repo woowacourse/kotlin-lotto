@@ -37,9 +37,12 @@ class LottoStore(
         return listOf(manualCount, autoCount)
     }
 
-    private fun generateManualLottoTicket(count: Int): List<LottoTicket> = inputView.inputManualNumbers(count)
+    private fun generateManualLottoTicket(count: Int): List<LottoTicket> =
+        List(count) {
+            LottoTicket(inputView.inputManualNumbers().map { LottoNumber(it) })
+        }
 
-    private fun generateAutoLottoTicket(count: Int): List<LottoTicket> = LottoMachine().purchase(count)
+    private fun generateAutoLottoTicket(count: Int): List<LottoTicket> = LottoMachine().generateAutoTicket(count)
 
     private fun getWinningLotto(): WinningLotto {
         val winningNumbers = LottoTicket(inputView.inputWinningNumbers().map { LottoNumber(it) }).getNumbers()

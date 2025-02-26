@@ -13,11 +13,11 @@ class LottoMachine {
         return totalCount - manualCount
     }
 
-    fun purchase(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateLotto()) }
+    fun generateAutoTicket(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateAutoLotto()) }
 
     fun calculateTotalCount(purchaseAmount: Int) = purchaseAmount / Constants.LOTTO_AMOUNT
 
-    private fun generateLotto(): List<LottoNumber> =
+    private fun generateAutoLotto(): List<LottoNumber> =
         LOTTO_RANGE
             .shuffled()
             .take(Constants.LOTTO_PICK_COUNT)
@@ -26,6 +26,6 @@ class LottoMachine {
 
     companion object {
         private val LOTTO_RANGE = (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
-        private val ERROR_INVALID_MANUAL_COUNT = "구입 금액을 넘겨서 구매할 수 없습니다."
+        private const val ERROR_INVALID_MANUAL_COUNT = "구입 금액을 넘겨서 구매할 수 없습니다."
     }
 }

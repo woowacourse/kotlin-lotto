@@ -1,8 +1,6 @@
 package lotto.view
 
 import lotto.Constants
-import lotto.domain.model.LottoNumber
-import lotto.domain.model.LottoTicket
 
 class InputView {
     fun validateAmount(amount: String): Int {
@@ -44,14 +42,10 @@ class InputView {
         return validateManualCount(manualCount)
     }
 
-    fun inputManualNumbers(count: Int): List<LottoTicket> {
+    fun inputManualNumbers(): List<Int> {
         println(MESSAGE_INPUT_MANUAL_NUMBERS)
-        val manualTickets = mutableListOf<LottoTicket>()
-        repeat(count) {
-            val manualNumbers = readln().split(COMMA).map { it.trim() }
-            manualTickets.add(LottoTicket(validateManualNumbers(manualNumbers).map { LottoNumber(it) }))
-        }
-        return manualTickets
+        val manualNumbers = readln().split(COMMA).map { it.trim() }
+        return validateManualNumbers(manualNumbers)
     }
 
     fun inputWinningNumbers(): List<Int> {
