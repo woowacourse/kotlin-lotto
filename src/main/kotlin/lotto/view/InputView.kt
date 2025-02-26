@@ -46,8 +46,8 @@ class InputView {
         private const val READ_PURCHASE_AMOUNT_MESSAGE = "구입금액을 입력해 주세요."
         private const val READ_WINNING_NUMBERS_MESSAGE = "\n지난 주 당첨 번호를 입력해 주세요."
         private const val READ_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
-        private const val READ_MANUAL_LOTTO_AMOUNT_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
-        private const val READ_MANUAL_LOTTO_NUMBERS_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
+        private const val READ_MANUAL_LOTTO_AMOUNT_MESSAGE = "\n수동으로 구매할 로또 수를 입력해 주세요."
+        private const val READ_MANUAL_LOTTO_NUMBERS_MESSAGE = "\n수동으로 구매할 번호를 입력해 주세요."
 
         private const val INVALID_NUMBER_MESSAGE = "숫자만 입력해 주세요.(공백 포함 x)"
         private const val EMPTY_INPUT_MESSAGE = "빈 문자열입니다."
