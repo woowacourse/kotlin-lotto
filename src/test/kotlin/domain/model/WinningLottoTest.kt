@@ -1,6 +1,7 @@
 package domain.model
 
-import domain.service.FakeLottoNumberGenerator
+import domain.fixture.createLotto
+import domain.fixture.createWinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -10,18 +11,15 @@ import org.junit.jupiter.params.provider.ValueSource
 class WinningLottoTest {
     @Test
     fun `n장의 Lotto에 대한 당첨 결과 구하기`() {
-        val fakeLottoGenerator =
-            FakeLottoNumberGenerator(
-                listOf(
-                    createLotto(1, 2, 3, 4, 5, 6),
-                    createLotto(1, 2, 3, 4, 5, 7),
-                ),
+        val lottos =
+            listOf(
+                createLotto(1, 2, 3, 4, 5, 6),
+                createLotto(2, 3, 4, 5, 6, 7),
+                createLotto(3, 4, 5, 6, 7, 8),
             )
 
-        val purchaseLotto = fakeLottoGenerator.generate(2)
-
         val winningLotto = createWinningLotto(1, 3, 4, 5, 6, 7, bonus = 2)
-        val result = winningLotto.calculate(purchaseLotto)
+        val result = winningLotto.calculate(lottos)
 
         assertThat(result.getWinningCount(Rank.SECOND)).isEqualTo(2)
         assertThat(result.getWinningCount(Rank.FOURTH)).isEqualTo(0)
@@ -47,16 +45,5 @@ class WinningLottoTest {
         ) {
             createWinningLotto(10, 20, 30, 40, 44, 45, bonus = value)
         }
-    }
-
-    private fun createLotto(vararg numbers: Int): Lotto {
-        return Lotto(numbers.map { LottoNumber(it) })
-    }
-
-    private fun createWinningLotto(
-        vararg numbers: Int,
-        bonus: Int,
-    ): WinningLotto {
-        return WinningLotto(createLotto(*numbers), LottoNumber(bonus))
     }
 }
