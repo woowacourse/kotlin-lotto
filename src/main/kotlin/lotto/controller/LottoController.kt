@@ -5,6 +5,7 @@ import lotto.model.LottoCount
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
+import lotto.model.Lottos
 import lotto.model.WinningLotto
 import lotto.model.lottomachine.AutomaticLottoMachine
 import lotto.model.lottomachine.ManualLottoMachine
@@ -18,16 +19,24 @@ class LottoController(
     fun run() {
         val purchaseMoney = getPurchaseMoney()
         val wholeLottoCount = getWholeLottoCount(purchaseMoney)
-        val manualLottoCount = getPurchaseManualLottoCount(wholeLottoCount)
 
-        val manualLottoBundle = getManualLottoBundle(manualLottoCount)
-        val automaticLottoCount = wholeLottoCount.minus(manualLottoCount)
-        val automaticLottoBundle = getAutomaticLottoBundle(automaticLottoCount)
+        val lottos = getLottos(wholeLottoCount)
+
+        outputView.printLottoCount(lottos.getManualLottoCount(), lottos.getAutomaticLottoCount())
+        outputView.printLottos(lottos)
 
         val winningLotto = getWinningLotto()
 //        val lottoStatistics: LottoStatistics = winningLotto.calculateStatistics(lottos, purchaseMoney)
 
 //        processLottoStatistics(lottoStatistics)
+    }
+
+    private fun getLottos(wholeLottoCount: LottoCount): Lottos {
+        val manualLottoCount = getPurchaseManualLottoCount(wholeLottoCount)
+        val manualLottoBundle = getManualLottoBundle(manualLottoCount)
+        val automaticLottoCount = wholeLottoCount.minus(manualLottoCount)
+        val automaticLottoBundle = getAutomaticLottoBundle(automaticLottoCount)
+        return Lottos(manualLottoBundle, automaticLottoBundle)
     }
 
     private fun getManualLottoBundle(manualLottoCount: LottoCount): List<Lotto> {
