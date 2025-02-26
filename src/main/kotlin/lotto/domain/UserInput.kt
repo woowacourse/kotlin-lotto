@@ -5,8 +5,9 @@ import lotto.global.Message
 data class UserInput(
     val buyAmount: Int,
     val manualLottoCount: Int,
-    val manualLotto: List<Lotto>,
+    private val rawManualLotto: List<List<Int>>,
 ) {
+    val manualLotto: List<Lotto> = rawManualLotto.map { Lotto(it.map { LottoNumber.of(it) }) }
     val totalLottoCount: Int = buyAmount / LOTTO_PRICE
     val automaticLottoCount: Int = totalLottoCount - manualLottoCount
 

@@ -35,7 +35,7 @@ class LottoViewTest {
     fun t1() {
         setInput("5000\n1\n1,2,3,4,5,6")
         assertThat(lottoView.getLottoAmount()).isEqualTo(
-            UserInput(5000, 1, listOf(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) }))),
+            UserInput(5000, 1, listOf(listOf(1, 2, 3, 4, 5, 6))),
         )
     }
 
@@ -66,33 +66,6 @@ class LottoViewTest {
     }
 
     @Test
-    @DisplayName("  - 6개의 숫자를 입력받지 않는다면 IllegalArgumentException를 반환하고 \"6개의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t2_2() {
-        setInput("1,2,3,4,5,6,7")
-        assertThatThrownBy { lottoView.getWinningLotto() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("6개의 숫자를 입력해주세요")
-    }
-
-    @Test
-    @DisplayName("  - 하나의 숫자 이상이 1부터 45까지의 범위가 아니라면 IllegalArgumentException를 반환하고 \"1부터 45까지의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t2_3() {
-        setInput("1,2,300,4,5,6")
-        assertThatThrownBy { lottoView.getWinningLotto() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("1부터 45까지의 숫자를 입력해주세요")
-    }
-
-    @Test
-    @DisplayName("  - 중복된 숫자를 입력한 경우 IllegalArgumentException을 반환하고 \"중복되지 않은 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t2_4() {
-        setInput("1,2,3,4,5,5")
-        assertThatThrownBy { lottoView.getWinningLotto() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("중복되지 않은 숫자를 입력해주세요")
-    }
-
-    @Test
     @DisplayName("보너스 번호를 입력받는다")
     fun t3() {
         setInput("6")
@@ -107,24 +80,6 @@ class LottoViewTest {
         assertThatThrownBy { lottoView.getBonusNum() }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("올바르지 않은 형식입니다")
-    }
-
-    @Test
-    @DisplayName("  - 1부터 45 사이의 숫자를 입력받지 않는다면 IllegalArgumentException을 반환하고 \"1부터 45까지의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t3_2() {
-        setInput("1234")
-        assertThatThrownBy { lottoView.getBonusNum() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("1부터 45까지의 숫자를 입력해주세요")
-    }
-
-    @Test
-    @DisplayName("  - 1부터 45 사이의 숫자를 입력받지 않는다면 IllegalArgumentException을 반환하고 \"1부터 45까지의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t3_2_1() {
-        setInput("-1")
-        assertThatThrownBy { lottoView.getBonusNum() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("1부터 45까지의 숫자를 입력해주세요")
     }
 
     @Test

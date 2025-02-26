@@ -1,12 +1,11 @@
 package lotto.view
 
 import lotto.domain.Lotto
-import lotto.domain.LottoNumber
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
 import lotto.domain.UserInput
-import lotto.global.LottoValidator
 import lotto.global.Message
+import java.lang.IllegalArgumentException
 
 class LottoView {
     fun getLottoAmount(): UserInput {
@@ -16,18 +15,29 @@ class LottoView {
 
     private fun getBuyAmount(): Int {
         println(Message.ASK_AMOUNT.msg)
-        return LottoValidator.requireLottoAmount(readln()).toInt()
+        val userInput = readln()
+        require(userInput.toIntOrNull() != null) { Message.ERR_INVALID_FORMAT.msg }
+        return userInput.toInt()
     }
 
     private fun getManualLottoCount(): Int {
         println(Message.ASK_MANUAL_LOTTO_AMOUNT)
-        return LottoValidator.requireLottoAmount(readln()).toInt()
+        val userInput = readln()
+        require(userInput.toIntOrNull() != null) { Message.ERR_INVALID_FORMAT.msg }
+        return userInput.toInt()
     }
 
-    private fun getManualLotto(): List<Lotto> {
+    private fun getManualLotto(): List<List<Int>> {
         println(Message.ASK_MANUAL_LOTTO.msg)
-        val userInput = LottoValidator.requireValidLotto(readln())
-        return listOf(Lotto(userInput.split(",").map { LottoNumber.of(it.toInt()) }))
+        val userInput = readln()
+        runCatching {
+            userInput.split("\n").map {
+                it.split(",").map { it.toInt() }
+            }
+        }.getOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
+        return userInput.split("\n").map {
+            it.split(",").map { it.toInt() }
+        }
     }
 
     fun printLotto(manyLotto: List<Lotto>) {
@@ -36,12 +46,18 @@ class LottoView {
 
     fun getWinningLotto(): List<Int> {
         println(Message.ASK_WINNING_LOTTO.msg)
-        return LottoValidator.requireValidLotto(readln()).split(",").map { it.toInt() }
+        val userInput = readln()
+        runCatching {
+            userInput.split(",").map { it.toInt() }
+        }.getOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
+        return userInput.split(",").map { it.toInt() }
     }
 
     fun getBonusNum(): Int {
         println(Message.ASK_BONUS_BALL.msg)
-        return LottoValidator.requireValidBonusNum(readln()).toInt()
+        val userInput = readln()
+        require(userInput.toIntOrNull() != null) { Message.ERR_INVALID_FORMAT.msg }
+        return userInput.toInt()
     }
 
     fun printResult(scoreRankMap: ScoreRankMap) {

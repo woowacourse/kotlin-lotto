@@ -1,7 +1,5 @@
 package lottoTest.domain
 
-import lotto.domain.Lotto
-import lotto.domain.LottoNumber
 import lotto.domain.UserInput
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -60,7 +58,7 @@ class UserInputTest {
             UserInput(
                 15000,
                 1,
-                listOf(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })),
+                listOf(listOf(1, 2, 3, 4, 5, 6)),
             )
         assertThat(userInput.automaticLottoCount).isEqualTo(14)
     }
