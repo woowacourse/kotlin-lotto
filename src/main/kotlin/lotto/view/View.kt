@@ -12,8 +12,8 @@ object View {
         return InputView.readNumber()
     }
 
-    fun readManualLottosNumbers(size: Int): List<List<Int>>? {
-        if (size == 0) return null
+    fun readManualLottosNumbers(size: Int): List<List<Int>> {
+        if (size == 0) return emptyList()
         OutputView.requestManualLottosNumbers()
         val manualLottoNumbers: List<List<Int>> = InputView.readLottosNumbers(size)
         return manualLottoNumbers

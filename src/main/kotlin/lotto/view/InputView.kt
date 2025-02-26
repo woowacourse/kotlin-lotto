@@ -29,6 +29,8 @@ object InputView {
     }
 
     fun readLottosNumbers(size: Int): List<List<Int>> {
+        if (size == 0) return emptyList()
+
         val lottoNumbers: List<List<Int>> =
             (1..size).map {
                 val input: String = readLine() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_INPUT_STATE)
