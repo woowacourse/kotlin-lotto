@@ -2,9 +2,9 @@ package lotto.controller
 
 import lotto.controller.Mapper.mapToLottoCount
 import lotto.controller.Mapper.mapToLottoResultsDescriptions
+import lotto.controller.Mapper.mapToLottos
 import lotto.controller.Mapper.mapToOutput
 import lotto.controller.Mapper.mapToProfitRate
-import lotto.controller.Mapper.mapToRandomLottos
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.WinLotto
@@ -17,17 +17,19 @@ class LottoController {
     fun start() {
         val pay: Int = View.readPay()
         val manualLottoCount: Int = View.readManualLottoCount()
-        val manualLottos: List<List<Int>>? = View.readManualLottosNumbers(manualLottoCount)
+        val manualLottos: List<List<Int>> = View.readManualLottosNumbers(manualLottoCount)
         View.showLottoCount(mapToLottoCount(pay))
-        makeLotto(pay)
+        makeLotto(pay, manualLottos)
         showBoughtLottos()
         readWinningLotto()
         showResult()
     }
 
-    private fun makeLotto(pay: Int) {
-        val lottos: List<Lotto> = mapToRandomLottos(pay)
-        boughtLottos = lottos
+    private fun makeLotto(
+        pay: Int,
+        manualLottos: List<List<Int>>,
+    ) {
+        boughtLottos = mapToLottos(pay, manualLottos)
     }
 
     private fun showBoughtLottos() {
