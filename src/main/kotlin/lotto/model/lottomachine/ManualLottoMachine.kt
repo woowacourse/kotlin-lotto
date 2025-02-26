@@ -4,5 +4,5 @@ import lotto.model.Lotto
 import lotto.model.LottoNumber
 
 object ManualLottoMachine {
-    fun createLotto(lottoNumbers: List<LottoNumber>): Lotto = Lotto(lottoNumbers)
+    fun createLotto(lottoNumbers: List<LottoNumber>): Lotto = Lotto(lottoNumbers.sortedBy { lottoNumber -> lottoNumber.number })
 }
