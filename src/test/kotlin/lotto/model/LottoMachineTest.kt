@@ -11,23 +11,34 @@ class LottoMachineTest {
     @ValueSource(ints = [-1, 0])
     @ParameterizedTest
     fun `입력한 금액은 0원 이상만 가능하다`(amount: Int) {
+        val passiveLottoNumbers = List(6) { LottoNumber(it + 1) }.toSet()
         assertThatThrownBy {
-            LottoMachine(0)
+            LottoMachine(amount, 0, listOf(Lotto(passiveLottoNumbers)))
         }.hasMessageContaining("0원 이상의 금액")
     }
 
     @Test
     fun `입력한 금액이 1,000으로 나누어지지 않으면 실패한다`() {
-        assertThrows<IllegalArgumentException> { LottoMachine(1001) }
+        assertThrows<IllegalArgumentException> { LottoMachine(1001, 0, listOf(Lotto(setOf()))) }
     }
 
     @Test
-    fun `구입 금액이 5000원이면 로또를 5개 반환한다`() {
+    fun `구입 금액이 5000원이면서 수동 로또가 0개일 때 자동로또를 5개 반환한다`() {
         val amount = 5000
-        val lottoMachine = LottoMachine(amount)
-        val lottoQuantity = lottoMachine.getLottoQuantity()
+        val lottoMachine = LottoMachine(amount, 0, listOf())
+        val lottoQuantity = lottoMachine.getActiveLottoQuantity()
 
         Assertions.assertEquals(5, lottoQuantity)
+    }
+
+    @Test
+    fun `구입 금액이 5000원이면서 수동 로또가 1개일 때 자동로또를 4개 반환한다`() {
+        val amount = 5000
+        val passiveLottoNumbers = List(6) { LottoNumber(it + 1) }.toSet()
+        val lottoMachine = LottoMachine(amount, 1, listOf(Lotto(passiveLottoNumbers)))
+        val lottoQuantity = lottoMachine.getActiveLottoQuantity()
+
+        Assertions.assertEquals(4, lottoQuantity)
     }
 
     @Test
@@ -43,7 +54,7 @@ class LottoMachineTest {
             )
 
         val totalAmount = winningResult.values.size * 1000
-        val lottoMachine = LottoMachine(totalAmount)
+        val lottoMachine = LottoMachine(totalAmount, 0, listOf())
 
         val totalProfit = (Rank.FIRST.winningMoney + Rank.FIFTH.winningMoney).toFloat()
         val expectedProfitRate = (totalProfit / totalAmount.toFloat())
