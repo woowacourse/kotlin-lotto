@@ -2,11 +2,11 @@ package controller
 
 import domain.model.LottoMatchResult
 import domain.model.LottoOrderRequest
-import domain.model.WinningLotto
 import domain.model.lotto.Lotto
 import domain.model.manual.ManualLottoAmount
 import domain.model.number.LottoNumber
 import domain.model.price.PurchasePrice
+import domain.model.winning.WinningLotto
 import domain.service.AutoLottoMachine
 import domain.service.ManualLottoMachine
 import util.retryWhenException

@@ -1,21 +1,22 @@
-package domain.model
+package domain.model.winning
 
+import domain.model.LottoMatchResult
+import domain.model.Rank
 import domain.model.lotto.Lotto
 import domain.model.number.LottoNumber
-import util.ErrorConstants.ERROR
 
 class WinningLotto(
     private val winningNumbers: Lotto,
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(bonusNumber.value !in winningNumbers.numbers.map { it.value }) {
-            DUPLICATED_BONUS_NUMBER
+        if (bonusNumber.value in winningNumbers.numbers.map { it.value }) {
+            throw WinningLottoException.DuplicatedBonusNumberException()
         }
     }
 
     fun calculate(purchaseLotto: List<Lotto>): LottoMatchResult {
-        val rankResult = Rank.rankMap().toMutableMap()
+        val rankResult = Rank.Companion.rankMap().toMutableMap()
         purchaseLotto.forEach { lotto ->
             val rank = getRank(lotto.numbers)
             rankResult[rank] = rankResult.getOrDefault(rank, 0) + 1
@@ -29,11 +30,7 @@ class WinningLotto(
         val lottoMatches = buyLotto.intersect(winningLottoNumbers).size
         val isBonusMatched = buyLotto.contains(bonusNumber)
 
-        val rank = Rank.valueOf(lottoMatches, isBonusMatched)
+        val rank = Rank.Companion.valueOf(lottoMatches, isBonusMatched)
         return rank
-    }
-
-    companion object {
-        const val DUPLICATED_BONUS_NUMBER = "$ERROR 보너스 번호와 로또 번호는 중복될 수 없습니다."
     }
 }

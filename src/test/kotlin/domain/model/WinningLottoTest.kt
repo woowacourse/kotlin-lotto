@@ -4,6 +4,8 @@ import domain.fixture.createLotto
 import domain.fixture.createWinningLotto
 import domain.model.number.LottoNumber
 import domain.model.number.LottoNumberException
+import domain.model.winning.WinningLotto
+import domain.model.winning.WinningLottoException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -32,7 +34,7 @@ class WinningLottoTest {
     fun `로또 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
         val lotto = createLotto(11, 22, 33, 44, 45, 7)
 
-        assertThrows<IllegalArgumentException>(
+        assertThrows<WinningLottoException.DuplicatedBonusNumberException>(
             message = "[ERROR] 보너스 번호와 로또 번호는 중복될 수 없습니다.",
         ) {
             WinningLotto(lotto, LottoNumber(7))
