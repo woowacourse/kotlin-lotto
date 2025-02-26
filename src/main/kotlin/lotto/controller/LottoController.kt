@@ -16,11 +16,10 @@ class LottoController(
 ) {
     fun run() {
         val (manualLottoBundle, autoLottoBundle) = purchaseLotto()
+        val combinedLottoBundle = LottoBundle.combine(manualLottoBundle, autoLottoBundle)
         printLottoBundle(manualLottoBundle, autoLottoBundle)
 
         val winningNumbers = generateWinningNumbers()
-
-        val combinedLottoBundle = LottoBundle.combine(manualLottoBundle, autoLottoBundle)
         printWinningResults(combinedLottoBundle, winningNumbers)
     }
 
