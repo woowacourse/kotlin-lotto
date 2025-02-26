@@ -3,10 +3,8 @@ package lotto.controller
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoOrder
 import lotto.domain.model.WinningLotto
-import lotto.domain.service.AutomaticLottoMachine
 import lotto.domain.service.LottoCalculator
 import lotto.domain.service.LottoStore
-import lotto.domain.service.ManualLottoMachine
 import lotto.domain.value.LottoCount
 import lotto.domain.value.LottoNumber
 import lotto.domain.value.PurchaseAmount
@@ -19,24 +17,13 @@ class LottoController(
 ) {
     fun run() {
         val store = LottoStore()
-        val manualLottoMachine = ManualLottoMachine()
-        val automaticLottoMachine = AutomaticLottoMachine()
 
         val purchaseAmount = getPurchaseAmount()
-        val totalLottoCount = purchaseAmount.getPurchaseQuantity()
+        val lottoOrder = getLottoOrder(purchaseAmount)
 
-        val manualLottoCount = getManualLottoCount()
-        val manualLottoNumbers = getManualLottoNumbers(manualLottoCount)
+        val totalLottos = store.purchase(lottoOrder)
 
-        val lottoOrder = LottoOrder(totalLottoCount, manualLottoCount, manualLottoNumbers)
-
-        val automaticLottoCount = lottoOrder.getAutomaticLottoCount()
-
-        val manualLottos = store.purchase(manualLottoMachine, manualLottoCount, manualLottoNumbers)
-        val automaticLottos = store.purchase(automaticLottoMachine, automaticLottoCount)
-
-        val totalLottos = manualLottos + automaticLottos
-        outputView.printPurchaseDetail(manualLottoCount, automaticLottoCount, totalLottos)
+        displayPurchaseDetail(lottoOrder, totalLottos)
 
         val lottoCalculator = LottoCalculator()
 
@@ -49,6 +36,13 @@ class LottoController(
     private fun getPurchaseAmount(): PurchaseAmount {
         val amount = inputView.readPurchaseAmount()
         return PurchaseAmount(amount)
+    }
+
+    private fun getLottoOrder(purchaseAmount: PurchaseAmount): LottoOrder {
+        val totalLottoCount = purchaseAmount.getPurchaseQuantity()
+        val manualLottoCount = getManualLottoCount()
+        val manualLottoNumbers = getManualLottoNumbers(manualLottoCount)
+        return LottoOrder(totalLottoCount, manualLottoCount, manualLottoNumbers)
     }
 
     private fun getManualLottoCount(): LottoCount {
@@ -75,5 +69,14 @@ class LottoController(
     private fun getBonusNumber(): LottoNumber {
         val bonusNumber = inputView.readBonusNumber()
         return LottoNumber.from(bonusNumber)
+    }
+
+    private fun displayPurchaseDetail(
+        lottoOrder: LottoOrder,
+        lottos: List<Lotto>,
+    ) {
+        val manualLottoCount = lottoOrder.manualLottoCount
+        val automaticLottoCount = lottoOrder.getAutomaticLottoCount()
+        outputView.printPurchaseDetail(manualLottoCount, automaticLottoCount, lottos)
     }
 }
