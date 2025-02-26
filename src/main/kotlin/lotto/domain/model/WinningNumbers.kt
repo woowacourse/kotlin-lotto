@@ -4,20 +4,29 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
     constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber(bonusNumber))
 
     init {
-        val duplicateBonusNumber = winningLotto.numbers.find { it == bonusNumber.number }
-        require(duplicateBonusNumber == null) { DUPLICATE_WINNING_NUMBER_MESSAGE.format(duplicateBonusNumber) }
+        require(winningLotto.hasLottoNumber(bonusNumber)) { DUPLICATE_WINNING_NUMBER_MESSAGE.format(bonusNumber) }
     }
 
     fun calculateLottoRanks(lottos: Lottos): LottoRanks {
-        val ranks = LottoRank.entries.associateWith { rank -> getLottoRankCount(lottos, rank) }
-        return LottoRanks(ranks)
+        val purchaseLottoRanks = getPurchaseLottoRanks(lottos)
+        return LottoRanks(LottoRank.entries.associateWith { rank -> getLottoRankCount(rank, purchaseLottoRanks) })
     }
 
     private fun getLottoRankCount(
-        lottos: Lottos,
         rank: LottoRank,
+        purchaseLottoRanks: List<LottoRank>,
     ): Int {
-        return lottos.lottos.count { lotto -> lotto.getLottoRank(winningLotto, bonusNumber) == rank }
+        return purchaseLottoRanks.count { purchaseLottoRank -> purchaseLottoRank == rank }
+    }
+
+    private fun getPurchaseLottoRanks(purchaseLotto: Lottos): List<LottoRank> {
+        val lottoRank = LottoRank
+        return purchaseLotto.lottos.map { lotto ->
+            lottoRank.calculate(
+                lotto.getMatchCount(winningLotto),
+                lotto.hasLottoNumber(bonusNumber),
+            )
+        }
     }
 
     private companion object {

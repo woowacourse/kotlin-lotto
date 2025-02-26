@@ -11,14 +11,9 @@ data class Lotto(private val _numbers: Set<LottoNumber>) {
         }
     }
 
-    fun getLottoRank(
-        winningLotto: Lotto,
-        bonusNumber: LottoNumber,
-    ): LottoRank {
-        val matchCount = _numbers.count { number -> winningLotto._numbers.contains(number) }
-        val isMatchBonusNumber = _numbers.contains(bonusNumber)
-        return LottoRank.calculate(matchCount, isMatchBonusNumber)
-    }
+    fun getMatchCount(winningLotto: Lotto) = _numbers.count { number -> winningLotto._numbers.contains(number) }
+
+    fun hasLottoNumber(number: LottoNumber) = _numbers.contains(number)
 
     override fun toString(): String {
         return this._numbers.toString()
