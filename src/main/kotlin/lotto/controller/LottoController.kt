@@ -68,8 +68,8 @@ class LottoController(
     }
 
     private fun getWinningNumbers(): Lotto {
-        val winningNumbers = inputView.readWinningNumbers().map { LottoNumber.from(it) }
-        return Lotto(winningNumbers)
+        val winningNumbers = inputView.readWinningNumbers()
+        return Lotto.of(winningNumbers)
     }
 
     private fun getBonusNumber(): LottoNumber {

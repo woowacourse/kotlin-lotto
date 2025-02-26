@@ -12,28 +12,28 @@ class LottoTest {
     @Test
     fun `6개의 로또 번호를 갖는다`() {
         assertDoesNotThrow {
-            Lotto.of(1, 2, 3, 4, 5, 6)
+            Lotto(1, 2, 3, 4, 5, 6)
         }
     }
 
     @Test
     fun `로또 번호가 6개가 아니면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            Lotto.of(1, 2, 3, 4, 5)
+            Lotto(1, 2, 3, 4, 5)
         }
     }
 
     @Test
     fun `로또 번호는 중복되지 않는다`() {
         assertDoesNotThrow {
-            Lotto.of(1, 2, 3, 4, 5, 6)
+            Lotto(1, 2, 3, 4, 5, 6)
         }
     }
 
     @Test
     fun `로또 번호가 중복되면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            Lotto.of(1, 1, 1, 1, 1, 1)
+            Lotto(1, 1, 1, 1, 1, 1)
         }
     }
 
@@ -43,16 +43,18 @@ class LottoTest {
         number: Int,
         expected: Boolean,
     ) {
-        val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
         assertThat(lotto.contains(LottoNumber.from(number))).isEqualTo(expected)
     }
 
     @Test
     fun `다른 로또와 일치하는 번호의 개수를 구한다`() {
-        val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
-        val other = Lotto.of(4, 5, 6, 7, 8, 9)
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val other = Lotto(4, 5, 6, 7, 8, 9)
 
         val countOfMatch = lotto.count(other)
         assertThat(countOfMatch).isEqualTo(3)
     }
+
+    private fun Lotto(vararg numbers: Int): Lotto = Lotto.of(numbers.toList())
 }
