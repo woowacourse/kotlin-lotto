@@ -1,6 +1,7 @@
 package domain.model
 
-class LottoNumber private constructor(
+@JvmInline
+value class LottoNumber private constructor(
     val value: Int,
 ) {
     override fun toString(): String = value.toString()
