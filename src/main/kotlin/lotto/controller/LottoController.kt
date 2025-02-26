@@ -29,9 +29,9 @@ class LottoController(
         return lottoBundle
     }
 
-    private fun printLottoBundle(bundle: LottoBundle) {
-        outputView.printPurchaseLottoCount(bundle.lottos.size)
-        bundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
+    private fun printLottoBundle(lottoBundle: LottoBundle) {
+        outputView.printPurchaseLottoCount(lottoBundle.lottos.size)
+        lottoBundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
     }
 
     private fun generateWinningNumbers(): WinningNumbers {

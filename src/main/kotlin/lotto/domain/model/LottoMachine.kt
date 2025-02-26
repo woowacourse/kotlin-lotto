@@ -6,8 +6,8 @@ import lotto.domain.service.RandomLottoNumbersGenerator
 class LottoMachine(
     private val generator: LottoNumbersGenerator = RandomLottoNumbersGenerator(),
 ) {
-    fun generateLottoBundle(purchaseLottoCount: Int): LottoBundle {
-        return LottoBundle(List(purchaseLottoCount) { Lotto(generator.generate()) })
+    fun generateLottoBundle(count: Int): LottoBundle {
+        return LottoBundle(List(count) { Lotto(generator.generate()) })
     }
 
     companion object {

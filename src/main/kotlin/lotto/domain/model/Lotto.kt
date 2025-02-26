@@ -7,12 +7,12 @@ class Lotto(val numbers: Set<LottoNumber>) {
         require(numbers.size == LOTTO_NUMBER_SIZE) { INVALID_LOTTO_NUMBER_SIZE_MESSAGE }
     }
 
-    fun calculateMatchLottoNumberCount(winningLotto: Lotto): Int {
-        return numbers.count { number -> winningLotto.numbers.contains(number) }
+    fun calculateMatchLottoNumberCount(lotto: Lotto): Int {
+        return numbers.count { number -> lotto.numbers.contains(number) }
     }
 
-    fun isMatchBonusNumber(bonusNumber: LottoNumber): Boolean {
-        return numbers.contains(bonusNumber)
+    fun isMatchBonusNumber(number: LottoNumber): Boolean {
+        return numbers.contains(number)
     }
 
     private companion object {
