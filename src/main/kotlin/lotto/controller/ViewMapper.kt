@@ -12,24 +12,19 @@ class ViewMapper {
 
     fun mapToLottoResultsDescriptions(
         boughtLottos: List<Lotto>,
-        winLotto: WinLotto,
+        win: WinLotto,
     ): List<String> {
-        val lottoResults: List<LottoResult> =
-            boughtLottos.map { boughtLotto -> LottoResult.from(winLotto, boughtLotto) }
-        val lottoPrizeEntries: List<LottoResult> =
-            LottoResult.entries
-                .filterNot { result: LottoResult -> result.prizeAmount == 0 }
-                .sortedBy { result: LottoResult -> result.prizeAmount }
+        val lottoResults: List<LottoResult> = boughtLottos.map { lotto: Lotto -> LottoResult.from(win, lotto) }
+        val lottoPrizeEntries: List<LottoResult> = LottoResult.entries.sortedPrizes()
         val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoResults, lottoPrizeEntries)
         return lottoResultsDescriptions
     }
 
     fun mapToProfitRate(
         boughtLottos: List<Lotto>,
-        winLotto: WinLotto,
+        win: WinLotto,
     ): Double {
-        val lottoResults: List<LottoResult> =
-            boughtLottos.map { boughtLotto -> LottoResult.from(winLotto, boughtLotto) }
+        val lottoResults: List<LottoResult> = boughtLottos.map { boughtLotto -> LottoResult.from(win, boughtLotto) }
         return profitCalculator.calculateProfitRate(lottoResults)
     }
 
@@ -57,10 +52,10 @@ class ViewMapper {
         if (entry.bonusMatched == LottoResult.BonusMatched.YES) BONUS_NUMBER_MATCHED else ""
 
     private fun countLottoResult(
-        userLottoResults: List<LottoResult>,
+        results: List<LottoResult>,
         entry: LottoResult,
     ): Int =
-        userLottoResults.count { lottoResult: LottoResult ->
+        results.count { lottoResult: LottoResult ->
             lottoResult == entry
         }
 

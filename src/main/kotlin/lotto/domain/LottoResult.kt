@@ -21,18 +21,18 @@ enum class LottoResult(
 
     companion object {
         fun from(
-            winLotto: WinLotto,
-            boughtLotto: Lotto,
+            win: WinLotto,
+            bought: Lotto,
         ): LottoResult =
             entries
                 .filterNot { result: LottoResult ->
-                    val bonusMatched: Boolean = winLotto.bonusNumberMatched(boughtLotto)
+                    val bonusMatched: Boolean = win.bonusNumberMatched(bought)
                     if (bonusMatched) {
                         result.bonusMatched == BonusMatched.NO
                     } else {
                         result.bonusMatched == BonusMatched.YES
                     }
-                }.calculateHighestPrize(winLotto, boughtLotto)
+                }.calculateHighestPrize(win, bought)
 
         private fun List<LottoResult>.calculateHighestPrize(
             winLotto: WinLotto,
