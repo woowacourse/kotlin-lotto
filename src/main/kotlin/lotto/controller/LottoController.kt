@@ -18,9 +18,9 @@ class LottoController {
     }
 
     private fun run() {
-        val lottoShop: LottoShop = makeLottoShop()
+        val lottoShop: LottoShop = createLottoShop()
         val boughtLottos: List<Lotto> = buyLottos(lottoShop)
-        val winLotto: WinLotto = makeWinLotto()
+        val winLotto: WinLotto = createWinLotto()
         showResult(boughtLottos, winLotto)
     }
 
@@ -32,13 +32,13 @@ class LottoController {
         return boughtLottos
     }
 
-    private fun makeLottoShop(): LottoShop {
+    private fun createLottoShop(): LottoShop {
         val pay: Int = view.readPay()
         val manualLottoCount: Int = view.readManualLottoCount()
         return LottoShop(pay, manualLottoCount)
     }
 
-    private fun makeWinLotto(): WinLotto {
+    private fun createWinLotto(): WinLotto {
         val lotto = Lotto(view.readLottoNumbers())
         val bonusNumber = LottoNumber(view.readBonusNumber())
         return WinLotto(lotto, bonusNumber)
