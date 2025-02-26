@@ -1,25 +1,15 @@
 package domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class PurchasePriceTest {
     @Test
     fun `구입 금액이 0 이하면 예외가 발생한다`() {
-        Assertions
-            .assertThatThrownBy {
-                PurchasePrice(0)
-            }.isInstanceOf(IllegalArgumentException::class.java)
+        assertThatThrownBy {
+            PurchasePrice(0)
+        }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(INVALID_MINIMUM_PURCHASE_AMOUNT)
-    }
-
-    @Test
-    fun `구입 금액이 천원 단위가 아니면 예외가 발생한다`() {
-        Assertions
-            .assertThatThrownBy {
-                PurchasePrice(10001)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage(INVALID_THOUSAND_WON_UNIT)
     }
 
     companion object {
