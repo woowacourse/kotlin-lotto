@@ -19,16 +19,26 @@ class LottoController(
     fun run() {
         val purchaseMoney = getPurchaseMoney()
         val wholeLottoCount = getWholeLottoCount(purchaseMoney)
-
         val lottos = getLottos(wholeLottoCount)
-
         outputView.printLottoCount(lottos.getManualLottoCount(), lottos.getAutomaticLottoCount())
         outputView.printLottos(lottos)
-
         val winningLotto = getWinningLotto()
         val lottoStatistics: LottoStatistics = winningLotto.calculateStatistics(lottos, purchaseMoney)
-
         processLottoStatistics(lottoStatistics)
+    }
+
+    private fun getPurchaseMoney(): LottoPurchaseAmount =
+        try {
+            outputView.printPurchaseAmountGuide()
+            inputView.readLottoPurchaseAmount()
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message)
+            getPurchaseMoney()
+        }
+
+    private fun getWholeLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount {
+        val lottoCount = purchaseMoney.getLottoCount()
+        return lottoCount
     }
 
     private fun getLottos(wholeLottoCount: LottoCount): Lottos {
@@ -38,6 +48,17 @@ class LottoController(
         val automaticLottoBundle = getAutomaticLottoBundle(automaticLottoCount)
         return Lottos(manualLottoBundle, automaticLottoBundle)
     }
+
+    private fun getPurchaseManualLottoCount(wholeLottoCount: LottoCount): LottoCount =
+        try {
+            outputView.printPurchaseManualLottoCountGuide()
+            val manualLottoCount = inputView.readManualLottoPurchaseCount()
+            wholeLottoCount.validateLottoCount(manualLottoCount)
+            manualLottoCount
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message)
+            getPurchaseManualLottoCount(wholeLottoCount)
+        }
 
     private fun getManualLottoBundle(manualLottoCount: LottoCount): List<Lotto> {
         if (manualLottoCount.isPositive()) outputView.printManualLottoNumbersGuide()
@@ -53,17 +74,6 @@ class LottoController(
             getManualLotto()
         }
 
-    private fun getPurchaseManualLottoCount(wholeLottoCount: LottoCount): LottoCount =
-        try {
-            outputView.printPurchaseManualLottoCountGuide()
-            val manualLottoCount = inputView.readManualLottoPurchaseCount()
-            wholeLottoCount.validateLottoCount(manualLottoCount)
-            manualLottoCount
-        } catch (error: IllegalArgumentException) {
-            outputView.printErrorMessage(error.message)
-            getPurchaseManualLottoCount(wholeLottoCount)
-        }
-
     private fun getAutomaticLottoBundle(automaticLottoCount: LottoCount): List<Lotto> =
         try {
             AutomaticLottoMachine.createLottoBundle(automaticLottoCount)
@@ -71,20 +81,6 @@ class LottoController(
             outputView.printErrorMessage(error.message)
             getAutomaticLottoBundle(automaticLottoCount)
         }
-
-    private fun getPurchaseMoney(): LottoPurchaseAmount =
-        try {
-            outputView.printPurchaseAmountGuide()
-            inputView.readLottoPurchaseAmount()
-        } catch (error: IllegalArgumentException) {
-            outputView.printErrorMessage(error.message)
-            getPurchaseMoney()
-        }
-
-    private fun getWholeLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount {
-        val lottoCount = purchaseMoney.getLottoCount()
-        return lottoCount
-    }
 
     private fun getWinningLotto(): WinningLotto {
         val winningLottoNumbers = getWinningLottoNumbers()
