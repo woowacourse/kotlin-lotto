@@ -9,8 +9,8 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호가 당첨 번호와 중복되면 예외를 발생시킨다`() {
-        val winningNumbers = lotto(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 6
+        val winningNumbers = lotto(1, 2, 3, 4, 5, 7)
+        val bonusNumber = 7
 
         assertThrows<IllegalArgumentException> {
             WinningLotto(winningNumbers.toSet(), LottoNumber(bonusNumber))
