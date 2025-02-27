@@ -6,6 +6,7 @@ import lotto.domain.model.Lotto
 import lotto.domain.model.LottoBundle
 import lotto.domain.model.LottoMachine
 import lotto.domain.model.LottoNumber
+import lotto.domain.model.Order
 import lotto.domain.model.PurchaseAmount
 import lotto.domain.model.WinningNumbers
 import lotto.view.InputView
@@ -16,21 +17,14 @@ class LottoController(
     private val outputView: OutputView = OutputView(),
 ) {
     fun run() {
-        val (manualLottoBundle, autoLottoBundle) = purchaseLotto()
-        val combinedLottoBundle = LottoBundle.combine(manualLottoBundle, autoLottoBundle)
-        printLottoBundle(manualLottoBundle, autoLottoBundle)
+        val purchaseAmount = readPurchaseAmount()
+        val order = generateLottoOrder(purchaseAmount)
+
+        val lottoBundle = purchaseLotto(order)
+        printLottoBundle(order, lottoBundle)
 
         val winningNumbers = generateWinningNumbers()
-        printWinningResults(combinedLottoBundle, winningNumbers)
-    }
-
-    private fun purchaseLotto(): Pair<LottoBundle?, LottoBundle?> {
-        val purchaseAmount = readPurchaseAmount()
-
-        val manualLottoBundle = purchaseManualLotto(purchaseAmount)
-        val autoLottoBundle = purchaseAutoLotto(purchaseAmount)
-
-        return Pair(manualLottoBundle, autoLottoBundle)
+        printWinningResults(lottoBundle, winningNumbers)
     }
 
     private fun readPurchaseAmount(): PurchaseAmount =
@@ -38,44 +32,36 @@ class LottoController(
             PurchaseAmount(inputView.readPurchaseAmount())
         }
 
-    private fun purchaseManualLotto(purchaseAmount: PurchaseAmount): LottoBundle? {
-        val manualLottoAmount = inputView.readManualLottoAmount()
-        reducePurchaseAmount(purchaseAmount, manualLottoAmount)
+    private fun generateLottoOrder(purchaseAmount: PurchaseAmount): Order =
+        retryWhenException {
+            val manualLottoAmount = inputView.readManualLottoAmount()
+            Order(purchaseAmount, manualLottoAmount)
+        }
 
-        val manualLottoNumbers = List(manualLottoAmount) { inputView.readManualLottoNumbers() }
+    private fun purchaseLotto(order: Order): LottoBundle {
+        val manualLottoBundle = purchaseManualLotto(order.manualLottoAmount)
+        val autoLottoBundle = purchaseAutoLotto(order.autoLottoAmount)
+
+        return LottoBundle.combine(manualLottoBundle, autoLottoBundle)
+    }
+
+    private fun purchaseManualLotto(purchaseLottoAmount: Int): LottoBundle? {
+        val manualLottoNumbers = List(purchaseLottoAmount) { inputView.readManualLottoNumbers() }
         val generator = ManualLottoNumbersGenerator(manualLottoNumbers)
-        return LottoMachine(generator).generateLottoBundle(manualLottoAmount)
+        return LottoMachine(generator).generateLottoBundle(purchaseLottoAmount)
     }
 
-    private fun purchaseAutoLotto(purchaseAmount: PurchaseAmount): LottoBundle? {
-        val autoLottoAmount = purchaseAmount.calculatePurchaseLottoCount(LottoMachine.LOTTO_PRICE)
-        reducePurchaseAmount(purchaseAmount, autoLottoAmount)
-
+    private fun purchaseAutoLotto(purchaseLottoAmount: Int): LottoBundle? {
         val generator = RandomLottoNumbersGenerator()
-        return LottoMachine(generator).generateLottoBundle(autoLottoAmount)
-    }
-
-    private fun reducePurchaseAmount(
-        purchaseAmount: PurchaseAmount,
-        reduceAmount: Int,
-    ) = retryWhenException {
-        purchaseAmount.reducePurchaseAmount(reduceAmount * LottoMachine.LOTTO_PRICE)
+        return LottoMachine(generator).generateLottoBundle(purchaseLottoAmount)
     }
 
     private fun printLottoBundle(
-        manualLottoBundle: LottoBundle?,
-        autoLottoBundle: LottoBundle?,
+        order: Order,
+        lottoBundle: LottoBundle,
     ) {
-        outputView.printPurchaseLottoCount(
-            manualLottoBundle?.lottos?.size ?: 0,
-            autoLottoBundle?.lottos?.size ?: 0,
-        )
-        manualLottoBundle?.printLottoNumbers()
-        autoLottoBundle?.printLottoNumbers()
-    }
-
-    private fun LottoBundle.printLottoNumbers() {
-        this.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
+        outputView.printPurchaseLottoCount(order.manualLottoAmount, order.autoLottoAmount)
+        lottoBundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
     }
 
     private fun generateWinningNumbers(): WinningNumbers {
