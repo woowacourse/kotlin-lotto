@@ -10,6 +10,6 @@ class LottoMachineTest {
         val manualLottoNumbers = listOf(listOf(1,2,3,4,5,6))
         val autoLottoCount = LottoTicketCount(1)
 
-        assertThrows<IllegalArgumentException> { LottoMachine(manualLottoCount, autoLottoCount, manualLottoNumbers, ) }
+        assertThrows<IllegalArgumentException> { LottoMachine() }
     }
 }

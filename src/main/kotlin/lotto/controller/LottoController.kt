@@ -6,11 +6,18 @@ import lotto.view.UserInterface
 class LottoController(
     private val userInterface: UserInterface = UserInterface(),
 ) {
-    fun run() {
-        val possibleToLottoTicketCount = meetLottoStoreCashier()
-        val lottoTickets = getLottoTickets(possibleToLottoTicketCount)
-        val winningLotto = getWinningLotto()
-        getResult(lottoTickets, winningLotto)
+    fun run(): Result<Unit> {
+        return kotlin.runCatching {
+            val possibleToLottoTicketCount = meetLottoStoreCashier()
+            val lottoTickets = getLottoTickets(possibleToLottoTicketCount)
+            val winningLotto = getWinningLotto()
+            getResult(lottoTickets, winningLotto)
+        }.map {
+            Result.success(Unit)
+        }.getOrElse {
+            e ->  Result.failure(Exception("로또 실행 중 오류 발생: ${e.message}"))
+        }
+
     }
 
     private fun meetLottoStoreCashier() : Int {
