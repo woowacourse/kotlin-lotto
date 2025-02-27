@@ -3,9 +3,10 @@ package lotto.view
 import lotto.validator.InputValidator
 
 object InputView {
-    fun inputPurchasePrice(): String {
+    fun inputPurchasePrice(): Int {
         println("구입금액을 입력해 주세요.")
-        return readln().also { InputValidator.ValidateNumber(it) }
+        val input = readln().also { InputValidator.ValidateNumber(it) }
+        return input.toInt()
     }
 
     fun inputManualLottoAmount(): Int {
@@ -23,17 +24,19 @@ object InputView {
         return numbers
     }
 
-    fun inputWinningNumber(): List<String> {
+    fun inputWinningNumber(): List<Int> {
         println("\n지난 주 당첨 번호를 입력해 주세요.")
         val numbers =
             readln().split(",").map {
                 it.trim().also { InputValidator.ValidateNumber(it) }
+                it.toInt()
             }
         return numbers
     }
 
-    fun inputBonusNumber(): String {
+    fun inputBonusNumber(): Int {
         println("보너스 볼을 입력해 주세요.")
-        return readln().also { InputValidator.ValidateNumber(it) }
+        val input = readln().also { InputValidator.ValidateNumber(it) }
+        return input.toInt()
     }
 }
