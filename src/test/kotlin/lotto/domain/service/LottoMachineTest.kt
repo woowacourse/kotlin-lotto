@@ -22,7 +22,7 @@ class LottoMachineTest {
     @ParameterizedTest
     @ValueSource(ints = [1, 3, 4])
     fun `로또 구입 개수만큼 로또를 발행한다`(count: Int) {
-        val lottoTickets = LottoMachine().purchase(count)
+        val lottoTickets = LottoMachine().generateAutoTicket(count)
         assertEquals(lottoTickets.size, count)
     }
 }
