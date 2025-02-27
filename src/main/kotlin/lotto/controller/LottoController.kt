@@ -52,8 +52,7 @@ class LottoController(
 
     private fun getManualLottoNumbers(purchaseCount: Int): List<Lotto> {
         return retryInput {
-            val input = inputView.getManualLottoNumbers(purchaseCount)
-            val lottos = input.map { it.split(DELIMITERS).map { it.trim().toInt() } }
+            val lottos = inputView.getManualLottoNumbers(purchaseCount)
             lottoMachine.buyLottos(ManualLottoGenerator(lottos))
         }
     }
@@ -91,15 +90,15 @@ class LottoController(
 
     private fun getWinningNumber(): Lotto {
         return retryInput {
-            val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { it.trim() }
-            Lotto(winningNumber.map { LottoNumber(it.toInt()) })
+            val winningNumber = inputView.getWinningNumber()
+            Lotto(winningNumber.map(::LottoNumber))
         }
     }
 
     private fun getWinningLotto(winningNumber: Lotto): WinningLotto {
         return retryInput {
             val bonusNumber = inputView.getBonusNumber()
-            WinningLotto(winningNumber, LottoNumber(bonusNumber.toInt()))
+            WinningLotto(winningNumber, LottoNumber(bonusNumber))
         }
     }
 
@@ -109,9 +108,5 @@ class LottoController(
                 println(e.message)
                 retryInput(inputFunction)
             }
-    }
-
-    companion object {
-        private const val DELIMITERS = ","
     }
 }
