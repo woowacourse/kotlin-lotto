@@ -3,6 +3,7 @@ package lottoTest.domain
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.Rank
+import lotto.domain.ScoreRankMap
 import lotto.domain.WinningLottoTicket
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -21,7 +22,11 @@ class WinningLottoTicketTest {
         val winningLotto = Lotto.of(1, 2, 11, 10, 8, 9)
         val bonus = LottoNumber.of(7)
         val result = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
-        assertThat(result.map[Rank.MISS]).isEqualTo(3)
+        assertThat(result).isEqualTo(
+            ScoreRankMap.of(
+                mapOf(Rank.MISS to 3),
+            ),
+        )
     }
 
     @Test
@@ -36,8 +41,14 @@ class WinningLottoTicketTest {
         val winningLotto = Lotto.of(1, 2, 11, 10, 8, 9)
         val bonus = LottoNumber.of(7)
         val result = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
-        assertThat(result.map[Rank.MISS]).isEqualTo(2)
-        assertThat(result.map[Rank.FOURTH]).isEqualTo(1)
+        assertThat(result).isEqualTo(
+            ScoreRankMap.of(
+                mapOf(
+                    Rank.MISS to 2,
+                    Rank.FOURTH to 1,
+                ),
+            ),
+        )
     }
 
     @Test
@@ -52,9 +63,15 @@ class WinningLottoTicketTest {
         val winningLotto = Lotto.of(1, 2, 11, 10, 8, 9)
         val bonus = LottoNumber.of(7)
         val result = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
-        assertThat(result.map[Rank.MISS]).isEqualTo(1)
-        assertThat(result.map[Rank.FOURTH]).isEqualTo(1)
-        assertThat(result.map[Rank.FIRST]).isEqualTo(1)
+        assertThat(result).isEqualTo(
+            ScoreRankMap.of(
+                mapOf(
+                    Rank.MISS to 1,
+                    Rank.FOURTH to 1,
+                    Rank.FIRST to 1,
+                ),
+            ),
+        )
     }
 
     @Test
