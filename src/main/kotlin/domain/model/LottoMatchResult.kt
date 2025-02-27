@@ -6,7 +6,7 @@ class LottoMatchResult(
     private val winningCountByRank: Map<Rank, Int>,
 ) {
     fun getWinningCount(rank: Rank): Int {
-        return winningCountByRank[rank] ?: throw IllegalArgumentException(NOT_EXIST_RANK.format(rank))
+        return winningCountByRank[rank] ?: 0
     }
 
     fun getProfitRate(money: PurchasePrice): Double {
@@ -17,9 +17,5 @@ class LottoMatchResult(
                 }.sum()
                 .toDouble()
         return totalPrice / money.value
-    }
-
-    companion object {
-        const val NOT_EXIST_RANK = "당첨 순위가 존재하지 않습니다: %s"
     }
 }
