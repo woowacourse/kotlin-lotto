@@ -1,9 +1,9 @@
-package lotto.domain
+package lottotest.domain.model.lottomachine
 
 import lotto.domain.model.Lotto
+import lotto.domain.model.LottoPayInfo
 import lotto.domain.model.lottomachine.ManualLottoMachine
-import lotto.domain.value.LottoNumber
-import lotto.domain.value.LottoPayInfo
+import lotto.domain.valueobject.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource

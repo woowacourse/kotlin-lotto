@@ -1,7 +1,7 @@
 package lotto.domain.model
 
 import lotto.domain.service.RandomLottoNumbersGenerator
-import lotto.domain.value.LottoNumber
+import lotto.domain.valueobject.LottoNumber
 
 class Lotto private constructor(
     private val _lottoNumbers: Collection<LottoNumber>,

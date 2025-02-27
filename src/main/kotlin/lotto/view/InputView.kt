@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.domain.value.LottoPayInfo
+import lotto.domain.model.LottoPayInfo
 import kotlin.runCatching
 
 class InputView {

@@ -1,4 +1,4 @@
-package lotto.service
+package lottotest.domain.service
 
 import lotto.domain.service.RandomLottoNumbersGenerator
 import org.assertj.core.api.Assertions.assertThat

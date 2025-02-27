@@ -1,15 +1,15 @@
-package lotto.domain.value
+package lotto.domain.valueobject
 
-import lotto.enums.GainLoss
-import lotto.enums.GainLoss.GAIN
-import lotto.enums.GainLoss.LOSS
-import lotto.enums.GainLoss.PRINCIPAL
+import lotto.domain.model.winning.GainLoss
+import lotto.domain.model.winning.GainLoss.GAIN
+import lotto.domain.model.winning.GainLoss.LOSS
+import lotto.domain.model.winning.GainLoss.PRINCIPAL
 import kotlin.math.roundToInt
 
-class EarningInfo(
-    rate: Double,
+data class EarningInfo(
+    private val _rate: Double,
 ) {
-    val rate: Double = rate
+    val rate: Double = _rate
         get() = (field * 100.0).roundToInt() / 100.0
 
     val gainLoss: GainLoss
@@ -20,7 +20,7 @@ class EarningInfo(
         }
 
     init {
-        require(rate >= MINIMUM_EARNING_RATE) { INVALID_EARNING_RATE.format(rate) }
+        require(_rate >= MINIMUM_EARNING_RATE) { INVALID_EARNING_RATE.format(_rate) }
     }
 
     companion object {

@@ -1,7 +1,7 @@
-package lotto.domain.model
+package lotto.domain.model.winning
 
-import lotto.domain.value.EarningInfo
-import lotto.domain.value.LottoPayInfo
+import lotto.domain.model.LottoPayInfo
+import lotto.domain.valueobject.EarningInfo
 import lotto.enums.Rank
 
 class LottoWinningStats(

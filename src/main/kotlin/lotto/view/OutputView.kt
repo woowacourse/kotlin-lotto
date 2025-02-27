@@ -1,13 +1,13 @@
 package lotto.view
 
-import lotto.domain.model.LottoWinningStats
+import lotto.domain.model.LottoPayInfo
 import lotto.domain.model.Lottos
-import lotto.domain.value.EarningInfo
-import lotto.domain.value.LottoPayInfo
-import lotto.enums.GainLoss
-import lotto.enums.GainLoss.GAIN
-import lotto.enums.GainLoss.LOSS
-import lotto.enums.GainLoss.PRINCIPAL
+import lotto.domain.model.winning.GainLoss
+import lotto.domain.model.winning.GainLoss.GAIN
+import lotto.domain.model.winning.GainLoss.LOSS
+import lotto.domain.model.winning.GainLoss.PRINCIPAL
+import lotto.domain.model.winning.LottoWinningStats
+import lotto.domain.valueobject.EarningInfo
 import lotto.enums.Rank
 
 class OutputView {

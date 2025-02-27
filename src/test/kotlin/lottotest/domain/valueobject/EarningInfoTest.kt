@@ -1,7 +1,7 @@
-package lotto.value
+package lottotest.domain.valueobject
 
-import lotto.domain.value.EarningInfo
-import lotto.enums.GainLoss
+import lotto.domain.model.winning.GainLoss
+import lotto.domain.valueobject.EarningInfo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

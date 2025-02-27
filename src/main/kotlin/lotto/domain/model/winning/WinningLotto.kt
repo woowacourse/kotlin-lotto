@@ -1,6 +1,7 @@
-package lotto.domain.model
+package lotto.domain.model.winning
 
-import lotto.domain.value.LottoNumber
+import lotto.domain.model.Lotto
+import lotto.domain.valueobject.LottoNumber
 import lotto.enums.Rank
 
 class WinningLotto(

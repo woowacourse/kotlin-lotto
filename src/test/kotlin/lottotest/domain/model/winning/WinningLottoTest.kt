@@ -1,8 +1,8 @@
-package lotto.domain
+package lottotest.domain.model.winning
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.WinningLotto
-import lotto.domain.value.LottoNumber
+import lotto.domain.model.winning.WinningLotto
+import lotto.domain.valueobject.LottoNumber
 import lotto.enums.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

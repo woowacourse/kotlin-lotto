@@ -1,10 +1,10 @@
-package lotto.domain
+package lottotest.domain.model.winning
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.Lottos
-import lotto.domain.model.WinningLotto
-import lotto.domain.value.EarningInfo
-import lotto.domain.value.LottoNumber
+import lotto.domain.model.winning.WinningLotto
+import lotto.domain.valueobject.EarningInfo
+import lotto.domain.valueobject.LottoNumber
 import lotto.enums.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -16,7 +16,20 @@ class LottoWinningStatsTest {
 
     @BeforeEach
     fun setUp() {
-        winningLotto = WinningLotto(Lotto.createSelfByManualLottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }), LottoNumber(45))
+        winningLotto =
+            WinningLotto(
+                Lotto.createSelfByManualLottoNumbers(
+                    listOf(
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                    ).map { LottoNumber(it) },
+                ),
+                LottoNumber(45),
+            )
         lottos = Lottos(listOf(Lotto.createSelfRandomly()))
     }
 

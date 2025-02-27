@@ -1,7 +1,8 @@
 package lotto.domain.model
 
 import lotto.constants.LottoConstants
-import lotto.domain.value.LottoPayInfo
+import lotto.domain.model.winning.LottoWinningStats
+import lotto.domain.model.winning.WinningLotto
 import lotto.enums.Rank
 
 data class Lottos(

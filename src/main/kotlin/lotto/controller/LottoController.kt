@@ -1,12 +1,12 @@
 package lotto.controller
 
 import lotto.domain.model.Lotto
+import lotto.domain.model.LottoPayInfo
 import lotto.domain.model.Lottos
-import lotto.domain.model.WinningLotto
 import lotto.domain.model.lottomachine.AutoLottoMachine
 import lotto.domain.model.lottomachine.ManualLottoMachine
-import lotto.domain.value.LottoNumber
-import lotto.domain.value.LottoPayInfo
+import lotto.domain.model.winning.WinningLotto
+import lotto.domain.valueobject.LottoNumber
 import lotto.view.InputView
 import lotto.view.OutputView
 

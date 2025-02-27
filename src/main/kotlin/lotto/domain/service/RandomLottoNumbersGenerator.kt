@@ -1,7 +1,7 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
-import lotto.domain.value.LottoNumber
+import lotto.domain.valueobject.LottoNumber
 
 class RandomLottoNumbersGenerator {
     fun generateLottoNumbers(): List<LottoNumber> = getShuffledNumbersAsSizeOfOneLotto().map { LottoNumber(it) }

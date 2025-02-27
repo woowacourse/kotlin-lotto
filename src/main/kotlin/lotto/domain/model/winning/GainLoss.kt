@@ -1,4 +1,4 @@
-package lotto.enums
+package lotto.domain.model.winning
 
 enum class GainLoss {
     GAIN,
