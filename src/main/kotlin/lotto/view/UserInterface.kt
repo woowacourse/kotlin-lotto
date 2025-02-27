@@ -58,6 +58,7 @@ class UserInterface(
         for (winningNumber in winningNumbers) {
             inputValidator.validateInteger(winningNumber)
         }
+
         return winningNumbers.map { LottoNumber(it.toInt()) }
     }
 

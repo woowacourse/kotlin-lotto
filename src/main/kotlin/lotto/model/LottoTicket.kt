@@ -3,11 +3,12 @@ package lotto.model
 import lotto.contants.LottoRuleConstants
 
 class LottoTicket(
+
     private val lottoIssueType: LottoIssueType,
     private val numbers: List<LottoNumber>,
 ) {
     private val lottoNumbers: Set<LottoNumber> = numbers.toSet()
-
+    
     init {
         require(numbers.size == LottoRuleConstants.LOTTO_PICK_COUNT.value)
         { ERROR_NUMBERS_COUNT }
@@ -24,7 +25,6 @@ class LottoTicket(
     }
 
     fun matchNumbersSize(lottoTicket: LottoTicket) = numbers.intersect(lottoTicket.getNumbers()).size
-
 
     companion object {
         private const val ERROR_NUMBERS_COUNT = "로또 번호의 개수는 6개입니다."
