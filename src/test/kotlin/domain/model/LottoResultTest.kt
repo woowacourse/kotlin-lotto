@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test
 class LottoResultTest {
     @Test
     fun `Lotto 결과에 따른 수익률 구하기`() {
-        val profitRate =
+        val purchasePriceValue: Int = 1_000_000
+
+        val lottoResult =
             LottoResult(
                 mutableMapOf(
                     Rank.FIRST to 1,
@@ -14,7 +16,9 @@ class LottoResultTest {
                     Rank.THIRD to 3,
                     Rank.FOURTH to 4,
                 ),
-            ).getProfitRate(PurchasePrice(1000000))
+            )
+
+        val profitRate = lottoResult.getProfitRate(purchasePriceValue)
 
         assertThat(profitRate).isEqualTo("2064.70")
     }
