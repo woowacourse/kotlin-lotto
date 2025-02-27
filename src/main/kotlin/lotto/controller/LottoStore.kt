@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
-import lotto.domain.model.Rank
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoMachine
 import lotto.domain.service.LottoResult
@@ -13,25 +12,20 @@ class LottoStore(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {
-    private val lottoMachine = LottoMachine()
-
     fun run() {
         val (manualCount, autoCount) = getLottoCount()
-        outputView.printManualNumbersGuide()
-        val manualLottoTickets = generateManualLottoTicket(manualCount)
-        val autoLottoTickets = generateAutoLottoTicket(autoCount)
-        outputView.printPurchaseCount(manualCount, autoCount)
-        outputView.printLotto(manualLottoTickets)
-        outputView.printLotto(autoLottoTickets)
         val lottoTickets = generateLottoTickets(manualCount, autoCount)
+        outputView.printLotto(lottoTickets)
+
         val winningLotto = getWinningLotto()
-        val result = calculateResult(manualLottoTickets, autoLottoTickets, winningLotto)
-        val formattedWinningStatus = formattingWinningStatus(result)
-        outputView.printResult(formattedWinningStatus)
+
+        val result = calculateResult(lottoTickets, winningLotto)
+        outputView.printResult(result.ranks)
         outputView.printProfit(result.calculateProfit())
     }
 
     private fun getLottoCount(): Pair<Int, Int> {
+        val lottoMachine = LottoMachine()
         val amount = inputView.inputPurchaseAmount()
         val totalCount = lottoMachine.calculateTotalCount(amount)
         val manualCount = inputView.inputManualCount()
@@ -71,19 +65,7 @@ class LottoStore(
     }
 
     private fun calculateResult(
-        manualLottoTickets: List<LottoTicket>,
-        autoLottoTickets: List<LottoTicket>,
+        lottoTickets: List<LottoTicket>,
         winningLotto: WinningLotto,
-    ): LottoResult {
-        val result = winningLotto.getResult(manualLottoTickets, autoLottoTickets)
-        return result
-    }
-
-    private fun formattingWinningStatus(result: LottoResult): Map<Rank, Int> {
-        val resultMap = mutableMapOf<Rank, Int>()
-        Rank.entries.filter { it != Rank.MISS }.map { rank ->
-            resultMap[rank] = result.getWinningStatus().getOrDefault(rank, 0)
-        }
-        return resultMap
-    }
+    ): LottoResult = winningLotto.getResult(lottoTickets)
 }
