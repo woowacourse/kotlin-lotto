@@ -1,13 +1,21 @@
 package lotto.view
 
 import lotto.domain.Lotto
+import lotto.domain.LottoAmount
 import lotto.domain.LottoResult
 import lotto.domain.Profit
 import lotto.domain.Rank
 
 object OutputView {
-    fun printLottoAmount(amount: Int) {
-        println("${amount}개를 구매했습니다.")
+    fun printManualLottoHeader() {
+        println(MANUAL_LOTTO_NUMBER_MESSAGE)
+    }
+
+    fun printLottoAmount(
+        amount: LottoAmount,
+        manualAmount: LottoAmount,
+    ) {
+        println("수동으로 ${manualAmount.toInt()}개, 자동으로 ${amount.toInt() - manualAmount.toInt()}개를 구매했습니다.")
     }
 
     fun printLottos(lottos: List<Lotto>) {
@@ -55,4 +63,6 @@ object OutputView {
     fun getProfitMessage(profit: Profit): String {
         return ProfitMessage.getMessage(profit)
     }
+
+    private const val MANUAL_LOTTO_NUMBER_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
 }

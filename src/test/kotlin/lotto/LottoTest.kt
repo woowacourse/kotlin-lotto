@@ -33,7 +33,7 @@ class LottoTest {
     fun `자동 생성된 로또와 보너스 번호를 비교할 수 있다`() {
         val lotto = lottoOf(1, 2, 3, 4, 5, 6)
 
-        val bonusNumber: LottoNumber = LottoNumber(3)
+        val bonusNumber: LottoNumber = LottoNumber.of(3)
         val result = lotto.compareWithNumber(bonusNumber)
 
         assertThat(result).isTrue()
