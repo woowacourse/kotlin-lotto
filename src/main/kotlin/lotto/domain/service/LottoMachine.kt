@@ -9,6 +9,7 @@ class LottoMachine {
         totalCount: Int,
         manualCount: Int,
     ): Int {
+        require(manualCount >= 0) { ERROR_INVALID_COUNT_RANGE }
         require(manualCount <= totalCount) { ERROR_INVALID_MANUAL_COUNT }
         return totalCount - manualCount
     }
@@ -27,5 +28,6 @@ class LottoMachine {
     companion object {
         private val LOTTO_RANGE = (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
         private const val ERROR_INVALID_MANUAL_COUNT = "구입 금액을 넘겨서 구매할 수 없습니다."
+        private const val ERROR_INVALID_COUNT_RANGE = "구매할 로또 수는 0보다 커야 합니다."
     }
 }
