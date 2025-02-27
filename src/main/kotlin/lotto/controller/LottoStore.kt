@@ -30,17 +30,18 @@ class LottoStore(
         outputView.printProfit(result.calculateProfit())
     }
 
-    private fun getLottoCount(): List<Int> {
+    private fun getLottoCount(): Pair<Int, Int> {
         val amount = inputView.inputPurchaseAmount()
         val totalCount = lottoMachine.calculateTotalCount(amount)
         val manualCount = inputView.inputManualCount()
         val autoCount = lottoMachine.calculateAutoCount(totalCount, manualCount)
-        return listOf(manualCount, autoCount)
+        return Pair(manualCount, autoCount)
     }
 
-    private fun generateManualLottoTicket(count: Int): List<LottoTicket> {
-        return List(count) { LottoTicket(inputView.inputManualNumbers().map { LottoNumber(it) }) }
-    }
+    private fun generateManualLottoTicket(count: Int): List<LottoTicket> =
+        List(count) {
+            LottoTicket(inputView.inputManualNumbers().map { LottoNumber(it) })
+        }
 
     private fun generateAutoLottoTicket(count: Int): List<LottoTicket> = LottoMachine().generateAutoTicket(count)
 
