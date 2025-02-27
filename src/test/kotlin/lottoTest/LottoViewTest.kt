@@ -34,7 +34,7 @@ class LottoViewTest {
     @DisplayName("로또의 금액, 수동 로또 개수, 수동 로또 정보를 입력받는다")
     fun t1() {
         setInput("5000\n1\n1,2,3,4,5,6")
-        assertThat(lottoView.getLottoAmount()).isEqualTo(
+        assertThat(lottoView.getUserInput()).isEqualTo(
             UserInput(5000, 1, listOf(listOf(1, 2, 3, 4, 5, 6))),
         )
     }
@@ -49,10 +49,10 @@ class LottoViewTest {
             1,2,3,4,5,6\n1,2,3,4,5,6
             """.trimIndent(),
         )
-        assertThat(lottoView.getLottoAmount()).isEqualTo(
+        assertThat(lottoView.getUserInput()).isEqualTo(
             UserInput(
                 5000,
-                1,
+                2,
                 listOf(
                     listOf(1, 2, 3, 4, 5, 6),
                     listOf(1, 2, 3, 4, 5, 6),
@@ -65,7 +65,7 @@ class LottoViewTest {
     @DisplayName("숫자로 변환할 수 없는 값을 입력받는다면 IllegalArgumentException를 반환하고, \"올바르지 않은 형식입니다\" 라는 메시지를 출력한다\n")
     fun t1_2() {
         setInput("8g1")
-        assertThatThrownBy { lottoView.getLottoAmount() }
+        assertThatThrownBy { lottoView.getUserInput() }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("올바르지 않은 형식입니다")
     }

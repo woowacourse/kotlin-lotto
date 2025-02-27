@@ -15,8 +15,8 @@ class LottoController(
     fun run() {
         val userInput = lottoView.getUserInput()
         val autoLotto = lottoGenerator.genManyLotto(userInput.automaticLottoCount)
-        lottoView.printLotto(autoLotto)
         val manyLotto = autoLotto + userInput.manualLotto
+        lottoView.printLotto(userInput, autoLotto)
 
         val userInputWinningLotto = lottoView.getWinningLotto()
         val winningLotto = Lotto.of(userInputWinningLotto)

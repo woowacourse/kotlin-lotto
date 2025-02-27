@@ -40,16 +40,21 @@ class LottoView {
         println(Message.ASK_MANUAL_LOTTO.msg)
         val userInput = readln()
         runCatching {
-            userInput.split("\n").map {
+            userInput.split("\\n").map {
                 it.split(",").map { it.toInt() }
             }
         }.getOrNull() ?: throw IllegalArgumentException(Message.ERR_INVALID_FORMAT.msg)
-        return userInput.split("\n").map {
+        return userInput.split("\\n").map {
             it.split(",").map { it.toInt() }
         }
     }
 
-    fun printLotto(manyLotto: List<Lotto>) {
+    fun printLotto(
+        userInput: UserInput,
+        autoLotto: List<Lotto>,
+    ) {
+        println("수동으로 ${userInput.manualLottoCount}장, 자동으로 ${userInput.automaticLottoCount}장을 구매했습니다")
+        val manyLotto = autoLotto + userInput.manualLotto
         for (lotto in manyLotto) println(lotto.value.toString())
     }
 
