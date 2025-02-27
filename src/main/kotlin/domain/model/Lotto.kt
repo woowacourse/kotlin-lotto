@@ -14,6 +14,6 @@ data class Lotto(
 
         const val ERROR = "[ERROR]"
         const val LOTTO_SIZE = 6
-        const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 6개 입니다."
+        const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 중복되지 않는 6개 입니다."
     }
 }
