@@ -1,10 +1,11 @@
 package lotto.controller
 
+import lotto.model.AutoLottoMachine
 import lotto.model.Lotto
-import lotto.model.LottoMachine
 import lotto.model.LottoMatcher
 import lotto.model.LottoNumber
-import lotto.model.LottoPurchaseAmount
+import lotto.model.LottoPurchaseInfo
+import lotto.model.ManualLottoMachine
 import lotto.model.PrizeCalculator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -14,27 +15,39 @@ class LottoController(
     private val outputView: OutputView = OutputView(),
 ) {
     fun run() {
-        val lottoPurchaseAmount = getLottoPurchaseAmount()
-        val publishedLotto = publishLotto(lottoPurchaseAmount)
+        val lottoPurchaseInfo = getLottoPurchaseInfo()
+        val publishedLotto = publishLotto(lottoPurchaseInfo)
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
         val lottoMatcher = LottoMatcher(winningLotto, bonusNumber)
-        showEarningRate(lottoPurchaseAmount, lottoMatcher, publishedLotto)
+        showEarningRate(lottoPurchaseInfo, lottoMatcher, publishedLotto)
     }
 
-    private fun getLottoPurchaseAmount(): LottoPurchaseAmount {
+    private fun getLottoPurchaseInfo(): LottoPurchaseInfo {
         outputView.printAmountMessage()
         val amountInput = inputView.getSingleNumber()
-        return LottoPurchaseAmount(amountInput)
+        outputView.printManualLottoCountMessage()
+        val countInput = inputView.getSingleNumber()
+        return LottoPurchaseInfo(amountInput, countInput)
     }
 
-    private fun publishLotto(lottoPurchaseAmount: LottoPurchaseAmount): List<Lotto> {
-        val publishedLotto = LottoMachine().publishLottoTickets(lottoPurchaseAmount.getLottoQuantity())
-        val formattedLottoNumbers =
-            publishedLotto.map { lotto ->
-                "[${lotto.numbers.joinToString(",") { it.value.toString() }}]"
+    private fun getLottoNumbersByManual(lottoPurchaseInfo: LottoPurchaseInfo): List<Lotto> {
+        if (lottoPurchaseInfo.manualLottoCount <= 0) {
+            return emptyList()
+        }
+        outputView.printManualLottoNumberMessage()
+        val manualNumbers =
+            List(lottoPurchaseInfo.manualLottoCount) {
+                inputView.getMultipleNumber()
             }
-        outputView.printPublishedLotto(lottoPurchaseAmount.getLottoQuantity(), formattedLottoNumbers)
+        return ManualLottoMachine(manualNumbers).publishLottoTickets(lottoPurchaseInfo)
+    }
+
+    private fun publishLotto(lottoPurchaseInfo: LottoPurchaseInfo): List<Lotto> {
+        val manualLottoList = getLottoNumbersByManual(lottoPurchaseInfo)
+        val autoLottoList = AutoLottoMachine().publishLottoTickets(lottoPurchaseInfo)
+        val publishedLotto = manualLottoList + autoLottoList
+        outputView.printPublishedLotto(lottoPurchaseInfo, publishedLotto.map { it.toString() })
         return publishedLotto
     }
 
@@ -51,12 +64,12 @@ class LottoController(
     }
 
     private fun showEarningRate(
-        lottoPurchaseAmount: LottoPurchaseAmount,
+        lottoPurchaseInfo: LottoPurchaseInfo,
         lottoMatcher: LottoMatcher,
         publishedLotto: List<Lotto>,
     ) {
         val result = lottoMatcher.matchLotto(publishedLotto)
-        val earningRate = PrizeCalculator().calculateEarningRate(lottoPurchaseAmount.amount, result)
+        val earningRate = PrizeCalculator().calculateEarningRate(lottoPurchaseInfo.amount, result)
         outputView.printPrize(result, earningRate)
     }
 }
