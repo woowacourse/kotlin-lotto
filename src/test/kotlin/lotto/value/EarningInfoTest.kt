@@ -1,6 +1,7 @@
 package lotto.value
 
 import lotto.domain.value.EarningInfo
+import lotto.enums.GainLoss
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -23,6 +24,26 @@ class EarningInfoTest {
         assertThrows<IllegalArgumentException> {
             EarningInfo(rate)
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "0.99, LOSS",
+        "1.00, PRINCIPAL",
+        "1.01, GAIN",
+    )
+    fun `수익률에 해당하는 GainLoss 상태값을 가져올 수 있다`(
+        rate: Double,
+        expected: GainLoss,
+    ) {
+        // Given
+        val earningInfo = EarningInfo(rate)
+
+        // When
+        val expectedGainLoss = earningInfo.gainLoss
+
+        // Then
+        assertThat(expectedGainLoss).isEqualTo(expected)
     }
 
     @ParameterizedTest
