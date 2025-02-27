@@ -40,13 +40,13 @@ class LottoController(
 
     private fun getPurchaseAmount(): LottoPurchaseAmount {
         return retryInput {
-            LottoPurchaseAmount(inputView.getPurchaseAmount().toInt(), LOTTO_PRICE)
+            LottoPurchaseAmount(inputView.getPurchaseAmount(), LOTTO_PRICE)
         }
     }
 
     private fun getManualLottoCount(purchasableCount: Int): ManualLottoCount {
         return retryInput {
-            ManualLottoCount(inputView.getManualLottoCount().toInt(), purchasableCount)
+            ManualLottoCount(inputView.getManualLottoCount(), purchasableCount)
         }
     }
 
