@@ -3,10 +3,9 @@ package lottoTest
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.WinningLottoTicket
-import lotto.service.LottoRankFinder
+import lotto.global.UserInputResult
 import lotto.view.LottoView
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayInputStream
@@ -30,119 +29,117 @@ class LottoViewTest {
     private val lottoView = LottoView()
 
     @Test
-    @DisplayName("로또의 금액을 입력받는다, 로또의 금액은 1000원이며, 최대한 살 수 있는 만큼 구매한다")
+    @DisplayName("로또의 금액을 입력받는다")
     fun t1() {
-        setInput("5000")
-        assertThat(lottoView.getLottoAmount()).isEqualTo(5)
+        setInput("5000\n")
+        val buyAmount = lottoView.getBuyAmount()
+        assertThat(buyAmount)
+            .isInstanceOf(UserInputResult.Success::class.java)
+        assertThat(buyAmount.get()).isEqualTo(5000)
     }
 
     @Test
-    @DisplayName("예를 들어 14500원을 입력받는다면 14000으로 로또 14개를 살 수 있으니 14개를 구매한다")
+    @DisplayName("숫자로 변환할 수 없는 값을 입력받는다면 UserInputResult.Failure 에\"올바르지 않은 형식입니다\"라는 메시지를 담는다")
     fun t1_1() {
-        setInput("14500")
-        assertThat(lottoView.getLottoAmount()).isEqualTo(14)
+        setInput("8g1")
+        val userInput = lottoView.getBuyAmount()
+        assertThat(userInput).isInstanceOf(UserInputResult.Failure::class.java)
+        val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
+        assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
     }
 
     @Test
-    @DisplayName("숫자로 변환할 수 없는 값을 입력받는다면 IllegalArgumentException를 반환하고, \"올바르지 않은 형식입니다\" 라는 메시지를 출력한다\n")
+    @DisplayName("검증에 실패한 값을 입력받는다면 UserInputResult.Failure 에\"올바르지 않은 형식입니다\"라는 메시지를 담는다")
     fun t1_2() {
+        setInput("500")
+        val userInput = lottoView.getBuyAmount()
+        assertThat(userInput).isInstanceOf(UserInputResult.Failure::class.java)
+        val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
+        assertThat(userInputFail.errorMessage.msg).contains("최소 구입 금액은 1000원 이상이여야 합니다")
+    }
+
+    @Test
+    @DisplayName("수동 로또 개수를 입력받는다")
+    fun t2() {
+        setInput("1")
+        val buyAmount = lottoView.getManualLottoCount(1500)
+        assertThat(buyAmount)
+            .isInstanceOf(UserInputResult.Success::class.java)
+        assertThat(buyAmount.get()).isEqualTo(1)
+    }
+
+    @Test
+    @DisplayName("숫자로 변환할 수 없는 값을 입력받는다면 UserInputResult.Failure 에\"올바르지 않은 형식입니다\"라는 메시지를 담는다")
+    fun t2_1() {
         setInput("8g1")
-        assertThatThrownBy { lottoView.getLottoAmount() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("올바르지 않은 형식입니다")
+        val userInput = lottoView.getManualLottoCount(1500)
+        assertThat(userInput).isInstanceOf(UserInputResult.Failure::class.java)
+        val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
+        assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
+    }
+
+    @Test
+    @DisplayName("수동 로또 정보를 입력받는다")
+    fun t3() {
+        setInput("1,2,3,4,5,6\\n1,2,3,4,5,6")
+        val buyAmount = lottoView.getManualLotto(2)
+        assertThat(buyAmount)
+            .isInstanceOf(UserInputResult.Success::class.java)
+        assertThat(buyAmount.get()).isEqualTo(
+            listOf(
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(1, 2, 3, 4, 5, 6),
+            ),
+        )
     }
 
     @Test
     @DisplayName("당첨 로또를 입력받는다")
-    fun t2() {
+    fun t4() {
         setInput("1,2,3,4,5,6")
-        assertThat(lottoView.getWinningLotto())
+        val userInput = lottoView.getWinningLotto()
+        assertThat(userInput.get())
             .isEqualTo(listOf(1, 2, 3, 4, 5, 6))
     }
 
     @Test
-    @DisplayName(" - , 로 번호를 구분하며,숫자로 변환할 수 없는 값을 입력받는다면 IllegalArgumentException를 반환하고, \"올바르지 않는 형식입니다\" 라는 메시지를 출력한다\n")
-    fun t2_1() {
+    @DisplayName(" - , 로 번호를 구분하며,숫자로 변환할 수 없는 값을 입력받는다면 \"올바르지 않는 형식입니다\" 라는 메시지를 출력하고 프로그램을 종료한다\n")
+    fun t4_1() {
         setInput("1,2,3,4,5,2ㅂ34")
-        assertThatThrownBy { lottoView.getWinningLotto() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("올바르지 않은 형식입니다")
-    }
-
-    @Test
-    @DisplayName("  - 6개의 숫자를 입력받지 않는다면 IllegalArgumentException를 반환하고 \"6개의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t2_2() {
-        setInput("1,2,3,4,5,6,7")
-        assertThatThrownBy { lottoView.getWinningLotto() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("6개의 숫자를 입력해주세요")
-    }
-
-    @Test
-    @DisplayName("  - 하나의 숫자 이상이 1부터 45까지의 범위가 아니라면 IllegalArgumentException를 반환하고 \"1부터 45까지의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t2_3() {
-        setInput("1,2,300,4,5,6")
-        assertThatThrownBy { lottoView.getWinningLotto() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("1부터 45까지의 숫자를 입력해주세요")
-    }
-
-    @Test
-    @DisplayName("  - 중복된 숫자를 입력한 경우 IllegalArgumentException을 반환하고 \"중복되지 않은 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t2_4() {
-        setInput("1,2,3,4,5,5")
-        assertThatThrownBy { lottoView.getWinningLotto() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("중복되지 않은 숫자를 입력해주세요")
+        val userInput = lottoView.getWinningLotto()
+        val userInputFail: UserInputResult.Failure<List<Int>> = userInput as UserInputResult.Failure
+        assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
     }
 
     @Test
     @DisplayName("보너스 번호를 입력받는다")
-    fun t3() {
+    fun t5() {
         setInput("6")
-        assertThat(lottoView.getBonusNum())
+        assertThat(lottoView.getBonusNum().get())
             .isEqualTo(6)
     }
 
     @Test
-    @DisplayName("  - 숫자로 변환할 수 없는 값을 입력받는다면 IllegalArgumentException를 반환하고, \"올바르지 않은 형식입니다\" 라는 메시지를 출력한다\n")
+    @DisplayName("  - 숫자로 변환할 수 없는 값을 입력받는다면, \"올바르지 않은 형식입니다\" 라는 메시지를 출력가혹 프로그램을 종료한다\n")
     fun t3_1() {
         setInput("11r")
-        assertThatThrownBy { lottoView.getBonusNum() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("올바르지 않은 형식입니다")
-    }
-
-    @Test
-    @DisplayName("  - 1부터 45 사이의 숫자를 입력받지 않는다면 IllegalArgumentException을 반환하고 \"1부터 45까지의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t3_2() {
-        setInput("1234")
-        assertThatThrownBy { lottoView.getBonusNum() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("1부터 45까지의 숫자를 입력해주세요")
-    }
-
-    @Test
-    @DisplayName("  - 1부터 45 사이의 숫자를 입력받지 않는다면 IllegalArgumentException을 반환하고 \"1부터 45까지의 숫자를 입력해주세요\" 라는 메시지를 출력한다\n")
-    fun t3_2_1() {
-        setInput("-1")
-        assertThatThrownBy { lottoView.getBonusNum() }
-            .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("1부터 45까지의 숫자를 입력해주세요")
+        val userInput = lottoView.getBonusNum()
+        val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
+        assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
     }
 
     @Test
     @DisplayName("- 당첨 정보를 입력받으면 정보를 취합하여 다음과 같이 출력한다 (README참조)")
-    fun t4() {
+    fun t6() {
         val output = setOut()
         val manyLotto =
             listOf(
-                Lotto(listOf(1, 2, 3, 43, 44, 45).map { LottoNumber.of(it) }),
-                Lotto(listOf(11, 12, 13, 14, 15, 16).map { LottoNumber.of(it) }),
+                Lotto.of(1, 2, 3, 43, 44, 45),
+                Lotto.of(11, 12, 13, 14, 15, 16),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
-        val rankMap = LottoRankFinder().findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
+        val rankMap = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         lottoView.printResult(rankMap)
         assertThat(output.toString()).contains(
             """

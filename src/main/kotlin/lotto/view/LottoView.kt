@@ -1,32 +1,67 @@
 package lotto.view
 
-import lotto.domain.LOTTO_PRICE
 import lotto.domain.Lotto
 import lotto.domain.Rank
 import lotto.domain.ScoreRankMap
-import lotto.global.LottoValidator
+import lotto.domain.UserInput
 import lotto.global.Message
+import lotto.global.UserInputResult
 
 class LottoView {
-    fun getLottoAmount(): Int {
+    fun getBuyAmount(): UserInputResult<Int> {
         println(Message.ASK_AMOUNT.msg)
-        val userInput = LottoValidator.requireLottoAmount(readln()).toInt() / LOTTO_PRICE
-        println("${userInput}개를 구매했습니다.")
-        return userInput
+        val input = readln().toIntOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
+        val validAmount =
+            UserInput.getValidBuyAmountOrNull(input)
+                ?: return UserInputResult.Failure(Message.ERR_LESS_THAN_MINIMUM_PRICE)
+        return UserInputResult.Success(validAmount)
     }
 
-    fun printLotto(manyLotto: List<Lotto>) {
-        for (lotto in manyLotto) println(lotto)
+    fun getManualLottoCount(buyAmount: Int): UserInputResult<Int> {
+        println(Message.ASK_MANUAL_LOTTO_AMOUNT.msg)
+        val input = readln().toIntOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
+        val validManualLottoCount =
+            UserInput.getValidManualLottoCountOrNull(input, buyAmount)
+                ?: return UserInputResult.Failure(Message.ERR_TOO_MANY_MANUAL_LOTTO)
+        return UserInputResult.Success(validManualLottoCount)
     }
 
-    fun getWinningLotto(): List<Int> {
+    fun getManualLotto(manualLottoCount: Int): UserInputResult<List<List<Int>>> {
+        println(Message.ASK_MANUAL_LOTTO.msg)
+        val input =
+            runCatching {
+                readln().split("\\n").map {
+                    it.split(",").map { it.toInt() }
+                }
+            }.getOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
+        val validManualLotto =
+            UserInput.getValidManualLottoSizeOrNull(manualLottoCount, input)
+                ?: return UserInputResult.Failure(Message.ERR_TOO_MANY_MANUAL_LOTTO)
+        return UserInputResult.Success(validManualLotto)
+    }
+
+    fun printLotto(
+        userInput: UserInput,
+        autoLotto: List<Lotto>,
+    ) {
+        println("수동으로 ${userInput.manualLottoCount}장, 자동으로 ${userInput.automaticLottoCount}장을 구매했습니다")
+        val manyLotto = autoLotto + userInput.manualLotto
+        for (lotto in manyLotto) println(lotto.value.toString())
+    }
+
+    fun getWinningLotto(): UserInputResult<List<Int>> {
         println(Message.ASK_WINNING_LOTTO.msg)
-        return LottoValidator.requireValidLotto(readln()).split(",").map { it.toInt() }
+        val userInput =
+            runCatching {
+                readln().split(",").map { it.toInt() }
+            }.getOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
+        return UserInputResult.Success(userInput)
     }
 
-    fun getBonusNum(): Int {
+    fun getBonusNum(): UserInputResult<Int> {
         println(Message.ASK_BONUS_BALL.msg)
-        return LottoValidator.requireValidBonusNum(readln()).toInt()
+        val userInput = readln().toIntOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
+        return UserInputResult.Success(userInput)
     }
 
     fun printResult(scoreRankMap: ScoreRankMap) {
@@ -43,5 +78,9 @@ class LottoView {
             총 수익률은 ${rate}입니다.(기준이 1이기 때문에 결과적으로 손해라는 의미임)
             """.trimIndent(),
         )
+    }
+
+    fun printMessage(message: Message) {
+        println(message.msg)
     }
 }

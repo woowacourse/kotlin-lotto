@@ -22,4 +22,11 @@ data class ScoreRankMap(
         val missingKeys = Rank.entries.filter { it !in map }
         require(missingKeys.isEmpty()) { IllegalArgumentException("올바르지 않은 값입니다") }
     }
+
+    companion object {
+        fun of(rawMap: Map<Rank, Int>): ScoreRankMap {
+            val map = Rank.entries.associateWith { rawMap[it] ?: 0 }
+            return ScoreRankMap(map)
+        }
+    }
 }
