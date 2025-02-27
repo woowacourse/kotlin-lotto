@@ -23,6 +23,7 @@ class LottoController(
 
         outputView.printManualLottoQuantityGuide()
         val manualLottoQuantity = inputView.readManualLottoQuantity()
+        val lottoCashier = LottoCashier(purchaseAmount, manualLottoQuantity)
 
         outputView.printManualLottoNumbersGuide(manualLottoQuantity > EMPTY_LOTTO_QUANTITY)
 
@@ -31,10 +32,10 @@ class LottoController(
             lottoWallet.add(inputView.readLottoNumbers())
         }
 
-        val lottoCashier = LottoCashier(purchaseAmount, manualLottoQuantity)
-
         val autoLottoQuantity = lottoCashier.getPurchaseAutoQuantity()
-        val autoLottos = LottoMachine().getAutoLottos(autoLottoQuantity)
+        val lottoMachine = LottoMachine()
+
+        val autoLottos = lottoMachine.getAutoLottos(autoLottoQuantity)
         lottoWallet.addAll(autoLottos)
 
         outputView.printPurchaseLottoQuantity(manualLottoQuantity, autoLottoQuantity)
