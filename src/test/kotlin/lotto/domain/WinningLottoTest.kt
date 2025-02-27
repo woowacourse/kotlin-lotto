@@ -16,7 +16,7 @@ class WinningLottoTest {
 
     @BeforeEach
     fun setUp() {
-        winningNumberLotto1to6 = Lotto.createManual(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
+        winningNumberLotto1to6 = Lotto.createSelfByManualLottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
     }
 
     @Test
@@ -37,7 +37,7 @@ class WinningLottoTest {
     @Test
     fun `일치하는 번호가 5개이고 보너스 번호가 일치하면 등수는 2등이다`() {
         // Given
-        val lotto = Lotto.createManual(setOf(1, 2, 3, 4, 5, 45).map { LottoNumber(it) })
+        val lotto = Lotto.createSelfByManualLottoNumbers(setOf(1, 2, 3, 4, 5, 45).map { LottoNumber(it) })
         val winningLotto = WinningLotto(winningNumberLotto1to6, bonusNumber45)
 
         // When
@@ -50,7 +50,7 @@ class WinningLottoTest {
     @Test
     fun `일치하는 번호가 5개이고 보너스 번호가 일치하지 않으면 등수는 3등이다`() {
         // Given
-        val lotto = Lotto.createManual(setOf(1, 2, 3, 4, 5, 20).map { LottoNumber(it) })
+        val lotto = Lotto.createSelfByManualLottoNumbers(setOf(1, 2, 3, 4, 5, 20).map { LottoNumber(it) })
         val winningLotto = WinningLotto(winningNumberLotto1to6, bonusNumber45)
 
         // When
@@ -63,7 +63,7 @@ class WinningLottoTest {
     @Test
     fun `일치하는 번호가 2개 이하이면 등수는 MISS이다`() {
         // Given
-        val lotto = Lotto.createManual(setOf(1, 2, 23, 24, 25, 26).map { LottoNumber(it) })
+        val lotto = Lotto.createSelfByManualLottoNumbers(setOf(1, 2, 23, 24, 25, 26).map { LottoNumber(it) })
         val winningLotto = WinningLotto(winningNumberLotto1to6, bonusNumber45)
 
         // When

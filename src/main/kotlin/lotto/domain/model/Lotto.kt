@@ -17,7 +17,7 @@ class Lotto private constructor(
         }
     }
 
-    fun getLottoNumbers(): List<LottoNumber> = lottoNumbers.sortedBy { it.number }
+    fun getSortedLottoNumbers(): List<LottoNumber> = lottoNumbers.sortedBy { it.number }
 
     companion object {
         const val NUMBER_OF_LOTTO_NUMBERS = 6
@@ -25,8 +25,8 @@ class Lotto private constructor(
         private const val INACCURATE_LOTTO_NUMBERS =
             "${NUMBER_OF_LOTTO_NUMBERS}개로 구성된 번호를 중복 없이 입력하세요 (현재 중복 없는 숫자는 %d개 입니다)"
 
-        fun createRandom(): Lotto = Lotto(RandomLottoNumbersGenerator().generateLottoNumbers())
+        fun createSelfRandomly(): Lotto = Lotto(RandomLottoNumbersGenerator().generateLottoNumbers())
 
-        fun createManual(numbers: Collection<LottoNumber>): Lotto = Lotto(numbers)
+        fun createSelfByManualLottoNumbers(numbers: Collection<LottoNumber>): Lotto = Lotto(numbers)
     }
 }

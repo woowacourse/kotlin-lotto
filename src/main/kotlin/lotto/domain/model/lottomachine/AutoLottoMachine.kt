@@ -8,5 +8,5 @@ class AutoLottoMachine : LottoMachine {
     override fun generateLottoBundle(
         payInfo: LottoPayInfo,
         manualTicketsNumbers: List<List<LottoNumber>>?,
-    ): List<Lotto> = List(payInfo.autoLottoQuantity) { Lotto.createRandom() }
+    ): List<Lotto> = List(payInfo.autoLottoQuantity) { Lotto.createSelfRandomly() }
 }

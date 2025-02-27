@@ -18,7 +18,7 @@ class WinningLotto(
 
     fun getRank(lotto: Lotto): Rank {
         val countOfMatch = getCountOfMatch(lotto)
-        val matchBonus = getMatchBonus(lotto)
+        val matchBonus = isBonusMatched(lotto)
         return Rank.valueOf(countOfMatch, matchBonus)
     }
 
@@ -28,7 +28,7 @@ class WinningLotto(
         return winningNumbers.intersect(lottoNumbers.toSet()).size
     }
 
-    private fun getMatchBonus(lotto: Lotto): Boolean = lotto.lottoNumbers.map { it.number }.contains(bonusNumber.number)
+    private fun isBonusMatched(lotto: Lotto): Boolean = lotto.lottoNumbers.map { it.number }.contains(bonusNumber.number)
 
     companion object {
         private const val HAS_DUPLICATE_BONUS_NUMBERS = "보너스 번호 %d이 당첨 번호 %s에 이미 존재합니다."

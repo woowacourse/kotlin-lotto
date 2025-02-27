@@ -18,14 +18,14 @@ class OutputView {
     fun printTicketsByLottos(lottos: Lottos) {
         lottos.tickets.forEach { lotto ->
             println(
-                lotto.getLottoNumbers().map { it.number },
+                lotto.getSortedLottoNumbers().map { it.number },
             )
         }
     }
 
     fun printLottoStats(lottoWinningStats: LottoWinningStats) {
         println("\n당첨 통계\n---------")
-        lottoWinningStats.getWinningStatsWithEmptyWithoutMiss().entries.reversed().forEach { winningStats ->
+        lottoWinningStats.getWholeWinningStatsWithoutMiss().entries.reversed().forEach { winningStats ->
             val bonusText = if (winningStats.key == Rank.SECOND) ", 보너스 볼 일치" else " "
             println("${winningStats.key.countOfMatch}개 일치$bonusText(${winningStats.key.winningMoney}원)- ${winningStats.value}개")
         }

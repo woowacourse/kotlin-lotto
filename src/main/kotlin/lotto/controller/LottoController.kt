@@ -37,7 +37,7 @@ class LottoController(
         outputView.printTicketsByLottos(lottos)
         val lottoWinningStats = lottos.getLottoWinningStats(getWinningLotto())
         outputView.printLottoStats(lottoWinningStats)
-        outputView.printLottoEarningRate(lottoWinningStats.getEarningRate())
+        outputView.printLottoEarningRate(lottoWinningStats.getEarningInfo())
     }
 
     private fun getPayInfo(): LottoPayInfo {
@@ -71,7 +71,7 @@ class LottoController(
     private fun getWinningLotto(): WinningLotto {
         val winningLottoNumbersWithoutBonusInput = inputView.readWinningLottoNumbersWithoutBonus()
         val winningLottoNumbersWithoutBonus = winningLottoNumbersWithoutBonusInput.map { LottoNumber(it) }
-        val winningLottoWithoutBonus = Lotto.createManual(winningLottoNumbersWithoutBonus)
+        val winningLottoWithoutBonus = Lotto.createSelfByManualLottoNumbers(winningLottoNumbersWithoutBonus)
         val bonusNumberText = inputView.readBonusNumber()
         val bonusNumber = LottoNumber(bonusNumberText)
 

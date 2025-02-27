@@ -16,8 +16,8 @@ class LottoWinningStatsTest {
 
     @BeforeEach
     fun setUp() {
-        winningLotto = WinningLotto(Lotto.createManual(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }), LottoNumber(45))
-        lottos = Lottos(listOf(Lotto.createRandom()))
+        winningLotto = WinningLotto(Lotto.createSelfByManualLottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }), LottoNumber(45))
+        lottos = Lottos(listOf(Lotto.createSelfRandomly()))
     }
 
     @Test
@@ -26,7 +26,7 @@ class LottoWinningStatsTest {
         val winningStats = lottos.getLottoWinningStats(winningLotto)
 
         // When
-        val earningRate = winningStats.getEarningRate()
+        val earningRate = winningStats.getEarningInfo()
 
         // Then
         assertThat(earningRate).isExactlyInstanceOf(EarningInfo::class.java)
@@ -38,7 +38,7 @@ class LottoWinningStatsTest {
         val winningStats = lottos.getLottoWinningStats(winningLotto)
 
         // When
-        val winningStatsWithEmpty = winningStats.getWinningStatsWithEmptyWithoutMiss()
+        val winningStatsWithEmpty = winningStats.getWholeWinningStatsWithoutMiss()
 
         // Then
         assertThat(winningStatsWithEmpty.size).isEqualTo(Rank.entries.size - 1)
