@@ -7,7 +7,7 @@ class LottoMachine {
         payInfo: LottoPayInfo,
         manualTicketsNumbers: List<List<Int>>? = null,
     ): Lottos {
-        val manualTickets: List<Lotto> = manualTicketsNumbers?.map { Lotto.createManual(it.toSet()) } ?: listOf()
+        val manualTickets: List<Lotto> = manualTicketsNumbers?.map { Lotto.createManual(it) } ?: listOf()
         val autoTickets: List<Lotto> = List(payInfo.autoLottoQuantity) { Lotto.createRandom() }
         return Lottos(manualTickets + autoTickets)
     }

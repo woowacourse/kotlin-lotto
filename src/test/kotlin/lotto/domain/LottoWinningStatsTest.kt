@@ -16,7 +16,7 @@ class LottoWinningStatsTest {
 
     @BeforeEach
     fun setUp() {
-        winningLotto = WinningLotto(Lotto.createManual((1..6).toSet()), LottoNumber(45))
+        winningLotto = WinningLotto(Lotto.createManual(listOf(1, 2, 3, 4, 5, 6)), LottoNumber(45))
         lottos = Lottos(listOf(Lotto.createRandom()))
     }
 

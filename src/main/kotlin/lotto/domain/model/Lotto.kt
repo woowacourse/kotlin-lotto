@@ -4,8 +4,11 @@ import lotto.domain.service.RandomLottoNumbersGenerator
 import lotto.domain.value.LottoNumber
 
 class Lotto private constructor(
-    val lottoNumbers: Set<LottoNumber>,
+    private val _lottoNumbers: Collection<LottoNumber>,
 ) {
+    val lottoNumbers: Set<LottoNumber>
+        get() = _lottoNumbers.toSet()
+
     init {
         require(lottoNumbers.size == NUMBER_OF_LOTTO_NUMBERS) {
             INACCURATE_LOTTO_NUMBERS.format(
@@ -24,6 +27,6 @@ class Lotto private constructor(
 
         fun createRandom(): Lotto = Lotto(RandomLottoNumbersGenerator().generateLottoNumbers())
 
-        fun createManual(numbers: Set<Int>): Lotto = Lotto(numbers.map { LottoNumber(it) }.toSet())
+        fun createManual(numbers: Collection<Int>): Lotto = Lotto(numbers.map { LottoNumber(it) })
     }
 }

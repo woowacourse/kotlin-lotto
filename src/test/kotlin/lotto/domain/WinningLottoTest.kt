@@ -16,7 +16,7 @@ class WinningLottoTest {
 
     @BeforeEach
     fun setUp() {
-        winningNumbers1to6 = Lotto.createManual((1..6).toSet())
+        winningNumbers1to6 = Lotto.createManual(listOf(1, 2, 3, 4, 5, 6))
     }
 
     @Test
