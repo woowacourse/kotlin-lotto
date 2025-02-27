@@ -1,21 +1,25 @@
 package lotto.model
 
-class LottoMachine (
-    private val manualLottoCount : LottoTicketCount,
-    private val autoLottoCount : LottoTicketCount,
-    private val manualLottoNumbers: List<List<Int>>,
-) {
-    init {
-        require(manualLottoCount.toInt() == manualLottoNumbers.size) { LOTTO_COUNT_NOT_MATCH_LOTTO_NUMBERS }
+// 로또 발행하는 머신
+class LottoMachine {
+    // 로또 티켓을 발행한다.
+    fun issueLottoTickets(
+        customerWantToBuyAutoLottoTicketCount: LottoTicketCount,
+        manualLottoNumbers: List<List<Int>>,
+    ): List<LottoTicket> =
+        purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount) + purchaseManualLottoTickets(manualLottoNumbers)
+
+    // 자동 로또를 발행
+    private fun purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount: LottoTicketCount): List<LottoTicket> {
+        val autoLottoGenerator = AutoLottoTicketGenerator()
+        val autoLottoTickets =
+            List(customerWantToBuyAutoLottoTicketCount.toInt()) { autoLottoGenerator.generateLottoTicket() }
+        return autoLottoTickets
     }
 
-    fun issueLottoTickets(): List<LottoTicket> = purchaseManualLottoTicket() + purchaseAutoLottoTickets()
-
-    private fun purchaseAutoLottoTickets(): List<LottoTicket> = List(autoLottoCount.toInt()) { AutoLottoGenerator().generateLotto() }
-
-    private fun purchaseManualLottoTicket(): List<LottoTicket> = manualLottoNumbers.map { numbers -> ManualLottoGenerator(numbers).generateLotto() }
-
-    companion object {
-        private const val LOTTO_COUNT_NOT_MATCH_LOTTO_NUMBERS = "수동 구매 개수와 수동 번호 입력 개수가 일치하지 않습니다."
+    // 수동 로또를 발행
+    private fun purchaseManualLottoTickets(manualLottoNumbers: List<List<Int>>): List<LottoTicket> {
+        val manualLottoTickets = manualLottoNumbers.map { ManualLottoTicketGenerator(it).generateLottoTicket() }
+        return manualLottoTickets
     }
 }
