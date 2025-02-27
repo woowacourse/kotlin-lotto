@@ -41,6 +41,6 @@ class LottoCountTest {
 
         val actual = lottoCount.minus(biggerLottoCount)
 
-        assertEquals(expected.number, actual.number)
+        assertEquals(expected, actual)
     }
 }
