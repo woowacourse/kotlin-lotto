@@ -10,9 +10,9 @@ class LottoSellerTest {
         val manualLottoAmount = 3
         val manualLottoNumbers =
             listOf(
-                Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }),
-                Lotto(listOf(7, 8, 9, 10, 11, 12).map { LottoNumber(it) }),
-                Lotto(listOf(13, 14, 15, 16, 17, 18).map { LottoNumber(it) }),
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(7, 8, 9, 10, 11, 12),
+                listOf(13, 14, 15, 16, 17, 18),
             )
 
         assertThat(LottoSeller(price, manualLottoAmount, manualLottoNumbers).getLottos().size).isEqualTo(10)
