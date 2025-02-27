@@ -2,7 +2,7 @@ package lotto.service
 
 import lotto.domain.LottoNumber
 
-class LottoGenerator : LottoNumberGenerator {
+class AutoLottoGenerator : LottoNumberGenerator {
     override fun generate(): List<LottoNumber> {
         return (MIN_RANGE..MAX_RANGE)
             .shuffled()
