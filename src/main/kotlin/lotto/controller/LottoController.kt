@@ -3,6 +3,8 @@ package lotto.controller
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.Order
+import lotto.domain.Order.Payment
+import lotto.domain.Order.Quantity
 import lotto.domain.Results
 import lotto.domain.WinningLotto
 import lotto.view.View
@@ -16,15 +18,15 @@ object LottoController {
     }
 
     private fun placeOrder(): Order {
-        val payment: Int = View.readPayment()
-        val manualQuantity: Int = View.readManualQuantity()
+        val payment = Payment(View.readPayment())
+        val manualQuantity = Quantity(View.readManualQuantity())
         return Order(payment, manualQuantity)
     }
 
     private fun processOrder(order: Order): List<Lotto> {
         View.requestManualNumbers()
-        val manualLottos: List<Lotto> = List(order.manualQuantity) { readManualNumbers() }.map(::Lotto)
-        val automaticLottos: List<Lotto> = List(order.automaticQuantity) { makeRandomNumbers() }.map(::Lotto)
+        val manualLottos: List<Lotto> = List(order.manualQuantity.value) { readManualNumbers() }.map(::Lotto)
+        val automaticLottos: List<Lotto> = List(order.automaticQuantity.value) { makeRandomNumbers() }.map(::Lotto)
         showPurchaseInformation(manualLottos, automaticLottos)
         val allLottos: List<Lotto> = manualLottos + automaticLottos
         return allLottos
