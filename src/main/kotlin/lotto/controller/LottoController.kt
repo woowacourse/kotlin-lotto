@@ -1,31 +1,47 @@
 package lotto.controller
 
 import lotto.contants.LottoRuleConstants
-import lotto.model.LottoMachine
-import lotto.model.LottoResult
-import lotto.model.LottoTicket
-import lotto.model.WinningLotto
+import lotto.model.*
 import lotto.view.UserInterface
 
 class LottoController(
     private val userInterface: UserInterface = UserInterface(),
 ) {
     fun run() {
-        val lottoTickets = generateLottoTickets()
+
+        val cashier = meetCashier()
+        val lottoCount = calculateLottoTicketAmount(cashier)
+        calculateLottoTicketCount(cashier, lottoCount)
+        val manualLottoCount = userInterface.getManualLottoCount()
+        val manualLottoNumber = userInterface.getManualLottoNumber(manualLottoCount)
+        val lottoTicketCountManager = LottoTicketCountManager(LottoTicketCount(lottoCount), LottoTicketCount(manualLottoCount))
+        val autoLottoCount = lottoTicketCountManager.autoLottoCount
+        // 수동 번호를 입력하세요.
+        val lottoTicket = LottoMachine(LottoTicketCount(manualLottoCount), LottoTicketCount(autoLottoCount), manualLottoNumber).issueLottoTickets()
+        userInterface.printLottoTickets(manualLottoCount, autoLottoCount, lottoTicket)
         val winningLotto = getWinningLotto()
-        val lottoResult = winningLotto.getResult(lottoTickets)
+        val lottoResult = winningLotto.getResult(lottoTicket)
         getResult(lottoResult)
     }
 
-    private fun generateLottoTickets(): List<LottoTicket> {
+    private fun meetCashier() : LottoStoreCashier {
         val amount = userInterface.inputPurchaseAmount()
-        val count = calculatePurchaseCount(amount)
-        val lottoTickets = LottoMachine().purchase(count)
-        userInterface.printLottoTickets(lottoTickets)
-        return lottoTickets
+        val cashier = LottoStoreCashier(amount)
+        return cashier
     }
 
-    private fun calculatePurchaseCount(amount: Int) = amount / LottoRuleConstants.LOTTO_AMOUNT.value
+    private fun calculateLottoTicketAmount(cashier: LottoStoreCashier): Int {
+        val lottoCount = cashier.calculateCount()
+        return lottoCount
+    }
+
+    private fun calculateLottoTicketCount(cashier: LottoStoreCashier, lottoCount: Int) {
+        val customerAnswer = userInterface.printLottoCount(lottoCount)
+        if (customerAnswer) {
+            val change = cashier.calculateChange()
+            userInterface.printChange(change)
+        }
+    }
 
     private fun getWinningLotto(): WinningLotto {
         val winningNumbers = userInterface.getWinningNumbers()
