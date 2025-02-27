@@ -22,7 +22,8 @@ object LottoController {
     }
 
     private fun processOrder(order: Order): List<Lotto> {
-        val manualLottos: List<Lotto> = List(order.manualQuantity) { readManualLottoNumbers() }.map(::Lotto)
+        View.requestManualNumbers()
+        val manualLottos: List<Lotto> = List(order.manualQuantity) { readManualNumbers() }.map(::Lotto)
         val automaticLottos: List<Lotto> = List(order.automaticQuantity) { makeRandomNumbers() }.map(::Lotto)
         showPurchaseInformation(manualLottos, automaticLottos)
         val allLottos: List<Lotto> = manualLottos + automaticLottos
@@ -37,10 +38,7 @@ object LottoController {
         View.showLottos(manualLottos, automaticLottos)
     }
 
-    private fun readManualLottoNumbers(): List<LottoNumber> {
-        View.requestManualNumbers()
-        return View.readManualNumbers().map(::LottoNumber)
-    }
+    private fun readManualNumbers(): List<LottoNumber> = View.readManualNumbers().map(::LottoNumber)
 
     private fun makeRandomNumbers(): List<LottoNumber> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map(::LottoNumber)
 
