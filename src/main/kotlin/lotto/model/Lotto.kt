@@ -1,14 +1,23 @@
 package lotto.model
 
 class Lotto(
-    private val numbers: List<LottoNumber>,
+    private val numbers: Set<LottoNumber>,
 ) {
     init {
-        require(numbers.size == numbers.distinct().size) { LOTTO_DISTINCT_MESSAGE }
         require(numbers.size == LOTTO_NUMBERS_SIZE) { LOTTO_COUNT_MESSAGE }
     }
 
-    fun getNumbers(): List<LottoNumber> = numbers
+    constructor(numbers: List<LottoNumber>) : this(numbers.toSet()) {
+        require(numbers.size == this.numbers.size) { LOTTO_COUNT_MESSAGE }
+    }
+
+    fun contains(it: LottoNumber): Boolean {
+        return numbers.contains(it)
+    }
+
+    fun match(lotto: Lotto): Int {
+        return numbers.count { lotto.contains(it) }
+    }
 
     companion object {
         const val LOTTO_NUMBERS_SIZE: Int = 6
