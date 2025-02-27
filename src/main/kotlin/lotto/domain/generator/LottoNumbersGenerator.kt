@@ -1,4 +1,4 @@
-package lotto.domain.service
+package lotto.domain.generator
 
 import lotto.domain.model.LottoNumber
 

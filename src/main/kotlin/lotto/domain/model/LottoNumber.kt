@@ -5,9 +5,15 @@ data class LottoNumber(val number: Int) {
         require(number in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER) { INVALID_LOTTO_NUMBER_RANGE_MESSAGE }
     }
 
-    private companion object {
-        private const val MIN_LOTTO_NUMBER = 1
-        private const val MAX_LOTTO_NUMBER = 45
-        const val INVALID_LOTTO_NUMBER_RANGE_MESSAGE = "로또의 각 번호는 1~45이하의 숫자를 가진다."
+    companion object {
+        const val MIN_LOTTO_NUMBER = 1
+        const val MAX_LOTTO_NUMBER = 45
+        private const val INVALID_LOTTO_NUMBER_RANGE_MESSAGE = "로또의 각 번호는 1~45이하의 숫자를 가진다."
+
+        private val NUMBERS: Map<Int, LottoNumber> = (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).associateWith(::LottoNumber)
+
+        fun from(value: Int): LottoNumber {
+            return NUMBERS[value] ?: throw IllegalArgumentException(INVALID_LOTTO_NUMBER_RANGE_MESSAGE)
+        }
     }
 }

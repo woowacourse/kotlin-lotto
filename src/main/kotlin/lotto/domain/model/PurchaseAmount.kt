@@ -1,6 +1,9 @@
 package lotto.domain.model
 
-class PurchaseAmount(private val amount: Int) {
+class PurchaseAmount(amount: Int) {
+    var amount: Int = amount
+        private set
+
     init {
         require(amount >= MIN_PURCHASE_VALUE) { INVALID_PURCHASE_VALUE_MESSAGE }
     }

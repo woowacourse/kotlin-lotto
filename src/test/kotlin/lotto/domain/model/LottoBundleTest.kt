@@ -1,5 +1,6 @@
 package lotto.domain.model
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -17,5 +18,15 @@ class LottoBundleTest {
         assertDoesNotThrow {
             LottoBundle(List(1) { Lotto(listOf(1, 2, 3, 4, 5, 6)) })
         }
+    }
+
+    @Test
+    fun `크기가 1인 로또 번들과 크기가 3인 로또 번들을 결합하면 크기가 4인 로또 번들이 되야한다`() {
+        val lottoBundle1 = LottoBundle(List(1) { Lotto(listOf(1, 2, 3, 4, 5, 6)) })
+        val lottoBundle2 = LottoBundle(List(3) { Lotto(listOf(1, 2, 3, 4, 5, 6)) })
+
+        val actual = LottoBundle.combine(lottoBundle1, lottoBundle2).lottos.size
+        val expected = 4
+        assertThat(actual).isEqualTo(expected)
     }
 }

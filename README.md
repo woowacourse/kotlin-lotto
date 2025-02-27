@@ -1,6 +1,8 @@
 # kotlin-lotto
 
-## 기능 요구 사항
+## Level 1
+
+### 기능 요구 사항
 
 - [x] 로또는 6개의 숫자를 가진다.
 - [x] 로또의 각 번호는 1~45이하의 숫자를 가진다.
@@ -28,11 +30,10 @@
 - [x] LottoRank 계산 로직 변경
 - [x] LottoNumbers 책임을 Lotto로 이전
 - [x] Lotto의 numbers 타입을 Set으로 변경
-- [x] 로또 관련 상수 LottoRules Enum Class로 관리하도록 변경 
+- [x] 로또 관련 상수 LottoRules Enum Class로 관리하도록 변경
 - [x] LottoRanks 일급 컬렉션 추가
 - [x] Controller에서 Domain 로직 분리
 - [x] LottoRankCalculator 로직 LottoRanks로 이전
-
 
 ### 2차 피드백 수정 사항
 
@@ -49,3 +50,42 @@
 - refactor: LottoRules에서 로또 가격 제거
 - feat: LottoGenerator 역할 분리
 - feat: 로또 생성 성공 테스트 추가
+
+<br>
+
+---
+
+## Level 2
+
+### 기능 구현 전 Level 1 피드백 반영
+
+- [x] 테스트를 위한 고정 번호 생성기 위치 변경
+- [x] 함수 매개변수 네이밍 수정
+- [x] Lotto의 isMatchBonusNumber 함수를 재사용 가능하도록 변경
+- [x] LottoNumber 인스턴스 재사용 방식 변경
+- [x] WinningNumbers 검증 시 기존 함수 활용하도록 변경
+- [x] 테스트 코드 형식 변경 (give / when /then)
+- [x] 로또 번호 정렬 테스트 코드 변경
+
+<br>
+
+### 기능 요구 사항
+
+- [x] 수동으로 구매할 개수 만큼 직접 번호를 입력할 수 있다.
+- [x] 직접 입력받은 번호로 로또를 생성할 수 있다.
+- [x] 로또 번들을 결합할 수 있다.
+
+- [x] 예외처리를 통해 에러가 발생하지 않도록 한다.
+    - 논리적인 오류일 때만 예외를 던진다.
+    - 논리적인 오류가 아니면 예외를 던지지 말고 null을 반환한다.
+    - 실패하는 경우가 복잡해서 null로 처리할 수 없으면 sealed class를 반환한다.
+    
+### 피드백 반영
+
+- [x] LottoMachine의 디폴트 파라미터를 제거
+- [x] 로또 최소/최대 번호 값 LottoNumber에서 관리하도록 수정
+- [x] 총 수익률 계산 테스트 가독성 개선
+- [x] LottoBundle Combine 테스트 케이스 1개로 수정
+- [x] 보너스 번호 보유 여부 테스트 가독성 개선
+
+- [x] 구입 금액에 따른 수동/자동 구매수를 계산할 수 있다.

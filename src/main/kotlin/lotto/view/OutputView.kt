@@ -6,8 +6,11 @@ import lotto.domain.model.LottoResult
 import java.math.BigDecimal
 
 class OutputView {
-    fun printPurchaseLottoCount(purchaseLottoCount: Int) {
-        println(PRINT_PURCHASE_LOTTO_COUNT_FORMAT.format(purchaseLottoCount))
+    fun printPurchaseLottoCount(
+        manualLottoAmount: Int,
+        autoLottoAmount: Int,
+    ) {
+        println(PRINT_PURCHASE_LOTTO_COUNT_FORMAT.format(manualLottoAmount, autoLottoAmount))
     }
 
     fun printPurchaseLottoNumbers(lottoNumbers: List<LottoNumber>) {
@@ -41,14 +44,18 @@ class OutputView {
         println(PRINT_TOTAL_RETURNS_FORMAT.format(totalReturns, returnComment))
     }
 
-    private companion object {
-        const val PRINT_WINNING_RESULT_HEADER = "\n당첨 통계\n---------"
-        const val PRINT_PURCHASE_LOTTO_COUNT_FORMAT = "%s개 구매했습니다."
-        const val PRINT_WINNING_RESULT_FORMAT = "%s개 일치%s(%s원) - %s개"
-        const val PRINT_TOTAL_RETURNS_FORMAT = "총 수익률은 %s입니다.%s"
-        const val RETURN_COMMENT = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
-        const val BONUS_COMMENT = ", 보너스 볼 일치"
-        const val LOSS_THRESHOLD = 1
-        const val DEFAULT_RESULT_VALUE = 0
+    fun printErrorMessage(message: String?) = println(ERROR_MESSAGE_PREFIX.format(message ?: UNKNOWN_ERROR_MESSAGE))
+
+    companion object {
+        private const val PRINT_WINNING_RESULT_HEADER = "\n당첨 통계\n---------"
+        private const val PRINT_PURCHASE_LOTTO_COUNT_FORMAT = "수동으로 %s장, 자동으로 %s개 구매했습니다."
+        private const val PRINT_WINNING_RESULT_FORMAT = "%s개 일치%s(%s원) - %s개"
+        private const val PRINT_TOTAL_RETURNS_FORMAT = "총 수익률은 %s입니다.%s"
+        private const val RETURN_COMMENT = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
+        private const val BONUS_COMMENT = ", 보너스 볼 일치"
+        private const val LOSS_THRESHOLD = 1
+        private const val DEFAULT_RESULT_VALUE = 0
+        private const val ERROR_MESSAGE_PREFIX = "[ERROR] %s"
+        private const val UNKNOWN_ERROR_MESSAGE = "Unknown error"
     }
 }
