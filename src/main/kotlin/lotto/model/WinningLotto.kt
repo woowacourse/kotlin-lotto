@@ -4,22 +4,31 @@ class WinningLotto(
     private val lotto: Lotto,
 ) {
     fun getRank(
-        winningNumbers: List<Int>,
-        bonusNumber: Int,
+        winningNumbers: Set<LottoNumber>,
+        bonusNumber: LottoNumber,
     ): Rank {
+        validateWinningNumbersBonusNumberDuplicate(winningNumbers, bonusNumber)
+
         val countOfMatch = countMatchWinningNumbers(winningNumbers)
         val matchBonus = isHaveBonusNumber(bonusNumber)
-
-        lotto.validateLottoNumbersDuplicate(winningNumbers.map { LottoNumber(it) } + listOf(LottoNumber(bonusNumber)))
 
         return Rank.fromMatchResult(countOfMatch, matchBonus)
     }
 
-    private fun countMatchWinningNumbers(winningNumbers: List<Int>): Int {
-        lotto.validateLottoNumbersCount(winningNumbers.map { LottoNumber(it) })
+    private fun countMatchWinningNumbers(winningNumbers: Set<LottoNumber>): Int {
+        lotto.validateLottoNumbersCount(winningNumbers)
 
-        return lotto.numbers.count { existNumber -> winningNumbers.contains(existNumber.number) }
+        return lotto.numbers.count { existNumber -> winningNumbers.contains(existNumber) }
     }
 
-    private fun isHaveBonusNumber(bonusNumber: Int): Boolean = lotto.numbers.map { it.number }.contains(bonusNumber)
+    private fun validateWinningNumbersBonusNumberDuplicate(
+        winningNumbers: Set<LottoNumber>,
+        bonusNumber: LottoNumber,
+    ) {
+        require(!winningNumbers.contains(bonusNumber)) {
+            "[ERROR] 당첨 번호와 보너스 번호는 중복될 수 없습니다."
+        }
+    }
+
+    private fun isHaveBonusNumber(bonusNumber: LottoNumber): Boolean = lotto.numbers.contains(bonusNumber)
 }

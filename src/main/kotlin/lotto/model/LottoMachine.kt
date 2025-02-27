@@ -6,10 +6,11 @@ import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
 
 class LottoMachine(
     private val amount: Int,
+    val passiveLottoQuantity: Int,
+    private val passiveLottoNumbers: List<Lotto>,
 ) {
     init {
         validateAmountMinimumRange()
-        validateAmountUnit()
     }
 
     private fun validateAmountMinimumRange() {
@@ -18,18 +19,14 @@ class LottoMachine(
         }
     }
 
-    private fun validateAmountUnit() {
-        require(amount % LOTTO_EACH_AMOUNT == 0) {
-            "[ERROR] ${LOTTO_EACH_AMOUNT}원 단위의 금액으로 입력해 주세요. 입력값: $amount"
-        }
-    }
+    fun getActiveLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT - passiveLottoQuantity
 
-    fun getLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT
-
-    fun getLottos(lottoQuantity: Int): Lottos {
+    private fun getActiveLottos(lottoQuantity: Int): Lottos {
         val lottos = List<Lotto>(lottoQuantity) { Lotto(getLottoNumbers().map { LottoNumber((it)) }.toSet()) }
         return Lottos(lottos)
     }
+
+    fun getTotalLottos(lottoQuantity: Int): Lottos = Lottos(passiveLottoNumbers).plus(getActiveLottos(lottoQuantity))
 
     private fun getLottoNumbers(): List<Int> {
         val shuffledLottoNumbers = (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE).shuffled()

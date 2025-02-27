@@ -3,9 +3,11 @@ package lotto.model
 class Lottos(
     private val lottos: List<Lotto>,
 ) {
+    operator fun plus(other: Lottos): Lottos = Lottos(this.lottos + other.lottos)
+
     fun countLottoByRank(
-        winningNumbers: Set<Int>,
-        bonusNumber: Int,
+        winningNumbers: Set<LottoNumber>,
+        bonusNumber: LottoNumber,
     ): Map<Rank, Int> {
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
 
@@ -18,5 +20,9 @@ class Lottos(
         return countResult
     }
 
-    fun getAllLottoNumbers(): List<Set<LottoNumber>> = lottos.map { lotto -> lotto.numbers }
+    fun getAllLottoNumbers(): List<Set<Int>> =
+        lottos.map { lotto ->
+            val numbers = lotto.numbers
+            numbers.map { it.number }.toSet()
+        }
 }
