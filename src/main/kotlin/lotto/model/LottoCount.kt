@@ -1,17 +1,12 @@
 package lotto.model
 
 data class LottoCount(
-    val number: Int,
+    private var _number: Int,
 ) {
-    init {
-        require(number >= 0) { ERROR_NEGATIVE_COUNT }
-    }
+    val number
+        get() = if (_number < 0) 0 else _number
 
     fun minus(lottoCount: LottoCount): LottoCount = LottoCount(this.number - lottoCount.number)
 
     fun isPurchasableLottoCount(lottoCount: LottoCount): Boolean = this.number >= lottoCount.number
-
-    companion object {
-        private const val ERROR_NEGATIVE_COUNT = "수량은 음수가 될 수 없습니다."
-    }
 }

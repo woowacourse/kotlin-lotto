@@ -1,6 +1,7 @@
 package lotto
 
 import lotto.model.LottoCount
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -30,5 +31,16 @@ class LottoCountTest {
 
         assertThrows<IllegalArgumentException> { lottoCount.minus(LottoCount(6)) }
         assertDoesNotThrow { lottoCount.minus(LottoCount(5)) }
+    }
+
+    @Test
+    fun `현재 로또 수량보다 더 큰 로또 수량을 차감해도 로또 수량은 0보다 작을 수 없다`() {
+        val lottoCount = LottoCount(5)
+        val biggerLottoCount = LottoCount(10)
+        val expected = LottoCount(0)
+
+        val actual = lottoCount.minus(biggerLottoCount)
+
+        assertEquals(expected.number, actual.number)
     }
 }
