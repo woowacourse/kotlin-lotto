@@ -15,7 +15,7 @@ class LottoNumber private constructor(val lottoNumber: Int) {
 
         // 팩토리 메서드 - 기존 객체를 재사용하도록 함
         fun of(number: Int): LottoNumber {
-            return CACHE[number] ?: throw IllegalArgumentException("잘못된 로또 번호: $number")
+            return CACHE[number] ?: throw IllegalArgumentException(LOTTO_NUM_ERROR_MESSAGE)
         }
     }
 }

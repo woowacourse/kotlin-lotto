@@ -10,10 +10,8 @@ class LottoFactory {
         return List(amount) { generateLottoNumbers() }
     }
 
-    fun generateManualLottos(numbersList: List<List<Int>>): List<Lotto> {
-        return numbersList.map { numbers ->
-            Lotto(numbers.map { LottoNumber.of(it) })
-        }
+    fun generateManualLottos(manualNumbers: ManualLottoNumbers): List<Lotto> {
+        return manualNumbers.toLottos()
     }
 
     companion object {

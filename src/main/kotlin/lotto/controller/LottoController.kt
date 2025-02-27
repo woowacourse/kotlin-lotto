@@ -5,6 +5,7 @@ import lotto.domain.LottoAmount
 import lotto.domain.LottoFactory
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
+import lotto.domain.ManualLottoNumbers
 import lotto.domain.Purchase
 import lotto.domain.WinningLotto
 import lotto.view.InputView
@@ -44,9 +45,11 @@ class LottoController(
         outputView.printProfit(lottoResult.calculateProfitRate(price))
     }
 
-    private fun getManualLottoNumbers(manualAmount: LottoAmount): List<List<Int>> {
-        return (0 until manualAmount.toInt()).map {
-            inputView.inputManualLottoNumbers() // 사용자 입력만 받음!
-        }
+    private fun getManualLottoNumbers(manualAmount: LottoAmount): ManualLottoNumbers {
+        val numbersList =
+            (0 until manualAmount.toInt()).map {
+                inputView.inputManualLottoNumbers()
+            }
+        return ManualLottoNumbers(numbersList)
     }
 }
