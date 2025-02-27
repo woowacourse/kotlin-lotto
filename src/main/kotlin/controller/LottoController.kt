@@ -4,29 +4,29 @@ import domain.model.Lotto
 import domain.model.LottoNumber
 import domain.model.LottoResult
 import domain.model.ManualLottoAmount
+import domain.model.ManualLottoAmount.Companion.toManualLottoAmountResult
+import domain.model.ManualLottoAmountResult
 import domain.model.PurchasePrice
 import domain.model.PurchasePrice.Companion.toAmount
+import domain.model.PurchasePrice.Companion.toPurchasePriceResult
+import domain.model.PurchasePriceResult
 import domain.model.WinningLotto
 import domain.service.AutoLottoGenerator
 import domain.service.LottoMatchCalculator
 import domain.service.ManualLottoGenerator
-import util.retryWhenException
-import validator.NumericValidator
 import view.InputView
 import view.OutputView
 
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val autoLottoGenerator: AutoLottoGenerator,
-    private val manualLottoGenerator: ManualLottoGenerator,
     private val lottoMatchCalculator: LottoMatchCalculator,
 ) {
     fun run() {
         val purchasePrice: PurchasePrice = getPurchasePrice()
         val manualLottoAmount: ManualLottoAmount = getManualLottoAmount(purchasePrice)
         val manualLotto: List<Lotto> = purchaseManualLotto(manualLottoAmount)
-        val autoLotto: List<Lotto> = purchaseAutoLotto(purchasePrice.toAmount(), manualLottoAmount)
+        val autoLotto: List<Lotto> = purchaseAutoLotto(purchasePrice.toAmount() - manualLottoAmount.value)
         displayLottoTicket(manualLotto, autoLotto)
 
         val winningNumbers: Lotto = getWinningNumbers()
@@ -36,62 +36,46 @@ class LottoController(
         displayResult(lottoResult, profitRate)
     }
 
-    private fun getPurchasePrice(): PurchasePrice =
-        retryWhenException(
-            action = {
-                val input = inputView.readPurchasePrice()
-                NumericValidator(input)
-                PurchasePrice(input.toInt())
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
+    private fun getPurchasePrice(): PurchasePrice {
+        val input: Int = inputView.readPurchasePrice()
+        return when (val result = input.toPurchasePriceResult()) {
+            is PurchasePriceResult.Success -> result.purchasePrice
+            is PurchasePriceResult.InvalidMinimumPurchaseAmount -> {
+                outputView.printExceptionMessage(result.errorMsg)
+                getPurchasePrice()
+            }
 
-    private fun getManualLottoAmount(purchasePrice: PurchasePrice): ManualLottoAmount =
-        retryWhenException(
-            action = {
-                val input = inputView.readManualLottoAmount()
-                NumericValidator(input)
-                ManualLottoAmount(input.toInt(), purchasePrice.toAmount())
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
+            is PurchasePriceResult.InvalidThousandWonUnit -> {
+                outputView.printExceptionMessage(result.errorMsg)
+                getPurchasePrice()
+            }
+        }
+    }
+
+    private fun getManualLottoAmount(purchasePrice: PurchasePrice): ManualLottoAmount {
+        val input = inputView.readManualLottoAmount()
+        return when (val result = input.toManualLottoAmountResult(purchasePrice.toAmount())) {
+            is ManualLottoAmountResult.CannotMoreThanTotalPurchaseAmount -> {
+                outputView.printExceptionMessage(result.errorMsg)
+                getManualLottoAmount(purchasePrice)
+            }
+
+            is ManualLottoAmountResult.Success -> result.amount
+        }
+    }
 
     private fun purchaseManualLotto(manualLottoAmount: ManualLottoAmount): List<Lotto> {
         inputView.printReadManualLottoNumbers()
-        return List(manualLottoAmount.value) { getManualLotto() }
+        val inputManualLottoNumbers: List<String> = List(manualLottoAmount.value) { inputView.readManualLottoNumbers() }
+        return runCatching {
+            ManualLottoGenerator(inputManualLottoNumbers).makeLotto(manualLottoAmount.value)
+        }.getOrElse {
+            outputView.printExceptionMessage(it.message ?: DEFAULT_EXCEPTION_MSG)
+            purchaseManualLotto(manualLottoAmount)
+        }
     }
 
-    private fun getManualLotto(): Lotto =
-        retryWhenException(
-            action = {
-                val manualLottoNumbers = getManualLottoNumbers()
-                manualLottoGenerator.setManualLottoNumbers(manualLottoNumbers)
-                manualLottoGenerator.makeLotto()
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
-
-    private fun getManualLottoNumbers(): Set<Int> =
-        retryWhenException(
-            action = {
-                val input = inputView.readManualLottoNumbers()
-                input
-                    .split(",")
-                    .map {
-                        NumericValidator(it)
-                        it.toInt()
-                    }.toSet()
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
-
-    private fun purchaseAutoLotto(
-        totalAmount: Int,
-        manualLottoAmount: ManualLottoAmount,
-    ): List<Lotto> =
-        List(totalAmount - manualLottoAmount.value) {
-            autoLottoGenerator.makeLotto()
-        }
+    private fun purchaseAutoLotto(amount: Int): List<Lotto> = AutoLottoGenerator().makeLotto(amount)
 
     private fun displayLottoTicket(
         manualLotto: List<Lotto>,
@@ -101,32 +85,26 @@ class LottoController(
         outputView.printPurchasedLotto(manualLotto + autoLotto)
     }
 
-    private fun getWinningNumbers(): Lotto =
-        retryWhenException(
-            action = {
-                val input = inputView.readWinningNumbers()
-                Lotto(
-                    input
-                        .split(",")
-                        .map {
-                            NumericValidator(it)
-                            LottoNumber.from(it.trim().toInt())
-                        }.toSet(),
-                )
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
+    private fun getWinningNumbers(): Lotto {
+        val input: String = inputView.readWinningNumbers()
+        return runCatching {
+            Lotto(input.split(",").map { LottoNumber.from(it.toInt()) }.toSet())
+        }.getOrElse {
+            outputView.printExceptionMessage(it.message ?: DEFAULT_EXCEPTION_MSG)
+            getWinningNumbers()
+        }
+    }
 
-    private fun getWinningLotto(winningNumbers: Lotto): WinningLotto =
-        retryWhenException(
-            action = {
-                val input = inputView.readBonusNumber()
-                NumericValidator(input)
-                val bonusNumber = LottoNumber.from(input.toInt())
-                WinningLotto(winningNumbers, bonusNumber)
-            },
-            onError = { outputView.printErrorMessage(it) },
-        )
+    private fun getWinningLotto(winningNumbers: Lotto): WinningLotto {
+        val input = inputView.readBonusNumber()
+        return runCatching {
+            val bonusNumber = LottoNumber.from(input.toInt())
+            WinningLotto(winningNumbers, bonusNumber)
+        }.getOrElse {
+            outputView.printExceptionMessage(it.message ?: DEFAULT_EXCEPTION_MSG)
+            getWinningLotto(winningNumbers)
+        }
+    }
 
     private fun displayResult(
         lottoResult: LottoResult,
@@ -134,5 +112,9 @@ class LottoController(
     ) {
         outputView.printWinningResult(lottoResult, profitRate)
         if (profitRate.toDouble() < 1) outputView.printLossMessage()
+    }
+
+    companion object {
+        const val DEFAULT_EXCEPTION_MSG = "예외가 발생했습니다."
     }
 }
