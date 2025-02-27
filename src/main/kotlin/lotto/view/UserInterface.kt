@@ -17,38 +17,39 @@ class UserInterface(
     }
 
     fun printLottoCount(lottoCount: Int): Boolean {
-        OutputView.printMessage("발행할 수 있는 로또 수는 ${lottoCount}입니다. ${lottoCount}만큼 발행하겠습니까? Y / N 로 대답해주세요.")
+        OutputView.printMessage("\n발행할 수 있는 로또 수는 ${lottoCount}입니다. ${lottoCount}만큼 발행하겠습니까? Y / N 로 대답해주세요.")
         val yesOrNo = InputView.getUserInput()
         return yesOrNo == "Y"
     }
 
     fun printChange(change: Int) {
-        OutputView.printMessage("거스름 돈은 ${change}입니다.")
+        OutputView.printMessage("\n거스름 돈은 ${change}입니다.")
     }
 
     fun getManualLottoCount(): Int {
-        OutputView.printMessage("수동으로 구매할 로또 수를 입력해 주세요.")
+        OutputView.printMessage("\n수동으로 구매할 로또 수를 입력해 주세요.")
         val manualLottoCount = InputView.getUserInput()
         inputValidator.validateInteger(manualLottoCount)
         inputValidator.validateOverZero(manualLottoCount)
         return manualLottoCount.toInt()
     }
 
-    fun printLottoTickets(manualLottoCount : Int, autoLottoCount: Int, lottoTickets: List<LottoTicket>) {
-        OutputView.printMessage("수동으로 ${manualLottoCount}장, 자동으로 ${autoLottoCount}개를 구매했습니다.")
-        lottoTickets.map {
-            OutputView.printMessage(it.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
-        }
-    }
 
     fun getManualLottoNumbers(manualLottoCount: Int): List<List<Int>> {
         val manualLottoNumber = mutableListOf<List<Int>>()
-        OutputView.printMessage("수동으로 구매할 번호를 입력해 주세요..")
+        OutputView.printMessage("\n수동으로 구매할 번호를 입력해 주세요..")
         repeat(manualLottoCount) {
             val numbers = InputView.getUserInput()
             manualLottoNumber.add(numbers.split(",").map { it.trim().toInt() })
         }
         return manualLottoNumber
+    }
+
+    fun printLottoTickets(manualLottoCount : Int, autoLottoCount: Int, lottoTickets: List<LottoTicket>) {
+        OutputView.printMessage("\n수동으로 ${manualLottoCount}장, 자동으로 ${autoLottoCount}개를 구매했습니다.")
+        lottoTickets.map {
+            OutputView.printMessage(it.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
+        }
     }
 
     fun getWinningNumbers(): List<LottoNumber> {
