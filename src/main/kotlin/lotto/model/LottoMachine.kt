@@ -7,7 +7,7 @@ class LottoMachine {
         customerWantToBuyAutoLottoTicketCount: LottoTicketCount,
         manualLottoNumbers: List<List<Int>>,
     ): List<LottoTicket> =
-        purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount) + purchaseManualLottoTickets(manualLottoNumbers)
+        purchaseManualLottoTickets(manualLottoNumbers) + purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount)
 
     // 자동 로또를 발행
     private fun purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount: LottoTicketCount): List<LottoTicket> {
