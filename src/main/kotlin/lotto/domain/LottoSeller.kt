@@ -2,16 +2,20 @@ package lotto.domain
 
 import lotto.service.AutoLottoGenerator
 
-class LottoSeller {
-    fun getLottos(
-        price: Int,
-        manualLottoAmount: Int,
-        manualLottoNumbers: List<List<Int>>,
-    ): List<Lotto> {
+class LottoSeller(
+    val price: Int,
+    val manualLottoAmount: Int,
+    val manualLottos: List<Lotto>,
+) {
+    fun getLottos(): List<Lotto> {
         val totalAmount = getLottoAmount(price)
         val autoLottoAMount = totalAmount - manualLottoAmount
 
-        return getAutoLottos(autoLottoAMount) + getManualLottos(manualLottoNumbers)
+        return getAutoLottos(autoLottoAMount) + manualLottos
+    }
+
+    fun getAutoLottoAmount(): Int {
+        return LottoCalculator(price).calculateAutoLottos(manualLottoAmount)
     }
 
     // 돈을 받아서 수량을 계산하기
@@ -26,6 +30,16 @@ class LottoSeller {
         return List(amount) { lottoFactory.generateAutoLotto(autoLottoGenerator) }
     }
 
+    //    fun getManualLottos(amount: Int): List<Lotto> {
+//        val manualLottos = mutableListOf<Lotto>()
+//
+//        repeat(amount) {
+//            val numbers = inputView.inputManualLottoNumber()
+//            val lotto = Lotto(numbers.map { number -> LottoNumber(number) })
+//            manualLottos.add(lotto)
+//        }
+//        return manualLottos
+//    }
     private fun getManualLottos(manualLottoNumbers: List<List<Int>>): List<Lotto> {
         val lottoFactory = LottoFactory()
         return manualLottoNumbers.map { numbers -> lottoFactory.generateManualLotto(numbers) }
