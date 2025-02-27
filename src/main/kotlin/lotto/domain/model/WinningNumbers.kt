@@ -4,7 +4,7 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
     constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber(bonusNumber))
 
     init {
-        require(winningLotto.hasLottoNumber(bonusNumber)) { DUPLICATE_WINNING_NUMBER_MESSAGE.format(bonusNumber) }
+        require(winningLotto.hasLottoNumber(bonusNumber).not()) { DUPLICATE_WINNING_NUMBER_MESSAGE.format(bonusNumber) }
     }
 
     fun calculateLottoRanks(lottos: Lottos): LottoRanks {
