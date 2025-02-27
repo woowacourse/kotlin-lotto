@@ -13,4 +13,6 @@ class LottoNumber private constructor(
 
         fun of(value: Int): LottoNumber = pool[value] ?: throw IllegalArgumentException(Message.ERR_NOT_IN_RANGE.msg)
     }
+
+    override fun toString(): String = value.toString()
 }

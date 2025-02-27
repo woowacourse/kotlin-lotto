@@ -13,8 +13,7 @@ class LottoController(
     private val lottoRankFinder: LottoRankFinder,
 ) {
     fun run() {
-        // 순차적으로 실행...이게 과연 최선일까?
-        val userInput = lottoView.getLottoAmount()
+        val userInput = lottoView.getUserInput()
         val autoLotto = lottoGenerator.genManyLotto(userInput.automaticLottoCount)
         lottoView.printLotto(autoLotto)
         val manyLotto = autoLotto + userInput.manualLotto

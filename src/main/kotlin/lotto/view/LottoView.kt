@@ -8,20 +8,29 @@ import lotto.global.Message
 import java.lang.IllegalArgumentException
 
 class LottoView {
-    fun getLottoAmount(): UserInput {
-        println(Message.ASK_AMOUNT.msg)
-        return UserInput(getBuyAmount(), getManualLottoCount(), getManualLotto())
+    fun getUserInput(): UserInput {
+        val buyAmount = getBuyAmount()
+        UserInput.requireBuyAmount(buyAmount)
+        val manualLottoCount = getManualLottoCount()
+        UserInput.requireMaxManualLottoCount(manualLottoCount, buyAmount)
+        if (manualLottoCount != 0) {
+            val manualLotto = getManualLotto()
+            UserInput.requireIsEqualToManualLottoSize(manualLottoCount, manualLotto)
+            return UserInput(buyAmount, manualLottoCount, manualLotto)
+        }
+        return UserInput(buyAmount, manualLottoCount)
     }
 
     private fun getBuyAmount(): Int {
         println(Message.ASK_AMOUNT.msg)
         val userInput = readln()
         require(userInput.toIntOrNull() != null) { Message.ERR_INVALID_FORMAT.msg }
+
         return userInput.toInt()
     }
 
     private fun getManualLottoCount(): Int {
-        println(Message.ASK_MANUAL_LOTTO_AMOUNT)
+        println(Message.ASK_MANUAL_LOTTO_AMOUNT.msg)
         val userInput = readln()
         require(userInput.toIntOrNull() != null) { Message.ERR_INVALID_FORMAT.msg }
         return userInput.toInt()
@@ -41,7 +50,7 @@ class LottoView {
     }
 
     fun printLotto(manyLotto: List<Lotto>) {
-        for (lotto in manyLotto) println(lotto)
+        for (lotto in manyLotto) println(lotto.value.toString())
     }
 
     fun getWinningLotto(): List<Int> {

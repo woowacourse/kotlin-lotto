@@ -40,6 +40,28 @@ class LottoViewTest {
     }
 
     @Test
+    @DisplayName("로또의 금액, 수동 로또 개수, 수동 로또 정보를 입력받는다2")
+    fun t1_1() {
+        setInput(
+            """
+            5000
+            2
+            1,2,3,4,5,6\n1,2,3,4,5,6
+            """.trimIndent(),
+        )
+        assertThat(lottoView.getLottoAmount()).isEqualTo(
+            UserInput(
+                5000,
+                1,
+                listOf(
+                    listOf(1, 2, 3, 4, 5, 6),
+                    listOf(1, 2, 3, 4, 5, 6),
+                ),
+            ),
+        )
+    }
+
+    @Test
     @DisplayName("숫자로 변환할 수 없는 값을 입력받는다면 IllegalArgumentException를 반환하고, \"올바르지 않은 형식입니다\" 라는 메시지를 출력한다\n")
     fun t1_2() {
         setInput("8g1")
