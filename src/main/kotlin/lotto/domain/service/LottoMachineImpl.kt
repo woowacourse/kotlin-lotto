@@ -6,11 +6,7 @@ import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoNumber.Companion.LOTTO_MAX_NUMBER
 import lotto.domain.model.LottoNumber.Companion.LOTTO_MIN_NUMBER
 
-class LottoMachineImpl(minNumber: Int = LOTTO_MIN_NUMBER, maxNumber: Int = LOTTO_MAX_NUMBER) :
-    LottoMachine {
-    private val lottoNumbers =
-        (minNumber..maxNumber).map { LottoNumber(it) }
-
+class LottoMachineImpl : LottoMachine {
     override fun generateRandomLottoNumbers(): Lotto {
         val lotto = getRandomLottoNumbers().sorted()
         return Lotto(lotto.toSet())
@@ -28,5 +24,9 @@ class LottoMachineImpl(minNumber: Int = LOTTO_MIN_NUMBER, maxNumber: Int = LOTTO
 
     private fun getManualLottoNumbers(numbers: List<Int>): List<LottoNumber> {
         return numbers.map { LottoNumber(it) }
+    }
+
+    companion object {
+        private val lottoNumbers = (LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER).map { LottoNumber(Integer.valueOf(it)) }
     }
 }
