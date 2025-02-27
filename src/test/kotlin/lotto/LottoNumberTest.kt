@@ -18,28 +18,4 @@ class LottoNumberTest {
     fun `로또 번호는 1~45 숫자 사이에 없을 경우 예외가 발생한다`(value: Int) {
         assertThrows<IllegalArgumentException> { LottoNumber.of(value) }
     }
-
-    @ParameterizedTest
-    @ValueSource(ints = [1, 7, 9, 44])
-    fun `보너스 볼 번호는 정수 형태로 입력되어야 한다`(input: Int) {
-        assertDoesNotThrow { LottoNumber.of(input) }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = [-1, 48, 0, 46, 90])
-    fun `보너스 볼 번호는 1~45 숫자 사이에 해당한다`(input: Int) {
-        assertThrows<IllegalArgumentException> { LottoNumber.of(input) }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = [1, 7, 9, 44])
-    fun `수동 로또 번호는 정수 형태로 입력되어야 한다`(input: Int) {
-        assertDoesNotThrow { LottoNumber.of(input) }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = [-1, 48, 0, 46, 90])
-    fun `수동 로또 번호는 1~45 숫자 사이에 해당한다`(input: Int) {
-        assertThrows<IllegalArgumentException> { LottoNumber.of(input) }
-    }
 }

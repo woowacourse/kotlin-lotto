@@ -38,17 +38,4 @@ class LottoTest {
 
         assertThat(result).isTrue()
     }
-
-    @Test
-    fun `수동 생성된 로또는 6개의 숫자를 가진다`() {
-        val lotto = lottoOf(1, 44, 7, 9, 5, 6)
-        assertThat(lotto.lottoNums.size).isEqualTo(6)
-    }
-
-    @Test
-    fun `수동 생성된 로또 번호는 중복되지 않는다`() {
-        assertThrows<IllegalArgumentException> {
-            lottoOf(1, 3, 3, 4, 6, 6)
-        }
-    }
 }
