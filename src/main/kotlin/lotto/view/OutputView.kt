@@ -4,6 +4,10 @@ import lotto.domain.model.LottoWinningStats
 import lotto.domain.model.Lottos
 import lotto.domain.value.EarningInfo
 import lotto.domain.value.LottoPayInfo
+import lotto.enums.GainLoss
+import lotto.enums.GainLoss.GAIN
+import lotto.enums.GainLoss.LOSS
+import lotto.enums.GainLoss.PRINCIPAL
 import lotto.enums.Rank
 
 class OutputView {
@@ -28,6 +32,13 @@ class OutputView {
     }
 
     fun printLottoEarningRate(earningInfo: EarningInfo) {
-        println("총 수익률은 ${earningInfo.rate}입니다.(기준이 1이기 때문에 결과적으로 ${earningInfo.gainLoss.fullText} 의미임)")
+        println("총 수익률은 ${earningInfo.rate}입니다.(기준이 1이기 때문에 결과적으로 ${convertGainLossToText(earningInfo.gainLoss)} 의미임)")
     }
+
+    private fun convertGainLossToText(gainLoss: GainLoss): String =
+        when (gainLoss) {
+            GAIN -> "이득이라는"
+            PRINCIPAL -> "본전이라는"
+            LOSS -> "손해라는"
+        }
 }
