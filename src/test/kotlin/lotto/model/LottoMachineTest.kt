@@ -1,14 +1,15 @@
 package lotto.model
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class LottoMachineTest {
-    @ParameterizedTest
-    @ValueSource(ints = [1, 3, 4])
-    fun `로또 구입 개수만큼 로또를 발행한다`(count: Int) {
-        val lottoMachine = LottoMachine()
-        assertEquals(lottoMachine.purchase(count).size, count)
+    @Test
+    fun `수동 구매 개수와 수동 번호 입력 개수가 일치하지 않으면 에러를 발생한다`() {
+        val manualLottoCount = LottoTicketCount(0)
+        val manualLottoNumbers = listOf(listOf(1,2,3,4,5,6))
+        val autoLottoCount = LottoTicketCount(1)
+
+        assertThrows<IllegalArgumentException> { LottoMachine(manualLottoCount, autoLottoCount, manualLottoNumbers, ) }
     }
 }
