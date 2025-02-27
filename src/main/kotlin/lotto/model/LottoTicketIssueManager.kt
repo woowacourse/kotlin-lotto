@@ -17,7 +17,7 @@ class LottoTicketIssueManager (
     }
 
     // 로또를 발행해서 준다.
-    fun getLottoTickets(manualLottoNumbers: List<List<Int>>): List<LottoTicket> = LottoMachine().issueLottoTickets(customerWantToBuyAutoLottoTicketCount, customerWantToBuyManualLottoTicketCount, manualLottoNumbers)
+    fun getLottoTickets(manualLottoNumbers: List<List<Int>>): List<LottoTicket> = LottoMachine().issueLottoTickets(customerWantToBuyAutoLottoTicketCount, manualLottoNumbers)
 
 
     companion object {
