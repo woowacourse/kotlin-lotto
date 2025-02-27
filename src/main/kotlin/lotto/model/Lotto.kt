@@ -1,6 +1,6 @@
 package lotto.model
 
-class Lotto private constructor(val numbers: List<LottoNumber>) {
+class Lotto private constructor(private val numbers: List<LottoNumber>) {
     init {
         require(numbers.size == NUMBER_COUNT) {
             COUNT_ERROR_MESSAGE
@@ -14,6 +14,8 @@ class Lotto private constructor(val numbers: List<LottoNumber>) {
     fun countMatchingNumber(lotto: Lotto): Int = numbers.count { it in lotto.numbers }
 
     fun isContain(lottoNumber: LottoNumber): Boolean = lottoNumber in numbers
+
+    override fun toString(): String = numbers.toString()
 
     companion object {
         const val NUMBER_COUNT = 6

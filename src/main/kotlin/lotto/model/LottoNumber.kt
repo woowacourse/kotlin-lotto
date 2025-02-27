@@ -1,12 +1,14 @@
 package lotto.model
 
 @JvmInline
-value class LottoNumber(val value: Int) {
+value class LottoNumber(private val value: Int) {
     init {
         require(value in MIN_VALUE..MAX_VALUE) {
             RANGE_ERROR_MESSAGE
         }
     }
+
+    override fun toString(): String = value.toString()
 
     companion object {
         const val MIN_VALUE = 1
