@@ -1,17 +1,14 @@
-package lottoTest
+package lottoTest.domain
 
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.Rank
 import lotto.domain.WinningLottoTicket
-import lotto.service.LottoRankFinder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class LottoRankFinderTest {
-    private val lottoRankFinder = LottoRankFinder()
-
+class WinningLottoTicketTest {
     @Test
     @DisplayName("복권을 구매한 숫자만큼 복권의 당첨 등수를 반환한다")
     fun t1() {
@@ -23,7 +20,7 @@ class LottoRankFinderTest {
             )
         val winningLotto = Lotto.of(1, 2, 11, 10, 8, 9)
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         assertThat(result.map[Rank.MISS]).isEqualTo(3)
     }
 
@@ -38,7 +35,7 @@ class LottoRankFinderTest {
             )
         val winningLotto = Lotto.of(1, 2, 11, 10, 8, 9)
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         assertThat(result.map[Rank.MISS]).isEqualTo(2)
         assertThat(result.map[Rank.FOURTH]).isEqualTo(1)
     }
@@ -54,7 +51,7 @@ class LottoRankFinderTest {
             )
         val winningLotto = Lotto.of(1, 2, 11, 10, 8, 9)
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         assertThat(result.map[Rank.MISS]).isEqualTo(1)
         assertThat(result.map[Rank.FOURTH]).isEqualTo(1)
         assertThat(result.map[Rank.FIRST]).isEqualTo(1)
@@ -66,7 +63,7 @@ class LottoRankFinderTest {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRank(lotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRank(lotto)
         assertThat(result).isEqualTo(Rank.FIRST)
     }
 
@@ -76,7 +73,7 @@ class LottoRankFinderTest {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 8).map { LottoNumber.of(it) })
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRank(lotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRank(lotto)
         assertThat(result).isEqualTo(Rank.THIRD)
     }
 
@@ -86,7 +83,7 @@ class LottoRankFinderTest {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber.of(it) })
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRank(lotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRank(lotto)
         assertThat(result).isEqualTo(Rank.SECOND)
     }
 
@@ -96,7 +93,7 @@ class LottoRankFinderTest {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber.of(it) })
         val bonus = LottoNumber.of(5)
-        val result = lottoRankFinder.findLottoRank(lotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRank(lotto)
         assertThat(result).isEqualTo(Rank.THIRD)
     }
 
@@ -106,7 +103,7 @@ class LottoRankFinderTest {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val winningLotto = Lotto(listOf(1, 2, 3, 4, 8, 9).map { LottoNumber.of(it) })
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRank(lotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRank(lotto)
         assertThat(result).isEqualTo(Rank.FOURTH)
     }
 
@@ -116,7 +113,7 @@ class LottoRankFinderTest {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val winningLotto = Lotto.of(1, 2, 3, 10, 8, 9)
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRank(lotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRank(lotto)
         assertThat(result).isEqualTo(Rank.FIFTH)
     }
 
@@ -126,7 +123,7 @@ class LottoRankFinderTest {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val winningLotto = Lotto.of(1, 2, 11, 10, 8, 9)
         val bonus = LottoNumber.of(7)
-        val result = lottoRankFinder.findLottoRank(lotto, WinningLottoTicket(winningLotto, bonus))
+        val result = WinningLottoTicket(winningLotto, bonus).findLottoRank(lotto)
         assertThat(result).isEqualTo(Rank.MISS)
     }
 }

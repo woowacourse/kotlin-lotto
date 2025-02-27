@@ -5,7 +5,6 @@ import lotto.domain.LottoNumber
 import lotto.domain.WinningLottoTicket
 import lotto.global.Message
 import lotto.global.UserInputResult
-import lotto.service.LottoRankFinder
 import lotto.view.LottoView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -141,7 +140,7 @@ class LottoViewTest {
             )
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
-        val rankMap = LottoRankFinder().findLottoRanks(manyLotto, WinningLottoTicket(winningLotto, bonus))
+        val rankMap = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         lottoView.printResult(rankMap)
         assertThat(output.toString()).contains(
             """

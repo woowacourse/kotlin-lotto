@@ -6,13 +6,11 @@ import lotto.domain.UserInput
 import lotto.domain.WinningLottoTicket
 import lotto.global.Message
 import lotto.service.LottoGenerator
-import lotto.service.LottoRankFinder
 import lotto.view.LottoView
 
 class LottoController(
     private val lottoView: LottoView,
     private val lottoGenerator: LottoGenerator,
-    private val lottoRankFinder: LottoRankFinder,
 ) {
     fun run() {
         val userInput = getUserInput()
@@ -25,7 +23,7 @@ class LottoController(
         val bonusNum = LottoNumber.of(lottoView.getBonusNum().get(this::shutdown))
         val winningLottoTicket = WinningLottoTicket(winningLotto, bonusNum)
 
-        val rankMap = lottoRankFinder.findLottoRanks(manyLotto, winningLottoTicket)
+        val rankMap = winningLottoTicket.findLottoRanks(manyLotto)
         lottoView.printResult(rankMap)
     }
 
