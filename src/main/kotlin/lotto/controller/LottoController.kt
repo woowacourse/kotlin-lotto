@@ -15,7 +15,7 @@ class LottoController(
         }.map {
             Result.success(Unit)
         }.getOrElse {
-            e ->  Result.failure(Exception("로또 실행 중 오류 발생: ${e.message}"))
+            e ->  Result.failure(Exception("(로또 실행 중 오류 발생) : ${e.message}"))
         }
 
     }
