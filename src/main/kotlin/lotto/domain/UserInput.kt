@@ -12,28 +12,22 @@ data class UserInput(
     val automaticLottoCount: Int = totalLottoCount - manualLottoCount
 
     init {
-        requireBuyAmount(buyAmount)
-        requireMaxManualLottoCount(manualLottoCount, buyAmount)
-        requireIsEqualToManualLottoSize(manualLottoCount, rawManualLotto)
+        requireNotNull(getValidBuyAmountOrNull(buyAmount)) { Message.ERR_LESS_THAN_MINIMUM_PRICE.msg }
+        requireNotNull(getValidManualLottoCountOrNull(manualLottoCount, buyAmount)) { Message.ERR_TOO_MANY_MANUAL_LOTTO.msg }
+        requireNotNull(getValidManualLottoSizeOrNull(manualLottoCount, rawManualLotto)) { Message.ERR_MANUAL_NOT_SUFFICIENT.msg }
     }
 
     companion object {
-        fun requireBuyAmount(buyAmount: Int) {
-            require(buyAmount >= LOTTO_PRICE) { Message.ERR_LESS_THAN_MINIMUM_PRICE.msg }
-        }
+        fun getValidBuyAmountOrNull(buyAmount: Int): Int? = if (buyAmount >= LOTTO_PRICE) buyAmount else null
 
-        fun requireMaxManualLottoCount(
+        fun getValidManualLottoCountOrNull(
             manualLottoCount: Int,
             buyAmount: Int,
-        ) {
-            require(manualLottoCount <= buyAmount / LOTTO_PRICE) { Message.ERR_TOO_MANY_MANUAL_LOTTO.msg }
-        }
+        ): Int? = if (manualLottoCount <= buyAmount / LOTTO_PRICE) manualLottoCount else null
 
-        fun requireIsEqualToManualLottoSize(
+        fun getValidManualLottoSizeOrNull(
             manualLottoCount: Int,
             manualLotto: List<List<Int>>,
-        ) {
-            require(manualLotto.size == manualLottoCount) { Message.ERR_MANUAL_NOT_SUFFICIENT.msg }
-        }
+        ): List<List<Int>>? = if (manualLotto.size == manualLottoCount) manualLotto else null
     }
 }
