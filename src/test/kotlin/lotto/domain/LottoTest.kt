@@ -1,6 +1,7 @@
 package lotto.domain
 
 import lotto.domain.model.Lotto
+import lotto.domain.value.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -8,12 +9,12 @@ class LottoTest {
     @Test
     fun `수동으로 Int 컬렉션을 받아 6개의 로또 번호 Set을 갖는 로또 인스턴스를 만든다`() {
         // given
-        val oneToSixList = listOf(1, 2, 3, 4, 5, 6)
-        val oneToSixSet = setOf(1, 2, 3, 4, 5, 6)
+        val oneToSixLottoNumberList = listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }
+        val oneToSixLottoNumberSet = setOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()
 
         // when
-        val lottoMadeByList = Lotto.createManual(oneToSixList)
-        val lottoMadeBySet = Lotto.createManual(oneToSixSet)
+        val lottoMadeByList = Lotto.createManual(oneToSixLottoNumberList)
+        val lottoMadeBySet = Lotto.createManual(oneToSixLottoNumberSet)
 
         // then
         assertThat(lottoMadeByList.lottoNumbers.size).isEqualTo(6)
@@ -32,7 +33,7 @@ class LottoTest {
     @Test
     fun `수동으로 생성된 로또 인스턴스의 번호들을 오름차순으로 정렬하여 반환한다`() {
         // Given
-        val lotto = Lotto.createManual(setOf(4, 5, 6, 1, 2, 3))
+        val lotto = Lotto.createManual(listOf(4, 5, 6, 1, 2, 3).map { LottoNumber(it) })
 
         // When
         val lottoNumbers = lotto.getLottoNumbers()

@@ -27,6 +27,6 @@ class Lotto private constructor(
 
         fun createRandom(): Lotto = Lotto(RandomLottoNumbersGenerator().generateLottoNumbers())
 
-        fun createManual(numbers: Collection<Int>): Lotto = Lotto(numbers.map { LottoNumber(it) })
+        fun createManual(numbers: Collection<LottoNumber>): Lotto = Lotto(numbers)
     }
 }

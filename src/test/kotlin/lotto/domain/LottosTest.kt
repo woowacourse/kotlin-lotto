@@ -15,12 +15,12 @@ class LottosTest {
 
     @BeforeEach
     fun setUp() {
-        val lottoWithoutBonus = Lotto.createManual(listOf(1, 2, 3, 4, 5, 6))
+        val lottoTicketWithoutBonus = Lotto.createManual(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
         val bonusNumber = LottoNumber(45)
-        winningLotto = WinningLotto(lottoWithoutBonus, bonusNumber)
+        winningLotto = WinningLotto(lottoTicketWithoutBonus, bonusNumber)
 
-        val lottoNumbers = listOf(4, 5, 6, 7, 8, 9)
-        lottosHasTwoTickets = Lottos(listOf(Lotto.createManual(lottoNumbers), Lotto.createManual(lottoNumbers)))
+        val lottoTicket = listOf(4, 5, 6, 7, 8, 9).map { LottoNumber(it) }
+        lottosHasTwoTickets = Lottos(listOf(Lotto.createManual(lottoTicket), Lotto.createManual(lottoTicket)))
     }
 
     @Test
