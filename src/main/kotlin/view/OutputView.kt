@@ -4,10 +4,6 @@ import domain.model.Lotto
 import domain.model.LottoResult
 
 class OutputView {
-    fun printErrorMessage(message: String?) {
-        println(message)
-    }
-
     fun printPurchasedLottoCount(
         manualCount: Int,
         autoCount: Int,
@@ -29,6 +25,10 @@ class OutputView {
 
     fun printLossMessage() {
         println(MESSAGE_LOSS)
+    }
+
+    fun printExceptionMessage(msg: String) {
+        println(msg)
     }
 
     companion object {
