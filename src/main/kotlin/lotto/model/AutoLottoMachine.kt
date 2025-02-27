@@ -9,7 +9,6 @@ class AutoLottoMachine : LottoMachine {
         return NUMBERS.shuffled()
             .take(Lotto.NUMBER_COUNT)
             .sorted()
-            .toList()
     }
 
     companion object {
