@@ -20,11 +20,12 @@ class WinningLottoTest {
     @Test
     fun `로또 당첨을 판단한다`() {
         val bonusNumber = LottoNumber(7)
-        val winningNumbers = lotto(1, 2, 3, 4, 5, 6).toSet()
+        val winningNumbers = lotto(1, 2, 3, 4, 5, 6)
         val lottoTicket = lotto(1, 2, 3, 4, 5, 6)
+        val expect = Rank.FIRST
 
-        val rank = WinningLotto(winningNumbers, bonusNumber).getRank(lottoTicket)
+        val rank = WinningLotto(winningNumbers.toSet(), bonusNumber).getRank(lottoTicket)
 
-        assertThat(rank).isEqualTo(Rank.FIRST)
+        assertThat(rank).isEqualTo(expect)
     }
 }
