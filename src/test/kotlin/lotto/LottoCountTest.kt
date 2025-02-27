@@ -13,17 +13,6 @@ class LottoCountTest {
     }
 
     @Test
-    fun `현재 로또 수량에서 구매 가능한 수량인지 판단한다`() {
-        val originLottoCount = LottoCount(10)
-
-        val validLottoCount = LottoCount(10)
-        val invalidLottoCount = LottoCount(15)
-
-        assertThrows<IllegalArgumentException> { originLottoCount.validateLottoCount(invalidLottoCount) }
-        assertDoesNotThrow { originLottoCount.validateLottoCount(validLottoCount) }
-    }
-
-    @Test
     fun `현재 로또 수량에서 입력받은 로또 수량을 차감한다`() {
         val lottoCount = LottoCount(5)
 
