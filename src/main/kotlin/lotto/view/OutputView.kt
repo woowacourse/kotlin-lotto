@@ -1,6 +1,5 @@
 package lotto.view
 
-import lotto.model.Lotto
 import lotto.model.ProfitStatus
 import lotto.model.ProfitStatus.BREAK_EVEN
 import lotto.model.ProfitStatus.LOSS
@@ -27,10 +26,8 @@ class OutputView {
         println("수동으로 ${manualQuantity}장, 자동으로 ${autoQuantity}장을 구매했습니다.")
     }
 
-    fun printLottos(lottos: List<Lotto>) {
-        lottos.forEach { lotto ->
-            println(lotto.getRawNumbers())
-        }
+    fun printLotto(lottoNumbers: List<Int>) {
+        println("[${lottoNumbers.joinToString(", ")}]")
     }
 
     fun printWinningNumbersGuide() {

@@ -4,14 +4,9 @@ import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
 import lotto.model.LottoNumber.Companion.ALL_LOTTO_NUMBERS
 
 class LottoMachine {
-    fun getTotalLottos(
-        manualLottos: List<Lotto>,
-        autoQuantity: Int,
-    ): List<Lotto> = manualLottos.plus(getAutoLottos(autoQuantity))
+    fun getAutoLottos(quantity: Int): List<Lotto> = List(quantity) { Lotto.from(getAutoNumbers()) }
 
-    private fun getAutoLottos(quantity: Int): List<Lotto> = List(quantity) { Lotto.from(getLottoNumbers()) }
-
-    private fun getLottoNumbers(): List<Int> =
+    private fun getAutoNumbers(): List<Int> =
         ALL_LOTTO_NUMBERS
             .shuffled()
             .take(LOTTO_NUMBER_SIZE)

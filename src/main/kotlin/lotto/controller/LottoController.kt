@@ -6,6 +6,7 @@ import lotto.model.LottoMachine
 import lotto.model.LottoMachine.Companion.EMPTY_LOTTO_QUANTITY
 import lotto.model.LottoNumber
 import lotto.model.LottoProfitCalculator
+import lotto.model.LottoWallet
 import lotto.model.ProfitStatus
 import lotto.model.Rank
 import lotto.model.WinningDiscriminator
@@ -24,13 +25,22 @@ class LottoController(
         val manualLottoQuantity = inputView.readManualLottoQuantity()
 
         outputView.printManualLottoNumbersGuide(manualLottoQuantity > EMPTY_LOTTO_QUANTITY)
-        val manualLottos = List(manualLottoQuantity) { Lotto.from(inputView.readLottoNumbers()) }
 
-        val autoLottoQuantity = getAutoLottoQuantity(purchaseAmount, manualLottoQuantity)
-        val lottos = getPurchaseLottos(manualLottos, autoLottoQuantity)
+        val lottoWallet = LottoWallet()
+        repeat(manualLottoQuantity) {
+            lottoWallet.add(inputView.readLottoNumbers())
+        }
+
+        val lottoCashier = LottoCashier(purchaseAmount, manualLottoQuantity)
+
+        val autoLottoQuantity = lottoCashier.getPurchaseAutoQuantity()
+        val autoLottos = LottoMachine().getAutoLottos(autoLottoQuantity)
+        lottoWallet.addAll(autoLottos)
 
         outputView.printPurchaseLottoQuantity(manualLottoQuantity, autoLottoQuantity)
-        outputView.printLottos(lottos)
+        lottoWallet.get().forEach { lotto ->
+            outputView.printLotto(lotto.getRawNumbers())
+        }
 
         outputView.printWinningNumbersGuide()
         val winningNumbers = inputView.readLottoNumbers()
@@ -38,7 +48,7 @@ class LottoController(
         outputView.printBonusNumberGuide()
         val bonusNumber = inputView.readBonusNumber()
 
-        val lottoWinningResult = getLottosWinningResult(lottos, winningNumbers, bonusNumber)
+        val lottoWinningResult = getLottosWinningResult(autoLottos, winningNumbers, bonusNumber)
 
         outputView.printWinningResultTitle()
         outputView.printWinningLottoResult(lottoWinningResult)
@@ -47,27 +57,6 @@ class LottoController(
         val profitStatus = ProfitStatus.from(profitRate)
 
         outputView.printProfitRate(profitRate, profitStatus)
-    }
-
-    private fun getAutoLottoQuantity(
-        purchaseAmount: Int,
-        manualLottoQuantity: Int,
-    ): Int {
-        val lottoCashier = LottoCashier(purchaseAmount, manualLottoQuantity)
-
-        return lottoCashier.getPurchaseAutoQuantity()
-    }
-
-    private fun getPurchaseLottos(
-        manualLottos: List<Lotto>,
-        autoLottoQuantity: Int,
-    ): List<Lotto> {
-        val lottoMachine = LottoMachine()
-
-        return lottoMachine.getTotalLottos(
-            manualLottos = manualLottos,
-            autoQuantity = autoLottoQuantity,
-        )
     }
 
     private fun getLottosWinningResult(
