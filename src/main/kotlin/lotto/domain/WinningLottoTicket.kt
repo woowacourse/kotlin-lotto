@@ -4,13 +4,11 @@ data class WinningLottoTicket(
     val lotto: Lotto,
     val bonusNumber: LottoNumber,
 ) {
-    fun getCountOfMatchWith(contrast: Lotto): Int = lotto.value.count { it in contrast.value }
-
     fun isMatchedBonusWith(contrast: Lotto): Boolean = lotto.contains(bonusNumber) && !contrast.contains(bonusNumber)
 
-    fun findLottoRank(lotto: Lotto): Rank {
-        val countOfMatch = this.getCountOfMatchWith(lotto)
-        val isBonusMatched = this.isMatchedBonusWith(lotto)
+    fun findLottoRank(contrast: Lotto): Rank {
+        val countOfMatch = lotto.getCountOfMatchWith(contrast)
+        val isBonusMatched = this.isMatchedBonusWith(contrast)
         return Rank.getRank(countOfMatch, isBonusMatched)
     }
 

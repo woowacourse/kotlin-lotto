@@ -14,6 +14,8 @@ data class Lotto(
 
     fun contains(element: LottoNumber): Boolean = value.contains(element)
 
+    fun getCountOfMatchWith(contrast: Lotto): Int = value.count { it in contrast.value }
+
     private fun requireValidLotto(input: List<LottoNumber>): List<LottoNumber> {
         var winningLotto = input.toList()
         require(input.size == MAX_LOTTO_LENGTH) { Message.ERR_NOT_SIX_ELEMENTS.msg }
