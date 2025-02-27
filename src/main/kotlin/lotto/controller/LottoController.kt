@@ -53,7 +53,9 @@ class LottoController(
         try {
             outputView.printPurchaseManualLottoCountGuide()
             val manualLottoCount = inputView.readManualLottoPurchaseCount()
-            wholeLottoCount.validateLottoCount(manualLottoCount)
+            if (!wholeLottoCount.isPurchasableLottoCount(manualLottoCount)) {
+                getPurchaseManualLottoCount(wholeLottoCount)
+            }
             manualLottoCount
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
