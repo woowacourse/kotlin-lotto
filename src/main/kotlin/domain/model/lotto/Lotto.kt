@@ -3,19 +3,19 @@ package domain.model.lotto
 import domain.model.Rank
 import domain.model.number.LottoNumber
 
-data class Lotto(val numbers: List<LottoNumber>) {
-    init {
+data class Lotto(val numbers: Set<LottoNumber>) {
+    constructor(numbers: List<LottoNumber>) : this(numbers.toSet()) {
+        if (numbers.size != this.numbers.size) {
+            throw LottoException.DuplicatedLottoSize()
+        }
         if (numbers.size != LOTTO_SIZE) {
             throw LottoException.InvalidLottoSize()
-        }
-        if (numbers.size != numbers.toSet().size) {
-            throw LottoException.DuplicatedLottoSize()
         }
     }
 
     fun getRank(
         winningLotto: Lotto,
-        bonusNumber: LottoNumber
+        bonusNumber: LottoNumber,
     ): Rank {
         val winningLottoNumbers = winningLotto.numbers
 
