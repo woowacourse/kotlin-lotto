@@ -5,8 +5,11 @@ import lotto.model.Rank
 import java.lang.String.format
 
 class LottoOutputView {
-    fun printLottoCount(numbers: List<Int>) {
-        println(format(OUTPUT_LOTTO_COUNT_MESSAGE, numbers[0], numbers[1]))
+    fun printLottoCount(
+        manual: Int,
+        auto: Int,
+    ) {
+        println(format(OUTPUT_LOTTO_COUNT_MESSAGE, manual, auto))
     }
 
     fun printLottoBundle(lottoBundle: List<Lotto>): List<Lotto> {
@@ -16,11 +19,8 @@ class LottoOutputView {
         return lottoBundle
     }
 
-    fun printManualLottoBundle(manualLottoBundle: List<Lotto>): List<Lotto> {
-        manualLottoBundle.forEach { lotto ->
-            println(lotto.numbers.map { it.number })
-        }
-        return manualLottoBundle
+    fun printManualLottoGuide() {
+        println(INPUT_MANUAL_LOTTO_MESSAGE)
     }
 
     private fun isBonusMatch(rank: Rank) = if (rank == Rank.SECOND) OUTPUT_STATISTICS_BONUS_NUMBER_MESSAGE else " "
@@ -47,6 +47,7 @@ class LottoOutputView {
     }
 
     companion object {
+        private const val INPUT_MANUAL_LOTTO_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
         private const val OUTPUT_LOTTO_COUNT_MESSAGE = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val OUTPUT_STATISTIC_GUIDE_MESSAGE = "\n당첨 통계\n---------"
         private const val OUTPUT_PROFIT_MESSAGE = "총 수익률은 %s입니다."

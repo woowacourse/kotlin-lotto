@@ -6,7 +6,7 @@ class LottoTicketCounter(
 ) {
     fun count(): Int = purchase.toInt() / PURCHASE_STANDARD
 
-    fun manualCount(): List<Int> = listOf(manual, count() - manual)
+    fun autoCount(): Int = count() - manual
 
     init {
         require(purchase.toInt() >= PURCHASE_STANDARD) { ERROR_MINIMUM_PURCHASE_MESSAGE }
