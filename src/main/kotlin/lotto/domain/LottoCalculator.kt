@@ -1,10 +1,10 @@
 package lotto.domain
 
-class PurchaseAmount(
+class LottoCalculator(
     val amountOfPurchase: Int,
 ) {
     init {
-        require(amountOfPurchase.toInt() % LOTTO_PRICE == 0) { "로또는 1000원 단위로 구입해주세요" }
+        require(amountOfPurchase % LOTTO_PRICE == 0) { "로또는 1000원 단위로 구입해주세요" }
     }
 
     fun calculateAmountOfLottos(): Int {
