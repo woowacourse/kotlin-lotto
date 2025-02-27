@@ -23,7 +23,7 @@ class LottoController(
         val lottoCashier = LottoCashier(purchaseAmount, manualLottoQuantity)
 
         val lottoWallet = geterateLottoWallet(manualLottoQuantity)
-        val autoLottoQuantity = lottoCashier.getPurchaseAutoQuantity()
+        val autoLottoQuantity = lottoCashier.getPurchaseAutoLottoQuantity()
         val lottoMachine = LottoMachine()
 
         addAutoLottosToWallet(lottoMachine, lottoWallet, autoLottoQuantity)

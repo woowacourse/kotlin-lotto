@@ -35,7 +35,7 @@ class LottoCashierTest {
         val lottoCashier = LottoCashier(amount = amount, manualQuantity = 0)
 
         // when
-        val lottoQuantity = lottoCashier.getPurchaseAutoQuantity()
+        val lottoQuantity = lottoCashier.getPurchaseAutoLottoQuantity()
 
         // then
         assertEquals(5, lottoQuantity)

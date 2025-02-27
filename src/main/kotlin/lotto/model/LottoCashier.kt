@@ -28,7 +28,7 @@ class LottoCashier(
         }
     }
 
-    fun getPurchaseAutoQuantity(): Int = amount / LOTTO_EACH_AMOUNT - manualQuantity
+    fun getPurchaseAutoLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT - manualQuantity
 
     companion object {
         private const val LOTTO_MIN_AMOUNT = 0
