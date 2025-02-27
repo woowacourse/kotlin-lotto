@@ -10,6 +10,13 @@ object OutputView {
         println("${amount}개를 구매했습니다.")
     }
 
+    fun printLottoAmount(
+        manual: Int,
+        auto: Int,
+    ) {
+        println("수동으로 ${manual}장, 자동으로 ${auto}개를 구매했습니다.")
+    }
+
     fun printLottos(lottos: List<Lotto>) {
         lottos.forEach { lotto ->
             println(lotto.lottoNums.map { it.number }.joinToString(", ", "[", "]"))
