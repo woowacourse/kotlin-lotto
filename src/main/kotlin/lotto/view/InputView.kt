@@ -8,14 +8,20 @@ object InputView {
         return readln().also { InputValidator.ValidateNumber(it) }
     }
 
-    fun inputManualLottoAmount(): String {
+    fun inputManualLottoAmount(): Int {
         println("수동으로 구매할 로또 수를 입력해 주세요. ")
-        return readln()
+        val input = readln().also { InputValidator.ValidateNumber(it) }
+        return input.toInt()
     }
 
-    fun inputManualLottoNumber(): String {
+    fun inputManualLottoNumber(): List<Int> {
         println("수동으로 구매할 번호를 입력해주세요. ")
-        return readln()
+        val numbers =
+            readln().split(',').map {
+                it.trim().also { InputValidator.ValidateNumber(it) }
+                it.toInt()
+            }
+        return numbers
     }
 
     fun inputWinningNumber(): List<String> {
