@@ -6,13 +6,14 @@ import lotto.domain.LottoNumber
 import lotto.domain.MAX_LOTTO_LENGTH
 import lotto.domain.MAX_LOTTO_NUMBER
 import lotto.domain.MIN_LOTTO_NUMBER
-import java.util.LinkedList
 
 class LottoGenerator {
     fun genLotto(): Lotto {
         val lotto = mutableListOf<LottoNumber>()
-        val range: LinkedList<Int> = LinkedList(IntRange(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER).shuffled())
-        repeat(MAX_LOTTO_LENGTH) { lotto.add(LottoNumber.of(range.poll())) }
+        val range = IntRange(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER).shuffled()
+        for (i in 0 until MAX_LOTTO_LENGTH) {
+            lotto.add(LottoNumber.of(range.get(i)))
+        }
 
         return Lotto(lotto.toList())
     }
