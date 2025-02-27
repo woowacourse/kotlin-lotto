@@ -7,8 +7,8 @@ import domain.model.manual.ManualLottoAmount
 import domain.model.number.LottoNumber
 import domain.model.price.PurchasePrice
 import domain.model.winning.WinningLotto
-import domain.service.AutoLottoMachine
-import domain.service.ManualLottoMachine
+import domain.model.machine.AutoLottoMachine
+import domain.model.machine.ManualLottoMachine
 import view.InputView
 import view.OutputView
 

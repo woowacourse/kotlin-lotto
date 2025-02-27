@@ -1,4 +1,4 @@
-package domain.service
+package domain.model.machine
 
 import domain.model.lotto.Lotto
 

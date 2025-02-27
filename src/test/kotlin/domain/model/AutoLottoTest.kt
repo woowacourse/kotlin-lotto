@@ -1,4 +1,4 @@
-package domain.service
+package domain.model
 
 import domain.fixture.createLotto
 import org.assertj.core.api.Assertions.assertThat

@@ -1,6 +1,7 @@
-package domain.service
+package domain.model
 
 import domain.fixture.createLotto
+import domain.model.machine.ManualLottoMachine
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

@@ -1,6 +1,6 @@
 package domain.model.price
 
-import domain.service.LottoMachine.Companion.STANDARD_AMOUNT_UNIT
+import domain.model.machine.LottoMachine.Companion.STANDARD_AMOUNT_UNIT
 import util.ErrorConstants.ERROR
 
 sealed class PurchasePriceException(override val message: String) : Throwable(message) {
