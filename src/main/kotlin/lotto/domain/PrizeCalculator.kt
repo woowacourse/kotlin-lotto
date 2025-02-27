@@ -1,4 +1,6 @@
-package lotto.model
+package lotto.domain
+
+import lotto.domain.model.Rank
 
 class PrizeCalculator {
     fun calculateEarningRate(

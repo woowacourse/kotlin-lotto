@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.domain.model
 
 class LottoPurchaseInfo(
     val amount: Int,

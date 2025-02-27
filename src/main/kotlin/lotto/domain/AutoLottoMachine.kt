@@ -1,4 +1,8 @@
-package lotto.model
+package lotto.domain
+
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoPurchaseInfo
 
 class AutoLottoMachine : LottoMachine {
     override fun publishLottoTickets(lottoPurchaseInfo: LottoPurchaseInfo): List<Lotto> {

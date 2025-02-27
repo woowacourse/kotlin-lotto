@@ -1,4 +1,4 @@
-package lotto.model
+package lotto.domain.model
 
 class Lotto private constructor(private val numbers: List<LottoNumber>) {
     init {

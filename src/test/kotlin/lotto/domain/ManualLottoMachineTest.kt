@@ -1,6 +1,7 @@
-package lotto.model
+package lotto.domain
 
 import io.kotest.matchers.shouldBe
+import lotto.domain.model.LottoPurchaseInfo
 import org.junit.jupiter.api.Test
 
 class ManualLottoMachineTest {

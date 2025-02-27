@@ -1,12 +1,12 @@
 package lotto.controller
 
-import lotto.model.AutoLottoMachine
-import lotto.model.Lotto
-import lotto.model.LottoMatcher
-import lotto.model.LottoNumber
-import lotto.model.LottoPurchaseInfo
-import lotto.model.ManualLottoMachine
-import lotto.model.PrizeCalculator
+import lotto.domain.AutoLottoMachine
+import lotto.domain.LottoMatcher
+import lotto.domain.ManualLottoMachine
+import lotto.domain.PrizeCalculator
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoPurchaseInfo
 import lotto.view.InputView
 import lotto.view.OutputView
 

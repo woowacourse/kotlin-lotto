@@ -1,7 +1,7 @@
 package lotto.view
 
-import lotto.model.LottoPurchaseInfo
-import lotto.model.Rank
+import lotto.domain.model.LottoPurchaseInfo
+import lotto.domain.model.Rank
 
 class OutputView {
     fun printAmountMessage() {
