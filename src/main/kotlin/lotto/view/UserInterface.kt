@@ -41,7 +41,7 @@ class UserInterface(
         }
     }
 
-    fun getManualLottoNumber(manualLottoCount: Int): List<List<Int>> {
+    fun getManualLottoNumbers(manualLottoCount: Int): List<List<Int>> {
         val manualLottoNumber = mutableListOf<List<Int>>()
         OutputView.printMessage("수동으로 구매할 번호를 입력해 주세요..")
         repeat(manualLottoCount) {
@@ -51,13 +51,13 @@ class UserInterface(
         return manualLottoNumber
     }
 
-    fun getWinningNumbers(): Set<LottoNumber> {
+    fun getWinningNumbers(): List<LottoNumber> {
         OutputView.printMessage("\n지난 주 당첨 번호를 입력해 주세요.")
         val winningNumbers = InputView.getUserInput().split(",").map { it.trim() }
         for (winningNumber in winningNumbers) {
             inputValidator.validateInteger(winningNumber)
         }
-        return winningNumbers.map { LottoNumber(it.toInt()) }.toSet()
+        return winningNumbers.map { LottoNumber(it.toInt()) }
     }
 
     fun getBonusNumber(): LottoNumber {

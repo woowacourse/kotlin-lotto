@@ -2,11 +2,11 @@ package lotto.model
 
 // 당첨 번호 확인하는 로직
 class WinningLotto(
-    private val winningNumbers: LottoTicket,
+    private val winningLottoTicket: LottoTicket,
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        require(!winningNumbers.containsNumber(bonusNumber)) { ERROR_LOTTO_NUMBERS_NOT_CONTAIN_BONUS_NUMBER }
+        require(!winningLottoTicket.containsNumber(bonusNumber)) { ERROR_LOTTO_NUMBERS_NOT_CONTAIN_BONUS_NUMBER }
     }
 
     // 전체 당첨 확인 결과 반환
@@ -20,7 +20,7 @@ class WinningLotto(
     }
 
     // 몇 개 맞는 지 확인
-    private fun getCountOfMatch(lottoTicket: LottoTicket): Int = winningNumbers.matchNumbersSize(lottoTicket)
+    private fun getCountOfMatch(lottoTicket: LottoTicket): Int = winningLottoTicket.matchNumbersSize(lottoTicket)
 
     // 보너스 번호 확인
     private fun getMatchBonus(lottoTicket: LottoTicket): Boolean = lottoTicket.containsNumber(bonusNumber)

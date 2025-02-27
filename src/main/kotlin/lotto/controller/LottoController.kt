@@ -1,6 +1,5 @@
 package lotto.controller
 
-import lotto.contants.LottoRuleConstants
 import lotto.model.*
 import lotto.view.UserInterface
 
@@ -8,48 +7,44 @@ class LottoController(
     private val userInterface: UserInterface = UserInterface(),
 ) {
     fun run() {
-
-        val cashier = meetCashier()
-        val lottoCount = calculateLottoTicketAmount(cashier)
-        calculateLottoTicketCount(cashier, lottoCount)
-        val manualLottoCount = userInterface.getManualLottoCount()
-        val manualLottoNumber = userInterface.getManualLottoNumber(manualLottoCount)
-        val lottoTicketCountManager = LottoTicketCountManager(LottoTicketCount(lottoCount), LottoTicketCount(manualLottoCount))
-        val autoLottoCount = lottoTicketCountManager.autoLottoCount
-        // 수동 번호를 입력하세요.
-        val lottoTicket = LottoMachine(LottoTicketCount(manualLottoCount), LottoTicketCount(autoLottoCount), manualLottoNumber).issueLottoTickets()
-        userInterface.printLottoTickets(manualLottoCount, autoLottoCount, lottoTicket)
+        val possibleToLottoTicketCount = meetLottoStoreCashier()
+        val lottoTickets = getLottoTickets(possibleToLottoTicketCount)
         val winningLotto = getWinningLotto()
-        val lottoResult = winningLotto.getResult(lottoTicket)
-        getResult(lottoResult)
+        getResult(lottoTickets, winningLotto)
     }
 
-    private fun meetCashier() : LottoStoreCashier {
-        val amount = userInterface.inputPurchaseAmount()
-        val cashier = LottoStoreCashier(amount)
-        return cashier
-    }
-
-    private fun calculateLottoTicketAmount(cashier: LottoStoreCashier): Int {
-        val lottoCount = cashier.calculateCount()
-        return lottoCount
-    }
-
-    private fun calculateLottoTicketCount(cashier: LottoStoreCashier, lottoCount: Int) {
-        val customerAnswer = userInterface.printLottoCount(lottoCount)
+    private fun meetLottoStoreCashier() : Int {
+        val money = userInterface.inputPurchaseAmount()
+        val lottoStoreCashier = LottoStoreCashier(money)
+        val possibleToLottoTicketCount = lottoStoreCashier.calculatePossibleToBuyLottoTicketCount()
+        val customerAnswer = userInterface.printLottoCount(possibleToLottoTicketCount)
         if (customerAnswer) {
-            val change = cashier.calculateChange()
+            val change = lottoStoreCashier.calculateChange(possibleToLottoTicketCount)
             userInterface.printChange(change)
         }
+        return possibleToLottoTicketCount
+    }
+
+    private fun getLottoTickets(possibleToLottoTicketCount: Int): List<LottoTicket> {
+        val customerWantToBuyManualLottoTicketCount = userInterface.getManualLottoCount()
+        val manualLottoNumbers = userInterface.getManualLottoNumbers(customerWantToBuyManualLottoTicketCount)
+        val lottoTicketIssueManager = LottoTicketIssueManager(possibleToLottoTicketCount, customerWantToBuyManualLottoTicketCount, manualLottoNumbers)
+        val lottoTickets = lottoTicketIssueManager.getLottoTickets(manualLottoNumbers)
+        val autoLottoTicketCount = lottoTicketIssueManager.getCustomerWantToBuyManualLottoTicketCount()
+        userInterface.printLottoTickets(customerWantToBuyManualLottoTicketCount, autoLottoTicketCount, lottoTickets)
+        return lottoTickets
     }
 
     private fun getWinningLotto(): WinningLotto {
         val winningNumbers = userInterface.getWinningNumbers()
         val bonusNumber = userInterface.getBonusNumber()
-        return WinningLotto(winningNumbers, bonusNumber)
+        val winningLottoTicket = LottoTicket(LottoIssueType.WINNING, winningNumbers)
+        return WinningLotto(winningLottoTicket, bonusNumber)
     }
 
-    private fun getResult(lottoResult: LottoResult) {
+    private fun getResult(lottoTickets: List<LottoTicket>, winningLotto: WinningLotto) {
+        val ranks = winningLotto.getRanks(lottoTickets)
+        val lottoResult = LottoResult(ranks)
         val winningStatus = lottoResult.getWinningStatus()
         val profit = lottoResult.calculateProfit()
         userInterface.printResult(winningStatus)

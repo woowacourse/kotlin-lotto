@@ -19,6 +19,7 @@ class LottoTicketIssueManager (
     // 로또를 발행해서 준다.
     fun getLottoTickets(manualLottoNumbers: List<List<Int>>): List<LottoTicket> = LottoMachine().issueLottoTickets(customerWantToBuyAutoLottoTicketCount, manualLottoNumbers)
 
+    fun getCustomerWantToBuyManualLottoTicketCount(): Int = customerWantToBuyManualLottoTicketCount.toInt()
 
     companion object {
         private const val LOTTO_COUNT_NOT_MATCH_LOTTO_NUMBERS = "수동 구매 개수와 수동 번호 입력 개수가 일치하지 않습니다."

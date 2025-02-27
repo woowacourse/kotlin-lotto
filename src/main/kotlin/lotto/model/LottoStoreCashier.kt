@@ -14,7 +14,7 @@ class LottoStoreCashier(
     }
 
     // 고객이 준 돈에서 몇장을 살 수 있는 지 계산한다.
-    private fun calculatePossibleToBuyLottoTicketCount(): Int = customerMoney / LottoRuleConstants.LOTTO_AMOUNT.value
+    fun calculatePossibleToBuyLottoTicketCount(): Int = customerMoney / LottoRuleConstants.LOTTO_AMOUNT.value
 
     // 고객이 몇장을 사고 싶다고 이야기를 하면 가능한지 계산한다.
     fun isPossibleToBuy(customerWantBuyLottoTicketCount: Int): Boolean = possibleToLottoTicketCount >= customerWantBuyLottoTicketCount
