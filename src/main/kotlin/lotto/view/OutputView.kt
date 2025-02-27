@@ -11,7 +11,7 @@ class OutputView {
     ) {
         println(MESSAGE_BUY_LOTTO.format(manualLottoCount, lottos.size - manualLottoCount))
         lottos.forEach { lotto ->
-            println(lotto.getSortedLotto().map { it.toInt() }.joinToString(", ", "[", "]"))
+            println(lotto.getSortedLotto().map { it.number }.joinToString(", ", "[", "]"))
         }
     }
 

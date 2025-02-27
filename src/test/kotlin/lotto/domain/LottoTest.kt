@@ -20,9 +20,9 @@ class LottoTest {
 
     @Test
     fun `로또 번호는 오름차순으로 정렬된다`() {
-        val lotto = Lotto(listOf(LottoNumber(7), LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6)).toSet())
+        val lotto = Lotto(listOf(7, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet())
         assertThat(
             lotto.getSortedLotto(),
-        ).isEqualTo(listOf(LottoNumber(2), LottoNumber(3), LottoNumber(4), LottoNumber(5), LottoNumber(6), LottoNumber(7)))
+        ).isEqualTo(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber(it) }.toSet())
     }
 }

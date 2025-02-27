@@ -10,7 +10,7 @@ class LottoNumberTest {
     @ParameterizedTest
     fun `로또 번호는 1~45 사이이다`(value: Int) {
         val number = LottoNumber(value)
-        assertThat(number.toInt()).isEqualTo(value)
+        assertThat(number.number).isEqualTo(value)
     }
 
     @ValueSource(ints = [-1, 0, 46, 47])
