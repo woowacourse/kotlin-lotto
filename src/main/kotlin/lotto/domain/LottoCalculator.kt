@@ -5,7 +5,7 @@ class LottoCalculator(
     private val lottoPrice: Int = LOTTO_PRICE,
 ) {
     init {
-        validateAmount()
+        validatePurchaseAmount()
     }
 
     fun calculateAmountOfLottos(): Int = amountOfPurchase / lottoPrice
@@ -15,7 +15,7 @@ class LottoCalculator(
         return calculateAmountOfLottos() - manualCount
     }
 
-    private fun validateAmount() {
+    private fun validatePurchaseAmount() {
         require(amountOfPurchase % lottoPrice == 0) { "로또는 ${lottoPrice}원 단위로 구입해주세요" }
     }
 

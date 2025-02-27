@@ -6,6 +6,10 @@ import lotto.domain.Profit
 import lotto.domain.Rank
 
 object OutputView {
+    fun printManualLottoMessage() {
+        println("수동으로 구매할 번호를 입력해주세요. ")
+    }
+
     fun printLottoAmount(
         manual: Int,
         auto: Int,

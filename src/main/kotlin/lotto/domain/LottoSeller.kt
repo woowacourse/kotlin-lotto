@@ -5,13 +5,13 @@ import lotto.service.AutoLottoGenerator
 class LottoSeller(
     val price: Int,
     val manualLottoAmount: Int,
-    val manualLottos: List<Lotto>,
+    val manualLottos: List<List<Int>>,
 ) {
     fun getLottos(): List<Lotto> {
         val totalAmount = getLottoAmount(price)
         val autoLottoAMount = totalAmount - manualLottoAmount
 
-        return getAutoLottos(autoLottoAMount) + manualLottos
+        return getAutoLottos(autoLottoAMount) + getManualLottos(manualLottos)
     }
 
     fun getAutoLottoAmount(): Int {
@@ -30,16 +30,6 @@ class LottoSeller(
         return List(amount) { lottoFactory.generateAutoLotto(autoLottoGenerator) }
     }
 
-    //    fun getManualLottos(amount: Int): List<Lotto> {
-//        val manualLottos = mutableListOf<Lotto>()
-//
-//        repeat(amount) {
-//            val numbers = inputView.inputManualLottoNumber()
-//            val lotto = Lotto(numbers.map { number -> LottoNumber(number) })
-//            manualLottos.add(lotto)
-//        }
-//        return manualLottos
-//    }
     private fun getManualLottos(manualLottoNumbers: List<List<Int>>): List<Lotto> {
         val lottoFactory = LottoFactory()
         return manualLottoNumbers.map { numbers -> lottoFactory.generateManualLotto(numbers) }

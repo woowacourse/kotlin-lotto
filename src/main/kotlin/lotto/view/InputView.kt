@@ -15,7 +15,6 @@ object InputView {
     }
 
     fun inputManualLottoNumber(): List<Int> {
-        println("수동으로 구매할 번호를 입력해주세요. ")
         val numbers =
             readln().split(',').map {
                 it.trim().also { InputValidator.ValidateNumber(it) }
