@@ -15,14 +15,7 @@ class WinningLotto(
         require(bonusNumber !in winningNumbers) { ERROR_BONUS_DUPLICATE }
     }
 
-    fun getResult(
-        manualLottoTickets: List<LottoTicket>,
-        autoLottoTickets: List<LottoTicket>,
-    ): LottoResult {
-        val results = manualLottoTickets.map { getRank(it) }.toMutableList()
-        results.addAll(autoLottoTickets.map { getRank(it) })
-        return LottoResult(results)
-    }
+    fun getResult(lottoTickets: List<LottoTicket>): LottoResult = LottoResult(lottoTickets.map { getRank(it) })
 
     fun getRank(lottoTicket: LottoTicket): Rank {
         val countOfMatch = getCountOfMatch(lottoTicket)
