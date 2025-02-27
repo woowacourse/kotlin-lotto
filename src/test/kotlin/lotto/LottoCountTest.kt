@@ -12,7 +12,7 @@ import org.junit.jupiter.api.assertThrows
 class LottoCountTest {
     @Test
     fun `로또 수량은 0보다 크거나 같아야 한다`() {
-        assertThrows<java.lang.IllegalArgumentException> { LottoCount(-1) }
+        assertThrows<IllegalArgumentException> { LottoCount(-1) }
         assertDoesNotThrow { LottoCount(0) }
     }
 
