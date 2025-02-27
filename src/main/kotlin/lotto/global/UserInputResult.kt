@@ -1,6 +1,6 @@
 package lotto.global
 
-import kotlin.system.exitProcess
+import java.lang.IllegalStateException
 
 sealed class UserInputResult<T> {
     data class Success<T>(
@@ -11,15 +11,8 @@ sealed class UserInputResult<T> {
         val errorMessage: Message,
     ) : UserInputResult<T>()
 
-    fun get(onFailure: (Message) -> Unit): T {
-        when (this) {
-            is Failure -> {
-                onFailure(this.errorMessage)
-                exitProcess(0)
-            }
-            is Success -> {
-                return this.value
-            }
-        }
+    fun get(): T {
+        if (this is Success) return this.value
+        throw IllegalStateException()
     }
 }

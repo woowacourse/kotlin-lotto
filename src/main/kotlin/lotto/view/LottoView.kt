@@ -6,7 +6,6 @@ import lotto.domain.ScoreRankMap
 import lotto.domain.UserInput
 import lotto.global.Message
 import lotto.global.UserInputResult
-import kotlin.system.exitProcess
 
 class LottoView {
     fun getBuyAmount(): UserInputResult<Int> {
@@ -81,8 +80,7 @@ class LottoView {
         )
     }
 
-    fun exit(message: Message) {
+    fun printMessage(message: Message) {
         println(message.msg)
-        exitProcess(0)
     }
 }

@@ -3,7 +3,6 @@ package lottoTest
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.WinningLottoTicket
-import lotto.global.Message
 import lotto.global.UserInputResult
 import lotto.view.LottoView
 import org.assertj.core.api.Assertions.assertThat
@@ -36,7 +35,7 @@ class LottoViewTest {
         val buyAmount = lottoView.getBuyAmount()
         assertThat(buyAmount)
             .isInstanceOf(UserInputResult.Success::class.java)
-        assertThat(buyAmount.get { e: Message -> e }).isEqualTo(5000)
+        assertThat(buyAmount.get()).isEqualTo(5000)
     }
 
     @Test
@@ -66,7 +65,7 @@ class LottoViewTest {
         val buyAmount = lottoView.getManualLottoCount(1500)
         assertThat(buyAmount)
             .isInstanceOf(UserInputResult.Success::class.java)
-        assertThat(buyAmount.get { e: Message -> e }).isEqualTo(1)
+        assertThat(buyAmount.get()).isEqualTo(1)
     }
 
     @Test
@@ -86,7 +85,7 @@ class LottoViewTest {
         val buyAmount = lottoView.getManualLotto(2)
         assertThat(buyAmount)
             .isInstanceOf(UserInputResult.Success::class.java)
-        assertThat(buyAmount.get { e: Message -> e }).isEqualTo(
+        assertThat(buyAmount.get()).isEqualTo(
             listOf(
                 listOf(1, 2, 3, 4, 5, 6),
                 listOf(1, 2, 3, 4, 5, 6),
@@ -99,7 +98,7 @@ class LottoViewTest {
     fun t4() {
         setInput("1,2,3,4,5,6")
         val userInput = lottoView.getWinningLotto()
-        assertThat(userInput.get {})
+        assertThat(userInput.get())
             .isEqualTo(listOf(1, 2, 3, 4, 5, 6))
     }
 
@@ -116,7 +115,7 @@ class LottoViewTest {
     @DisplayName("보너스 번호를 입력받는다")
     fun t5() {
         setInput("6")
-        assertThat(lottoView.getBonusNum().get {})
+        assertThat(lottoView.getBonusNum().get())
             .isEqualTo(6)
     }
 
