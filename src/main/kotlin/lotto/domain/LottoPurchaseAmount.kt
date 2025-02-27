@@ -1,13 +1,9 @@
 package lotto.domain
 
 class LottoPurchaseAmount(val money: Int, lottoPrice: Int) {
-    val purchasableCount: Int
-
     init {
         require(money % lottoPrice == REMAINING) { ERROR_NOT_THOUSAND_UNIT }
         require(money > SMALL_CHANGE) { ERROR_NOT_NEGATIVE_NUMBER }
-
-        purchasableCount = money / lottoPrice
     }
 
     companion object {
