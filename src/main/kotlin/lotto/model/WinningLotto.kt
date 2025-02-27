@@ -24,14 +24,14 @@ class WinningLotto(
 
     private fun getCountOfMatch(lottoTicket: LottoTicket): Int = winningNumbers.intersect(lottoTicket.getNumbers()).size
 
-    private fun getMatchBonus(lottoTicket: LottoTicket): Boolean = lottoTicket.getNumbers().contains(bonusNumber)
+    private fun getMatchBonus(lottoTicket: LottoTicket): Boolean = lottoTicket.containsNumber(bonusNumber)
 
     companion object {
         private const val ERROR_NUMBERS_COUNT = "로또 번호의 개수는 6개입니다."
         private const val ERROR_LOTTO_NUMBERS_NOT_CONTAIN_BONUS_NUMBER = "로또 당첨 번호는 보너스 번호를 포함하지 말아야합니다."
 
-        fun create(vararg lottoNumbers: LottoNumber, bonusNumber: LottoNumber): WinningLotto {
-            return WinningLotto(lottoNumbers.toSet(), bonusNumber)
+        fun create(vararg lottoNumbers: Int, bonusNumber: Int): WinningLotto {
+            return WinningLotto(lottoNumbers.map { LottoNumber(it) }.toSet(), LottoNumber(bonusNumber))
         }
     }
 }

@@ -17,12 +17,12 @@ class UserInterface(
         return purchaseAmount.toInt()
     }
 
-    fun printLottoTickets(lottoTickets: List<LottoTicket>) {
-        OutputView.printMessage("${lottoTickets.size}개를 구매했습니다.")
-        lottoTickets.map {
-            OutputView.printMessage(it.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
-        }
-    }
+//    fun printLottoTickets(lottoTickets: List<LottoTicket>) {
+//        OutputView.printMessage("${lottoTickets.size}개를 구매했습니다.")
+//        lottoTickets.map {
+//            OutputView.printMessage(it.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
+//        }
+//    }
 
     fun getWinningNumbers(): Set<LottoNumber> {
         OutputView.printMessage("\n지난 주 당첨 번호를 입력해 주세요.")
