@@ -1,12 +1,13 @@
 package lotto.controller
 
+import lotto.domain.generator.ManualLottoNumbersGenerator
+import lotto.domain.generator.RandomLottoNumbersGenerator
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoBundle
 import lotto.domain.model.LottoMachine
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.PurchaseAmount
 import lotto.domain.model.WinningNumbers
-import lotto.domain.service.ManualLottoNumbersGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -50,7 +51,8 @@ class LottoController(
         val autoLottoAmount = purchaseAmount.calculatePurchaseLottoCount(LottoMachine.LOTTO_PRICE)
         reducePurchaseAmount(purchaseAmount, autoLottoAmount)
 
-        return LottoMachine().generateLottoBundle(autoLottoAmount)
+        val generator = RandomLottoNumbersGenerator()
+        return LottoMachine(generator).generateLottoBundle(autoLottoAmount)
     }
 
     private fun reducePurchaseAmount(
