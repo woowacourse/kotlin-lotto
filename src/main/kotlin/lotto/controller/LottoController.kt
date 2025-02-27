@@ -14,7 +14,23 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    fun runLotto() {
+    fun safeRunLotto() =
+        runCatching {
+            runLotto()
+        }.fold(
+            onSuccess = { it },
+            onFailure = { e ->
+                when (e) {
+                    is IllegalArgumentException,
+                    is IllegalStateException,
+                    -> throw e
+
+                    else -> null
+                }
+            },
+        )
+
+    private fun runLotto() {
         val lottoPayInfo = getPayInfo()
         val lottos: Lottos = getLottosByPayInfo(lottoPayInfo)
         outputView.printLottoPurchaseQuantity(lottoPayInfo)
