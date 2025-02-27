@@ -8,7 +8,7 @@ import lotto.domain.MAX_LOTTO_NUMBER
 import lotto.domain.MIN_LOTTO_NUMBER
 
 class LottoGenerator {
-    fun genLotto(): Lotto {
+    fun makeLotto(): Lotto {
         val lotto = mutableListOf<LottoNumber>()
         val range = IntRange(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER).shuffled()
         for (i in 0 until MAX_LOTTO_LENGTH) {
@@ -18,9 +18,9 @@ class LottoGenerator {
         return Lotto(lotto.toList())
     }
 
-    fun genManyLotto(iterates: Int): List<Lotto> {
+    fun makeLotto(count: Int): List<Lotto> {
         val manyLotto = mutableListOf<Lotto>()
-        repeat(iterates) { manyLotto.add(genLotto()) }
+        repeat(count) { manyLotto.add(makeLotto()) }
         return manyLotto.toList()
     }
 }

@@ -12,7 +12,7 @@ class LottoGeneratorTest {
     @Test
     @DisplayName("하나의 로또를 만들 수 있다")
     fun t1() {
-        val lotto = lottoGenerator.genLotto()
+        val lotto = lottoGenerator.makeLotto()
         assertThat(lotto).isInstanceOfSatisfying(Lotto::class.java) {
             assertThat(lotto.value).hasSize(6)
         }
@@ -21,7 +21,7 @@ class LottoGeneratorTest {
     @Test
     @DisplayName("입력받은 횟수만큼의 로또를 만들 수 있다")
     fun t2() {
-        val manyLotto = lottoGenerator.genManyLotto(10)
+        val manyLotto = lottoGenerator.makeLotto(10)
         assertThat(manyLotto).hasSize(10)
         manyLotto.forEach { lotto ->
             assertThat(lotto).isInstanceOf(Lotto::class.java)
