@@ -7,8 +7,6 @@ data class LottoCount(
         require(number >= 0) { ERROR_NEGATIVE_COUNT }
     }
 
-    fun isPositive(): Boolean = number > 0
-
     fun minus(lottoCount: LottoCount): LottoCount = LottoCount(this.number - lottoCount.number)
 
     fun isPurchasableLottoCount(lottoCount: LottoCount): Boolean = this.number >= lottoCount.number
