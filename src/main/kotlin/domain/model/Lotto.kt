@@ -10,8 +10,6 @@ data class Lotto(
     companion object {
         fun of(vararg inputNumbers: Int): Lotto = Lotto(inputNumbers.map { LottoNumber.from(it) }.toSet())
 
-        fun Set<LottoNumber>.toValues() = this.map { it }
-
         const val ERROR = "[ERROR]"
         const val LOTTO_SIZE = 6
         const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 중복되지 않는 6개 입니다."
