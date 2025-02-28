@@ -16,13 +16,22 @@ class InputView {
         return LottoCount(manualLottoCount)
     }
 
-    fun readLottoNumbers(): Lotto {
+    fun readLottoNumbers(): List<LottoNumber> {
         val lottoNumbers =
             readln()
                 .split(LOTTO_NUMBER_DELIMITER)
                 .map { number -> number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER) }
                 .map { number -> LottoNumber(number) }
-        return Lotto(lottoNumbers)
+        return lottoNumbers
+    }
+
+    fun readWinningLottoNumbersOfLastWeek(): Lotto {
+        val lottoNumbersOfLastWeek =
+            readln()
+                .split(LOTTO_NUMBER_DELIMITER)
+                .map { number -> number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER) }
+                .map { number -> LottoNumber(number) }
+        return Lotto(lottoNumbersOfLastWeek)
     }
 
     fun readBonusNumber(): LottoNumber {

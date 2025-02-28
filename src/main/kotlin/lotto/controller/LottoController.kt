@@ -2,8 +2,8 @@ package lotto.controller
 
 import lotto.model.Lotto
 import lotto.model.LottoCount
+import lotto.model.LottoMachine
 import lotto.model.LottoNumber
-import lotto.model.LottoNumbersGenerator
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoResult
 import lotto.model.Lottos
@@ -14,7 +14,7 @@ import lotto.view.OutputView
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val lottoNumbersGenerator: LottoNumbersGenerator,
+    private val lottoMachine: LottoMachine,
 ) {
     fun run() {
         val purchaseMoney: LottoPurchaseAmount = getPurchaseMoney()
@@ -40,17 +40,33 @@ class LottoController(
         val manualLottoCount: LottoCount = getManualLottoCount()
         val autoLottoCount: LottoCount = lottoCount.subtract(manualLottoCount)
         val lottos: MutableList<Lotto> = mutableListOf()
-        outputView.printManualLottoNumbersGuide()
-        repeat(manualLottoCount.count) {
-            val manualLotto: Lotto = inputView.readLottoNumbers()
-            lottos.add(manualLotto)
-        }
-        repeat(autoLottoCount.count) {
-            val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
-            lottos.add(Lotto.create(lottoNumbers))
-        }
+
+        createManualLottos(manualLottoCount, lottos)
+        createAutoLottos(autoLottoCount, lottos)
         outputView.printLottoCount(manualLottoCount, autoLottoCount)
         return Lottos(lottos)
+    }
+
+    private fun createManualLottos(
+        manualLottoCount: LottoCount,
+        lottos: MutableList<Lotto>,
+    ) {
+        outputView.printManualLottoNumbersGuide()
+        repeat(manualLottoCount.count) {
+            val manualLottoNumbers: List<LottoNumber> = inputView.readLottoNumbers()
+            val manualLotto: Lotto = lottoMachine.createManualLotto(manualLottoNumbers)
+            lottos.add(manualLotto)
+        }
+    }
+
+    private fun createAutoLottos(
+        autoLottoCount: LottoCount,
+        lottos: MutableList<Lotto>,
+    ) {
+        repeat(autoLottoCount.count) {
+            val autoLotto: Lotto = lottoMachine.createAutoLotto()
+            lottos.add(autoLotto)
+        }
     }
 
     private fun getManualLottoCount(): LottoCount =
@@ -76,7 +92,7 @@ class LottoController(
     private fun getWinningLottoNumbers(): Lotto =
         try {
             outputView.printWinningLottoNumbersOfLastWeekGuide()
-            inputView.readLottoNumbers()
+            inputView.readWinningLottoNumbersOfLastWeek()
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getWinningLottoNumbers()
