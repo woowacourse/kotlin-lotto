@@ -33,5 +33,5 @@ class WinningDiscriminator(
 
     private fun countMatchWinningNumbers(userLotto: Lotto): Int = userLotto.countMatchNumbers(winningLotto)
 
-    private fun isHaveBonusNumber(lotto: Lotto): Boolean = lotto.isContain(bonusNumber)
+    private fun isHaveBonusNumber(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
 }

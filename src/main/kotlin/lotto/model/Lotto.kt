@@ -22,7 +22,7 @@ class Lotto private constructor(
 
     fun countMatchNumbers(otherLotto: Lotto): Int = numbers.count { number -> number in otherLotto.numbers }
 
-    fun isContain(number: LottoNumber): Boolean = numbers.contains(number)
+    fun contains(number: LottoNumber): Boolean = numbers.contains(number)
 
     fun getRawNumbers(): List<Int> = this.numbers.map { it.number }
 
