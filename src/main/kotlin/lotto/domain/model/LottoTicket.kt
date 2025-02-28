@@ -2,23 +2,30 @@ package lotto.domain.model
 
 import lotto.Constants
 
+sealed class LottoTicketResult {
+    data class Success(
+        val ticket: LottoTicket,
+    ) : LottoTicketResult()
+
+    data object InvalidCount : LottoTicketResult()
+
+    data object DuplicateNumbers : LottoTicketResult()
+}
+
 class LottoTicket(
     numbers: List<LottoNumber>,
 ) {
-    val numbers: Set<LottoNumber>
-
-    init {
-        require(numbers.size == Constants.LOTTO_PICK_COUNT) { ERROR_LOTTO_INVALID_COUNT }
-        require(numbers.toSet().size == Constants.LOTTO_PICK_COUNT) { ERROR_LOTTO_DUPLICATE }
-        this.numbers = numbers.toSet()
-    }
+    val numbers: Set<LottoNumber> = numbers.toSet()
 
     fun countMatchingNumbers(winningNumbers: Set<LottoNumber>): Int = numbers.intersect(winningNumbers).size
 
     fun hasNumber(number: LottoNumber): Boolean = numbers.contains(number)
 
     companion object {
-        private const val ERROR_LOTTO_INVALID_COUNT = "로또 번호는 6개여야 합니다."
-        private const val ERROR_LOTTO_DUPLICATE = "로또 번호는 서로 중복되면 안 됩니다."
+        fun create(numbers: List<LottoNumber>): LottoTicketResult {
+            if (numbers.size != Constants.LOTTO_PICK_COUNT) return LottoTicketResult.InvalidCount
+            if (numbers.toSet().size != Constants.LOTTO_PICK_COUNT) return LottoTicketResult.DuplicateNumbers
+            return LottoTicketResult.Success(LottoTicket(numbers))
+        }
     }
 }

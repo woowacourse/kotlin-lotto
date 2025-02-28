@@ -45,11 +45,23 @@ class LottoStore(
     }
 
     private fun generateManualLottoTicket(count: Int): List<LottoTicket> {
-        val manualLottoTickets =
-            List(count) {
-                LottoTicket(inputView.inputManualNumbers().map { LottoNumber(it) })
+        val manualLottoTickets = mutableListOf<LottoTicket>()
+
+        repeat(count) {
+            while (true) {
+                val result = LottoTicket.create(inputView.inputManualNumbers().map { LottoNumber(it) })
+                when (result) {
+                    is LottoTicketResult.Success -> {
+                        manualLottoTickets.add(result.ticket)
+                        break
+                    }
+
+                    is LottoTicketResult.InvalidCount -> println(ERROR_LOTTO_INVALID_COUNT)
+                    is LottoTicketResult.DuplicateNumbers -> println(ERROR_LOTTO_DUPLICATE)
+                }
             }
-        return manualLottoTickets
+        }
+        return manualLottoTickets.toList()
     }
 
     private fun generateAutoLottoTicket(count: Int): List<LottoTicket> {
@@ -68,4 +80,9 @@ class LottoStore(
         lottoTickets: List<LottoTicket>,
         winningLotto: WinningLotto,
     ): LottoResult = winningLotto.getResult(lottoTickets)
+
+    companion object {
+        private const val ERROR_LOTTO_INVALID_COUNT = "로또 번호는 6개여야 합니다. 다시 입력해주세요."
+        private const val ERROR_LOTTO_DUPLICATE = "로또 번호는 서로 중복되면 안 됩니다. 다시 입력해주세요."
+    }
 }
