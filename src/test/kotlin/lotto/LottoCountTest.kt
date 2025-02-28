@@ -23,4 +23,9 @@ class LottoCountTest {
 
         assertThat(actual).isEqualTo(4)
     }
+
+    @Test
+    fun `로또 개수가 1개 미만일 경우 예외를 발생한다`() {
+        assertThrows<IllegalArgumentException> { LottoCount(0) }
+    }
 }
