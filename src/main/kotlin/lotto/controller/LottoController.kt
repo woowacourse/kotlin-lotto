@@ -39,15 +39,17 @@ class LottoController(
         val manualLottoCount: Int = getManualLottoCount()
         require(lottoCount >= manualLottoCount) { "수동으로 입력할 로또 개수는 최대 $lottoCount 까지 가능합니다." }
         val lottos: MutableList<Lotto> = mutableListOf()
+        val autoLottoCount: Int = lottoCount - manualLottoCount
         outputView.printManualLottoNumbersGuide()
         repeat(manualLottoCount) {
             val manualLotto: Lotto = inputView.readLottoNumbers()
             lottos.add(manualLotto)
         }
-        repeat(lottoCount - manualLottoCount) {
+        repeat(autoLottoCount) {
             val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
             lottos.add(Lotto.create(lottoNumbers))
         }
+        outputView.printLottoCount(manualLottoCount, autoLottoCount)
         return Lottos(lottos)
     }
 
