@@ -1,6 +1,6 @@
 package lotto.model
 
-class Lotto(
+data class Lotto(
     val numbers: List<LottoNumber>,
 ) {
     constructor(vararg number: Int) : this(number.map { LottoNumber(it) })
