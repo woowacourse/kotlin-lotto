@@ -35,7 +35,7 @@ object LottoController {
         return allLottos
     }
 
-    private fun makeRandomNumbers(): List<LottoNumber> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map(::LottoNumber)
+    private fun makeRandomNumbers(): List<LottoNumber> = LottoNumber.RANGE.shuffled().subList(0, Lotto.SIZE).map(LottoNumber::from)
 
     private fun showPurchaseInformation(
         manualLottos: List<Lotto>,
@@ -46,9 +46,9 @@ object LottoController {
     }
 
     private fun readWinningLotto(): WinningLotto {
-        val lottoNumbers: List<LottoNumber> = View.readWinningNumbers().map(::LottoNumber)
+        val lottoNumbers: List<LottoNumber> = View.readWinningNumbers().map(LottoNumber::from)
         val lotto = Lotto(lottoNumbers)
-        val bonusNumber = LottoNumber(View.readBonusNumber())
+        val bonusNumber = LottoNumber.from(View.readBonusNumber())
         return WinningLotto(lotto, bonusNumber)
     }
 

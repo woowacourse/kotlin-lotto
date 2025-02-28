@@ -8,7 +8,7 @@ class Order(
     val automaticQuantity = Quantity(payment.amount / Lotto.PRICE - manualQuantity.value)
     val manualNumbersList: List<List<LottoNumber>> =
         manualNumbersList.map { numbers: List<Int> ->
-            numbers.map(::LottoNumber)
+            numbers.map(LottoNumber::from)
         }
 
     init {
