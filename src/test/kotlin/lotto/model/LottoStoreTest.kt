@@ -7,13 +7,13 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class LottoCashierTest {
+class LottoStoreTest {
     @ValueSource(ints = [-1, 0])
     @ParameterizedTest
     fun `입력한 금액은 0원 이상만 가능하다`(amount: Int) {
         // given & when & then
         assertThatThrownBy {
-            LottoCashier(amount = amount, manualQuantity = 0)
+            LottoStore(amount = amount, manualQuantity = 0)
         }.hasMessageContaining("0원 이상의 금액")
     }
 
@@ -24,7 +24,7 @@ class LottoCashierTest {
 
         // when & then
         assertThatThrownBy {
-            LottoCashier(amount = amount, manualQuantity = 0)
+            LottoStore(amount = amount, manualQuantity = 0)
         }.hasMessageContaining("단위")
     }
 
@@ -32,10 +32,10 @@ class LottoCashierTest {
     fun `구입 금액이 5,000원이면 로또 구입 개수를 5개로 반환한다`() {
         // given
         val amount = 5000
-        val lottoCashier = LottoCashier(amount = amount, manualQuantity = 0)
+        val lottoStore = LottoStore(amount = amount, manualQuantity = 0)
 
         // when
-        val lottoQuantity = lottoCashier.getPurchaseAutoLottoQuantity()
+        val lottoQuantity = lottoStore.autoLottoQuantity
 
         // then
         assertEquals(5, lottoQuantity)
@@ -49,7 +49,7 @@ class LottoCashierTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            LottoCashier(amount, manualQuantity)
+            LottoStore(amount, manualQuantity)
         }
     }
 }

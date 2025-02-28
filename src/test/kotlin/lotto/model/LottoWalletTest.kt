@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test
 
 class LottoWalletTest {
     @Test
-    fun `로또를 추가하면 로또 지갑에 로또가 포함된다`() {
+    fun `한 장의 로또를 추가하면 로또 지갑에 로또가 포함된다`() {
         // given
         val lottoWallet = LottoWallet()
-        val lottoNumbers = listOf(1, 2, 3, 4, 5, 6)
+        val lotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
 
         // when
-        lottoWallet.add(lottoNumbers)
+        lottoWallet.addAll(listOf(lotto))
 
         // then
-        assertTrue(lottoWallet.get().map { it.getRawNumbers() }.contains(lottoNumbers))
+        assertTrue(lottoWallet.lottos.contains(lotto))
     }
 
     @Test
@@ -29,8 +29,8 @@ class LottoWalletTest {
         lottoWallet.addAll(lottos)
 
         // then
-        lottoWallet.get().forEach { lotto ->
-            assertTrue(lottoWallet.get().contains(lotto))
+        lottoWallet.lottos.forEach { lotto ->
+            assertTrue(lottos.contains(lotto))
         }
     }
 }

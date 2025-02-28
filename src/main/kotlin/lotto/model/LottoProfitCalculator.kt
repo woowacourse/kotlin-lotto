@@ -2,10 +2,10 @@ package lotto.model
 
 class LottoProfitCalculator {
     fun getProfitRate(
-        countLottoByRank: Map<Rank, Int>,
+        winningResult: Map<Rank, Int>,
         purchaseAmount: Int,
     ): Float {
-        val totalProfit = countLottoByRank.entries.sumOf { it.key.winningMoney * it.value }
+        val totalProfit = winningResult.entries.sumOf { rank -> rank.key.winningMoney * rank.value }
         return formatProfitRate(totalProfit, purchaseAmount)
     }
 

@@ -1,7 +1,7 @@
 package lotto.model
 
 class LottoNumber private constructor(
-    val number: Int,
+    val value: Int,
 ) {
     companion object {
         const val LOTTO_NUMBER_MIN_RANGE = 1

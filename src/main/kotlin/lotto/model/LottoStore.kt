@@ -1,9 +1,12 @@
 package lotto.model
 
-class LottoCashier(
+class LottoStore(
     private val amount: Int,
     private val manualQuantity: Int,
+    private val lottoMachine: LottoMachine = LottoMachine(),
 ) {
+    val autoLottoQuantity: Int = amount / LOTTO_EACH_AMOUNT - manualQuantity
+
     init {
         validateAmountMinimumRange()
         validateAmountUnit()
@@ -28,7 +31,11 @@ class LottoCashier(
         }
     }
 
-    fun getPurchaseAutoLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT - manualQuantity
+    fun buy(manualNumbers: List<List<Int>> = emptyList()): List<Lotto> =
+        when (manualNumbers.isNotEmpty()) {
+            true -> lottoMachine.getManualLottos(manualNumbers)
+            false -> lottoMachine.getAutoLottos(autoLottoQuantity)
+        }
 
     companion object {
         private const val LOTTO_MIN_AMOUNT = 0

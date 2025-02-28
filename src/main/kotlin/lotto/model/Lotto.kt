@@ -20,7 +20,7 @@ class Lotto private constructor(
         }
     }
 
-    fun countMatchNumbers(otherLotto: Lotto): Int = numbers.count { number -> number in otherLotto.numbers }
+    fun countMatchNumbers(other: Lotto): Int = numbers.count { number -> number in other.numbers }
 
     fun contains(number: LottoNumber): Boolean = numbers.contains(number)
 

@@ -13,6 +13,11 @@ class LottoMachine {
             .take(LOTTO_NUMBER_SIZE)
             .sorted()
 
+    fun getManualLottos(ticket: List<List<Int>>): List<Lotto> =
+        ticket.map { numbers ->
+            Lotto.from(numbers)
+        }
+
     companion object {
         const val EMPTY_LOTTO_QUANTITY = 0
     }

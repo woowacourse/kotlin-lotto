@@ -1,15 +1,20 @@
 package lotto.model
 
-class WinningDiscriminator(
+class WinningDiscriminator private constructor(
     private val winningLotto: Lotto,
     private val bonusNumber: LottoNumber,
 ) {
+    constructor(winningNumbers: List<Int>, bonusNumber: Int) : this(
+        Lotto.from(winningNumbers),
+        LottoNumber.from(bonusNumber),
+    )
+
     init {
         validateWinningNumberAndBonusNumberDuplicate()
     }
 
     private fun validateWinningNumberAndBonusNumberDuplicate() {
-        require(!isHaveBonusNumber(winningLotto)) {
+        require(!containsBonus(winningLotto)) {
             "[ERROR] 우승 번호와 보너스 번호는 중복될 수 없습니다."
         }
     }
@@ -18,20 +23,18 @@ class WinningDiscriminator(
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
 
         lottos.forEach { lotto ->
-            val rank = discriminateLotto(lotto)
+            val rank = discriminate(lotto)
             countResult[rank] = countResult.getValue(rank) + 1
         }
 
         return countResult
     }
 
-    private fun discriminateLotto(userLotto: Lotto): Rank =
+    private fun discriminate(userLotto: Lotto): Rank =
         Rank.from(
-            countOfMatch = countMatchWinningNumbers(userLotto),
-            matchBonus = isHaveBonusNumber(userLotto),
+            countOfMatch = userLotto.countMatchNumbers(winningLotto),
+            matchBonus = containsBonus(userLotto),
         )
 
-    private fun countMatchWinningNumbers(userLotto: Lotto): Int = userLotto.countMatchNumbers(winningLotto)
-
-    private fun isHaveBonusNumber(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
+    private fun containsBonus(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
 }

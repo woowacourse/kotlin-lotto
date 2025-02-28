@@ -14,7 +14,7 @@ class LottoNumberTest {
         val lottoNumber = LottoNumber.from(number)
 
         // then
-        assertEquals(number, lottoNumber.number)
+        assertEquals(number, lottoNumber.value)
     }
 
     @ValueSource(ints = [0, 46])

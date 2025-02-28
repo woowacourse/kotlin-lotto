@@ -1,15 +1,10 @@
 package lotto.model
 
 class LottoWallet {
-    private val lottoBundle: MutableList<Lotto> = mutableListOf()
-
-    fun add(lottoNumbers: List<Int>) {
-        lottoBundle.add(Lotto.from(lottoNumbers))
-    }
+    private val _lottos: MutableList<Lotto> = mutableListOf()
+    val lottos: List<Lotto> get() = _lottos.toList()
 
     fun addAll(lottos: List<Lotto>) {
-        lottoBundle.addAll(lottos)
+        _lottos.addAll(lottos)
     }
-
-    fun get() = lottoBundle.toList()
 }

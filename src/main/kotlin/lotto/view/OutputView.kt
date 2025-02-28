@@ -27,8 +27,10 @@ class OutputView {
         println("수동으로 ${manualQuantity}장, 자동으로 ${autoQuantity}장을 구매했습니다.")
     }
 
-    fun printLotto(lotto: Lotto) {
-        println("[${lotto.numbers.map { it.number }.joinToString(", ")}]")
+    fun printLotto(lottos: List<Lotto>) {
+        lottos.forEach { lotto ->
+            println("[${lotto.numbers.map { it.value }.joinToString(", ")}]")
+        }
     }
 
     fun printWinningNumbersGuide() {

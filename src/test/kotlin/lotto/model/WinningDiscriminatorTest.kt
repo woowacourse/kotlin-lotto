@@ -9,9 +9,8 @@ class WinningDiscriminatorTest {
     fun `6개의 번호가 일치하면 1등을 반환한다`() {
         // given
         val lottoNumbers = listOf(1, 2, 3, 4, 5, 6)
-        val winningLotto = Lotto.from(lottoNumbers)
-        val bonusNumber = LottoNumber.from(7)
-        val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
+        val bonusNumber = 7
+        val winningDiscriminator = WinningDiscriminator(lottoNumbers, bonusNumber)
         val lotto = listOf(Lotto.from(lottoNumbers))
 
         // when
@@ -25,9 +24,9 @@ class WinningDiscriminatorTest {
     fun `5개의 번호가 일치하면 3등을 반환한다`() {
         // given
         val lottoNumbers = listOf(1, 2, 3, 4, 5, 8)
-        val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber.from(7)
-        val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
+        val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 7
+        val winningDiscriminator = WinningDiscriminator(winningNumbers, bonusNumber)
         val lotto = listOf(Lotto.from(lottoNumbers))
 
         // when
@@ -41,8 +40,8 @@ class WinningDiscriminatorTest {
     fun `4개의 번호가 일치하면 4등을 반환한다`() {
         // given
         val lottoNumbers = listOf(1, 2, 3, 4, 9, 10)
-        val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber.from(7)
+        val winningLotto = listOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 7
         val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
         val lotto = listOf(Lotto.from(lottoNumbers))
 
@@ -57,8 +56,8 @@ class WinningDiscriminatorTest {
     fun `3개의 번호가 일치하면 5등을 반환한다`() {
         // given
         val lottoNumbers = listOf(1, 2, 3, 8, 9, 10)
-        val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber.from(7)
+        val winningLotto = listOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 7
         val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
         val lotto = listOf(Lotto.from(lottoNumbers))
 
@@ -77,8 +76,8 @@ class WinningDiscriminatorTest {
             listOf(21, 22, 23, 24, 25, 26),
         ).forEach { lottoNumbers ->
             // given
-            val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-            val bonusNumber = LottoNumber.from(7)
+            val winningLotto = listOf(1, 2, 3, 4, 5, 6)
+            val bonusNumber = 7
             val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
             val lotto = listOf(Lotto.from(lottoNumbers))
 
@@ -94,9 +93,9 @@ class WinningDiscriminatorTest {
     fun `보너스 번호가 일치하면서 5개의 번호가 동일한 경우 2등을 반환한다`() {
         // given
         val lottoNumbers = listOf(1, 2, 3, 4, 5, 7)
-        val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber.from(7)
-        val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
+        val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 7
+        val winningDiscriminator = WinningDiscriminator(winningNumbers, bonusNumber)
         val lotto = listOf(Lotto.from(lottoNumbers))
 
         // when
@@ -109,24 +108,24 @@ class WinningDiscriminatorTest {
     @Test
     fun `당첨 번호와 보너스 번호가 중복되면 오류를 반환한다`() {
         // given
-        val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber.from(1)
+        val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 1
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            WinningDiscriminator(winningLotto, bonusNumber)
+            WinningDiscriminator(winningNumbers, bonusNumber)
         }
     }
 
     @Test
     fun `당첨 번호끼리 중복되지 않았을 때, 당첨 번호와 보너스 번호와 중복되면 오류를 반환한다`() {
         // given
-        val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6))
-        val bonusNumber = LottoNumber.from(1)
+        val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
+        val bonusNumber = 1
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            WinningDiscriminator(winningLotto, bonusNumber)
+            WinningDiscriminator(winningNumbers, bonusNumber)
         }
     }
 }
