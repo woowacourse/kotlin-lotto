@@ -1,13 +1,14 @@
 package lotto.model
 
 import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
-import lotto.model.LottoNumber.Companion.ALL_LOTTO_NUMBERS
+import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_MAX_RANGE
+import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_MIN_RANGE
 
 class LottoMachine {
     fun getAutoLottos(quantity: Int): List<Lotto> = List(quantity) { Lotto.from(getAutoNumbers()) }
 
     private fun getAutoNumbers(): List<Int> =
-        ALL_LOTTO_NUMBERS
+        (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE)
             .shuffled()
             .take(LOTTO_NUMBER_SIZE)
             .sorted()

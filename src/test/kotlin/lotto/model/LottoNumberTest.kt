@@ -1,5 +1,6 @@
 package lotto.model
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -23,5 +24,17 @@ class LottoNumberTest {
         assertThrows<IllegalArgumentException> {
             LottoNumber.from(number)
         }
+    }
+
+    @ValueSource(ints = [1, 22, 45])
+    @ParameterizedTest
+    fun `번호 객체 내부에 캐싱된 인스턴스가 재생성되지 않고 재사용된다`(number: Int) {
+        // given & when
+        val number1 = LottoNumber.from(number)
+        val number2 = LottoNumber.from(number)
+
+        // then
+        assertThat(number1).isSameAs(number2)
+        assertThat(number1).isEqualTo(number2)
     }
 }
