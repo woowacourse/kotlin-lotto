@@ -1,72 +1,94 @@
 package lotto.view
 
-import lotto.domain.LottoResult
-import lotto.domain.ResultClassification
+import lotto.domain.Lotto
+import lotto.domain.LottoNumber
+import lotto.domain.Result
+import lotto.domain.Results
 
 object OutputView {
-    private const val MESSAGE_ENTER_PRICE = "구입금액을 입력해 주세요."
-    private const val MESSAGE_ENTER_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
-    private const val MESSAGE_ENTER_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
-    private const val MESSAGE_PURCHASE_COUNT = "개를 구매했습니다."
-    private const val MESSAGE_RESULT_HEADER = "당첨 통계\n---------"
-    private const val MESSAGE_RESULT_PER_PRIZE = "%s개 일치%s (%s원) - %s개"
-    private const val MESSAGE_BONUS_NUMBER_DESCRIPTION = ", 보너스 볼 일치"
-    private const val MESSAGE_RESULT_SUMMARY = "총 수익률은 %s입니다.(기준이 1이기 때문에 결과적으로 %s 의미임)"
-    private const val MESSAGE_PROFIT_RATE_PROFIT = "이득이라는"
-    private const val MESSAGE_PROFIT_RATE_LOSS = "손해라는"
-    private const val MESSAGE_PROFIT_RATE_BREAKEVEN = "본전이라는"
-
-    fun requestPrice() {
-        println(MESSAGE_ENTER_PRICE)
+    fun requestPayment() {
+        println(MESSAGE_ENTER_PAYMENT)
     }
 
-    fun showLottoCount(lottoCount: Int) {
-        println("$lottoCount$MESSAGE_PURCHASE_COUNT")
-    }
-
-    fun showLottos(numbers: List<List<Int>>) {
-        println(numbers.joinToString("\n"))
+    fun requestManualQuantity() {
         println()
+        println(MESSAGE_ENTER_MANUAL_PURCHASE_QUANTITY)
+    }
+
+    fun requestManualNumbers() {
+        println()
+        println(MESSAGE_ENTER_MANUAL_LOTTO_NUMBERS)
+    }
+
+    fun showLottoCount(
+        manualQuantity: Int,
+        automaticQuantity: Int,
+    ) {
+        println()
+        println(MESSAGE_RESULT_PURCHASE_QUANTITY.format(manualQuantity, automaticQuantity))
+    }
+
+    fun showLottos(lottos: List<Lotto>) {
+        lottos.forEach { lotto: Lotto ->
+            println(lotto.numbers.map(LottoNumber::value).sorted())
+        }
     }
 
     fun requestWinningLotto() {
+        println()
         println(MESSAGE_ENTER_WINNING_NUMBERS)
     }
 
     fun requestBonusNumber() {
+        println()
         println(MESSAGE_ENTER_BONUS_NUMBER)
     }
 
-    fun showResult(
-        resultTally: Map<LottoResult, Int>,
-        profitRate: Double,
-    ) {
+    fun showResults(results: Results) {
         println()
         println(MESSAGE_RESULT_HEADER)
-        LottoResult.entries.drop(1).forEach { entry -> println(makePrizeDescription(entry, resultTally)) }
+        Result.entries.sortedWith(compareBy(Result::matchCount, Result::requireBonus)).forEach { result: Result ->
+            if (result != Result.FAIL) println(makePrizeDescription(result, results.tally[result] ?: 0))
+        }
         println(
             MESSAGE_RESULT_SUMMARY.format(
-                profitRate,
-                makeResultSummary(profitRate),
+                "%.2f".format(results.profitRate),
+                makeResultSummary(results.classification),
             ),
         )
     }
 
     private fun makePrizeDescription(
-        lottoResult: LottoResult,
-        resultTally: Map<LottoResult, Int>,
+        result: Result,
+        count: Int,
     ): String =
         MESSAGE_RESULT_PER_PRIZE.format(
-            lottoResult.matchCount,
-            if (lottoResult.requireBonus) MESSAGE_BONUS_NUMBER_DESCRIPTION else "",
-            lottoResult.prize,
-            resultTally[lottoResult],
+            result.matchCount,
+            if (result.requireBonus) MESSAGE_BONUS_NUMBER_DESCRIPTION else "",
+            result.prize,
+            count,
         )
 
-    private fun makeResultSummary(profitRate: Double): String =
-        when (ResultClassification.from(profitRate)) {
-            ResultClassification.PROFIT -> MESSAGE_PROFIT_RATE_PROFIT
-            ResultClassification.LOSS -> MESSAGE_PROFIT_RATE_LOSS
-            ResultClassification.BREAKEVEN -> MESSAGE_PROFIT_RATE_BREAKEVEN
+    private fun makeResultSummary(classification: Results.Classification): String =
+        when (classification) {
+            Results.Classification.PROFIT -> MESSAGE_PROFIT_RATE_PROFIT
+            Results.Classification.LOSS -> MESSAGE_PROFIT_RATE_LOSS
+            Results.Classification.BREAKEVEN -> MESSAGE_PROFIT_RATE_BREAKEVEN
         }
+
+    private const val MESSAGE_ENTER_PAYMENT = "구입금액을 입력해 주세요."
+    private const val MESSAGE_ENTER_MANUAL_PURCHASE_QUANTITY = "수동으로 구매할 로또 수를 입력해 주세요."
+    private const val MESSAGE_ENTER_MANUAL_LOTTO_NUMBERS = "수동으로 구매할 번호를 입력해 주세요."
+    private const val MESSAGE_ENTER_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
+    private const val MESSAGE_ENTER_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+
+    private const val MESSAGE_RESULT_PURCHASE_QUANTITY = "수동으로 %s장, 자동으로 %s장을 구매했습니다."
+    private const val MESSAGE_RESULT_HEADER = "당첨 통계\n---------"
+    private const val MESSAGE_RESULT_PER_PRIZE = "%s개 일치%s (%s원) - %s개"
+    private const val MESSAGE_RESULT_SUMMARY = "총 수익률은 %s입니다.(기준이 1이기 때문에 결과적으로 %s 의미임)"
+
+    private const val MESSAGE_BONUS_NUMBER_DESCRIPTION = ", 보너스 볼 일치"
+    private const val MESSAGE_PROFIT_RATE_PROFIT = "이득이라는"
+    private const val MESSAGE_PROFIT_RATE_LOSS = "손해라는"
+    private const val MESSAGE_PROFIT_RATE_BREAKEVEN = "본전이라는"
 }
