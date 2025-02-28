@@ -97,14 +97,14 @@ class LottoController(
     private fun getWinningNumber(): Lotto {
         return retryInput {
             val winningNumber = inputView.getWinningNumber()
-            Lotto(winningNumber.map(::LottoNumber))
+            Lotto(winningNumber.map { LottoNumber.from(it) })
         }
     }
 
     private fun getWinningLotto(winningNumber: Lotto): WinningLotto {
         return retryInput {
             val bonusNumber = inputView.getBonusNumber()
-            WinningLotto(winningNumber, LottoNumber(bonusNumber))
+            WinningLotto(winningNumber, LottoNumber.from(bonusNumber))
         }
     }
 

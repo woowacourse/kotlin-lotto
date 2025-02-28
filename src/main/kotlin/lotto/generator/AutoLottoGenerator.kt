@@ -10,6 +10,6 @@ class AutoLottoGenerator(private val size: Int) : LottoGenerator {
     }
 
     private fun getRandomLottoNumber(): List<LottoNumber> {
-        return (LottoNumber.MIN_BOUND..LottoNumber.MAX_BOUND).shuffled().take(MAX_LOTTO_SIZE).map { LottoNumber(it) }
+        return (LottoNumber.MIN_BOUND..LottoNumber.MAX_BOUND).shuffled().take(MAX_LOTTO_SIZE).map { LottoNumber.from(it) }
     }
 }

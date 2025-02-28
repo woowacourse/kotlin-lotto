@@ -10,7 +10,7 @@ class LottoTest {
     fun `로또 번호가 중복되면 예외가 발생한다`() {
         val lottoNumbers = listOf(1, 1, 2, 2, 3, 3)
         assertThrows<IllegalArgumentException> {
-            Lotto(lottoNumbers.map { LottoNumber(it) })
+            Lotto(lottoNumbers.map { LottoNumber.from(it) })
         }
     }
 
@@ -19,7 +19,7 @@ class LottoTest {
     fun `당첨 번호가 6개가 아니면 예외가 발생한다`(input: Int) {
         val testList = List(input) { 1 }
         assertThrows<IllegalArgumentException> {
-            Lotto(testList.map { LottoNumber(it) })
+            Lotto(testList.map { LottoNumber.from(it) })
         }
     }
 }
