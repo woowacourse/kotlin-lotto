@@ -1,7 +1,5 @@
 package lotto.domain.model
 
-import lotto.domain.service.LottoResult
-
 class WinningLotto(
     private val winningNumbers: Set<LottoNumber>,
     private val bonusNumber: LottoNumber,
@@ -14,8 +12,6 @@ class WinningLotto(
         winningNumbers: List<Int>,
         bonusNumber: LottoNumber,
     ) : this(winningNumbers.map { LottoNumber(it) }.toSet(), bonusNumber)
-
-    fun getResult(lottoTickets: List<LottoTicket>): LottoResult = LottoResult(lottoTickets.map { getRank(it) })
 
     fun getRank(lottoTicket: LottoTicket): Rank {
         val countOfMatch = getCountOfMatch(lottoTicket)

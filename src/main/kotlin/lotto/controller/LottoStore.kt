@@ -2,6 +2,7 @@ package lotto.controller
 
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
+import lotto.domain.model.LottoTicketResult
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoMachine
 import lotto.domain.service.LottoResult
@@ -79,7 +80,7 @@ class LottoStore(
     private fun calculateResult(
         lottoTickets: List<LottoTicket>,
         winningLotto: WinningLotto,
-    ): LottoResult = winningLotto.getResult(lottoTickets)
+    ): LottoResult = LottoResult.calculateResult(lottoTickets, winningLotto)
 
     companion object {
         private const val ERROR_LOTTO_INVALID_COUNT = "로또 번호는 6개여야 합니다. 다시 입력해주세요."
