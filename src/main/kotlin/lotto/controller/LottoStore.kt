@@ -37,7 +37,7 @@ class LottoStore(
         manualCount: Int,
         autoCount: Int,
     ): List<LottoTicket> {
-        outputView.printManualNumbersGuide()
+        if (manualCount != 0) outputView.printManualNumbersGuide()
         val manualLottoTickets = generateManualLottoTicket(manualCount)
         val autoLottoTickets = generateAutoLottoTicket(autoCount)
         outputView.printPurchaseCount(manualCount, autoCount)
