@@ -1,16 +1,18 @@
 package lotto.model
 
 class RandomLottoGenerator : LottoGenerator {
-    override fun generate(count: Int): List<Lotto> =
-        List(count) {
+    override fun generate(count: Int): List<Lotto> {
+        val range = (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER)
+        return List(count) {
             Lotto(
-                (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER)
+                range
                     .shuffled()
                     .take(LOTTO_SIZE)
                     .sorted()
-                    .map { LottoNumber(it) },
+                    .map { LottoNumber.from(it) },
             )
         }
+    }
 
     companion object {
         private const val LOTTO_SIZE: Int = 6
