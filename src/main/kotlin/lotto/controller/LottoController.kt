@@ -73,7 +73,7 @@ class LottoController(
     ) {
         outputView.printPurchaseLottoQuantity(manualLottoQuantity, autoLottoQuantity)
         lottoWallet.get().forEach { lotto ->
-            outputView.printLotto(lotto.getRawNumbers())
+            outputView.printLotto(lotto)
         }
     }
 
