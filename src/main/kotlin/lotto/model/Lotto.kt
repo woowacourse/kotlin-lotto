@@ -31,7 +31,7 @@ class Lotto(
             winningNumbers.numbers.contains(number)
         }
 
-    fun isMatchedBonusNumber(bonusNumber: LottoNumber) = numbers.contains(bonusNumber)
+    fun isMatchedBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
 
     companion object {
         private const val ERROR_DUPLICATED_LOTTO_NUMBERS = "입력한 로또 번호 %s이 중복됩니다. 로또 번호는 중복될 수 없습니다."
