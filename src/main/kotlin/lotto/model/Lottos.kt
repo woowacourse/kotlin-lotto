@@ -1,8 +1,11 @@
 package lotto.model
 
 class Lottos(
-    val lottoBundle: List<Lotto>,
+    private val manualLottos: List<Lotto>,
+    private val autoLotts: List<Lotto>,
 ) {
+    val lottoBundle = manualLottos + autoLotts
+
     val size: Int
         get() = lottoBundle.size
 

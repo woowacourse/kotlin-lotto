@@ -18,9 +18,7 @@ class LottoController(
 ) {
     fun run() {
         val purchaseMoney: LottoPurchaseAmount = getPurchaseMoney()
-        val lottos: Lottos = createLottos(purchaseMoney)
-        outputView.printLottos(lottos)
-
+        val lottos: Lottos = getLottos(purchaseMoney)
         val winningLotto: WinningLotto = getWinningLotto()
         val lottoResult: LottoResult = lottos.calculateLottoResult(winningLotto)
         displayLottoResult(lottoResult, purchaseMoney)
@@ -35,39 +33,32 @@ class LottoController(
             getPurchaseMoney()
         }
 
-    private fun createLottos(purchaseMoney: LottoPurchaseAmount): Lottos {
+    private fun getLottos(purchaseMoney: LottoPurchaseAmount): Lottos {
         val lottoCount: LottoCount = getLottoCount(purchaseMoney)
         val manualLottoCount: LottoCount = getManualLottoCount()
         val autoLottoCount: LottoCount = lottoCount.subtract(manualLottoCount)
-        val lottos: MutableList<Lotto> = mutableListOf()
+        val manualLottos: List<Lotto> = getManualLottos(manualLottoCount)
+        val autoLottos: List<Lotto> = getAutoLottos(autoLottoCount)
+        val lottos = Lottos(manualLottos, autoLottos)
 
-        createManualLottos(manualLottoCount, lottos)
-        createAutoLottos(autoLottoCount, lottos)
         outputView.printLottoCount(manualLottoCount, autoLottoCount)
-        return Lottos(lottos)
+        outputView.printLottos(lottos)
+        return lottos
     }
 
-    private fun createManualLottos(
-        manualLottoCount: LottoCount,
-        lottos: MutableList<Lotto>,
-    ) {
+    private fun getManualLottos(manualLottoCount: LottoCount): List<Lotto> {
         outputView.printManualLottoNumbersGuide()
-        repeat(manualLottoCount.count) {
-            val manualLottoNumbers: List<LottoNumber> = inputView.readLottoNumbers()
-            val manualLotto: Lotto = lottoMachine.createManualLotto(manualLottoNumbers)
-            lottos.add(manualLotto)
-        }
+        return List(manualLottoCount.count) { getManualLotto() }
     }
 
-    private fun createAutoLottos(
-        autoLottoCount: LottoCount,
-        lottos: MutableList<Lotto>,
-    ) {
-        repeat(autoLottoCount.count) {
-            val autoLotto: Lotto = lottoMachine.createAutoLotto()
-            lottos.add(autoLotto)
-        }
+    private fun getManualLotto(): Lotto {
+        val lottoNumbers: List<LottoNumber> = inputView.readLottoNumbers()
+        return lottoMachine.createManualLotto(lottoNumbers)
     }
+
+    private fun getAutoLottos(autoLottoCount: LottoCount) = List(autoLottoCount.count) { getAutoLotto() }
+
+    private fun getAutoLotto(): Lotto = lottoMachine.createAutoLotto()
 
     private fun getManualLottoCount(): LottoCount =
         try {
