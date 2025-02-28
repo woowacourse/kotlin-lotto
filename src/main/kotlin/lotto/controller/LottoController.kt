@@ -17,7 +17,6 @@ class LottoController(
 ) {
     fun run() {
         val purchaseMoney: LottoPurchaseAmount = getPurchaseMoney()
-        val manualLottoCount: Int = getManualLottoCount()
         val lottos: Lottos = createLottos(purchaseMoney)
         outputView.printLottos(lottos)
 
@@ -35,6 +34,23 @@ class LottoController(
             getPurchaseMoney()
         }
 
+    private fun createLottos(purchaseMoney: LottoPurchaseAmount): Lottos {
+        val lottoCount: Int = getLottoCount(purchaseMoney)
+        val manualLottoCount: Int = getManualLottoCount()
+        require(lottoCount >= manualLottoCount) { "수동으로 입력할 로또 개수는 최대 $lottoCount 까지 가능합니다." }
+        val lottos: MutableList<Lotto> = mutableListOf()
+        outputView.printManualLottoNumbersGuide()
+        repeat(manualLottoCount) {
+            val manualLotto: Lotto = inputView.readLottoNumbers()
+            lottos.add(manualLotto)
+        }
+        repeat(lottoCount - manualLottoCount) {
+            val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
+            lottos.add(Lotto.create(lottoNumbers))
+        }
+        return Lottos(lottos)
+    }
+
     private fun getManualLottoCount(): Int =
         try {
             outputView.printManualLottoCountGuide()
@@ -44,19 +60,8 @@ class LottoController(
             getManualLottoCount()
         }
 
-    private fun createLottos(purchaseMoney: LottoPurchaseAmount): Lottos {
-        val lottoCount: Int = getLottoCount(purchaseMoney)
-        val lottos: MutableList<Lotto> = mutableListOf()
-        repeat(lottoCount) {
-            val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
-            lottos.add(Lotto.create(lottoNumbers))
-        }
-        return Lottos(lottos)
-    }
-
     private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
         val lottoCount: Int = purchaseMoney.getLottoCount()
-        outputView.printLottoCount(lottoCount)
         return lottoCount
     }
 
@@ -69,7 +74,7 @@ class LottoController(
     private fun getWinningLottoNumbers(): Lotto =
         try {
             outputView.printWinningLottoNumbersOfLastWeekGuide()
-            inputView.readWinningLottoNumbersOfLastWeek()
+            inputView.readLottoNumbers()
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getWinningLottoNumbers()
