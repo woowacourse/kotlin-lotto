@@ -1,13 +1,13 @@
 package lotto.controller
 
-import lotto.Constants
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
-import lotto.domain.model.Rank
+import lotto.domain.model.LottoTicketResult
+import lotto.domain.model.PurchaseAmount
+import lotto.domain.model.PurchaseCount
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoMachine
 import lotto.domain.service.LottoResult
-import lotto.domain.service.LottoScanner
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -15,43 +15,76 @@ class LottoStore(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {
-    private fun calculatePurchaseCount(amount: Int) = amount / Constants.LOTTO_AMOUNT
+    fun run() {
+        val (manualCount, autoCount) = getLottoCount()
+        val lottoTickets = generateLottoTickets(manualCount, autoCount)
+        outputView.printLotto(lottoTickets)
 
-    private fun generateLottoTicket(count: Int): List<LottoTicket> = LottoMachine().purchase(count)
+        val winningLotto = getWinningLotto()
 
-    private fun inputWinningLotto(): WinningLotto {
-        val winningNumbers = LottoTicket(inputView.inputWinningNumbers().map { LottoNumber(it) }.toSet())
+        val result = calculateResult(lottoTickets, winningLotto)
+        outputView.printResult(result.ranks)
+        outputView.printProfit(result.calculateProfit())
+    }
+
+    private fun getLottoCount(): Pair<Int, Int> {
+        val amount = PurchaseAmount(inputView.inputPurchaseAmount())
+        val totalCount = amount.calculatePurchaseLottoCount()
+        val manualCount = inputView.inputManualCount()
+        val autoCount = PurchaseCount(totalCount, manualCount).calculateAutoCount()
+        return Pair(manualCount, autoCount)
+    }
+
+    private fun generateLottoTickets(
+        manualCount: Int,
+        autoCount: Int,
+    ): List<LottoTicket> {
+        if (manualCount != 0) outputView.printManualNumbersGuide()
+        val manualLottoTickets = generateManualLottoTicket(manualCount)
+        val autoLottoTickets = generateAutoLottoTicket(autoCount)
+        outputView.printPurchaseCount(manualCount, autoCount)
+        return manualLottoTickets + autoLottoTickets
+    }
+
+    private fun generateManualLottoTicket(count: Int): List<LottoTicket> {
+        val manualLottoTickets = mutableListOf<LottoTicket>()
+
+        repeat(count) {
+            while (true) {
+                val result = LottoTicket.create(inputView.inputManualNumbers().map { LottoNumber(it) })
+                when (result) {
+                    is LottoTicketResult.Success -> {
+                        manualLottoTickets.add(result.ticket)
+                        break
+                    }
+
+                    is LottoTicketResult.InvalidCount -> println(ERROR_LOTTO_INVALID_COUNT)
+                    is LottoTicketResult.DuplicateNumbers -> println(ERROR_LOTTO_DUPLICATE)
+                }
+            }
+        }
+        return manualLottoTickets.toList()
+    }
+
+    private fun generateAutoLottoTicket(count: Int): List<LottoTicket> {
+        val autoLottoTickets = LottoMachine().generateAutoTicket(count)
+        return autoLottoTickets
+    }
+
+    private fun getWinningLotto(): WinningLotto {
+        val winningNumbers = inputView.inputWinningNumbers()
         val bonusNumber = LottoNumber(inputView.inputBonusNumber())
-        val winningLotto = WinningLotto(winningNumbers.getNumbers(), bonusNumber)
+        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
         return winningLotto
     }
 
     private fun calculateResult(
         lottoTickets: List<LottoTicket>,
         winningLotto: WinningLotto,
-    ): LottoResult {
-        val result = LottoScanner(lottoTickets, winningLotto).getResult()
-        return result
-    }
+    ): LottoResult = LottoResult.calculateResult(lottoTickets, winningLotto)
 
-    private fun formattingWinningStatus(result: LottoResult): Map<Rank, Int> {
-        val resultMap = mutableMapOf<Rank, Int>()
-        Rank.entries.filter { it != Rank.MISS }.map { rank ->
-            resultMap[rank] = result.getWinningStatus().getOrDefault(rank, 0)
-        }
-        return resultMap
-    }
-
-    fun run() {
-        val amount = inputView.inputPurchaseAmount()
-        val count = calculatePurchaseCount(amount)
-        outputView.printPurchaseCount(count)
-        val lottoTickets = generateLottoTicket(count)
-        outputView.printLotto(lottoTickets)
-        val winningLotto = inputWinningLotto()
-        val result = calculateResult(lottoTickets, winningLotto)
-        val formattedWinningStatus = formattingWinningStatus(result)
-        outputView.printResult(formattedWinningStatus)
-        outputView.printProfit(result.calculateProfit())
+    companion object {
+        private const val ERROR_LOTTO_INVALID_COUNT = "로또 번호는 6개여야 합니다. 다시 입력해주세요."
+        private const val ERROR_LOTTO_DUPLICATE = "로또 번호는 서로 중복되면 안 됩니다. 다시 입력해주세요."
     }
 }

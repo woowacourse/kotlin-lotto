@@ -5,18 +5,18 @@ import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
 
 class LottoMachine {
-    fun purchase(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateLotto()) }
+    fun generateAutoTicket(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateAutoLotto()) }
 
-    private fun generateLotto(): Set<LottoNumber> =
+    fun calculateTotalCount(purchaseAmount: Int) = purchaseAmount / Constants.LOTTO_AMOUNT
+
+    private fun generateAutoLotto(): List<LottoNumber> =
         LOTTO_RANGE
             .shuffled()
-            .take(LOTTO_PICK_COUNT)
+            .take(Constants.LOTTO_PICK_COUNT)
             .sorted()
             .map { LottoNumber(it) }
-            .toSet()
 
     companion object {
-        private const val LOTTO_PICK_COUNT = 6
         private val LOTTO_RANGE = (Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER)
     }
 }

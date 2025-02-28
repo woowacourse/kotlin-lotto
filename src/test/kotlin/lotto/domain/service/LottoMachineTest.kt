@@ -1,24 +1,29 @@
 package lotto.domain.service
 
+import lotto.domain.model.PurchaseCount
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class LottoMachineTest {
-    @ParameterizedTest
-    @ValueSource(ints = [1, 3, 4])
-    fun `로또 구입 개수만큼 로또를 발행한다`(count: Int) {
-        val lottoTickets = LottoMachine().purchase(count)
-        assertEquals(lottoTickets.size, count)
+    @Test
+    fun `로또 구입 금액을 로또 1장 가격으로 나눈 값이 구입 개수이다`() {
+        val count = LottoMachine().calculateTotalCount(12000)
+        assertThat(count).isEqualTo(12)
     }
 
     @Test
-    fun `생성된 로또는 1에서 45범위 사이이다`() {
-        val lottoTickets = LottoMachine().purchase(1)
-        assertDoesNotThrow {
-            lottoTickets[0].getNumbers().all { it.number in 1..45 }
-        }
+    fun `전체 로또 구입 개수에서 수동 구입 개수를 뺀 값이 자동 구입 개수이다`() {
+        val autoCount = PurchaseCount(12, 3).calculateAutoCount()
+        assertThat(autoCount).isEqualTo(9)
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [1, 3, 4])
+    fun `로또 구입 개수만큼 로또를 발행한다`(count: Int) {
+        val lottoTickets = LottoMachine().generateAutoTicket(count)
+        assertEquals(lottoTickets.size, count)
     }
 }

@@ -7,39 +7,33 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class OutputView {
-    fun printPurchaseCount(count: Int) {
-        println(MESSAGE_PURCHASE.format(count))
+    fun printPurchaseCount(
+        manualCount: Int,
+        autoCount: Int,
+    ) {
+        println(MESSAGE_PURCHASE.format(manualCount, autoCount))
     }
+
+    fun printManualNumbersGuide() = println(MESSAGE_OUTPUT_MANUAL_NUMBERS)
 
     fun printLotto(lottoTickets: List<LottoTicket>) {
         lottoTickets.forEach { ticket ->
-            println(ticket.getNumbers().map { it.number }.joinToString(SEPARATOR, PREFIX, POSTFIX))
+            println(ticket.numbers.map { it.number })
         }
     }
 
     fun printResult(results: Map<Rank, Int>) {
         println(MESSAGE_RESULT_HEADER)
-        for (result in results) {
-            val matchMessage =
-                when (result.key) {
-                    Rank.FIRST -> MESSAGE_MATCH_SIX
-                    Rank.SECOND -> MESSAGE_MATCH_FIVE_BONUS
-                    Rank.THIRD -> MESSAGE_MATCH_FIVE
-                    Rank.FOURTH -> MESSAGE_MATCH_FOUR
-                    Rank.FIFTH -> MESSAGE_MATCH_THREE
-                    Rank.MISS -> MESSAGE_MATCH_MISS
-                }
-            val prizeMessage =
-                when (result.key) {
-                    Rank.FIRST -> Rank.FIRST.winningMoney
-                    Rank.SECOND -> Rank.SECOND.winningMoney
-                    Rank.THIRD -> Rank.THIRD.winningMoney
-                    Rank.FOURTH -> Rank.FOURTH.winningMoney
-                    Rank.FIFTH -> Rank.FIFTH.winningMoney
-                    Rank.MISS -> Rank.MISS.winningMoney
-                }
-
-            println(MESSAGE_RESULT.format(matchMessage, prizeMessage, result.value))
+        Rank.entries.sortedBy { it.winningMoney }.filterNot { it == Rank.MISS }.forEach { rank ->
+            val matchBonus = if (rank == Rank.SECOND) MESSAGE_MATCH_BONUS else ""
+            println(
+                MESSAGE_MATCH_COUNT.format(
+                    rank.countOfMatch,
+                    matchBonus,
+                    rank.winningMoney,
+                    results.getOrDefault(rank, 0),
+                ),
+            )
         }
     }
 
@@ -59,23 +53,16 @@ class OutputView {
         }
 
     companion object {
-        private const val MESSAGE_PURCHASE = "%d개를 구매했습니다."
+        private const val MESSAGE_OUTPUT_MANUAL_NUMBERS = "\n수동으로 구매할 번호를 입력해 주세요."
+        private const val MESSAGE_PURCHASE = "\n수동으로 %d장, 자동으로 %d장을 구매했습니다."
         private const val MESSAGE_RESULT_HEADER = "\n" + "당첨 통계" + "\n" + "---------"
-        private const val MESSAGE_MATCH_SIX = "6개 일치"
-        private const val MESSAGE_MATCH_FIVE_BONUS = "5개 일치, 보너스 볼 일치"
-        private const val MESSAGE_MATCH_FIVE = "5개 일치"
-        private const val MESSAGE_MATCH_FOUR = "4개 일치"
-        private const val MESSAGE_MATCH_THREE = "3개 일치"
-        private const val MESSAGE_MATCH_MISS = "0개 일치"
-        private const val MESSAGE_RESULT = "%s (%d원) - %d개"
+        private const val MESSAGE_MATCH_BONUS = "보너스 볼 일치"
         private const val MESSAGE_PROFIT = "총 수익률은 %s입니다."
         private const val MESSAGE_PROFIT_GAIN = " (기준이 1이기 때문에 결과적으로 이득이라는 의미임)"
         private const val MESSAGE_PROFIT_BREAKEVEN = " (기준이 1이기 때문에 결과적으로 본전이라는 의미임)"
         private const val MESSAGE_PROFIT_LOSS = " (기준이 1이기 때문에 결과적으로 손해라는 의미임)"
+        private const val MESSAGE_MATCH_COUNT = "%d개 일치%s (%d원) - %d개"
 
-        private const val SEPARATOR = ", "
-        private const val PREFIX = "["
-        private const val POSTFIX = "]"
         private const val PATTERN_DECIMAL_POINT = "#.##"
     }
 }
