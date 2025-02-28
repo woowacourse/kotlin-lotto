@@ -4,6 +4,7 @@ import lotto.model.Lotto
 import lotto.model.LottoCount
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
+import lotto.model.LottoNumbersGenerator
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoResult
 import lotto.model.Lottos
@@ -15,6 +16,7 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
     private val lottoMachine: LottoMachine,
+    private val lottoNumbersGenerator: LottoNumbersGenerator,
 ) {
     fun run() {
         val purchaseMoney: LottoPurchaseAmount = getPurchaseMoney()
@@ -83,7 +85,7 @@ class LottoController(
     private fun getManualLotto(): Lotto =
         runCatching {
             val lottoNumbers: List<LottoNumber> = inputView.readLottoNumbers()
-            lottoMachine.createManualLotto(lottoNumbers)
+            lottoMachine.createLotto(lottoNumbers)
         }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
             getManualLotto()
@@ -91,7 +93,10 @@ class LottoController(
 
     private fun getAutoLottos(autoLottoCount: LottoCount): List<Lotto> = List(autoLottoCount.count) { getAutoLotto() }
 
-    private fun getAutoLotto(): Lotto = lottoMachine.createAutoLotto()
+    private fun getAutoLotto(): Lotto {
+        val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
+        return lottoMachine.createLotto(lottoNumbers)
+    }
 
     private fun getWinningLotto(): WinningLotto {
         val winningLottoNumbers: Lotto = getWinningLottoNumbers()
