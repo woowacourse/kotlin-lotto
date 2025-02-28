@@ -1,26 +1,34 @@
 package lotto.model
 
+import lotto.Amount
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class AmountTest {
     @Test
-    fun `구입 금액이 0 이하인 경우 예외가 발생한다`() {
-        val exception =
-            assertThrows<IllegalArgumentException> {
-                Amount(-1)
-            }
-        assertThat(exception.message).isEqualTo("[ERROR] 금액은 양수이어야 합니다.")
+    fun `소지한 돈을 로또 금액으로 나누면 로또 갯수가 리턴된다`() {
+        val amount = Amount.createOrNull(10000)
+        assertThat(amount).isNotNull
+        assertThat(amount?.getCount(1000)).isEqualTo(10)
     }
 
     @Test
-    fun `구입 금액이 로또 가격으로 나눌 수 없는 경우 예외가 발생한다`() {
-        val amount = Amount(9999)
-        val exception =
-            assertThrows<IllegalArgumentException> {
-                amount.moneySplit(Amount(1000))
-            }
-        assertThat(exception.message).isEqualTo("[ERROR] 로또 금액에 맞게 나눌 수 없습니다")
+    fun `소지한 돈이 음수이면 null이 생성된다`() {
+        val amount = Amount.createOrNull(-1)
+        assertThat(amount).isEqualTo(null)
+    }
+
+    @Test
+    fun `소지한 돈에 구입 금액을 지불하면 남은 돈을 가진 객채가 생성된다`() {
+        var amount = Amount.createOrNull(10000)
+        amount = amount?.paymentOrNull(7000)
+        assertThat(amount?.money).isEqualTo(3000)
+    }
+
+    @Test
+    fun `소지한 돈 이상의 구입 금액을 지불하면 null가 생성된다`() {
+        var amount = Amount.createOrNull(10000)
+        amount = amount?.paymentOrNull(17000)
+        assertThat(amount?.money).isEqualTo(null)
     }
 }
