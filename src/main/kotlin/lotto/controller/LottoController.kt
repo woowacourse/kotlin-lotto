@@ -17,6 +17,7 @@ class LottoController(
 ) {
     fun run() {
         val purchaseMoney: LottoPurchaseAmount = getPurchaseMoney()
+        val manualLottoCount: Int = getManualLottoCount()
         val lottos: Lottos = createLottos(purchaseMoney)
         outputView.printLottos(lottos)
 
@@ -32,6 +33,15 @@ class LottoController(
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getPurchaseMoney()
+        }
+
+    private fun getManualLottoCount(): Int =
+        try {
+            outputView.printManualLottoCountGuide()
+            inputView.readManualLottoCount()
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message)
+            getManualLottoCount()
         }
 
     private fun createLottos(purchaseMoney: LottoPurchaseAmount): Lottos {

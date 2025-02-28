@@ -10,6 +10,11 @@ class InputView {
         return LottoPurchaseAmount(money)
     }
 
+    fun readManualLottoCount(): Int {
+        val manualLottoCount = readln().trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER)
+        return manualLottoCount
+    }
+
     fun readWinningLottoNumbersOfLastWeek(): Lotto {
         val lottoNumbersOfLastWeek =
             readln()

@@ -10,6 +10,10 @@ class OutputView {
         println(PURCHASE_AMOUNT_GUIDE_MESSAGE)
     }
 
+    fun printManualLottoCountGuide() {
+        println(MANUAL_LOTTO_COUNT_GUIDE_MESSAGE)
+    }
+
     fun printLottoCount(lottoCount: Int) {
         println(LOTTO_COUNT_MESSAGE_FORMAT.format(lottoCount))
     }
@@ -95,6 +99,7 @@ class OutputView {
 
     companion object {
         private const val PURCHASE_AMOUNT_GUIDE_MESSAGE = "구입금액을 입력해 주세요."
+        private const val MANUAL_LOTTO_COUNT_GUIDE_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
         private const val LOTTO_COUNT_MESSAGE_FORMAT = "%d개를 구매했습니다."
         private const val LOTTO_NUMBER_SEPARATOR = ", "
         private const val LOTTO_NUMBERS_PREFIX = "["
