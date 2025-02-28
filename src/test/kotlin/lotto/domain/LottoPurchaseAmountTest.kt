@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class LottoPurchaseAmountTest {
     @ValueSource(ints = [1234, 3456, 100])
     @ParameterizedTest
-    fun `구매 가격이 1000 단위가 아니면 IllegalArgumentException이 일어난다`(input: Int) {
+    fun `구매 가격이 1000 단위가 아니면 예외가 발생한다`(input: Int) {
         assertThrows<IllegalArgumentException> {
             LottoPurchaseAmount(input)
         }
@@ -15,7 +15,7 @@ class LottoPurchaseAmountTest {
 
     @ValueSource(ints = [-1000, 0, -1234])
     @ParameterizedTest
-    fun `구매 가격에 0 이하의 숫자가 들어오면 IllegalArgumentException이 일어난다`(input: Int) {
+    fun `구매 가격에 0 이하의 숫자가 들어오면 예외가 발생한다`(input: Int) {
         assertThrows<IllegalArgumentException> {
             LottoPurchaseAmount(input)
         }
