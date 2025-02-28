@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoStore(
+class LottoMarket(
     private val amount: Int,
     private val manualQuantity: Int,
     private val lottoMachine: LottoMachine = LottoMachine(),

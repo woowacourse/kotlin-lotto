@@ -2,8 +2,8 @@ package lotto.controller
 
 import lotto.model.LottoMachine
 import lotto.model.LottoMachine.Companion.EMPTY_LOTTO_QUANTITY
+import lotto.model.LottoMarket
 import lotto.model.LottoProfitCalculator
-import lotto.model.LottoStore
 import lotto.model.LottoWallet
 import lotto.model.ProfitStatus
 import lotto.model.WinningDiscriminator
@@ -18,8 +18,8 @@ class LottoController(
         val purchaseAmount = getPurchaseAmount()
         val manualLottoQuantity = getManualQuantity()
 
-        val lottoStore = purchaseLottos(purchaseAmount, manualLottoQuantity)
-        val lottoWallet = storeLottos(lottoStore, manualLottoQuantity)
+        val lottoMarket = purchaseLottos(purchaseAmount, manualLottoQuantity)
+        val lottoWallet = storeLottos(lottoMarket, manualLottoQuantity)
 
         val winningDiscriminator = getWinningInfo()
         discriminateLottos(winningDiscriminator, lottoWallet, purchaseAmount)
@@ -40,25 +40,25 @@ class LottoController(
     private fun purchaseLottos(
         purchaseAmount: Int,
         manualLottoQuantity: Int,
-    ): LottoStore {
+    ): LottoMarket {
         val lottoMachine = LottoMachine()
-        val lottoStore = LottoStore(purchaseAmount, manualLottoQuantity, lottoMachine)
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity, lottoMachine)
         outputView.printManualLottoNumbersGuide(manualLottoQuantity > EMPTY_LOTTO_QUANTITY)
-        return lottoStore
+        return lottoMarket
     }
 
     private fun storeLottos(
-        lottoStore: LottoStore,
+        lottoMarket: LottoMarket,
         manualLottoQuantity: Int,
     ): LottoWallet {
         val lottoWallet = LottoWallet()
         val purchaseLottos =
-            lottoStore.buy(
+            lottoMarket.buy(
                 List(manualLottoQuantity) { inputView.readLottoNumbers() },
             )
         lottoWallet.addAll(purchaseLottos)
 
-        outputView.printPurchaseLottoQuantity(manualLottoQuantity, lottoStore.autoLottoQuantity)
+        outputView.printPurchaseLottoQuantity(manualLottoQuantity, lottoMarket.autoLottoQuantity)
         outputView.printLotto(lottoWallet.lottos)
         return lottoWallet
     }
