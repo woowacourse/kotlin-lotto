@@ -1,5 +1,6 @@
 package domain.model
 
+import domain.model.price.PurchasePrice
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
