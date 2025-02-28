@@ -10,7 +10,7 @@ class LottoFactory {
         return List(amount) { generateLottoNumbers() }
     }
 
-    fun generateManualLottos(manualNumbers: ManualLottoNumbers): List<Lotto> {
+    fun generateManualLottos(manualNumbers: NumbersList): List<Lotto> {
         return manualNumbers.toLottos()
     }
 

@@ -1,7 +1,7 @@
 package lotto
 
 import lotto.domain.LottoFactory
-import lotto.domain.ManualLottoNumbers
+import lotto.domain.NumbersList
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -20,6 +20,6 @@ class LottoFactoryTest {
                 listOf(1, 2, 3, 4, 5, 6),
                 listOf(1, 2, 3, 4, 5, 6),
             )
-        assertThat(LottoFactory().generateManualLottos(ManualLottoNumbers(manualLottoNumbers)).size).isEqualTo(3)
+        assertThat(LottoFactory().generateManualLottos(NumbersList(manualLottoNumbers)).size).isEqualTo(3)
     }
 }

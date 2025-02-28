@@ -5,7 +5,7 @@ import lotto.domain.LottoAmount
 import lotto.domain.LottoFactory
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
-import lotto.domain.ManualLottoNumbers
+import lotto.domain.NumbersList
 import lotto.domain.Purchase
 import lotto.domain.WinningLotto
 import lotto.view.InputView
@@ -51,12 +51,12 @@ class LottoController(
         return manualLottos + autoLottos
     }
 
-    private fun getManualLottoNumbers(manualAmount: LottoAmount): ManualLottoNumbers {
+    private fun getManualLottoNumbers(manualAmount: LottoAmount): NumbersList {
         val numbersList =
             (0 until manualAmount.toInt()).map {
                 inputView.inputManualLottoNumbers()
             }
-        return ManualLottoNumbers(numbersList)
+        return NumbersList(numbersList)
     }
 
     private fun getWinningLotto(): WinningLotto {
