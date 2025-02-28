@@ -1,12 +1,12 @@
 package domain.model.price
 
+import domain.model.machine.LottoMachine.Companion.STANDARD_AMOUNT_UNIT
 import domain.model.price.PurchasePriceException.InvalidUnitException
 import domain.model.price.PurchasePriceException.OverStandardPriceException
-import domain.service.LottoMachine.Companion.STANDARD_AMOUNT_UNIT
 
 class PurchasePrice(
     val value: Int,
-    standardPrice: Int = STANDARD_AMOUNT_UNIT,
+    val standardPrice: Int = STANDARD_AMOUNT_UNIT,
 ) {
     init {
         if (value <= 0 && value < standardPrice) {
@@ -17,8 +17,7 @@ class PurchasePrice(
         }
     }
 
-    fun getPurchasableLottoCount(standardPrice: Int = STANDARD_AMOUNT_UNIT): Int {
+    fun getPurchasableLottoCount(): Int {
         return value / standardPrice
     }
 }
-
