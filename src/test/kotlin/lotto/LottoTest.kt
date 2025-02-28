@@ -1,6 +1,10 @@
 package lotto
 
 import lotto.model.Lotto
+import lotto.model.LottoNumber
+import lotto.model.Rank
+import lotto.model.WinningLotto
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -27,5 +31,15 @@ class LottoTest {
         assertThrows<IllegalArgumentException> {
             Lotto(1, 2, 3, 4, 5)
         }
+    }
+
+    @Test
+    fun `당첨 로또를 입력하면 로또가 몇 등인지 반환한다`() {
+        val winningLotto = WinningLotto(Lotto(1, 2, 3, 4, 5, 6), LottoNumber(7))
+        val lotto = Lotto(1, 2, 3, 4, 5, 7)
+
+        val expected = Rank.SECOND
+
+        assertThat(lotto.getRank(winningLotto)).isEqualTo(expected)
     }
 }

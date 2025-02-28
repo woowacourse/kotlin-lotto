@@ -26,12 +26,18 @@ class Lotto(
         return duplicates
     }
 
-    fun getMatchCount(winningNumbers: Lotto): Int =
+    fun getRank(winningLotto: WinningLotto): Rank {
+        val matchCount = getMatchCount(winningLotto.winningNumbers)
+        val isMatchedBonus = isMatchedBonusNumber(winningLotto.bonusNumber)
+        return Rank.findRank(matchCount, isMatchedBonus)
+    }
+
+    private fun getMatchCount(winningNumbers: Lotto): Int =
         numbers.count { number ->
             winningNumbers.numbers.contains(number)
         }
 
-    fun isMatchedBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
+    private fun isMatchedBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
 
     companion object {
         private const val ERROR_DUPLICATED_LOTTO_NUMBERS = "입력한 로또 번호 %s이 중복됩니다. 로또 번호는 중복될 수 없습니다."
