@@ -24,5 +24,11 @@ class LottoTest {
         assertThrows<IllegalArgumentException> { createLotto(listOf(6, 5, 4, 3, 2, 1)) }
     }
 
+    @Test
+    fun `로또 넘버를 random으로 생성할 때, 1부터 45 사이의 랜덤한 값의 로또가 생성된다`() {
+        val lotto = Lotto.createRandom()
+        assertThat { lotto.numberList.forEach { it.value in 1..45 } }
+    }
+
     fun createLotto(numberList: List<Int>): Lotto? = Lotto.createOrNull(numberList.map { it -> LottoNumber.valueOf(it) })
 }

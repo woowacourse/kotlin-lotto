@@ -1,6 +1,6 @@
 package lotto
 
-class LottoNumber private constructor(
+data class LottoNumber private constructor(
     val value: Int,
 ) {
     companion object {
