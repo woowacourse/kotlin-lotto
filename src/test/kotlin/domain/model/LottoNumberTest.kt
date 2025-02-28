@@ -11,7 +11,7 @@ class LottoNumberTest {
         assertThrows<IllegalArgumentException>(
             message = "[ERROR] 로또 번호는 1부터 45 사이입니다.",
         ) {
-            LottoNumber(value)
+            LottoNumber.from(value)
         }
     }
 }

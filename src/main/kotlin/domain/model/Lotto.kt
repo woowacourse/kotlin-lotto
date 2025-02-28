@@ -1,6 +1,6 @@
 package domain.model
 
-class Lotto(
+data class Lotto(
     val numbers: Set<LottoNumber>,
 ) {
     init {
@@ -8,12 +8,10 @@ class Lotto(
     }
 
     companion object {
-        fun of(vararg inputNumbers: Int): Lotto = Lotto(inputNumbers.map { LottoNumber(it) }.toSet())
-
-        fun Set<LottoNumber>.toValues() = this.map { it.value }
+        fun of(vararg inputNumbers: Int): Lotto = Lotto(inputNumbers.map { LottoNumber.from(it) }.toSet())
 
         const val ERROR = "[ERROR]"
         const val LOTTO_SIZE = 6
-        const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 6개 입니다."
+        const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 중복되지 않는 6개 입니다."
     }
 }
