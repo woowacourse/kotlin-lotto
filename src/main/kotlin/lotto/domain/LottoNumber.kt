@@ -1,11 +1,10 @@
 package lotto.domain
 
-data class LottoNumber(val number: Int) {
+@JvmInline
+value class LottoNumber(val number: Int) {
     init {
         validateLottoNumberRange()
     }
-
-    fun toInt() = number
 
     private fun validateLottoNumberRange() {
         require(number in MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER) { ERROR_OUT_OF_LOTTO_NUMBER_RANGE }

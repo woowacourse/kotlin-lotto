@@ -10,6 +10,27 @@ class InputView {
         return getPurchaseAmount()
     }
 
+    fun getManualLottoCount(): String {
+        println(MESSAGE_INPUT_MANUAL_LOTTO_COUNT)
+        val input = readln()
+        if (validateInteger(input)) {
+            return input
+        }
+        return getManualLottoCount()
+    }
+
+    fun getManualLottoTickets() {
+        println(MESSAGE_INPUT_MANUAL_LOTTO_TICKETS)
+    }
+
+    fun getManualLotto(): String {
+        val input = readln()
+        if (validateListInteger(input)) {
+            return input
+        }
+        return getManualLotto()
+    }
+
     fun getWinningNumber(): String {
         println(MESSAGE_INPUT_WINNING_NUMBER)
         val input = readln()
@@ -48,6 +69,8 @@ class InputView {
 
     companion object {
         const val MESSAGE_INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
+        const val MESSAGE_INPUT_MANUAL_LOTTO_COUNT = "\n수동으로 구매할 로또 수를 입력해 주세요."
+        const val MESSAGE_INPUT_MANUAL_LOTTO_TICKETS = "\n수동으로 구매할 번호를 입력해 주세요."
         const val MESSAGE_INPUT_WINNING_NUMBER = "\n지난 주 당첨 번호를 입력해 주세요."
         const val MESSAGE_INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
 

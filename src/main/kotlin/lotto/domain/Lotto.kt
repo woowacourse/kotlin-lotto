@@ -1,6 +1,6 @@
 package lotto.domain
 
-class Lotto(private val lotto: Set<LottoNumber>) {
+data class Lotto(private val lotto: Set<LottoNumber>) {
     init {
         validateLottoSize()
     }
@@ -8,21 +8,7 @@ class Lotto(private val lotto: Set<LottoNumber>) {
     fun getSortedLotto() = lotto.sortedBy { it.number }.toSet()
 
     private fun validateLottoSize() {
-        runCatching { lotto.size == LOTTO_SIZE }
-            .onFailure { ERROR_LOTTO_SIZE }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Lotto
-
-        return lotto == other.lotto
-    }
-
-    override fun hashCode(): Int {
-        return lotto.hashCode()
+        require(lotto.size == LOTTO_SIZE) { ERROR_LOTTO_SIZE }
     }
 
     companion object {
