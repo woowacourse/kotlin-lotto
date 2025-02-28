@@ -1,5 +1,6 @@
 package lotto.domain.service
 
+import lotto.domain.model.PurchaseCount
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -15,7 +16,7 @@ class LottoMachineTest {
 
     @Test
     fun `전체 로또 구입 개수에서 수동 구입 개수를 뺀 값이 자동 구입 개수이다`() {
-        val autoCount = LottoMachine().calculateAutoCount(12, 3)
+        val autoCount = PurchaseCount(12, 3).calculateAutoCount()
         assertThat(autoCount).isEqualTo(9)
     }
 
