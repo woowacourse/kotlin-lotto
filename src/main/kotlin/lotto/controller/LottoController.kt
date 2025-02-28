@@ -71,7 +71,7 @@ class LottoController(
     private fun getWinningLotto(): WinningLotto {
         val winningLottoNumbersWithoutBonusInput = inputView.readWinningLottoNumbersWithoutBonus()
         val winningLottoNumbersWithoutBonus = winningLottoNumbersWithoutBonusInput.map { LottoNumber(it) }
-        val winningLottoWithoutBonus = Lotto.createSelfByManualLottoNumbers(winningLottoNumbersWithoutBonus)
+        val winningLottoWithoutBonus = Lotto(winningLottoNumbersWithoutBonus)
         val bonusNumberText = inputView.readBonusNumber()
         val bonusNumber = LottoNumber(bonusNumberText)
 

@@ -17,7 +17,7 @@ class LottoWinningStatsTest {
     @BeforeEach
     fun setUp() {
         val sampleLottoTicket = listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }
-        val sampleLotto = Lotto.createSelfByManualLottoNumbers(sampleLottoTicket)
+        val sampleLotto = Lotto(sampleLottoTicket)
 
         winningLotto =
             WinningLotto(

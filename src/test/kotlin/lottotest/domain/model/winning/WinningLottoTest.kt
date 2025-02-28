@@ -17,7 +17,7 @@ class WinningLottoTest {
 
     @BeforeEach
     fun setUp() {
-        winningNumberLotto1to6 = Lotto.createSelfByManualLottoNumbers(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
+        winningNumberLotto1to6 = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
     }
 
     @Test
@@ -33,7 +33,7 @@ class WinningLottoTest {
     @Test
     fun `보유한 당첨 정보를 이용해 전달받은 로또 인스턴스의 Rank정보를 반환한다`() {
         // Given
-        val lotto = Lotto.createSelfByManualLottoNumbers((2..7).map { LottoNumber(it) })
+        val lotto = Lotto((2..7).map { LottoNumber(it) })
         val winningLotto = WinningLotto(winningNumberLotto1to6, bonusNumber45)
 
         // When

@@ -8,5 +8,5 @@ class ManualLottoMachine : LottoMachine {
     override fun generateLottoBundle(
         payInfo: LottoPayInfo,
         manualTicketsNumbers: List<List<LottoNumber>>?,
-    ): List<Lotto> = manualTicketsNumbers?.map { Lotto.createSelfByManualLottoNumbers(it) } ?: emptyList()
+    ): List<Lotto> = manualTicketsNumbers?.map { Lotto(it) } ?: emptyList()
 }
