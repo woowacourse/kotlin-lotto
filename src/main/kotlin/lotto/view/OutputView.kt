@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.LottoCount
 import lotto.model.Lottos
 import lotto.model.Rank
 
@@ -9,12 +10,27 @@ class OutputView {
         println(PURCHASE_AMOUNT_GUIDE_MESSAGE)
     }
 
-    fun printLottoCount(lottoCount: Int) {
-        println(LOTTO_COUNT_MESSAGE_FORMAT.format(lottoCount))
+    fun printPurchaseManualLottoCountGuide() {
+        println()
+        println(PURCHASE_MANUAL_LOTTO_COUNT_GUIDE_MESSAGE)
+    }
+
+    fun printManualLottoNumbersGuide() {
+        println()
+        println(MANUAL_LOTTO_NUMBERS_GUIDE_MESSAGE)
+    }
+
+    fun printLottoCount(
+        manualLottoCount: LottoCount,
+        automaticLottoCount: LottoCount,
+    ) {
+        println()
+        println(LOTTO_COUNT_MESSAGE_FORMAT.format(manualLottoCount.number, automaticLottoCount.number))
     }
 
     fun printLottos(lottos: Lottos) {
-        lottos.lottoBundle.forEach { lotto -> printLottoNumbers(lotto) }
+        lottos.manualLottoBundle.forEach { lotto -> printLottoNumbers(lotto) }
+        lottos.automaticLottoBundle.forEach { lotto -> printLottoNumbers(lotto) }
     }
 
     private fun printLottoNumbers(lotto: Lotto) {
@@ -43,7 +59,7 @@ class OutputView {
     fun printLottoStatistics(lottoStatistics: Map<Rank, Int>) {
         println()
         println(LOTTO_STATISTICS_TITLE)
-        Rank.entries.reversed().drop(EXCLUDE_MISS_LANK).forEach { rank ->
+        Rank.entries.reversed().filter { rank -> rank != Rank.MISS }.forEach { rank ->
             printRankStatistics(rank, lottoStatistics)
         }
     }
@@ -94,7 +110,9 @@ class OutputView {
 
     companion object {
         private const val PURCHASE_AMOUNT_GUIDE_MESSAGE = "구입금액을 입력해 주세요."
-        private const val LOTTO_COUNT_MESSAGE_FORMAT = "%d개를 구매했습니다."
+        private const val PURCHASE_MANUAL_LOTTO_COUNT_GUIDE_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val MANUAL_LOTTO_NUMBERS_GUIDE_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
+        private const val LOTTO_COUNT_MESSAGE_FORMAT = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val LOTTO_NUMBER_SEPARATOR = ", "
         private const val LOTTO_NUMBERS_PREFIX = "["
         private const val LOTTO_NUMBERS_POSTFIX = "]"
@@ -103,7 +121,6 @@ class OutputView {
         private const val ERROR_FORMAT = "[ERROR] %s"
         private const val DEFAULT_ERROR_MESSAGE = "알 수 없는 에러가 발생했습니다."
         private const val LOTTO_STATISTICS_TITLE = "당첨 통계\n---------"
-        private const val EXCLUDE_MISS_LANK = 1
         private const val INITIAL_LOTTO_RANK_COUNT = 0
         private const val DEFAULT_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치 (%d원)- %d개"
         private const val SECOND_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"

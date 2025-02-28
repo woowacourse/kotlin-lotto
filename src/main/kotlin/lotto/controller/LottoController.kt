@@ -1,77 +1,101 @@
 package lotto.controller
 
 import lotto.model.Lotto
-import lotto.model.LottoNumber
+import lotto.model.LottoCount
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
+import lotto.model.Lottos
 import lotto.model.WinningLotto
-import lotto.model.lottomachine.LottoMachine
+import lotto.model.lottomachine.AutomaticLottoMachine
+import lotto.model.lottomachine.ManualLottoMachine
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val lottoMachine: LottoMachine,
 ) {
     fun run() {
         val purchaseMoney = getPurchaseMoney()
-        val lottoCount = getLottoCount(purchaseMoney)
-        outputView.printLottoCount(lottoCount)
-        val lottos = lottoMachine.createLottos(lottoCount)
+        val wholeLottoCount = getWholeLottoCount(purchaseMoney)
+        val lottos = getLottos(wholeLottoCount)
+        outputView.printLottoCount(lottos.getManualLottoCount(), lottos.getAutomaticLottoCount())
         outputView.printLottos(lottos)
-
-        val winningLotto = getWinningLotto(purchaseMoney)
-        val lottoStatistics: LottoStatistics = winningLotto.calculateStatistics(lottos)
-
+        val winningLotto = getWinningLotto()
+        val lottoStatistics: LottoStatistics = winningLotto.calculateStatistics(lottos, purchaseMoney)
         processLottoStatistics(lottoStatistics)
     }
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =
         try {
-            outputView.printPurchaseAmountGuide()
             inputView.readLottoPurchaseAmount()
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getPurchaseMoney()
         }
 
-    private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
+    private fun getWholeLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount {
         val lottoCount = purchaseMoney.getLottoCount()
         return lottoCount
     }
 
-    private fun getWinningLotto(purchaseMoney: LottoPurchaseAmount): WinningLotto {
-        val winningLottoNumbers = getWinningLottoNumbers()
-        val winningLotto = getWinningLotto(winningLottoNumbers, purchaseMoney)
+    private fun getLottos(wholeLottoCount: LottoCount): Lottos {
+        val manualLottoCount = getPurchaseManualLottoCount(wholeLottoCount)
+        val manualLottoBundle = getManualLottoBundle(manualLottoCount)
+        val automaticLottoCount = wholeLottoCount.minus(manualLottoCount)
+        val automaticLottoBundle = getAutomaticLottoBundle(automaticLottoCount)
+        return Lottos(manualLottoBundle, automaticLottoBundle)
+    }
+
+    private fun getPurchaseManualLottoCount(wholeLottoCount: LottoCount): LottoCount =
+        try {
+            val manualLottoCount = inputView.readManualLottoPurchaseCount()
+            if (!wholeLottoCount.isPurchasableLottoCount(manualLottoCount)) {
+                getPurchaseManualLottoCount(wholeLottoCount)
+            } else {
+                manualLottoCount
+            }
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message)
+            getPurchaseManualLottoCount(wholeLottoCount)
+        }
+
+    private fun getManualLottoBundle(manualLottoCount: LottoCount): List<Lotto> {
+        if (manualLottoCount.number != 0) outputView.printManualLottoNumbersGuide()
+        return List(manualLottoCount.number) { getManualLotto() }
+    }
+
+    private fun getManualLotto(): Lotto =
+        try {
+            val manualLottoNumbers = inputView.readManualLottoNumbers()
+            ManualLottoMachine.createLotto(manualLottoNumbers)
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message)
+            getManualLotto()
+        }
+
+    private fun getAutomaticLottoBundle(automaticLottoCount: LottoCount): List<Lotto> =
+        try {
+            AutomaticLottoMachine.createLottoBundle(automaticLottoCount)
+        } catch (error: IllegalArgumentException) {
+            outputView.printErrorMessage(error.message)
+            getAutomaticLottoBundle(automaticLottoCount)
+        }
+
+    private fun getWinningLotto(): WinningLotto {
+        val winningLottoNumbers = inputView.readWinningLottoNumbersOfLastWeek()
+        val winningLotto = getWinningLotto(winningLottoNumbers)
         return winningLotto
     }
 
-    private fun getWinningLottoNumbers(): Lotto =
+    private fun getWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
         try {
-            outputView.printWinningLottoNumbersOfLastWeekGuide()
-            inputView.readWinningLottoNumbersOfLastWeek()
+            val bonusNumber = inputView.readBonusNumber()
+            WinningLotto(winningLottoNumbers, bonusNumber)
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
-            getWinningLottoNumbers()
+            getWinningLotto(winningLottoNumbers)
         }
-
-    private fun getWinningLotto(
-        winningLottoNumbers: Lotto,
-        purchaseMoney: LottoPurchaseAmount,
-    ): WinningLotto =
-        try {
-            val bonusNumber = getBonusNumber()
-            WinningLotto(winningLottoNumbers, bonusNumber, purchaseMoney)
-        } catch (error: IllegalArgumentException) {
-            outputView.printErrorMessage(error.message)
-            getWinningLotto(winningLottoNumbers, purchaseMoney)
-        }
-
-    private fun getBonusNumber(): LottoNumber {
-        outputView.printBonusNumberGuide()
-        return inputView.readBonusNumber()
-    }
 
     private fun processLottoStatistics(lottoStatistics: LottoStatistics) {
         outputView.printLottoStatistics(lottoStatistics.rankStatistics)

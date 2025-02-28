@@ -1,0 +1,46 @@
+package lotto
+
+import lotto.model.LottoCount
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
+
+class LottoCountTest {
+    @Test
+    fun `로또 수량은 0보다 크거나 같아야 한다`() {
+        assertThrows<IllegalArgumentException> { LottoCount(-1) }
+        assertDoesNotThrow { LottoCount(0) }
+    }
+
+    @Test
+    fun `로또 갯수가 입력한 갯수보다 적은지 알 수 있다`() {
+        val lottoCount = LottoCount(10)
+        assertAll(
+            { assertTrue(lottoCount.isPurchasableLottoCount(LottoCount(10))) },
+            { assertFalse(lottoCount.isPurchasableLottoCount(LottoCount(11))) },
+        )
+    }
+
+    @Test
+    fun `현재 로또 수량에서 입력받은 로또 수량을 차감한다`() {
+        val lottoCount = LottoCount(5)
+
+        assertThrows<IllegalArgumentException> { lottoCount.minus(LottoCount(6)) }
+        assertDoesNotThrow { lottoCount.minus(LottoCount(5)) }
+    }
+
+    @Test
+    fun `현재 로또 수량보다 더 큰 로또 수량을 차감해도 로또 수량은 0보다 작을 수 없다`() {
+        val lottoCount = LottoCount(5)
+        val biggerLottoCount = LottoCount(10)
+        val expected = LottoCount(0)
+
+        val actual = lottoCount.minus(biggerLottoCount)
+
+        assertEquals(expected, actual)
+    }
+}
