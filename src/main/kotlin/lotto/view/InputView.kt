@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.LottoCount
 import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 
@@ -10,9 +11,9 @@ class InputView {
         return LottoPurchaseAmount(money)
     }
 
-    fun readManualLottoCount(): Int {
+    fun readManualLottoCount(): LottoCount {
         val manualLottoCount = readln().trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER)
-        return manualLottoCount
+        return LottoCount(manualLottoCount)
     }
 
     fun readLottoNumbers(): Lotto {

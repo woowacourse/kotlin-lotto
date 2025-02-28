@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.model.Lotto
+import lotto.model.LottoCount
 import lotto.model.LottoNumber
 import lotto.model.LottoNumbersGenerator
 import lotto.model.LottoPurchaseAmount
@@ -35,17 +36,16 @@ class LottoController(
         }
 
     private fun createLottos(purchaseMoney: LottoPurchaseAmount): Lottos {
-        val lottoCount: Int = getLottoCount(purchaseMoney)
-        val manualLottoCount: Int = getManualLottoCount()
-        require(lottoCount >= manualLottoCount) { "수동으로 입력할 로또 개수는 최대 $lottoCount 까지 가능합니다." }
+        val lottoCount: LottoCount = getLottoCount(purchaseMoney)
+        val manualLottoCount: LottoCount = getManualLottoCount()
+        val autoLottoCount: LottoCount = lottoCount.subtract(manualLottoCount)
         val lottos: MutableList<Lotto> = mutableListOf()
-        val autoLottoCount: Int = lottoCount - manualLottoCount
         outputView.printManualLottoNumbersGuide()
-        repeat(manualLottoCount) {
+        repeat(manualLottoCount.count) {
             val manualLotto: Lotto = inputView.readLottoNumbers()
             lottos.add(manualLotto)
         }
-        repeat(autoLottoCount) {
+        repeat(autoLottoCount.count) {
             val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
             lottos.add(Lotto.create(lottoNumbers))
         }
@@ -53,7 +53,7 @@ class LottoController(
         return Lottos(lottos)
     }
 
-    private fun getManualLottoCount(): Int =
+    private fun getManualLottoCount(): LottoCount =
         try {
             outputView.printManualLottoCountGuide()
             inputView.readManualLottoCount()
@@ -62,8 +62,8 @@ class LottoController(
             getManualLottoCount()
         }
 
-    private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
-        val lottoCount: Int = purchaseMoney.getLottoCount()
+    private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount {
+        val lottoCount = LottoCount(purchaseMoney.getLottoCount())
         return lottoCount
     }
 

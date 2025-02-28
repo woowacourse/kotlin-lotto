@@ -1,6 +1,7 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.LottoCount
 import lotto.model.LottoResult
 import lotto.model.Lottos
 import lotto.model.Rank
@@ -19,10 +20,10 @@ class OutputView {
     }
 
     fun printLottoCount(
-        manualLottoCount: Int,
-        autoLottoCount: Int,
+        manualLottoCount: LottoCount,
+        autoLottoCount: LottoCount,
     ) {
-        println(LOTTO_COUNT_MESSAGE_FORMAT.format(manualLottoCount, autoLottoCount))
+        println(LOTTO_COUNT_MESSAGE_FORMAT.format(manualLottoCount.count, autoLottoCount.count))
     }
 
     fun printLottos(lottos: Lottos) {
