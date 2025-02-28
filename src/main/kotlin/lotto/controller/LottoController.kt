@@ -64,7 +64,7 @@ class LottoController(
     private fun getAutoLottoCount(
         totalLottoCount: LottoCount,
         manualLottoCount: LottoCount,
-    ) = totalLottoCount.subtract(manualLottoCount)
+    ): LottoCount = totalLottoCount.subtract(manualLottoCount)
 
     private fun createLottos(
         manualLottoCount: LottoCount,
@@ -89,7 +89,7 @@ class LottoController(
             getManualLotto()
         }
 
-    private fun getAutoLottos(autoLottoCount: LottoCount) = List(autoLottoCount.count) { getAutoLotto() }
+    private fun getAutoLottos(autoLottoCount: LottoCount): List<Lotto> = List(autoLottoCount.count) { getAutoLotto() }
 
     private fun getAutoLotto(): Lotto = lottoMachine.createAutoLotto()
 
@@ -135,8 +135,8 @@ class LottoController(
         lottoResult: LottoResult,
         purchasedAmount: LottoPurchaseAmount,
     ) {
-        outputView.printLottoResult(lottoResult)
         val rateOfReturn: Double = lottoResult.getRateOfReturn(purchasedAmount.money)
+        outputView.printLottoResult(lottoResult)
         outputView.printLottoRateOfReturn(rateOfReturn, lottoResult.getIsLossMoney(rateOfReturn))
     }
 }
