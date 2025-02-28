@@ -3,9 +3,34 @@ package lotto.view
 import lotto.InputValidator
 
 class LottoInputView {
-    fun inputPurchase(): String {
+    fun inputPurchase(): Double {
         println(INPUT_PURCHASE_MESSAGE)
-        return readln().also { InputValidator(it) }
+        val purchase = readln().also { InputValidator(it) }
+        return purchase.toDouble()
+    }
+
+    fun inputManualPurchase(): Int {
+        println(INPUT_MANUAL_PURCHASE_MESSAGE)
+        val manualPurchase = readln().also { InputValidator(it) }
+        return manualPurchase.toInt()
+    }
+
+    fun inputManualLotto(input: Int): List<List<Int>> {
+        println(INPUT_MANUAL_LOTTO_MESSAGE)
+        val manualLotto = mutableListOf<List<Int>>()
+        repeat(input) {
+            manualLotto.add(manualLotto())
+        }
+        return manualLotto
+    }
+
+    private fun manualLotto(): List<Int> {
+        val input = readln()
+
+        return input
+            .split(",")
+            .map { it.trim().also { InputValidator(it) }.toInt() }
+            .toList()
     }
 
     fun inputWinningNumbers(): List<Int> {
@@ -26,6 +51,8 @@ class LottoInputView {
 
     companion object {
         private const val INPUT_PURCHASE_MESSAGE = "구입금액을 입력해 주세요."
+        private const val INPUT_MANUAL_PURCHASE_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val INPUT_MANUAL_LOTTO_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
         private const val INPUT_WINNING_NUMBERS_MESSAGE = "지난 주 당첨 번호를 입력해 주세요."
         private const val INPUT_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
     }

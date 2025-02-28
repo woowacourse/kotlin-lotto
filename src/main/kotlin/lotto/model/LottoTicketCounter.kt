@@ -1,9 +1,12 @@
 package lotto.model
 
 class LottoTicketCounter(
-    private val purchase: String,
+    private val purchase: Double,
+    private val manual: Int,
 ) {
     fun count(): Int = purchase.toInt() / PURCHASE_STANDARD
+
+    fun autoCount(): Int = count() - manual
 
     init {
         require(purchase.toInt() >= PURCHASE_STANDARD) { ERROR_MINIMUM_PURCHASE_MESSAGE }
