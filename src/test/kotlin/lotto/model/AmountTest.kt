@@ -13,8 +13,22 @@ class AmountTest {
     }
 
     @Test
-    fun `소지한 돈이 0 이하이면 null이 생성된다`() {
+    fun `소지한 돈이 음수이면 null이 생성된다`() {
         val amount = Amount.createOrNull(-1)
         assertThat(amount).isEqualTo(null)
+    }
+
+    @Test
+    fun `소지한 돈에 구입 금액을 지불하면 남은 돈을 가진 객채가 생성된다`() {
+        var amount = Amount.createOrNull(10000)
+        amount = amount?.paymentOrNull(7000)
+        assertThat(amount?.money).isEqualTo(3000)
+    }
+
+    @Test
+    fun `소지한 돈 이상의 구입 금액을 지불하면 null가 생성된다`() {
+        var amount = Amount.createOrNull(10000)
+        amount = amount?.paymentOrNull(17000)
+        assertThat(amount?.money).isEqualTo(null)
     }
 }
