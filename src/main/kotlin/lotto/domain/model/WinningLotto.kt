@@ -6,14 +6,14 @@ class WinningLotto(
     private val winningNumbers: Set<LottoNumber>,
     private val bonusNumber: LottoNumber,
 ) {
+    init {
+        require(bonusNumber !in winningNumbers) { ERROR_BONUS_DUPLICATE }
+    }
+
     constructor(
         winningNumbers: List<Int>,
         bonusNumber: LottoNumber,
     ) : this(winningNumbers.map { LottoNumber(it) }.toSet(), bonusNumber)
-
-    init {
-        require(bonusNumber !in winningNumbers) { ERROR_BONUS_DUPLICATE }
-    }
 
     fun getResult(lottoTickets: List<LottoTicket>): LottoResult = LottoResult(lottoTickets.map { getRank(it) })
 
