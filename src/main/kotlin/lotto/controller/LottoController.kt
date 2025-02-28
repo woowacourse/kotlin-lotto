@@ -36,9 +36,12 @@ class LottoController(
 
     private fun createLottos(purchaseMoney: LottoPurchaseAmount): Lottos {
         val lottoCount: Int = getLottoCount(purchaseMoney)
-        val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
-        val lottos = Lottos(List(lottoCount) { Lotto.create(lottoNumbers) })
-        return lottos
+        val lottos: MutableList<Lotto> = mutableListOf()
+        repeat(lottoCount) {
+            val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
+            lottos.add(Lotto.create(lottoNumbers))
+        }
+        return Lottos(lottos)
     }
 
     private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): Int {
