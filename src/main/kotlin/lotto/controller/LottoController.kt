@@ -34,16 +34,18 @@ class LottoController(
         }
 
     private fun getLottos(purchaseMoney: LottoPurchaseAmount): Lottos {
+        val (manualLottoCount: LottoCount, autoLottoCount: LottoCount) = calculateLottoCounts(purchaseMoney)
+        val lottos: Lottos = createLottos(manualLottoCount, autoLottoCount)
+
+        displayLottoInfo(manualLottoCount, autoLottoCount, lottos)
+        return lottos
+    }
+
+    private fun calculateLottoCounts(purchaseMoney: LottoPurchaseAmount): Pair<LottoCount, LottoCount> {
         val totalLottoCount: LottoCount = getLottoCount(purchaseMoney)
         val manualLottoCount: LottoCount = getManualLottoCount(totalLottoCount)
         val autoLottoCount: LottoCount = getAutoLottoCount(totalLottoCount, manualLottoCount)
-        val manualLottos: List<Lotto> = getManualLottos(manualLottoCount)
-        val autoLottos: List<Lotto> = getAutoLottos(autoLottoCount)
-        val lottos = Lottos(manualLottos, autoLottos)
-
-        outputView.printLottoCount(manualLottoCount, autoLottoCount)
-        outputView.printLottos(lottos)
-        return lottos
+        return manualLottoCount to autoLottoCount
     }
 
     private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount = LottoCount(purchaseMoney.getLottoCount())
@@ -63,6 +65,15 @@ class LottoController(
         totalLottoCount: LottoCount,
         manualLottoCount: LottoCount,
     ) = totalLottoCount.subtract(manualLottoCount)
+
+    private fun createLottos(
+        manualLottoCount: LottoCount,
+        autoLottoCount: LottoCount,
+    ): Lottos {
+        val manualLottos = getManualLottos(manualLottoCount)
+        val autoLottos = getAutoLottos(autoLottoCount)
+        return Lottos(manualLottos, autoLottos)
+    }
 
     private fun getManualLottos(manualLottoCount: LottoCount): List<Lotto> {
         outputView.printManualLottoNumbersGuide()
@@ -86,6 +97,15 @@ class LottoController(
         val winningLottoNumbers: Lotto = getWinningLottoNumbers()
         val winningLotto: WinningLotto = createWinningLotto(winningLottoNumbers)
         return winningLotto
+    }
+
+    private fun displayLottoInfo(
+        manualLottoCount: LottoCount,
+        autoLottoCount: LottoCount,
+        lottos: Lottos,
+    ) {
+        outputView.printLottoCount(manualLottoCount, autoLottoCount)
+        outputView.printLottos(lottos)
     }
 
     private fun getWinningLottoNumbers(): Lotto =
