@@ -15,8 +15,7 @@ class Lotto private constructor(
     }
 
     private fun validateLottoNumbersDuplicate(lottoNumbers: List<LottoNumber>) {
-        val uniqueNumbers = lottoNumbers.map { it.number }.toSet()
-        require(uniqueNumbers.size == lottoNumbers.size) {
+        require(lottoNumbers.distinct().size == lottoNumbers.size) {
             "[ERROR] 로또 번호는 중복될 수 없습니다."
         }
     }
