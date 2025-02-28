@@ -1,11 +1,12 @@
 package lotto.controller
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoMachine
+import lotto.domain.model.LottoPayInfo
 import lotto.domain.model.Lottos
-import lotto.domain.model.WinningLotto
-import lotto.domain.value.LottoNumber
-import lotto.domain.value.LottoPayInfo
+import lotto.domain.model.lottomachine.AutoLottoMachine
+import lotto.domain.model.lottomachine.ManualLottoMachine
+import lotto.domain.model.winning.WinningLotto
+import lotto.domain.valueobject.LottoNumber
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -13,29 +14,64 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    fun runLotto() {
+    fun safeRunLotto() =
+        runCatching {
+            runLotto()
+        }.fold(
+            onSuccess = { it },
+            onFailure = { e ->
+                when (e) {
+                    is IllegalArgumentException,
+                    is IllegalStateException,
+                    -> throw e
+
+                    else -> null
+                }
+            },
+        )
+
+    private fun runLotto() {
         val lottoPayInfo = getPayInfo()
-        outputView.printLottoPurchaseQuantity(lottoPayInfo)
         val lottos: Lottos = getLottosByPayInfo(lottoPayInfo)
+        outputView.printLottoPurchaseQuantity(lottoPayInfo)
         outputView.printTicketsByLottos(lottos)
         val lottoWinningStats = lottos.getLottoWinningStats(getWinningLotto())
         outputView.printLottoStats(lottoWinningStats)
-        outputView.printLottoEarningRate(lottoWinningStats.getEarningRate())
+        outputView.printLottoEarningRate(lottoWinningStats.getEarningInfo())
     }
 
     private fun getPayInfo(): LottoPayInfo {
         val lottoPurchaseAmount = inputView.readLottoPurchaseAmount()
-        return LottoPayInfo(lottoPurchaseAmount)
+        val manualLottoQuantity = inputView.readManualLottoQuantity()
+        return LottoPayInfo(lottoPurchaseAmount, manualLottoQuantity)
     }
 
     private fun getLottosByPayInfo(payInfo: LottoPayInfo): Lottos {
-        val lottoMachine = LottoMachine()
-        return lottoMachine.generateLottos(payInfo)
+        val manualLottoTickets = getManualLottoTickets(payInfo)
+        val autoLottoTickets = getAutoLottoTickets(payInfo)
+        return Lottos(manualLottoTickets + autoLottoTickets)
+    }
+
+    private fun getManualLottoTickets(payInfo: LottoPayInfo): List<Lotto> {
+        val manualLottoMachine = ManualLottoMachine()
+        val manualTicketsNumbersInput =
+            if (payInfo.manualLottoQuantity > 0) inputView.readManualLottoNumbers(payInfo) else null
+        val manualTicketsNumbers =
+            manualTicketsNumbersInput?.map { singleLottoInput ->
+                singleLottoInput.map { LottoNumber(it) }
+            } ?: emptyList()
+        return manualLottoMachine.generateLottoBundle(payInfo, manualTicketsNumbers)
+    }
+
+    private fun getAutoLottoTickets(payInfo: LottoPayInfo): List<Lotto> {
+        val autoLottoMachine = AutoLottoMachine()
+        return autoLottoMachine.generateLottoBundle(payInfo)
     }
 
     private fun getWinningLotto(): WinningLotto {
-        val winningLottoNumbersWithoutBonus = inputView.readWinningLottoNumbersWithoutBonus()
-        val winningLottoWithoutBonus = Lotto(winningLottoNumbersWithoutBonus.map { LottoNumber(it) }.toSet())
+        val winningLottoNumbersWithoutBonusInput = inputView.readWinningLottoNumbersWithoutBonus()
+        val winningLottoNumbersWithoutBonus = winningLottoNumbersWithoutBonusInput.map { LottoNumber(it) }
+        val winningLottoWithoutBonus = Lotto(winningLottoNumbersWithoutBonus)
         val bonusNumberText = inputView.readBonusNumber()
         val bonusNumber = LottoNumber(bonusNumberText)
 

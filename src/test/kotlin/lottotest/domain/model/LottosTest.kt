@@ -1,10 +1,10 @@
-package lotto.domain
+package lottotest.domain.model
 
 import lotto.domain.model.Lotto
-import lotto.domain.model.LottoWinningStats
 import lotto.domain.model.Lottos
-import lotto.domain.model.WinningLotto
-import lotto.domain.value.LottoNumber
+import lotto.domain.model.winning.LottoWinningStats
+import lotto.domain.model.winning.WinningLotto
+import lotto.domain.valueobject.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -15,13 +15,14 @@ class LottosTest {
 
     @BeforeEach
     fun setUp() {
-        val winLottoNumbers = (1..6).map { LottoNumber(it) }.toSet()
-        val lottoWithoutBonus = Lotto(winLottoNumbers)
+        val lottoTicketWithoutBonus =
+            Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) })
         val bonusNumber = LottoNumber(45)
-        winningLotto = WinningLotto(lottoWithoutBonus, bonusNumber)
+        winningLotto = WinningLotto(lottoTicketWithoutBonus, bonusNumber)
 
-        val lottoNumbers = (4..9).map { LottoNumber(it) }.toSet()
-        lottosHasTwoTickets = Lottos(listOf(Lotto(lottoNumbers), Lotto(lottoNumbers)))
+        val lottoTicket = listOf(4, 5, 6, 7, 8, 9).map { LottoNumber(it) }
+        lottosHasTwoTickets =
+            Lottos(listOf(Lotto(lottoTicket), Lotto(lottoTicket)))
     }
 
     @Test

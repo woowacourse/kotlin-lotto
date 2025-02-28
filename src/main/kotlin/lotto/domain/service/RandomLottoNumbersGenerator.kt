@@ -1,13 +1,10 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
-import lotto.domain.value.LottoNumber
+import lotto.domain.valueobject.LottoNumber
 
-class RandomLottoGenerator {
-    fun generateLotto(): Lotto {
-        val lottoNumbers = getShuffledNumbersAsSizeOfOneLotto().map { LottoNumber(it) }.toSet()
-        return Lotto(lottoNumbers)
-    }
+class RandomLottoNumbersGenerator {
+    fun generateLottoNumbers(): Set<LottoNumber> = getShuffledNumbersAsSizeOfOneLotto().map { LottoNumber(it) }.toSet()
 
     private fun getShuffledNumbersAsSizeOfOneLotto(): List<Int> =
         (LottoNumber.LOTTO_RANGE)

@@ -1,10 +1,14 @@
-package lotto.domain.value
+package lotto.domain.model
 
 import lotto.constants.LottoConstants.LOTTO_PRICE
 
 class LottoPayInfo(
     val lottoPurchaseAmount: Int,
+    val manualLottoQuantity: Int,
 ) {
+    val autoLottoQuantity: Int
+        get() = getTotalLottoQuantity() - manualLottoQuantity
+
     init {
         require(lottoPurchaseAmount % LOTTO_PRICE == 0) {
             INDIVISIBLE_PURCHASE_AMOUNT_VALUE_ERROR.format(
@@ -18,7 +22,7 @@ class LottoPayInfo(
         }
     }
 
-    fun getLottoPurchaseQuantity(): Int {
+    private fun getTotalLottoQuantity(): Int {
         val quantity =
             runCatching { lottoPurchaseAmount / LOTTO_PRICE }.getOrElse {
                 throw IllegalArgumentException(

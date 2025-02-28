@@ -1,22 +1,23 @@
-package lotto.domain.model
+package lotto.domain.model.winning
 
-import lotto.domain.value.EarningRate
-import lotto.domain.value.LottoPayInfo
-import lotto.enums.Rank
+import lotto.domain.enums.Rank
+import lotto.domain.model.LottoPayInfo
+import lotto.domain.valueobject.EarningInfo
 
 class LottoWinningStats(
     private val winningStatsInfo: Map<Rank, Int>,
     private val lottoPayInfo: LottoPayInfo,
 ) {
-    fun getEarningRate(): EarningRate {
+    fun getEarningInfo(): EarningInfo {
         val winningAmount = calculateWinningAmount()
         val rate = winningAmount.toDouble() / lottoPayInfo.lottoPurchaseAmount
-        return EarningRate(rate)
+        return EarningInfo(rate)
     }
 
-    fun getWinningStatsWithEmpty(): Map<Rank, Int> {
+    fun getWholeWinningStatsWithoutMiss(): Map<Rank, Int> {
         val emptyWinningStatus = Rank.entries.associateWith { 0 }
-        return emptyWinningStatus + winningStatsInfo
+        val withMiss = emptyWinningStatus + winningStatsInfo
+        return withMiss.filter { (key, _) -> key != Rank.MISS }
     }
 
     private fun calculateWinningAmount(): Int = winningStatsInfo.entries.sumOf { (rank, count) -> rank.winningMoney * count }

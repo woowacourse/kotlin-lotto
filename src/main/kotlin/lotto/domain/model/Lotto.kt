@@ -1,24 +1,30 @@
 package lotto.domain.model
 
-import lotto.domain.value.LottoNumber
+import lotto.domain.service.RandomLottoNumbersGenerator
+import lotto.domain.valueobject.LottoNumber
 
 class Lotto(
-    val lottoNumbers: Set<LottoNumber>,
+    private val _lottoNumbers: Collection<LottoNumber>,
 ) {
+    val lottoNumbers: Set<LottoNumber>
+        get() = _lottoNumbers.toSet()
+
     init {
         require(lottoNumbers.size == NUMBER_OF_LOTTO_NUMBERS) {
-            TOO_MANY_LOTTO_NUMBERS.format(
+            INACCURATE_LOTTO_NUMBERS.format(
                 lottoNumbers.size,
             )
         }
     }
 
-    fun getLottoNumbers(): List<LottoNumber> = lottoNumbers.sortedBy { it.number }
+    fun getSortedLottoNumbers(): List<LottoNumber> = lottoNumbers.sortedBy { it.number }
 
     companion object {
         const val NUMBER_OF_LOTTO_NUMBERS = 6
 
-        private const val TOO_MANY_LOTTO_NUMBERS =
+        private const val INACCURATE_LOTTO_NUMBERS =
             "${NUMBER_OF_LOTTO_NUMBERS}개로 구성된 번호를 중복 없이 입력하세요 (현재 중복 없는 숫자는 %d개 입니다)"
+
+        fun createSelfRandomly(): Lotto = Lotto(RandomLottoNumbersGenerator().generateLottoNumbers())
     }
 }
