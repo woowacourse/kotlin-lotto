@@ -32,7 +32,7 @@ class LottoController(
         val winningNumbers: Lotto = getWinningNumbers()
         val winningLotto: WinningLotto = getWinningLotto(winningNumbers)
         val lottoResult: LottoResult = lottoMatchCalculator.calculate(manualLotto + autoLotto, winningLotto)
-        val profitRate = lottoResult.getProfitRate(purchasePrice.value)
+        val profitRate: String = lottoResult.getProfitRate(purchasePrice.value)
         displayResult(lottoResult, profitRate)
     }
 
