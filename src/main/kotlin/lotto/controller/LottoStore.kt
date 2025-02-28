@@ -4,6 +4,7 @@ import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
 import lotto.domain.model.LottoTicketResult
 import lotto.domain.model.PurchaseAmount
+import lotto.domain.model.PurchaseCount
 import lotto.domain.model.WinningLotto
 import lotto.domain.service.LottoMachine
 import lotto.domain.service.LottoResult
@@ -27,11 +28,10 @@ class LottoStore(
     }
 
     private fun getLottoCount(): Pair<Int, Int> {
-        val lottoMachine = LottoMachine()
         val amount = PurchaseAmount(inputView.inputPurchaseAmount())
         val totalCount = amount.calculatePurchaseLottoCount()
         val manualCount = inputView.inputManualCount()
-        val autoCount = lottoMachine.calculateAutoCount(totalCount, manualCount)
+        val autoCount = PurchaseCount(totalCount, manualCount).calculateAutoCount()
         return Pair(manualCount, autoCount)
     }
 
