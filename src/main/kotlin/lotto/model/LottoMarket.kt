@@ -31,11 +31,17 @@ class LottoMarket(
         }
     }
 
-    fun buy(manualNumbers: List<List<Int>> = emptyList()): List<Lotto> =
-        when (manualNumbers.isNotEmpty()) {
-            true -> lottoMachine.getManualLottos(manualNumbers)
-            false -> lottoMachine.getAutoLottos(autoLottoQuantity)
-        }
+    fun buy(
+        manualNumbers: List<List<Int>> = emptyList(),
+        lottoWallet: LottoWallet,
+    ) {
+        lottoWallet.addAll(
+            when (manualNumbers.isNotEmpty()) {
+                true -> lottoMachine.getManualLottos(manualNumbers)
+                false -> lottoMachine.getAutoLottos(autoLottoQuantity)
+            },
+        )
+    }
 
     companion object {
         private const val LOTTO_MIN_AMOUNT = 0
