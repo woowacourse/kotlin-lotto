@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoMachineTest {
-    val lottoMachine = LottoMachine()
+    private val lottoMachine = LottoMachine()
 
     @Test
     fun `수동으로 구매할 로또 번호를 입력하면 로또 티켓을 얻을 수 있다`() {
