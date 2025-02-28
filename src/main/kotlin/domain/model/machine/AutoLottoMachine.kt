@@ -9,6 +9,9 @@ import kotlin.collections.shuffled
 
 object AutoLottoMachine : LottoMachine {
     override fun generate(): Lotto {
-        return Lotto((LOTTO_MIN..LOTTO_MAX).shuffled().take(LOTTO_SIZE).map { LottoNumber(it) })
+        val range = (LOTTO_MIN..LOTTO_MAX)
+        val randomNumbers = (range).shuffled().take(LOTTO_SIZE)
+        val lottoNumbers = randomNumbers.map { LottoNumber(it) }.toSet()
+        return Lotto(lottoNumbers)
     }
 }
