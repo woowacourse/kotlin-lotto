@@ -4,7 +4,6 @@ import lotto.domain.Lotto
 import lotto.domain.LottoCalculator
 import lotto.domain.LottoCount
 import lotto.domain.LottoMachine
-import lotto.domain.LottoMachine.Companion.LOTTO_PRICE
 import lotto.domain.LottoNumber
 import lotto.domain.LottoPurchaseAmount
 import lotto.domain.OrderSheet
@@ -41,7 +40,7 @@ class LottoController(
 
     private fun getPurchaseAmount(): LottoPurchaseAmount {
         return retryInput {
-            LottoPurchaseAmount(inputView.getPurchaseAmount(), LOTTO_PRICE)
+            LottoPurchaseAmount(inputView.getPurchaseAmount())
         }
     }
 

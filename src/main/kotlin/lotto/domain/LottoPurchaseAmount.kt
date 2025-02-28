@@ -1,6 +1,8 @@
 package lotto.domain
 
-class LottoPurchaseAmount(val money: Int, lottoPrice: Int) {
+import lotto.domain.LottoMachine.Companion.LOTTO_PRICE
+
+class LottoPurchaseAmount(val money: Int, lottoPrice: Int = LOTTO_PRICE) {
     init {
         require(money % lottoPrice == REMAINING) { ERROR_NOT_THOUSAND_UNIT }
         require(money > SMALL_CHANGE) { ERROR_NOT_NEGATIVE_NUMBER }
