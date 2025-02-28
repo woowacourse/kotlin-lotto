@@ -27,13 +27,13 @@ class WinningDiscriminator private constructor(
     private fun discriminate(lotto: Lotto): Rank =
         Rank.from(
             countOfMatch = lotto.countMatchNumbers(winningLotto),
-            matchBonus = containsBonus(lotto),
+            matchBonus = matchBonus(lotto),
         )
 
-    private fun containsBonus(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
+    private fun matchBonus(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
 
     private fun validateWinningNumberAndBonusNumberDuplicate() {
-        require(!containsBonus(winningLotto)) {
+        require(!matchBonus(winningLotto)) {
             "[ERROR] 우승 번호와 보너스 번호는 중복될 수 없습니다."
         }
     }
