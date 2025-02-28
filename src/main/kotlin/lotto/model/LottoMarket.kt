@@ -13,6 +13,18 @@ class LottoMarket(
         validateManualLottoQuantity()
     }
 
+    fun buy(
+        manualNumbers: List<List<Int>> = emptyList(),
+        lottoWallet: LottoWallet,
+    ) {
+        lottoWallet.addAll(
+            when (manualNumbers.isNotEmpty()) {
+                true -> lottoMachine.getManualLottos(manualNumbers)
+                false -> lottoMachine.getAutoLottos(autoLottoQuantity)
+            },
+        )
+    }
+
     private fun validateAmountMinimumRange() {
         require(amount > LOTTO_MIN_AMOUNT) {
             "[ERROR] ${LOTTO_MIN_AMOUNT}원 이상의 금액으로 입력해 주세요. 입력값: $amount"
@@ -29,18 +41,6 @@ class LottoMarket(
         require(amount - manualQuantity * LOTTO_EACH_AMOUNT >= 0) {
             "[ERROR] 낸 금액보다 많은 수동 로또를 살 수 없습니다. 금액: $amount, 수동 로또: ${manualQuantity}장"
         }
-    }
-
-    fun buy(
-        manualNumbers: List<List<Int>> = emptyList(),
-        lottoWallet: LottoWallet,
-    ) {
-        lottoWallet.addAll(
-            when (manualNumbers.isNotEmpty()) {
-                true -> lottoMachine.getManualLottos(manualNumbers)
-                false -> lottoMachine.getAutoLottos(autoLottoQuantity)
-            },
-        )
     }
 
     companion object {

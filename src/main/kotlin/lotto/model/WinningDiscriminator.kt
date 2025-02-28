@@ -13,12 +13,6 @@ class WinningDiscriminator private constructor(
         validateWinningNumberAndBonusNumberDuplicate()
     }
 
-    private fun validateWinningNumberAndBonusNumberDuplicate() {
-        require(!containsBonus(winningLotto)) {
-            "[ERROR] 우승 번호와 보너스 번호는 중복될 수 없습니다."
-        }
-    }
-
     fun getResult(lottoWallet: LottoWallet): Map<Rank, Int> {
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
 
@@ -30,11 +24,17 @@ class WinningDiscriminator private constructor(
         return countResult
     }
 
-    private fun discriminate(userLotto: Lotto): Rank =
+    private fun discriminate(lotto: Lotto): Rank =
         Rank.from(
-            countOfMatch = userLotto.countMatchNumbers(winningLotto),
-            matchBonus = containsBonus(userLotto),
+            countOfMatch = lotto.countMatchNumbers(winningLotto),
+            matchBonus = containsBonus(lotto),
         )
 
     private fun containsBonus(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
+
+    private fun validateWinningNumberAndBonusNumberDuplicate() {
+        require(!containsBonus(winningLotto)) {
+            "[ERROR] 우승 번호와 보너스 번호는 중복될 수 없습니다."
+        }
+    }
 }
