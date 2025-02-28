@@ -5,6 +5,7 @@ import lotto.model.LottoCount
 import lotto.model.LottoResult
 import lotto.model.Lottos
 import lotto.model.Rank
+import kotlin.math.floor
 
 class OutputView {
     fun printPurchaseAmountGuide() {
@@ -99,7 +100,7 @@ class OutputView {
         rateOfReturn: Double,
         isLossMoney: Boolean,
     ) {
-        print(RATE_OF_RETURN_MESSAGE_FORMAT.format(rateOfReturn))
+        print(RATE_OF_RETURN_MESSAGE_FORMAT.format(floor(rateOfReturn * DECIMAL_SCALE) / DECIMAL_SCALE))
         if (isLossMoney) {
             print(RATE_OF_RETURN_IS_LOSS_MONEY_MESSAGE)
         }
@@ -123,6 +124,7 @@ class OutputView {
         private const val DEFAULT_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치 (%d원)- %d개"
         private const val SECOND_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
         private const val RATE_OF_RETURN_MESSAGE_FORMAT = "총 수익률은 %.2f입니다."
+        private const val DECIMAL_SCALE = 100
         private const val RATE_OF_RETURN_IS_LOSS_MONEY_MESSAGE = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
     }
 }
