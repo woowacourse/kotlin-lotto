@@ -1,8 +1,8 @@
 package lotto.domain.model.winning
 
+import lotto.domain.enums.Rank
 import lotto.domain.model.Lotto
 import lotto.domain.valueobject.LottoNumber
-import lotto.enums.Rank
 
 class WinningLotto(
     private val winningNumbers: Lotto,

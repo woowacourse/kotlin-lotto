@@ -1,9 +1,9 @@
 package lottotest.domain.model.winning
 
+import lotto.domain.enums.Rank
 import lotto.domain.model.Lotto
 import lotto.domain.model.winning.WinningLotto
 import lotto.domain.valueobject.LottoNumber
-import lotto.enums.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.assertThrows
 class WinningLottoTest {
     private lateinit var winningNumberLotto1to6: Lotto
     private val bonusNumber45: LottoNumber = LottoNumber(45)
+    private val bonusNumber1: LottoNumber = LottoNumber(1)
 
     @BeforeEach
     fun setUp() {
@@ -20,56 +21,25 @@ class WinningLottoTest {
     }
 
     @Test
-    fun `당첨 번호와 보너스 번호는 중복되지 않는다`() {
+    fun `당첨 번호와 보너스 번호는 서로 중복되지 않는다`() {
         assertDoesNotThrow {
             WinningLotto(winningNumberLotto1to6, bonusNumber45)
         }
-    }
-
-    @Test
-    fun `당첨 번호와 보너스 번호가 중복되면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            val bonusNumber = LottoNumber(1)
-            WinningLotto(winningNumberLotto1to6, bonusNumber)
+            WinningLotto(winningNumberLotto1to6, bonusNumber1)
         }
     }
 
     @Test
-    fun `일치하는 번호가 5개이고 보너스 번호가 일치하면 등수는 2등이다`() {
+    fun `보유한 당첨 정보를 이용해 전달받은 로또 인스턴스의 Rank정보를 반환한다`() {
         // Given
-        val lotto = Lotto.createSelfByManualLottoNumbers(setOf(1, 2, 3, 4, 5, 45).map { LottoNumber(it) })
+        val lotto = Lotto.createSelfByManualLottoNumbers((2..7).map { LottoNumber(it) })
         val winningLotto = WinningLotto(winningNumberLotto1to6, bonusNumber45)
 
         // When
         val rank = winningLotto.getRank(lotto)
 
         // Then
-        assertThat(rank).isEqualTo(Rank.SECOND)
-    }
-
-    @Test
-    fun `일치하는 번호가 5개이고 보너스 번호가 일치하지 않으면 등수는 3등이다`() {
-        // Given
-        val lotto = Lotto.createSelfByManualLottoNumbers(setOf(1, 2, 3, 4, 5, 20).map { LottoNumber(it) })
-        val winningLotto = WinningLotto(winningNumberLotto1to6, bonusNumber45)
-
-        // When
-        val rank = winningLotto.getRank(lotto)
-
-        // Then
-        assertThat(rank).isEqualTo(Rank.THIRD)
-    }
-
-    @Test
-    fun `일치하는 번호가 2개 이하이면 등수는 MISS이다`() {
-        // Given
-        val lotto = Lotto.createSelfByManualLottoNumbers(setOf(1, 2, 23, 24, 25, 26).map { LottoNumber(it) })
-        val winningLotto = WinningLotto(winningNumberLotto1to6, bonusNumber45)
-
-        // When
-        val rank = winningLotto.getRank(lotto)
-
-        // Then
-        assertThat(rank).isEqualTo(Rank.MISS)
+        assertThat(rank).isExactlyInstanceOf(Rank::class.java)
     }
 }

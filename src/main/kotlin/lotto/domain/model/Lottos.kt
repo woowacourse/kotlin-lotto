@@ -1,9 +1,9 @@
 package lotto.domain.model
 
 import lotto.constants.LottoConstants
+import lotto.domain.enums.Rank
 import lotto.domain.model.winning.LottoWinningStats
 import lotto.domain.model.winning.WinningLotto
-import lotto.enums.Rank
 
 data class Lottos(
     val tickets: List<Lotto>,

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class LottoPayInfoTest {
     @ParameterizedTest
     @ValueSource(ints = [-100, -1000, -45, 0, 999])
-    fun `구매 금액이 로또 1장 가격보다 작으면 예외가 발생한다`(purchaseAmount: Int) {
+    fun `구매 금액은 로또 1장의 가격보다 커야 한다`(purchaseAmount: Int) {
         assertThrows<IllegalArgumentException> {
             LottoPayInfo(purchaseAmount, 0)
         }

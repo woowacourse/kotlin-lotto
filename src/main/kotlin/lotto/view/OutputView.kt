@@ -1,5 +1,6 @@
 package lotto.view
 
+import lotto.domain.enums.Rank
 import lotto.domain.model.LottoPayInfo
 import lotto.domain.model.Lottos
 import lotto.domain.model.winning.GainLoss
@@ -8,7 +9,6 @@ import lotto.domain.model.winning.GainLoss.LOSS
 import lotto.domain.model.winning.GainLoss.PRINCIPAL
 import lotto.domain.model.winning.LottoWinningStats
 import lotto.domain.valueobject.EarningInfo
-import lotto.enums.Rank
 
 class OutputView {
     fun printLottoPurchaseQuantity(payInfo: LottoPayInfo) {

@@ -4,7 +4,7 @@ import lotto.domain.model.Lotto
 import lotto.domain.valueobject.LottoNumber
 
 class RandomLottoNumbersGenerator {
-    fun generateLottoNumbers(): List<LottoNumber> = getShuffledNumbersAsSizeOfOneLotto().map { LottoNumber(it) }
+    fun generateLottoNumbers(): Set<LottoNumber> = getShuffledNumbersAsSizeOfOneLotto().map { LottoNumber(it) }.toSet()
 
     private fun getShuffledNumbersAsSizeOfOneLotto(): List<Int> =
         (LottoNumber.LOTTO_RANGE)

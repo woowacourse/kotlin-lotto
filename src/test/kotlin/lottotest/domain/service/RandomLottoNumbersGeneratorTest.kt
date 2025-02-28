@@ -9,14 +9,12 @@ class RandomLottoNumbersGeneratorTest {
     fun `랜덤한 로또 번호 인스턴스들을 가지는 컬렉션을 생성한다`() {
         // Given
         val randomlottoNumbersGenerator = RandomLottoNumbersGenerator()
-        val lottoNumbersA = randomlottoNumbersGenerator.generateLottoNumbers().sortedBy { it.number }
-        val lottoNumbersB = randomlottoNumbersGenerator.generateLottoNumbers().sortedBy { it.number }
 
         // When
-        val numbersAText = lottoNumbersA.map { it.number }.joinToString(",")
-        val numbersBText = lottoNumbersB.map { it.number }.joinToString(",")
+        val lottoNumbersA = randomlottoNumbersGenerator.generateLottoNumbers()
+        val lottoNumbersB = randomlottoNumbersGenerator.generateLottoNumbers()
 
         // Then
-        assertThat(numbersAText).isNotEqualTo(numbersBText)
+        assertThat(lottoNumbersA).isNotEqualTo(lottoNumbersB)
     }
 }
