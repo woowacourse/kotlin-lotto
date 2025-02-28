@@ -6,8 +6,7 @@ class Lottos(
 ) {
     val lottoBundle = manualLottos + autoLotts
 
-    val size: Int
-        get() = lottoBundle.size
+    val size: Int = lottoBundle.size
 
     fun calculateLottoResult(winningLotto: WinningLotto): LottoResult {
         val ranks: Map<Rank, Int> =
