@@ -25,10 +25,10 @@ class LottoController(
     }
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =
-        try {
+        runCatching {
             outputView.printPurchaseAmountGuide()
             inputView.readLottoPurchaseAmount()
-        } catch (error: IllegalArgumentException) {
+        }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
             getPurchaseMoney()
         }
@@ -51,20 +51,23 @@ class LottoController(
         return List(manualLottoCount.count) { getManualLotto() }
     }
 
-    private fun getManualLotto(): Lotto {
-        val lottoNumbers: List<LottoNumber> = inputView.readLottoNumbers()
-        return lottoMachine.createManualLotto(lottoNumbers)
-    }
+    private fun getManualLotto(): Lotto =
+        runCatching {
+            val lottoNumbers: List<LottoNumber> = inputView.readLottoNumbers()
+            lottoMachine.createManualLotto(lottoNumbers)
+        }.getOrElse {
+            getManualLotto()
+        }
 
     private fun getAutoLottos(autoLottoCount: LottoCount) = List(autoLottoCount.count) { getAutoLotto() }
 
     private fun getAutoLotto(): Lotto = lottoMachine.createAutoLotto()
 
     private fun getManualLottoCount(): LottoCount =
-        try {
+        runCatching {
             outputView.printManualLottoCountGuide()
             inputView.readManualLottoCount()
-        } catch (error: IllegalArgumentException) {
+        }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
             getManualLottoCount()
         }
@@ -81,19 +84,19 @@ class LottoController(
     }
 
     private fun getWinningLottoNumbers(): Lotto =
-        try {
+        runCatching {
             outputView.printWinningLottoNumbersOfLastWeekGuide()
             inputView.readWinningLottoNumbersOfLastWeek()
-        } catch (error: IllegalArgumentException) {
+        }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
             getWinningLottoNumbers()
         }
 
     private fun createWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
-        try {
+        runCatching {
             val bonusNumber: LottoNumber = getBonusNumber()
             WinningLotto(winningLottoNumbers, bonusNumber)
-        } catch (error: IllegalArgumentException) {
+        }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
             createWinningLotto(winningLottoNumbers)
         }
