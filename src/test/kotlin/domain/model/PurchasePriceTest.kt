@@ -2,14 +2,13 @@ package domain.model
 
 import domain.model.PurchasePrice.Companion.toPurchasePriceResult
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class PurchasePriceTest {
     @ParameterizedTest
-    @ValueSource(ints = [0, -1000])
-    fun `구입 금액이 0 이하면 InvalidMinimumPurchaseAmount 씰드 클래스를 반환한다`(value: Int) {
+    @ValueSource(ints = [0, -100, -3000])
+    fun `구입 금액이 최소 금액 미만일 경우 예외 처리를 한다`(value: Int) {
         val actualResult = value.toPurchasePriceResult()
 
         val expectedResult = PurchasePriceResult.InvalidMinimumPurchaseAmount::class.java
@@ -17,9 +16,10 @@ class PurchasePriceTest {
         assertThat(actualResult).isInstanceOf(expectedResult)
     }
 
-    @Test
-    fun `구입 금액이 천원 단위가 아니면 InvalidThousandWonUnit 씰드 클래스를 반환한다`() {
-        val actualResult = 1500.toPurchasePriceResult()
+    @ParameterizedTest
+    @ValueSource(ints = [500, 2500])
+    fun `구입 금액은 천원 단위여야 한다`(value: Int) {
+        val actualResult = value.toPurchasePriceResult()
 
         val expectedResult = PurchasePriceResult.InvalidThousandWonUnit::class.java
 
@@ -28,7 +28,7 @@ class PurchasePriceTest {
 
     @ParameterizedTest
     @ValueSource(ints = [1000, 35000])
-    fun `이외 정상적인 구입 금액을 입력하면 Success 씰드 클래스를 반환한다`(value: Int) {
+    fun `천원 단위의 양수로 정상적으로 로또를 구입할 수 있다`(value: Int) {
         val actualResult = value.toPurchasePriceResult()
 
         val expectedResult = PurchasePriceResult.Success::class.java
