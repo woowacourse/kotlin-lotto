@@ -7,6 +7,7 @@ import lotto.model.LottoTicketCounter
 import lotto.model.Profit
 import lotto.model.WinningLotto
 import lotto.model.WinningStatistics
+import lotto.model.generator.ManualLottoGenerator
 import lotto.model.generator.RandomLottoGenerator
 import lotto.view.LottoInputView
 import lotto.view.LottoOutputView
@@ -39,8 +40,8 @@ class LottoController {
         manualCount: Int,
     ): List<Lotto> {
         val autoCount = LottoTicketCounter(purchase, manualCount).autoCount()
-        outputView.printManualLottoGuide()
-        val manualLottoBundle = List(manualCount) { Lotto(inputView.inputManualLotto()) }
+        val manualLotto = inputView.inputManualLotto(manualCount)
+        val manualLottoBundle = LottoStore().getTickets(manualCount, ManualLottoGenerator(manualLotto))
         outputView.printLottoCount(manualCount, autoCount)
 
         val autoLottoBundle = LottoStore().getTickets(autoCount, RandomLottoGenerator())
