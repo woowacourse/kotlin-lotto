@@ -6,38 +6,68 @@ import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 
 class InputView {
+    private val outputView = OutputView()
+
     fun readLottoPurchaseAmount(): LottoPurchaseAmount {
-        val money = readln().toIntOrException()
+        outputView.printPurchaseAmountGuide()
+
+        val money = readIntOrRetry { readLottoPurchaseAmount() }
         return LottoPurchaseAmount(money)
     }
 
     fun readManualLottoPurchaseCount(): LottoCount {
-        val count = readln().toIntOrException()
+        outputView.printPurchaseManualLottoCountGuide()
+
+        val count = readIntOrRetry { readManualLottoPurchaseCount() }
         return LottoCount(count)
     }
 
-    fun readManualLottoNumbers(): List<LottoNumber> = readln().toLottoNumbersOrException()
+    fun readManualLottoNumbers(): List<LottoNumber> = readLottoNumbersWithGuideMessage {}
 
     fun readWinningLottoNumbersOfLastWeek(): Lotto {
-        val lottoNumbersOfLastWeek = readln().toLottoNumbersOrException()
-        return Lotto(lottoNumbersOfLastWeek)
+        val winningLottoNumbersOfLastWeek =
+            readLottoNumbersWithGuideMessage { outputView.printWinningLottoNumbersOfLastWeekGuide() }
+        return runCatching {
+            Lotto(winningLottoNumbersOfLastWeek)
+        }.getOrElse { error ->
+            outputView.printErrorMessage(error.message)
+            readWinningLottoNumbersOfLastWeek()
+        }
     }
 
     fun readBonusNumber(): LottoNumber {
-        val bonusNumber = readln().toIntOrException()
-        return LottoNumber.from(bonusNumber)
+        outputView.printBonusNumberGuide()
+        val bonusNumber = readIntOrRetry { readBonusNumber() }
+        return runCatching {
+            LottoNumber.from(bonusNumber)
+        }.getOrElse { error ->
+            outputView.printErrorMessage(error.message)
+            readBonusNumber()
+        }
     }
 
-    private fun String.toIntOrException(): Int = this.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER)
+    private fun <T> readIntOrRetry(action: () -> T): Int {
+        return readln().toIntOrNull() ?: run {
+            outputView.printErrorMessage(ERROR_INVALID_INPUT)
+            return readIntOrRetry(action)
+        }
+    }
 
-    private fun String.toLottoNumbersOrException(): List<LottoNumber> =
-        this
-            .split(LOTTO_NUMBER_DELIMITER)
-            .map { number -> number.toIntOrException() }
-            .map { number -> LottoNumber.from(number) }
+    private fun readLottoNumbersWithGuideMessage(guideMessage: () -> Unit): List<LottoNumber> {
+        guideMessage()
+        return runCatching {
+            readln()
+                .split(LOTTO_NUMBER_DELIMITER)
+                .map { number -> number.toIntOrNull() ?: return readLottoNumbersWithGuideMessage(guideMessage) }
+                .map { number -> LottoNumber.from(number) }
+        }.getOrElse { error ->
+            outputView.printErrorMessage(error.message)
+            readManualLottoNumbers()
+        }
+    }
 
     companion object {
-        private const val ERROR_NOT_A_NUMBER = "숫자만 입력 가능합니다."
+        private const val ERROR_INVALID_INPUT = "유효하지 않은 입력입니다."
         private const val LOTTO_NUMBER_DELIMITER = ","
     }
 }

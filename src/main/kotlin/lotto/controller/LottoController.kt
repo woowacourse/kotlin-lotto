@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.model.Lotto
 import lotto.model.LottoCount
-import lotto.model.LottoNumber
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoStatistics
 import lotto.model.Lottos
@@ -29,7 +28,6 @@ class LottoController(
 
     private fun getPurchaseMoney(): LottoPurchaseAmount =
         try {
-            outputView.printPurchaseAmountGuide()
             inputView.readLottoPurchaseAmount()
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
@@ -51,12 +49,12 @@ class LottoController(
 
     private fun getPurchaseManualLottoCount(wholeLottoCount: LottoCount): LottoCount =
         try {
-            outputView.printPurchaseManualLottoCountGuide()
             val manualLottoCount = inputView.readManualLottoPurchaseCount()
             if (!wholeLottoCount.isPurchasableLottoCount(manualLottoCount)) {
                 getPurchaseManualLottoCount(wholeLottoCount)
+            } else {
+                manualLottoCount
             }
-            manualLottoCount
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getPurchaseManualLottoCount(wholeLottoCount)
@@ -85,33 +83,19 @@ class LottoController(
         }
 
     private fun getWinningLotto(): WinningLotto {
-        val winningLottoNumbers = getWinningLottoNumbers()
+        val winningLottoNumbers = inputView.readWinningLottoNumbersOfLastWeek()
         val winningLotto = getWinningLotto(winningLottoNumbers)
         return winningLotto
     }
 
-    private fun getWinningLottoNumbers(): Lotto =
-        try {
-            outputView.printWinningLottoNumbersOfLastWeekGuide()
-            inputView.readWinningLottoNumbersOfLastWeek()
-        } catch (error: IllegalArgumentException) {
-            outputView.printErrorMessage(error.message)
-            getWinningLottoNumbers()
-        }
-
     private fun getWinningLotto(winningLottoNumbers: Lotto): WinningLotto =
         try {
-            val bonusNumber = getBonusNumber()
+            val bonusNumber = inputView.readBonusNumber()
             WinningLotto(winningLottoNumbers, bonusNumber)
         } catch (error: IllegalArgumentException) {
             outputView.printErrorMessage(error.message)
             getWinningLotto(winningLottoNumbers)
         }
-
-    private fun getBonusNumber(): LottoNumber {
-        outputView.printBonusNumberGuide()
-        return inputView.readBonusNumber()
-    }
 
     private fun processLottoStatistics(lottoStatistics: LottoStatistics) {
         outputView.printLottoStatistics(lottoStatistics.rankStatistics)
