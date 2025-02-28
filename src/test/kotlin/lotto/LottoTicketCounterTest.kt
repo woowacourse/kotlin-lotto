@@ -15,7 +15,7 @@ class LottoTicketCounterTest {
     @Test
     fun `수동 구입 개수에 따른 자동 로또 개수와 수동 로또 개수를 계산한다`() {
         val calculator = LottoTicketCounter(14000.0, 3)
-        assertThat(calculator.manualCount()).isEqualTo(listOf(3, 11))
+        assertThat(calculator.autoCount()).isEqualTo(11)
     }
 
     @Test
