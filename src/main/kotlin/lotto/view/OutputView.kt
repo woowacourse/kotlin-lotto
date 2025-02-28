@@ -55,6 +55,10 @@ class OutputView {
         println(PRINT_TOTAL_RETURNS_FORMAT.format(totalReturns, returnComment))
     }
 
+    fun printErrorMessage(message: String) {
+        println(message)
+    }
+
     private companion object {
         const val PRINT_MANUAL_LOTTO_NUMBERS_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
         const val PRINT_WINNING_NUMBERS_MESSAGE = "\n지난 주 당첨 번호를 입력해 주세요."
