@@ -13,7 +13,7 @@ class WinningLottoTest {
         val bonusNumber = 7
 
         assertThrows<IllegalArgumentException> {
-            WinningLotto(winningNumbers.toSet(), LottoNumber(bonusNumber))
+            WinningLotto(winningNumbers.numbers, LottoNumber(bonusNumber))
         }
     }
 
@@ -24,7 +24,7 @@ class WinningLottoTest {
         val lottoTicket = lotto(1, 2, 3, 4, 5, 6)
         val expect = Rank.FIRST
 
-        val rank = WinningLotto(winningNumbers.toSet(), bonusNumber).getRank(lottoTicket)
+        val rank = WinningLotto(winningNumbers.numbers, bonusNumber).getRank(lottoTicket)
 
         assertThat(rank).isEqualTo(expect)
     }

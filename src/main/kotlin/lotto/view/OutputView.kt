@@ -18,7 +18,7 @@ class OutputView {
 
     fun printLotto(lottoTickets: List<LottoTicket>) {
         lottoTickets.forEach { ticket ->
-            println(ticket.toSet().map { it.number })
+            println(ticket.numbers.map { it.number })
         }
     }
 

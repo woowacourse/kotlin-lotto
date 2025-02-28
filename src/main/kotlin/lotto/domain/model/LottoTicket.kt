@@ -5,15 +5,13 @@ import lotto.Constants
 class LottoTicket(
     numbers: List<LottoNumber>,
 ) {
-    private val numbers: Set<LottoNumber>
+    val numbers: Set<LottoNumber>
 
     init {
         require(numbers.size == Constants.LOTTO_PICK_COUNT) { ERROR_LOTTO_INVALID_COUNT }
         require(numbers.toSet().size == Constants.LOTTO_PICK_COUNT) { ERROR_LOTTO_DUPLICATE }
         this.numbers = numbers.toSet()
     }
-
-    fun toSet(): Set<LottoNumber> = numbers
 
     fun countMatchingNumbers(winningNumbers: Set<LottoNumber>): Int = numbers.intersect(winningNumbers).size
 
