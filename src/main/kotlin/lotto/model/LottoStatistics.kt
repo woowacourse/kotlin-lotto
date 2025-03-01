@@ -17,7 +17,7 @@ class LottoStatistics(
 
     fun isLossMoney(): Boolean = rateOfReturn < 1
 
-    private fun getTotalPrize(): Double = rankStatistics.asIterable().sumOf { (rank, count) -> rank.prizeMoney * count }.toDouble()
+    private fun getTotalPrize(): Double = rankStatistics.entries.sumOf { (rank, count) -> rank.prizeMoney * count }.toDouble()
 
     private fun Double.floorToDecimalPlaces(decimalPlaces: Int): Double {
         val scaleFactor = 10.0.pow((decimalPlaces - 1).toDouble())
