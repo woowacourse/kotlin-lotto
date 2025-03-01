@@ -1,11 +1,15 @@
 package lotto.domain
 
 class Lotto(
-    val numbers: List<LottoNumber>,
+    numbers: List<LottoNumber>,
 ) {
+    private val _numbers: Set<LottoNumber> = numbers.toSet()
+    val numbers: Set<LottoNumber>
+        get() = _numbers.toSet()
+
     init {
-        require(numbers.size == SIZE) { ERROR_MESSAGE_INCORRECT_LOTTO_NUMBERS }
-        require(numbers.size == numbers.toSet().size) { ERROR_MESSAGE_LOTTO_NUMBER_MUST_BE_UNIQUE }
+        require(this._numbers.size == SIZE) { ERROR_MESSAGE_INCORRECT_LOTTO_NUMBERS }
+        require(this._numbers.size == numbers.size) { ERROR_MESSAGE_LOTTO_NUMBER_MUST_BE_UNIQUE }
     }
 
     constructor(vararg numbers: Int) : this(numbers.map(LottoNumber::from))

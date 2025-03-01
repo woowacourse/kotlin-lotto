@@ -28,6 +28,7 @@ class LottoTest {
                 listOf(1, 2, 3, 4),
                 listOf(1, 2, 3, 4, 5),
                 listOf(1, 2, 3, 4, 5, 6, 7),
+                listOf(1, 1, 3, 4, 5, 6, 7),
             )
     }
 }
