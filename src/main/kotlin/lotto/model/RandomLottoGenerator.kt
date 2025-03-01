@@ -2,15 +2,15 @@ package lotto.model
 
 class RandomLottoGenerator : LottoGenerator {
     override fun generate(count: Int): List<Lotto> {
-        val range = (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER)
         return List(count) {
-            Lotto(
-                range
+            val numbers =
+                (MINIMUM_LOTTO_NUMBER..MAXIMUM_LOTTO_NUMBER)
                     .shuffled()
                     .take(LOTTO_SIZE)
                     .sorted()
-                    .map { LottoNumber.from(it) },
-            )
+                    .map { LottoNumber.from(it) }
+                    .toSet()
+            Lotto(numbers)
         }
     }
 
