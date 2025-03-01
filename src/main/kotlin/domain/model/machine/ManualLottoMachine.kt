@@ -5,6 +5,6 @@ import domain.model.number.LottoNumber
 
 class ManualLottoMachine(private val lotto: List<Int>) : LottoMachine {
     override fun generate(): Lotto {
-        return Lotto(lotto.map { LottoNumber(it) })
+        return Lotto(lotto.map { LottoNumber.from(it) })
     }
 }

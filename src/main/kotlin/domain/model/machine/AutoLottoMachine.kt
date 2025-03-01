@@ -11,7 +11,7 @@ object AutoLottoMachine : LottoMachine {
     override fun generate(): Lotto {
         val range = (LOTTO_MIN..LOTTO_MAX)
         val randomNumbers = (range).shuffled().take(LOTTO_SIZE)
-        val lottoNumbers = randomNumbers.map { LottoNumber(it) }.toSet()
+        val lottoNumbers = randomNumbers.map { LottoNumber.from(it) }.toSet()
         return Lotto(lottoNumbers)
     }
 }

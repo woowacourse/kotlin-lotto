@@ -3,12 +3,12 @@ package controller
 import domain.model.LottoMatchResult
 import domain.model.LottoOrderRequest
 import domain.model.lotto.Lotto
+import domain.model.machine.AutoLottoMachine
+import domain.model.machine.ManualLottoMachine
 import domain.model.manual.ManualLottoAmount
 import domain.model.number.LottoNumber
 import domain.model.price.PurchasePrice
 import domain.model.winning.WinningLotto
-import domain.model.machine.AutoLottoMachine
-import domain.model.machine.ManualLottoMachine
 import view.InputView
 import view.OutputView
 
@@ -90,7 +90,7 @@ class LottoController(
     private fun getWinningNumbers(): Lotto {
         return runCatching {
             val input = inputView.readWinningNumbers()
-            Lotto(input.map { LottoNumber(it) })
+            Lotto(input.map { LottoNumber.from(it) })
         }.getOrElse { e ->
             outputView.printErrorMessage(e.message)
             getWinningNumbers()
@@ -100,7 +100,7 @@ class LottoController(
     private fun getWinningLotto(winningNumbers: Lotto): WinningLotto {
         return runCatching {
             val input = inputView.readBonusNumber()
-            WinningLotto(winningNumbers, LottoNumber(input))
+            WinningLotto(winningNumbers, LottoNumber.from(input))
         }.getOrElse { e ->
             outputView.printErrorMessage(e.message)
             getWinningLotto(winningNumbers)

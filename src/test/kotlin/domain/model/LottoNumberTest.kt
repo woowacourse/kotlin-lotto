@@ -12,6 +12,6 @@ class LottoNumberTest {
     fun `로또 번호는 1 부터 45 사이가 아니면 예외가 발생한다`(value: Int) {
         assertThrows<LottoNumberException.InvalidLottoNumberRange>(
             message = "[ERROR] 로또 번호는 1부터 45 사이입니다.",
-        ) { LottoNumber(value) }
+        ) { LottoNumber.from(value) }
     }
 }

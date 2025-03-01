@@ -37,7 +37,7 @@ class WinningLottoTest {
         assertThrows<WinningLottoException.DuplicatedBonusNumberException>(
             message = "[ERROR] 보너스 번호와 로또 번호는 중복될 수 없습니다.",
         ) {
-            WinningLotto(lotto, LottoNumber(7))
+            WinningLotto(lotto, LottoNumber.from(7))
         }
     }
 
