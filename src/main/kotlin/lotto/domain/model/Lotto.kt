@@ -1,6 +1,11 @@
 package lotto.domain.model
 
 sealed class LottoResult {
+    fun getSuccessOrThrow(): Lotto {
+        require(this is Success)
+        return lotto
+    }
+
     data class Success(val lotto: Lotto) : LottoResult()
 
     data object InvalidNumbersNull : LottoResult()
@@ -30,11 +35,14 @@ data class Lotto private constructor(private val _numbers: Set<LottoNumber>) {
                 numbers.map {
                     when (val lottoNumberResult = LottoNumber.from(it)) {
                         LottoNumberResult.InvalidNumberNull -> return LottoResult.InvalidNumberNull
-                        is LottoNumberResult.InvalidNumberRange -> return LottoResult.InvalidNumberRange(lottoNumberResult.number)
+                        is LottoNumberResult.InvalidNumberRange -> return LottoResult.InvalidNumberRange(
+                            lottoNumberResult.number,
+                        )
+
                         is LottoNumberResult.Success -> lottoNumberResult.lottoNumber
                     }
                 }.toSortedSet()
-            if (numbers.size != LOTTO_NUMBER_SIZE) return LottoResult.InvalidNumbersSize(lottoNumbers)
+            if (lottoNumbers.size != LOTTO_NUMBER_SIZE) return LottoResult.InvalidNumbersSize(lottoNumbers)
             return LottoResult.Success(Lotto(lottoNumbers))
         }
 

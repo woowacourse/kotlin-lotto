@@ -1,6 +1,11 @@
 package lotto.domain.model
 
 sealed class PurchaseAmountResult {
+    fun getSuccessOrThrow(): PurchaseAmount {
+        require(this is Success)
+        return this.purchaseAmount
+    }
+
     data class Success(val purchaseAmount: PurchaseAmount) : PurchaseAmountResult()
 
     data class InvalidAmount(val amount: Int) : PurchaseAmountResult()
@@ -34,6 +39,7 @@ class PurchaseAmount private constructor(private var _amount: Int) {
             return PurchaseAmountResult.Success(PurchaseAmount(amount))
         }
 
-        private const val INVALID_PURCHASE_LOTTO_AMOUNT_MESSAGE = "선택하신 개수의 금액은 %d 입니다. 구매하시는 금액은 현재 구매할 %d원 보다 적어야 합니다."
+        private const val INVALID_PURCHASE_LOTTO_AMOUNT_MESSAGE =
+            "선택하신 개수의 금액은 %d 입니다. 구매하시는 금액은 현재 구매할 %d원 보다 적어야 합니다."
     }
 }

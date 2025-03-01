@@ -1,6 +1,11 @@
 package lotto.domain.model
 
 sealed class WinningNumbersResult {
+    fun getSuccessOrThrow(): WinningNumbers {
+        require(this is Success)
+        return this.winningNumbers
+    }
+
     data class Success(val winningNumbers: WinningNumbers) : WinningNumbersResult()
 
     data class InvalidHasBonusNumber(val lottoNumbers: List<Int>, val bonusNumber: Int) : WinningNumbersResult()

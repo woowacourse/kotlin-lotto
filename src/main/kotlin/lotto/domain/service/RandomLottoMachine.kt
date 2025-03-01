@@ -4,14 +4,12 @@ import lotto.domain.model.Lotto
 import lotto.domain.model.Lotto.Companion.LOTTO_NUMBER_SIZE
 import lotto.domain.model.LottoNumber.Companion.LOTTO_MAX_NUMBER
 import lotto.domain.model.LottoNumber.Companion.LOTTO_MIN_NUMBER
-import lotto.domain.model.LottoResult
 
-class LottoMachineImpl : LottoMachine {
-    override fun generateRandomLottoNumbers(): Lotto {
+class RandomLottoMachine : LottoMachine {
+    override fun generate(): Lotto {
         val lottoNumbers = getRandomLottoNumbers().sorted()
         val lottoResult = Lotto.from(lottoNumbers)
-        require(lottoResult is LottoResult.Success)
-        return lottoResult.lotto
+        return lottoResult.getSuccessOrThrow()
     }
 
     private fun getRandomLottoNumbers(): List<Int> {
