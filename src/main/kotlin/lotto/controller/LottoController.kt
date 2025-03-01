@@ -60,8 +60,8 @@ class LottoController(
         order: Order,
         lottoBundle: LottoBundle,
     ) {
-        outputView.printPurchaseLottoCount(order.manualLottoAmount, order.autoLottoAmount)
-        lottoBundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
+        outputView.printPurchaseLottoCount(order)
+        lottoBundle.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto) }
     }
 
     private fun generateWinningNumbers(): WinningNumbers {

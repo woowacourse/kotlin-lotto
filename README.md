@@ -97,3 +97,5 @@
 ### 2차 피드백 반영
 
 - [x] LottoTest isMatchNumber 테스트명 수정
+- [x] OutputView 함수들 파라미터 수정
+  - List -> 객체

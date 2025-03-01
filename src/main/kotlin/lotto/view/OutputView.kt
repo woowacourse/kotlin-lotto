@@ -1,20 +1,18 @@
 package lotto.view
 
-import lotto.domain.model.LottoNumber
+import lotto.domain.model.Lotto
 import lotto.domain.model.LottoRank
 import lotto.domain.model.LottoResult
+import lotto.domain.model.Order
 import java.math.BigDecimal
 
 class OutputView {
-    fun printPurchaseLottoCount(
-        manualLottoAmount: Int,
-        autoLottoAmount: Int,
-    ) {
-        println(PRINT_PURCHASE_LOTTO_COUNT_FORMAT.format(manualLottoAmount, autoLottoAmount))
+    fun printPurchaseLottoCount(order: Order) {
+        println(PRINT_PURCHASE_LOTTO_COUNT_FORMAT.format(order.manualLottoAmount, order.autoLottoAmount))
     }
 
-    fun printPurchaseLottoNumbers(lottoNumbers: List<LottoNumber>) {
-        println(lottoNumbers.map { it.number })
+    fun printPurchaseLottoNumbers(lotto: Lotto) {
+        println(lotto.numbers.map { it.number })
     }
 
     fun printWinningResults(ranks: LottoResult) {
