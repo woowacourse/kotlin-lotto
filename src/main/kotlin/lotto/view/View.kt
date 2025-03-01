@@ -1,37 +1,58 @@
 package lotto.view
 
-import lotto.domain.LottoResult
+import lotto.domain.Lotto
+import lotto.domain.Results
 
 object View {
-    fun readPrice(): Int {
-        OutputView.requestPrice()
-        val price: Int = InputView.readPrice()
-        return price
+    fun requestPayment(): Int {
+        OutputView.requestPayment()
+        return retryUntilValid { InputView.readPayment() }
     }
 
-    fun showLottoCount(lottoCount: Int) {
-        OutputView.showLottoCount(lottoCount)
+    fun requestManualQuantity(): Int {
+        OutputView.requestManualQuantity()
+        return retryUntilValid { InputView.readManualQuantity() }
     }
 
-    fun showLottos(numbers: List<List<Int>>) {
-        OutputView.showLottos(numbers)
+    fun requestManualNumbers() {
+        OutputView.requestManualNumbers()
     }
 
-    fun showResult(
-        resultTally: Map<LottoResult, Int>,
-        profitRate: Double,
-    ) {
-        OutputView.showResult(resultTally, profitRate)
+    fun readManualNumbers(): List<Int> {
+        return retryUntilValid { InputView.readLottoNumbers() }
     }
 
-    fun readLottoNumbers(): List<Int> {
+    fun requestWinningNumbers(): List<Int> {
         OutputView.requestWinningLotto()
-        val winningNumbers: List<Int> = InputView.readWinningNumbers()
-        return winningNumbers
+        return retryUntilValid { InputView.readLottoNumbers() }
     }
 
-    fun readBonusNumber(): Int {
+    fun requestBonusNumber(): Int {
         OutputView.requestBonusNumber()
-        return InputView.readBonusNumber()
+        return retryUntilValid { InputView.readBonusNumber() }
+    }
+
+    fun showLottoCount(
+        manualQuantity: Int,
+        automaticQuantity: Int,
+    ) {
+        OutputView.showLottoCount(manualQuantity, automaticQuantity)
+    }
+
+    fun showLottos(vararg allLottos: List<Lotto>) {
+        allLottos.forEach { lottos: List<Lotto> ->
+            OutputView.showLottos(lottos)
+        }
+    }
+
+    fun showResult(results: Results) {
+        OutputView.showResults(results)
+    }
+
+    private fun <T> retryUntilValid(reader: () -> T?): T {
+        return reader() ?: run {
+            OutputView.warnNonNumericInput()
+            retryUntilValid(reader)
+        }
     }
 }
