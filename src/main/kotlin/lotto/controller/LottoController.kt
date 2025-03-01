@@ -30,7 +30,6 @@ class LottoController(
         outputView.printLottoCounts(manualCount, totalCount - manualCount)
         outputView.printAllLottos(manualLottos + autoLottos)
 
-        // 당첨 번호 입력 및 검증 후 생성
         val winningNumbers = inputView.inputWinningNumbers() ?: return outputView.printError("당첨 번호 오류입니다.")
         val bonusNumberInput = inputView.inputBonusNumber() ?: return outputView.printError("보너스 번호 오류입니다.")
 
