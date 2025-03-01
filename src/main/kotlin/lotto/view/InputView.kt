@@ -14,11 +14,11 @@ class InputView {
         return readln().toIntOrNull()?.takeIf { it in 0..totalCount }
     }
 
-    fun inputManualLottoNumber(): List<Int>? {
+    fun inputManualLottoNumber(): List<Int> {
         println(INPUT_MANUAL_LOTTO_NUMBER_MESSAGE)
         val numbers = readln().split(",").mapNotNull { it.trim().toIntOrNull() }
 
-        return numbers.takeIf { it.size == Lotto.LOTTO_NUMBERS_SIZE }
+        return return if (numbers.size == Lotto.LOTTO_NUMBERS_SIZE) numbers else inputManualLottoNumber()
     }
 
     fun inputWinningNumbers(): List<Int>? {
