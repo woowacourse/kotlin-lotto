@@ -23,10 +23,15 @@ class ResultTest {
                 Arguments.of(Lotto(1, 2, 3, 4, 5, 6), Result.FIRST),
                 Arguments.of(Lotto(1, 2, 3, 4, 5, 7), Result.SECOND),
                 Arguments.of(Lotto(1, 2, 3, 4, 5, 45), Result.THIRD),
+                Arguments.of(Lotto(1, 2, 3, 4, 7, 45), Result.FOURTH),
                 Arguments.of(Lotto(1, 2, 3, 4, 44, 45), Result.FOURTH),
+                Arguments.of(Lotto(1, 2, 3, 7, 44, 45), Result.FIFTH),
                 Arguments.of(Lotto(1, 2, 3, 43, 44, 45), Result.FIFTH),
+                Arguments.of(Lotto(1, 2, 7, 43, 44, 45), Result.FAIL),
                 Arguments.of(Lotto(1, 2, 42, 43, 44, 45), Result.FAIL),
+                Arguments.of(Lotto(1, 7, 42, 43, 44, 45), Result.FAIL),
                 Arguments.of(Lotto(1, 41, 42, 43, 44, 45), Result.FAIL),
+                Arguments.of(Lotto(7, 41, 42, 43, 44, 45), Result.FAIL),
                 Arguments.of(Lotto(40, 41, 42, 43, 44, 45), Result.FAIL),
             )
     }
