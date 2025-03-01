@@ -4,16 +4,14 @@ import lotto.domain.Lotto
 import lotto.domain.Results
 
 object View {
-    fun readPayment(): Int {
+    fun requestPayment(): Int {
         OutputView.requestPayment()
-        val payment: Int = InputView.readPayment()
-        return payment
+        return readPayment()
     }
 
-    fun readManualQuantity(): Int {
+    fun requestManualQuantity(): Int {
         OutputView.requestManualQuantity()
-        val manualQuantity: Int = InputView.readManualQuantity()
-        return manualQuantity
+        return readManualQuantity()
     }
 
     fun requestManualNumbers() {
@@ -21,7 +19,22 @@ object View {
     }
 
     fun readManualNumbers(): List<Int> {
-        return InputView.readLottoNumbers()
+        val lottoNumbers: List<Int>? = InputView.readLottoNumbers()
+        if (lottoNumbers == null) {
+            OutputView.warnNonNumericInput()
+            return readManualNumbers()
+        }
+        return lottoNumbers
+    }
+
+    fun requestWinningNumbers(): List<Int> {
+        OutputView.requestWinningLotto()
+        return readWinningNumbers()
+    }
+
+    fun requestBonusNumber(): Int {
+        OutputView.requestBonusNumber()
+        return readBonusNumber()
     }
 
     fun showLottoCount(
@@ -37,18 +50,43 @@ object View {
         }
     }
 
-    fun readWinningNumbers(): List<Int> {
-        OutputView.requestWinningLotto()
-        val winningNumbers: List<Int> = InputView.readLottoNumbers()
+    fun showResult(results: Results) {
+        OutputView.showResults(results)
+    }
+
+    private fun readPayment(): Int {
+        val payment: Int? = InputView.readPayment()
+        if (payment == null) {
+            OutputView.warnNonNumericInput()
+            return readPayment()
+        }
+        return payment
+    }
+
+    private fun readManualQuantity(): Int {
+        val manualQuantity: Int? = InputView.readManualQuantity()
+        if (manualQuantity == null) {
+            OutputView.warnNonNumericInput()
+            return readManualQuantity()
+        }
+        return manualQuantity
+    }
+
+    private fun readWinningNumbers(): List<Int> {
+        val winningNumbers: List<Int>? = InputView.readLottoNumbers()
+        if (winningNumbers == null) {
+            OutputView.warnNonNumericInput()
+            return readWinningNumbers()
+        }
         return winningNumbers
     }
 
-    fun readBonusNumber(): Int {
-        OutputView.requestBonusNumber()
-        return InputView.readBonusNumber()
-    }
-
-    fun showResult(results: Results) {
-        OutputView.showResults(results)
+    private fun readBonusNumber(): Int {
+        val bonusNumber: Int? = InputView.readBonusNumber()
+        if (bonusNumber == null) {
+            OutputView.warnNonNumericInput()
+            return readBonusNumber()
+        }
+        return bonusNumber
     }
 }

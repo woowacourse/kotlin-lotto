@@ -18,14 +18,12 @@ object LottoController {
     }
 
     private fun placeOrder(): Order {
-        val payment = Payment(View.readPayment())
-        val manualQuantity = Quantity(View.readManualQuantity())
+        val payment = Payment(View.requestPayment())
+        val manualQuantity = Quantity(View.requestManualQuantity())
         if (manualQuantity.value > 0) View.requestManualNumbers()
-        val manualNumbersList: List<List<Int>> = List(manualQuantity.value) { readManualNumbers() }
+        val manualNumbersList: List<List<Int>> = List(manualQuantity.value) { View.readManualNumbers() }
         return Order(payment, manualQuantity, manualNumbersList)
     }
-
-    private fun readManualNumbers(): List<Int> = View.readManualNumbers()
 
     private fun processOrder(order: Order): List<Lotto> {
         val manualLottos: List<Lotto> = order.manualNumbersList.map(::Lotto)
@@ -46,9 +44,9 @@ object LottoController {
     }
 
     private fun readWinningLotto(): WinningLotto {
-        val lottoNumbers: List<LottoNumber> = View.readWinningNumbers().map(LottoNumber::from)
+        val lottoNumbers: List<LottoNumber> = View.requestWinningNumbers().map(LottoNumber::from)
         val lotto = Lotto(lottoNumbers)
-        val bonusNumber = LottoNumber.from(View.readBonusNumber())
+        val bonusNumber = LottoNumber.from(View.requestBonusNumber())
         return WinningLotto(lotto, bonusNumber)
     }
 

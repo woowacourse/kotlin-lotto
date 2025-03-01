@@ -58,6 +58,10 @@ object OutputView {
         )
     }
 
+    fun warnNonNumericInput() {
+        println(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
+    }
+
     private fun makePrizeDescription(
         result: Result,
         count: Int,
@@ -91,4 +95,6 @@ object OutputView {
     private const val MESSAGE_PROFIT_RATE_PROFIT = "이득이라는"
     private const val MESSAGE_PROFIT_RATE_LOSS = "손해라는"
     private const val MESSAGE_PROFIT_RATE_BREAKEVEN = "본전이라는"
+
+    private const val ERROR_MESSAGE_INPUT_NOT_A_NUMBER = "올바르지 않은 입력입니다. 숫자를 입력해주세요."
 }
