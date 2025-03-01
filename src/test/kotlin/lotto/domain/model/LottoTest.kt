@@ -46,7 +46,7 @@ class LottoTest {
     }
 
     @Test
-    fun `1-6까지의 번호를 가진 로또의 번호에 보너스 번호 1이 포함되면 true를 반환한다`() {
+    fun `1-6까지의 번호를 가진 로또에 1이 포함되면 true를 반환한다`() {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber.from(1)
 
@@ -57,7 +57,7 @@ class LottoTest {
     }
 
     @Test
-    fun `1-6까지의 번호를 가진 로또의 번호에 보너스 번호 9가 포함되지 않으면 false를 반환한다`() {
+    fun `1-6까지의 번호를 가진 로또에 9가 포함되지 않으면 false를 반환한다`() {
         val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
         val bonusNumber = LottoNumber.from(9)
 
