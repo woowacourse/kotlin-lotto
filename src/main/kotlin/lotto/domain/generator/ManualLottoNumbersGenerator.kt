@@ -5,10 +5,10 @@ import lotto.domain.model.LottoNumber
 class ManualLottoNumbersGenerator(private val numbers: List<List<Int>>) : LottoNumbersGenerator {
     private var count: Int = 0
 
-    override fun generate(): Set<LottoNumber> {
+    override fun generate(): List<LottoNumber> {
         require(count < numbers.size) { INVALID_MANUAL_LOTTO_NUMBERS_SIZE_MESSAGE }
 
-        return numbers[count++].sorted().map { LottoNumber.from(it) }.toSet()
+        return numbers[count++].map { LottoNumber.from(it) }
     }
 
     companion object {

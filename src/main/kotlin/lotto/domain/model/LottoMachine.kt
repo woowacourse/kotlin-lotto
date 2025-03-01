@@ -8,7 +8,18 @@ class LottoMachine(
     fun generateLottoBundle(count: Int): LottoBundle? {
         if (count == 0) return null
 
-        return LottoBundle(List(count) { Lotto(generator.generate()) })
+        val lottos = generateLottos(count)
+        return LottoBundle(lottos)
+    }
+
+    private fun generateLottos(count: Int): List<Lotto> {
+        return List(count) { generateLotto() }
+    }
+
+    private fun generateLotto(): Lotto {
+        val numbers = generator.generate()
+        val sortedNumbers = numbers.toSortedSet(compareBy { it.number })
+        return Lotto(sortedNumbers)
     }
 
     companion object {

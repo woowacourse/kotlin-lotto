@@ -99,3 +99,7 @@
 - [x] LottoTest isMatchNumber 테스트명 수정
 - [x] OutputView 함수들 파라미터 수정
   - List -> 객체
+- [x] 로또 번호 생성기의 번호 정렬 역할을 LottoMachine의 책임으로 변경
+  - 로또 번호는 생성 방식에 관계없이 항상 정렬되어야 하므로, 번호 정렬의 책임을 LottoMachine으로 이전
+  - Set 변환 후 크기에 대한 검증은 Lotto에서 처리하므로 LottoNumbersGenerator에서 Set 변환을 제거
+  - LottoNumbersGenerator는 이제 List<LottoNumber>를 반환하도록 변경

@@ -16,7 +16,7 @@ class Lotto(val numbers: Set<LottoNumber>) {
     }
 
     companion object {
-        private const val LOTTO_NUMBER_SIZE = 6
+        const val LOTTO_NUMBER_SIZE = 6
         private const val INVALID_LOTTO_NUMBER_SIZE_MESSAGE = "로또 번호는 6개여야 하며, 중복될 수 없습니다."
     }
 }
