@@ -47,7 +47,7 @@ object OutputView {
     fun showResults(results: Results) {
         println()
         println(MESSAGE_RESULT_HEADER)
-        Result.entries.sortedWith(compareBy(Result::matchCount, Result::requireBonus)).forEach { result: Result ->
+        Result.entries.reversed().forEach { result: Result ->
             if (result != Result.FAIL) println(makePrizeDescription(result, results.tally[result] ?: 0))
         }
         println(
