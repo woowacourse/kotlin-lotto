@@ -103,3 +103,4 @@
   - 로또 번호는 생성 방식에 관계없이 항상 정렬되어야 하므로, 번호 정렬의 책임을 LottoMachine으로 이전
   - Set 변환 후 크기에 대한 검증은 Lotto에서 처리하므로 LottoNumbersGenerator에서 Set 변환을 제거
   - LottoNumbersGenerator는 이제 List<LottoNumber>를 반환하도록 변경
+- [x] 랜덤 로또 번호 생성 시 LottoNumber의 NUMBERS를 활용하도록 수정
