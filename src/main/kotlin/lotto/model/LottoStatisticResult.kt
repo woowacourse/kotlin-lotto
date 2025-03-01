@@ -11,7 +11,6 @@ class LottoStatisticResult {
         val totalWinningPrice = getTotalWinningPrice(winningCounts)
         val profitRate = totalWinningPrice.toDouble() / purchasePrice.toDouble()
         return String.format("%.2f", profitRate)
-//      return (floor((totalWinningPrice.toDouble() / purchasePrice) * PERCENT_FACTOR) / PERCENT_FACTOR).toString()
     }
 
     companion object {

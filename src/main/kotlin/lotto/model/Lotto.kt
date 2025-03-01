@@ -26,11 +26,3 @@ class Lotto(
         }
     }
 }
-
-//    fun contains(number: LottoNumber): Boolean {
-//        return numbers.contains(number)
-//    }
-
-//    fun matchCount(lotto: Lotto): Int {
-//        return numbers.count { lotto.contains(it) }
-//    }
