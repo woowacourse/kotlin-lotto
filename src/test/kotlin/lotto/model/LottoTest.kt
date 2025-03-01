@@ -1,7 +1,7 @@
 package lotto.model
 
-import lotto.Lotto
-import lotto.LottoNumber
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

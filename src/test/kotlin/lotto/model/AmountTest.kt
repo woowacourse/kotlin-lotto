@@ -1,6 +1,6 @@
 package lotto.model
 
-import lotto.Amount
+import lotto.domain.model.Amount
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

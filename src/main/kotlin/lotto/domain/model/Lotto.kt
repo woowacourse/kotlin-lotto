@@ -1,4 +1,4 @@
-package lotto
+package lotto.domain.model
 
 interface SortStrategy {
     fun sort(numberList: List<LottoNumber>): List<LottoNumber>
