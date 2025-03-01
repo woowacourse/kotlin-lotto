@@ -78,4 +78,13 @@ class UserInputTest {
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("구매한 수동 로또의 개수만큼 수동 로또를 입력받아야 합니다")
     }
+
+    @Test
+    @DisplayName("검증에 실패한 값을 입력받는다면 UserInputResult.Failure 에\"올바르지 않은 형식입니다\"라는 메시지를 담는다")
+    fun t6() {
+        assertThatThrownBy {
+            UserInput(500, 11, listOf())
+        }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("최소 구입 금액은 1000원 이상이여야 합니다")
+    }
 }

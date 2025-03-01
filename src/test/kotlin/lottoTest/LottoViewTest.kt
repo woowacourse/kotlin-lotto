@@ -49,20 +49,10 @@ class LottoViewTest {
     }
 
     @Test
-    @DisplayName("검증에 실패한 값을 입력받는다면 UserInputResult.Failure 에\"올바르지 않은 형식입니다\"라는 메시지를 담는다")
-    fun t1_2() {
-        setInput("500")
-        val userInput = lottoView.getBuyAmount()
-        assertThat(userInput).isInstanceOf(UserInputResult.Failure::class.java)
-        val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
-        assertThat(userInputFail.errorMessage.msg).contains("최소 구입 금액은 1000원 이상이여야 합니다")
-    }
-
-    @Test
     @DisplayName("수동 로또 개수를 입력받는다")
     fun t2() {
         setInput("1")
-        val buyAmount = lottoView.getManualLottoCount(1500)
+        val buyAmount = lottoView.getManualLottoCount()
         assertThat(buyAmount)
             .isInstanceOf(UserInputResult.Success::class.java)
         assertThat(buyAmount.get()).isEqualTo(1)
@@ -72,7 +62,7 @@ class LottoViewTest {
     @DisplayName("숫자로 변환할 수 없는 값을 입력받는다면 UserInputResult.Failure 에\"올바르지 않은 형식입니다\"라는 메시지를 담는다")
     fun t2_1() {
         setInput("8g1")
-        val userInput = lottoView.getManualLottoCount(1500)
+        val userInput = lottoView.getManualLottoCount()
         assertThat(userInput).isInstanceOf(UserInputResult.Failure::class.java)
         val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
         assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
@@ -82,7 +72,7 @@ class LottoViewTest {
     @DisplayName("수동 로또 정보를 입력받는다")
     fun t3() {
         setInput("1,2,3,4,5,6\\n1,2,3,4,5,6")
-        val buyAmount = lottoView.getManualLotto(2)
+        val buyAmount = lottoView.getManualLotto()
         assertThat(buyAmount)
             .isInstanceOf(UserInputResult.Success::class.java)
         assertThat(buyAmount.get()).isEqualTo(

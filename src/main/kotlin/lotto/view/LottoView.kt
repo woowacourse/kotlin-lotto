@@ -11,22 +11,16 @@ class LottoView {
     fun getBuyAmount(): UserInputResult<Int> {
         println(Message.ASK_AMOUNT.msg)
         val input = readln().toIntOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
-        val validAmount =
-            UserInput.getValidBuyAmountOrNull(input)
-                ?: return UserInputResult.Failure(Message.ERR_LESS_THAN_MINIMUM_PRICE)
-        return UserInputResult.Success(validAmount)
+        return UserInputResult.Success(input)
     }
 
-    fun getManualLottoCount(buyAmount: Int): UserInputResult<Int> {
+    fun getManualLottoCount(): UserInputResult<Int> {
         println(Message.ASK_MANUAL_LOTTO_AMOUNT.msg)
         val input = readln().toIntOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
-        val validManualLottoCount =
-            UserInput.getValidManualLottoCountOrNull(input, buyAmount)
-                ?: return UserInputResult.Failure(Message.ERR_TOO_MANY_MANUAL_LOTTO)
-        return UserInputResult.Success(validManualLottoCount)
+        return UserInputResult.Success(input)
     }
 
-    fun getManualLotto(manualLottoCount: Int): UserInputResult<List<List<Int>>> {
+    fun getManualLotto(): UserInputResult<List<List<Int>>> {
         println(Message.ASK_MANUAL_LOTTO.msg)
         val input =
             runCatching {
@@ -34,10 +28,7 @@ class LottoView {
                     it.split(",").map { it.toInt() }
                 }
             }.getOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
-        val validManualLotto =
-            UserInput.getValidManualLottoSizeOrNull(manualLottoCount, input)
-                ?: return UserInputResult.Failure(Message.ERR_TOO_MANY_MANUAL_LOTTO)
-        return UserInputResult.Success(validManualLotto)
+        return UserInputResult.Success(input)
     }
 
     fun printLotto(

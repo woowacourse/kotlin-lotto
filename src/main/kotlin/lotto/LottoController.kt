@@ -50,12 +50,18 @@ class LottoController(
     }
 
     private fun getUserInput(): UserInput {
+        val userInputBuilder = UserInput.Builder()
         val buyAmount = lottoView.getBuyAmount()
         if (buyAmount is UserInputResult.Failure) this.shutdown(buyAmount.errorMessage)
-        val manualLottoCount = lottoView.getManualLottoCount(buyAmount.get())
+        userInputBuilder.buyAmount(buyAmount.get()) ?: this.shutdown(Message.ERR_LESS_THAN_MINIMUM_PRICE)
+
+        val manualLottoCount = lottoView.getManualLottoCount()
         if (manualLottoCount is UserInputResult.Failure) this.shutdown(manualLottoCount.errorMessage)
-        val manualLotto = lottoView.getManualLotto(manualLottoCount.get())
-        return UserInput(buyAmount.get(), manualLottoCount.get(), manualLotto.get())
+        userInputBuilder.manualLottoCount(manualLottoCount.get()) ?: this.shutdown(Message.ERR_TOO_MANY_MANUAL_LOTTO)
+
+        val manualLotto = lottoView.getManualLotto()
+        userInputBuilder.manualLotto(manualLotto.get()) ?: this.shutdown(Message.ERR_MANUAL_NOT_SUFFICIENT)
+        return userInputBuilder.build()
     }
 
     private fun shutdown(err: Message) {
