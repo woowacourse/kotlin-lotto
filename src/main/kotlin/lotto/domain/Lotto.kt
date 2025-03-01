@@ -32,7 +32,7 @@ data class Lotto(
         fun generateRandomLotto(count: Int): List<Lotto> =
             List(count) {
                 val lottoNumbers =
-                    (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER)
+                    (LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER)
                         .shuffled()
                         .take(MAX_LOTTO_LENGTH)
                 of(lottoNumbers)
