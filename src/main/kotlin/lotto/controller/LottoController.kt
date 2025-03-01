@@ -20,7 +20,7 @@ object LottoController {
     private fun placeOrder(): Order {
         val payment = Payment(View.readPayment())
         val manualQuantity = Quantity(View.readManualQuantity())
-        View.requestManualNumbers()
+        if (manualQuantity.value > 0) View.requestManualNumbers()
         val manualNumbersList: List<List<Int>> = List(manualQuantity.value) { readManualNumbers() }
         return Order(payment, manualQuantity, manualNumbersList)
     }
