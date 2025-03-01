@@ -6,10 +6,12 @@ class Order(
     manualNumbersList: List<List<Int>>,
 ) {
     val automaticQuantity = Quantity(payment.amount / Lotto.PRICE - manualQuantity.value)
-    val manualNumbersList: List<List<LottoNumber>> =
+    private val _manualNumbersList: List<List<LottoNumber>> =
         manualNumbersList.map { numbers: List<Int> ->
             numbers.map(LottoNumber::from)
         }
+    val manualNumbersList: List<List<LottoNumber>>
+        get() = _manualNumbersList.map { it.toList() }
 
     init {
         require(payment.amount / Lotto.PRICE >= manualQuantity.value) { ERROR_MESSAGE_TOO_MANY_MANUAL_LOTTOS }
