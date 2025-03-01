@@ -15,7 +15,8 @@ sealed class LottoTicketResult {
 class LottoTicket(
     numbers: List<LottoNumber>,
 ) {
-    val numbers: Set<LottoNumber> = numbers.toSet()
+    private val _numbers: List<LottoNumber> = numbers
+    val numbers: Set<LottoNumber> get() = _numbers.toSet()
 
     fun countMatchingNumbers(winningNumbers: Set<LottoNumber>): Int = numbers.intersect(winningNumbers).size
 
