@@ -7,7 +7,7 @@ data class UserInput(
     val manualLottoCount: Int,
     private val rawManualLotto: List<List<Int>> = listOf(),
 ) {
-    val manualLotto: List<Lotto> = rawManualLotto.map { Lotto(it.map { LottoNumber.of(it) }) }
+    val manualLotto: List<Lotto> = rawManualLotto.map { Lotto.of(it) }
     val totalLottoCount: Int = buyAmount / LOTTO_PRICE
     val automaticLottoCount: Int = totalLottoCount - manualLottoCount
 
