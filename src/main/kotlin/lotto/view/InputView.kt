@@ -1,6 +1,8 @@
 package lotto.view
 
 object InputView {
+    private const val LOTTO_NUMBERS_DELIMITER = ","
+
     fun readPayment(): Int? {
         val paymentInput: String = readln()
         val payment: Int? = paymentInput.toIntOrNull()
@@ -27,6 +29,4 @@ object InputView {
         val bonusNumber: Int? = bonusNumberInput.toIntOrNull()
         return bonusNumber
     }
-
-    private const val LOTTO_NUMBERS_DELIMITER = ","
 }
