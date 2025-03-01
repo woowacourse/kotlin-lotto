@@ -53,12 +53,12 @@ class InputView {
         }
     }
 
-    private fun readLottoNumbersWithGuideMessage(guideMessage: () -> Unit): List<LottoNumber> {
-        guideMessage()
+    private fun readLottoNumbersWithGuideMessage(showGuideMessage: () -> Unit): List<LottoNumber> {
+        showGuideMessage()
         return runCatching {
             readln()
                 .split(LOTTO_NUMBER_DELIMITER)
-                .map { number -> number.toIntOrNull() ?: return readLottoNumbersWithGuideMessage(guideMessage) }
+                .map { number -> number.toIntOrNull() ?: return readLottoNumbersWithGuideMessage(showGuideMessage) }
                 .map { number -> LottoNumber.from(number) }
         }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
