@@ -8,6 +8,14 @@ import lotto.domain.model.WinningLotto
 class LottoResult(
     val ranks: Map<Rank, Int>,
 ) {
+    fun calculateProfit(): Double {
+        val totalWinningMoney =
+            ranks.entries.sumOf { (key, value) ->
+                key.winningMoney * value
+            }
+        return totalWinningMoney / (ranks.values.sum() * Constants.LOTTO_AMOUNT).toDouble()
+    }
+
     companion object {
         fun calculateResult(
             lottoTickets: List<LottoTicket>,
@@ -20,13 +28,5 @@ class LottoResult(
                     .eachCount()
             return LottoResult(rankCounts)
         }
-    }
-
-    fun calculateProfit(): Double {
-        val totalWinningMoney =
-            ranks.entries.sumOf { (key, value) ->
-                key.winningMoney * value
-            }
-        return totalWinningMoney / (ranks.values.sum() * Constants.LOTTO_AMOUNT).toDouble()
     }
 }
