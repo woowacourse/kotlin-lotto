@@ -11,4 +11,5 @@ class WinningLotto(
     fun contains(number: LottoNumber): Boolean = lotto.contains(number)
 
     fun isBonusMatch(lotto: Lotto): Boolean = lotto.contains(bonusNumber)
+
 }
