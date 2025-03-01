@@ -8,7 +8,7 @@ data class UserInput(
     private val rawManualLotto: List<List<Int>> = listOf(),
 ) {
     val manualLotto: List<Lotto> = rawManualLotto.map { Lotto.of(it) }
-    val totalLottoCount: Int = buyAmount / LOTTO_PRICE
+    val totalLottoCount: Int = buyAmount / Lotto.LOTTO_PRICE
     val automaticLottoCount: Int = totalLottoCount - manualLottoCount
 
     init {
@@ -18,12 +18,12 @@ data class UserInput(
     }
 
     companion object {
-        fun getValidBuyAmountOrNull(buyAmount: Int): Int? = if (buyAmount >= LOTTO_PRICE) buyAmount else null
+        fun getValidBuyAmountOrNull(buyAmount: Int): Int? = if (buyAmount >= Lotto.LOTTO_PRICE) buyAmount else null
 
         fun getValidManualLottoCountOrNull(
             manualLottoCount: Int,
             buyAmount: Int,
-        ): Int? = if (manualLottoCount <= buyAmount / LOTTO_PRICE) manualLottoCount else null
+        ): Int? = if (manualLottoCount <= buyAmount / Lotto.LOTTO_PRICE) manualLottoCount else null
 
         fun getValidManualLottoSizeOrNull(
             manualLottoCount: Int,

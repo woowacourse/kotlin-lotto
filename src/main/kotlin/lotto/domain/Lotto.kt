@@ -2,9 +2,6 @@ package lotto.domain
 
 import lotto.global.Message
 
-const val LOTTO_PRICE = 1000
-const val MAX_LOTTO_LENGTH = 6
-
 data class Lotto(
     val value: Set<LottoNumber>,
 ) {
@@ -17,6 +14,9 @@ data class Lotto(
     fun getCountOfMatchWith(contrast: Lotto): Int = value.count { it in contrast.value }
 
     companion object {
+        const val LOTTO_PRICE = 1000
+        const val MAX_LOTTO_LENGTH = 6
+
         fun of(vararg numbers: Int): Lotto = of(numbers.toList())
 
         fun of(numbers: List<Int>): Lotto {

@@ -16,7 +16,7 @@ data class ScoreRankMap(
 
     fun getEarned() = map.entries.sumOf { it.key.winningMoney * it.value }
 
-    fun getPaid() = map.values.sum() * LOTTO_PRICE
+    fun getPaid() = map.values.sum() * Lotto.LOTTO_PRICE
 
     private fun requireRankMap() {
         val missingKeys = Rank.entries.filter { it !in map }
