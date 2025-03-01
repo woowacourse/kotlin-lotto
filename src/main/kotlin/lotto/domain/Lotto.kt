@@ -28,5 +28,21 @@ data class Lotto(
         fun of(vararg numbers: Int): Lotto = Lotto(numbers.map { LottoNumber.of(it) })
 
         fun of(numbers: List<Int>): Lotto = Lotto(numbers.map { LottoNumber.of(it) })
+
+        private fun generateRandomLotto(): Lotto {
+            val lotto = mutableListOf<LottoNumber>()
+            val range = IntRange(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER).shuffled()
+            for (i in 0 until MAX_LOTTO_LENGTH) {
+                lotto.add(LottoNumber.of(range.get(i)))
+            }
+
+            return Lotto(lotto.toList())
+        }
+
+        fun generateRandomLotto(count: Int): List<Lotto> {
+            val manyLotto = mutableListOf<Lotto>()
+            repeat(count) { manyLotto.add(generateRandomLotto()) }
+            return manyLotto.toList()
+        }
     }
 }

@@ -6,13 +6,11 @@ import lotto.domain.UserInput
 import lotto.domain.WinningLottoTicket
 import lotto.global.Message
 import lotto.global.UserInputResult
-import lotto.service.LottoGenerator
 import lotto.view.LottoView
 import kotlin.system.exitProcess
 
 class LottoController(
     private val lottoView: LottoView,
-    private val lottoGenerator: LottoGenerator,
 ) {
     fun run() {
         val userInput = getUserInput()
@@ -23,7 +21,7 @@ class LottoController(
     }
 
     private fun purchaseLotto(userInput: UserInput): List<Lotto> {
-        val autoLotto = lottoGenerator.makeLotto(userInput.automaticLottoCount)
+        val autoLotto = Lotto.generateRandomLotto(userInput.automaticLottoCount)
         return autoLotto + userInput.manualLotto
     }
 
