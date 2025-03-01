@@ -1,7 +1,5 @@
 package lotto.model
 
-import kotlin.math.floor
-
 class LottoStatisticResult {
     private fun getTotalWinningPrice(winningCounts: Map<Rank, Int>): Int =
         winningCounts.entries.sumOf { (rank, winningCount) -> winningCount * rank.winningMoney }
@@ -11,7 +9,9 @@ class LottoStatisticResult {
         winningCounts: Map<Rank, Int>,
     ): String {
         val totalWinningPrice = getTotalWinningPrice(winningCounts)
-        return (floor((totalWinningPrice.toDouble() / purchasePrice) * PERCENT_FACTOR) / PERCENT_FACTOR).toString()
+        val profitRate = totalWinningPrice.toDouble() / purchasePrice.toDouble()
+        return String.format("%.2f", profitRate)
+//      return (floor((totalWinningPrice.toDouble() / purchasePrice) * PERCENT_FACTOR) / PERCENT_FACTOR).toString()
     }
 
     companion object {
