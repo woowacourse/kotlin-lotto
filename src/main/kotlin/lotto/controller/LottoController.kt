@@ -4,6 +4,7 @@ import lotto.model.Lotto
 import lotto.model.LottoGenerator
 import lotto.model.LottoNumber
 import lotto.model.LottoStatisticResult
+import lotto.model.ManualLottoGenerator
 import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -25,10 +26,8 @@ class LottoController(
         val manualNumbersList = inputView.inputManualLottoNumber(manualCount)
 
         // 수동 로또 생성 (명확히 List<Lotto> 형태로 변환)
-        val manualLottos =
-            manualNumbersList.map { numbers ->
-                Lotto.from(numbers) ?: return outputView.printError("잘못된 수동 로또 번호입니다.")
-            }
+        val manualLottoGenerator = ManualLottoGenerator(manualNumbersList)
+        val manualLottos = manualLottoGenerator.generate(manualCount)
 
         // 자동 로또 생성
         val autoLottos = randomLottoGenerator.generate(totalCount - manualCount)
