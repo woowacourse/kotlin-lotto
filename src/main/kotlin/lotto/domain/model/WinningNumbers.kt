@@ -12,9 +12,9 @@ sealed class WinningNumbersResult {
 }
 
 class WinningNumbers private constructor(private val winningLotto: Lotto, private val bonusNumber: LottoNumber) {
-    fun calculateLottoRanks(lottos: Lottos): LottoRanks {
+    fun calculateLottoRanks(lottos: Lottos): LottoStore {
         val purchaseLottoRanks = getPurchaseLottoRanks(lottos)
-        return LottoRanks(LottoRank.entries.associateWith { rank -> getLottoRankCount(rank, purchaseLottoRanks) })
+        return LottoStore(LottoRank.entries.associateWith { rank -> getLottoRankCount(rank, purchaseLottoRanks) })
     }
 
     private fun getLottoRankCount(
