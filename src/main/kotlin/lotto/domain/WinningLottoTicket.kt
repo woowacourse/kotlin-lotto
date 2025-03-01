@@ -13,11 +13,11 @@ data class WinningLottoTicket(
     }
 
     fun findLottoRanks(manyLotto: List<Lotto>): ScoreRankMap {
-        val rankMap = Rank.entries.associateWith { 0 }.toMutableMap()
-        for (lotto in manyLotto) {
-            val rank = findLottoRank(lotto)
-            rankMap[rank] = rankMap.getOrDefault(rank, 0) + 1
-        }
-        return ScoreRankMap(rankMap.toMap())
+        val rankMap =
+            manyLotto
+                .map { findLottoRank(it) }
+                .groupingBy { it }
+                .eachCount()
+        return ScoreRankMap.of(rankMap)
     }
 }
