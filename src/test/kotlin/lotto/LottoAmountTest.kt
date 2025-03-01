@@ -15,7 +15,7 @@ class LottoAmountTest {
 
     @ParameterizedTest
     @ValueSource(ints = [-1, -2, -9])
-    fun `수동으로 구매할 로또의 수는 정수로 입력받아야 한다`(manualAmount: Int) {
+    fun `로또의 수는 양수로 입력받아야 한다`(manualAmount: Int) {
         assertThrows<IllegalArgumentException> { LottoAmount(manualAmount) }
     }
 }

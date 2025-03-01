@@ -12,6 +12,6 @@ data class LottoAmount(private val value: Int) {
     }
 
     companion object {
-        private const val MANUAL_LOTTO_AMOUNT_ERROR_MESSAGE = "수동으로 구매할 로또의 수는 정수로 입력해야 한다"
+        private const val MANUAL_LOTTO_AMOUNT_ERROR_MESSAGE = "수동으로 구매할 로또의 수는 양수로 입력해야 한다"
     }
 }
