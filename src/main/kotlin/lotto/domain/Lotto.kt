@@ -6,28 +6,28 @@ const val LOTTO_PRICE = 1000
 const val MAX_LOTTO_LENGTH = 6
 
 data class Lotto(
-    val value: List<LottoNumber>,
+    val value: Set<LottoNumber>,
 ) {
     init {
-        requireValidLotto(value)
+        require(value.size == MAX_LOTTO_LENGTH) { Message.ERR_NOT_SIX_ELEMENTS.msg }
     }
 
     fun contains(element: LottoNumber): Boolean = value.contains(element)
 
     fun getCountOfMatchWith(contrast: Lotto): Int = value.count { it in contrast.value }
 
-    private fun requireValidLotto(input: List<LottoNumber>): List<LottoNumber> {
-        var winningLotto = input.toList()
-        require(input.size == MAX_LOTTO_LENGTH) { Message.ERR_NOT_SIX_ELEMENTS.msg }
-        winningLotto = winningLotto.distinct()
-        require(winningLotto.size == MAX_LOTTO_LENGTH) { Message.ERR_ELEMENT_DUPLICATED.msg }
-        return input
-    }
-
     companion object {
-        fun of(vararg numbers: Int): Lotto = Lotto(numbers.map { LottoNumber.of(it) })
+        fun of(vararg numbers: Int): Lotto = of(numbers.toList())
 
-        fun of(numbers: List<Int>): Lotto = Lotto(numbers.map { LottoNumber.of(it) })
+        fun of(numbers: List<Int>): Lotto {
+            require(numbers.distinct().size == numbers.size) { Message.ERR_ELEMENT_DUPLICATED.msg }
+            return Lotto(
+                numbers
+                    .map {
+                        LottoNumber.of(it)
+                    }.toSet(),
+            )
+        }
 
         fun generateRandomLotto(count: Int): List<Lotto> =
             List(count) {

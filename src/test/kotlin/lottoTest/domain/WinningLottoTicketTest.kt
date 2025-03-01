@@ -44,7 +44,7 @@ class WinningLottoTicketTest {
     @DisplayName("지난 주 당첨 번호와 보너스 볼을 입력받으면 복권의 당첨 등수(enum 멤버)를 반환한다")
     fun t3() {
         val lotto = Lotto.of(1, 2, 3, 4, 5, 6)
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 7).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 7)
         val bonus = LottoNumber.of(5)
         val result = WinningLottoTicket(winningLotto, bonus).findLottoRank(lotto)
         assertThat(result).isEqualTo(Rank.THIRD)

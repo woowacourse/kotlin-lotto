@@ -16,7 +16,7 @@ class ScoreRankMapTest {
                 Lotto.of(1, 2, 3, 4, 44, 45),
                 Lotto.of(11, 12, 13, 14, 15, 16),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
         val rankMap = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         val result = rankMap.getRate()
@@ -32,7 +32,7 @@ class ScoreRankMapTest {
                 Lotto.of(11, 12, 13, 14, 15, 16),
                 Lotto.of(1, 2, 3, 43, 44, 45),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
         val rankMap = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         val result = rankMap.getRate()
@@ -48,7 +48,7 @@ class ScoreRankMapTest {
                 Lotto.of(11, 12, 13, 14, 15, 16),
                 Lotto.of(1, 2, 3, 43, 44, 45),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
         val rankMap = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         assertThat(rankMap.getEarned()).isEqualTo(10000)
@@ -63,7 +63,7 @@ class ScoreRankMapTest {
                 Lotto.of(11, 12, 13, 14, 15, 16),
                 Lotto.of(1, 2, 3, 43, 44, 45),
             )
-        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.of(it) })
+        val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
         val rankMap = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
         assertThat(rankMap.getPaid()).isEqualTo(3000)
