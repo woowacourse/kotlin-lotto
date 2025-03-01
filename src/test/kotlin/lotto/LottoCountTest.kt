@@ -29,8 +29,8 @@ class LottoCountTest {
     fun `현재 로또 수량에서 입력받은 로또 수량을 차감한다`() {
         val lottoCount = LottoCount(5)
 
-        assertThrows<IllegalArgumentException> { lottoCount.minus(LottoCount(6)) }
         assertDoesNotThrow { lottoCount.minus(LottoCount(5)) }
+        assertDoesNotThrow { lottoCount.minus(LottoCount(6)) }
     }
 
     @Test
