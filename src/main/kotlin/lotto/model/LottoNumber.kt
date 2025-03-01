@@ -1,6 +1,8 @@
 package lotto.model
 
 class LottoNumber private constructor(private val value: Int) {
+    override fun toString(): String = value.toString()
+
     companion object {
         const val MAXIMUM_LOTTO_RANGE: Int = 45
         const val MINIMUM_LOTTO_RANGE: Int = 1
