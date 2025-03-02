@@ -1,32 +1,36 @@
 package lotto.view
 
 class InputView(
-    private val onInvalidInput: (String) -> Unit,
+    private val onInvalidInput: (String?) -> Unit,
 ) {
-    fun readNumber(): Int {
+    /**
+     * @return null if input is not a number
+     * **/
+    fun readNumber(): Int? {
         val input: String = readUntilValid()
-        val number: Int =
-            input
-                .trim()
-                .toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INPUT_NOT_A_NUMBER)
+        val number: Int = input.trim().toIntOrNull() ?: return null
         return number
     }
 
-    fun readNumbers(): List<Int> {
+    /**
+     * @return null if any number in list is not a number
+     * **/
+    fun readNumbers(): List<Int>? {
         val input: String = readUntilValid()
         val numbers: List<Int> =
             input
                 .split(LOTTO_NUMBERS_DELIMITER)
-                .map { number: String ->
-                    number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_MESSAGE_INVALID_LOTTO_NUMBERS)
-                }
+                .map { number: String -> number.trim().toIntOrNull() ?: return null }
         return numbers
     }
 
-    fun readLottosNumbers(size: Int): List<List<Int>> {
+    /**
+     * @return null if any number in list is not a number
+     * **/
+    fun readLottosNumbers(size: Int): List<List<Int>>? {
         if (size == 0) return emptyList()
 
-        val lottoNumbers: List<List<Int>> = (1..size).map { readNumbers() }
+        val lottoNumbers: List<List<Int>> = (1..size).map { readNumbers() ?: return null }
         return lottoNumbers
     }
 
@@ -42,7 +46,5 @@ class InputView(
     companion object {
         private const val LOTTO_NUMBERS_DELIMITER = ","
         private const val ERROR_MESSAGE_INVALID_INPUT_STATE = "정상적으로 입력되지 않았습니다."
-        private const val ERROR_MESSAGE_INPUT_NOT_A_NUMBER = "숫자를 입력해주세요."
-        private const val ERROR_MESSAGE_INVALID_LOTTO_NUMBERS = "양식에 맞게 입력해주세요. 예시: 1, 2, 3, 4, 5, 6"
     }
 }

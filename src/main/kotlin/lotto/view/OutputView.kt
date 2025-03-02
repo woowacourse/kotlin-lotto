@@ -57,6 +57,10 @@ class OutputView {
         println(MESSAGE_ENTER_MANUAL_LOTTO)
     }
 
+    fun showError(errorMessage: String?) {
+        println(errorMessage ?: ERROR_MESSAGE_UNKNOWN)
+    }
+
     companion object {
         private const val MESSAGE_ENTER_PRICE = "구입금액을 입력해 주세요."
         private const val MESSAGE_ENTER_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
@@ -68,6 +72,7 @@ class OutputView {
         private const val MESSAGE_PROFIT_RATE_WIN = "이득이라는"
         private const val MESSAGE_ENTER_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요."
         private const val MESSAGE_ENTER_MANUAL_LOTTO = "수동으로 구매할 번호를 입력해 주세요."
+        private const val ERROR_MESSAGE_UNKNOWN = "알 수 없는 에러가 발생했습니다."
         private const val RESULT_DESCRIPTION_TEMPLATE = "총 수익률은 %.2f입니다.(기준이 1이기 때문에 결과적으로 %S 의미임)"
         private const val SHOW_LOTTO_SEPARATOR = "\n"
         private const val SHOW_LOTTO_RESULT_SEPARATOR = "\n"
