@@ -34,8 +34,7 @@ class WinningNumbersTest {
         val winningLotto = Lotto.from(listOf(1, 2, 3, 4, 5, 6)).getSuccessOrThrow()
         val bonusNumber = LottoNumber.from(8).getSuccessOrThrow()
         val winningNumbersResult = WinningNumbers.from(winningLotto, bonusNumber).getSuccessOrThrow()
-        val lottos = Lottos()
-        lottos.addManualLotto(lottoResult.getSuccessOrThrow())
+        val lottos = Lottos(listOf(lottoResult.getSuccessOrThrow()), emptyList())
         val actual = LottoRank.entries.associateWith { if (lottoRank == it) 1 else 0 }
         assertThat(winningNumbersResult.calculateLottoRanks(lottos).lottoRanks).isEqualTo(actual)
     }

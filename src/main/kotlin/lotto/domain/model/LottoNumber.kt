@@ -2,7 +2,7 @@ package lotto.domain.model
 
 sealed class LottoNumberResult {
     fun getSuccessOrThrow(): LottoNumber {
-        require(this is Success)
+        require(this is Success) { "${this::class.simpleName} 문제가 발생 했습니다." }
         return this.lottoNumber
     }
 
