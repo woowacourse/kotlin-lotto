@@ -24,8 +24,8 @@ class InputView {
 
         println("수동으로 구매할 번호를 입력해 주세요.")
         repeat(passivityQuantity) {
-            val rawPassiveWinningNumbers = readln().trim().split(COMMA)
-            val mapToPassiveLottoNumbers = rawPassiveWinningNumbers.map { it.toIntOrNull() }
+            val rawPassiveWinningNumbers = readln().split(COMMA)
+            val mapToPassiveLottoNumbers = rawPassiveWinningNumbers.map { it.trim().toIntOrNull() }
             passiveLottoNumbers.add(mapToPassiveLottoNumbers.validateWinningNumbers())
         }
         return passiveLottoNumbers
@@ -44,6 +44,6 @@ class InputView {
     }
 
     companion object {
-        private const val COMMA = ","
+        private const val COMMA = ','
     }
 }
