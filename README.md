@@ -16,7 +16,7 @@
 - [x] 컨트롤러에서 ManualLottoTicket 구현체를 통해 수동 LottoQuantity만큼 수동 번호 정보를 입력받아 LottoTicket 리스트를 생성한다
   (LottoTicket에서 논리오류 예외를 던진 뒤 컨트롤러에서 캐칭 후 재입력 처리)
 
-- [ ] lottoPaymentMoney에 수동 LottoQuantity를 전달해 자동 LottoQuantity를 받는다
+- [x] lottoPaymentMoney에 이미 구매한 수동 LottoQuantity 수량을 전달해서 남은 구매 가능 수량인 자동 LottoQuantity를 받는다
 
 - [ ] 자동 LottoQuantity만큼 AutoLottoTicket 구현체를 통해 List<LottoTicket>로 인스턴스화 한다
 
