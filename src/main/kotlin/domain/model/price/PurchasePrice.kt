@@ -9,10 +9,10 @@ class PurchasePrice(
     private val standardPrice: Int = STANDARD_AMOUNT_UNIT,
 ) {
     init {
-        if (value <= 0 && value < standardPrice) {
+        check(value >= standardPrice) {
             throw OverStandardPriceException(standardPrice)
         }
-        if (value % standardPrice != 0) {
+        check(value % standardPrice == 0) {
             throw InvalidUnitException(standardPrice)
         }
     }

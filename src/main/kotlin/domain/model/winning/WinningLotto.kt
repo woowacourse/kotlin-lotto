@@ -10,7 +10,7 @@ class WinningLotto(
     private val bonusNumber: LottoNumber,
 ) {
     init {
-        if (bonusNumber.value in winningNumbers.numbers.map { it.value }) {
+        check(bonusNumber.value !in winningNumbers.numbers.map { it.value }) {
             throw WinningLottoException.DuplicatedBonusNumberException()
         }
     }
