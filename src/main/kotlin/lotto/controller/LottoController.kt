@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.domain.model.AutoLottoTicket
 import lotto.domain.model.LottoTicket
 import lotto.domain.model.ManualLottoTicket
 import lotto.domain.valueobject.LottoNumber
@@ -15,14 +16,39 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun runLotto() {
-        val lottoPaymentMoney: LottoPaymentMoney = retryUntilSuccess { readLottoPaymentMoney() }
+        val lottoPaymentMoney = getLottoPaymentMoney()
+        val (manualQuantity, autoQuantity) = getLottoQuantities(lottoPaymentMoney)
+        val boughtTickets = buyLottoTickets(manualQuantity, autoQuantity)
+    }
+
+    private fun getLottoPaymentMoney(): LottoPaymentMoney {
+        val money = retryUntilSuccess { readLottoPaymentMoney() }
         outputView.showParagraphSeparation()
-        val manualLottoQuantity: LottoQuantity = retryUntilSuccess { validateManualLottoQuantity(lottoPaymentMoney) }
+        return money
+    }
+
+    private fun getLottoQuantities(paymentMoney: LottoPaymentMoney): Pair<LottoQuantity, LottoQuantity> {
+        val manualQuantity = retryUntilSuccess { validateManualLottoQuantity(paymentMoney) }
         outputView.showParagraphSeparation()
-        val manualLottoTickets = createWholeManualLottoTickets(manualLottoQuantity)
+        val autoQuantity = paymentMoney.calculateLeftLotoQuantity(manualQuantity)
+        return Pair(manualQuantity, autoQuantity)
+    }
+
+    private fun buyLottoTickets(
+        manualQuantity: LottoQuantity,
+        autoQuantity: LottoQuantity,
+    ): List<LottoTicket> {
+        val manualTickets = createWholeManualLottoTickets(manualQuantity)
+        val autoTickets = createWholeAutoLottoTickets(autoQuantity)
+        return manualTickets + autoTickets
     }
 
     private fun readLottoPaymentMoney(): LottoPaymentMoney = LottoPaymentMoney(inputView.readPayAmount())
+
+    private fun createWholeAutoLottoTickets(autoLottoQuantity: LottoQuantity): List<LottoTicket> {
+        if (autoLottoQuantity.quantity == 0) return emptyList()
+        return List(autoLottoQuantity.quantity) { AutoLottoTicket() }
+    }
 
     private fun createWholeManualLottoTickets(manualLottoQuantity: LottoQuantity): List<LottoTicket> {
         if (manualLottoQuantity.quantity == 0) return emptyList()

@@ -18,7 +18,7 @@
 
 - [x] lottoPaymentMoney에 이미 구매한 수동 LottoQuantity 수량을 전달해서 남은 구매 가능 수량인 자동 LottoQuantity를 받는다
 
-- [ ] 자동 LottoQuantity만큼 AutoLottoTicket 구현체를 통해 List<LottoTicket>로 인스턴스화 한다
+- [x] 자동 LottoQuantity만큼 AutoLottoTicket 구현체를 통해 List<LottoTicket>로 인스턴스화 한다
 
 - [ ] 출력 뷰에 수동, 자동 LottoQuantity와 List<LottoTicket>를 전달해 구매 정보를 콘솔 출력한다
 
