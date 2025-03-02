@@ -16,7 +16,7 @@ class WinningLotto(
     }
 
     fun calculate(purchaseLotto: List<Lotto>): LottoMatchResult {
-        val rankResult = Rank.Companion.rankMap().toMutableMap()
+        val rankResult = Rank.rankMap().toMutableMap()
         purchaseLotto.forEach { lotto ->
             val rank = lotto.getRank(winningNumbers, bonusNumber)
             rankResult[rank] = rankResult.getOrDefault(rank, 0) + 1

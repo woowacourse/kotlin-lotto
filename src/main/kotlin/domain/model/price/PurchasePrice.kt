@@ -6,7 +6,7 @@ import domain.model.price.PurchasePriceException.OverStandardPriceException
 
 class PurchasePrice(
     val value: Int,
-    val standardPrice: Int = STANDARD_AMOUNT_UNIT,
+    private val standardPrice: Int = STANDARD_AMOUNT_UNIT,
 ) {
     init {
         if (value <= 0 && value < standardPrice) {

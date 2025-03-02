@@ -22,7 +22,7 @@ data class Lotto(val numbers: Set<LottoNumber>) {
         val lottoMatches = numbers.intersect(winningLottoNumbers).size
         val isBonusMatched = numbers.contains(bonusNumber)
 
-        val rank = Rank.Companion.valueOf(lottoMatches, isBonusMatched)
+        val rank = Rank.valueOf(lottoMatches, isBonusMatched)
         return rank
     }
 
