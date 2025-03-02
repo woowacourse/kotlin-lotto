@@ -1,17 +1,16 @@
 package lotto.model
 
 import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
-import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_MAX_RANGE
-import lotto.model.LottoNumber.Companion.LOTTO_NUMBER_MIN_RANGE
+import lotto.model.LottoNumber.Companion.cachedLottoNumbers
 
 class LottoMachine {
-    fun getAutoLottos(quantity: Int): List<Lotto> = List(quantity) { Lotto.from(getAutoNumbers()) }
+    fun getAutoLottos(quantity: Int): List<Lotto> = List(quantity) { Lotto(getAutoNumbers()) }
 
-    private fun getAutoNumbers(): List<Int> =
-        (LOTTO_NUMBER_MIN_RANGE..LOTTO_NUMBER_MAX_RANGE)
+    private fun getAutoNumbers(): List<LottoNumber> =
+        cachedLottoNumbers
             .shuffled()
             .take(LOTTO_NUMBER_SIZE)
-            .sorted()
+            .sortedBy { number -> number.value }
 
     fun getManualLottos(ticket: List<List<Int>>): List<Lotto> =
         ticket.map { numbers ->

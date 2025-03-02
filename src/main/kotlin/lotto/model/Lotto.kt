@@ -1,6 +1,6 @@
 package lotto.model
 
-class Lotto private constructor(
+class Lotto(
     val numbers: List<LottoNumber>,
 ) {
     init {
