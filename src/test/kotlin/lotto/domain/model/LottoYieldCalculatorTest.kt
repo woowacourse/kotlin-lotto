@@ -5,14 +5,14 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class LottoStoreTest {
+class LottoYieldCalculatorTest {
     @ParameterizedTest
     @MethodSource("calculateTotalReturnTest")
     fun `총 수익률을 계산할 수 있다`(
         lottoRanks: Map<LottoRank, Int>,
         expectedReturn: Double,
     ) {
-        val totalReturn = LottoStore(lottoRanks).calculateTotalReturn()
+        val totalReturn = LottoYieldCalculator(lottoRanks).calculateTotalReturn()
         assertThat(totalReturn.toDouble()).isEqualTo(expectedReturn)
     }
 

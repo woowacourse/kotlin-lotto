@@ -20,7 +20,7 @@ sealed class LottoResult {
 data class Lotto private constructor(private val _numbers: Set<LottoNumber>) {
     val numbers get() = _numbers.map { it.number }
 
-    fun getMatchCount(winningLotto: Lotto) = _numbers.count { number -> winningLotto._numbers.contains(number) }
+    fun getSameNumberCount(other: Lotto) = _numbers.count { number -> other._numbers.contains(number) }
 
     fun hasLottoNumber(number: LottoNumber) = _numbers.contains(number)
 

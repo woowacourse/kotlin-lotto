@@ -12,9 +12,9 @@ sealed class WinningNumbersResult {
 }
 
 class WinningNumbers private constructor(private val winningLotto: Lotto, private val bonusNumber: LottoNumber) {
-    fun calculateLottoRanks(lottos: Lottos): LottoStore {
+    fun calculateLottoRanks(lottos: Lottos): LottoYieldCalculator {
         val purchaseLottoRanks = getPurchaseLottoRanks(lottos)
-        return LottoStore(LottoRank.entries.associateWith { rank -> getLottoRankCount(rank, purchaseLottoRanks) })
+        return LottoYieldCalculator(LottoRank.entries.associateWith { rank -> getLottoRankCount(rank, purchaseLottoRanks) })
     }
 
     private fun getLottoRankCount(
@@ -28,7 +28,7 @@ class WinningNumbers private constructor(private val winningLotto: Lotto, privat
         val lottoRank = LottoRank
         return purchaseLotto.lottos.map { lotto ->
             lottoRank.calculate(
-                lotto.getMatchCount(winningLotto),
+                lotto.getSameNumberCount(winningLotto),
                 lotto.hasLottoNumber(bonusNumber),
             )
         }
