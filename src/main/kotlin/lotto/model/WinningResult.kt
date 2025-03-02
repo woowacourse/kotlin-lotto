@@ -2,7 +2,6 @@ package lotto.model
 
 class WinningResult(
     private val lottos: Lottos,
-    private val amount: Int,
 ) {
     fun countLottoByRank(
         winningNumbers: Set<LottoNumber>,
@@ -22,11 +21,15 @@ class WinningResult(
     fun getProfitRate(
         winningNumbers: Set<LottoNumber>,
         bonusNumber: LottoNumber,
+        lottoQuantity: LottoQuantity,
     ): Float {
         val countLottoByRank = countLottoByRank(winningNumbers, bonusNumber)
         val totalProfit = countLottoByRank.entries.sumOf { it.key.winningMoney * it.value }
-        return formatProfitRate(totalProfit)
+        return formatProfitRate(totalProfit, lottoQuantity.amount)
     }
 
-    private fun formatProfitRate(totalProfit: Int): Float = totalProfit / amount.toFloat()
+    private fun formatProfitRate(
+        totalProfit: Int,
+        amount: Int,
+    ): Float = totalProfit / amount.toFloat()
 }

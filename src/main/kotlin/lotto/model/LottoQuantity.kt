@@ -1,7 +1,7 @@
 package lotto.model
 
 class LottoQuantity(
-    private val amount: Int,
+    val amount: Int,
     private val passiveLottoQuantity: Int,
 ) {
     init {
