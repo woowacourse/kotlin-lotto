@@ -9,8 +9,8 @@ class InputView {
 
     fun readWinningNumbers(): Set<Int> {
         println("\n지난 주 당첨 번호를 입력해 주세요.")
-        val rawWinningNumbers = readln().trim().split(COMMA)
-        val winningNumbers = rawWinningNumbers.map { it.toIntOrNull() }
+        val rawWinningNumbers = readln().split(COMMA)
+        val winningNumbers = rawWinningNumbers.map { it.trim().toIntOrNull() }
         return winningNumbers.validateWinningNumbers()
     }
 
