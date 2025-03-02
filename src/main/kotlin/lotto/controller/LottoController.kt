@@ -15,6 +15,8 @@ class LottoController(
         val lottoPaymentMoney: LottoPaymentMoney = retryUntilSuccess { readLottoPaymentMoney() }
         outputView.showParagraphSeparation()
         val manualLottoQuantity: LottoQuantity = retryUntilSuccess { validateManualLottoQuantity(lottoPaymentMoney) }
+        outputView.showParagraphSeparation()
+        val rawManualLottoNumbers = inputView.readManualLottoNumbersByQuantity(manualLottoQuantity)
     }
 
     private fun readLottoPaymentMoney(): LottoPaymentMoney = LottoPaymentMoney(inputView.readPayAmount())
