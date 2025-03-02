@@ -2,7 +2,7 @@ package lotto.domain
 
 class NumbersList(private val numbersList: MutableList<List<Int>>) {
     fun removeFirst(): List<Int> {
-        require(numbersList.isNotEmpty()) { "수동 로또 번호 리스트가 비어 있습니다." }
+        require(numbersList.isNotEmpty()) { BLANK_LIST_MESSAGE }
         return numbersList.removeFirst()
     }
 
@@ -14,5 +14,9 @@ class NumbersList(private val numbersList: MutableList<List<Int>>) {
 
     fun size(): Int {
         return numbersList.size
+    }
+
+    companion object {
+        private const val BLANK_LIST_MESSAGE = "수동 로또 번호 리스트가 비어 있습니다."
     }
 }
