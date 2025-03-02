@@ -15,10 +15,10 @@ class LottoController(
     private val randomLottoGenerator: LottoGenerator,
 ) {
     fun play() {
-        val purchaseAmount = inputView.inputPurchase() ?: return outputView.printError("구입 금액 오류입니다.")
+        val purchaseAmount = inputView.inputPurchase()
         val totalCount = purchaseAmount / 1000
 
-        val manualCount = inputView.inputManualCount(totalCount) ?: return outputView.printError("수동 로또 개수 오류입니다.")
+        val manualCount = inputView.inputManualCount(totalCount)
 
         val manualNumbersList = inputView.inputManualLottoNumber(manualCount)
 
@@ -30,8 +30,8 @@ class LottoController(
         outputView.printLottoCounts(manualCount, totalCount - manualCount)
         outputView.printAllLottos(manualLottos + autoLottos)
 
-        val winningNumbers = inputView.inputWinningNumbers() ?: return outputView.printError("당첨 번호 오류입니다.")
-        val bonusNumberInput = inputView.inputBonusNumber() ?: return outputView.printError("보너스 번호 오류입니다.")
+        val winningNumbers = inputView.inputWinningNumbers()
+        val bonusNumberInput = inputView.inputBonusNumber()
 
         val winningLotto =
             WinningLotto(
