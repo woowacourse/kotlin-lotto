@@ -1,19 +1,9 @@
 package lotto.domain.model
 
-class Lottos {
-    private val randomLottos: MutableList<Lotto> = mutableListOf()
-    private val manualLottos: MutableList<Lotto> = mutableListOf()
+class Lottos(private val manualLottos: List<Lotto>, private val randomLottos: List<Lotto>) {
     val lottos get() = manualLottos + randomLottos
 
-    fun addRandomLotto(lotto: Lotto) {
-        randomLottos.add(lotto)
-    }
+    fun getManualLottosCount() = manualLottos.size
 
-    fun addManualLotto(lotto: Lotto) {
-        manualLottos.add(lotto)
-    }
-
-    fun getRandomLottosSize() = randomLottos.size
-
-    fun getManualLottosSize() = manualLottos.size
+    fun getRandomLottosCount() = randomLottos.size
 }

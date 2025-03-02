@@ -31,24 +31,22 @@ class LottoController(
     private fun purchaseLotto(purchaseAmount: PurchaseAmount): Lottos {
         val manualCount = retryHandleResult { handleManualCount(inputView.readManualLottoCount()) }
         val purchaseManualLottoCount = purchaseAmount.getPurchaseLottoCount(manualCount)
-        val lottos = getLottos(purchaseAmount, purchaseManualLottoCount)
-        outputView.printPurchaseLottoCount(lottos.getManualLottosSize(), lottos.getRandomLottosSize())
+        val purchaseRandomLottoCount = purchaseAmount.getPurchaseRemainLottoCount()
+        val lottos = getLottos(purchaseManualLottoCount, purchaseRandomLottoCount)
+        outputView.printPurchaseLottoCount(lottos.getManualLottosCount(), lottos.getRandomLottosCount())
         lottos.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers) }
         return lottos
     }
 
     private fun getLottos(
-        purchaseAmount: PurchaseAmount,
         purchaseManualLottoCount: Int,
+        purchaseRandomLottoCount: Int,
     ): Lottos {
-        val lottos = Lottos()
         outputView.printManualLottoNumbers()
-        repeat(purchaseManualLottoCount) {
-            val manualLotto = retryHandleResult { handleLottoResult(Lotto.from(inputView.readLottoNumbers())) }
-            lottos.addManualLotto(manualLotto)
-        }
-        repeat(purchaseAmount.getPurchaseRemainLottoCount()) { lottos.addRandomLotto(lottoMachine.generate()) }
-        return lottos
+        val manualLottos =
+            List(purchaseManualLottoCount) { retryHandleResult { handleLottoResult(Lotto.from(inputView.readLottoNumbers())) } }
+        val randomLottos = List(purchaseRandomLottoCount) { lottoMachine.generate() }
+        return Lottos(manualLottos, randomLottos)
     }
 
     private fun getWinningNumbers(): WinningNumbers {
