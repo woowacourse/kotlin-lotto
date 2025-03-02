@@ -1,6 +1,5 @@
 package lotto.domain.model
 
-import lotto.domain.service.FixedLottoNumbersGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -27,11 +26,10 @@ class WinningNumbersTest {
         actual: LottoRank,
     ) {
         val winningNumbers = WinningNumbers(listOf(1, 2, 3, 4, 5, 6), 8)
-        assertThat(
-            winningNumbers.calculateLottoRanks(
-                LottoMachine(generator = FixedLottoNumbersGenerator(lottoNumbers)).generateLottoBundle(1),
-            ).lottoRanks.keys.first(),
-        ).isEqualTo(actual)
+        val lottoBundle = LottoBundle(listOf(Lotto(lottoNumbers)))
+        val lottoResult = winningNumbers.calculateLottoRanks(lottoBundle)
+        val lottoRank = lottoResult.lottoRanks.keys.first()
+        assertThat(lottoRank).isEqualTo(actual)
     }
 
     companion object {

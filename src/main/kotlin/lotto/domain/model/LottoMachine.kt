@@ -1,13 +1,25 @@
 package lotto.domain.model
 
-import lotto.domain.service.LottoNumbersGenerator
-import lotto.domain.service.RandomLottoNumbersGenerator
+import lotto.domain.generator.LottoNumbersGenerator
 
 class LottoMachine(
-    private val generator: LottoNumbersGenerator = RandomLottoNumbersGenerator(),
+    private val generator: LottoNumbersGenerator,
 ) {
-    fun generateLottoBundle(purchaseLottoCount: Int): LottoBundle {
-        return LottoBundle(List(purchaseLottoCount) { Lotto(generator.generate()) })
+    fun generateLottoBundle(count: Int): LottoBundle? {
+        if (count == 0) return null
+
+        val lottos = generateLottos(count)
+        return LottoBundle(lottos)
+    }
+
+    private fun generateLottos(count: Int): List<Lotto> {
+        return List(count) { generateLotto() }
+    }
+
+    private fun generateLotto(): Lotto {
+        val numbers = generator.generate()
+        val sortedNumbers = numbers.toSortedSet(compareBy { it.number })
+        return Lotto(sortedNumbers)
     }
 
     companion object {

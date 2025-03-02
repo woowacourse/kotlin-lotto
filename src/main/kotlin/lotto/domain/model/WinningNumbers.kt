@@ -1,10 +1,10 @@
 package lotto.domain.model
 
 class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: LottoNumber) {
-    constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber(bonusNumber))
+    constructor(numbers: List<Int>, bonusNumber: Int) : this(Lotto(numbers), LottoNumber.from(bonusNumber))
 
     init {
-        require(winningLotto.numbers.contains(bonusNumber).not()) { DUPLICATE_WINNING_NUMBER_MESSAGE }
+        require(winningLotto.isMatchNumber(bonusNumber).not()) { DUPLICATE_WINNING_NUMBER_MESSAGE }
     }
 
     fun calculateLottoRanks(lottoBundle: LottoBundle): LottoResult {
@@ -18,11 +18,11 @@ class WinningNumbers(private val winningLotto: Lotto, private val bonusNumber: L
 
     private fun calculateLottoRank(lotto: Lotto): LottoRank {
         val matchCount = lotto.calculateMatchLottoNumberCount(winningLotto)
-        val isMatchBonusNumber = lotto.isMatchBonusNumber(bonusNumber)
+        val isMatchBonusNumber = lotto.isMatchNumber(bonusNumber)
         return LottoRank.calculate(matchCount, isMatchBonusNumber)
     }
 
-    private companion object {
-        const val DUPLICATE_WINNING_NUMBER_MESSAGE = "보너스 번호는 당첨 번호와 중복될 수 없습니다."
+    companion object {
+        private const val DUPLICATE_WINNING_NUMBER_MESSAGE = "보너스 번호는 당첨 번호와 중복될 수 없습니다."
     }
 }

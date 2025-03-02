@@ -15,7 +15,7 @@ class LottoResult(val lottoRanks: Map<LottoRank, Int>) {
         return totalWinningAmount.divide(totalSpent, SCALE_BOUND, RoundingMode.DOWN)
     }
 
-    private companion object {
-        const val SCALE_BOUND = 2
+    companion object {
+        private const val SCALE_BOUND = 2
     }
 }
