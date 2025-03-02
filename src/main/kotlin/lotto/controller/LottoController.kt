@@ -27,6 +27,7 @@ class LottoController(
         val winTicketInfo = retryUntilSuccess { getWinTicketInfo() }
 
         val winningStatistics = WinningStatistics(lottoPaymentMoney, getRankCounts(boughtTickets, winTicketInfo))
+        outputView.showWinningStatics(winningStatistics)
     }
 
     private fun getRankCounts(
@@ -61,6 +62,7 @@ class LottoController(
     private fun getWinTicketInfo(): WinTicketInfo {
         val winLottoTicket = retryUntilSuccess { createWinLottoTicket() }
         val bonusNumber = retryUntilSuccess { LottoNumber(inputView.readBonusBallNumber()) }
+        outputView.showParagraphSeparation()
         return WinTicketInfo(winLottoTicket, bonusNumber)
     }
 

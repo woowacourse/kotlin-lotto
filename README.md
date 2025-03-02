@@ -27,7 +27,7 @@
 
 - [x] List<LottoTicket>을 통해 당첨 통계 맵이 담긴 WinningStatistics 인스턴스를 만든다
 
-- [ ] 출력 뷰에게 WinningStatistics를 전달해 당첨 통계를 콘솔 출력한다.
+- [x] 출력 뷰에게 WinningStatistics를 전달해 당첨 통계를 콘솔 출력한다.
 
 - [ ] lottoPaymentMoney를 WinningStatistics에 전달해 EarningInfo 인스턴스를 만든다
   (EarningInfo는 수익률을 2자리로 반올림한 값을 가지고, 이익, 본전, 손실 상태값을 반환할 수 있어야 한다)
