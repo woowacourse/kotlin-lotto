@@ -1,10 +1,11 @@
 package lotto.controller
 
-import lotto.model.LottoMachine
-import lotto.model.LottoMachine.Companion.EMPTY_LOTTO_QUANTITY
+import lotto.model.AutoLottoMachine
 import lotto.model.LottoMarket
+import lotto.model.LottoMarket.Companion.EMPTY_LOTTO_QUANTITY
 import lotto.model.LottoProfitCalculator
 import lotto.model.LottoWallet
+import lotto.model.ManualLottoMachine
 import lotto.model.ProfitStatus
 import lotto.model.WinningDiscriminator
 import lotto.view.InputView
@@ -41,8 +42,9 @@ class LottoController(
         purchaseAmount: Int,
         manualLottoQuantity: Int,
     ): LottoMarket {
-        val lottoMachine = LottoMachine()
-        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity, lottoMachine)
+        val autoLottoMachine = AutoLottoMachine()
+        val manualLottoMachine = ManualLottoMachine()
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity, manualLottoMachine, autoLottoMachine)
         outputView.printManualLottoNumbersGuide(manualLottoQuantity > EMPTY_LOTTO_QUANTITY)
         return lottoMarket
     }

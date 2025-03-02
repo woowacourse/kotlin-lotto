@@ -3,7 +3,8 @@ package lotto.model
 class LottoMarket(
     private val amount: Int,
     private val manualQuantity: Int,
-    private val lottoMachine: LottoMachine = LottoMachine(),
+    private val manualLottoMachine: ManualLottoMachine = ManualLottoMachine(),
+    private val autoLottoMachine: AutoLottoMachine = AutoLottoMachine(),
 ) {
     val autoLottoQuantity: Int = amount / LOTTO_EACH_AMOUNT - manualQuantity
 
@@ -19,8 +20,8 @@ class LottoMarket(
     ) {
         lottoWallet.addAll(
             when (manualNumbers.isNotEmpty()) {
-                true -> lottoMachine.getManualLottos(manualNumbers)
-                false -> lottoMachine.getAutoLottos(autoLottoQuantity)
+                true -> manualLottoMachine.generate(manualTicket = manualNumbers)
+                false -> autoLottoMachine.generate(quantity = autoLottoQuantity)
             },
         )
     }
@@ -44,6 +45,8 @@ class LottoMarket(
     }
 
     companion object {
+        const val EMPTY_LOTTO_QUANTITY = 0
+
         private const val LOTTO_MIN_AMOUNT = 0
         private const val LOTTO_EACH_AMOUNT = 1000
     }
