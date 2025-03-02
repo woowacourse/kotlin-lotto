@@ -1,9 +1,11 @@
 package lotto.view
 
+import lotto.domain.model.PurchaseAmount
+
 class InputView {
-    fun validateAmount(amount: String): Int {
+    fun validateAmount(amount: String): PurchaseAmount {
         require(amount.toIntOrNull() != null) { ERROR_INVALID_AMOUNT }
-        return amount.toInt()
+        return PurchaseAmount(amount.toInt())
     }
 
     fun validateManualCount(count: String): Int {
@@ -26,7 +28,7 @@ class InputView {
         return bonusNumber.toInt()
     }
 
-    fun inputPurchaseAmount(): Int {
+    fun inputPurchaseAmount(): PurchaseAmount {
         println(MESSAGE_INPUT_AMOUNT)
         val purchaseAmount = readln().trim()
         return validateAmount(purchaseAmount)
