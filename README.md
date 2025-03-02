@@ -8,7 +8,7 @@
 - [x] 입력 뷰에서 구입금액을 Int로 입력받아 컨트롤러에서 lottoPaymentMoney로 인스턴스화 한다
   (lottoPaymentMoney에서 논리오류 예외를 던진 뒤 컨트롤러에서 캐칭 후 재입력 처리)
 
-- [ ] 입력 뷰에서 수동 구매수량을 Int로 입력 받아 컨트롤러에서 LottoQuantity로 인스턴스화 한다
+- [x] 입력 뷰에서 수동 구매수량을 Int로 입력 받아 컨트롤러에서 LottoQuantity로 인스턴스화 한다
   (LottoQuantity에서 논리오류 예외를 던진 뒤 컨트롤러에서 캐칭 후 재입력 처리)
 
 - [ ] 입력 뷰에 수동 구매수량 LottoQuantity를 전달해 List<List<Int>>로 수동 번호 정보를 입력받는다

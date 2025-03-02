@@ -2,11 +2,15 @@ package lotto.domain.valueobject
 
 import kotlin.require
 
-data class LottoPaymentMoney(val money: Int) {
+data class LottoPaymentMoney(
+    val money: Int,
+) {
     init {
         require(money >= 0) { ERROR_NEGATIVE_NUMBER }
         require(money % LOTTO_PRICE_UNIT == 0) { ERROR_DIVIDE_BY_LOTTO_UNIT }
     }
+
+    fun calculatePossibleBuyLottoQuantity(): LottoQuantity = LottoQuantity(money / LOTTO_PRICE_UNIT)
 
     companion object {
         private const val LOTTO_PRICE_UNIT = 1000
