@@ -27,10 +27,10 @@ class LottoController(
         discriminateLottos(winningDiscriminator, lottoWallet, purchaseAmount)
     }
 
-    private fun getPurchaseAmount(): Int {
+    private fun getPurchaseAmount(): Amount {
         outputView.printPurchaseAmountGuide()
         val purchaseAmount = inputView.readPurchaseAmount()
-        return purchaseAmount
+        return Amount(purchaseAmount)
     }
 
     private fun getManualQuantity(): Int {
@@ -40,12 +40,12 @@ class LottoController(
     }
 
     private fun purchaseLottos(
-        purchaseAmount: Int,
+        purchaseAmount: Amount,
         manualLottoQuantity: Int,
     ): LottoMarket {
         val autoLottoMachine = AutoLottoMachine()
         val manualLottoMachine = ManualLottoMachine()
-        val lottoMarket = LottoMarket(Amount(purchaseAmount), manualLottoQuantity, manualLottoMachine, autoLottoMachine)
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity, manualLottoMachine, autoLottoMachine)
         outputView.printManualLottoNumbersGuide(manualLottoQuantity > EMPTY_LOTTO_QUANTITY)
         return lottoMarket
     }
@@ -69,7 +69,7 @@ class LottoController(
     private fun discriminateLottos(
         winningDiscriminator: WinningDiscriminator,
         lottoWallet: LottoWallet,
-        purchaseAmount: Int,
+        purchaseAmount: Amount,
     ) {
         val winningResult = winningDiscriminator.getResult(lottoWallet)
         outputView.printWinningResultTitle()

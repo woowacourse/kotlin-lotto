@@ -26,7 +26,7 @@ class LottoMarket(
 
     private fun validateManualLottoQuantity() {
         require(amount.isAffordable(manualQuantity)) {
-            "[ERROR] 낸 금액보다 많은 수동 로또를 살 수 없습니다. 금액: $amount, 수동 로또: ${manualQuantity}장"
+            "[ERROR] 낸 금액보다 많은 수동 로또를 살 수 없습니다. 금액: ${amount.value}, 수동 로또: ${manualQuantity}장"
         }
     }
 

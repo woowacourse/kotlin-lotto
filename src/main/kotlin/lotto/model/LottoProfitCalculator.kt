@@ -3,7 +3,7 @@ package lotto.model
 class LottoProfitCalculator {
     fun getProfitRate(
         winningResult: Map<Rank, Int>,
-        purchaseAmount: Int,
+        purchaseAmount: Amount,
     ): Float {
         val totalProfit = winningResult.entries.sumOf { rank -> rank.key.winningMoney * rank.value }
         return formatProfitRate(totalProfit, purchaseAmount)
@@ -11,6 +11,6 @@ class LottoProfitCalculator {
 
     private fun formatProfitRate(
         totalProfit: Int,
-        purchaseAmount: Int,
-    ): Float = totalProfit.toFloat() / purchaseAmount.toFloat()
+        purchaseAmount: Amount,
+    ): Float = totalProfit.toFloat() / purchaseAmount.value.toFloat()
 }

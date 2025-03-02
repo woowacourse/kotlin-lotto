@@ -16,10 +16,10 @@ class LottoProfitCalculatorTest {
                 Rank.FIFTH to 1,
                 Rank.MISS to 100,
             )
-        val totalAmount = winningResult.values.size * 1000
+        val totalAmount = Amount(winningResult.values.size * 1000)
         val profitCalculator = LottoProfitCalculator()
         val totalProfit = (Rank.FIRST.winningMoney + Rank.FIFTH.winningMoney).toFloat()
-        val expectedProfitRate = totalProfit / totalAmount.toFloat()
+        val expectedProfitRate = totalProfit / totalAmount.value.toFloat()
 
         // when
         val actualProfitRate = profitCalculator.getProfitRate(winningResult, totalAmount)
