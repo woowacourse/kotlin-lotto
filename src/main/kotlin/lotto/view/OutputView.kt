@@ -33,7 +33,7 @@ class OutputView {
             println("${rank.countOfMatch}개 일치$bonusMessage (${rank.winningMoney}원)- ${matchResults[rank] ?: 0}개")
         }
 
-        println("총 수익률은 $profitRate 입니다.(기준이 1이기 때문에 결과적으로 손해라는 의미임)")
+        println("총 수익률은 $profitRate 입니다.")
     }
 
     companion object {
