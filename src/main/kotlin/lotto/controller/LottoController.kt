@@ -1,13 +1,14 @@
 package lotto.controller
 
+import lotto.model.AutoLottoLottoNumbersGenerator
 import lotto.model.Lotto
 import lotto.model.LottoCount
 import lotto.model.LottoMachine
 import lotto.model.LottoNumber
-import lotto.model.LottoNumbersGenerator
 import lotto.model.LottoPurchaseAmount
 import lotto.model.LottoResult
 import lotto.model.Lottos
+import lotto.model.ManualLottoLottoNumbersMachine
 import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -16,7 +17,6 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
     private val lottoMachine: LottoMachine,
-    private val lottoNumbersGenerator: LottoNumbersGenerator,
 ) {
     fun run() {
         val purchaseMoney: LottoPurchaseAmount = getPurchaseMoney()
@@ -79,23 +79,23 @@ class LottoController(
 
     private fun getManualLottos(manualLottoCount: LottoCount): List<Lotto> {
         outputView.printManualLottoNumbersGuide()
-        return List(manualLottoCount.count) { getManualLotto() }
+        val manualLottoNumbersBundle: List<List<LottoNumber>> = getManualNumbersBundle(manualLottoCount)
+        val numbersGenerator = ManualLottoLottoNumbersMachine(manualLottoNumbersBundle)
+
+        return lottoMachine.createLottos(manualLottoCount, numbersGenerator)
     }
 
-    private fun getManualLotto(): Lotto =
+    private fun getManualNumbersBundle(count: LottoCount): List<List<LottoNumber>> =
         runCatching {
-            val lottoNumbers: List<LottoNumber> = inputView.readLottoNumbers()
-            lottoMachine.createLotto(lottoNumbers)
+            List(count.count) { inputView.readLottoNumbers() }
         }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
-            getManualLotto()
+            getManualNumbersBundle(count)
         }
 
-    private fun getAutoLottos(autoLottoCount: LottoCount): List<Lotto> = List(autoLottoCount.count) { getAutoLotto() }
-
-    private fun getAutoLotto(): Lotto {
-        val lottoNumbers: List<LottoNumber> = lottoNumbersGenerator.generateLottoNumbers()
-        return lottoMachine.createLotto(lottoNumbers)
+    private fun getAutoLottos(autoLottoCount: LottoCount): List<Lotto> {
+        val numbersGenerator = AutoLottoLottoNumbersGenerator()
+        return lottoMachine.createLottos(autoLottoCount, numbersGenerator)
     }
 
     private fun getWinningLotto(): WinningLotto {
