@@ -3,7 +3,7 @@ package lotto.domain.model
 import lotto.Constants
 
 class PurchaseAmount(
-    private var amount: Int,
+    private val amount: Int,
 ) {
     init {
         require(amount >= Constants.LOTTO_AMOUNT) { ERROR_INVALID_MINIMUM_AMOUNT }
