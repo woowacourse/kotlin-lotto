@@ -1,6 +1,6 @@
 package lotto.model
 
-class LottoTicketCounter(
+class LottoCashier(
     private val purchase: Double,
     private val manual: Int,
 ) {

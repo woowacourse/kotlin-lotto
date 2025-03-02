@@ -1,9 +1,9 @@
 package lotto.controller
 
 import lotto.model.Lotto
+import lotto.model.LottoCashier
 import lotto.model.LottoNumber
 import lotto.model.LottoStore
-import lotto.model.LottoTicketCounter
 import lotto.model.Profit
 import lotto.model.WinningLotto
 import lotto.model.WinningStatistics
@@ -39,7 +39,7 @@ class LottoController {
         purchase: Double,
         manualCount: Int,
     ): List<Lotto> {
-        val autoCount = LottoTicketCounter(purchase, manualCount).autoCount()
+        val autoCount = LottoCashier(purchase, manualCount).autoCount()
         val manualLottoGenerator = ManualLottoGenerator()
 
         repeat(manualCount) {
