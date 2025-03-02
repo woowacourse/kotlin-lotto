@@ -43,23 +43,6 @@ class WinTicketInfoTest {
         assertThat(winTicketInfo.bonusNumber).isEqualTo(bonusNumber)
     }
 
-//    @ParameterizedTest
-//    @MethodSource("normalWinBonusLottoNumbersWithRank")
-//    fun `생성된 당첨 인스턴스에게 외부의 구매 티켓을 하나 전달하면 등수 카테고리를 반환한다`(
-//        rawWinNumbers: List<Int>,
-//        bonusNumber: LottoNumber,
-//        rawBuyNumbers: List<Int>,
-//        expectedRank: Rank,
-//    ) {
-//        // given
-//        val winLottoTicket: LottoTicket = ManualLottoTicket(rawWinNumbers.map { LottoNumber(it) })
-//        val boughtLottoTicket: LottoTicket = ManualLottoTicket(rawBuyNumbers.map { LottoNumber(it) })
-//
-//        // when then
-//        val winTicketInfo = WinTicketInfo(winLottoTicket, bonusNumber)
-//        assertThat(winTicketInfo.calculateLottoRank(boughtLottoTicket)).isEqualTo(expectedRank)
-//    }
-
     companion object {
         @JvmStatic
         fun duplicateWinBonusLottoNumbers() =

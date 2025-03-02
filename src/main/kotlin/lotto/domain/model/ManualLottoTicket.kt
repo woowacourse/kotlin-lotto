@@ -10,7 +10,7 @@ class ManualLottoTicket(
             ERROR_DUPLICATE_NUMBER.format(fundDuplicateLottoNumbers().map { it.value }.joinToString())
         }
         require(lottoNumbers.size == LottoTicket.LOTTO_TICKET_SIZE) {
-            ERROR_LOTTONUMBER_SIZE.format(lottoNumbers.size)
+            ERROR_LOTTO_NUMBER_SIZE.format(lottoNumbers.size)
         }
     }
 
@@ -25,7 +25,7 @@ class ManualLottoTicket(
         get() = _lottoNumbers.toSet()
 
     companion object {
-        val ERROR_DUPLICATE_NUMBER = "입력값에 중복된 번호(%s)가 존재합니다."
-        val ERROR_LOTTONUMBER_SIZE = "로또번호는 %d개가 아닌 ${LottoTicket.LOTTO_TICKET_SIZE}개로 입력해야 합니다."
+        private const val ERROR_DUPLICATE_NUMBER = "입력값에 중복된 번호(%s)가 존재합니다."
+        private const val ERROR_LOTTO_NUMBER_SIZE = "로또번호는 %d개가 아닌 ${LottoTicket.LOTTO_TICKET_SIZE}개로 입력해야 합니다."
     }
 }
