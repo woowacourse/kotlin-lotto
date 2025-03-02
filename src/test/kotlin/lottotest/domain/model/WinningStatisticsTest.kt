@@ -31,6 +31,24 @@ class WinningStatisticsTest {
         assertThat(actualRank).isEqualTo(expectedRank)
     }
 
+    @ParameterizedTest
+    @MethodSource("normalWinningStatisticsData")
+    fun `인스턴스에게 전체 당첨 금액을 요청하면 당첨 금액 인스턴스를 반환한다`(
+        lottoPaymentMoney: LottoPaymentMoney,
+        rawWinRankMap: Map<Rank, Int>,
+        rawExpectedRank: List<Pair<Rank, Int>>,
+    ) {
+        // Given
+        val winRankMap = rawWinRankMap.mapValues { (_, value) -> ObjectQuantity(value) }
+        val expectedPrizeMoney: Int = rawWinRankMap.map { (rank, value) -> rank.winningMoney * value }.sum()
+
+        // When
+        val winningStatistics = WinningStatistics(lottoPaymentMoney, winRankMap)
+
+        // Then
+        assertThat(winningStatistics.getTotalPrizeMoney().money).isEqualTo(expectedPrizeMoney)
+    }
+
     companion object {
         @JvmStatic
         fun normalWinningStatisticsData() =

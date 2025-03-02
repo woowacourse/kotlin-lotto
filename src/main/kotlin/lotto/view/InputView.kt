@@ -29,7 +29,7 @@ class InputView {
 
     private fun readSingleLottoNumbers(): List<Int> =
         runCatching {
-            readln().split(',').map { it.toInt() }
+            readln().split(',').map { it.trim().toInt() }
         }.getOrElse { throw IllegalArgumentException(ERROR_READ_PAY_INPUT) }
 
     private fun readSingleNumber(): Int =

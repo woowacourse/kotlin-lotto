@@ -25,9 +25,9 @@ class LottoController(
         outputView.showBoughtLottoQuantity(manualQuantity, autoQuantity)
         outputView.showBoughtLottoTickets(boughtTickets)
         val winTicketInfo = retryUntilSuccess { getWinTicketInfo() }
-
         val winningStatistics = WinningStatistics(lottoPaymentMoney, getRankCounts(boughtTickets, winTicketInfo))
         outputView.showWinningStatics(winningStatistics)
+        outputView.showEarningRate(winningStatistics.getEarningRate())
     }
 
     private fun getRankCounts(
