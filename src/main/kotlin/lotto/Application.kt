@@ -14,5 +14,4 @@ fun main() {
         outputView = outputView,
         randomLottoGenerator = RandomLottoGenerator(),
     ).play()
-
 }

@@ -31,7 +31,6 @@ class InputView {
     fun inputBonusNumber(): Int? {
         println(INPUT_BONUS_NUMBER_MESSAGE)
         return readln().toIntOrNull()?.takeIf { it in LottoNumber.MINIMUM_LOTTO_RANGE..LottoNumber.MAXIMUM_LOTTO_RANGE }
-
     }
 
     companion object {
@@ -40,6 +39,5 @@ class InputView {
         private const val INPUT_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
         private const val INPUT_MANUAL_LOTTO_AMOUNT_MESSAGE = "\n수동으로 구매할 로또 수를 입력해 주세요."
         private const val INPUT_MANUAL_LOTTO_NUMBER_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
-
     }
 }

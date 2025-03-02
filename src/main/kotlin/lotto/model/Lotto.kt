@@ -24,6 +24,7 @@ class Lotto(
             val lottoNumbers = numbers.mapNotNull { LottoNumber.from(it) }.toSet()
             return if (lottoNumbers.size == LOTTO_NUMBERS_SIZE) Lotto(lottoNumbers) else null
         }
+
         const val LOTTO_DISTINCT_MESSAGE = "로또 번호가 중복될 수 없습니다."
     }
 }
