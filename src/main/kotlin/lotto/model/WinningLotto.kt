@@ -30,5 +30,5 @@ class WinningLotto(
         }
     }
 
-    private fun isHaveBonusNumber(bonusNumber: LottoNumber): Boolean = lotto.numbers.contains(bonusNumber)
+    private fun isHaveBonusNumber(bonusNumber: LottoNumber): Boolean = lotto.isContainBonusNumber(bonusNumber)
 }

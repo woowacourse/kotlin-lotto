@@ -13,6 +13,8 @@ class Lotto(
         }
     }
 
+    fun isContainBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
+
     companion object {
         const val LOTTO_NUMBER_SIZE = 6
         const val LOTTO_NUMBER_MIN_RANGE = 1
