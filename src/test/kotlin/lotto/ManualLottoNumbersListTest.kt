@@ -10,7 +10,7 @@ class ManualLottoNumbersListTest {
     @Test
     fun `수동 로또 번호 리스트를 Lotto 리스트로 변환할 수 있다`() {
         val manualNumbers =
-            listOf(
+            mutableListOf(
                 listOf(1, 2, 3, 4, 5, 6),
                 listOf(7, 8, 9, 10, 11, 12),
             )

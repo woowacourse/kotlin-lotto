@@ -1,10 +1,12 @@
 package lotto.controller
 
+import lotto.domain.AutoLottoGenerator
 import lotto.domain.Lotto
 import lotto.domain.LottoAmount
 import lotto.domain.LottoFactory
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
+import lotto.domain.ManualLottoGenerator
 import lotto.domain.NumbersList
 import lotto.domain.Purchase
 import lotto.domain.WinningLotto
@@ -45,8 +47,11 @@ class LottoController(
         outputView.printManualLottoHeader()
 
         val manualNumbers = getManualLottoNumbers(manualAmount)
-        val manualLottos = lottoFactory.generateManualLottos(manualNumbers)
-        val autoLottos = lottoFactory.generateLottos(totalAmount.toInt() - manualAmount.toInt())
+        val manualGenerator = ManualLottoGenerator(manualNumbers)
+        val autoGenerator = AutoLottoGenerator()
+
+        val manualLottos = lottoFactory.generateLottos(manualAmount.toInt(), manualGenerator)
+        val autoLottos = lottoFactory.generateLottos(totalAmount.toInt() - manualAmount.toInt(), autoGenerator)
 
         return manualLottos + autoLottos
     }
@@ -55,7 +60,8 @@ class LottoController(
         val numbersList =
             (0 until manualAmount.toInt()).map {
                 inputView.inputManualLottoNumbers()
-            }
+            }.toMutableList()
+
         return NumbersList(numbersList)
     }
 
