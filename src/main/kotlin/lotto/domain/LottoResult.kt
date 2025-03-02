@@ -12,9 +12,9 @@ class LottoResult(
         return getRanks().groupingBy { it }.eachCount()
     }
 
-    fun calculateProfitRate(): Double {
-        val totalWinningMoney = getRanks().sumOf { it.winningMoney }
-        val totalCost = lottos.size * Purchase.LOTTO_PRICE
+    fun calculateProfitRate(price: Int): Double {
+        val totalWinningMoney = getRanks().sumOf { it.winningMoney.toLong() }
+        val totalCost = Purchase(price).getPrice().toLong()
         return totalWinningMoney.toDouble() / totalCost
     }
 }
