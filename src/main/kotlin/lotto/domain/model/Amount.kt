@@ -11,9 +11,6 @@ class Amount private constructor(
     }
 
     companion object {
-        fun createOrNull(input: Int): Amount? {
-            if (input < 0) return null
-            return Amount(input)
-        }
+        fun createOrNull(input: Int): Amount? = if (input >= 0) Amount(input) else null
     }
 }

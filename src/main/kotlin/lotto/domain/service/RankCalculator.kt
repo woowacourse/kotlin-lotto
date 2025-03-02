@@ -9,11 +9,7 @@ class RankCalculator {
         inputMoney: Int,
         earningMoney: Int,
     ): Double {
-        require(inputMoney != 0) { INPUT_MONEY_ZERO }
+        require(inputMoney != 0) { "[ERROR] 입력 금액이 0입니다" }
         return earningMoney.toDouble() / inputMoney.toDouble()
-    }
-
-    companion object {
-        const val INPUT_MONEY_ZERO = "[Error] 입력 금액이 0입니다"
     }
 }

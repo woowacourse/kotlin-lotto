@@ -19,9 +19,7 @@ enum class Rank(
             matchBonus: Boolean,
         ): Rank =
             entries.firstOrNull {
-                (it.countOfMatch == countOfMatch) && ((it.matchBonus && matchBonus) == it.matchBonus)
-            } ?: throw IllegalArgumentException(RANK_FIND_ERROR)
-
-        const val RANK_FIND_ERROR = "[ERROR] 순위를 찾을 수 없습니다"
+                (it.countOfMatch <= countOfMatch) && ((it.matchBonus && matchBonus) == it.matchBonus)
+            } ?: MISS
     }
 }
