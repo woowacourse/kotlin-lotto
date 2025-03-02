@@ -22,4 +22,9 @@ class LottoTicketCounterTest {
     fun `구입 금액이 1000원 미만인 경우 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> { LottoTicketCounter(800.0, 0) }
     }
+
+    @Test
+    fun `구입 개수보다 수동 로또 개수 입력이 더 많을 경우 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> { LottoTicketCounter(1000.0, 2) }
+    }
 }
