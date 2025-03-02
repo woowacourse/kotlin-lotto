@@ -5,10 +5,11 @@ import domain.model.number.LottoNumber
 
 data class Lotto(val numbers: Set<LottoNumber>) {
     constructor(numbers: List<LottoNumber>) : this(numbers.toSet()) {
-        if (numbers.size != this.numbers.size) {
+        check(numbers.size == this.numbers.size) {
             throw LottoException.DuplicatedLottoSize()
         }
-        if (numbers.size != LOTTO_SIZE) {
+
+        check(numbers.size == LOTTO_SIZE) {
             throw LottoException.InvalidLottoSize()
         }
     }
