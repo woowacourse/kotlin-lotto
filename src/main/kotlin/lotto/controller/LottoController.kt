@@ -7,10 +7,10 @@ import lotto.domain.Money
 import lotto.domain.WinLotto
 import lotto.view.View
 
-class LottoController {
-    val view = View()
-    val viewMapper = ViewMapper()
-
+class LottoController(
+    val view: View = View(),
+    val viewMapper: ViewMapper = ViewMapper(),
+) {
     fun start() {
         runCatching(::run).onFailure { error: Throwable ->
             view.showError(error)

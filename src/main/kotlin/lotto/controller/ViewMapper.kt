@@ -5,9 +5,9 @@ import lotto.domain.LottoResult
 import lotto.domain.ProfitCalculator
 import lotto.domain.WinLotto
 
-class ViewMapper {
-    val profitCalculator = ProfitCalculator()
-
+class ViewMapper(
+    val profitCalculator: ProfitCalculator = ProfitCalculator(),
+) {
     fun mapToOutput(boughtLottos: List<Lotto>): List<List<Int>> = boughtLottos.map(::sorted)
 
     fun mapToLottoResultsDescriptions(
