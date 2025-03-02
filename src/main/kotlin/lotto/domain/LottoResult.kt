@@ -21,24 +21,24 @@ enum class LottoResult(
 
     companion object {
         fun from(
-            winLotto: WinLotto,
-            boughtLotto: Lotto,
+            win: WinLotto,
+            bought: Lotto,
         ): LottoResult =
             entries
                 .filterNot { result: LottoResult ->
-                    val bonusMatched: Boolean = winLotto.bonusNumberMatched(boughtLotto)
+                    val bonusMatched: Boolean = win.bonusNumberMatched(bought)
                     if (bonusMatched) {
                         result.bonusMatched == BonusMatched.NO
                     } else {
                         result.bonusMatched == BonusMatched.YES
                     }
-                }.calculateHighestPrize(winLotto, boughtLotto)
+                }.calculateHighestPrize(win, bought)
 
         private fun List<LottoResult>.calculateHighestPrize(
             winLotto: WinLotto,
             boughtLotto: Lotto,
         ): LottoResult {
-            val matchCount = boughtLotto.calculateMatchCount(winLotto)
+            val matchCount = boughtLotto.countMatch(winLotto)
             return filter { result: LottoResult -> result.matchCount <= matchCount }
                 .maxBy { result: LottoResult -> result.prizeAmount }
         }

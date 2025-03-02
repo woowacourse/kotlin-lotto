@@ -1,34 +1,21 @@
 package lotto.controller
 
 import lotto.domain.Lotto
-import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.ProfitCalculator
 import lotto.domain.WinLotto
 
-object ViewMapper {
-    const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
-    const val BONUS_NUMBER_MATCHED = ", 보너스 볼 일치"
-
-    fun mapToLottoCount(pay: Int): Int = pay / Lotto.Companion.PRICE
-
-    fun mapToRandomLottos(pay: Int): List<Lotto> = Lotto.Companion.buyRandomLottos(pay)
-
-    fun mapToOutput(boughtLottos: List<Lotto>): List<List<Int>> =
-        boughtLottos.map { lotto: Lotto ->
-            lotto.numbers.map { lottoNumber: LottoNumber -> lottoNumber.value }.sorted()
-        }
+class ViewMapper(
+    val profitCalculator: ProfitCalculator = ProfitCalculator(),
+) {
+    fun mapToOutput(boughtLottos: List<Lotto>): List<List<Int>> = boughtLottos.map(::sorted)
 
     fun mapToLottoResultsDescriptions(
         boughtLottos: List<Lotto>,
         winLotto: WinLotto,
     ): List<String> {
-        val lottoResults: List<LottoResult> =
-            boughtLottos.map { boughtLotto -> LottoResult.from(winLotto, boughtLotto) }
-        val lottoPrizeEntries: List<LottoResult> =
-            LottoResult.entries
-                .filterNot { result: LottoResult -> result.prizeAmount == 0 }
-                .sortedBy { result: LottoResult -> result.prizeAmount }
+        val lottoResults: List<LottoResult> = boughtLottos.toResults(winLotto)
+        val lottoPrizeEntries: List<LottoResult> = LottoResult.entries.sortedPrizes()
         val lottoResultsDescriptions: List<String> = makeLottoResultDescription(lottoResults, lottoPrizeEntries)
         return lottoResultsDescriptions
     }
@@ -37,10 +24,18 @@ object ViewMapper {
         boughtLottos: List<Lotto>,
         winLotto: WinLotto,
     ): Double {
-        val lottoResults: List<LottoResult> =
-            boughtLottos.map { boughtLotto -> LottoResult.from(winLotto, boughtLotto) }
-        return ProfitCalculator.calculateProfitRate(lottoResults)
+        val lottoResults: List<LottoResult> = boughtLottos.toResults(winLotto)
+        return profitCalculator.calculateProfitRate(lottoResults)
     }
+
+    private fun sorted(lotto: Lotto): List<Int> = lotto.toList().sorted()
+
+    private fun List<LottoResult>.sortedPrizes(): List<LottoResult> =
+        LottoResult.entries
+            .filterNot { result: LottoResult -> result.prizeAmount == 0 }
+            .sortedBy { result: LottoResult -> result.prizeAmount }
+
+    private fun List<Lotto>.toResults(winLotto: WinLotto): List<LottoResult> = map { lotto: Lotto -> LottoResult.from(winLotto, lotto) }
 
     private fun makeLottoResultDescription(
         lottoResults: List<LottoResult>,
@@ -59,10 +54,15 @@ object ViewMapper {
         if (entry.bonusMatched == LottoResult.BonusMatched.YES) BONUS_NUMBER_MATCHED else ""
 
     private fun countLottoResult(
-        userLottoResults: List<LottoResult>,
+        results: List<LottoResult>,
         entry: LottoResult,
     ): Int =
-        userLottoResults.count { lottoResult: LottoResult ->
+        results.count { lottoResult: LottoResult ->
             lottoResult == entry
         }
+
+    companion object {
+        const val LOTTO_RESULT_DESCRIPTION_TEMPLATE = "%d개 일치%S (%d원) - %d개"
+        const val BONUS_NUMBER_MATCHED = ", 보너스 볼 일치"
+    }
 }
