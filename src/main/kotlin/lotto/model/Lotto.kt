@@ -23,14 +23,14 @@ data class Lotto private constructor(
         const val LOTTO_PRICE = 1_000
 
         fun from(numbers: List<LottoNumber>): Lotto {
-            require(numbers.size == numbers.toSet().size) { ERROR_DUPLICATED_LOTTO_NUMBERS.format(numbers) }
             require(numbers.size == LOTTO_NUMBERS_COUNT) { ERROR_LOTTO_NUMBERS_SIZE.format(numbers.size) }
+            require(numbers.size == numbers.toSet().size) { ERROR_DUPLICATED_LOTTO_NUMBERS.format(numbers) }
             return Lotto(numbers.toSet())
         }
 
         fun from(vararg numbers: Int): Lotto {
-            require(numbers.size == numbers.toSet().size) { ERROR_DUPLICATED_LOTTO_NUMBERS.format(numbers) }
             require(numbers.size == LOTTO_NUMBERS_COUNT) { ERROR_LOTTO_NUMBERS_SIZE.format(numbers.size) }
+            require(numbers.size == numbers.toSet().size) { ERROR_DUPLICATED_LOTTO_NUMBERS.format(numbers) }
             return Lotto(numbers.map { number -> LottoNumber(number) }.toSet())
         }
     }
