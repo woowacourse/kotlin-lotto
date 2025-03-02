@@ -1,7 +1,5 @@
 package lotto.view
 
-import lotto.domain.valueobject.LottoQuantity
-
 class InputView {
     fun readPayAmount(): Int {
         println(ALERT_READ_PAY_INPUT)
@@ -13,12 +11,11 @@ class InputView {
         return runCatching { readln().toInt() }.getOrElse { throw IllegalArgumentException(ERROR_READ_PAY_INPUT) }
     }
 
-    fun readManualLottoNumbersByQuantity(manualLottoQuantity: LottoQuantity): List<List<Int>> {
+    fun showManualLottoNumbersAlert() {
         println(ALERT_READ_BUY_MANUAL_LOTTO_NUMBERS)
-        return List(manualLottoQuantity.quantity) { readSingleManualLottoNumbers() }
     }
 
-    private fun readSingleManualLottoNumbers(): List<Int> =
+    fun readSingleManualLottoNumbers(): List<Int> =
         runCatching {
             readln().split(',').map { it.toInt() }
         }.getOrElse { throw IllegalArgumentException(ERROR_READ_PAY_INPUT) }
