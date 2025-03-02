@@ -5,7 +5,7 @@ data class Lotto private constructor(
 ) {
     fun getRank(winningLotto: WinningLotto): Rank {
         val matchCount = getMatchCount(winningLotto.winningNumbers)
-        val isMatchedBonus = isMatchedBonusNumber(winningLotto.bonusNumber)
+        val isMatchedBonus = containsNumber(winningLotto.bonusNumber)
         return Rank.findRank(matchCount, isMatchedBonus)
     }
 
@@ -14,7 +14,7 @@ data class Lotto private constructor(
             winningNumbers.numbers.contains(number)
         }
 
-    private fun isMatchedBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
+    private fun containsNumber(number: LottoNumber): Boolean = numbers.contains(number)
 
     companion object {
         private const val ERROR_DUPLICATED_LOTTO_NUMBERS = "입력한 로또 번호 %s이 중복됩니다. 로또 번호는 중복될 수 없습니다."
