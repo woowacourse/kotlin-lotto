@@ -25,7 +25,7 @@
 - [x] 입력 뷰에 서 List<Int>로 당첨 번호 정보를, Int로 보너스 번호를 입력받아 WinTicketInfo로 인스턴스화 한다
   (WinTicketInfo에서 논리오류 예외를 던진 뒤 컨트롤러에서 캐칭 후 재입력 처리)
 
-- [ ] List<LottoTicket>을 통해 당첨 통계 맵이 담긴 WinningStatistics 인스턴스를 만든다
+- [x] List<LottoTicket>을 통해 당첨 통계 맵이 담긴 WinningStatistics 인스턴스를 만든다
 
 - [ ] 출력 뷰에게 WinningStatistics를 전달해 당첨 통계를 콘솔 출력한다.
 

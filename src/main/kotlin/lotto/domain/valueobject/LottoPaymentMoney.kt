@@ -10,11 +10,11 @@ data class LottoPaymentMoney(
         require(money % LOTTO_PRICE_UNIT == 0) { ERROR_DIVIDE_BY_LOTTO_UNIT }
     }
 
-    fun calculatePossibleBuyLottoQuantity(): LottoQuantity = LottoQuantity(money / LOTTO_PRICE_UNIT)
+    fun calculatePossibleBuyLottoQuantity(): ObjectQuantity = ObjectQuantity(money / LOTTO_PRICE_UNIT)
 
-    fun calculateLeftLotoQuantity(partialPurchaseQuantity: LottoQuantity): LottoQuantity {
+    fun calculateLeftLotoQuantity(partialPurchaseQuantity: ObjectQuantity): ObjectQuantity {
         val rawLeftQuantity = calculatePossibleBuyLottoQuantity().quantity - partialPurchaseQuantity.quantity
-        return LottoQuantity(rawLeftQuantity)
+        return ObjectQuantity(rawLeftQuantity)
     }
 
     companion object {

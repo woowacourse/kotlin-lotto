@@ -1,14 +1,14 @@
 package lottotest.domain.valueobject.validator
 
 import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.LottoQuantity
+import lotto.domain.valueobject.ObjectQuantity
 import lotto.domain.valueobject.validator.ManualLottoQuantityValidator
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class ManualLottoQuantityValidatorTest {
+class ManualObjectQuantityValidatorTest {
     @ParameterizedTest
     @CsvSource(
         "0, 0",
@@ -24,7 +24,7 @@ class ManualLottoQuantityValidatorTest {
         // given
         val lottoPaymentMoney = LottoPaymentMoney(money)
         val manualLottoQuantityValidator = ManualLottoQuantityValidator()
-        val manualLottoQuantity = LottoQuantity(manualLottoQuantityValue)
+        val manualLottoQuantity = ObjectQuantity(manualLottoQuantityValue)
 
         // when than
         assertDoesNotThrow {
@@ -45,7 +45,7 @@ class ManualLottoQuantityValidatorTest {
         // given
         val lottoPaymentMoney = LottoPaymentMoney(money)
         val manualLottoQuantityValidator = ManualLottoQuantityValidator()
-        val manualLottoQuantity = LottoQuantity(manualLottoQuantityValue)
+        val manualLottoQuantity = ObjectQuantity(manualLottoQuantityValue)
 
         // when than
         assertThrows<IllegalArgumentException> {

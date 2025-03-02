@@ -1,12 +1,12 @@
 package lotto.domain.valueobject.validator
 
 import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.LottoQuantity
+import lotto.domain.valueobject.ObjectQuantity
 
 class ManualLottoQuantityValidator {
     fun validate(
         lottoPaymentMoney: LottoPaymentMoney,
-        manualLottoQuantity: LottoQuantity,
+        manualLottoQuantity: ObjectQuantity,
     ) {
         val possibleQuantity = lottoPaymentMoney.calculatePossibleBuyLottoQuantity()
         require(possibleQuantity >= manualLottoQuantity) {

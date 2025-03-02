@@ -1,7 +1,7 @@
 package lotto.view
 
 import lotto.domain.model.LottoTicket
-import lotto.domain.valueobject.LottoQuantity
+import lotto.domain.valueobject.ObjectQuantity
 
 class OutputView {
     fun showParagraphSeparation() {
@@ -9,8 +9,8 @@ class OutputView {
     }
 
     fun showBoughtLottoQuantity(
-        manualQuantity: LottoQuantity,
-        autoQuantity: LottoQuantity,
+        manualQuantity: ObjectQuantity,
+        autoQuantity: ObjectQuantity,
     ) {
         println(ALERT_BOUGHT_LOTTO_QUANTITY.format(manualQuantity.quantity, autoQuantity.quantity))
     }
