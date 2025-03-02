@@ -13,7 +13,7 @@ class LottoCalculatorTest {
         val lottos: List<Lotto> = listOf(number1, number2, number3)
 
         val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(2, 3, 4, 5, 6, 7)))
-        val winningBonusNumber: LottoNumber = LottoNumber(45)
+        val winningBonusNumber: LottoNumber = LottoNumber.from(45)
 
         val lottoGame = LottoCalculator(winningNumber, winningBonusNumber)
         val winningStats = lottoGame.matchLottos(lottos)
@@ -33,7 +33,7 @@ class LottoCalculatorTest {
     @Test
     fun `당첨 통계로 당첨 금액을 계산한다`() {
         val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(2, 3, 4, 5, 6, 7)))
-        val winningBonusNumber: LottoNumber = LottoNumber(45)
+        val winningBonusNumber: LottoNumber = LottoNumber.from(45)
 
         val lottoResult = LottoCalculator(winningNumber, winningBonusNumber)
 
@@ -48,7 +48,7 @@ class LottoCalculatorTest {
         val purchaseAmount: Int = 14_000
 
         val winningNumber: Lotto = Lotto(intToLottoNumber(listOf(2, 3, 4, 5, 6, 7)))
-        val winningBonusNumber: LottoNumber = LottoNumber(45)
+        val winningBonusNumber: LottoNumber = LottoNumber.from(45)
 
         val lottoResult = LottoCalculator(winningNumber, winningBonusNumber)
 
@@ -56,6 +56,6 @@ class LottoCalculatorTest {
     }
 
     private fun intToLottoNumber(numbers: List<Int>): List<LottoNumber> {
-        return numbers.map { LottoNumber(it) }
+        return numbers.map { LottoNumber.from(it) }
     }
 }
