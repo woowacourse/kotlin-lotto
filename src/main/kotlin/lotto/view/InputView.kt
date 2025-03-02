@@ -9,7 +9,7 @@ class InputView {
 
     fun readWinningNumbers(): Set<Int> {
         println("\n지난 주 당첨 번호를 입력해 주세요.")
-        val rawWinningNumbers = readln().split(", ")
+        val rawWinningNumbers = readln().trim().split(COMMA)
         val winningNumbers = rawWinningNumbers.map { it.toIntOrNull() }
         return winningNumbers.validateWinningNumbers()
     }
@@ -24,7 +24,7 @@ class InputView {
 
         println("수동으로 구매할 번호를 입력해 주세요.")
         repeat(passivityQuantity) {
-            val rawPassiveWinningNumbers = readln().split(", ")
+            val rawPassiveWinningNumbers = readln().trim().split(COMMA)
             val mapToPassiveLottoNumbers = rawPassiveWinningNumbers.map { it.toIntOrNull() }
             passiveLottoNumbers.add(mapToPassiveLottoNumbers.validateWinningNumbers())
         }
@@ -41,5 +41,9 @@ class InputView {
     private fun Int?.validateIsNumber(): Int {
         if (this == null) throw IllegalArgumentException("[ERROR] 숫자를 입력해주세요.")
         return this
+    }
+
+    companion object {
+        private const val COMMA = ","
     }
 }
