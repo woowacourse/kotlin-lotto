@@ -19,7 +19,9 @@ class LottoController(
     fun run() {
         val order: LottoOrderRequest = getOrder()
         val autoLotto = buyAutoLotto(order.autoLottoAmount)
-        val allLotto = order.combine(autoLotto)
+        val manualLotto = makeManualLotto(order.manualLotto)
+
+        val allLotto = autoLotto + manualLotto
         displayPickedLotto(manualLottoAmount = order.amount.value, lotto = allLotto)
 
         val winningNumbers: Lotto = getWinningNumbers()
@@ -60,12 +62,11 @@ class LottoController(
         }
     }
 
-    private fun getManualLottoNumbers(amount: ManualLottoAmount): List<Lotto> {
+    private fun getManualLottoNumbers(amount: ManualLottoAmount): List<List<Int>> {
         return runCatching {
             outputView.printManualLottoRequest()
             List(amount.value) {
-                val input = inputView.readManualLottoNumbers()
-                ManualLottoMachine(input).generate()
+                inputView.readManualLottoNumbers()
             }
         }.getOrElse {
             outputView.printErrorMessage(it.message)
@@ -79,6 +80,36 @@ class LottoController(
     ) {
         outputView.printPurchasedLottoAmount(manualLottoAmount, lotto.size)
         outputView.printPurchasedLotto(lotto)
+    }
+
+    private fun makeManualLotto(manualLotto: List<List<Int>>): List<Lotto> {
+        return List(manualLotto.size) { idx ->
+            buyManualLotto(manualLotto[idx], idx)
+        }
+    }
+
+    private fun buyManualLotto(
+        lotto: List<Int>,
+        index: Int,
+    ): Lotto {
+        return runCatching {
+            ManualLottoMachine(lotto).generate()
+        }.getOrElse {
+            val newManualLotto = getOneManualLottoNumbers(it.message, index)
+            buyManualLotto(newManualLotto, index)
+        }
+    }
+
+    private fun getOneManualLottoNumbers(
+        message: String?,
+        index: Int,
+    ): List<Int> {
+        return runCatching {
+            outputView.printRetryManualLottoNumber(message, index + 1)
+            inputView.readManualLottoNumbers()
+        }.getOrElse {
+            getOneManualLottoNumbers(message, index)
+        }
     }
 
     private fun buyAutoLotto(autoLottoAmount: Int): List<Lotto> {
@@ -112,6 +143,6 @@ class LottoController(
         profitRate: Double,
     ) {
         outputView.printWinningResult(lottoResult, profitRate)
-        if (profitRate.toDouble() < 1) outputView.printLossMessage()
+        if (profitRate < 1) outputView.printLossMessage()
     }
 }
