@@ -1,7 +1,6 @@
 package domain.model.number
 
-@JvmInline
-value class LottoNumber private constructor(val value: Int) {
+class LottoNumber private constructor(val value: Int) {
     init {
         check(value in LOTTO_MIN..LOTTO_MAX) {
             throw LottoNumberException.InvalidLottoNumberRange()
@@ -15,7 +14,7 @@ value class LottoNumber private constructor(val value: Int) {
         private val NUMBERS: MutableMap<Int, LottoNumber> = mutableMapOf()
 
         fun from(value: Int): LottoNumber {
-            return NUMBERS[value] ?: LottoNumber(value).also { NUMBERS[value] = it }
+            return NUMBERS.getOrPut(value) { LottoNumber(value) }
         }
     }
 }
