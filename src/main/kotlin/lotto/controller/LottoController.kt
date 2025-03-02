@@ -1,5 +1,6 @@
 package lotto.controller
 
+import lotto.model.Amount
 import lotto.model.AutoLottoMachine
 import lotto.model.LottoMarket
 import lotto.model.LottoMarket.Companion.EMPTY_LOTTO_QUANTITY
@@ -44,7 +45,7 @@ class LottoController(
     ): LottoMarket {
         val autoLottoMachine = AutoLottoMachine()
         val manualLottoMachine = ManualLottoMachine()
-        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity, manualLottoMachine, autoLottoMachine)
+        val lottoMarket = LottoMarket(Amount(purchaseAmount), manualLottoQuantity, manualLottoMachine, autoLottoMachine)
         outputView.printManualLottoNumbersGuide(manualLottoQuantity > EMPTY_LOTTO_QUANTITY)
         return lottoMarket
     }

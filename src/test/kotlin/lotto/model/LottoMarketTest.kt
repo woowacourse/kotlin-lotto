@@ -13,7 +13,7 @@ class LottoMarketTest {
     fun `입력한 금액은 0원 이상만 가능하다`(amount: Int) {
         // given & when & then
         assertThatThrownBy {
-            LottoMarket(amount = amount, manualQuantity = 0)
+            LottoMarket(amount = Amount(amount), manualQuantity = 0)
         }.hasMessageContaining("0원 이상의 금액")
     }
 
@@ -24,7 +24,7 @@ class LottoMarketTest {
 
         // when & then
         assertThatThrownBy {
-            LottoMarket(amount = amount, manualQuantity = 0)
+            LottoMarket(amount = Amount(amount), manualQuantity = 0)
         }.hasMessageContaining("단위")
     }
 
@@ -32,7 +32,7 @@ class LottoMarketTest {
     fun `구입 금액이 5,000원이면 로또 구입 개수를 5개로 반환한다`() {
         // given
         val amount = 5000
-        val lottoMarket = LottoMarket(amount = amount, manualQuantity = 0)
+        val lottoMarket = LottoMarket(amount = Amount(amount), manualQuantity = 0)
 
         // when
         val lottoQuantity = lottoMarket.autoLottoQuantity
@@ -49,7 +49,7 @@ class LottoMarketTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            LottoMarket(amount, manualQuantity)
+            LottoMarket(Amount(amount), manualQuantity)
         }
     }
 }
