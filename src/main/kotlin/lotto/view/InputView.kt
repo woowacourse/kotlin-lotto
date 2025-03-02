@@ -31,7 +31,7 @@ class InputView {
                 .split(LOTTO_NUMBER_DELIMITER)
                 .map { number -> number.trim().toIntOrNull() ?: throw IllegalArgumentException(ERROR_NOT_A_NUMBER) }
                 .map { number -> LottoNumber(number) }
-        return Lotto(lottoNumbersOfLastWeek)
+        return Lotto.from(lottoNumbersOfLastWeek)
     }
 
     fun readBonusNumber(): LottoNumber {

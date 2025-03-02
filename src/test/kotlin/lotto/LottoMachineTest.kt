@@ -22,7 +22,7 @@ class LottoMachineTest {
             )
         val actual: Lotto = lottoMachine.createLotto(lottoNumbers)
 
-        val expected = Lotto(1, 2, 3, 4, 5, 6)
+        val expected = Lotto.from(1, 2, 3, 4, 5, 6)
 
         assertThat(actual).isEqualTo(expected)
     }
