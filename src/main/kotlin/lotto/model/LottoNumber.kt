@@ -3,7 +3,8 @@ package lotto.model
 import lotto.model.Lotto.Companion.LOTTO_NUMBER_MAX_RANGE
 import lotto.model.Lotto.Companion.LOTTO_NUMBER_MIN_RANGE
 
-data class LottoNumber(
+@JvmInline
+value class LottoNumber(
     val number: Int,
 ) {
     init {
