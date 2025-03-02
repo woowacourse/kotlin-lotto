@@ -2,7 +2,7 @@ package lotto.domain.model
 
 import lotto.domain.value.LottoNumber
 
-class Lotto(
+class Lotto private constructor(
     val lottoNumbers: List<LottoNumber>,
 ) {
     init {
@@ -23,7 +23,8 @@ class Lotto(
 
         fun create(): Lotto {
             val lottoNumbers =
-                LottoNumber.NUMBERS.values
+                LottoNumber
+                    .getAll()
                     .shuffled()
                     .take(NUMBER_OF_LOTTO_NUMBERS)
             return Lotto(lottoNumbers)

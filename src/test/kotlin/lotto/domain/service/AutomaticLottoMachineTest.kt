@@ -2,7 +2,7 @@ package lotto.domain.service
 
 import lotto.domain.model.Lotto
 import lotto.domain.value.LottoCount
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class AutomaticLottoMachineTest {
@@ -17,6 +17,6 @@ class AutomaticLottoMachineTest {
         val lottos: List<Lotto> = lottoMachine.generate(lottoCount)
 
         // then
-        Assertions.assertThat(lottos.size).isEqualTo(5)
+        assertThat(lottos.size).isEqualTo(5)
     }
 }

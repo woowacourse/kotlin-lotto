@@ -51,8 +51,8 @@ class LottoController(
     ): List<Lotto> {
         val manualLottoNumbers = getManualLottoNumbers(manualLottoCount)
         val manualLottos =
-            store.publish(manualLottoMachine, manualLottoCount, manualLottoNumbers)
-        val automaticLottos = store.publish(automaticLottoMachine, automaticLottoCount)
+            store.sell(manualLottoMachine, manualLottoCount, manualLottoNumbers)
+        val automaticLottos = store.sell(automaticLottoMachine, automaticLottoCount)
         return manualLottos + automaticLottos
     }
 

@@ -15,7 +15,7 @@ class LottoStoreTest {
         val lottoCount = LottoCount(5)
 
         // when
-        val lottos: List<Lotto> = store.publish(lottoMachine, lottoCount)
+        val lottos: List<Lotto> = store.sell(lottoMachine, lottoCount)
 
         // then
         Assertions.assertThat(lottos.size).isEqualTo(5)
@@ -29,7 +29,7 @@ class LottoStoreTest {
         val lottoNumbers = listOf(listOf(1, 2, 3, 4, 5, 6))
 
         // when
-        val lottos: List<Lotto> = store.publish(lottoMachine, lottoCount, lottoNumbers)
+        val lottos: List<Lotto> = store.sell(lottoMachine, lottoCount, lottoNumbers)
 
         // then
         Assertions.assertThat(lottos.size).isEqualTo(1)
