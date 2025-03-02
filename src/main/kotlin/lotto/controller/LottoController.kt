@@ -40,8 +40,15 @@ class LottoController {
         manualCount: Int,
     ): List<Lotto> {
         val autoCount = LottoTicketCounter(purchase, manualCount).autoCount()
-        val manualLotto = inputView.inputManualLotto(manualCount)
-        val manualLottoBundle = LottoStore().getTickets(manualCount, ManualLottoGenerator(manualLotto))
+        val manualLottoGenerator = ManualLottoGenerator()
+
+        repeat(manualCount) {
+            val manualLotto = inputView.inputManualLotto()
+            manualLottoGenerator.add(manualLotto)
+        }
+
+        val manualLottoBundle = LottoStore().getTickets(manualCount, manualLottoGenerator)
+
         outputView.printLottoCount(manualCount, autoCount)
 
         val autoLottoBundle = LottoStore().getTickets(autoCount, RandomLottoGenerator())

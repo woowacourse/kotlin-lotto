@@ -15,16 +15,7 @@ class LottoInputView {
         return manualPurchase.toInt()
     }
 
-    fun inputManualLotto(input: Int): List<List<Int>> {
-        println(INPUT_MANUAL_LOTTO_MESSAGE)
-        val manualLotto = mutableListOf<List<Int>>()
-        repeat(input) {
-            manualLotto.add(manualLotto())
-        }
-        return manualLotto
-    }
-
-    private fun manualLotto(): List<Int> {
+    fun inputManualLotto(): List<Int> {
         val input = readln()
 
         return input
