@@ -5,5 +5,3 @@ class ManualLottoGenerator(
 ) : LottoGenerator {
     override fun generate(): List<Lotto> = numbers.map(::Lotto)
 }
-
-fun ManualLottoGenerator(numbers: List<Int>): ManualLottoGenerator = ManualLottoGenerator(listOf(numbers))
