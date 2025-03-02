@@ -27,7 +27,6 @@ class LottoController(
 
     private fun buyLottos(lottoShop: LottoShop): List<Lotto> {
         val manualLottos: List<List<Int>> = view.readManualLottosNumbers(lottoShop.manualCount)
-        view.showLottoCount(lottoShop.manualCount, lottoShop.randomCount)
         val boughtLottos: List<Lotto> = lottoShop.buyLottos(manualLottos)
         view.showLottos(viewMapper.mapToOutput(boughtLottos))
         return boughtLottos
@@ -36,7 +35,9 @@ class LottoController(
     private fun createLottoShop(): LottoShop {
         val pay = Money(view.readPay())
         val manualLottoCount: Int = view.readManualLottoCount()
-        return LottoShop(pay, manualLottoCount)
+        val lottoShop = LottoShop(pay, manualLottoCount)
+        view.showLottoCount(lottoShop.manualCount, lottoShop.randomCount)
+        return lottoShop
     }
 
     private fun createWinLotto(): WinLotto {
