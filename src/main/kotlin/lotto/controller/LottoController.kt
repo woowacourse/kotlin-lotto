@@ -3,6 +3,7 @@ package lotto.controller
 import lotto.domain.model.AutoLottoTicket
 import lotto.domain.model.LottoTicket
 import lotto.domain.model.ManualLottoTicket
+import lotto.domain.model.WinTicketInfo
 import lotto.domain.valueobject.LottoNumber
 import lotto.domain.valueobject.LottoPaymentMoney
 import lotto.domain.valueobject.LottoQuantity
@@ -21,6 +22,7 @@ class LottoController(
         val boughtTickets = buyLottoTickets(manualQuantity, autoQuantity)
         outputView.showBoughtLottoQuantity(manualQuantity, autoQuantity)
         outputView.showBoughtLottoTickets(boughtTickets)
+        val winTicketInfo = retryUntilSuccess { getWinTicketInfo() }
     }
 
     private fun getLottoPaymentMoney(): LottoPaymentMoney {
@@ -43,6 +45,19 @@ class LottoController(
         val autoTickets = createWholeAutoLottoTickets(autoQuantity)
         return manualTickets + autoTickets
     }
+
+    private fun getWinTicketInfo(): WinTicketInfo {
+        val winLottoTicket = retryUntilSuccess { createWinLottoTicket() }
+        val bonusNumber = retryUntilSuccess { LottoNumber(inputView.readBonusBallNumber()) }
+        return WinTicketInfo(winLottoTicket, bonusNumber)
+    }
+
+    private fun createWinLottoTicket(): LottoTicket =
+        ManualLottoTicket(
+            inputView.readWinLottoNumbers().map {
+                LottoNumber(it)
+            },
+        )
 
     private fun readLottoPaymentMoney(): LottoPaymentMoney = LottoPaymentMoney(inputView.readPayAmount())
 

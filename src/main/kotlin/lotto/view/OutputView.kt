@@ -19,6 +19,7 @@ class OutputView {
         lottoTickets.forEach { ticket ->
             println(ticket.getSortedLottoNumbers())
         }
+        showParagraphSeparation()
     }
 
     companion object {
