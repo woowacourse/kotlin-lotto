@@ -3,7 +3,7 @@ package lotto.model
 class Lotto(
     numbers: List<Int>,
 ) {
-    val numbers: List<LottoNumber> = numbers.map { LottoNumber(it) }
+    val numbers: List<LottoNumber> = numbers.map { LottoNumber.from(it) }
 
     init {
         require(numbers.distinct().size == numbers.size) { ERROR_DUPLICATED_NUMBERS_MESSAGE }

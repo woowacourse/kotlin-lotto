@@ -32,7 +32,7 @@ class LottoController {
 
     private fun getWinningLotto(): Lotto = Lotto(inputView.inputWinningNumbers())
 
-    private fun getBonusNumber(): LottoNumber = LottoNumber(inputView.inputBonusNumber())
+    private fun getBonusNumber(): LottoNumber = LottoNumber.from(inputView.inputBonusNumber())
 
     private fun getLottoBundle(
         purchase: Double,

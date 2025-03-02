@@ -12,5 +12,10 @@ class LottoNumber(
 
     companion object {
         const val ERROR_LOTTO_BOUND_MESSAGE = "로또 번호는 1에서 45 범위 내에서 있어야 합니다."
+
+        private val NUMBERS: Map<Int, LottoNumber> =
+            (MINIMUM_LOTTO_RANGE..MAXIMUM_LOTTO_RANGE).associateWith(::LottoNumber)
+
+        fun from(value: Int): LottoNumber = NUMBERS[value] ?: throw IllegalArgumentException()
     }
 }
