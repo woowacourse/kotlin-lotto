@@ -60,7 +60,7 @@ class WinningLottoTicketTest {
                         Lotto.of(11, 12, 13, 14, 15, 16),
                         Lotto.of(11, 12, 13, 14, 15, 16),
                     ),
-                    RankScoreBoard.of(
+                    RankScoreBoard.fromNecessaryKey(
                         mapOf(Rank.MISS to 3),
                     ),
                 ),
@@ -70,7 +70,7 @@ class WinningLottoTicketTest {
                         Lotto.of(11, 12, 13, 14, 15, 16),
                         Lotto.of(11, 12, 13, 14, 15, 16),
                     ),
-                    RankScoreBoard.of(
+                    RankScoreBoard.fromNecessaryKey(
                         mapOf(
                             Rank.MISS to 2,
                             Rank.FOURTH to 1,
@@ -83,7 +83,7 @@ class WinningLottoTicketTest {
                         Lotto.of(1, 2, 3, 4, 5, 6),
                         Lotto.of(1, 2, 11, 10, 8, 9),
                     ),
-                    RankScoreBoard.of(
+                    RankScoreBoard.fromNecessaryKey(
                         mapOf(
                             Rank.MISS to 1,
                             Rank.FOURTH to 1,

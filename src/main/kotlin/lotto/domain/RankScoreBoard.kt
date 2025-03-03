@@ -24,7 +24,13 @@ data class RankScoreBoard(
     }
 
     companion object {
-        fun of(rawMap: Map<Rank, Int>): RankScoreBoard {
+        /**
+         * Rank 클래스에 없는 key에는 자동으로 0을 채운 후 객체를 안전하게 생성합니다
+         * 생성자로 생성 시 인자의 map에는 Rank 의 모든 key가 있어야 합니다
+         * @param:Map<Rank, Int>
+         * @return RankScoreBoard
+         */
+        fun fromNecessaryKey(rawMap: Map<Rank, Int>): RankScoreBoard {
             val map = Rank.entries.associateWith { rawMap[it] ?: 0 }
             return RankScoreBoard(map)
         }

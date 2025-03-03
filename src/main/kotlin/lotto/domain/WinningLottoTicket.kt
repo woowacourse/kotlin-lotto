@@ -18,6 +18,6 @@ data class WinningLottoTicket(
                 .map { findLottoRank(it) }
                 .groupingBy { it }
                 .eachCount()
-        return RankScoreBoard.of(rankMap)
+        return RankScoreBoard.fromNecessaryKey(rankMap)
     }
 }
