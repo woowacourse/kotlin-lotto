@@ -20,5 +20,6 @@ class LottoStoreCashier(
     fun isPossibleToBuy(customerWantBuyLottoTicketCount: Int): Boolean = possibleToLottoTicketCount >= customerWantBuyLottoTicketCount
 
     // 고객에게 전달할 잔돈을 계산한다.
-    fun calculateChange(customerWantBuyLottoTicketCount: Int): Int = customerMoney - (LottoRuleConstants.LOTTO_AMOUNT.value * possibleToLottoTicketCount)
+    fun calculateChange(customerWantBuyLottoTicketCount: Int): Int =
+        customerMoney - (LottoRuleConstants.LOTTO_AMOUNT.value * possibleToLottoTicketCount)
 }

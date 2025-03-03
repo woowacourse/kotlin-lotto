@@ -1,14 +1,15 @@
 package lotto.model
 
 // 수동이랑 자동 로또 계산해주는 매니저, 로또 티켓까지 주는 역할 담당
-class LottoTicketIssueManager (
+class LottoTicketIssueManager(
     customerWantBuyLottoTicketCount: Int,
     customerWantToBuyManualLottoTicketCount: Int,
     manualLottoNumbers: List<List<Int>>,
 ) {
     private val customerWantBuyLottoTicketCount = LottoTicketCount(customerWantBuyLottoTicketCount)
     private val customerWantToBuyManualLottoTicketCount = LottoTicketCount(customerWantToBuyManualLottoTicketCount)
-    private val customerWantToBuyAutoLottoTicketCount = LottoTicketCount(customerWantBuyLottoTicketCount - customerWantToBuyManualLottoTicketCount)
+    private val customerWantToBuyAutoLottoTicketCount =
+        LottoTicketCount(customerWantBuyLottoTicketCount - customerWantToBuyManualLottoTicketCount)
 
     // 발행가능한 개수보다 수동으로 로또 발행받고 싶은 개수가 크면 안된다.
     init {
@@ -17,7 +18,8 @@ class LottoTicketIssueManager (
     }
 
     // 로또를 발행해서 준다.
-    fun getLottoTickets(manualLottoNumbers: List<List<Int>>): List<LottoTicket> = LottoMachine().issueLottoTickets(customerWantToBuyAutoLottoTicketCount, manualLottoNumbers)
+    fun getLottoTickets(manualLottoNumbers: List<List<Int>>): List<LottoTicket> =
+        LottoMachine().issueLottoTickets(customerWantToBuyAutoLottoTicketCount, manualLottoNumbers)
 
     fun getCustomerWantToBuyManualLottoTicketCount(): Int = customerWantToBuyManualLottoTicketCount.toInt()
 

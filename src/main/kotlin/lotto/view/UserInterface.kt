@@ -34,7 +34,6 @@ class UserInterface(
         return manualLottoCount.toInt()
     }
 
-
     fun getManualLottoNumbers(manualLottoCount: Int): List<List<Int>> {
         val manualLottoNumber = mutableListOf<List<Int>>()
         OutputView.printMessage("\n수동으로 구매할 번호를 입력해 주세요..")
@@ -45,7 +44,11 @@ class UserInterface(
         return manualLottoNumber
     }
 
-    fun printLottoTickets(manualLottoCount : Int, autoLottoCount: Int, lottoTickets: List<LottoTicket>) {
+    fun printLottoTickets(
+        manualLottoCount: Int,
+        autoLottoCount: Int,
+        lottoTickets: List<LottoTicket>,
+    ) {
         OutputView.printMessage("\n수동으로 ${manualLottoCount}장, 자동으로 ${autoLottoCount}개를 구매했습니다.")
         lottoTickets.map {
             OutputView.printMessage(it.getNumbers().map { it.number }.joinToString(", ", "[", "]"))

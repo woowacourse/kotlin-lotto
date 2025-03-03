@@ -1,6 +1,11 @@
 package lotto.controller
 
-import lotto.model.*
+import lotto.model.LottoStoreCashier
+import lotto.model.LottoTicketIssueManager
+import lotto.model.LottoTicket
+import lotto.model.WinningLotto
+import lotto.model.LottoIssueType
+import lotto.model.LottoResult
 import lotto.view.UserInterface
 
 class LottoController(
@@ -15,12 +20,12 @@ class LottoController(
         }.map {
             Result.success(Unit)
         }.getOrElse {
-            e ->  Result.failure(Exception("(로또 실행 중 오류 발생) : ${e.message}"))
+                e ->
+            Result.failure(Exception("(로또 실행 중 오류 발생) : ${e.message}"))
         }
-
     }
 
-    private fun meetLottoStoreCashier() : Int {
+    private fun meetLottoStoreCashier(): Int {
         val money = userInterface.inputPurchaseAmount()
         val lottoStoreCashier = LottoStoreCashier(money)
         val possibleToLottoTicketCount = lottoStoreCashier.calculatePossibleToBuyLottoTicketCount()
@@ -35,7 +40,8 @@ class LottoController(
     private fun getLottoTickets(possibleToLottoTicketCount: Int): List<LottoTicket> {
         val customerWantToBuyManualLottoTicketCount = userInterface.getManualLottoCount()
         val manualLottoNumbers = userInterface.getManualLottoNumbers(customerWantToBuyManualLottoTicketCount)
-        val lottoTicketIssueManager = LottoTicketIssueManager(possibleToLottoTicketCount, customerWantToBuyManualLottoTicketCount, manualLottoNumbers)
+        val lottoTicketIssueManager =
+            LottoTicketIssueManager(possibleToLottoTicketCount, customerWantToBuyManualLottoTicketCount, manualLottoNumbers)
         val lottoTickets = lottoTicketIssueManager.getLottoTickets(manualLottoNumbers)
         val autoLottoTicketCount = lottoTicketIssueManager.getCustomerWantToBuyManualLottoTicketCount()
         userInterface.printLottoTickets(customerWantToBuyManualLottoTicketCount, autoLottoTicketCount, lottoTickets)
@@ -49,7 +55,10 @@ class LottoController(
         return WinningLotto(winningLottoTicket, bonusNumber)
     }
 
-    private fun getResult(lottoTickets: List<LottoTicket>, winningLotto: WinningLotto) {
+    private fun getResult(
+        lottoTickets: List<LottoTicket>,
+        winningLotto: WinningLotto,
+    ) {
         val ranks = winningLotto.getRanks(lottoTickets)
         val lottoResult = LottoResult(ranks)
         val winningStatus = lottoResult.getWinningStatus()

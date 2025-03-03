@@ -1,7 +1,7 @@
 package lotto.model
 
 class ManualLottoTicketGenerator(
-    private val numbers: List<Int>
+    private val numbers: List<Int>,
 ) : LottoTicketGenerator {
     override val type: LottoIssueType = LottoIssueType.MANUAL
 

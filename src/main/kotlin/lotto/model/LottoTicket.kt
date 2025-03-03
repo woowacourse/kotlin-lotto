@@ -10,17 +10,16 @@ class LottoTicket(
     private val lottoNumbers: Set<LottoNumber> = numbers.toSet()
     
     init {
-        require(numbers.size == LottoRuleConstants.LOTTO_PICK_COUNT.value)
-        { ERROR_NUMBERS_COUNT }
+        require(numbers.size == LottoRuleConstants.LOTTO_PICK_COUNT.value) { ERROR_NUMBERS_COUNT }
     }
 
     fun getSize() = lottoNumbers.size
 
-    fun containsNumber(number: LottoNumber) : Boolean {
+    fun containsNumber(number: LottoNumber): Boolean {
         return lottoNumbers.contains(number)
     }
 
-    fun getNumbers() : Set<LottoNumber> {
+    fun getNumbers(): Set<LottoNumber> {
         return lottoNumbers
     }
 
@@ -29,7 +28,10 @@ class LottoTicket(
     companion object {
         private const val ERROR_NUMBERS_COUNT = "로또 번호의 개수는 6개입니다."
 
-        fun create(lottoIssueType: LottoIssueType, vararg lottoNumbers: Int): LottoTicket {
+        fun create(
+            lottoIssueType: LottoIssueType,
+            vararg lottoNumbers: Int,
+        ): LottoTicket {
             return LottoTicket(lottoIssueType, lottoNumbers.map { LottoNumber(it) })
         }
     }

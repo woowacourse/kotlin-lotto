@@ -1,7 +1,7 @@
 package lotto.model
 
 class LottoTicketCount(
-    private val count : Int,
+    private val count: Int,
 ) {
     init {
         require(count >= 0) { LOTTO_TICKET_COUNT_NOT_NEGATIVE }
