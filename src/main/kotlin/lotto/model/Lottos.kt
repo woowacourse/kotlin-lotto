@@ -4,7 +4,7 @@ class Lottos(
     private val manualLottos: List<Lotto>,
     private val autoLotts: List<Lotto>,
 ) {
-    val lottoBundle = manualLottos + autoLotts
+    val lottoBundle: List<Lotto> = manualLottos + autoLotts
 
     val size: Int = lottoBundle.size
 
