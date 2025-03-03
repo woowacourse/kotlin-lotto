@@ -2,16 +2,16 @@ package lotto.model
 
 class LottoQuantity(
     val amount: Int,
-    val passiveLottoQuantity: Int,
+    val manualLottoQuantity: Int,
 ) {
     init {
         validateAmountMinimumRange()
-        validatePassiveQuantity()
+        validateManualQuantity()
     }
 
     private fun getTotalLottoQuantity(): Int = amount / LOTTO_EACH_AMOUNT
 
-    fun getActiveLottoQuantity(): Int = getTotalLottoQuantity() - passiveLottoQuantity
+    fun getAutoLottoQuantity(): Int = getTotalLottoQuantity() - manualLottoQuantity
 
     private fun validateAmountMinimumRange() {
         require(amount >= LOTTO_EACH_AMOUNT) {
@@ -19,8 +19,8 @@ class LottoQuantity(
         }
     }
 
-    private fun validatePassiveQuantity() {
-        require(getTotalLottoQuantity() >= passiveLottoQuantity) {
+    private fun validateManualQuantity() {
+        require(getTotalLottoQuantity() >= manualLottoQuantity) {
             "[ERROR] 수동 로또의 수는 전체 구매 로또의 수보다 클 수 없습니다."
         }
     }

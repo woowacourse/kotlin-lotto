@@ -43,16 +43,16 @@ class LottoController(
         allLottos: Lottos,
     ) {
         outputView.printPurchaseLottoQuantity(
-            lottoQuantity.passiveLottoQuantity,
-            lottoQuantity.getActiveLottoQuantity(),
+            lottoQuantity.manualLottoQuantity,
+            lottoQuantity.getAutoLottoQuantity(),
         )
         showLottos(allLottos)
     }
 
     private fun getLottoQuantity(): LottoQuantity {
         val amount = inputView.readPurchaseAmount()
-        val passiveLottoQuantity = inputView.readPassivePurchaseQuantity()
-        val lottoQuantity = LottoQuantity(amount, passiveLottoQuantity)
+        val manualLottoQuantity = inputView.readManualPurchaseQuantity()
+        val lottoQuantity = LottoQuantity(amount, manualLottoQuantity)
         return lottoQuantity
     }
 
@@ -60,25 +60,25 @@ class LottoController(
         lottoQuantity: LottoQuantity,
         lottoMachine: LottoMachine,
     ): Lottos {
-        val passiveLottos = getPassiveLottos(lottoQuantity.passiveLottoQuantity)
-        val activeLottos = generateActiveLottos(lottoQuantity, lottoMachine)
-        val allLottos = Lottos(passiveLottos, activeLottos)
+        val manualLottos = getManualLottos(lottoQuantity.manualLottoQuantity)
+        val autoLottos = generateAutoLottos(lottoQuantity, lottoMachine)
+        val allLottos = Lottos(manualLottos, autoLottos)
 
         return allLottos
     }
 
-    private fun generateActiveLottos(
+    private fun generateAutoLottos(
         lottoQuantity: LottoQuantity,
         lottoMachine: LottoMachine,
     ): List<Lotto> =
-        List(lottoQuantity.getActiveLottoQuantity()) {
+        List(lottoQuantity.getAutoLottoQuantity()) {
             lottoMachine.getLottoNumbers()
         }
 
-    private fun getPassiveLottos(passiveLottoQuantity: Int): List<Lotto> {
-        val passiveNumbers = inputView.readPassiveLottoNumbers(passiveLottoQuantity)
-        val passiveLottos = passiveNumbers.map { Lotto(it.mapToLottoNumbers()) }
-        return passiveLottos
+    private fun getManualLottos(manualLottoQuantity: Int): List<Lotto> {
+        val manualLottoNumbers = inputView.readManualLottoNumbers(manualLottoQuantity)
+        val manualLottos = manualLottoNumbers.map { Lotto(it.mapToLottoNumbers()) }
+        return manualLottos
     }
 
     private fun showLottos(lottos: Lottos) {

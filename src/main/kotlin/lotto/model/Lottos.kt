@@ -1,10 +1,10 @@
 package lotto.model
 
 class Lottos(
-    private val passiveLottos: List<Lotto>,
-    private val activeLottos: List<Lotto>,
+    private val manualLottos: List<Lotto>,
+    private val autoLottos: List<Lotto>,
 ) {
-    fun getTotalLottos(): List<Lotto> = passiveLottos + activeLottos
+    fun getTotalLottos(): List<Lotto> = manualLottos + autoLottos
 
     fun getAllLottoNumbers(): List<Set<Int>> {
         val totalLottos = getTotalLottos()

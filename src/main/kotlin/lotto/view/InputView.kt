@@ -14,12 +14,12 @@ class InputView {
         return winningNumbers.validateWinningNumbers()
     }
 
-    fun readPassivePurchaseQuantity(): Int {
+    fun readManualPurchaseQuantity(): Int {
         println("수동으로 구매할 로또 수를 입력해 주세요.")
         return readln().toIntOrNull().validateIsNumber()
     }
 
-    fun readPassiveLottoNumbers(passivityQuantity: Int): List<Set<Int>> {
+    fun readManualLottoNumbers(passivityQuantity: Int): List<Set<Int>> {
         val passiveLottoNumbers = mutableListOf<Set<Int>>()
 
         println("수동으로 구매할 번호를 입력해 주세요.")
