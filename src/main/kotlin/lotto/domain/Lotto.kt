@@ -11,7 +11,7 @@ data class Lotto(
 
     fun contains(element: LottoNumber): Boolean = value.contains(element)
 
-    fun getCountOfMatchWith(contrast: Lotto): Int = value.count { it in contrast.value }
+    fun getCountOfMatchWith(contrast: Lotto): Int = value.intersect(contrast.value).size
 
     companion object {
         const val LOTTO_PRICE = 1000
