@@ -1,6 +1,6 @@
-package lotto.domain
+package lotto.service
 
-class LottoCalculator(
+class LottoAmountCalculator(
     val amountOfPurchase: Int,
     private val lottoPrice: Int = LOTTO_PRICE,
 ) {
@@ -9,11 +9,6 @@ class LottoCalculator(
     }
 
     fun calculateAmountOfLottos(): Int = amountOfPurchase / lottoPrice
-
-    fun calculateAutoLottos(manualCount: Int): Int {
-        require(manualCount in 0..calculateAmountOfLottos()) { "수동 로또 개수가 잘못되었습니다." }
-        return calculateAmountOfLottos() - manualCount
-    }
 
     private fun validatePurchaseAmount() {
         require(amountOfPurchase % lottoPrice == 0) { "로또는 ${lottoPrice}원 단위로 구입해주세요" }
