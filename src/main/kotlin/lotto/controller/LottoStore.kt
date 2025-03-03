@@ -54,10 +54,9 @@ class LottoStore(
     }
 
     private fun getWinningLotto(): WinningLotto {
-        val winningNumbers = inputView.inputWinningNumbers()
+        val winningNumbers = WinningLotto(inputView.inputWinningNumbers())
         val bonusNumber = LottoNumber(inputView.inputBonusNumber())
-        val winningLotto = WinningLotto(winningNumbers, bonusNumber)
-        return winningLotto
+        return WinningLotto(winningNumbers.winningNumbers, bonusNumber)
     }
 
     private fun calculateResult(
