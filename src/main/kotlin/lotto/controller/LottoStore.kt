@@ -2,7 +2,6 @@ package lotto.controller
 
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
-import lotto.domain.model.LottoTicketResult
 import lotto.domain.model.PurchaseAmount
 import lotto.domain.model.PurchaseCount
 import lotto.domain.model.WinningLotto
@@ -38,36 +37,16 @@ class LottoStore(
         manualCount: Int,
         autoCount: Int,
     ): List<LottoTicket> {
+        val lottoMachine = LottoMachine()
         if (manualCount != 0) outputView.printManualNumbersGuide()
-        val manualLottoTickets = generateManualLottoTicket(manualCount)
-        val autoLottoTickets = generateAutoLottoTicket(autoCount)
+        val manualTickets =
+            lottoMachine.generateManualTicket(
+                input = { inputView.inputManualNumbers() },
+                count = manualCount,
+            )
+        val autoTickets = lottoMachine.generateAutoTicket(autoCount)
         outputView.printPurchaseCount(manualCount, autoCount)
-        return manualLottoTickets + autoLottoTickets
-    }
-
-    private fun generateManualLottoTicket(count: Int): List<LottoTicket> {
-        val manualLottoTickets = mutableListOf<LottoTicket>()
-
-        repeat(count) {
-            while (true) {
-                val result = LottoTicket.create(inputView.inputManualNumbers().map { LottoNumber(it) })
-                when (result) {
-                    is LottoTicketResult.Success -> {
-                        manualLottoTickets.add(result.ticket)
-                        break
-                    }
-
-                    is LottoTicketResult.InvalidCount -> println(ERROR_LOTTO_INVALID_COUNT)
-                    is LottoTicketResult.DuplicateNumbers -> println(ERROR_LOTTO_DUPLICATE)
-                }
-            }
-        }
-        return manualLottoTickets.toList()
-    }
-
-    private fun generateAutoLottoTicket(count: Int): List<LottoTicket> {
-        val autoLottoTickets = LottoMachine().generateAutoTicket(count)
-        return autoLottoTickets
+        return manualTickets + autoTickets
     }
 
     private fun getWinningLotto(): WinningLotto {
@@ -81,9 +60,4 @@ class LottoStore(
         lottoTickets: List<LottoTicket>,
         winningLotto: WinningLotto,
     ): LottoResult = LottoResult.calculateResult(lottoTickets, winningLotto)
-
-    companion object {
-        private const val ERROR_LOTTO_INVALID_COUNT = "로또 번호는 6개여야 합니다. 다시 입력해주세요."
-        private const val ERROR_LOTTO_DUPLICATE = "로또 번호는 서로 중복되면 안 됩니다. 다시 입력해주세요."
-    }
 }
