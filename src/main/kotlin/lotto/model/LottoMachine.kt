@@ -4,5 +4,5 @@ class LottoMachine {
     fun createLottos(
         lottoCount: LottoCount,
         numberGenerator: LottoNumbersGenerator,
-    ): List<Lotto> = List(lottoCount.count) { Lotto.from(numberGenerator.generate()) }
+    ): List<Lotto> = List(lottoCount.count) { Lotto(numberGenerator.generate()) }
 }

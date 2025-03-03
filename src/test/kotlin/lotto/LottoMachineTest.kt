@@ -36,7 +36,7 @@ class LottoMachineTest {
         // then
         assertAll(
             { Assertions.assertThat(lottos.size).isEqualTo(1) },
-            { Assertions.assertThat(lottos[0]).isEqualTo(Lotto.from(numbersBundle[0])) },
+            { Assertions.assertThat(lottos[0]).isEqualTo(Lotto(numbersBundle[0])) },
         )
     }
 
@@ -52,7 +52,7 @@ class LottoMachineTest {
         // then
         assertAll(
             { Assertions.assertThat(lottos.size).isEqualTo(1) },
-            { Assertions.assertThat(lottos[0]).isEqualTo(Lotto.from(1, 2, 3, 4, 5, 6)) },
+            { Assertions.assertThat(lottos[0]).isEqualTo(Lotto(1, 2, 3, 4, 5, 6)) },
         )
     }
 

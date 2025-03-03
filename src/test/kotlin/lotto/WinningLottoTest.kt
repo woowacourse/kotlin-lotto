@@ -15,7 +15,7 @@ class WinningLottoTest {
 
     @BeforeEach
     fun setUp() {
-        winningNumber = Lotto.from(1, 2, 3, 4, 5, 6)
+        winningNumber = Lotto(1, 2, 3, 4, 5, 6)
     }
 
     @Test

@@ -12,16 +12,16 @@ class LottosTest {
     @Test
     fun `당첨 번호에 따라 구매한 로또들의 등수를 찾아 로또 결과를 반환한다`() {
         // given
-        val lotto1 = Lotto.from(1, 2, 3, 4, 5, 6) // 1등
-        val lotto2 = Lotto.from(1, 2, 3, 4, 5, 7) // 2등
-        val lotto3 = Lotto.from(1, 2, 3, 4, 5, 8) // 3등
-        val lotto4 = Lotto.from(10, 11, 12, 13, 14, 15) // miss
+        val lotto1 = Lotto(1, 2, 3, 4, 5, 6) // 1등
+        val lotto2 = Lotto(1, 2, 3, 4, 5, 7) // 2등
+        val lotto3 = Lotto(1, 2, 3, 4, 5, 8) // 3등
+        val lotto4 = Lotto(10, 11, 12, 13, 14, 15) // miss
 
         val lottos = Lottos(manualLottos = listOf(lotto1, lotto2), autoLotts = listOf(lotto3, lotto4))
 
         val winningLotto =
             WinningLotto(
-                Lotto.from(1, 2, 3, 4, 5, 6),
+                Lotto(1, 2, 3, 4, 5, 6),
                 bonusNumber = LottoNumber(7),
             )
 
