@@ -2,7 +2,7 @@ package lotto.model
 
 class LottoQuantity(
     val amount: Int,
-    private val passiveLottoQuantity: Int,
+    val passiveLottoQuantity: Int,
 ) {
     init {
         validateAmountMinimumRange()
