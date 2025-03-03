@@ -3,12 +3,11 @@ package lotto.model
 import lotto.contants.LottoRuleConstants
 
 class LottoTicket(
-
-    private val lottoIssueType: LottoIssueType,
+    val lottoIssueType: LottoIssueType,
     private val numbers: List<LottoNumber>,
 ) {
     private val lottoNumbers: Set<LottoNumber> = numbers.toSet()
-    
+
     init {
         require(numbers.size == LottoRuleConstants.LOTTO_PICK_COUNT.value) { ERROR_NUMBERS_COUNT }
     }

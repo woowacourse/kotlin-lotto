@@ -1,5 +1,7 @@
 package lotto.view
 
 object OutputView {
-    fun printMessage(msg: Any) = println(msg)
+    fun printlnMessage(msg: Any) = println(msg)
+
+    fun printMessage(msg: Any) = print(msg)
 }

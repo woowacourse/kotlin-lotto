@@ -1,11 +1,11 @@
 package lotto.controller
 
-import lotto.model.LottoStoreCashier
-import lotto.model.LottoTicketIssueManager
-import lotto.model.LottoTicket
-import lotto.model.WinningLotto
 import lotto.model.LottoIssueType
 import lotto.model.LottoResult
+import lotto.model.LottoStoreCashier
+import lotto.model.LottoTicket
+import lotto.model.LottoTicketIssueManager
+import lotto.model.WinningLotto
 import lotto.view.UserInterface
 
 class LottoController(
