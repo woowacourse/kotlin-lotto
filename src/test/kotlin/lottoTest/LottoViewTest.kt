@@ -45,7 +45,7 @@ class LottoViewTest {
         val userInput = lottoView.getBuyAmount()
         assertThat(userInput).isInstanceOf(UserInputResult.Failure::class.java)
         val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
-        assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
+        assertThat(userInputFail.errorLottoException.msg).contains("올바르지 않은 형식입니다")
     }
 
     @Test
@@ -65,7 +65,7 @@ class LottoViewTest {
         val userInput = lottoView.getManualLottoCount()
         assertThat(userInput).isInstanceOf(UserInputResult.Failure::class.java)
         val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
-        assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
+        assertThat(userInputFail.errorLottoException.msg).contains("올바르지 않은 형식입니다")
     }
 
     @Test
@@ -98,7 +98,7 @@ class LottoViewTest {
         setInput("1,2,3,4,5,2ㅂ34")
         val userInput = lottoView.getWinningLotto()
         val userInputFail: UserInputResult.Failure<List<Int>> = userInput as UserInputResult.Failure
-        assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
+        assertThat(userInputFail.errorLottoException.msg).contains("올바르지 않은 형식입니다")
     }
 
     @Test
@@ -115,7 +115,7 @@ class LottoViewTest {
         setInput("11r")
         val userInput = lottoView.getBonusNum()
         val userInputFail: UserInputResult.Failure<Int> = userInput as UserInputResult.Failure
-        assertThat(userInputFail.errorMessage.msg).contains("올바르지 않은 형식입니다")
+        assertThat(userInputFail.errorLottoException.msg).contains("올바르지 않은 형식입니다")
     }
 
     @Test

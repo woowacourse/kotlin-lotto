@@ -1,6 +1,6 @@
 package lotto.domain
 
-import lotto.global.Message
+import lotto.global.LottoException
 
 data class UserInput(
     val buyAmount: Int,
@@ -45,9 +45,9 @@ data class UserInput(
     }
 
     init {
-        requireNotNull(getValidBuyAmountOrNull(buyAmount)) { Message.ERR_LESS_THAN_MINIMUM_PRICE.msg }
-        requireNotNull(getValidManualLottoCountOrNull(manualLottoCount, buyAmount)) { Message.ERR_TOO_MANY_MANUAL_LOTTO.msg }
-        requireNotNull(getValidManualLottoSizeOrNull(manualLottoCount, rawManualLotto)) { Message.ERR_MANUAL_NOT_SUFFICIENT.msg }
+        requireNotNull(getValidBuyAmountOrNull(buyAmount)) { LottoException.ERR_LESS_THAN_MINIMUM_PRICE.msg }
+        requireNotNull(getValidManualLottoCountOrNull(manualLottoCount, buyAmount)) { LottoException.ERR_TOO_MANY_MANUAL_LOTTO.msg }
+        requireNotNull(getValidManualLottoSizeOrNull(manualLottoCount, rawManualLotto)) { LottoException.ERR_MANUAL_NOT_SUFFICIENT.msg }
     }
 
     companion object {

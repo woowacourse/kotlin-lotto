@@ -1,12 +1,12 @@
 package lotto.domain
 
-import lotto.global.Message
+import lotto.global.LottoException
 
 data class Lotto(
     val value: Set<LottoNumber>,
 ) {
     init {
-        require(value.size == MAX_LOTTO_LENGTH) { Message.ERR_NOT_SIX_ELEMENTS.msg }
+        require(value.size == MAX_LOTTO_LENGTH) { LottoException.ERR_NOT_SIX_ELEMENTS.msg }
     }
 
     fun contains(element: LottoNumber): Boolean = value.contains(element)
@@ -20,7 +20,7 @@ data class Lotto(
         fun of(vararg numbers: Int): Lotto = of(numbers.toList())
 
         fun of(numbers: List<Int>): Lotto {
-            require(numbers.distinct().size == numbers.size) { Message.ERR_ELEMENT_DUPLICATED.msg }
+            require(numbers.distinct().size == numbers.size) { LottoException.ERR_ELEMENT_DUPLICATED.msg }
             return Lotto(
                 numbers
                     .map {

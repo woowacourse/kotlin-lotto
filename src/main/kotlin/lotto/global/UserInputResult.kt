@@ -8,7 +8,7 @@ sealed class UserInputResult<T> {
     ) : UserInputResult<T>()
 
     data class Failure<T>(
-        val errorMessage: Message,
+        val errorLottoException: LottoException,
     ) : UserInputResult<T>()
 
     fun get(): T {

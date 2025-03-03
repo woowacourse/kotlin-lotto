@@ -4,31 +4,37 @@ import lotto.domain.Lotto
 import lotto.domain.Rank
 import lotto.domain.RankScoreBoard
 import lotto.domain.UserInput
-import lotto.global.Message
+import lotto.global.LottoException
 import lotto.global.UserInputResult
 
 class LottoView {
     fun getBuyAmount(): UserInputResult<Int> {
-        println(Message.ASK_AMOUNT.msg)
-        val input = readln().toIntOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
-        return UserInputResult.Success(input)
+        println(ASK_AMOUNT)
+        val input = readln()
+        LottoException.ERR_INVALID_FORMAT.userInput = input
+        val result = input.toIntOrNull() ?: return UserInputResult.Failure(LottoException.ERR_INVALID_FORMAT)
+        return UserInputResult.Success(result)
     }
 
     fun getManualLottoCount(): UserInputResult<Int> {
-        println(Message.ASK_MANUAL_LOTTO_AMOUNT.msg)
-        val input = readln().toIntOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
-        return UserInputResult.Success(input)
+        val input = readln()
+        println(ASK_MANUAL_LOTTO_AMOUNT)
+        LottoException.ERR_INVALID_FORMAT.userInput = input
+        val result = input.toIntOrNull() ?: return UserInputResult.Failure(LottoException.ERR_INVALID_FORMAT)
+        return UserInputResult.Success(result)
     }
 
     fun getManualLotto(): UserInputResult<List<List<Int>>> {
-        println(Message.ASK_MANUAL_LOTTO.msg)
-        val input =
+        println(ASK_MANUAL_LOTTO)
+        val input = readln()
+        LottoException.ERR_INVALID_FORMAT.userInput = input
+        val result =
             runCatching {
-                readln().split("\\n").map {
+                input.split("\\n").map {
                     it.split(",").map { it.toInt() }
                 }
-            }.getOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
-        return UserInputResult.Success(input)
+            }.getOrNull() ?: return UserInputResult.Failure(LottoException.ERR_INVALID_FORMAT)
+        return UserInputResult.Success(result)
     }
 
     fun printLotto(
@@ -41,17 +47,21 @@ class LottoView {
     }
 
     fun getWinningLotto(): UserInputResult<List<Int>> {
-        println(Message.ASK_WINNING_LOTTO.msg)
+        println(ASK_WINNING_LOTTO)
+        val input = readln()
+        LottoException.ERR_INVALID_FORMAT.userInput = input
         val userInput =
             runCatching {
-                readln().split(",").map { it.toInt() }
-            }.getOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
+                input.split(",").map { it.toInt() }
+            }.getOrNull() ?: return UserInputResult.Failure(LottoException.ERR_INVALID_FORMAT)
         return UserInputResult.Success(userInput)
     }
 
     fun getBonusNum(): UserInputResult<Int> {
-        println(Message.ASK_BONUS_BALL.msg)
-        val userInput = readln().toIntOrNull() ?: return UserInputResult.Failure(Message.ERR_INVALID_FORMAT)
+        println(ASK_BONUS_BALL)
+        val input = readln()
+        LottoException.ERR_INVALID_FORMAT.userInput = input
+        val userInput = input.toIntOrNull() ?: return UserInputResult.Failure(LottoException.ERR_INVALID_FORMAT)
         return UserInputResult.Success(userInput)
     }
 
@@ -71,7 +81,15 @@ class LottoView {
         )
     }
 
-    fun printMessage(message: Message) {
-        println(message.msg)
+    fun printMessage(lottoException: LottoException) {
+        println(lottoException.msg + "입력 값 : ${lottoException.userInput}")
+    }
+
+    companion object {
+        private const val ASK_AMOUNT = "구입금액을 입력해 주세요."
+        private const val ASK_WINNING_LOTTO = "지난 주 당첨 번호를 입력해 주세요."
+        private const val ASK_BONUS_BALL = "보너스 볼을 입력해 주세요."
+        private const val ASK_MANUAL_LOTTO_AMOUNT = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val ASK_MANUAL_LOTTO = "수동으로 구매할 번호를 입력해 주세요."
     }
 }

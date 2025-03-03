@@ -1,6 +1,6 @@
 package lotto.domain
 
-import lotto.global.Message
+import lotto.global.LottoException
 
 class LottoNumber private constructor(
     val value: Int,
@@ -10,7 +10,7 @@ class LottoNumber private constructor(
         const val MIN_LOTTO_NUMBER = 1
         private val pool = (MIN_LOTTO_NUMBER..MAX_LOTTO_NUMBER).map { LottoNumber(it) }.associateBy { it.value }
 
-        fun of(value: Int): LottoNumber = pool[value] ?: throw IllegalArgumentException(Message.ERR_NOT_IN_RANGE.msg)
+        fun of(value: Int): LottoNumber = pool[value] ?: throw IllegalArgumentException(LottoException.ERR_NOT_IN_RANGE.msg)
     }
 
     override fun toString(): String = value.toString()
