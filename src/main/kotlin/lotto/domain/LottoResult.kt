@@ -1,7 +1,5 @@
 package lotto.domain
 
-import lotto.service.LottoAmountCalculator
-
 class LottoResult(
     private val lottos: List<Lotto>,
     private val winningLotto: WinningLotto,
@@ -18,7 +16,7 @@ class LottoResult(
 
     fun calculateProfitRate(): Double {
         val totalWinningMoney = getRanks().sumOf { it.winningMoney }
-        val totalCost = lottos.size * LottoAmountCalculator.LOTTO_PRICE
+        val totalCost = lottos.size * Price.LOTTO_PRICE
         return totalWinningMoney.toDouble() / totalCost
     }
 }
