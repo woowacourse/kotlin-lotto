@@ -22,11 +22,27 @@ class LottoController(
         val allLottos = getAllLottos(lottoQuantity, LottoMachine(AutoLottoGenerator()))
         showPurchaseLottosInfo(lottoQuantity, allLottos)
 
-        val winningNumbers = inputView.readWinningNumbers().mapToLottoNumbers()
-        val bonusNumber = inputView.readBonusNumber().mapToLottoNumber()
+        val winningNumbers = getWinningNumbers()
+        val bonusNumber = getBonusNumber()
 
         showTotalResult(allLottos, winningNumbers, bonusNumber, lottoQuantity)
     }
+
+    private fun getWinningNumbers(): Set<LottoNumber> =
+        runCatching {
+            inputView.readWinningNumbers().mapToLottoNumbers()
+        }.getOrElse { error ->
+            println(error.message)
+            getWinningNumbers()
+        }
+
+    private fun getBonusNumber(): LottoNumber =
+        runCatching {
+            inputView.readBonusNumber().mapToLottoNumber()
+        }.getOrElse { error ->
+            println(error.message)
+            getBonusNumber()
+        }
 
     private fun showTotalResult(
         allLottos: Lottos,
@@ -52,11 +68,28 @@ class LottoController(
     }
 
     private fun getLottoQuantity(): LottoQuantity {
-        val amount = inputView.readPurchaseAmount()
-        val manualLottoQuantity = inputView.readManualPurchaseQuantity()
+        val amount = getAmount()
+        val manualLottoQuantity = getManualLottoQuantity()
         val lottoQuantity = LottoQuantity(amount, manualLottoQuantity)
         return lottoQuantity
     }
+
+    private fun getAmount(): Int =
+        runCatching {
+            inputView.readPurchaseAmount()
+        }.getOrElse { error ->
+            println(error.message)
+            getAmount()
+        }
+
+    private fun getManualLottoQuantity(): Int =
+        kotlin
+            .runCatching {
+                inputView.readManualPurchaseQuantity()
+            }.getOrElse { error ->
+                println(error)
+                getManualLottoQuantity()
+            }
 
     private fun getAllLottos(
         lottoQuantity: LottoQuantity,
