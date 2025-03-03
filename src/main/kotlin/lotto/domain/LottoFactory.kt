@@ -1,15 +1,15 @@
 package lotto.domain
 
-import lotto.service.AutoLottoGenerator
-import lotto.service.ManualLottoGenerator
+import lotto.service.AutoLottoNumberGenerator
+import lotto.service.ManualLottoNumberGenerator
 
 class LottoFactory {
-    fun generateAutoLotto(generator: AutoLottoGenerator): Lotto {
-        return Lotto(generator.generate())
+    fun generateAutoLotto(generator: AutoLottoNumberGenerator): Lotto {
+        return Lotto(generator.generateLottoNumbers())
     }
 
     fun generateManualLotto(numbers: List<Int>): Lotto {
-        val generator = ManualLottoGenerator(numbers)
-        return Lotto(generator.generate())
+        val generator = ManualLottoNumberGenerator(numbers)
+        return Lotto(generator.generateLottoNumbers())
     }
 }
