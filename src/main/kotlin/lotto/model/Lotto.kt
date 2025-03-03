@@ -23,7 +23,7 @@ data class Lotto(
 
     fun getMatchCount(lotto: Lotto): Int =
         numbers.count { number ->
-            lotto.numbers.contains(number)
+            lotto.containsNumber(number)
         }
 
     fun containsNumber(number: LottoNumber): Boolean = numbers.contains(number)
