@@ -1,7 +1,7 @@
 package lotto.domain.valueobject
 
 data class PrizeMoney(
-    val money: Int,
+    val money: Long,
 ) {
     init {
         require(money >= 0) { ERROR_NEGATIVE_NUMBER }

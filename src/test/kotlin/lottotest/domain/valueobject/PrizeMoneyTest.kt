@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class PrizeMoneyTest {
     @ParameterizedTest
-    @ValueSource(ints = [-1, -1000])
-    fun `당첨 금액이 음수라면 인스턴스를 생성하지 않는다`(money: Int) {
+    @ValueSource(longs = [-1, -1000])
+    fun `당첨 금액이 음수라면 인스턴스를 생성하지 않는다`(money: Long) {
         // when then
         assertThrows<IllegalArgumentException> {
             PrizeMoney(money)
@@ -17,8 +17,8 @@ class PrizeMoneyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [0, 1, 123456])
-    fun `당첨 금액을 입력 받으면 당첨 금액 값을 보관한다`(money: Int) {
+    @ValueSource(longs = [0, 1, 123456])
+    fun `당첨 금액을 입력 받으면 당첨 금액 값을 보관한다`(money: Long) {
         // when then
         assertThat(PrizeMoney(money).money).isEqualTo(money)
     }

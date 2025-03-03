@@ -40,7 +40,7 @@ class WinningStatisticsTest {
     ) {
         // Given
         val winRankMap = rawWinRankMap.mapValues { (_, value) -> ObjectQuantity(value) }
-        val expectedPrizeMoney: Int = rawWinRankMap.map { (rank, value) -> rank.winningMoney * value }.sum()
+        val expectedPrizeMoney: Long = rawWinRankMap.map { (rank, value) -> rank.winningMoney.toLong() * value }.sum()
 
         // When
         val winningStatistics = WinningStatistics(lottoPaymentMoney, winRankMap)

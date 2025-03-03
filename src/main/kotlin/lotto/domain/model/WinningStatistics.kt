@@ -22,7 +22,7 @@ class WinningStatistics(
     }
 
     fun getTotalPrizeMoney(): PrizeMoney {
-        val rawPrizeMoney: Int = winRankCounts.map { (rank, value) -> rank.winningMoney * value.quantity }.sum()
+        val rawPrizeMoney: Long = winRankCounts.map { (rank, value) -> rank.winningMoney * value.quantity }.sumOf { it.toLong() }
         return PrizeMoney(rawPrizeMoney)
     }
 
