@@ -11,14 +11,14 @@ class LottoResult(
 
     fun getRankMatchCount(rank: Rank): Int = result[rank] ?: 0
 
-    fun getProfitRate(purchasePrice: PurchasePrice): String {
+    fun getProfitRate(purchasePrice: Int): String {
         val totalPrice: Double =
             result
                 .map { (rank, amount) ->
                     rank.winningMoney * amount
                 }.sum()
                 .toDouble()
-        return ROUND.format(totalPrice / purchasePrice.value)
+        return ROUND.format(totalPrice / purchasePrice)
     }
 
     private fun getWinningMessage(

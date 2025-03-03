@@ -1,18 +1,16 @@
 package domain.model
 
-import domain.model.Lotto.Companion.ERROR
-import domain.service.AutoLottoGenerator.Companion.LOTTO_MAX
-import domain.service.AutoLottoGenerator.Companion.LOTTO_MIN
-
 @JvmInline
-value class LottoNumber(
+value class LottoNumber private constructor(
     val value: Int,
 ) {
-    init {
-        require(value in LOTTO_MIN..LOTTO_MAX) { INVALID_BONUS_NUMBER }
-    }
+    override fun toString(): String = value.toString()
 
     companion object {
-        const val INVALID_BONUS_NUMBER = "$ERROR 로또 번호는 1부터 45 사이입니다."
+        private const val MINIMUM_NUMBER = 1
+        private const val MAXIMUM_NUMBER = 45
+        private val NUMBERS: Map<Int, LottoNumber> = (MINIMUM_NUMBER..MAXIMUM_NUMBER).associateWith(::LottoNumber)
+
+        fun from(value: Int): LottoNumber = NUMBERS[value] ?: throw IllegalArgumentException()
     }
 }
