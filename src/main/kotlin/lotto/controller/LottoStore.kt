@@ -27,7 +27,11 @@ class LottoStore(
     }
 
     private fun getLottoCount(): PurchaseCount {
-        val purchaseAmount: PurchaseAmount = inputView.inputPurchaseAmount()
+        var purchaseAmount: PurchaseAmount? = null
+        while (purchaseAmount == null) {
+            purchaseAmount = inputView.inputPurchaseAmount()
+        }
+
         val totalCount: Int = purchaseAmount.calculatePurchaseLottoCount()
         val manualCount: Int = inputView.inputManualCount()
         return PurchaseCount.from(totalCount, manualCount)
