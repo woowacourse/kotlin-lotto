@@ -8,7 +8,10 @@ class Price(
     }
 
     private fun validatePurchaseAmount() {
-        require(price % LOTTO_PRICE == 0) { "로또는 ${LOTTO_PRICE}원 단위로 구입해주세요" }
+        if (price % LOTTO_PRICE != 0) {
+            val change = price % LOTTO_PRICE
+            println("구입 금액이 1000원 단위가 아닙니다. 거스름돈 ${change}원을 반환합니다.")
+        }
     }
 
     companion object {
