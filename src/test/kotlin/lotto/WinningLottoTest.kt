@@ -2,6 +2,7 @@ package lotto
 
 import lotto.model.Lotto
 import lotto.model.LottoNumber
+import lotto.model.Rank
 import lotto.model.WinningLotto
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
@@ -45,5 +46,14 @@ class WinningLottoTest {
         assertDoesNotThrow {
             WinningLotto(winningNumber, bonusNumber)
         }
+    }
+
+    @Test
+    fun `구입한 로또를 넣어주면, 등수를 반환한다`() {
+        val lotto = Lotto(1, 2, 3, 4, 5, 6)
+        val bonusNumber = LottoNumber(7)
+        val winningLotto = WinningLotto(winningNumber, bonusNumber)
+
+        assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.FIRST)
     }
 }
