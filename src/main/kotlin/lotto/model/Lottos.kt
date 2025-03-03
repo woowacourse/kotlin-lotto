@@ -23,6 +23,6 @@ class Lottos(
     ): Rank {
         val matchCount = lotto.getMatchCount(winningLotto.winningNumbers)
         val isBonusMatched = lotto.containsNumber(winningLotto.bonusNumber)
-        return Rank.findRank(matchCount, isBonusMatched)
+        return Rank.calculate(matchCount, isBonusMatched)
     }
 }

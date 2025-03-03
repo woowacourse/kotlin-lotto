@@ -23,6 +23,6 @@ class RankTest {
         isMatchedBonus: Boolean,
         expected: Rank,
     ) {
-        assertThat(Rank.findRank(matchCount, isMatchedBonus)).isEqualTo(expected)
+        assertThat(Rank.calculate(matchCount, isMatchedBonus)).isEqualTo(expected)
     }
 }
