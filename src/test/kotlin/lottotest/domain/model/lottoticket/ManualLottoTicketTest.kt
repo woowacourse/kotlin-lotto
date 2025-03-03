@@ -1,6 +1,6 @@
-package lottotest.domain.model
+package lottotest.domain.model.lottoticket
 
-import lotto.domain.model.ManualLottoTicket
+import lotto.domain.model.lottoticket.ManualLottoTicket
 import lotto.domain.valueobject.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows

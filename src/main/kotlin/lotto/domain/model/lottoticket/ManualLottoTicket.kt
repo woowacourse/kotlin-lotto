@@ -1,4 +1,4 @@
-package lotto.domain.model
+package lotto.domain.model.lottoticket
 
 import lotto.domain.valueobject.LottoNumber
 

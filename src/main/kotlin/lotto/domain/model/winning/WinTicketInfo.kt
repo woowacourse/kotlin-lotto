@@ -1,5 +1,6 @@
-package lotto.domain.model
+package lotto.domain.model.winning
 
+import lotto.domain.model.lottoticket.LottoTicket
 import lotto.domain.valueobject.LottoNumber
 
 class WinTicketInfo(

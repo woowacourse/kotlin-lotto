@@ -1,9 +1,9 @@
 package lotto.view
 
-import lotto.domain.model.GainLoss
-import lotto.domain.model.LottoTicket
-import lotto.domain.model.Rank
-import lotto.domain.model.WinningStatistics
+import lotto.domain.model.lottoticket.LottoTicket
+import lotto.domain.model.winning.GainLoss
+import lotto.domain.model.winning.Rank
+import lotto.domain.model.winning.WinningStatistics
 import lotto.domain.valueobject.EarningRate
 import lotto.domain.valueobject.ObjectQuantity
 

@@ -1,4 +1,4 @@
-package lotto.domain.model
+package lotto.domain.model.winning
 
 import lotto.domain.valueobject.EarningRate
 import lotto.domain.valueobject.LottoPaymentMoney

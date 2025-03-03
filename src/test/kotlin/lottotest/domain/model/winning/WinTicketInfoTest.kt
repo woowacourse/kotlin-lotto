@@ -1,9 +1,9 @@
-package lottotest.domain.model
+package lottotest.domain.model.winning
 
-import lotto.domain.model.LottoTicket
-import lotto.domain.model.ManualLottoTicket
-import lotto.domain.model.Rank
-import lotto.domain.model.WinTicketInfo
+import lotto.domain.model.lottoticket.LottoTicket
+import lotto.domain.model.lottoticket.ManualLottoTicket
+import lotto.domain.model.winning.Rank
+import lotto.domain.model.winning.WinTicketInfo
 import lotto.domain.valueobject.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows

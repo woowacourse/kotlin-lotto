@@ -1,7 +1,7 @@
-package lottotest.domain.model
+package lottotest.domain.model.winning
 
-import lotto.domain.model.Rank
-import lotto.domain.model.WinningStatistics
+import lotto.domain.model.winning.Rank
+import lotto.domain.model.winning.WinningStatistics
 import lotto.domain.valueobject.LottoPaymentMoney
 import lotto.domain.valueobject.ObjectQuantity
 import org.assertj.core.api.Assertions.assertThat

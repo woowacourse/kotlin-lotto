@@ -1,5 +1,7 @@
-package lotto.domain.model
+package lotto.domain.model.lottoticket
 
+import lotto.domain.model.winning.Rank
+import lotto.domain.model.winning.WinTicketInfo
 import lotto.domain.valueobject.LottoNumber
 
 interface LottoTicket {

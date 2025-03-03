@@ -1,6 +1,6 @@
-package lottotest.domain.model
+package lottotest.domain.model.winning
 
-import lotto.domain.model.GainLoss
+import lotto.domain.model.winning.GainLoss
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
