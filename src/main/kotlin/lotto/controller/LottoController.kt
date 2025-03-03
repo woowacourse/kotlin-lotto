@@ -4,6 +4,7 @@ import lotto.domain.AutoLottoMachine
 import lotto.domain.LottoMatcher
 import lotto.domain.ManualLottoMachine
 import lotto.domain.PrizeCalculator
+import lotto.domain.model.Amount
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoPurchaseInfo
@@ -20,20 +21,20 @@ class LottoController(
         val winningLotto = getWinningLotto()
         val bonusNumber = getBonusNumber()
         val lottoMatcher = LottoMatcher(winningLotto, bonusNumber)
-        showEarningRate(lottoPurchaseInfo, lottoMatcher, publishedLotto)
+        showEarningRate(lottoPurchaseInfo.amount, lottoMatcher, publishedLotto)
     }
 
     private fun getLottoPurchaseInfo(): LottoPurchaseInfo {
         outputView.printAmountMessage()
-        val amountInput = inputView.getSingleNumber()
+        val amount = Amount(inputView.getSingleNumber())
         outputView.printManualLottoCountMessage()
         val countInput = inputView.getSingleNumber()
-        return LottoPurchaseInfo(amountInput, countInput)
+        return LottoPurchaseInfo(amount, countInput)
     }
 
     private fun getLottoNumbersByManual(lottoPurchaseInfo: LottoPurchaseInfo): List<Lotto> {
         if (lottoPurchaseInfo.manualLottoCount <= 0) {
-            return emptyList()
+            return ManualLottoMachine().publishLottoTickets(lottoPurchaseInfo)
         }
         outputView.printManualLottoNumberMessage()
         val manualNumbers =
@@ -64,12 +65,12 @@ class LottoController(
     }
 
     private fun showEarningRate(
-        lottoPurchaseInfo: LottoPurchaseInfo,
+        amount: Amount,
         lottoMatcher: LottoMatcher,
         publishedLotto: List<Lotto>,
     ) {
         val result = lottoMatcher.matchLotto(publishedLotto)
-        val earningRate = PrizeCalculator().calculateEarningRate(lottoPurchaseInfo.amount, result)
+        val earningRate = PrizeCalculator().calculateEarningRate(amount.value, result)
         outputView.printPrize(result, earningRate)
     }
 }
