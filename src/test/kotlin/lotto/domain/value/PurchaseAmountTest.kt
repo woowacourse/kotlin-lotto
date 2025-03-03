@@ -1,5 +1,7 @@
 package lotto.domain.value
 
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -36,5 +38,12 @@ class PurchaseAmountTest {
         assertThrows<IllegalArgumentException> {
             PurchaseAmount(amount)
         }
+    }
+
+    @Test
+    fun `구입 금액이 3000원이면 구입 수량은 3이다`() {
+        val amount = PurchaseAmount(3000)
+        val quantity = amount.getPurchaseQuantity()
+        assertThat(quantity.count).isEqualTo(3)
     }
 }

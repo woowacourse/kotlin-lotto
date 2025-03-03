@@ -8,5 +8,5 @@ fun main() {
     val inputView = InputView()
     val outputView = OutputView()
     val controller = LottoController(inputView, outputView)
-    controller.runLotto()
+    controller.run()
 }
