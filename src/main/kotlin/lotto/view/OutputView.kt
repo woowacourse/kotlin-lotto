@@ -39,6 +39,10 @@ object OutputView {
         println(message)
     }
 
+    fun printNumberErrorMessage() {
+        println("유효한 숫자를 입력해주세요.")
+    }
+
     private fun printHeader() {
         println("\n당첨 통계")
         println("---------")

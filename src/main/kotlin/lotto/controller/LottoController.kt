@@ -5,6 +5,7 @@ import lotto.domain.LottoFactory
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.ManualLottoAmount
+import lotto.domain.Price
 import lotto.domain.WinningLotto
 import lotto.service.AutoLottoNumberGenerator
 import lotto.service.LottoAmountCalculator
@@ -17,7 +18,7 @@ class LottoController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val price: Int = getPurchasePrice()
+        val price: Price = getPurchasePrice()
         val lottoAmount: Int = getLottoAmount(price)
         val manualLottoAmount: ManualLottoAmount = getManualAmount(lottoAmount)
         val autoLottoAmount: Int = lottoAmount - manualLottoAmount.amount
@@ -61,25 +62,35 @@ class LottoController(
         return manualLottos
     }
 
-    private fun getLottoAmount(price: Int): Int {
-        return LottoAmountCalculator(price).calculateAmountOfLottos()
+    private fun getLottoAmount(price: Price): Int {
+        return LottoAmountCalculator(price.price).calculateAmountOfLottos()
     }
 
     private fun getManualAmount(lottoAmount: Int): ManualLottoAmount {
-        val input = inputView.inputManualLottoAmount()
-        return ManualLottoAmount(input, lottoAmount)
+        while (true) {
+            val input = inputView.inputManualLottoAmount()
+            if (input != null) {
+                runCatching {
+                    return ManualLottoAmount(input, lottoAmount)
+                }.onFailure { e ->
+                    outputView.printErrorMessage(e.message)
+                }
+            }
+        }
     }
 
-    private fun getPurchasePrice(): Int =
-        retryWhenException(
-            action = {
-                val input = inputView.inputPurchasePrice()
-                input
-            },
-            onError = {
-                outputView.printErrorMessage(it)
-            },
-        )
+    private fun getPurchasePrice(): Price {
+        while (true) {
+            val input = inputView.inputPurchasePrice()
+            if (input != null) {
+                runCatching {
+                    return Price(input)
+                }.onFailure { e ->
+                    outputView.printErrorMessage(e.message)
+                }
+            }
+        }
+    }
 
     private fun getWinningNumbers(): Lotto =
         retryWhenException(
@@ -92,14 +103,16 @@ class LottoController(
             },
         )
 
-    private fun getBonusNumber(): LottoNumber =
-        retryWhenException(
-            action = {
-                val input = InputView.inputBonusNumber()
-                LottoNumber(input)
-            },
-            onError = {
-                outputView.printErrorMessage(it)
-            },
-        )
+    private fun getBonusNumber(): LottoNumber {
+        while (true) {
+            val input = inputView.inputBonusNumber()
+            if (input != null) {
+                runCatching {
+                    return LottoNumber(input)
+                }.onFailure { e ->
+                    outputView.printErrorMessage(e.message)
+                }
+            }
+        }
+    }
 }
