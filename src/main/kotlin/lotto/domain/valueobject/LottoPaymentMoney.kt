@@ -2,7 +2,8 @@ package lotto.domain.valueobject
 
 import kotlin.require
 
-data class LottoPaymentMoney(
+@JvmInline
+value class LottoPaymentMoney(
     val money: Int,
 ) {
     init {

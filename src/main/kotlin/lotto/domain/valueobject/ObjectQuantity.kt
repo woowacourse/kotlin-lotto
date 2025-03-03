@@ -1,6 +1,7 @@
 package lotto.domain.valueobject
 
-data class ObjectQuantity(
+@JvmInline
+value class ObjectQuantity(
     val quantity: Int,
 ) : Comparable<ObjectQuantity> {
     init {

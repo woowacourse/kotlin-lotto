@@ -1,6 +1,7 @@
 package lotto.domain.valueobject
 
-data class LottoNumber(
+@JvmInline
+value class LottoNumber(
     val value: Int,
 ) {
     init {

@@ -1,6 +1,7 @@
 package lotto.domain.valueobject
 
-data class EarningRate(
+@JvmInline
+value class EarningRate(
     val rate: Double,
 ) {
     init {

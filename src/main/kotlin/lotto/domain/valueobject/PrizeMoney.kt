@@ -1,6 +1,7 @@
 package lotto.domain.valueobject
 
-data class PrizeMoney(
+@JvmInline
+value class PrizeMoney(
     val money: Long,
 ) {
     init {
