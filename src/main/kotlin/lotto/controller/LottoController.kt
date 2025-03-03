@@ -39,7 +39,7 @@ class LottoController(
 
         val matchResults =
             allLottos
-                .groupingBy { it.match(winningLotto) }
+                .groupingBy { winningLotto.match(it) }
                 .eachCount()
 
         val profitRate = LottoStatisticResult().calculateProfit(purchaseAmount, matchResults)

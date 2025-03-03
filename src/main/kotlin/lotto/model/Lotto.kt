@@ -7,11 +7,7 @@ class Lotto(
         require(numbers.size == LOTTO_NUMBERS_SIZE) { LOTTO_COUNT_MESSAGE }
     }
 
-    fun match(winning: WinningLotto): Rank {
-        val matchCount = numbers.count { winning.contains(it) }
-        val bonusMatch = winning.isBonusMatch(this)
-        return Rank.valueOf(matchCount, bonusMatch)
-    }
+    fun matchCount(other: Lotto): Int = numbers.count { other.contains(it) }
 
     fun contains(number: LottoNumber): Boolean = numbers.contains(number)
 
