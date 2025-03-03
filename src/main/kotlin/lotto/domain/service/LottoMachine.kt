@@ -3,8 +3,31 @@ package lotto.domain.service
 import lotto.Constants
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
+import lotto.domain.model.LottoTicketResult
 
 class LottoMachine {
+    fun generateManualTicket(
+        input: () -> List<Int>,
+        count: Int,
+    ): List<LottoTicket> {
+        val manualTickets = mutableListOf<LottoTicket>()
+
+        repeat(count) {
+            val numbers = input()
+            val result = LottoTicket.create(numbers.map { LottoNumber(it) })
+            when (result) {
+                is LottoTicketResult.Success -> {
+                    manualTickets.add(result.ticket)
+                }
+
+                is LottoTicketResult.InvalidCount -> throw IllegalArgumentException(ERROR_LOTTO_INVALID_COUNT)
+                is LottoTicketResult.DuplicateNumbers -> throw IllegalArgumentException(ERROR_LOTTO_DUPLICATE)
+            }
+        }
+
+        return manualTickets
+    }
+
     fun generateAutoTicket(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateAutoLotto()) }
 
     fun calculateTotalCount(purchaseAmount: Int) = purchaseAmount / Constants.LOTTO_AMOUNT
