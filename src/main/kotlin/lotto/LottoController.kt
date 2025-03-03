@@ -45,8 +45,8 @@ class LottoController(
         manyLotto: List<Lotto>,
         winningLottoTicket: WinningLottoTicket,
     ) {
-        val rankMap = winningLottoTicket.findLottoRanks(manyLotto)
-        lottoView.printResult(rankMap)
+        val rankScoreBoard = winningLottoTicket.findLottoRanks(manyLotto)
+        lottoView.printResult(rankScoreBoard)
     }
 
     private fun getUserInput(): UserInput {

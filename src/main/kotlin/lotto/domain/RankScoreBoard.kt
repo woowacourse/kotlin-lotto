@@ -1,7 +1,7 @@
 package lotto.domain
 
 // 각 등수 : 나온 숫자 의 맵을 저장하는 일급컬렉션
-data class ScoreRankMap(
+data class RankScoreBoard(
     val map: Map<Rank, Int>,
 ) {
     init {
@@ -24,9 +24,9 @@ data class ScoreRankMap(
     }
 
     companion object {
-        fun of(rawMap: Map<Rank, Int>): ScoreRankMap {
+        fun of(rawMap: Map<Rank, Int>): RankScoreBoard {
             val map = Rank.entries.associateWith { rawMap[it] ?: 0 }
-            return ScoreRankMap(map)
+            return RankScoreBoard(map)
         }
     }
 }

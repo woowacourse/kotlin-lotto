@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class ScoreRankMapTest {
+class RankScoreBoardTest {
     @Test
     @DisplayName("복권의 구매액과 총 당첨 정보를 입력받아 수익률을 반환한다")
     fun t1() {
@@ -34,8 +34,8 @@ class ScoreRankMapTest {
             )
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
-        val rankMap = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
-        val result = rankMap.getRate()
+        val rankScoreBoard = WinningLottoTicket(winningLotto, bonus).findLottoRanks(manyLotto)
+        val result = rankScoreBoard.getRate()
         assertThat(result).isEqualTo("3.33")
     }
 

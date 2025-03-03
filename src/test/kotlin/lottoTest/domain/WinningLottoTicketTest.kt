@@ -3,7 +3,7 @@ package lottoTest.domain
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 import lotto.domain.Rank
-import lotto.domain.ScoreRankMap
+import lotto.domain.RankScoreBoard
 import lotto.domain.WinningLottoTicket
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -19,7 +19,7 @@ class WinningLottoTicketTest {
     @DisplayName("복권을 구매한 숫자만큼 복권의 당첨 등수를 반환한다")
     fun t1(
         manyLotto: List<Lotto>,
-        scoreMap: ScoreRankMap,
+        scoreMap: RankScoreBoard,
     ) {
         val winningLotto = Lotto.of(1, 2, 3, 4, 5, 6)
         val bonus = LottoNumber.of(7)
@@ -60,7 +60,7 @@ class WinningLottoTicketTest {
                         Lotto.of(11, 12, 13, 14, 15, 16),
                         Lotto.of(11, 12, 13, 14, 15, 16),
                     ),
-                    ScoreRankMap.of(
+                    RankScoreBoard.of(
                         mapOf(Rank.MISS to 3),
                     ),
                 ),
@@ -70,7 +70,7 @@ class WinningLottoTicketTest {
                         Lotto.of(11, 12, 13, 14, 15, 16),
                         Lotto.of(11, 12, 13, 14, 15, 16),
                     ),
-                    ScoreRankMap.of(
+                    RankScoreBoard.of(
                         mapOf(
                             Rank.MISS to 2,
                             Rank.FOURTH to 1,
@@ -83,7 +83,7 @@ class WinningLottoTicketTest {
                         Lotto.of(1, 2, 3, 4, 5, 6),
                         Lotto.of(1, 2, 11, 10, 8, 9),
                     ),
-                    ScoreRankMap.of(
+                    RankScoreBoard.of(
                         mapOf(
                             Rank.MISS to 1,
                             Rank.FOURTH to 1,

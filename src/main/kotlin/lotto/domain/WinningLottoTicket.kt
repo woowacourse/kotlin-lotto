@@ -12,12 +12,12 @@ data class WinningLottoTicket(
         return Rank.getRank(countOfMatch, isBonusMatched)
     }
 
-    fun findLottoRanks(manyLotto: List<Lotto>): ScoreRankMap {
+    fun findLottoRanks(manyLotto: List<Lotto>): RankScoreBoard {
         val rankMap =
             manyLotto
                 .map { findLottoRank(it) }
                 .groupingBy { it }
                 .eachCount()
-        return ScoreRankMap.of(rankMap)
+        return RankScoreBoard.of(rankMap)
     }
 }
