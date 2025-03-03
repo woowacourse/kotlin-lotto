@@ -4,7 +4,7 @@ class Lotto(
     val numbers: Set<LottoNumber>,
 ) {
     init {
-        require(numbers.size == LOTTO_NUMBERS_SIZE) { LOTTO_COUNT_MESSAGE }
+        require(numbers.size == LOTTO_NUMBERS_SIZE) { "로또 번호는 ${LOTTO_NUMBERS_SIZE}개여야 합니다. 현재 입력된 갯수는 ${numbers.size}개 입니다." }
     }
 
     fun matchCount(other: Lotto): Int = numbers.count { other.contains(it) }
