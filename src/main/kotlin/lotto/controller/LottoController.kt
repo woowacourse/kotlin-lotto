@@ -52,16 +52,21 @@ class LottoController(
 
     private fun getLottoCount(purchaseMoney: LottoPurchaseAmount): LottoCount = LottoCount(purchaseMoney.getLottoCount())
 
-    private fun getManualLottoCount(totalLottoCount: LottoCount): LottoCount =
-        runCatching {
-            outputView.printManualLottoCountGuide()
+    private fun getManualLottoCount(totalLottoCount: LottoCount): LottoCount {
+        outputView.printManualLottoCountGuide()
+
+        return runCatching {
             val manualLottoCount: LottoCount = inputView.readManualLottoCount()
-            manualLottoCount.validateLottoMaxCount(totalLottoCount)
-            manualLottoCount
+            if (totalLottoCount.isAvailablePurchase(manualLottoCount)) {
+                manualLottoCount
+            } else {
+                getManualLottoCount(totalLottoCount)
+            }
         }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
             getManualLottoCount(totalLottoCount)
         }
+    }
 
     private fun getAutoLottoCount(
         totalLottoCount: LottoCount,

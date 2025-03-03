@@ -4,14 +4,26 @@ import lotto.model.LottoCount
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class LottoCountTest {
-    @Test
-    fun `수동 로또 개수가 총 로또 개수를 초과할 경우 예외를 발생한다`() {
-        val totalLottoCount = LottoCount(10)
-        val manualLottoCount = LottoCount(11)
+    @ParameterizedTest
+    @CsvSource(
+        "10, 11, false",
+        "11, 11, true",
+    )
+    fun `로또 개수 구매 가능 여부 테스트`(
+        totalLottoCountValue: Int,
+        manualLottoCountValue: Int,
+        expectedResult: Boolean,
+    ) {
+        val totalLottoCount = LottoCount(totalLottoCountValue)
+        val manualLottoCount = LottoCount(manualLottoCountValue)
 
-        assertThrows<IllegalArgumentException> { totalLottoCount.subtract(manualLottoCount) }
+        val result = totalLottoCount.isAvailablePurchase(manualLottoCount)
+
+        assertThat(result).isEqualTo(expectedResult)
     }
 
     @Test
