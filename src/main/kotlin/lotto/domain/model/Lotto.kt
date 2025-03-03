@@ -11,7 +11,7 @@ class Lotto private constructor(private val numbers: List<LottoNumber>) {
         }
     }
 
-    fun countMatchingNumber(lotto: Lotto): Int = numbers.count { it in lotto.numbers }
+    fun countMatchingNumber(lotto: Lotto): Int = numbers.count { number -> number in lotto.numbers }
 
     fun isContain(lottoNumber: LottoNumber): Boolean = lottoNumber in numbers
 
