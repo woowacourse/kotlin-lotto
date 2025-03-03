@@ -43,14 +43,20 @@ class OutputView {
         println()
         println("당첨 통계")
         println("---------")
-        Rank.entries
-            .filter { it.winningMoney > 0 }
-            .forEach { rank ->
-                println(
-                    "${rank.countOfMatch}개 일치${if (rank == Rank.SECOND) ", 보너스 볼 일치" else ""} " +
-                        "(${rank.winningMoney}원) - ${result.getOrDefault(rank, 0)}개",
-                )
-            }
+        result.forEach { (rank, matchCount) ->
+            if (rank == Rank.MISS) return@forEach
+            printRankResult(rank.countOfMatch, rank.winningMoney, matchCount, rank == Rank.SECOND)
+        }
         println("총 수익률은 ${"%.2f".format(earningRate)}입니다.")
+    }
+
+    private fun printRankResult(
+        countOfMatch: Int,
+        winningMoney: Int,
+        userCount: Int,
+        bonus: Boolean = false,
+    ) {
+        val bonusText = if (bonus) ", 보너스 볼 일치" else ""
+        println("${countOfMatch}개 일치$bonusText (${winningMoney}원)- ${userCount}개")
     }
 }
