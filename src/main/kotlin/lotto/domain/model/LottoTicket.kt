@@ -26,7 +26,7 @@ class LottoTicket(
         fun create(numbers: List<LottoNumber>): LottoTicketResult {
             if (numbers.size != Constants.LOTTO_PICK_COUNT) return LottoTicketResult.InvalidCount
             if (numbers.toSet().size != Constants.LOTTO_PICK_COUNT) return LottoTicketResult.DuplicateNumbers
-            return LottoTicketResult.Success(LottoTicket(numbers))
+            return LottoTicketResult.Success(LottoTicket(numbers.sortedBy { it.number }))
         }
     }
 }
