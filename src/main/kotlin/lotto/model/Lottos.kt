@@ -1,22 +1,16 @@
 package lotto.model
 
 class Lottos(
-    private val lottos: List<Lotto>,
+    private val manualLottos: List<Lotto>,
+    private val autoLottos: List<Lotto>,
 ) {
-    fun countLottoByRank(
-        winningNumbers: Set<Int>,
-        bonusNumber: Int,
-    ): Map<Rank, Int> {
-        val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
+    fun getTotalLottos(): List<Lotto> = manualLottos + autoLottos
 
-        lottos.forEach { lotto ->
-            val winningLotto = WinningLotto(lotto)
-            val rank = winningLotto.getRank(winningNumbers, bonusNumber)
-            countResult[rank] = countResult.getValue(rank) + 1
+    fun getAllLottoNumbers(): List<Set<Int>> {
+        val totalLottos = getTotalLottos()
+        return totalLottos.map { lotto ->
+            val numbers = lotto.numbers
+            numbers.map { it.number }.toSet()
         }
-
-        return countResult
     }
-
-    fun getAllLottoNumbers(): List<Set<LottoNumber>> = lottos.map { lotto -> lotto.numbers }
 }

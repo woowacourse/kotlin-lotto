@@ -1,5 +1,6 @@
 package lotto.model
 
+import lotto.model.LottoTest.Companion.makeTestLotto
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -15,11 +16,11 @@ class WinningLottoTest {
         lottoNumbers: Set<Int>,
         expectedRank: Rank,
     ) {
-        val lotto = Lotto.from(lottoNumbers)
+        val lotto = Lotto(makeTestLotto(lottoNumbers))
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
+        val winningNumbers = makeTestLotto(setOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(7)
 
         val rank = winningLotto.getRank(winningNumbers, bonusNumber)
 
@@ -28,10 +29,10 @@ class WinningLottoTest {
 
     @Test
     fun `보너스 번호가 일치하면서 5개의 번호가 동일한 경우 2등을 반환한다`() {
-        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 7
+        val winningNumbers = makeTestLotto(setOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(7)
 
-        val lotto = Lotto.from(setOf(1, 2, 3, 4, 5, 7))
+        val lotto = Lotto(makeTestLotto(setOf(1, 2, 3, 4, 5, 7)))
         val winningLotto = WinningLotto(lotto)
         val rank = winningLotto.getRank(winningNumbers, bonusNumber)
 
@@ -41,11 +42,11 @@ class WinningLottoTest {
     @Test
     fun `당첨 번호에서 중복되는 번호가 있을 경우 오류를 반환한다`() {
         val lottoNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val lotto = Lotto.from(lottoNumbers)
+        val lotto = Lotto(makeTestLotto(lottoNumbers))
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = setOf(1, 1, 2, 3, 4, 5)
-        val bonusNumber = 6
+        val winningNumbers = makeTestLotto(setOf(1, 1, 2, 3, 4, 5))
+        val bonusNumber = LottoNumber(6)
 
         assertThrows<IllegalArgumentException> {
             winningLotto.getRank(winningNumbers, bonusNumber)
@@ -55,11 +56,11 @@ class WinningLottoTest {
     @Test
     fun `당첨 번호는 중복되지 않았을 때, 보너스 번호와 중복되면 오류를 반환한다`() {
         val lottoNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val lotto = Lotto.from(lottoNumbers)
+        val lotto = Lotto(makeTestLotto(lottoNumbers))
         val winningLotto = WinningLotto(lotto)
 
-        val winningNumbers = setOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 1
+        val winningNumbers = makeTestLotto(setOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(1)
 
         assertThrows<IllegalArgumentException> {
             winningLotto.getRank(winningNumbers, bonusNumber)
