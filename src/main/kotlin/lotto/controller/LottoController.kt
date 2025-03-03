@@ -36,10 +36,12 @@ class LottoController(
                 val totalPurchaseCount =
                     handlePurchaseCount(PurchaseCount.from(purchaseAmount.getRemainPurchaseCount()))
                 val manualPurchaseCount = handlePurchaseCount(PurchaseCount.from(inputView.readManualLottoCount()))
-                val purchaseManualLottoCount = purchaseAmount.getPurchaseLottoCount(manualPurchaseCount.count)
+                val currentPurchaseAmount =
+                    handlePurchaseAmountResult(purchaseAmount.purchaseLotto(manualPurchaseCount.count))
+                val remainPurchaseCount = currentPurchaseAmount.getRemainPurchaseCount()
                 val purchaseRandomLottoCount =
-                    handlePurchaseCount(totalPurchaseCount.getRemainPurchaseCount(purchaseManualLottoCount))
-                getLottos(purchaseManualLottoCount, purchaseRandomLottoCount.count)
+                    handlePurchaseCount(totalPurchaseCount.getRemainPurchaseCount(remainPurchaseCount))
+                getLottos(manualPurchaseCount.count, purchaseRandomLottoCount.count)
             }
         outputView.printPurchaseLottoCount(lottos.getManualLottosCount(), lottos.getRandomLottosCount())
         lottos.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers) }
@@ -75,7 +77,7 @@ class LottoController(
     }
 
     private fun handlePurchaseCount(result: PurchaseCountResult): PurchaseCount {
-        when (result) {
+        return when (result) {
             PurchaseCountResult.InvalidCountNull -> throw IllegalArgumentException(INVALID_NUMBER_MESSAGE)
             is PurchaseCountResult.InvalidCountRange -> throw IllegalArgumentException(INVALID_MANUAL_COUNT)
             is PurchaseCountResult.PurchaseFail -> throw IllegalArgumentException(
@@ -85,12 +87,12 @@ class LottoController(
                 ),
             )
 
-            is PurchaseCountResult.Success -> return result.purchaseCount
+            is PurchaseCountResult.Success -> result.purchaseCount
         }
     }
 
     private fun handleLottoNumberResult(result: LottoNumberResult): LottoNumber {
-        when (result) {
+        return when (result) {
             LottoNumberResult.InvalidNumberNull -> throw IllegalArgumentException(INVALID_NUMBER_MESSAGE)
             is LottoNumberResult.InvalidNumberRange -> throw IllegalArgumentException(
                 INVALID_LOTTO_NUMBER_RANGE_MESSAGE.format(
@@ -98,13 +100,13 @@ class LottoController(
                 ),
             )
 
-            is LottoNumberResult.Success -> return result.lottoNumber
+            is LottoNumberResult.Success -> result.lottoNumber
         }
     }
 
     private fun handleLottoResult(result: LottoResult): Lotto {
-        when (result) {
-            is LottoResult.Success -> return result.lotto
+        return when (result) {
+            is LottoResult.Success -> result.lotto
             LottoResult.InvalidNumberNull -> throw IllegalArgumentException(INVALID_NUMBER_MESSAGE)
             is LottoResult.InvalidNumberRange -> throw IllegalArgumentException(
                 INVALID_LOTTO_NUMBER_RANGE_MESSAGE.format(
@@ -127,7 +129,7 @@ class LottoController(
     }
 
     private fun handlePurchaseAmountResult(result: PurchaseAmountResult): PurchaseAmount {
-        when (result) {
+        return when (result) {
             is PurchaseAmountResult.InvalidAmount -> throw IllegalArgumentException(
                 INVALID_MIN_AMOUNT_MESSAGE.format(
                     result.amount,
@@ -135,7 +137,11 @@ class LottoController(
             )
 
             PurchaseAmountResult.InvalidAmountNull -> throw IllegalArgumentException(INVALID_NUMBER_MESSAGE)
-            is PurchaseAmountResult.Success -> return result.purchaseAmount
+            is PurchaseAmountResult.InvalidPurchase -> throw IllegalArgumentException(
+                INVALID_PURCHASE_LOTTO_AMOUNT_MESSAGE.format(result.purchaseAmount, result.currentAmount),
+            )
+
+            is PurchaseAmountResult.Success -> result.purchaseAmount
         }
     }
 
@@ -164,6 +170,8 @@ class LottoController(
         private const val INVALID_MIN_AMOUNT_MESSAGE = "%s원으로 로또를 구매하지 못했습니다 로또는 한 장 이상 구매해야 합니다."
         private const val INVALID_NUMBER_MESSAGE = "숫자만 입력해 주세요."
         private const val INVALID_PURCHASE_FAIL = "구매하시는 개수%s는 구매할 수 있는 개수%s 보다 작아야 합니다. "
+        private const val INVALID_PURCHASE_LOTTO_AMOUNT_MESSAGE =
+            "선택하신 개수의 금액은 %d 입니다. 구매하시는 금액은 현재 구매할 %d원 보다 적어야 합니다."
         private const val DUPLICATE_WINNING_NUMBER_MESSAGE = "보너스 번호 %s은(는) 당첨 번호 %s와 중복 될 수 없습니다."
     }
 }

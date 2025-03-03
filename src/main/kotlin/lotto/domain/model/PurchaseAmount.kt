@@ -11,21 +11,20 @@ sealed class PurchaseAmountResult {
     data class InvalidAmount(val amount: Int) : PurchaseAmountResult()
 
     data object InvalidAmountNull : PurchaseAmountResult()
+
+    data class InvalidPurchase(val purchaseAmount: Int, val currentAmount: Int) : PurchaseAmountResult()
 }
 
-class PurchaseAmount private constructor(private var _amount: Int) {
-    private val amount get() = _amount
-
+data class PurchaseAmount private constructor(private val amount: Int) {
     fun getRemainPurchaseCount(lottoPrice: Int = Lotto.LOTTO_PRICE) = amount / lottoPrice
 
-    fun getPurchaseLottoCount(
+    fun purchaseLotto(
         purchaseCount: Int,
         lottoPrice: Int = Lotto.LOTTO_PRICE,
-    ): Int {
+    ): PurchaseAmountResult {
         val purchaseAmount = lottoPrice * purchaseCount
-        require(purchaseAmount <= amount) { INVALID_PURCHASE_LOTTO_AMOUNT_MESSAGE.format(purchaseAmount, amount) }
-        _amount -= purchaseAmount
-        return purchaseCount
+        if (purchaseAmount > amount) return PurchaseAmountResult.InvalidPurchase(purchaseAmount, amount)
+        return PurchaseAmountResult.Success(this.copy(amount = amount - purchaseAmount))
     }
 
     companion object {
@@ -34,8 +33,5 @@ class PurchaseAmount private constructor(private var _amount: Int) {
             if (amount < Lotto.LOTTO_PRICE) return PurchaseAmountResult.InvalidAmount(amount)
             return PurchaseAmountResult.Success(PurchaseAmount(amount))
         }
-
-        private const val INVALID_PURCHASE_LOTTO_AMOUNT_MESSAGE =
-            "선택하신 개수의 금액은 %d 입니다. 구매하시는 금액은 현재 구매할 %d원 보다 적어야 합니다."
     }
 }
