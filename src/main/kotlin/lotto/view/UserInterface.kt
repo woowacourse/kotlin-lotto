@@ -30,7 +30,7 @@ class UserInterface(
         OutputView.printlnMessage(MANUAL_LOTTO_COUNT_PROMPT)
         val manualLottoCount = InputView.getUserInput()
         inputValidator.validateInteger(manualLottoCount)
-        inputValidator.validateOverZero(manualLottoCount)
+        inputValidator.validateNoNegativeNumber(manualLottoCount)
         return manualLottoCount.toInt()
     }
 
