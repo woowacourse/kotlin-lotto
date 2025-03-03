@@ -39,7 +39,11 @@ class LottoController(
 
     private fun getLottoTickets(possibleToLottoTicketCount: Int): List<LottoTicket> {
         val customerWantToBuyManualLottoTicketCount = userInterface.getManualLottoCount()
-        val manualLottoNumbers = userInterface.getManualLottoNumbers(customerWantToBuyManualLottoTicketCount)
+        val manualLottoNumbers = if (customerWantToBuyManualLottoTicketCount != 0) {
+             userInterface.getManualLottoNumbers(customerWantToBuyManualLottoTicketCount)
+        } else {
+            emptyList()
+        }
         val lottoTicketIssueManager =
             LottoTicketIssueManager(possibleToLottoTicketCount, customerWantToBuyManualLottoTicketCount, manualLottoNumbers)
         val lottoTickets = lottoTicketIssueManager.getLottoTickets(manualLottoNumbers)
