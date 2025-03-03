@@ -29,13 +29,6 @@ data class Lotto(
             )
         }
 
-        fun generateRandomLotto(count: Int): List<Lotto> =
-            List(count) {
-                val lottoNumbers =
-                    (LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER)
-                        .shuffled()
-                        .take(MAX_LOTTO_LENGTH)
-                of(lottoNumbers)
-            }
+        fun generateRandomLotto(lottoNumbers: List<List<Int>>): List<Lotto> = lottoNumbers.map { of(it) }.toMutableList()
     }
 }

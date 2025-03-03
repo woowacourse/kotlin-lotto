@@ -82,7 +82,7 @@ class LottoView {
     }
 
     fun printMessage(lottoException: LottoException) {
-        println(lottoException.msg + "입력 값 : ${lottoException.userInput}")
+        println(lottoException.msg + ". 입력 값 : ${lottoException.userInput}")
     }
 
     companion object {

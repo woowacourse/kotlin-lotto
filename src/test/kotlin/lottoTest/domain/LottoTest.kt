@@ -1,6 +1,7 @@
 package lottoTest.domain
 
 import lotto.domain.Lotto
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -49,5 +50,23 @@ class LottoTest {
         assertThatThrownBy { Lotto.of(1, 2, 3, 4, 5, 5) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("중복되지 않은 숫자를 입력해주세요")
+    }
+
+    @Test
+    @DisplayName("이차원 Int형 리스트를 받으면 열의 크기만큼 로또를 생성할 수 있다")
+    fun t7() {
+        val lottoNumbers =
+            listOf(
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(11, 12, 13, 14, 15, 16),
+                listOf(21, 22, 23, 24, 25, 26),
+            )
+        assertThat(Lotto.generateRandomLotto(lottoNumbers)).isEqualTo(
+            listOf(
+                Lotto.of(1, 2, 3, 4, 5, 6),
+                Lotto.of(11, 12, 13, 14, 15, 16),
+                Lotto.of(21, 22, 23, 24, 25, 26),
+            ),
+        )
     }
 }

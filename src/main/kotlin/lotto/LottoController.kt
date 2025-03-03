@@ -1,6 +1,8 @@
 package lotto
 
 import lotto.domain.Lotto
+import lotto.domain.Lotto.Companion.MAX_LOTTO_LENGTH
+import lotto.domain.Lotto.Companion.of
 import lotto.domain.LottoNumber
 import lotto.domain.UserInput
 import lotto.domain.WinningLottoTicket
@@ -21,7 +23,13 @@ class LottoController(
     }
 
     private fun purchaseLotto(userInput: UserInput): List<Lotto> {
-        val autoLotto = Lotto.generateRandomLotto(userInput.automaticLottoCount)
+        val lottoNumbers =
+            List(userInput.manualLottoCount) {
+                (LottoNumber.MIN_LOTTO_NUMBER..LottoNumber.MAX_LOTTO_NUMBER)
+                    .shuffled()
+                    .take(MAX_LOTTO_LENGTH)
+            }
+        val autoLotto = Lotto.generateRandomLotto(lottoNumbers)
         return autoLotto + userInput.manualLotto
     }
 
