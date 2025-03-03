@@ -7,6 +7,5 @@ class LottoStore {
     fun sell(
         lottoMachine: LottoMachine,
         lottoCount: LottoCount,
-        lottoNumbers: List<List<Int>>? = null,
-    ): List<Lotto> = lottoMachine.generate(lottoCount, lottoNumbers)
+    ): List<Lotto> = lottoMachine.generate(lottoCount)
 }

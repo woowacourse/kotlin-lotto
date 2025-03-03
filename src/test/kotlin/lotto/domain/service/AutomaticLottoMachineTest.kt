@@ -6,11 +6,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class AutomaticLottoMachineTest {
-    private val lottoMachine = AutomaticLottoMachine()
-
     @Test
     fun `로또 수량 5개에 대해 5장의 로또를 발급한다`() {
         // given
+        val lottoMachine = AutomaticLottoMachine()
         val lottoCount = LottoCount(5)
 
         // when
