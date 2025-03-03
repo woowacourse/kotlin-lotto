@@ -15,6 +15,8 @@ class Lotto(
 
     fun isContainBonusNumber(bonusNumber: LottoNumber): Boolean = numbers.contains(bonusNumber)
 
+    fun countMatchNumbers(winningNumbers: Set<LottoNumber>): Int = numbers.count { number -> winningNumbers.contains(number) }
+
     companion object {
         const val LOTTO_NUMBER_SIZE = 6
         const val LOTTO_NUMBER_MIN_RANGE = 1

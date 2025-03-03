@@ -18,7 +18,7 @@ class WinningLotto(
     private fun countMatchWinningNumbers(winningNumbers: Set<LottoNumber>): Int {
         lotto.validateLottoNumbersCount(winningNumbers)
 
-        return lotto.numbers.count { existNumber -> winningNumbers.contains(existNumber) }
+        return lotto.countMatchNumbers(winningNumbers)
     }
 
     private fun validateWinningNumbersBonusNumberDuplicate(
