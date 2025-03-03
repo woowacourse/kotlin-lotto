@@ -10,9 +10,9 @@ data class Lotto(
         require(numbers.size == numbers.toSet().size) { ERROR_DUPLICATED_LOTTO_NUMBERS.format(numbers) }
     }
 
-    fun getMatchCount(winningNumbers: Lotto): Int =
+    fun getMatchCount(lotto: Lotto): Int =
         numbers.count { number ->
-            winningNumbers.numbers.contains(number)
+            lotto.numbers.contains(number)
         }
 
     fun containsNumber(number: LottoNumber): Boolean = numbers.contains(number)
