@@ -1,37 +1,20 @@
 package lotto.view
 
 class InputView {
-    fun getSingleNumber(): Int {
-        val input = readln()
-        validateSingleInput(input)
-        return input.toInt()
-    }
+    fun getSingleNumber(): Int = getInput { it.toInt() }
 
-    fun getMultipleNumber(): List<Int> {
-        val input = readln()
-        validateMultipleInput(input)
-        return input.split(",").map { it.trim().toInt() }
-    }
-
-    private fun validateSingleInput(input: String) {
-        validateEmptyInput(input)
-        validateNumber(input)
-    }
-
-    private fun validateMultipleInput(input: String) {
-        validateEmptyInput(input)
-        input.split(",").forEach { validateNumber(it.trim()) }
-    }
-
-    private fun validateEmptyInput(input: String) {
-        require(input.trim().isNotEmpty()) {
-            "[ERROR] 입력이 존재하지 않습니다."
+    fun getMultipleNumber(): List<Int> =
+        getInput {
+            it.split(",").map { num -> num.trim().toInt() }
         }
+
+    private fun <T> getInput(transform: (String) -> T): T {
+        val input = readln().also { validateInput(it) }
+        return transform(input)
     }
 
-    private fun validateNumber(input: String) {
-        require(input.toIntOrNull() != null) {
-            "[ERROR] 입력이 정수가 아닙니다: $input"
-        }
+    private fun validateInput(input: String) {
+        require(input.trim().isNotEmpty()) { "[ERROR] 입력이 존재하지 않습니다." }
+        input.split(",").forEach { require(it.trim().toIntOrNull() != null) { "[ERROR] 입력이 정수가 아닙니다: $it" } }
     }
 }
