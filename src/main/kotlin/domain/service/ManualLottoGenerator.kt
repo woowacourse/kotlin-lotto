@@ -6,7 +6,7 @@ import domain.model.LottoNumber
 class ManualLottoGenerator(
     private val manualLottoInput: List<String>,
 ) : LottoGenerator {
-    private fun makeOneLotto(lottoNumbers: Set<Int>): Lotto = Lotto(getLottoNumbers(lottoNumbers))
+    private fun makeOneLotto(lottoNumbers: Set<Int>): Lotto = Lotto.from(getLottoNumbers(lottoNumbers))
 
     override fun getLottoNumbers(lottoNumbers: Set<Int>): Set<LottoNumber> = lottoNumbers.map { LottoNumber.from(it) }.toSet()
 

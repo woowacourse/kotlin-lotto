@@ -1,6 +1,6 @@
 package domain.model
 
-data class Lotto(
+data class Lotto private constructor(
     val numbers: Set<LottoNumber>,
 ) {
     init {
@@ -8,6 +8,8 @@ data class Lotto(
     }
 
     companion object {
+        fun from(inputNumbers: Set<LottoNumber>) = Lotto(inputNumbers)
+
         fun of(vararg inputNumbers: Int): Lotto = Lotto(inputNumbers.map { LottoNumber.from(it) }.toSet())
 
         const val ERROR = "[ERROR]"

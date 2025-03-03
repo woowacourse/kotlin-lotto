@@ -88,7 +88,7 @@ class LottoController(
     private fun getWinningNumbers(): Lotto {
         val input: String = inputView.readWinningNumbers()
         return runCatching {
-            Lotto(input.split(",").map { LottoNumber.from(it.toInt()) }.toSet())
+            Lotto.from(input.split(",").map { LottoNumber.from(it.toInt()) }.toSet())
         }.getOrElse {
             outputView.printExceptionMessage(it.message ?: DEFAULT_EXCEPTION_MSG)
             getWinningNumbers()

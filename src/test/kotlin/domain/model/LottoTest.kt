@@ -12,7 +12,7 @@ class LottoTest {
         assertThrows<IllegalArgumentException>(
             message = "[ERROR] 로또 번호는 6개 입니다.",
         ) {
-            Lotto(values)
+            Lotto.from(values)
         }
     }
 
@@ -23,7 +23,7 @@ class LottoTest {
         assertThrows<IllegalArgumentException>(
             message = "[ERROR] 로또 번호는 중복이 없습니다.",
         ) {
-            Lotto(values)
+            Lotto.from(values)
         }
     }
 }
