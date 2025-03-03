@@ -1,10 +1,12 @@
 package lotto.model
 
+import lotto.contants.LottoRuleConstants
+
 class LottoTicketCount(
     private val count: Int,
 ) {
     init {
-        require(count >= 0) { LOTTO_TICKET_COUNT_NOT_NEGATIVE }
+        require(count >= LottoRuleConstants.ZERO.value) { LOTTO_TICKET_COUNT_NOT_NEGATIVE }
     }
 
     fun toInt() = count

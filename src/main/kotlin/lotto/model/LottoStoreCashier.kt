@@ -10,7 +10,7 @@ class LottoStoreCashier(
 
     // 로또의 가격은 천원이다. 로또를 구매할려면 천원이상 넣어야한다.
     init {
-        require(customerMoney >= LottoRuleConstants.LOTTO_AMOUNT.value) { "로또는 천원이상 넣어야지 구매 가능합니다." }
+        require(customerMoney >= LottoRuleConstants.LOTTO_AMOUNT.value) { INSUFFICIENT_MONEY_FOR_LOTTO_PURCHASE }
     }
 
     // 고객이 준 돈에서 몇장을 살 수 있는 지 계산한다.
@@ -22,4 +22,8 @@ class LottoStoreCashier(
     // 고객에게 전달할 잔돈을 계산한다.
     fun calculateChange(customerWantBuyLottoTicketCount: Int): Int =
         customerMoney - (LottoRuleConstants.LOTTO_AMOUNT.value * possibleToLottoTicketCount)
+
+    companion object {
+        private const val INSUFFICIENT_MONEY_FOR_LOTTO_PURCHASE = "로또는 천원이상 넣어야지 구매 가능합니다."
+    }
 }
