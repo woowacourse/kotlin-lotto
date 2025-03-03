@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertThrows
 class LottoTest {
     @Test
     fun `로또는 한 장에 로또 번호 6개를 가진다`() {
-        val lotto = LottoTicket.create(LottoIssueType.MANUAL, 2, 3, 4, 5, 6)
+        val lotto = LottoTicket.create(LottoIssueType.MANUAL, 1, 2, 3, 4, 5, 6)
         assertEquals(lotto.getSize(), 6)
     }
 
