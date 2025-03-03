@@ -4,7 +4,7 @@ import domain.model.Lotto
 import domain.model.LottoNumber
 
 interface LottoGenerator {
-    fun getLottoNumbers(lottoNumbers: Set<Int>): Set<LottoNumber>
+    fun getLottoNumbers(): Set<LottoNumber>
 
     fun makeLotto(amount: Int): List<Lotto>
 }

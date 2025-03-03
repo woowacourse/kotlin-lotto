@@ -10,9 +10,9 @@ class AutoLottoGenerator : LottoGenerator {
             .take(6)
             .toSet()
 
-    override fun getLottoNumbers(lottoNumbers: Set<Int>): Set<LottoNumber> = lottoNumbers.map { LottoNumber.from(it) }.toSet()
+    override fun getLottoNumbers(): Set<LottoNumber> = makeRandomNumbers().map { LottoNumber.from(it) }.toSet()
 
-    override fun makeLotto(amount: Int): List<Lotto> = List(amount) { Lotto.from(getLottoNumbers(makeRandomNumbers())) }
+    override fun makeLotto(amount: Int): List<Lotto> = List(amount) { Lotto.from(getLottoNumbers()) }
 
     companion object {
         const val LOTTO_MIN = 1

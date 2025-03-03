@@ -6,13 +6,15 @@ import domain.model.LottoNumber
 class ManualLottoGenerator(
     private val manualLottoInput: List<String>,
 ) : LottoGenerator {
-    private fun makeOneLotto(lottoNumbers: Set<Int>): Lotto = Lotto.from(getLottoNumbers(lottoNumbers))
+    private val lottoNumbers: ArrayDeque<List<Int>> = ArrayDeque(manualLottoInput.map { it.toIntList() })
 
-    override fun getLottoNumbers(lottoNumbers: Set<Int>): Set<LottoNumber> = lottoNumbers.map { LottoNumber.from(it) }.toSet()
+    override fun getLottoNumbers(): Set<LottoNumber> = lottoNumbers.removeFirst().toLottoNumberSet()
 
-    override fun makeLotto(amount: Int): List<Lotto> = manualLottoInput.map { makeOneLotto(it.toIntSet()) }
+    override fun makeLotto(amount: Int): List<Lotto> = List(amount) { Lotto.from(getLottoNumbers()) }
 
     companion object {
-        private fun String.toIntSet() = this.split(',').map { it.toInt() }.toSet()
+        private fun String.toIntList() = this.split(',').map { it.toInt() }
+
+        fun List<Int>.toLottoNumberSet() = this.map { LottoNumber.from(it) }.toSet()
     }
 }
