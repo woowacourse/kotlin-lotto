@@ -78,6 +78,7 @@ class LottoController(
     }
 
     private fun getManualLottos(manualLottoCount: LottoCount): List<Lotto> {
+        if (manualLottoCount.count == 0) return emptyList()
         outputView.printManualLottoNumbersGuide()
         val manualLottoNumbersBundle: List<List<LottoNumber>> = getManualNumbersBundle(manualLottoCount)
         val numbersGenerator = ManualLottoLottoNumbersMachine(manualLottoNumbersBundle)
@@ -85,12 +86,16 @@ class LottoController(
         return lottoMachine.createLottos(manualLottoCount, numbersGenerator)
     }
 
-    private fun getManualNumbersBundle(count: LottoCount): List<List<LottoNumber>> =
+    private fun getManualNumbersBundle(lottoCount: LottoCount): List<List<LottoNumber>> = List(lottoCount.count) { getValidLottoNumbers() }
+
+    private fun getValidLottoNumbers(): List<LottoNumber> =
         runCatching {
-            List(count.count) { inputView.readLottoNumbers() }
+            val numbers: List<LottoNumber> = inputView.readLottoNumbers()
+            Lotto(numbers)
+            return numbers
         }.getOrElse { error ->
             outputView.printErrorMessage(error.message)
-            getManualNumbersBundle(count)
+            getValidLottoNumbers()
         }
 
     private fun getAutoLottos(autoLottoCount: LottoCount): List<Lotto> {
