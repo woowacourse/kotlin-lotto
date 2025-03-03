@@ -8,42 +8,58 @@ import java.text.DecimalFormat
 class UserInterface(
     private val inputValidator: InputValidator = InputValidator(),
 ) {
-    fun inputPurchaseAmount(): Int {
-        OutputView.printlnMessage(PURCHASE_AMOUNT_PROMPT)
-        val purchaseAmount = InputView.getUserInput()
-        inputValidator.validateInteger(purchaseAmount)
-        inputValidator.validateOverZero(purchaseAmount)
-        return purchaseAmount.toInt()
-    }
+    fun inputPurchaseAmount(): Int =
+        runCatching {
+            OutputView.printlnMessage(PURCHASE_AMOUNT_PROMPT)
+            val purchaseAmount = InputView.getUserInput()
+            inputValidator.validateInteger(purchaseAmount)
+            inputValidator.validateOverZero(purchaseAmount)
+            return purchaseAmount.toInt()
+        }.getOrElse { error ->
+            OutputView.printlnMessage(error)
+            inputPurchaseAmount()
+        }
 
-    fun printLottoCount(lottoCount: Int): Boolean {
-        OutputView.printlnMessage(String.format(LOTTO_COUNT_PROMPT, lottoCount, lottoCount))
-        val yesOrNo = InputView.getUserInput()
-        return yesOrNo == "Y"
-    }
+    fun printLottoCount(lottoCount: Int): Boolean =
+        runCatching {
+            OutputView.printlnMessage(String.format(LOTTO_COUNT_PROMPT, lottoCount, lottoCount))
+            val yesOrNo = InputView.getUserInput()
+            return yesOrNo == "Y"
+        }.getOrElse { error ->
+            OutputView.printlnMessage(error)
+            printLottoCount(lottoCount)
+        }
 
     fun printChange(change: Int) {
         OutputView.printlnMessage(String.format(CHANGE_MESSAGE, change))
     }
 
-    fun getManualLottoCount(): Int {
-        OutputView.printlnMessage(MANUAL_LOTTO_COUNT_PROMPT)
-        val manualLottoCount = InputView.getUserInput()
-        inputValidator.validateInteger(manualLottoCount)
-        inputValidator.validateNoNegativeNumber(manualLottoCount)
-        return manualLottoCount.toInt()
-    }
-
-    fun getManualLottoNumbers(manualLottoCount: Int): List<List<Int>> {
-        val manualLottoNumber = mutableListOf<List<Int>>()
-        OutputView.printlnMessage(MANUAL_LOTTO_NUMBERS_PROMPT)
-        OutputView.printlnMessage(MANUAL_LOTTO_FORMAT_PROMPT)
-        repeat(manualLottoCount) {
-            val numbers = InputView.getUserInput()
-            manualLottoNumber.add(numbers.split(",").map { it.trim().toInt() })
+    fun getManualLottoCount(): Int =
+        runCatching {
+            OutputView.printlnMessage(MANUAL_LOTTO_COUNT_PROMPT)
+            val manualLottoCount = InputView.getUserInput()
+            inputValidator.validateInteger(manualLottoCount)
+            inputValidator.validateNoNegativeNumber(manualLottoCount)
+            return manualLottoCount.toInt()
+        }.getOrElse { error ->
+            OutputView.printlnMessage(error)
+            getManualLottoCount()
         }
-        return manualLottoNumber
-    }
+
+    fun getManualLottoNumbers(manualLottoCount: Int): List<List<Int>> =
+        runCatching {
+            val manualLottoNumber = mutableListOf<List<Int>>()
+            OutputView.printlnMessage(MANUAL_LOTTO_NUMBERS_PROMPT)
+            OutputView.printlnMessage(MANUAL_LOTTO_FORMAT_PROMPT)
+            repeat(manualLottoCount) {
+                val numbers = InputView.getUserInput()
+                manualLottoNumber.add(numbers.split(",").map { it.trim().toInt() })
+            }
+            return manualLottoNumber
+        }.getOrElse { error ->
+            OutputView.printlnMessage(error)
+            getManualLottoNumbers(manualLottoCount)
+        }
 
     fun printLottoTickets(
         manualLottoCount: Int,
@@ -57,22 +73,30 @@ class UserInterface(
         }
     }
 
-    fun getWinningNumbers(): List<LottoNumber> {
-        OutputView.printlnMessage(WINNING_NUMBERS_PROMPT)
-        val winningNumbers = InputView.getUserInput().split(",").map { it.trim() }
-        for (winningNumber in winningNumbers) {
-            inputValidator.validateInteger(winningNumber)
+    fun getWinningNumbers(): List<LottoNumber> =
+        runCatching {
+            OutputView.printlnMessage(WINNING_NUMBERS_PROMPT)
+            val winningNumbers = InputView.getUserInput().split(",").map { it.trim() }
+            for (winningNumber in winningNumbers) {
+                inputValidator.validateInteger(winningNumber)
+            }
+
+            return winningNumbers.map { LottoNumber(it.toInt()) }
+        }.getOrElse { error ->
+            OutputView.printlnMessage(error)
+            getWinningNumbers()
         }
 
-        return winningNumbers.map { LottoNumber(it.toInt()) }
-    }
-
-    fun getBonusNumber(): LottoNumber {
-        OutputView.printlnMessage(BONUS_NUMBER_PROMPT)
-        val bonusNumber = InputView.getUserInput()
-        inputValidator.validateInteger(bonusNumber)
-        return LottoNumber(bonusNumber.toInt())
-    }
+    fun getBonusNumber(): LottoNumber =
+        runCatching {
+            OutputView.printlnMessage(BONUS_NUMBER_PROMPT)
+            val bonusNumber = InputView.getUserInput()
+            inputValidator.validateInteger(bonusNumber)
+            return LottoNumber(bonusNumber.toInt())
+        }.getOrElse { error ->
+            OutputView.printlnMessage(error)
+            getBonusNumber()
+        }
 
     fun printResult(results: Map<Rank, Int>) {
         OutputView.printlnMessage(WINNING_STATISTICS_HEADER)

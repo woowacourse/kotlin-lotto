@@ -11,18 +11,11 @@ import lotto.view.UserInterface
 class LottoController(
     private val userInterface: UserInterface = UserInterface(),
 ) {
-    fun run(): Result<Unit> {
-        return kotlin.runCatching {
-            val possibleToLottoTicketCount = meetLottoStoreCashier()
-            val lottoTickets = getLottoTickets(possibleToLottoTicketCount)
-            val winningLotto = getWinningLotto()
-            getResult(lottoTickets, winningLotto)
-        }.map {
-            Result.success(Unit)
-        }.getOrElse {
-                e ->
-            Result.failure(Exception("(로또 실행 중 오류 발생) : ${e.message}"))
-        }
+    fun run() {
+        val possibleToLottoTicketCount = meetLottoStoreCashier()
+        val lottoTickets = getLottoTickets(possibleToLottoTicketCount)
+        val winningLotto = getWinningLotto()
+        getResult(lottoTickets, winningLotto)
     }
 
     private fun meetLottoStoreCashier(): Int {
@@ -39,13 +32,18 @@ class LottoController(
 
     private fun getLottoTickets(possibleToLottoTicketCount: Int): List<LottoTicket> {
         val customerWantToBuyManualLottoTicketCount = userInterface.getManualLottoCount()
-        val manualLottoNumbers = if (customerWantToBuyManualLottoTicketCount != 0) {
-             userInterface.getManualLottoNumbers(customerWantToBuyManualLottoTicketCount)
-        } else {
-            emptyList()
-        }
+        val manualLottoNumbers =
+            if (customerWantToBuyManualLottoTicketCount != 0) {
+                userInterface.getManualLottoNumbers(customerWantToBuyManualLottoTicketCount)
+            } else {
+                emptyList()
+            }
         val lottoTicketIssueManager =
-            LottoTicketIssueManager(possibleToLottoTicketCount, customerWantToBuyManualLottoTicketCount, manualLottoNumbers)
+            LottoTicketIssueManager(
+                possibleToLottoTicketCount,
+                customerWantToBuyManualLottoTicketCount,
+                manualLottoNumbers,
+            )
         val lottoTickets = lottoTicketIssueManager.getLottoTickets(manualLottoNumbers)
         val autoLottoTicketCount = lottoTicketIssueManager.getCustomerWantToBuyManualLottoTicketCount()
         userInterface.printLottoTickets(customerWantToBuyManualLottoTicketCount, autoLottoTicketCount, lottoTickets)
