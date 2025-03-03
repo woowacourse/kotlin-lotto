@@ -2,8 +2,8 @@ package lotto.service
 
 import lotto.domain.LottoNumber
 
-class AutoLottoGenerator : LottoNumberGenerator {
-    override fun generate(): List<LottoNumber> {
+class AutoLottoNumberGenerator : LottoNumberGenerator {
+    override fun generateLottoNumbers(): List<LottoNumber> {
         return (MIN_RANGE..MAX_RANGE)
             .shuffled()
             .take(LOTTO_SIZE)
