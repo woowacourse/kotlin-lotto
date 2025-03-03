@@ -16,6 +16,8 @@ sealed class PurchaseAmountResult {
 class PurchaseAmount private constructor(private var _amount: Int) {
     private val amount get() = _amount
 
+    fun getRemainPurchaseCount(lottoPrice: Int = Lotto.LOTTO_PRICE) = amount / lottoPrice
+
     fun getPurchaseLottoCount(
         purchaseCount: Int,
         lottoPrice: Int = Lotto.LOTTO_PRICE,
@@ -24,12 +26,6 @@ class PurchaseAmount private constructor(private var _amount: Int) {
         require(purchaseAmount <= amount) { INVALID_PURCHASE_LOTTO_AMOUNT_MESSAGE.format(purchaseAmount, amount) }
         _amount -= purchaseAmount
         return purchaseCount
-    }
-
-    fun getPurchaseRemainLottoCount(lottoPrice: Int = Lotto.LOTTO_PRICE): Int {
-        val remainLottoCount = amount / lottoPrice
-        _amount -= lottoPrice * remainLottoCount
-        return remainLottoCount
     }
 
     companion object {
