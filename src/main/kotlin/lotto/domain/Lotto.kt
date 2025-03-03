@@ -9,7 +9,7 @@ class Lotto(val lottoNums: List<LottoNumber>) {
     // 순위 반환하기
     fun getRank(winningLotto: WinningLotto): Rank {
         val matchCount = compareWithWinningLotto(winningLotto.winningLotto)
-        val matchbonus = compareWithBonusNumber(winningLotto.bounusNumber)
+        val matchbonus = compareWithBonusNumber(winningLotto.bonusNumber)
         return Rank.valueOf(matchCount, matchbonus)
     }
 

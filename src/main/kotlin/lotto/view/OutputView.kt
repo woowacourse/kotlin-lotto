@@ -6,8 +6,15 @@ import lotto.domain.Profit
 import lotto.domain.Rank
 
 object OutputView {
-    fun printLottoAmount(amount: Int) {
-        println("${amount}개를 구매했습니다.")
+    fun printManualLottoMessage() {
+        println("수동으로 구매할 번호를 입력해주세요. ")
+    }
+
+    fun printLottoAmount(
+        manual: Int,
+        auto: Int,
+    ) {
+        println("수동으로 ${manual}장, 자동으로 ${auto}개를 구매했습니다.")
     }
 
     fun printLottos(lottos: List<Lotto>) {
@@ -24,12 +31,16 @@ object OutputView {
     fun printProfit(profitRate: Double) {
         val profitStatus = Profit.profitOf(profitRate)
         println(
-            "총 수익률은 ${"%.2f".format(profitRate)}입니다. (${profitStatus.message})",
+            "총 수익률은 ${"%.2f".format(profitRate)}입니다. ${profitStatus.profitMessage}",
         )
     }
 
     fun printErrorMessage(message: String?) {
         println(message)
+    }
+
+    fun printNumberErrorMessage() {
+        println("유효한 숫자를 입력해주세요.")
     }
 
     private fun printHeader() {
