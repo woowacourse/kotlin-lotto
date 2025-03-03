@@ -1,4 +1,8 @@
-package lotto.model
+package lotto.domain
+
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.Rank
 
 class LottoMatcher(
     private val winningLotto: Lotto,
