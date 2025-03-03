@@ -69,12 +69,11 @@ class LottoController(
     private fun getManualAmount(lottoAmount: Int): ManualLottoAmount {
         while (true) {
             val input = inputView.inputManualLottoAmount()
-            if (input != null) {
-                runCatching {
-                    return ManualLottoAmount(input, lottoAmount)
-                }.onFailure { e ->
-                    outputView.printErrorMessage(e.message)
-                }
+
+            runCatching {
+                return ManualLottoAmount(input, lottoAmount)
+            }.onFailure { e ->
+                outputView.printErrorMessage(e.message)
             }
         }
     }
@@ -82,12 +81,10 @@ class LottoController(
     private fun getPurchasePrice(): Price {
         while (true) {
             val input = inputView.inputPurchasePrice()
-            if (input != null) {
-                runCatching {
-                    return Price(input)
-                }.onFailure { e ->
-                    outputView.printErrorMessage(e.message)
-                }
+            runCatching {
+                return Price(input)
+            }.onFailure { e ->
+                outputView.printErrorMessage(e.message)
             }
         }
     }
@@ -106,12 +103,11 @@ class LottoController(
     private fun getBonusNumber(): LottoNumber {
         while (true) {
             val input = inputView.inputBonusNumber()
-            if (input != null) {
-                runCatching {
-                    return LottoNumber(input)
-                }.onFailure { e ->
-                    outputView.printErrorMessage(e.message)
-                }
+
+            runCatching {
+                return LottoNumber(input)
+            }.onFailure { e ->
+                outputView.printErrorMessage(e.message)
             }
         }
     }
