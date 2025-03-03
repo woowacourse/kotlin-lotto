@@ -15,23 +15,26 @@ object InputView {
         return InputValidator.validateNumber(input) ?: inputPurchasePrice()
     }
 
-    fun inputManualLottoNumber(): List<Int> {
+    fun inputLottoNumber(): List<Int> {
+        val input = readln()
         val numbers =
-            readln().split(',').map { it ->
-                it.trim().also { InputValidator.validateNumber(it) }
-                it.toInt()
-            }
-        return numbers
+            input.split(',')
+                .map { it.trim() }
+                .mapNotNull { number ->
+                    InputValidator.validateNumber(number)?.toInt()
+                }
+
+        return if (numbers.size == input.split(',').size) {
+            numbers
+        } else {
+            println("잘못된 입력입니다. 유효한 숫자만 입력해주세요.")
+            inputLottoNumber()
+        }
     }
 
     fun inputWinningNumber(): List<Int> {
         println("\n지난 주 당첨 번호를 입력해 주세요.")
-        val numbers =
-            readln().split(",").map { it ->
-                it.trim().also { InputValidator.validateNumber(it) }
-                it.toInt()
-            }
-        return numbers
+        return inputLottoNumber()
     }
 
     fun inputBonusNumber(): Int {

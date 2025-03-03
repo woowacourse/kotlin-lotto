@@ -9,7 +9,6 @@ import lotto.domain.Price
 import lotto.domain.WinningLotto
 import lotto.service.AutoLottoNumberGenerator
 import lotto.service.LottoAmountCalculator
-import lotto.util.retryWhenException
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -55,8 +54,13 @@ class LottoController(
         outputView.printManualLottoMessage()
 
         repeat(amount) {
-            val numbers = inputView.inputManualLottoNumber()
-            manualLottos.add(lottoFactory.generateManualLotto(numbers))
+            val input = inputView.inputLottoNumber()
+            runCatching {
+                val lotto = lottoFactory.generateManualLotto(input)
+                manualLottos.add(lotto)
+            }.onFailure { e ->
+                outputView.printErrorMessage(e.message)
+            }
         }
 
         return manualLottos
@@ -89,21 +93,20 @@ class LottoController(
         }
     }
 
-    private fun getWinningNumbers(): Lotto =
-        retryWhenException(
-            action = {
-                val input = inputView.inputWinningNumber()
-                Lotto(input.map { number -> LottoNumber(number.toInt()) })
-            },
-            onError = {
-                outputView.printErrorMessage(it)
-            },
-        )
+    private fun getWinningNumbers(): Lotto {
+        while (true) {
+            val input = inputView.inputWinningNumber()
+            runCatching {
+                return Lotto(input.map { number -> LottoNumber(number) })
+            }.onFailure { e ->
+                outputView.printErrorMessage(e.message)
+            }
+        }
+    }
 
     private fun getBonusNumber(): LottoNumber {
         while (true) {
             val input = inputView.inputBonusNumber()
-
             runCatching {
                 return LottoNumber(input)
             }.onFailure { e ->
