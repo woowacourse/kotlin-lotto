@@ -23,6 +23,9 @@ class LottoQuantity(
         require(getTotalLottoQuantity() >= manualLottoQuantity) {
             "[ERROR] 수동 로또의 수는 전체 구매 로또의 수보다 클 수 없습니다."
         }
+        require(manualLottoQuantity >= 0) {
+            "[ERROR] 수동 로또의 수는 0개 이상으로 입력해 주세요"
+        }
     }
 
     companion object {
