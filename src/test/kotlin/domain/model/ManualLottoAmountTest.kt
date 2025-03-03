@@ -1,6 +1,5 @@
 package domain.model
 
-import domain.model.ManualLottoAmount.Companion.toManualLottoAmountResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -12,7 +11,7 @@ class ManualLottoAmountTest {
         val tryManualLottoAmount = 15
         val totalPurchaseAmount = 10
 
-        val actual = tryManualLottoAmount.toManualLottoAmountResult(totalPurchaseAmount)
+        val actual = ManualLottoAmount.from(tryManualLottoAmount, totalPurchaseAmount)
         val expected = ManualLottoAmountResult.CannotMoreThanTotalPurchaseAmount::class.java
 
         assertThat(actual).isInstanceOf(expected)
@@ -23,7 +22,7 @@ class ManualLottoAmountTest {
     fun `총 구매 개수를 넘지 않을 경우 수동 로또가 정상 구매된다`(value: Int) {
         val totalPurchaseAmount = 10
 
-        val actual = value.toManualLottoAmountResult(totalPurchaseAmount)
+        val actual = ManualLottoAmount.from(value, totalPurchaseAmount)
         val expected = ManualLottoAmountResult.Success::class.java
 
         assertThat(actual).isInstanceOf(expected)

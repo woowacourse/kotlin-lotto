@@ -12,20 +12,18 @@ sealed class ManualLottoAmountResult {
 
 class ManualLottoAmount private constructor(
     val value: Int,
-    totalPurchaseAmount: Int,
 ) {
-    init {
-        require(value <= totalPurchaseAmount) { CANNOT_MORE_THAN_TOTAL_PURCHASE_AMOUNT }
-    }
-
     companion object {
-        fun Int.toManualLottoAmountResult(totalPurchaseAmount: Int): ManualLottoAmountResult {
-            if (this > totalPurchaseAmount) {
+        fun from(
+            value: Int,
+            maxRange: Int,
+        ): ManualLottoAmountResult {
+            if (value !in 0..maxRange) {
                 return ManualLottoAmountResult.CannotMoreThanTotalPurchaseAmount(CANNOT_MORE_THAN_TOTAL_PURCHASE_AMOUNT)
             }
-            return ManualLottoAmountResult.Success(ManualLottoAmount(this, totalPurchaseAmount))
+            return ManualLottoAmountResult.Success(ManualLottoAmount(value))
         }
 
-        const val CANNOT_MORE_THAN_TOTAL_PURCHASE_AMOUNT = "[ERROR] 구매 가능한 개수보다 구매하려는 개수가 더 많습니다."
+        private const val CANNOT_MORE_THAN_TOTAL_PURCHASE_AMOUNT = "[ERROR] 구매 가능한 개수보다 구매하려는 개수가 더 많습니다."
     }
 }

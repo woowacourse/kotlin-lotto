@@ -4,7 +4,6 @@ import domain.model.Lotto
 import domain.model.LottoNumber
 import domain.model.LottoResult
 import domain.model.ManualLottoAmount
-import domain.model.ManualLottoAmount.Companion.toManualLottoAmountResult
 import domain.model.ManualLottoAmountResult
 import domain.model.PurchasePrice
 import domain.model.PurchasePrice.Companion.toAmount
@@ -53,8 +52,8 @@ class LottoController(
     }
 
     private fun getManualLottoAmount(purchasePrice: PurchasePrice): ManualLottoAmount {
-        val input = inputView.readManualLottoAmount()
-        return when (val result = input.toManualLottoAmountResult(purchasePrice.toAmount())) {
+        val input: Int = inputView.readManualLottoAmount()
+        return when (val result = ManualLottoAmount.from(input, purchasePrice.toAmount())) {
             is ManualLottoAmountResult.CannotMoreThanTotalPurchaseAmount -> {
                 outputView.printExceptionMessage(result.errorMsg)
                 getManualLottoAmount(purchasePrice)
