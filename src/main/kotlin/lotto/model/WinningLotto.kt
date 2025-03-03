@@ -6,7 +6,7 @@ class WinningLotto(
 ) {
     init {
         require(
-            winningNumbers.numbers.contains(bonusNumber).not(),
+            winningNumbers.containsNumber(bonusNumber).not(),
         ) { ERROR_DUPLICATED_BONUS_NUMBER.format(bonusNumber.number) }
     }
 
