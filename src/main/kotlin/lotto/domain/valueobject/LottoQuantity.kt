@@ -1,0 +1,16 @@
+package lotto.domain.valueobject
+
+@JvmInline
+value class LottoQuantity(
+    val quantity: Int,
+) : Comparable<LottoQuantity> {
+    init {
+        require(quantity > 0) { ERROR_NEGATIVE_LOTTO_NUMBER }
+    }
+
+    override fun compareTo(other: LottoQuantity): Int = this.quantity.compareTo(other.quantity)
+
+    companion object {
+        private const val ERROR_NEGATIVE_LOTTO_NUMBER = "로또 수량은 0 이하가 될 수 없습니다."
+    }
+}
