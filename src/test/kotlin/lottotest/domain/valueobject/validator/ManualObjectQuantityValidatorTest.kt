@@ -1,7 +1,7 @@
 package lottotest.domain.valueobject.validator
 
 import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.ObjectQuantity
+import lotto.domain.valueobject.LottoQuantity
 import lotto.domain.valueobject.validator.ManualLottoQuantityValidator
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -24,7 +24,7 @@ class ManualObjectQuantityValidatorTest {
         // given
         val lottoPaymentMoney = LottoPaymentMoney(money)
         val manualLottoQuantityValidator = ManualLottoQuantityValidator()
-        val manualLottoQuantity = ObjectQuantity(manualLottoQuantityValue)
+        val manualLottoQuantity = LottoQuantity(manualLottoQuantityValue)
 
         // when than
         assertDoesNotThrow {
@@ -45,7 +45,7 @@ class ManualObjectQuantityValidatorTest {
         // given
         val lottoPaymentMoney = LottoPaymentMoney(money)
         val manualLottoQuantityValidator = ManualLottoQuantityValidator()
-        val manualLottoQuantity = ObjectQuantity(manualLottoQuantityValue)
+        val manualLottoQuantity = LottoQuantity(manualLottoQuantityValue)
 
         // when than
         assertThrows<IllegalArgumentException> {

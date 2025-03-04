@@ -1,7 +1,7 @@
 package lottotest.domain.valueobject
 
 import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.ObjectQuantity
+import lotto.domain.valueobject.LottoQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -65,7 +65,7 @@ class LottoPaymentMoneyTest {
     ) {
         // given
         val lottoPaymentMoney = LottoPaymentMoney(money)
-        val partialPurchaseQuantity = ObjectQuantity(rawPartialPurchaseQuantity)
+        val partialPurchaseQuantity = LottoQuantity(rawPartialPurchaseQuantity)
 
         // when
         val actualLeftQuantity = lottoPaymentMoney.calculateLeftLotoQuantity(partialPurchaseQuantity)

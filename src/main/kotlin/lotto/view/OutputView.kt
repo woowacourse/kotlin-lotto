@@ -5,7 +5,7 @@ import lotto.domain.model.winning.GainLoss
 import lotto.domain.model.winning.Rank
 import lotto.domain.model.winning.WinningStatistics
 import lotto.domain.valueobject.EarningRate
-import lotto.domain.valueobject.ObjectQuantity
+import lotto.domain.valueobject.LottoQuantity
 
 class OutputView {
     fun showParagraphSeparation() {
@@ -13,10 +13,10 @@ class OutputView {
     }
 
     fun showBoughtLottoQuantity(
-        manualQuantity: ObjectQuantity,
-        autoQuantity: ObjectQuantity,
+        manualLottoQuantity: LottoQuantity,
+        autoLottoQuantity: LottoQuantity,
     ) {
-        println(ALERT_BOUGHT_LOTTO_QUANTITY.format(manualQuantity.quantity, autoQuantity.quantity))
+        println(ALERT_BOUGHT_LOTTO_QUANTITY.format(manualLottoQuantity.quantity, autoLottoQuantity.quantity))
     }
 
     fun showBoughtLottoTickets(lottoTickets: List<LottoTicket>) {

@@ -3,7 +3,7 @@ package lottotest.domain.model.winning
 import lotto.domain.model.winning.Rank
 import lotto.domain.model.winning.WinningStatistics
 import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.ObjectQuantity
+import lotto.domain.valueobject.WinningQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -19,13 +19,13 @@ class WinningStatisticsTest {
         rawExpectedRank: List<Pair<Rank, Int>>,
     ) {
         // Given
-        val winRankMap = rawWinRankMap.mapValues { (_, value) -> ObjectQuantity(value) }
-        val expectedRank: List<Pair<Rank, ObjectQuantity>> =
-            rawExpectedRank.map { (rank, value) -> rank to ObjectQuantity(value) }
+        val winRankMap = rawWinRankMap.mapValues { (_, value) -> WinningQuantity(value) }
+        val expectedRank: List<Pair<Rank, WinningQuantity>> =
+            rawExpectedRank.map { (rank, value) -> rank to WinningQuantity(value) }
 
         // When
         val winningStatistics = WinningStatistics(LottoPaymentMoney(rawLottoPaymentMoney), winRankMap)
-        val actualRank: List<Pair<Rank, ObjectQuantity>> = winningStatistics.getFullRanksWithoutMiss()
+        val actualRank: List<Pair<Rank, WinningQuantity>> = winningStatistics.getFullRanksWithoutMiss()
 
         // Then
         assertThat(actualRank).isEqualTo(expectedRank)
@@ -39,7 +39,7 @@ class WinningStatisticsTest {
         rawExpectedRank: List<Pair<Rank, Int>>,
     ) {
         // Given
-        val winRankMap = rawWinRankMap.mapValues { (_, value) -> ObjectQuantity(value) }
+        val winRankMap = rawWinRankMap.mapValues { (_, value) -> WinningQuantity(value) }
         val expectedPrizeMoney: Long = rawWinRankMap.map { (rank, value) -> rank.winningMoney.toLong() * value }.sum()
 
         // When
