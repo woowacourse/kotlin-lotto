@@ -1,9 +1,9 @@
 package lotto.controller
 
-import lotto.domain.model.AutoLottoGenerator
+import lotto.domain.generator.AutoLottoGenerator
+import lotto.domain.generator.ManualLottoGenerator
 import lotto.domain.model.LottoNumber
 import lotto.domain.model.LottoTicket
-import lotto.domain.model.ManualLottoGenerator
 import lotto.domain.model.PurchaseAmount
 import lotto.domain.model.PurchaseCount
 import lotto.domain.model.WinningLotto
@@ -32,7 +32,6 @@ class LottoStore(
         while (purchaseAmount == null) {
             purchaseAmount = inputView.inputPurchaseAmount()
         }
-
         val totalCount: Int = purchaseAmount.calculatePurchaseLottoCount()
         val manualCount: Int = inputView.inputManualCount()
         return PurchaseCount.from(totalCount, manualCount)
@@ -43,8 +42,7 @@ class LottoStore(
         autoCount: Int,
     ): List<LottoTicket> {
         if (manualCount != 0) outputView.printManualNumbersGuide()
-        val manualInput = inputView.inputManualNumbers()
-        val manualTickets = List(manualCount) { ManualLottoGenerator(manualInput).generateLotto() }
+        val manualTickets = List(manualCount) { ManualLottoGenerator(inputView.inputManualNumbers()).generateLotto() }
         val autoTickets = List(autoCount) { AutoLottoGenerator().generateLotto() }
         outputView.printPurchaseCount(manualCount, autoCount)
         return manualTickets + autoTickets
