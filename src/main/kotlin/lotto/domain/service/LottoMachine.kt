@@ -10,7 +10,9 @@ class LottoMachine {
         count: Int,
     ): List<LottoTicket> =
         List(count) {
-            LottoTicket.create(input().map { LottoNumber(it) })
+            LottoTicket.create(input().map { LottoNumber(it) }).getOrElse {
+                throw IllegalArgumentException(it.message)
+            }
         }
 
     fun generateAutoTicket(count: Int): List<LottoTicket> = List(count) { LottoTicket(generateAutoLotto()) }
