@@ -1,4 +1,7 @@
-package lotto.domain.model
+package lotto.domain.generator
+
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoTicket
 
 class ManualLottoGenerator(
     private val manualInput: List<Int>,

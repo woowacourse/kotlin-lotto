@@ -1,6 +1,8 @@
-package lotto.domain.model
+package lotto.domain.generator
 
 import lotto.Constants
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.LottoTicket
 
 class AutoLottoGenerator : LottoGenerator {
     override fun generateLotto(): LottoTicket =
