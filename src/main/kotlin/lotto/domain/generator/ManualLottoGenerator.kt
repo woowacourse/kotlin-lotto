@@ -6,5 +6,8 @@ import lotto.domain.model.LottoTicket
 class ManualLottoGenerator(
     private val manualInput: List<Int>,
 ) : LottoGenerator {
-    override fun generateLotto(): LottoTicket = LottoTicket.create(manualInput.map { LottoNumber(it) })
+    override fun generateLotto(): LottoTicket =
+        LottoTicket.create(manualInput.map { LottoNumber(it) }).getOrElse {
+            throw IllegalArgumentException(it.message)
+        }
 }
