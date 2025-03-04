@@ -1,16 +1,34 @@
 package lotto.domain
 
-import lotto.global.LottoValidator
-
-const val LOTTO_PRICE = 1000
-const val MAX_LOTTO_LENGTH = 6
+import lotto.global.LottoException
 
 data class Lotto(
-    val value: List<LottoNumber>,
+    val value: Set<LottoNumber>,
 ) {
     init {
-        LottoValidator.requireValidLotto(value)
+        require(value.size == MAX_LOTTO_LENGTH) { LottoException.ERR_NOT_SIX_ELEMENTS.msg }
     }
 
     fun contains(element: LottoNumber): Boolean = value.contains(element)
+
+    fun getCountOfMatchWith(contrast: Lotto): Int = value.intersect(contrast.value).size
+
+    companion object {
+        const val LOTTO_PRICE = 1000
+        const val MAX_LOTTO_LENGTH = 6
+
+        fun of(vararg numbers: Int): Lotto = of(numbers.toList())
+
+        fun of(numbers: List<Int>): Lotto {
+            require(numbers.distinct().size == numbers.size) { LottoException.ERR_ELEMENT_DUPLICATED.msg }
+            return Lotto(
+                numbers
+                    .map {
+                        LottoNumber.of(it)
+                    }.toSet(),
+            )
+        }
+
+        fun generateRandomLotto(lottoNumbers: List<List<Int>>): List<Lotto> = lottoNumbers.map { of(it) }.toMutableList()
+    }
 }
