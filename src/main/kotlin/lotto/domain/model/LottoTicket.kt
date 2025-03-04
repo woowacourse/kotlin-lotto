@@ -16,11 +16,10 @@ class LottoTicket(
         private const val ERROR_LOTTO_INVALID_COUNT = "로또 번호는 6개여야 합니다."
         private const val ERROR_LOTTO_DUPLICATE = "로또 번호는 서로 중복되면 안 됩니다."
 
-        fun create(numbers: List<LottoNumber>): Result<LottoTicket> =
-            runCatching {
-                require(numbers.size == Constants.LOTTO_PICK_COUNT) { ERROR_LOTTO_INVALID_COUNT }
-                require(numbers.toSet().size == Constants.LOTTO_PICK_COUNT) { ERROR_LOTTO_DUPLICATE }
-                LottoTicket(numbers.sortedBy { it.number })
-            }
+        fun create(numbers: List<LottoNumber>): LottoTicket {
+            require(numbers.size == Constants.LOTTO_PICK_COUNT) { ERROR_LOTTO_INVALID_COUNT }
+            require(numbers.toSet().size == Constants.LOTTO_PICK_COUNT) { ERROR_LOTTO_DUPLICATE }
+            return LottoTicket(numbers.sortedBy { it.number })
+        }
     }
 }
