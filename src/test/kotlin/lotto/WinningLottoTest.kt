@@ -54,6 +54,6 @@ class WinningLottoTest {
         val bonusNumber = LottoNumber(7)
         val winningLotto = WinningLotto(winningNumber, bonusNumber)
 
-        assertThat(winningLotto.findLottoRank(lotto)).isEqualTo(Rank.FIRST)
+        assertThat(winningLotto.getRank(lotto)).isEqualTo(Rank.FIRST)
     }
 }

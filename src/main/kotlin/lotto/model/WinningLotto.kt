@@ -6,14 +6,15 @@ class WinningLotto(
 ) {
     init {
         require(
-            winningNumbers.numbers.contains(bonusNumber).not(),
+            winningNumbers.containsNumber(bonusNumber).not(),
         ) { ERROR_DUPLICATED_BONUS_NUMBER.format(bonusNumber.number) }
     }
 
-    fun findLottoRank(lotto: Lotto): Rank {
-        val matchCount = lotto.getMatchCount(winningNumbers)
-        val isMatchedBonus = lotto.isMatchedBonusNumber(bonusNumber)
-        return Rank.findRank(matchCount, isMatchedBonus)
+    fun getRank(lotto: Lotto): Rank {
+        val matchCount: Int = lotto.getMatchCount(winningNumbers)
+        val bonusMatched: Boolean = lotto.containsNumber(bonusNumber)
+
+        return Rank.calculate(matchCount, bonusMatched)
     }
 
     companion object {

@@ -1,17 +1,30 @@
 package lotto.view
 
 import lotto.model.Lotto
+import lotto.model.LottoCount
 import lotto.model.LottoResult
 import lotto.model.Lottos
 import lotto.model.Rank
+import kotlin.math.floor
 
 class OutputView {
     fun printPurchaseAmountGuide() {
         println(PURCHASE_AMOUNT_GUIDE_MESSAGE)
     }
 
-    fun printLottoCount(lottoCount: Int) {
-        println(LOTTO_COUNT_MESSAGE_FORMAT.format(lottoCount))
+    fun printManualLottoCountGuide() {
+        println(MANUAL_LOTTO_COUNT_GUIDE_MESSAGE)
+    }
+
+    fun printManualLottoNumbersGuide() {
+        println(MANUAL_LOTTO_NUMBERS_GUIDE_MESSAGE)
+    }
+
+    fun printLottoCount(
+        manualLottoCount: LottoCount,
+        autoLottoCount: LottoCount,
+    ) {
+        println(LOTTO_COUNT_MESSAGE_FORMAT.format(manualLottoCount.count, autoLottoCount.count))
     }
 
     fun printLottos(lottos: Lottos) {
@@ -87,7 +100,7 @@ class OutputView {
         rateOfReturn: Double,
         isLossMoney: Boolean,
     ) {
-        print(RATE_OF_RETURN_MESSAGE_FORMAT.format(rateOfReturn))
+        print(RATE_OF_RETURN_MESSAGE_FORMAT.format(floor(rateOfReturn * DECIMAL_SCALE) / DECIMAL_SCALE))
         if (isLossMoney) {
             print(RATE_OF_RETURN_IS_LOSS_MONEY_MESSAGE)
         }
@@ -95,7 +108,9 @@ class OutputView {
 
     companion object {
         private const val PURCHASE_AMOUNT_GUIDE_MESSAGE = "구입금액을 입력해 주세요."
-        private const val LOTTO_COUNT_MESSAGE_FORMAT = "%d개를 구매했습니다."
+        private const val MANUAL_LOTTO_COUNT_GUIDE_MESSAGE = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val MANUAL_LOTTO_NUMBERS_GUIDE_MESSAGE = "수동으로 구매할 번호를 입력해 주세요."
+        private const val LOTTO_COUNT_MESSAGE_FORMAT = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val LOTTO_NUMBER_SEPARATOR = ", "
         private const val LOTTO_NUMBERS_PREFIX = "["
         private const val LOTTO_NUMBERS_POSTFIX = "]"
@@ -109,6 +124,7 @@ class OutputView {
         private const val DEFAULT_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치 (%d원)- %d개"
         private const val SECOND_RANK_STATISTICS_MESSAGE_FORMAT = "%d개 일치, 보너스 볼 일치 (%d원) - %d개"
         private const val RATE_OF_RETURN_MESSAGE_FORMAT = "총 수익률은 %.2f입니다."
+        private const val DECIMAL_SCALE = 100
         private const val RATE_OF_RETURN_IS_LOSS_MONEY_MESSAGE = "(기준이 1이기 때문에 결과적으로 손해라는 의미임)"
     }
 }

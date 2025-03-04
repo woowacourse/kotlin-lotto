@@ -15,7 +15,7 @@ enum class Rank(
     companion object {
         private const val MATCH_COUNT_OF_SECOND_OR_THIRD = 5
 
-        fun findRank(
+        fun calculate(
             matchCount: Int,
             isMatchedBonus: Boolean,
         ): Rank =

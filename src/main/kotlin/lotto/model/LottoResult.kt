@@ -8,8 +8,7 @@ class LottoResult(
     private fun getTotalPrizeMoney(): Long =
         ranks
             .entries
-            .sumOf { (rank, count) -> rank.prizeMoney * count }
-            .toLong()
+            .sumOf { (rank, count) -> rank.prizeMoney * count.toLong() }
 
     fun getIsLossMoney(rateOfReturn: Double): Boolean = rateOfReturn < PRINCIPAL_RATE_OF_RETURN
 

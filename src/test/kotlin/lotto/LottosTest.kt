@@ -17,7 +17,7 @@ class LottosTest {
         val lotto3 = Lotto(1, 2, 3, 4, 5, 8) // 3등
         val lotto4 = Lotto(10, 11, 12, 13, 14, 15) // miss
 
-        val lottos = Lottos(listOf(lotto1, lotto2, lotto3, lotto4))
+        val lottos = Lottos(manualLottos = listOf(lotto1, lotto2), autoLotts = listOf(lotto3, lotto4))
 
         val winningLotto =
             WinningLotto(
