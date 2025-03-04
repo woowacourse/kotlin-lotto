@@ -1,44 +1,49 @@
 package lotto.controller
 
 import lotto.model.Lotto
-import lotto.model.LottoMatchCalculator
+import lotto.model.LottoFactory
+import lotto.model.LottoGenerator
 import lotto.model.LottoNumber
 import lotto.model.LottoStatisticResult
-import lotto.model.LottoTicketCounter
-import lotto.model.RandomLottoGenerator
 import lotto.model.WinningLotto
 import lotto.view.InputView
 import lotto.view.OutputView
 
-class LottoController {
-    private val inputView = InputView()
-    private val outputView = OutputView()
-
+class LottoController(
+    private val inputView: InputView,
+    private val outputView: OutputView,
+    private val randomLottoGenerator: LottoGenerator,
+) {
     fun play() {
-        val purchase = inputView.inputPurchase()
-        val count = LottoTicketCounter(purchase).ticketCount
-        outputView.printLottoCount(count)
+        val purchaseAmount = inputView.inputPurchase()
+        val totalCount = purchaseAmount / 1000
 
-        val lottoBundle = purchaseLottos(count)
-        outputView.printLottoBundle(lottoBundle)
+        val manualCount = inputView.inputManualCount(totalCount)
 
-        val winningLotto = WinningLotto(getWinningLotto(), LottoNumber(getBonusNumber()))
-        val lottoMatchResult = LottoMatchCalculator().getWinningCounts(lottoBundle, winningLotto)
+        val manualNumbersList = inputView.inputManualLottoNumber(manualCount)
 
-        val lottoStatisticResult = LottoStatisticResult().calculateProfit(purchase.toInt(), lottoMatchResult)
+        val lottoFactory = LottoFactory(randomLottoGenerator, manualNumbersList)
+        val allLottos = lottoFactory.createLottos(totalCount)
 
-        outputView.printResult(lottoMatchResult, lottoStatisticResult)
-    }
+        outputView.printLottoCounts(manualCount, totalCount - manualCount)
+        outputView.printAllLottos(allLottos)
 
-    private fun getWinningLotto(): Lotto {
-        val input = inputView.inputWinningNumbers()
-        val lottoNumber = input.map { LottoNumber(it) }
-        return Lotto(lottoNumber)
-    }
+        val winningNumbers = inputView.inputWinningNumbers()
+        val bonusNumberInput = inputView.inputBonusNumber()
 
-    private fun getBonusNumber(): Int = inputView.inputBonusNumber()
+        val winningLotto =
+            WinningLotto(
+                lotto = Lotto.from(winningNumbers) ?: return outputView.printError("당첨 로또 생성에 실패했습니다."),
+                bonusNumber = LottoNumber.from(bonusNumberInput),
+            )
 
-    private fun purchaseLottos(count: Int): List<Lotto> {
-        return RandomLottoGenerator().generate(count)
+        val matchResults =
+            allLottos
+                .groupingBy { winningLotto.match(it) }
+                .eachCount()
+
+        val profitRate = LottoStatisticResult().calculateProfit(purchaseAmount, matchResults)
+
+        outputView.printResult(matchResults, profitRate)
     }
 }
