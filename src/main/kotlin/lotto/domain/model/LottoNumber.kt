@@ -7,9 +7,7 @@ value class LottoNumber(
     val number: Int,
 ) {
     init {
-        require(number in Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER) {
-            ERROR_INVALID_RANGE
-        }
+        require(number in Constants.MINIMUM_NUMBER..Constants.MAXIMUM_NUMBER) { ERROR_INVALID_RANGE }
     }
 
     companion object {
