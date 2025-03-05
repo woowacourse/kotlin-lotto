@@ -11,8 +11,7 @@ class PurchaseAmountTest {
 
     @BeforeEach
     fun setUp() {
-        val purchaseResult = PurchaseAmount.from(3000)
-        this.purchaseAmount = purchaseResult.getSuccessOrThrow()
+        purchaseAmount = PurchaseAmount.from(3000)
     }
 
     @CsvSource(
@@ -25,19 +24,17 @@ class PurchaseAmountTest {
         amount: Int,
         count: Int,
     ) {
-        val purchaseResult = PurchaseAmount.from(amount)
-        this.purchaseAmount = purchaseResult.getSuccessOrThrow()
+        this.purchaseAmount = PurchaseAmount.from(amount)
         val lottoAmount = count * Lotto.LOTTO_PRICE
         assertThatThrownBy { purchaseAmount.purchaseLotto(count) }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("선택하신 개수의 금액은 $lottoAmount 입니다. 구매하시는 금액은 현재 구매할 ${amount}원 보다 적어야 합니다.")
+            .hasMessage("선택하신 개수의 금액은 $lottoAmount 입니다. 구매하시는 금액은 현재 구매할 ${amount}원 보다 작거나 같아야 합니다.")
     }
 
     @ValueSource(ints = [999, 0, -1000, -999])
     @ParameterizedTest
     fun `구매 금액이 1000원 미만이라면 예외가 발생한다`(purchaseAmount: Int) {
-        val purchaseResult = PurchaseAmount.from(purchaseAmount)
-        assertThatThrownBy { purchaseResult.getSuccessOrThrow() }.isInstanceOf(
+        assertThatThrownBy { PurchaseAmount.from(purchaseAmount) }.isInstanceOf(
             IllegalArgumentException::class.java,
-        )
+        ).hasMessage("${purchaseAmount}원으로 로또를 구매하지 못했습니다 로또는 한 장 이상 구매해야 합니다.")
     }
 }

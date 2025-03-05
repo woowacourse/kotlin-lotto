@@ -8,8 +8,7 @@ import lotto.domain.model.LottoNumber.Companion.LOTTO_MIN_NUMBER
 class RandomLottoMachine : LottoMachine {
     override fun generate(): Lotto {
         val lottoNumbers = getRandomLottoNumbers().sorted()
-        val lottoResult = Lotto.from(lottoNumbers)
-        return lottoResult.getSuccessOrThrow()
+        return Lotto(lottoNumbers)
     }
 
     private fun getRandomLottoNumbers(): List<Int> {
