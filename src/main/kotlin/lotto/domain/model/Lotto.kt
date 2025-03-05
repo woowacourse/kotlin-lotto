@@ -1,5 +1,8 @@
 package lotto.domain.model
 
+import lotto.domain.model.LottoNumber.Companion.LOTTO_MAX_NUMBER
+import lotto.domain.model.LottoNumber.Companion.LOTTO_MIN_NUMBER
+
 data class Lotto(private val _numbers: Set<LottoNumber>) {
     constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) }.toSet())
 
@@ -18,6 +21,7 @@ data class Lotto(private val _numbers: Set<LottoNumber>) {
     }
 
     companion object {
+        val lottoNumbers = (LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER).toList()
         private const val INVALID_LOTTO_NUMBER_SIZE_MESSAGE = "%s 중복을 제외한 로또 번호 입니다. 로또 번호는 6개여야 합니다."
         const val LOTTO_PRICE = 1000
         const val LOTTO_NUMBER_SIZE = 6

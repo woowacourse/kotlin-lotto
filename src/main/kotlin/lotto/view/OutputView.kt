@@ -13,7 +13,7 @@ class OutputView {
     }
 
     fun printPurchaseLottoNumbers(lottoNumbers: List<Int>) {
-        println(lottoNumbers)
+        println(lottoNumbers.sorted())
     }
 
     fun printManualLottoNumbers() {

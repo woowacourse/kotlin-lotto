@@ -7,6 +7,7 @@ import lotto.domain.model.PurchaseAmount
 import lotto.domain.model.PurchaseCount
 import lotto.domain.model.WinningNumbers
 import lotto.domain.service.LottoMachine
+import lotto.domain.service.ManualLottoMachine
 import lotto.domain.service.RandomLottoMachine
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -14,7 +15,8 @@ import lotto.view.OutputView
 class LottoController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val lottoMachine: LottoMachine = RandomLottoMachine(),
+    private val manualLottoMachine: LottoMachine = ManualLottoMachine(),
+    private val randomLottoMachine: LottoMachine = RandomLottoMachine(),
 ) {
     fun run() {
         val purchaseAmount =
@@ -46,8 +48,10 @@ class LottoController(
     ): Lottos {
         outputView.printManualLottoNumbers()
         val manualLottos =
-            List(purchaseManualLottoCount) { retryEvent { Lotto(requireNotNull(inputView.readLottoNumbers()) { INVALID_TO_NUMBER }) } }
-        val randomLottos = List(purchaseRandomLottoCount) { lottoMachine.generate() }
+            List(purchaseManualLottoCount) {
+                retryEvent { manualLottoMachine.generate(requireNotNull(inputView.readLottoNumbers()) { INVALID_TO_NUMBER }) }
+            }
+        val randomLottos = List(purchaseRandomLottoCount) { randomLottoMachine.generate(Lotto.lottoNumbers) }
         return Lottos(manualLottos, randomLottos)
     }
 
