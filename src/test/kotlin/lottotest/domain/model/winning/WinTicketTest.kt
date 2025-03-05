@@ -61,7 +61,7 @@ class WinTicketTest {
         // when
         val winRankCounts: Map<Rank, WinningQuantity> = winTicket.calculateWinningStatistics(boughtTickets)
         val expectRankCounts: Map<Rank, WinningQuantity> =
-            mapOf(Rank.FIRST to WinningQuantity(1), Rank.SECOND to WinningQuantity(1))
+            mapOf(Rank.FIRST to WinningQuantity(1), Rank.THIRD to WinningQuantity(1))
 
         // then
         assertThat(winRankCounts).isEqualTo(expectRankCounts)
