@@ -1,6 +1,9 @@
 package domain.strategy
 
 import domain.model.Lotto
+import domain.model.Lotto.Companion.LOTTO_MAX
+import domain.model.Lotto.Companion.LOTTO_MIN
+import domain.model.Lotto.Companion.LOTTO_SIZE
 import domain.model.LottoNumber
 
 class AutoLottoGenerator(
@@ -13,11 +16,5 @@ class AutoLottoGenerator(
         return List(autoLottoAmount) {
             Lotto((LOTTO_MIN..LOTTO_MAX).shuffled().take(LOTTO_SIZE).map { LottoNumber(it) })
         }
-    }
-
-    companion object {
-        const val LOTTO_MIN = 1
-        const val LOTTO_MAX = 45
-        const val LOTTO_SIZE = 6
     }
 }

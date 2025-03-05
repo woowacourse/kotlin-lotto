@@ -1,7 +1,6 @@
 package domain.model
 
 import ERROR
-import domain.strategy.AutoLottoGenerator.Companion.LOTTO_SIZE
 
 class Lotto(val numbers: List<LottoNumber>) {
     init {
@@ -10,6 +9,9 @@ class Lotto(val numbers: List<LottoNumber>) {
     }
 
     companion object {
+        const val LOTTO_MIN = 1
+        const val LOTTO_MAX = 45
+        const val LOTTO_SIZE = 6
         const val INVALID_LOTTO_SIZE = "$ERROR 로또 번호는 ${LOTTO_SIZE}개 입니다."
         const val DUPLICATED_LOTTO_NUMBERS = "$ERROR 로또 번호는 중복이 없습니다."
 
