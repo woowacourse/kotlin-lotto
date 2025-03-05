@@ -6,8 +6,9 @@ import domain.model.LottoNumber
 import domain.model.LottoResult
 import domain.model.PurchasePrice
 import domain.model.WinningLotto
-import domain.service.LottoGenerator
 import domain.service.LottoMatchCalculator
+import domain.service.LottoStore
+import domain.strategy.AutoLottoGenerator
 import util.Mapper
 import util.retryWhenException
 import validator.ManualLottoAmountValidator
@@ -43,7 +44,8 @@ class LottoController(
         return retryWhenException(
             action = {
                 val manualLottoAmount = inputView.readManualLottoAmount()
-                LottoGenerator(purchasePrice).getAutoLottoAmount(manualLottoAmount).also { ManualLottoAmountValidator(it) }
+                val lottoAmount = LottoStore(purchasePrice).getLottoAmount()
+                AutoLottoGenerator(lottoAmount, manualLottoAmount).autoLottoAmount.also { ManualLottoAmountValidator(it) }
                 manualLottoAmount
             },
             onError = { outputView.printErrorMessage(it) },
@@ -59,7 +61,7 @@ class LottoController(
                 inputView.askForManualLottoNumber()
                 val manualLottoNumbers =
                     List(manualLottoAmount) { inputView.readManualLottoNumber().map { LottoNumber(it) } }
-                LottoGenerator(money).makeLottos(manualLottoAmount, manualLottoNumbers)
+                LottoStore(money).makeLottos(manualLottoAmount, manualLottoNumbers)
             },
             onError = { outputView.printErrorMessage(it) },
         )

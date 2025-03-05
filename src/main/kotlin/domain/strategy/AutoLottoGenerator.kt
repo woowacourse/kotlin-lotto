@@ -3,15 +3,16 @@ package domain.strategy
 import domain.model.Lotto
 import domain.model.LottoNumber
 
-class AutoLottoGenerator(private val autoLottoAmount: Int) : LottoGeneratorType {
+class AutoLottoGenerator(
+    totalLottoAmount: Int,
+    manualLottoAmount: Int,
+) : LottoGeneratorType {
+    val autoLottoAmount = totalLottoAmount - manualLottoAmount
+
     override fun generateNumber(): List<Lotto> {
-        val autoLottoList = mutableListOf<Lotto>()
-        repeat(autoLottoAmount) {
-            val lottoMachine = (LOTTO_MIN..LOTTO_MAX).shuffled().toMutableList()
-            val lotto = Lotto(lottoMachine.take(6).map { LottoNumber(it) })
-            autoLottoList.add(lotto)
+        return List(autoLottoAmount) {
+            Lotto((LOTTO_MIN..LOTTO_MAX).shuffled().take(LOTTO_SIZE).map { LottoNumber(it) })
         }
-        return autoLottoList
     }
 
     companion object {
