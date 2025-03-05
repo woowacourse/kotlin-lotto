@@ -3,8 +3,9 @@ package lottotest.domain.model.winning
 import lotto.domain.model.lottoticket.LottoTicket
 import lotto.domain.model.lottoticket.ManualLottoTicket
 import lotto.domain.model.winning.Rank
-import lotto.domain.model.winning.WinTicketInfo
+import lotto.domain.model.winning.WinTicket
 import lotto.domain.valueobject.LottoNumber
+import lotto.domain.valueobject.WinningQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -12,7 +13,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class WinTicketInfoTest {
+class WinTicketTest {
     @ParameterizedTest
     @MethodSource("duplicateWinBonusLottoNumbers")
     fun `당첨 티켓의 로또번호와 보너스 로또번호는 서로 중복되면 인스턴스가 생성되지 않는다`(
@@ -24,7 +25,7 @@ class WinTicketInfoTest {
 
         // when then
         assertThrows<IllegalArgumentException> {
-            WinTicketInfo(winLottoTicket, LottoNumber(rawBonusNumber))
+            WinTicket(winLottoTicket, LottoNumber(rawBonusNumber))
         }
     }
 
@@ -38,9 +39,32 @@ class WinTicketInfoTest {
         val winLottoTicket: LottoTicket = ManualLottoTicket(rawWinNumbers.map { LottoNumber(it) })
 
         // when then
-        val winTicketInfo = WinTicketInfo(winLottoTicket, LottoNumber(rawBonusNumber))
-        assertThat(winTicketInfo.winLottoTicket).isEqualTo(winLottoTicket)
-        assertThat(winTicketInfo.bonusNumber).isEqualTo(LottoNumber(rawBonusNumber))
+        val winTicket = WinTicket(winLottoTicket, LottoNumber(rawBonusNumber))
+        assertThat(winTicket.winLottoTicket).isEqualTo(winLottoTicket)
+        assertThat(winTicket.bonusNumber).isEqualTo(LottoNumber(rawBonusNumber))
+    }
+
+    @ParameterizedTest
+    @MethodSource("winNumber1to6")
+    fun `구매한 로또들의 정보가 주어지면 자신의 당첨 정보와 비교하여 당첨 통계를 알려준다`(
+        rawWinNumbers: List<Int>,
+        rawBonusNumber: Int,
+    ) {
+        // given
+        val winLottoTicket: LottoTicket = ManualLottoTicket(rawWinNumbers.map { LottoNumber(it) })
+        val winTicket = WinTicket(winLottoTicket, LottoNumber(rawBonusNumber))
+
+        val boughtTicket1to6 = ManualLottoTicket((1..6).map { LottoNumber(it) })
+        val boughtTicket2to7 = ManualLottoTicket((2..7).map { LottoNumber(it) })
+        val boughtTickets: List<LottoTicket> = listOf(boughtTicket1to6, boughtTicket2to7)
+
+        // when
+        val winRankCounts: Map<Rank, WinningQuantity> = winTicket.calculateWinningStatistics(boughtTickets)
+        val expectRankCounts: Map<Rank, WinningQuantity> =
+            mapOf(Rank.FIRST to WinningQuantity(1), Rank.SECOND to WinningQuantity(1))
+
+        // then
+        assertThat(winRankCounts).isEqualTo(expectRankCounts)
     }
 
     companion object {
@@ -59,10 +83,9 @@ class WinTicketInfoTest {
             )
 
         @JvmStatic
-        fun normalWinBonusLottoNumbersWithRank() =
+        fun winNumber1to6() =
             Stream.of(
-                Arguments.of(listOf(1, 2, 3, 4, 5, 6), 45, listOf(1, 2, 3, 4, 5, 6), Rank.FIRST),
-                Arguments.of(listOf(9, 8, 7, 6, 5, 4), 45, listOf(22, 23, 24, 25, 26, 27), Rank.MISS),
+                Arguments.of((1..6).toList(), 45),
             )
     }
 }
