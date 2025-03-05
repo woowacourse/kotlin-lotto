@@ -10,20 +10,24 @@ import org.junit.jupiter.params.provider.MethodSource
 class WinningNumbersTest {
     @Test
     fun `보너스 번호가 당첨 번호와 중복되면 예외가 발생한다`() {
-        val lotto = listOf(1, 2, 3, 4, 5, 6)
-        val bonusNumber = 6
+        val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(6)
         assertThatThrownBy { WinningNumbers(lotto, bonusNumber) }.isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("보너스 번호 ${bonusNumber}은(는) 당첨 번호와 중복 될 수 없습니다.")
+            .hasMessage("보너스 번호 ${bonusNumber}은(는) 당첨 번호 ${lotto}와 중복 될 수 없습니다.")
     }
 
     @MethodSource("calculateLottoRanksTest")
     @ParameterizedTest
     fun `로또 랭크를 구할 수 있다`(
         lotto: Lotto,
-        actual: LottoRank,
+        lottoRank: LottoRank,
     ) {
-        val winningNumbers = WinningNumbers(listOf(1, 2, 3, 4, 5, 6), 8)
-        assertThat(winningNumbers.calculateLottoRanks(listOf(lotto)).lottoRanks).isEqualTo(listOf(actual))
+        val winningLotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val bonusNumber = LottoNumber(8)
+        val winningNumbersResult = WinningNumbers(winningLotto, bonusNumber)
+        val lottos = Lottos(listOf(lotto), emptyList())
+        val actual = LottoRank.entries.associateWith { if (lottoRank == it) 1 else 0 }
+        assertThat(winningNumbersResult.calculateLottoRanks(lottos).lottoRanks).isEqualTo(actual)
     }
 
     companion object {

@@ -1,30 +1,29 @@
 package lotto.domain.model
 
-class Lotto(val numbers: Set<LottoNumber>) {
+import lotto.domain.model.LottoNumber.Companion.LOTTO_MAX_NUMBER
+import lotto.domain.model.LottoNumber.Companion.LOTTO_MIN_NUMBER
+
+data class Lotto(private val _numbers: Set<LottoNumber>) {
     constructor(numbers: List<Int>) : this(numbers.map { LottoNumber(it) }.toSet())
 
     init {
-        require(numbers.size == LOTTO_NUMBER_SIZE) {
-            INVALID_LOTTO_NUMBER_SIZE_MESSAGE.format(this)
-        }
+        require(_numbers.size == LOTTO_NUMBER_SIZE) { INVALID_LOTTO_NUMBER_SIZE_MESSAGE.format(numbers) }
     }
 
-    fun getLottoRank(
-        winningLotto: Lotto,
-        bonusNumber: LottoNumber,
-    ): LottoRank {
-        val matchCount = numbers.count { number -> winningLotto.numbers.contains(number) }
-        val isMatchBonusNumber = numbers.contains(bonusNumber)
-        return LottoRank.calculate(matchCount, isMatchBonusNumber)
-    }
+    val numbers get() = _numbers.map { it.number }
+
+    fun getSameNumberCount(other: Lotto) = _numbers.count { number -> other._numbers.contains(number) }
+
+    fun hasLottoNumber(number: LottoNumber) = _numbers.contains(number)
 
     override fun toString(): String {
-        return this.numbers.toString()
+        return this._numbers.toString()
     }
 
     companion object {
-        const val LOTTO_PRICE = 1000
-        private const val LOTTO_NUMBER_SIZE = 6
+        val lottoNumbers = (LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER).toList()
         private const val INVALID_LOTTO_NUMBER_SIZE_MESSAGE = "%s 중복을 제외한 로또 번호 입니다. 로또 번호는 6개여야 합니다."
+        const val LOTTO_PRICE = 1000
+        const val LOTTO_NUMBER_SIZE = 6
     }
 }

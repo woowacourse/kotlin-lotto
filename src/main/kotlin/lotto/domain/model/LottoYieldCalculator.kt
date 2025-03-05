@@ -3,7 +3,7 @@ package lotto.domain.model
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class LottoRanks(val lottoRanks: Map<LottoRank, Int>) {
+class LottoYieldCalculator(val lottoRanks: Map<LottoRank, Int>) {
     fun calculateTotalReturn(lottoPrice: Int = Lotto.LOTTO_PRICE): BigDecimal {
         val rankWinningAmounts =
             lottoRanks.map { (key, value) -> key.winningAmount.toBigDecimal() * value.toBigDecimal() }

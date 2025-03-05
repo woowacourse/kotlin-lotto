@@ -5,28 +5,29 @@ import java.util.Scanner
 class InputView {
     private val scanner = Scanner(System.`in`)
 
-    fun readPurchaseAmount(): Int {
+    fun readPurchaseAmount(): Int? {
         println(READ_PURCHASE_AMOUNT_MESSAGE)
-        return requireNotNull(scanner.nextLine().trim().toIntOrNull()) { INVALID_NUMBER_MESSAGE }
+        return scanner.nextLine().trim().toIntOrNull()
     }
 
-    fun readWinningNumbers(): List<Int> {
-        println(READ_WINNING_NUMBERS_MESSAGE)
-        val winningNumbersInput = scanner.nextLine().split(WINNING_NUMBERS_DELIMITER).map { it.trim() }
-        return winningNumbersInput.map { requireNotNull(it.toIntOrNull()) { INVALID_NUMBER_MESSAGE } }
+    fun readManualLottoCount(): Int? {
+        println(READ_PASSIVITY_LOTTO_COUNT)
+        return scanner.nextLine().trim().toIntOrNull()
     }
 
-    fun readBonusNumber(): Int {
-        println(READ_BONUS_NUMBER_MESSAGE)
+    fun readLottoNumbers(): List<Int>? {
+        val lottoNumbersInput = scanner.nextLine().split(WINNING_NUMBERS_DELIMITER).map { it.trim() }
+        return lottoNumbersInput.map { it.toIntOrNull() ?: return null }
+    }
+
+    fun readBonusNumber(): Int? {
         val bonusNumberInput = scanner.nextLine().trim()
-        return requireNotNull(bonusNumberInput.toIntOrNull()) { INVALID_NUMBER_MESSAGE }
+        return bonusNumberInput.toIntOrNull()
     }
 
     private companion object {
         const val WINNING_NUMBERS_DELIMITER = ','
         const val READ_PURCHASE_AMOUNT_MESSAGE = "구입금액을 입력해 주세요."
-        const val READ_WINNING_NUMBERS_MESSAGE = "\n지난 주 당첨 번호를 입력해 주세요."
-        const val READ_BONUS_NUMBER_MESSAGE = "보너스 볼을 입력해 주세요."
-        const val INVALID_NUMBER_MESSAGE = "숫자만 입력해 주세요.(공백 포함 x)"
+        const val READ_PASSIVITY_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요."
     }
 }

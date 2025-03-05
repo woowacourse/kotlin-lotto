@@ -2,42 +2,87 @@ package lotto.controller
 
 import lotto.domain.model.Lotto
 import lotto.domain.model.LottoNumber
+import lotto.domain.model.Lottos
+import lotto.domain.model.PurchaseAmount
+import lotto.domain.model.PurchaseCount
 import lotto.domain.model.WinningNumbers
-import lotto.domain.service.LottosGenerator
-import lotto.domain.service.PurchaseCalculator
+import lotto.domain.service.LottoMachine
+import lotto.domain.service.ManualLottoMachine
+import lotto.domain.service.RandomLottoMachine
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class LottoController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val lottosGenerator: LottosGenerator = LottosGenerator(),
-    private val purchaseCalculator: PurchaseCalculator = PurchaseCalculator(),
+    private val manualLottoMachine: LottoMachine = ManualLottoMachine(),
+    private val randomLottoMachine: LottoMachine = RandomLottoMachine(),
 ) {
     fun run() {
-        val lottos = purchaseLotto()
-        val winningLotto = Lotto(inputView.readWinningNumbers())
-        val bonusNumber = LottoNumber(inputView.readBonusNumber())
-        val winningNumbers = WinningNumbers(winningLotto, bonusNumber)
+        val purchaseAmount =
+            retryEvent { PurchaseAmount.from(requireNotNull(inputView.readPurchaseAmount()) { INVALID_TO_NUMBER }) }
+        val lottos = purchaseLotto(purchaseAmount)
+        val winningNumbers = getWinningNumbers()
 
         printWinningResults(lottos, winningNumbers)
     }
 
-    private fun purchaseLotto(): List<Lotto> {
-        val purchasePrice = inputView.readPurchaseAmount()
-        val lottoCount = purchaseCalculator.getLottoCount(purchasePrice)
-        val lottos = lottosGenerator.generate(lottoCount)
-        outputView.printPurchaseLottoCount(lottos.size)
-        lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers.toList()) }
+    private fun purchaseLotto(purchaseAmount: PurchaseAmount): Lottos {
+        val (manualPurchaseCount, remainPurchaseCount) =
+            retryEvent {
+                val manualPurchaseCount =
+                    PurchaseCount(requireNotNull(inputView.readManualLottoCount()) { INVALID_TO_NUMBER })
+                val currentPurchaseAmount = purchaseAmount.purchaseLotto(manualPurchaseCount.count)
+                val remainPurchaseCount = currentPurchaseAmount.getRemainPurchaseCount()
+                manualPurchaseCount.count to remainPurchaseCount
+            }
+        val lottos = getLottos(manualPurchaseCount, remainPurchaseCount)
+        outputView.printPurchaseLottoCount(lottos.getManualLottosCount(), lottos.getRandomLottosCount())
+        lottos.lottos.forEach { lotto -> outputView.printPurchaseLottoNumbers(lotto.numbers) }
         return lottos
     }
 
+    private fun getLottos(
+        purchaseManualLottoCount: Int,
+        purchaseRandomLottoCount: Int,
+    ): Lottos {
+        outputView.printManualLottoNumbers()
+        val manualLottos =
+            List(purchaseManualLottoCount) {
+                retryEvent { manualLottoMachine.generate(requireNotNull(inputView.readLottoNumbers()) { INVALID_TO_NUMBER }) }
+            }
+        val randomLottos = List(purchaseRandomLottoCount) { randomLottoMachine.generate(Lotto.lottoNumbers) }
+        return Lottos(manualLottos, randomLottos)
+    }
+
+    private fun getWinningNumbers(): WinningNumbers {
+        outputView.printWinningNumbers()
+        val winningLotto = Lotto(retryEvent { requireNotNull(inputView.readLottoNumbers()) { INVALID_TO_NUMBER } })
+        outputView.printBonusNumber()
+        return retryEvent {
+            val bonusNumber = LottoNumber(requireNotNull(inputView.readBonusNumber()) { INVALID_TO_NUMBER })
+            WinningNumbers(winningLotto, bonusNumber)
+        }
+    }
+
     private fun printWinningResults(
-        lottos: List<Lotto>,
+        lottos: Lottos,
         winningNumbers: WinningNumbers,
     ) {
         val lottoRanks = winningNumbers.calculateLottoRanks(lottos)
         outputView.printWinningResults(lottoRanks)
         outputView.printTotalReturns(lottoRanks.calculateTotalReturn())
+    }
+
+    private fun <T> retryEvent(event: () -> T): T {
+        while (true) {
+            runCatching { event() }
+                .onSuccess { return it }
+                .onFailure { outputView.printErrorMessage(it.message ?: it.stackTraceToString()) }
+        }
+    }
+
+    companion object {
+        private const val INVALID_TO_NUMBER = "숫자를 입력해주세요"
     }
 }
