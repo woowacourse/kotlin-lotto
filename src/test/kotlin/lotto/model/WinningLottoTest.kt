@@ -1,23 +1,36 @@
 package lotto.model
 
-import lotto.domain.model.Lotto
-import lotto.domain.model.LottoNumber
-import lotto.domain.model.Rank
-import lotto.domain.model.WinningLotto
+import lotto.domain.model.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class WinningLottoTest {
     @Test
-    fun `당첨 로또 번호와 보너스 볼이 중복이면 null을 반환한다`() {
-        assertThat(WinningLotto.createOrNull(lottoNumberList(listOf(1, 2, 3, 4, 5, 6)), LottoNumber.valueOf(6))).isEqualTo(null)
+    fun `당첨 로또 번호와 보너스 번호가 중복이면 null을 반환한다`() {
+        val winningLotto = WinningLotto.valueOfOrNull(
+            createLottoNumbers(listOf(1, 2, 3, 4, 5, 6)), LottoNumber.valueOf(6)
+        )
+        assertThat(winningLotto).isNull()
     }
 
     @Test
-    fun `당첨 로또와 로또를 비교하여 순위를 반환한다`() {
-        val winningLotto = WinningLotto.createOrNull(lottoNumberList(listOf(1, 2, 3, 4, 5, 6)), LottoNumber.valueOf(7))
-        assertThat(winningLotto?.findRank(Lotto.valueOf(lottoNumberList(listOf(1, 2, 3, 4, 5, 6))))).isEqualTo(Rank.FIRST)
+    fun `당첨 로또와 비교하여 로또 순위를 반환한다`() {
+        val winningLotto = WinningLotto.valueOfOrNull(
+            createLottoNumbers(listOf(1, 2, 3, 4, 5, 6)), LottoNumber.valueOf(7)
+        ) ?: throw IllegalStateException("WinningLotto 생성 실패")
+
+        val rank = winningLotto.findRank(
+            when (val result = Lotto.valueOf(createLottoNumbers(listOf(1, 2, 3, 4, 5, 6)))) {
+                is LottoCreationResult.Success -> result.lotto
+                is LottoCreationResult.Failure -> throw IllegalArgumentException("Lotto 생성 실패")
+            }
+        )
+
+        assertThat(rank).isEqualTo(Rank.FIRST)
     }
 
-    private fun lottoNumberList(numberList: List<Int>): List<LottoNumber> = numberList.map { it -> LottoNumber.valueOf(it) }
+
+
+    private fun createLottoNumbers(numberList: List<Int>): List<LottoNumber> =
+        numberList.map { LottoNumber.valueOf(it) }
 }

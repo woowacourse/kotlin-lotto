@@ -6,29 +6,27 @@ import org.junit.jupiter.api.Test
 
 class AmountTest {
     @Test
-    fun `소지한 돈을 로또 금액으로 나누면 로또 갯수가 리턴된다`() {
-        val amount = Amount.createOrNull(10000)
+    fun `소지한 금액으로 로또 구매 가능한 개수를 반환한다`() {
+        val amount = Amount.valueOfOrNull(10000)
         assertThat(amount).isNotNull
         assertThat(amount?.getCount(1000)).isEqualTo(10)
     }
 
     @Test
-    fun `소지한 돈이 음수이면 null이 생성된다`() {
-        val amount = Amount.createOrNull(-1)
-        assertThat(amount).isEqualTo(null)
+    fun `소지한 금액이 음수면 null을 반환한다`() {
+        val amount = Amount.valueOfOrNull(-1)
+        assertThat(amount).isNull()
     }
 
     @Test
-    fun `소지한 돈에 구입 금액을 지불하면 남은 돈을 가진 객채가 생성된다`() {
-        var amount = Amount.createOrNull(10000)
-        amount = amount?.paymentOrNull(7000)
+    fun `구매 후 남은 금액을 가진 Amount 객체를 반환한다`() {
+        val amount = Amount.valueOfOrNull(10000)?.paymentOrNull(7000)
         assertThat(amount?.money).isEqualTo(3000)
     }
 
     @Test
-    fun `소지한 돈 이상의 구입 금액을 지불하면 null가 생성된다`() {
-        var amount = Amount.createOrNull(10000)
-        amount = amount?.paymentOrNull(17000)
-        assertThat(amount?.money).isEqualTo(null)
+    fun `소지한 금액보다 큰 금액을 지불하면 null을 반환한다`() {
+        val amount = Amount.valueOfOrNull(10000)?.paymentOrNull(17000)
+        assertThat(amount).isNull()
     }
 }

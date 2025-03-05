@@ -7,21 +7,19 @@ import org.junit.jupiter.api.Test
 
 class PrizeCalculatorTest {
     @Test
-    fun `순위 리스트에 따라 당첨금을 반환한다`() {
+    fun `순위 리스트에 따라 총 당첨금을 계산한다`() {
         val rankCalculator = RankCalculator()
         val winningList = listOf(Rank.FIRST, Rank.SECOND)
-        assertThat(rankCalculator.earningMoney(winningList)).isEqualTo(Rank.FIRST.winningMoney + Rank.SECOND.winningMoney)
+        val totalPrize = Rank.FIRST.winningMoney + Rank.SECOND.winningMoney
+        assertThat(rankCalculator.earningMoney(winningList)).isEqualTo(totalPrize)
     }
 
     @Test
-    fun `당첨금과 입력 금액에 따라 수익률을 반환한다`() {
+    fun `당첨금과 투자 금액으로 수익률을 계산한다`() {
         val rankCalculator = RankCalculator()
         val winningList = listOf(Rank.FIRST, Rank.SECOND)
-        assertThat(
-            rankCalculator.calculateEarningRate(
-                2000,
-                rankCalculator.earningMoney(winningList),
-            ),
-        ).isEqualTo((Rank.FIRST.winningMoney + Rank.SECOND.winningMoney) / 2000.0)
+        val totalPrize = Rank.FIRST.winningMoney + Rank.SECOND.winningMoney
+        assertThat(rankCalculator.calculateEarningRate(2000, totalPrize))
+            .isEqualTo(totalPrize / 2000.0)
     }
 }

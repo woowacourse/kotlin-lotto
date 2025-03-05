@@ -7,13 +7,13 @@ import org.junit.jupiter.api.assertThrows
 
 class LottoNumberTest {
     @Test
-    fun `로또 넘버를 isEqualTo로 생성할 때, 유효한 범위 외의 값이 들어오면 null를 리턴한다`() {
-        val lottoNumber = LottoNumber.createOrNull(-1)
-        assertThat(lottoNumber).isEqualTo(null)
+    fun `유효 범위를 벗어난 숫자로 LottoNumber 생성 시 null을 반환한다`() {
+        val lottoNumber = LottoNumber.valueOfOrNull(-1)
+        assertThat(lottoNumber).isNull()
     }
 
     @Test
-    fun `로또 넘버를 valueOf로 생성할 때, 유효한 범위 외의 값이 들어오면 throw 한다`() {
+    fun `유효 범위를 벗어난 숫자로 LottoNumber 생성 시 예외를 던진다`() {
         assertThrows<IllegalArgumentException> { LottoNumber.valueOf(-1) }
     }
 }
