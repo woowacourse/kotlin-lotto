@@ -4,7 +4,7 @@ import lotto.domain.model.lottoticket.AutoLottoTicket
 import lotto.domain.model.lottoticket.LottoTicket
 import lotto.domain.model.lottoticket.ManualLottoTicket
 import lotto.domain.model.winning.Rank
-import lotto.domain.model.winning.WinTicketInfo
+import lotto.domain.model.winning.WinTicket
 import lotto.domain.model.winning.WinningStatistics
 import lotto.domain.valueobject.LottoNumber
 import lotto.domain.valueobject.LottoPaymentMoney
@@ -33,9 +33,9 @@ class LottoController(
 
     private fun getRankCounts(
         boughtTickets: List<LottoTicket>,
-        winTicketInfo: WinTicketInfo,
+        winTicket: WinTicket,
     ): Map<Rank, WinningQuantity> {
-        val rawRankCount = boughtTickets.map { it.getRankByWinInfo(winTicketInfo) }.groupingBy { it }.eachCount()
+        val rawRankCount = boughtTickets.map { it.getRankByWinInfo(winTicket) }.groupingBy { it }.eachCount()
         return rawRankCount.mapValues { (_, value) -> WinningQuantity(value) }
     }
 
@@ -60,11 +60,11 @@ class LottoController(
         return manualTickets + autoTickets
     }
 
-    private fun getWinTicketInfo(): WinTicketInfo {
+    private fun getWinTicketInfo(): WinTicket {
         val winLottoTicket = retryUntilSuccess { createWinLottoTicket() }
         val bonusNumber = retryUntilSuccess { LottoNumber(inputView.readBonusBallNumber()) }
         outputView.showParagraphSeparation()
-        return WinTicketInfo(winLottoTicket, bonusNumber)
+        return WinTicket(winLottoTicket, bonusNumber)
     }
 
     private fun createWinLottoTicket(): LottoTicket =

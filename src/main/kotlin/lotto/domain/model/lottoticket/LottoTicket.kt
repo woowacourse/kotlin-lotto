@@ -1,7 +1,7 @@
 package lotto.domain.model.lottoticket
 
 import lotto.domain.model.winning.Rank
-import lotto.domain.model.winning.WinTicketInfo
+import lotto.domain.model.winning.WinTicket
 import lotto.domain.valueobject.LottoNumber
 
 interface LottoTicket {
@@ -9,12 +9,12 @@ interface LottoTicket {
 
     fun getSortedLottoNumbers(): List<LottoNumber> = lottoNumbers.sortedBy { it.value }
 
-    fun getRankByWinInfo(winTicketInfo: WinTicketInfo): Rank {
+    fun getRankByWinInfo(winTicket: WinTicket): Rank {
         val countOfMatch =
-            winTicketInfo.winLottoTicket.lottoNumbers
+            winTicket.winLottoTicket.lottoNumbers
                 .intersect(lottoNumbers)
                 .size
-        val isMatchedBonus = winTicketInfo.bonusNumber in lottoNumbers
+        val isMatchedBonus = winTicket.bonusNumber in lottoNumbers
 
         return Rank.valueOf(countOfMatch, isMatchedBonus)
     }

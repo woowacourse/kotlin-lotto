@@ -3,7 +3,7 @@ package lotto.domain.model.winning
 import lotto.domain.model.lottoticket.LottoTicket
 import lotto.domain.valueobject.LottoNumber
 
-class WinTicketInfo(
+class WinTicket(
     val winLottoTicket: LottoTicket,
     val bonusNumber: LottoNumber,
 ) {
