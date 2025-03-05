@@ -7,14 +7,11 @@ enum class GainLoss {
     ;
 
     companion object {
-        fun valueOf(rate: Double): GainLoss {
-            if (rate < 1.0) {
-                return LOSS
+        fun valueOf(rate: Double): GainLoss =
+            when {
+                rate < 1.0 -> LOSS
+                rate > 1.0 -> GAIN
+                else -> PRINCIPAL
             }
-            if (rate > 1.0) {
-                return GAIN
-            }
-            return PRINCIPAL
-        }
     }
 }
