@@ -3,13 +3,11 @@ package lotto.controller
 import lotto.domain.model.lottoticket.AutoLottoTicket
 import lotto.domain.model.lottoticket.LottoTicket
 import lotto.domain.model.lottoticket.ManualLottoTicket
-import lotto.domain.model.winning.Rank
 import lotto.domain.model.winning.WinTicket
 import lotto.domain.model.winning.WinningStatistics
 import lotto.domain.valueobject.LottoNumber
 import lotto.domain.valueobject.LottoPaymentMoney
 import lotto.domain.valueobject.LottoQuantity
-import lotto.domain.valueobject.WinningQuantity
 import lotto.domain.valueobject.validator.ManualLottoQuantityValidator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -25,18 +23,10 @@ class LottoController(
         val boughtTickets = buyLottoTickets(manualQuantity, autoQuantity)
         outputView.showBoughtLottoQuantity(manualQuantity, autoQuantity)
         outputView.showBoughtLottoTickets(boughtTickets)
-        val winTicketInfo = retryUntilSuccess { getWinTicketInfo() }
-        val winningStatistics = WinningStatistics(lottoPaymentMoney, getRankCounts(boughtTickets, winTicketInfo))
+        val winTicket = retryUntilSuccess { getWinTicket() }
+        val winningStatistics = WinningStatistics(lottoPaymentMoney, winTicket.calculateWinningStatistics(boughtTickets))
         outputView.showWinningStatics(winningStatistics)
         outputView.showEarningRate(winningStatistics.getEarningRate())
-    }
-
-    private fun getRankCounts(
-        boughtTickets: List<LottoTicket>,
-        winTicket: WinTicket,
-    ): Map<Rank, WinningQuantity> {
-        val rawRankCount = boughtTickets.map { it.getRankByWinInfo(winTicket) }.groupingBy { it }.eachCount()
-        return rawRankCount.mapValues { (_, value) -> WinningQuantity(value) }
     }
 
     private fun getLottoPaymentMoney(): LottoPaymentMoney {
@@ -60,7 +50,7 @@ class LottoController(
         return manualTickets + autoTickets
     }
 
-    private fun getWinTicketInfo(): WinTicket {
+    private fun getWinTicket(): WinTicket {
         val winLottoTicket = retryUntilSuccess { createWinLottoTicket() }
         val bonusNumber = retryUntilSuccess { LottoNumber(inputView.readBonusBallNumber()) }
         outputView.showParagraphSeparation()
