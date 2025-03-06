@@ -1,14 +1,14 @@
 package domain.model
 
 import ERROR
-import util.LottoFactory
+import util.Mapper
 
 class WinningLotto(
     val lotto: Lotto,
     val bonusNumber: BonusNumber,
 ) {
     init {
-        require(bonusNumber.value !in LottoFactory.extractionNumber(lotto)) { DUPLICATED_BONUS_NUMBER }
+        require(bonusNumber.value !in Mapper.toNumberList(lotto)) { DUPLICATED_BONUS_NUMBER }
     }
 
     companion object {
