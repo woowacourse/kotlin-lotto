@@ -10,7 +10,7 @@ class LottoMachineTest {
         val input = "1,2,3,4,5,6"
         val lottoMachine = LottoMachine()
         lottoMachine.buyLottoTicket(LottoManualGenerator(input))
-        val expected = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()))
+        val expected = listOf(Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }.toSet()))
         assertThat(lottoMachine.getLottoTickets()).isEqualTo(expected)
     }
 }

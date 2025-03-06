@@ -5,6 +5,6 @@ import lotto.domain.LottoNumber
 
 class LottoManualGenerator(private val input: String) : LottoGenerator {
     override fun generateLottoNumbers(): Lotto {
-        return Lotto(input.split(",").map { LottoNumber(it.toInt()) }.toSet())
+        return Lotto(input.split(",").map { LottoNumber.from(it.toInt()) }.toSet())
     }
 }

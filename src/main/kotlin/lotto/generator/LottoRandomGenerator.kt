@@ -8,7 +8,7 @@ class LottoRandomGenerator : LottoGenerator {
         return Lotto(
             (MIN_BOUND..MAX_BOUND)
                 .shuffled()
-                .take(NUMBER_OF_LOTTO_NUMBER).map { LottoNumber(it) }.toSet(),
+                .take(NUMBER_OF_LOTTO_NUMBER).map { LottoNumber.from(it) }.toSet(),
         )
     }
 

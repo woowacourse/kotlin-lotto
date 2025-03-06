@@ -4,19 +4,21 @@ class InputView {
     fun getPurchaseAmount(): String {
         println(MESSAGE_INPUT_PURCHASE_AMOUNT)
         val input = readln()
-        if (validateInteger(input)) {
-            return input
+        if (input.toIntOrNull() == null) {
+            println(ERROR_NOT_INVALID_INPUT)
+            return getPurchaseAmount()
         }
-        return getPurchaseAmount()
+        return input
     }
 
     fun getManualLottoCount(): String {
         println(MESSAGE_INPUT_MANUAL_LOTTO_COUNT)
         val input = readln()
-        if (validateInteger(input)) {
-            return input
+        if (input.toIntOrNull() == null) {
+            println(ERROR_NOT_INVALID_INPUT)
+            return getManualLottoCount()
         }
-        return getManualLottoCount()
+        return input
     }
 
     fun getManualLottoTickets() {
@@ -73,6 +75,7 @@ class InputView {
         const val MESSAGE_INPUT_MANUAL_LOTTO_TICKETS = "\n수동으로 구매할 번호를 입력해 주세요."
         const val MESSAGE_INPUT_WINNING_NUMBER = "\n지난 주 당첨 번호를 입력해 주세요."
         const val MESSAGE_INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+        const val ERROR_NOT_INVALID_INPUT = "[ERROR] 입력이 올바르지 않습니다. 다시 입력해주세요"
 
         const val SEPARATOR = ","
 

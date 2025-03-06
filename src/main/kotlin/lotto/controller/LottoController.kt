@@ -80,13 +80,13 @@ class LottoController(
     }
 
     private fun getInputLotto(): Lotto {
-        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber(it.trim().toInt()) }.toSet()
+        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber.from(it.trim().toInt()) }.toSet()
         return Lotto(winningNumber)
     }
 
     private fun getBonusNumber(): LottoNumber {
-        val bonusNumber = inputView.getBonusNumber()
-        return LottoNumber(bonusNumber.toInt())
+        val bonusNumber = inputView.getBonusNumber().toIntOrNull() ?: return getBonusNumber()
+        return LottoNumber.from(bonusNumber)
     }
 
     companion object {

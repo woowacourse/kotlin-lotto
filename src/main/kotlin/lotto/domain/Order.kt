@@ -1,7 +1,7 @@
 package lotto.domain
 
 class Order(
-    private val purchaseAmount: Int,
+    val purchaseAmount: Int,
 ) {
     init {
         require(purchaseAmount >= LOTTO_PRICE) { ERROR_UNDER_THOUSAND }
