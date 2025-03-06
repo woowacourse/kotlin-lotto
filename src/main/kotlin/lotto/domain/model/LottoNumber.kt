@@ -1,6 +1,8 @@
 package lotto.domain.model
 
-data class LottoNumber(val value: Int) {
+data class LottoNumber(
+    val value: Int,
+) {
     init {
         require(value in VALID_RANGE) { RANGE_ERROR }
     }
@@ -11,7 +13,6 @@ data class LottoNumber(val value: Int) {
 
         fun valueOf(value: Int): LottoNumber = LottoNumber(value)
 
-        fun valueOfOrNull(value: Int): LottoNumber? =
-            runCatching { valueOf(value) }.getOrNull()
+        fun valueOfOrNull(value: Int): LottoNumber? = runCatching { valueOf(value) }.getOrNull()
     }
 }

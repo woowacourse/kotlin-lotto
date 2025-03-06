@@ -22,7 +22,9 @@ sealed class LottoCreationResult {
     }
 }
 
-class Lotto private constructor(val numberList: List<LottoNumber>) {
+class Lotto private constructor(
+    val numberList: List<LottoNumber>,
+) {
     init {
         require(numberList.sortedBy { it.value } == numberList) { "[ERROR] 로또 번호는 정렬된 상태여야 합니다." }
     }
@@ -38,8 +40,7 @@ class Lotto private constructor(val numberList: List<LottoNumber>) {
                 else -> LottoCreationResult.Success(Lotto(numberList.sortedBy { it.value }))
             }
 
-        fun valueOfOrNull(numberList: List<LottoNumber>): Lotto? =
-            runCatching { Lotto(numberList.sortedBy { it.value }) }.getOrNull()
+        fun valueOfOrNull(numberList: List<LottoNumber>): Lotto? = runCatching { Lotto(numberList.sortedBy { it.value }) }.getOrNull()
 
         fun createRandom(sortStrategy: SortStrategy = RandomSort()): Lotto =
             Lotto(sortStrategy.sort(LOTTO_NUMBERS).take(LOTTO_NUMBER_QUANTITY).sortedBy { it.value })

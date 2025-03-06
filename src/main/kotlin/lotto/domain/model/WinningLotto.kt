@@ -33,8 +33,11 @@ class WinningLotto private constructor(
     companion object {
         const val WINNING_LOTTO_NUMBER_QUANTITY = 6
 
-        fun valueOf(numbers: List<LottoNumber>, bonusNumber: LottoNumber): WinningLottoCreationResult {
-            return runCatching { WinningLotto(numbers, bonusNumber) }
+        fun valueOf(
+            numbers: List<LottoNumber>,
+            bonusNumber: LottoNumber,
+        ): WinningLottoCreationResult =
+            runCatching { WinningLotto(numbers, bonusNumber) }
                 .map { WinningLottoCreationResult.Success(it) }
                 .getOrElse { exception ->
                     when (exception.message) {
@@ -44,10 +47,10 @@ class WinningLotto private constructor(
                         else -> throw exception
                     }
                 }
-        }
 
-        fun valueOfOrNull(numbers: List<LottoNumber>, bonusNumber: LottoNumber): WinningLotto? =
-            runCatching { WinningLotto(numbers, bonusNumber) }.getOrNull()
+        fun valueOfOrNull(
+            numbers: List<LottoNumber>,
+            bonusNumber: LottoNumber,
+        ): WinningLotto? = runCatching { WinningLotto(numbers, bonusNumber) }.getOrNull()
     }
 }
-

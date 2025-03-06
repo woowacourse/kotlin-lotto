@@ -5,7 +5,6 @@ import lotto.domain.model.LottoCreationResult
 import lotto.domain.model.LottoNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class LottoTest {
     @Test
@@ -26,11 +25,9 @@ class LottoTest {
         assertThat(lotto.numberList.all { it.value in 1..45 }).isTrue()
     }
 
-    private fun createLotto(numberList: List<Int>): Lotto? {
-        return when (val result = Lotto.valueOf(numberList.map { LottoNumber.valueOf(it) })) {
+    private fun createLotto(numberList: List<Int>): Lotto? =
+        when (val result = Lotto.valueOf(numberList.map { LottoNumber.valueOf(it) })) {
             is LottoCreationResult.Success -> result.lotto
             is LottoCreationResult.Failure -> null
         }
-    }
-
 }

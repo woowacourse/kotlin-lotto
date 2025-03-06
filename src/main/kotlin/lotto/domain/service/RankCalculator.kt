@@ -3,7 +3,13 @@ package lotto.domain.service
 import lotto.domain.model.Rank
 
 class RankCalculator {
-    fun earningMoney(winningList: List<Rank>): Int = winningList.sumOf { it.winningMoney }
+    fun earningMoney(winningList: Map<Rank, Int>): Int {
+        var money = 0
+        winningList.forEach {
+            money += it.key.winningMoney * it.value
+        }
+        return money
+    }
 
     fun calculateEarningRate(
         inputMoney: Int,

@@ -1,6 +1,12 @@
 package lotto.controller
 
-import lotto.domain.model.*
+import lotto.domain.model.Amount
+import lotto.domain.model.Lotto
+import lotto.domain.model.LottoCreationResult
+import lotto.domain.model.LottoNumber
+import lotto.domain.model.Rank
+import lotto.domain.model.WinningLotto
+import lotto.domain.model.WinningLottoCreationResult
 import lotto.domain.service.RankCalculator
 import lotto.domain.service.WinningListMaker
 import lotto.view.InputView
@@ -21,13 +27,11 @@ class LottoController(
         outputView.printPurchaseResult(manualLottoList, autoLottoList)
 
         val winningLotto = getWinningLotto()
-        val ranks = WinningListMaker().calculateRanks(winningLotto, manualLottoList + autoLottoList)
-
-        outputView.printResult(sortResultsByOriginalRankOrder(ranks), calculateEarningRate(ranks))
+        val ranks = WinningListMaker(winningLotto).makeWinningList(manualLottoList + autoLottoList)
+        outputView.printResult(ranks, calculateEarningRate(ranks))
     }
 
-    private fun getAutoLotto(count: Int): List<Lotto> =
-        List(count) { Lotto.createRandom() }
+    private fun getAutoLotto(count: Int): List<Lotto> = List(count) { Lotto.createRandom() }
 
     private fun getManualCount(): Int {
         val manualCount = inputView.getManualCount()
@@ -76,15 +80,10 @@ class LottoController(
         return getWinningLotto()
     }
 
-    private fun calculateEarningRate(ranks: List<Rank>): Double {
+    private fun calculateEarningRate(ranks: Map<Rank, Int>): Double {
         val totalWinnings = RankCalculator().earningMoney(ranks)
         return RankCalculator().calculateEarningRate(amount.money, totalWinnings)
     }
-
-    private fun sortResultsByOriginalRankOrder(ranks: List<Rank>): List<Pair<Rank, Int>> =
-        Rank.entries.filter { it != Rank.MISS }
-            .map { rank -> rank to ranks.count { it == rank } }
-            .reversed()
 
     companion object {
         const val LOTTO_PRIZE = 1000

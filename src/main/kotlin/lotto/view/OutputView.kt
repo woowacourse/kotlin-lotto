@@ -44,7 +44,7 @@ class OutputView {
     }
 
     fun printResult(
-        sortedResults: List<Pair<Rank, Int>>,
+        sortedResults: Map<Rank, Int>,
         earningRate: Double,
     ) {
         println(Message.winningStatsHeader())
