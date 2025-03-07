@@ -3,8 +3,8 @@ package lotto.generator
 import lotto.domain.Lotto
 import lotto.domain.LottoNumber
 
-class LottoManualGenerator(private val input: String) : LottoGenerator {
+class LottoManualGenerator(private val input: Set<Int>) : LottoGenerator {
     override fun generateLottoNumbers(): Lotto {
-        return Lotto(input.split(",").map { LottoNumber.from(it.toInt()) }.toSet())
+        return Lotto(input.map { LottoNumber.from(it) }.toSet())
     }
 }

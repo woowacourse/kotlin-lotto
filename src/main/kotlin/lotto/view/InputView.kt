@@ -1,24 +1,24 @@
 package lotto.view
 
 class InputView {
-    fun getPurchaseAmount(): String {
+    fun getPurchaseAmount(): Int {
         println(MESSAGE_INPUT_PURCHASE_AMOUNT)
         val input = readln()
         if (input.toIntOrNull() == null) {
             println(ERROR_NOT_INVALID_INPUT)
             return getPurchaseAmount()
         }
-        return input
+        return input.toInt()
     }
 
-    fun getManualLottoCount(): String {
+    fun getManualLottoCount(): Int {
         println(MESSAGE_INPUT_MANUAL_LOTTO_COUNT)
         val input = readln()
         if (input.toIntOrNull() == null) {
             println(ERROR_NOT_INVALID_INPUT)
             return getManualLottoCount()
         }
-        return input
+        return input.toInt()
     }
 
     fun getManualLottoTickets() {

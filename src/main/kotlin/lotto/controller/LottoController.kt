@@ -4,10 +4,7 @@ import lotto.domain.Lotto
 import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
-import lotto.domain.Order
 import lotto.domain.WinningLotto
-import lotto.generator.LottoManualGenerator
-import lotto.generator.LottoRandomGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -19,36 +16,28 @@ class LottoController(
 
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val lottoTicket = prepareLottoTicket(purchaseAmount)
+        val lottoTickets = prepareLottoTicket(purchaseAmount)
         val winningLotto = readWinningLotto()
-        val lottoResult = createLottoResult(purchaseAmount, lottoTicket, winningLotto)
+        val lottoResult = createLottoResult(purchaseAmount, lottoTickets, winningLotto)
         showResult(lottoResult)
     }
 
     private fun getPurchaseAmount(): Int {
-        return inputView.getPurchaseAmount().toInt()
+        val purchaseAmount = inputView.getPurchaseAmount()
+        if (purchaseAmount < 1_000 || purchaseAmount % 1_000 == 0) {
+            println("[ERROR] 구입 금액이 올바르지 않습니다. 다시 입력해주세요.")
+            return getPurchaseAmount()
+        }
+        return purchaseAmount
     }
 
     private fun prepareLottoTicket(purchaseAmount: Int): List<Lotto> {
-        val order = Order(purchaseAmount)
         val manualLottoCount = getManualLottoCount()
-        order.setManualCount(manualLottoCount)
-        generateLottoTicket(order)
-        val lottoTickets = lottoMachine.getLottoTickets()
+        val autoLottoTickets = lottoMachine.createLottoTicket(purchaseAmount, manualLottoCount)
+        val manualLottoTickets = getManualLottoTickets(manualLottoCount)
+        val lottoTickets = manualLottoTickets + autoLottoTickets
         outputView.printPurchasedLottoTickets(manualLottoCount, lottoTickets)
         return lottoTickets
-    }
-
-    private fun generateLottoTicket(order: Order) {
-        inputView.getManualLottoTickets()
-        repeat(order.manualCount) {
-            val lotto = inputView.getManualLotto()
-            lottoMachine.buyLottoTicket(LottoManualGenerator(lotto))
-        }
-        val autoCount = order.getAutoCount()
-        repeat(autoCount) {
-            lottoMachine.buyLottoTicket(LottoRandomGenerator())
-        }
     }
 
     private fun readWinningLotto(): WinningLotto {
@@ -75,8 +64,18 @@ class LottoController(
     }
 
     private fun getManualLottoCount(): Int {
-        val manualLottoCount = inputView.getManualLottoCount()
-        return manualLottoCount.toInt()
+        return inputView.getManualLottoCount()
+    }
+
+    private fun getManualLottoTickets(manualLottoCount: Int): List<Lotto> {
+        val inputTickets: MutableList<Set<Int>> = mutableListOf()
+        inputView.getManualLottoTickets()
+        repeat(manualLottoCount) {
+            val input = inputView.getManualLotto()
+            inputTickets.add(input.split(",").map { it.trim().toInt() }.toSet())
+        }
+        val manualLotto = lottoMachine.createManualLottoTicket(inputTickets)
+        return manualLotto
     }
 
     private fun getInputLotto(): Lotto {
