@@ -2,7 +2,7 @@ package lotto.model
 
 import lotto.contants.LottoRuleConstants
 
-class LottoTicket(
+data class LottoTicket(
     val lottoIssueType: LottoIssueType,
     private val numbers: List<LottoNumber>,
 ) {

@@ -5,7 +5,6 @@ class LottoTicketIssueManager(
     manualCount: Int,
     manualLottoNumbers: List<List<Int>>,
 ) {
-    private val manualLottoTicketCount = LottoTicketCount(manualCount)
     private val autoLottoTicketCount =
         LottoTicketCount(totalCount - manualCount)
 
