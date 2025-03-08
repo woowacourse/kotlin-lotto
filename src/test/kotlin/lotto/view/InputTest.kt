@@ -28,12 +28,4 @@ class InputTest {
             InputValidator().validateOverZero(input)
         }
     }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["500", "1234"])
-    fun `구입금액이 1000으로 나누어 떨어지지 않으면 예외를 발생시킨다`(input: String) {
-        assertThrows<IllegalArgumentException> {
-            InputValidator().validateAmountUnits1000(input)
-        }
-    }
 }
