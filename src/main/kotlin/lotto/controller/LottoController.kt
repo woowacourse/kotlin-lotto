@@ -45,7 +45,7 @@ class LottoController(
                 manualLottoNumbers,
             )
         val lottoTickets = lottoTicketIssueManager.getLottoTickets(manualLottoNumbers)
-        val autoLottoTicketCount = lottoTicketIssueManager.getCustomerWantToBuyManualLottoTicketCount()
+        val autoLottoTicketCount = lottoTicketIssueManager.getAutoLottoTicketCount()
         viewFlow.printLottoTickets(customerWantToBuyManualLottoTicketCount, autoLottoTicketCount, lottoTickets)
         return lottoTickets
     }
