@@ -4,7 +4,8 @@ class LottoMachine {
     fun issueLottoTickets(
         customerWantToBuyAutoLottoTicketCount: LottoTicketCount,
         manualLottoNumbers: List<List<Int>>,
-    ): List<LottoTicket> = purchaseManualLottoTickets(manualLottoNumbers) + purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount)
+    ): List<LottoTicket> =
+        purchaseManualLottoTickets(manualLottoNumbers) + purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount)
 
     private fun purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount: LottoTicketCount): List<LottoTicket> {
         val autoLottoGenerator = AutoLottoTicketGenerator()

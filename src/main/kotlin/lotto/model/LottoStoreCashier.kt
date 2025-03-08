@@ -13,8 +13,6 @@ class LottoStoreCashier(
 
     fun calculatePossibleToBuyLottoTicketCount(): Int = customerMoney / LottoRuleConstants.LOTTO_AMOUNT.value
 
-    fun isPossibleToBuy(customerWantBuyLottoTicketCount: Int): Boolean = possibleToLottoTicketCount >= customerWantBuyLottoTicketCount
-
     fun calculateChange(customerWantBuyLottoTicketCount: Int): Int =
         customerMoney - (LottoRuleConstants.LOTTO_AMOUNT.value * possibleToLottoTicketCount)
 

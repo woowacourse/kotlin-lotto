@@ -15,7 +15,7 @@ class LottoTicketIssueManagerTest {
             LottoTicketIssueManager(
                 totalCount,
                 manualLottoCount,
-                manualLottoNumbers
+                manualLottoNumbers,
             )
         }
     }
@@ -30,7 +30,7 @@ class LottoTicketIssueManagerTest {
             LottoTicketIssueManager(
                 totalCount,
                 manualLottoCount,
-                manualLottoNumbers
+                manualLottoNumbers,
             )
         }
     }

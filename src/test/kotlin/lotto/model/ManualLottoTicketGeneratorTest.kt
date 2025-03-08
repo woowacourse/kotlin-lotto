@@ -1,12 +1,10 @@
 package lotto.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 class ManualLottoTicketGeneratorTest {
-
     @Test
     fun `수동로또의 타입은 수동이다`() {
         val numbers = listOf(1, 2, 3, 4, 5, 6)
