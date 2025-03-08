@@ -2,10 +2,10 @@ package lotto.model
 
 class LottoMachine {
     fun issueLottoTickets(
-        customerWantToBuyAutoLottoTicketCount: LottoTicketCount,
+        autoLottoTicketCount: LottoTicketCount,
         manualLottoNumbers: List<List<Int>>,
     ): List<LottoTicket> =
-        purchaseManualLottoTickets(manualLottoNumbers) + purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount)
+        purchaseManualLottoTickets(manualLottoNumbers) + purchaseAutoLottoTickets(autoLottoTicketCount)
 
     private fun purchaseAutoLottoTickets(customerWantToBuyAutoLottoTicketCount: LottoTicketCount): List<LottoTicket> {
         val autoLottoGenerator = AutoLottoTicketGenerator()
