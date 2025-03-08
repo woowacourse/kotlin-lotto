@@ -22,7 +22,7 @@ data class LottoTicket(
         return lottoNumbers
     }
 
-    fun matchNumbersSize(lottoTicket: LottoTicket) = numbers.intersect(lottoTicket.getNumbers()).size
+    fun matchNumbersSize(lottoTicket: LottoTicket): Int = numbers.intersect(lottoTicket.getNumbers()).size
 
     companion object {
         private const val ERROR_NUMBERS_COUNT = "로또 번호의 개수는 6개입니다."
