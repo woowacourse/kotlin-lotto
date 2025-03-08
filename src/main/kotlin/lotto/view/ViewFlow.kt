@@ -69,7 +69,7 @@ class ViewFlow(
         println(String.format(LOTTO_PURCHASE_RESULT_, manualLottoCount, autoLottoCount))
         lottoTickets.map {
             print("${it.lottoIssueType.issueType} ")
-            print(it.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
+            print(it.getNumbers().map { it.number }.joinToString(", ", "[", "]\n"))
         }
     }
 
