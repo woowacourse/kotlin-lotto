@@ -6,10 +6,10 @@ import lotto.model.LottoStoreCashier
 import lotto.model.LottoTicket
 import lotto.model.LottoTicketIssueManager
 import lotto.model.WinningLotto
-import lotto.view.UserInterface
+import lotto.view.ViewFlow
 
 class LottoController(
-    private val userInterface: UserInterface = UserInterface(),
+    private val viewFlow: ViewFlow = ViewFlow(),
 ) {
     fun run() {
         val possibleToLottoTicketCount = meetLottoStoreCashier()
@@ -19,22 +19,22 @@ class LottoController(
     }
 
     private fun meetLottoStoreCashier(): Int {
-        val money = userInterface.inputPurchaseAmount()
+        val money = viewFlow.inputPurchaseAmount()
         val lottoStoreCashier = LottoStoreCashier(money)
         val possibleToLottoTicketCount = lottoStoreCashier.calculatePossibleToBuyLottoTicketCount()
-        val customerAnswer = userInterface.printLottoCount(possibleToLottoTicketCount)
+        val customerAnswer = viewFlow.printLottoCount(possibleToLottoTicketCount)
         if (customerAnswer) {
             val change = lottoStoreCashier.calculateChange(possibleToLottoTicketCount)
-            userInterface.printChange(change)
+            viewFlow.printChange(change)
         }
         return possibleToLottoTicketCount
     }
 
     private fun getLottoTickets(possibleToLottoTicketCount: Int): List<LottoTicket> {
-        val customerWantToBuyManualLottoTicketCount = userInterface.getManualLottoCount()
+        val customerWantToBuyManualLottoTicketCount = viewFlow.getManualLottoCount()
         val manualLottoNumbers =
             if (customerWantToBuyManualLottoTicketCount != 0) {
-                userInterface.getManualLottoNumbers(customerWantToBuyManualLottoTicketCount)
+                viewFlow.getManualLottoNumbers(customerWantToBuyManualLottoTicketCount)
             } else {
                 emptyList()
             }
@@ -46,13 +46,13 @@ class LottoController(
             )
         val lottoTickets = lottoTicketIssueManager.getLottoTickets(manualLottoNumbers)
         val autoLottoTicketCount = lottoTicketIssueManager.getCustomerWantToBuyManualLottoTicketCount()
-        userInterface.printLottoTickets(customerWantToBuyManualLottoTicketCount, autoLottoTicketCount, lottoTickets)
+        viewFlow.printLottoTickets(customerWantToBuyManualLottoTicketCount, autoLottoTicketCount, lottoTickets)
         return lottoTickets
     }
 
     private fun getWinningLotto(): WinningLotto {
-        val winningNumbers = userInterface.getWinningNumbers()
-        val bonusNumber = userInterface.getBonusNumber()
+        val winningNumbers = viewFlow.getWinningNumbers()
+        val bonusNumber = viewFlow.getBonusNumber()
         val winningLottoTicket = LottoTicket(LottoIssueType.WINNING, winningNumbers)
         return WinningLotto(winningLottoTicket, bonusNumber)
     }
@@ -65,7 +65,7 @@ class LottoController(
         val lottoResult = LottoResult(ranks)
         val winningStatus = lottoResult.getWinningStatus()
         val profit = lottoResult.calculateProfit()
-        userInterface.printResult(winningStatus)
-        userInterface.printProfit(profit)
+        viewFlow.printResult(winningStatus)
+        viewFlow.printProfit(profit)
     }
 }

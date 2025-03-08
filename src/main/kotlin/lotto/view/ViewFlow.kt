@@ -5,59 +5,59 @@ import lotto.model.LottoTicket
 import lotto.model.Rank
 import java.text.DecimalFormat
 
-class UserInterface(
+class ViewFlow(
     private val inputValidator: InputValidator = InputValidator(),
 ) {
     fun inputPurchaseAmount(): Int =
         runCatching {
-            OutputView.printlnMessage(PURCHASE_AMOUNT_PROMPT)
-            val purchaseAmount = InputView.getUserInput()
+            println(PURCHASE_AMOUNT_PROMPT)
+            val purchaseAmount = readln().trim()
             inputValidator.validateInteger(purchaseAmount)
             inputValidator.validateOverZero(purchaseAmount)
             return purchaseAmount.toInt()
         }.getOrElse { error ->
-            OutputView.printlnMessage(error)
+            println(error)
             inputPurchaseAmount()
         }
 
     fun printLottoCount(lottoCount: Int): Boolean =
         runCatching {
-            OutputView.printlnMessage(String.format(LOTTO_COUNT_PROMPT, lottoCount, lottoCount))
-            val yesOrNo = InputView.getUserInput()
+            println(String.format(LOTTO_COUNT_PROMPT, lottoCount, lottoCount))
+            val yesOrNo = readln().trim()
             return yesOrNo == "Y"
         }.getOrElse { error ->
-            OutputView.printlnMessage(error)
+            println(error)
             printLottoCount(lottoCount)
         }
 
     fun printChange(change: Int) {
-        OutputView.printlnMessage(String.format(CHANGE_MESSAGE, change))
+        println(String.format(CHANGE_, change))
     }
 
     fun getManualLottoCount(): Int =
         runCatching {
-            OutputView.printlnMessage(MANUAL_LOTTO_COUNT_PROMPT)
-            val manualLottoCount = InputView.getUserInput()
+            println(MANUAL_LOTTO_COUNT_PROMPT)
+            val manualLottoCount = readln().trim()
             inputValidator.validateInteger(manualLottoCount)
             inputValidator.validateNoNegativeNumber(manualLottoCount)
             return manualLottoCount.toInt()
         }.getOrElse { error ->
-            OutputView.printlnMessage(error)
+            println(error)
             getManualLottoCount()
         }
 
     fun getManualLottoNumbers(manualLottoCount: Int): List<List<Int>> =
         runCatching {
             val manualLottoNumber = mutableListOf<List<Int>>()
-            OutputView.printlnMessage(MANUAL_LOTTO_NUMBERS_PROMPT)
-            OutputView.printlnMessage(MANUAL_LOTTO_FORMAT_PROMPT)
+            println(MANUAL_LOTTO_NUMBERS_PROMPT)
+            println(MANUAL_LOTTO_FORMAT_PROMPT)
             repeat(manualLottoCount) {
-                val numbers = InputView.getUserInput()
+                val numbers = readln().trim()
                 manualLottoNumber.add(numbers.split(",").map { it.trim().toInt() })
             }
             return manualLottoNumber
         }.getOrElse { error ->
-            OutputView.printlnMessage(error)
+            println(error)
             getManualLottoNumbers(manualLottoCount)
         }
 
@@ -66,45 +66,45 @@ class UserInterface(
         autoLottoCount: Int,
         lottoTickets: List<LottoTicket>,
     ) {
-        OutputView.printlnMessage(String.format(LOTTO_PURCHASE_RESULT_MESSAGE, manualLottoCount, autoLottoCount))
+        println(String.format(LOTTO_PURCHASE_RESULT_, manualLottoCount, autoLottoCount))
         lottoTickets.map {
-            OutputView.printMessage("${it.lottoIssueType.issueType} ")
-            OutputView.printMessage(it.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
+            print("${it.lottoIssueType.issueType} ")
+            print(it.getNumbers().map { it.number }.joinToString(", ", "[", "]"))
         }
     }
 
     fun getWinningNumbers(): List<LottoNumber> =
         runCatching {
-            OutputView.printlnMessage(WINNING_NUMBERS_PROMPT)
-            val winningNumbers = InputView.getUserInput().split(",").map { it.trim() }
+            println(WINNING_NUMBERS_PROMPT)
+            val winningNumbers = readln().trim().split(",").map { it.trim() }
             for (winningNumber in winningNumbers) {
                 inputValidator.validateInteger(winningNumber)
             }
 
             return winningNumbers.map { LottoNumber(it.toInt()) }
         }.getOrElse { error ->
-            OutputView.printlnMessage(error)
+            println(error)
             getWinningNumbers()
         }
 
     fun getBonusNumber(): LottoNumber =
         runCatching {
-            OutputView.printlnMessage(BONUS_NUMBER_PROMPT)
-            val bonusNumber = InputView.getUserInput()
+            println(BONUS_NUMBER_PROMPT)
+            val bonusNumber = readln().trim()
             inputValidator.validateInteger(bonusNumber)
             return LottoNumber(bonusNumber.toInt())
         }.getOrElse { error ->
-            OutputView.printlnMessage(error)
+            println(error)
             getBonusNumber()
         }
 
     fun printResult(results: Map<Rank, Int>) {
-        OutputView.printlnMessage(WINNING_STATISTICS_HEADER)
-        OutputView.printlnMessage(WINNING_STATISTICS_DIVIDER)
+        println(WINNING_STATISTICS_HEADER)
+        println(WINNING_STATISTICS_DIVIDER)
 
         val rankOrder = listOf(Rank.FIFTH, Rank.FOURTH, Rank.THIRD, Rank.SECOND, Rank.FIRST)
 
-        val rankMessages =
+        val ranks =
             mapOf(
                 Rank.FIFTH to RANK_3_MATCH,
                 Rank.FOURTH to RANK_4_MATCH,
@@ -113,7 +113,7 @@ class UserInterface(
                 Rank.FIRST to RANK_6_MATCH,
             )
 
-        val prizeMessages =
+        val prizes =
             mapOf(
                 Rank.FIFTH to PRIZE_5000,
                 Rank.FOURTH to PRIZE_50000,
@@ -123,25 +123,25 @@ class UserInterface(
             )
         for (rank in rankOrder) {
             val count = results.getOrDefault(rank, 0)
-            OutputView.printlnMessage("${rankMessages[rank]} (${prizeMessages[rank]}) - ${count}개")
+            println("${ranks[rank]} (${prizes[rank]}) - ${count}개")
         }
     }
 
     fun printProfit(profit: Double) {
         val df = DecimalFormat("#.##")
-        OutputView.printlnMessage(String.format(PROFIT_MESSAGE, df.format(profit)))
+        println(String.format(PROFIT_, df.format(profit)))
     }
 
     companion object {
         private const val PURCHASE_AMOUNT_PROMPT = "구입금액을 입력해 주세요."
         private const val LOTTO_COUNT_PROMPT = "\n발행할 수 있는 로또 수는 %d입니다. %d만큼 발행하겠습니까? Y / N 로 대답해주세요."
-        private const val CHANGE_MESSAGE = "\n거스름 돈은 %d원입니다."
+        private const val CHANGE_ = "\n거스름 돈은 %d원입니다."
         private const val MANUAL_LOTTO_COUNT_PROMPT = "\n수동으로 구매할 로또 수를 입력해 주세요."
         private const val MANUAL_LOTTO_NUMBERS_PROMPT = "\n수동으로 구매할 번호를 입력해 주세요."
         private const val MANUAL_LOTTO_FORMAT_PROMPT = "수동으로 구매할 번호는 쉼표로 구분된 숫자로 입력해 주세요."
         private const val WINNING_NUMBERS_PROMPT = "\n지난 주 당첨 번호를 입력해 주세요."
         private const val BONUS_NUMBER_PROMPT = "보너스 볼을 입력해 주세요."
-        private const val LOTTO_PURCHASE_RESULT_MESSAGE = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
+        private const val LOTTO_PURCHASE_RESULT_ = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다."
         private const val WINNING_STATISTICS_HEADER = "\n당첨 통계"
         private const val WINNING_STATISTICS_DIVIDER = "---------"
         private const val PRIZE_5000 = "5000원"
@@ -154,6 +154,6 @@ class UserInterface(
         private const val RANK_5_MATCH = "5개 일치"
         private const val RANK_5_MATCH_BONUS = "5개 일치, 보너스 볼 일치"
         private const val RANK_6_MATCH = "6개 일치"
-        private const val PROFIT_MESSAGE = "총 수익률은 %s입니다."
+        private const val PROFIT_ = "총 수익률은 %s입니다."
     }
 }
