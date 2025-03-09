@@ -13,7 +13,7 @@ import java.util.stream.Stream
 class WinningStatisticsTest {
     @ParameterizedTest
     @MethodSource("normalWinningStatisticsData")
-    fun `인스턴스에게 당첨 통계를 요청하면 MISS를 제외한 전체 0개 당첨을 포함한 정렬된 전체 정보를 반환한다`(
+    fun `0번의 당첨을 포함한 MISS를 제외한 정렬된 당첨 정보를 알려준다`(
         rawLottoPaymentMoney: Int,
         rawWinRankMap: Map<Rank, Int>,
         rawExpectedRank: List<Pair<Rank, Int>>,
@@ -33,7 +33,7 @@ class WinningStatisticsTest {
 
     @ParameterizedTest
     @MethodSource("normalWinningStatisticsData")
-    fun `인스턴스에게 전체 당첨 금액을 요청하면 당첨 금액 인스턴스를 반환한다`(
+    fun `전체 당첨 금액을 요청하면 당첨 금액을 알려준다`(
         rawLottoPaymentMoney: Int,
         rawWinRankMap: Map<Rank, Int>,
         rawExpectedRank: List<Pair<Rank, Int>>,

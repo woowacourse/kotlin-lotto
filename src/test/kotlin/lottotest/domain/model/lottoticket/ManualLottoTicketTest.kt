@@ -11,7 +11,7 @@ import java.util.stream.Stream
 class ManualLottoTicketTest {
     @ParameterizedTest
     @MethodSource("wrongSizeLottoNumbers")
-    fun `로또 번호 컬렉션의 사이즈가 로또 티켓 한장의 사이즈와 다르다면 인스턴스를 생성하지 않는다`(numbers: List<Int>) {
+    fun `로또 번호 컬렉션의 사이즈는 로또 티켓 한장의 사이즈와 같아야 한다`(numbers: List<Int>) {
         // given
         val exampleLottoNumbers: List<LottoNumber> = numbers.map { LottoNumber(it) }
 
@@ -23,7 +23,7 @@ class ManualLottoTicketTest {
 
     @ParameterizedTest
     @MethodSource("duplicateLottoNumbers")
-    fun `로또 번호 컬렉션에 중복된 로또 번호가 존재한다면 인스턴스를 생성하지 않는다`(numbers: List<Int>) {
+    fun `로또 번호 컬렉션에 중복된 로또 번호가 존재할 수 없다`(numbers: List<Int>) {
         // given
         val exampleLottoNumbers: List<LottoNumber> = numbers.map { LottoNumber(it) }
 
@@ -35,7 +35,7 @@ class ManualLottoTicketTest {
 
     @ParameterizedTest
     @MethodSource("normalLottoNumbers")
-    fun `로또 번호 컬렉션의 사이즈가 로또 티켓 한장의 사이즈와 같다면 인스턴스는 입력한 로또 번호들을 가진다`(numbers: List<Int>) {
+    fun `수동 로또 티켓은 입력한 로또 번호들을 가진다`(numbers: List<Int>) {
         // given
         val exampleLottoNumbers: List<LottoNumber> = numbers.map { LottoNumber(it) }
 

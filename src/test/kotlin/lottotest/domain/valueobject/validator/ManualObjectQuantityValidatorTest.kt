@@ -17,7 +17,7 @@ class ManualObjectQuantityValidatorTest {
         "123_000, 0",
         "123_000, 123",
     )
-    fun `로또 지불금으로 구매 가능한 수동 구매 수량이라면 구매를 허용한다`(
+    fun `수동 구매수량은 로또 구입 금액으로 구매가 가능한 한도 이내이다`(
         money: Int,
         manualLottoQuantityValue: Int,
     ) {
@@ -38,7 +38,7 @@ class ManualObjectQuantityValidatorTest {
         "1000, 2",
         "123_000, 124",
     )
-    fun `로또 지불금으로 구매가 불가능한 수동 구매 수량이라면 구매를 막는다`(
+    fun `수동 구매수량은 로또 구입 금액으로 구매가 가능한 한도를 넘어설 수 없다`(
         money: Int,
         manualLottoQuantityValue: Int,
     ) {

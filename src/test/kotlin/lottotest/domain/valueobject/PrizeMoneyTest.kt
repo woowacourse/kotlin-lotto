@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class PrizeMoneyTest {
     @ParameterizedTest
     @ValueSource(longs = [-1, -1000])
-    fun `당첨 금액이 음수라면 인스턴스를 생성하지 않는다`(money: Long) {
+    fun `당첨 금액이 음수일 수 없다`(money: Long) {
         // when then
         assertThrows<IllegalArgumentException> {
             PrizeMoney(money)

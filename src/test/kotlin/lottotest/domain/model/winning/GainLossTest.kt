@@ -12,7 +12,7 @@ class GainLossTest {
         "1.00, PRINCIPAL",
         "1.01, GAIN",
     )
-    fun `수익률이 1을 기준으로 작으면 LOSS 크면 GAIN, 같으면 PRINCIPAL을 반환한다`(
+    fun `수익률이 1을 기준으로 작으면 LOSS 크면 GAIN, 같으면 PRINCIPAL이다`(
         rate: Double,
         expected: GainLoss,
     ) {

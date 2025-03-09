@@ -11,7 +11,7 @@ import java.util.stream.Stream
 class LottoTicketTest {
     @ParameterizedTest
     @MethodSource("notSortedLottoNumbers")
-    fun `정렬된 로또 번호 컬렉션을 요구하면 정렬된 로또 번호 컬렉션을 제공한다`(
+    fun `로또 티켓은 정렬된 로또 번호 컬렉션을 제공한다`(
         numbers: List<Int>,
         sortedNumbers: List<Int>,
     ) {

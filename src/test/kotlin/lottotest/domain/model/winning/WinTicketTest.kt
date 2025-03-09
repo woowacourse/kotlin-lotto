@@ -16,7 +16,7 @@ import java.util.stream.Stream
 class WinTicketTest {
     @ParameterizedTest
     @MethodSource("duplicateWinBonusLottoNumbers")
-    fun `당첨 티켓의 로또번호와 보너스 로또번호는 서로 중복되면 인스턴스가 생성되지 않는다`(
+    fun `당첨 티켓의 로또번호와 보너스 로또번호는 중복될 수 없다`(
         rawWinNumbers: List<Int>,
         rawBonusNumber: Int,
     ) {
@@ -31,7 +31,7 @@ class WinTicketTest {
 
     @ParameterizedTest
     @MethodSource("normalWinBonusLottoNumbers")
-    fun `인스턴스가 생성되면 당첨 티켓의 로또번호와 보너스 로또번호를 보유한다`(
+    fun `당첨 티켓은 로또번호와 보너스 로또번호를 보유한다`(
         rawWinNumbers: List<Int>,
         rawBonusNumber: Int,
     ) {
@@ -46,7 +46,7 @@ class WinTicketTest {
 
     @ParameterizedTest
     @MethodSource("winNumber1to6")
-    fun `구매한 로또들의 정보가 주어지면 자신의 당첨 정보와 비교하여 당첨 통계를 알려준다`(
+    fun `당첨 티켓에게 구매한 로또들의 정보가 주어지면 당첨 통계를 알려준다`(
         rawWinNumbers: List<Int>,
         rawBonusNumber: Int,
     ) {

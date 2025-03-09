@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class LottoNumberTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 46])
-    fun `허용 로또 번호 범위 이내 값이 주여지면 인스턴스를 생성하지 않는다`(value: Int) {
+    fun `로또 번호는 로또 번호 범위 이외의 값을 가질 수 없다`(value: Int) {
         assertThrows<IllegalArgumentException> {
             LottoNumber(value)
         }
@@ -17,7 +17,7 @@ class LottoNumberTest {
 
     @ParameterizedTest
     @ValueSource(ints = [1, 20, 45])
-    fun `허용 로또 번호 범위 이내 값으로 로또 번호를 생성하면 인스턴스에 입력한 값을 포함한다`(value: Int) {
+    fun `로또 번호는 로또 번호 범위 이내의 값을 갖는다`(value: Int) {
         // given when
         val lottoNumber = LottoNumber(value)
 
