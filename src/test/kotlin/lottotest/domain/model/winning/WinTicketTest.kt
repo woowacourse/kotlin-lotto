@@ -3,9 +3,9 @@ package lottotest.domain.model.winning
 import lotto.domain.model.purchaseInfo.LottoNumber
 import lotto.domain.model.purchaseInfo.ticket.LottoTicket
 import lotto.domain.model.purchaseInfo.ticket.ManualLottoTicket
-import lotto.domain.model.result.WinningQuantity
 import lotto.domain.model.winning.Rank
 import lotto.domain.model.winning.WinTicket
+import lotto.domain.model.winning.WinningQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

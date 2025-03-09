@@ -3,7 +3,6 @@ package lotto.domain.model.winning
 import lotto.domain.model.purchaseInfo.LottoPaymentMoney
 import lotto.domain.model.result.EarningRate
 import lotto.domain.model.result.PrizeMoney
-import lotto.domain.model.result.WinningQuantity
 
 class WinningStatistics(
     private val lottoPaymentMoney: LottoPaymentMoney,

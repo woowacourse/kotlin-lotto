@@ -1,4 +1,4 @@
-package lotto.domain.model.result
+package lotto.domain.model.winning
 
 @JvmInline
 value class WinningQuantity(

@@ -1,6 +1,6 @@
-package lottotest.domain.model.result
+package lottotest.domain.model.winning
 
-import lotto.domain.model.result.WinningQuantity
+import lotto.domain.model.winning.WinningQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
