@@ -1,34 +1,67 @@
 package lotto.view
 
-import lotto.domain.model.LottoWinningStats
-import lotto.domain.model.Lottos
-import lotto.domain.value.EarningRate
-import lotto.domain.value.LottoPayInfo
-import lotto.enums.Rank
+import lotto.domain.model.purchaseInfo.quantity.AutoLottoQuantity
+import lotto.domain.model.purchaseInfo.quantity.ManualLottoQuantity
+import lotto.domain.model.purchaseInfo.ticket.LottoTicket
+import lotto.domain.model.result.EarningRate
+import lotto.domain.model.winning.GainLoss
+import lotto.domain.model.winning.Rank
+import lotto.domain.model.winning.WinningStatistics
 
 class OutputView {
-    fun printLottoPurchaseQuantity(payInfo: LottoPayInfo) {
-        println("${payInfo.getLottoPurchaseQuantity()}개를 구매했습니다.")
+    fun showParagraphSeparation() {
+        println()
     }
 
-    fun printTicketsByLottos(lottos: Lottos) {
-        lottos.tickets.forEach { lotto ->
+    fun showBoughtLottoQuantity(
+        manualLottoQuantity: ManualLottoQuantity,
+        autoLottoQuantity: AutoLottoQuantity,
+    ) {
+        println(ALERT_BOUGHT_LOTTO_QUANTITY.format(manualLottoQuantity.quantity, autoLottoQuantity.quantity))
+    }
+
+    fun showBoughtLottoTickets(lottoTickets: List<LottoTicket>) {
+        lottoTickets.forEach { ticket ->
+            println(ticket.getSortedLottoNumbers())
+        }
+        showParagraphSeparation()
+    }
+
+    fun showWinningStatics(winningStatics: WinningStatistics) {
+        println(HEADER_WINNING_STATICS)
+        winningStatics.getFullRanksWithoutMiss().forEach { (rank, matchCount) ->
             println(
-                lotto.getLottoNumbers().map { it.number },
+                BODY_SINGLE_LINE_WINNING_STATICS.format(
+                    rank.countOfMatch,
+                    getBonusBallText(rank),
+                    rank.winningMoney,
+                    matchCount.quantity,
+                ),
             )
         }
     }
 
-    fun printLottoStats(lottoWinningStats: LottoWinningStats) {
-        println("\n당첨 통계\n---------")
-        lottoWinningStats.getWinningStatsWithEmpty().entries.reversed().forEach { winningStats ->
-            val bonusText = if (winningStats.key == Rank.SECOND) ", 보너스 볼 일치" else " "
-            println("${winningStats.key.countOfMatch}개 일치$bonusText(${winningStats.key.winningMoney}원)- ${winningStats.value}개")
-        }
+    fun showEarningRate(earningRates: EarningRate) {
+        println(BODY_EARNING_RATE_INFO.format(earningRates.rate, getGainLossText(earningRates)))
     }
 
-    fun printLottoEarningRate(earningRate: EarningRate) {
-        val gainLossText = if (earningRate.rate > 1) "이득이라는" else (if (earningRate.rate == 1.0) "본전이라는" else "손해라는")
-        println("총 수익률은 ${earningRate.rate}입니다.(기준이 1이기 때문에 결과적으로 $gainLossText 의미임)")
+    companion object {
+        private const val ALERT_BOUGHT_LOTTO_QUANTITY = "수동으로 %d장, 자동으로 %d개를 구매했습니다."
+        private const val HEADER_WINNING_STATICS = "당첨 통계\n---------"
+        private const val BODY_SINGLE_LINE_WINNING_STATICS = "%d개 일치%s(%d원)- %d개"
+        private const val BODY_EARNING_RATE_INFO = "총 수익률은 %.2f입니다.(기준이 1이기 때문에 결과적으로 %s 의미임)"
+
+        private fun getBonusBallText(rank: Rank): String =
+            when (rank) {
+                Rank.SECOND -> ", 보너스 볼 일치"
+                else -> " "
+            }
+
+        private fun getGainLossText(earningRates: EarningRate): String =
+            when (GainLoss.valueOf(earningRates.rate)) {
+                GainLoss.GAIN -> "이득이라는"
+                GainLoss.LOSS -> "손해라는"
+                else -> "본전이라는"
+            }
     }
 }

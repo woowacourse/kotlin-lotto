@@ -1,51 +1,47 @@
 package lotto.view
 
-import kotlin.runCatching
-
 class InputView {
-    fun readLottoPurchaseAmount(): Int {
-        println(INPUT_PURCHASE_AMOUNT)
-        val inputText = readln()
-        val lottoPurchaseAmount =
-            runCatching { inputText.toInt() }.getOrElse {
-                throw IllegalArgumentException(
-                    CAN_NOT_TO_INT.format(
-                        inputText,
-                    ),
-                )
-            }
-        return lottoPurchaseAmount
+    fun readPayAmount(): Int {
+        println(ALERT_READ_PAY_INPUT)
+        return readSingleNumber()
     }
 
-    fun readWinningLottoNumbersWithoutBonus(): List<Int> {
-        println(INPUT_WINNING_LOTTO)
-        val inputMessage = readln()
-        val winningLottoNumbers =
-            runCatching {
-                inputMessage.split(",").map { it.trim().toInt() }
-            }.getOrElse {
-                throw IllegalArgumentException(CAN_NOT_TO_INT.format(inputMessage))
-            }
-        return winningLottoNumbers
+    fun readManualLottoQuantity(): Int {
+        println(ALERT_READ_BUY_MANUAL_LOTTO_QUANTITY)
+        return readSingleNumber()
     }
 
-    fun readBonusNumber(): Int {
-        println(INPUT_BONUS_NUMBER)
-        val inputMessage = readln()
-        val bonusNumber =
-            runCatching {
-                inputMessage.trim().toInt()
-            }.getOrElse {
-                throw IllegalArgumentException(CAN_NOT_TO_INT.format(inputMessage))
-            }
-        return bonusNumber
+    fun showManualLottoNumbersAlert() {
+        println(ALERT_READ_BUY_MANUAL_LOTTO_NUMBERS)
     }
+
+    fun readSingleManualLottoNumbers(): List<Int> = readSingleLottoNumbers()
+
+    fun readWinLottoNumbers(): List<Int> {
+        println(ALERT_READ_PREV_WEEK_WIN_NUMBERS)
+        return readSingleLottoNumbers()
+    }
+
+    fun readBonusBallNumber(): Int {
+        println(ALERT_READ_PREV_WEEK_BONUS_NUMBER)
+        return readSingleNumber()
+    }
+
+    private fun readSingleLottoNumbers(): List<Int> =
+        runCatching {
+            readln().split(',').map { it.trim().toInt() }
+        }.getOrElse { throw IllegalArgumentException(ERROR_READ_PAY_INPUT) }
+
+    private fun readSingleNumber(): Int =
+        runCatching { readln().toInt() }.getOrElse { throw IllegalArgumentException(ERROR_READ_PAY_INPUT) }
 
     companion object {
-        private const val INPUT_PURCHASE_AMOUNT = "구입금액을 입력해 주세요."
-        private const val INPUT_WINNING_LOTTO = "\n지난 주 당첨 번호를 입력해 주세요."
-        private const val INPUT_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
+        private const val ALERT_READ_PAY_INPUT = "구입금액을 입력해 주세요."
+        private const val ALERT_READ_BUY_MANUAL_LOTTO_QUANTITY = "수동으로 구매할 로또 수를 입력해 주세요."
+        private const val ALERT_READ_BUY_MANUAL_LOTTO_NUMBERS = "수동으로 구매할 번호를 입력해 주세요."
+        private const val ALERT_READ_PREV_WEEK_WIN_NUMBERS = "지난 주 당첨 번호를 입력해 주세요."
+        private const val ALERT_READ_PREV_WEEK_BONUS_NUMBER = "보너스 볼을 입력해 주세요."
 
-        private const val CAN_NOT_TO_INT = "정수로 변환할 수 없는 입력값입니다. (입력:%s)"
+        private const val ERROR_READ_PAY_INPUT = "숫자 형식이 올바르지 않습니다."
     }
 }
