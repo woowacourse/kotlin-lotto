@@ -1,7 +1,6 @@
 package lottotest.domain.valueobject
 
 import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.LottoQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -50,27 +49,5 @@ class LottoPaymentMoneyTest {
 
         // then
         assertThat(lottoPaymentMoney.calculatePossibleBuyLottoQuantity().quantity).isEqualTo(expectedQuantity)
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        "1000, 0, 1",
-        "1000, 1, 0",
-        "123_000, 122, 1",
-    )
-    fun `로또 구입금액에게 이미 구매한 로또의 수량을 알려주면 남은 구매 가능한 로또의 수량을 알려준다`(
-        money: Int,
-        rawPartialPurchaseQuantity: Int,
-        expectedLeftQuantity: Int,
-    ) {
-        // given
-        val lottoPaymentMoney = LottoPaymentMoney(money)
-        val partialPurchaseQuantity = LottoQuantity(rawPartialPurchaseQuantity)
-
-        // when
-        val actualLeftQuantity = lottoPaymentMoney.calculateLeftLotoQuantity(partialPurchaseQuantity)
-
-        // then
-        assertThat(actualLeftQuantity.quantity).isEqualTo(expectedLeftQuantity)
     }
 }

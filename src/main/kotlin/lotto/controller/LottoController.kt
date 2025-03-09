@@ -5,10 +5,11 @@ import lotto.domain.model.lottoticket.LottoTicket
 import lotto.domain.model.lottoticket.ManualLottoTicket
 import lotto.domain.model.winning.WinTicket
 import lotto.domain.model.winning.WinningStatistics
+import lotto.domain.valueobject.AutoLottoQuantity
 import lotto.domain.valueobject.LottoNumber
 import lotto.domain.valueobject.LottoPaymentMoney
 import lotto.domain.valueobject.LottoQuantity
-import lotto.domain.valueobject.validator.ManualLottoQuantityValidator
+import lotto.domain.valueobject.ManualLottoQuantity
 import lotto.view.InputView
 import lotto.view.OutputView
 import kotlin.runCatching
@@ -19,9 +20,10 @@ class LottoController(
 ) {
     fun runLotto() {
         val lottoPaymentMoney = getLottoPaymentMoney()
-        val (manualQuantity, autoQuantity) = getLottoQuantities(lottoPaymentMoney)
-        val boughtTickets = buyLottoTickets(manualQuantity, autoQuantity)
-        outputView.showBoughtLottoQuantity(manualQuantity, autoQuantity)
+        val boughtLottoQuantity = lottoPaymentMoney.calculatePossibleBuyLottoQuantity()
+        val (manualLottoQuantity, autoLottoQuantity) = getLottoQuantities(boughtLottoQuantity)
+        val boughtTickets = buyLottoTickets(manualLottoQuantity, autoLottoQuantity)
+        outputView.showBoughtLottoQuantity(manualLottoQuantity, autoLottoQuantity)
         outputView.showBoughtLottoTickets(boughtTickets)
         val winTicket = retryUntilSuccess { getWinTicket() }
         val winningStatistics = WinningStatistics(lottoPaymentMoney, winTicket.calculateWinningStatistics(boughtTickets))
@@ -35,18 +37,18 @@ class LottoController(
         return money
     }
 
-    private fun getLottoQuantities(paymentMoney: LottoPaymentMoney): Pair<LottoQuantity, LottoQuantity> {
-        val manualQuantity = retryUntilSuccess { validateManualLottoQuantity(paymentMoney) }
-        val autoQuantity = paymentMoney.calculateLeftLotoQuantity(manualQuantity)
-        return Pair(manualQuantity, autoQuantity)
+    private fun getLottoQuantities(boughtLottoQuantity: LottoQuantity): Pair<ManualLottoQuantity, AutoLottoQuantity> {
+        val manualLottoQuantity = retryUntilSuccess { getManualLottoQuantity(boughtLottoQuantity) }
+        val autoLottoQuantity = AutoLottoQuantity(boughtLottoQuantity, manualLottoQuantity)
+        return Pair(manualLottoQuantity, autoLottoQuantity)
     }
 
     private fun buyLottoTickets(
-        manualQuantity: LottoQuantity,
-        autoQuantity: LottoQuantity,
+        manualLottoQuantity: ManualLottoQuantity,
+        autoLottoQuantity: AutoLottoQuantity,
     ): List<LottoTicket> {
-        val manualTickets = createWholeManualLottoTickets(manualQuantity)
-        val autoTickets = createWholeAutoLottoTickets(autoQuantity)
+        val manualTickets = createWholeManualLottoTickets(manualLottoQuantity)
+        val autoTickets = createWholeAutoLottoTickets(autoLottoQuantity)
         return manualTickets + autoTickets
     }
 
@@ -66,12 +68,12 @@ class LottoController(
 
     private fun readLottoPaymentMoney(): LottoPaymentMoney = LottoPaymentMoney(inputView.readPayAmount())
 
-    private fun createWholeAutoLottoTickets(autoLottoQuantity: LottoQuantity): List<LottoTicket> {
+    private fun createWholeAutoLottoTickets(autoLottoQuantity: AutoLottoQuantity): List<LottoTicket> {
         if (autoLottoQuantity.quantity == 0) return emptyList()
         return List(autoLottoQuantity.quantity) { AutoLottoTicket() }
     }
 
-    private fun createWholeManualLottoTickets(manualLottoQuantity: LottoQuantity): List<LottoTicket> {
+    private fun createWholeManualLottoTickets(manualLottoQuantity: ManualLottoQuantity): List<LottoTicket> {
         if (manualLottoQuantity.quantity == 0) return emptyList()
         inputView.showManualLottoNumbersAlert()
         val manualLottoTickets = List(manualLottoQuantity.quantity) { retryUntilSuccess { createSingleManualLottoTicket() } }
@@ -86,9 +88,9 @@ class LottoController(
             },
         )
 
-    private fun validateManualLottoQuantity(lottoPaymentMoney: LottoPaymentMoney): LottoQuantity {
-        val manualLottoQuantity = LottoQuantity(inputView.readManualLottoQuantity())
-        ManualLottoQuantityValidator().validate(lottoPaymentMoney, manualLottoQuantity)
+    private fun getManualLottoQuantity(boughtLottoQuantity: LottoQuantity): ManualLottoQuantity {
+        val rawManualLottoQuantity = inputView.readManualLottoQuantity()
+        val manualLottoQuantity = ManualLottoQuantity(boughtLottoQuantity, rawManualLottoQuantity)
         outputView.showParagraphSeparation()
         return manualLottoQuantity
     }

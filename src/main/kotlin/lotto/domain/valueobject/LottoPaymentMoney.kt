@@ -13,11 +13,6 @@ value class LottoPaymentMoney(
 
     fun calculatePossibleBuyLottoQuantity(): LottoQuantity = LottoQuantity(money / LOTTO_PRICE_UNIT)
 
-    fun calculateLeftLotoQuantity(partialPurchaseQuantity: LottoQuantity): LottoQuantity {
-        val rawLeftQuantity = calculatePossibleBuyLottoQuantity().quantity - partialPurchaseQuantity.quantity
-        return LottoQuantity(rawLeftQuantity)
-    }
-
     companion object {
         private const val LOTTO_PRICE_UNIT = 1000
 
