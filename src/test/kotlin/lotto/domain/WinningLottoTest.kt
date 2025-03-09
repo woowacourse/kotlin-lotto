@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class WinningLottoTest {
+    fun createLotto(vararg numbers: Int): Lotto {
+        return Lotto.of(setOf(*numbers.map { LottoNumber.from(it) }.toTypedArray())) ?: error("로또 생성 실패")
+    }
+
     @Test
     fun `로또 번호와 보너스 번호가 중복되면 오류가 발생한다`() {
         assertThrows<IllegalArgumentException> {
