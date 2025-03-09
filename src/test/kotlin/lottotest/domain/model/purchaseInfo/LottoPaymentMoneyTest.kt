@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class LottoPaymentMoneyTest {
     @ParameterizedTest
-    @ValueSource(ints = [-1, -1000])
-    fun `구입 금액이 음수일 수 없다`(money: Int) {
+    @ValueSource(ints = [900, 0, -1, -1000])
+    fun `구입 금액은 로또 한장의 가격보다 작을 수 없다`(money: Int) {
         assertThrows<IllegalArgumentException> {
             LottoPaymentMoney(money)
         }
@@ -25,7 +25,7 @@ class LottoPaymentMoneyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [0, 1000, 123_000])
+    @ValueSource(ints = [1000, 123_000])
     fun `로또 구입 금액은 로또 구입이 가능한 거스름돈 없는 값을 가진다`(money: Int) {
         // given when
         val lottoPaymentMoney = LottoPaymentMoney(money)
@@ -36,7 +36,6 @@ class LottoPaymentMoneyTest {
 
     @ParameterizedTest
     @CsvSource(
-        "0, 0",
         "1000, 1",
         "123_000, 123",
     )
