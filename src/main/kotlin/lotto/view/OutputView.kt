@@ -1,12 +1,12 @@
 package lotto.view
 
-import lotto.domain.model.lottoticket.LottoTicket
+import lotto.domain.model.purchaseInfo.quantity.AutoLottoQuantity
+import lotto.domain.model.purchaseInfo.quantity.ManualLottoQuantity
+import lotto.domain.model.purchaseInfo.ticket.LottoTicket
+import lotto.domain.model.result.EarningRate
 import lotto.domain.model.winning.GainLoss
 import lotto.domain.model.winning.Rank
 import lotto.domain.model.winning.WinningStatistics
-import lotto.domain.valueobject.AutoLottoQuantity
-import lotto.domain.valueobject.EarningRate
-import lotto.domain.valueobject.ManualLottoQuantity
 
 class OutputView {
     fun showParagraphSeparation() {

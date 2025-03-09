@@ -1,4 +1,4 @@
-package lotto.domain.valueobject
+package lotto.domain.model.purchaseInfo
 
 @JvmInline
 value class LottoNumber(
@@ -15,6 +15,6 @@ value class LottoNumber(
         private const val LOTTO_MAX_NUMBER = 45
         val LOTTO_RANGE = LOTTO_MIN_NUMBER..LOTTO_MAX_NUMBER
 
-        private const val ERROR_NOT_IN_RANGE = "로또 번호는 ${LOTTO_MIN_NUMBER} 이상 ${LOTTO_MAX_NUMBER} 이하의 정수값이어야 합니다"
+        private const val ERROR_NOT_IN_RANGE = "로또 번호는 $LOTTO_MIN_NUMBER 이상 $LOTTO_MAX_NUMBER 이하의 정수값이어야 합니다"
     }
 }

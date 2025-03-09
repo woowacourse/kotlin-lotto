@@ -1,9 +1,9 @@
 package lottotest.domain.model.winning
 
+import lotto.domain.model.purchaseInfo.LottoPaymentMoney
+import lotto.domain.model.result.WinningQuantity
 import lotto.domain.model.winning.Rank
 import lotto.domain.model.winning.WinningStatistics
-import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.WinningQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

@@ -1,9 +1,9 @@
 package lotto.domain.model.winning
 
-import lotto.domain.valueobject.EarningRate
-import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.PrizeMoney
-import lotto.domain.valueobject.WinningQuantity
+import lotto.domain.model.purchaseInfo.LottoPaymentMoney
+import lotto.domain.model.result.EarningRate
+import lotto.domain.model.result.PrizeMoney
+import lotto.domain.model.result.WinningQuantity
 
 class WinningStatistics(
     val lottoPaymentMoney: LottoPaymentMoney,

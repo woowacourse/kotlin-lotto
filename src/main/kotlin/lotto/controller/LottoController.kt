@@ -1,15 +1,15 @@
 package lotto.controller
 
-import lotto.domain.model.lottoticket.AutoLottoTicket
-import lotto.domain.model.lottoticket.LottoTicket
-import lotto.domain.model.lottoticket.ManualLottoTicket
+import lotto.domain.model.purchaseInfo.LottoNumber
+import lotto.domain.model.purchaseInfo.LottoPaymentMoney
+import lotto.domain.model.purchaseInfo.quantity.AutoLottoQuantity
+import lotto.domain.model.purchaseInfo.quantity.LottoQuantity
+import lotto.domain.model.purchaseInfo.quantity.ManualLottoQuantity
+import lotto.domain.model.purchaseInfo.ticket.AutoLottoTicket
+import lotto.domain.model.purchaseInfo.ticket.LottoTicket
+import lotto.domain.model.purchaseInfo.ticket.ManualLottoTicket
 import lotto.domain.model.winning.WinTicket
 import lotto.domain.model.winning.WinningStatistics
-import lotto.domain.valueobject.AutoLottoQuantity
-import lotto.domain.valueobject.LottoNumber
-import lotto.domain.valueobject.LottoPaymentMoney
-import lotto.domain.valueobject.LottoQuantity
-import lotto.domain.valueobject.ManualLottoQuantity
 import lotto.view.InputView
 import lotto.view.OutputView
 import kotlin.runCatching

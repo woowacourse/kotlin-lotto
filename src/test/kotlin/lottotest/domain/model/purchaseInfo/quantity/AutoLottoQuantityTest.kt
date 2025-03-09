@@ -1,8 +1,8 @@
-package lottotest.domain.valueobject
+package lottotest.domain.model.purchaseInfo.quantity
 
-import lotto.domain.valueobject.AutoLottoQuantity
-import lotto.domain.valueobject.LottoQuantity
-import lotto.domain.valueobject.ManualLottoQuantity
+import lotto.domain.model.purchaseInfo.quantity.AutoLottoQuantity
+import lotto.domain.model.purchaseInfo.quantity.LottoQuantity
+import lotto.domain.model.purchaseInfo.quantity.ManualLottoQuantity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource

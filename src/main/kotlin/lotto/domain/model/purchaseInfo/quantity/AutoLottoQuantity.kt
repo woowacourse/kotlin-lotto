@@ -1,4 +1,4 @@
-package lotto.domain.valueobject
+package lotto.domain.model.purchaseInfo.quantity
 
 @JvmInline
 value class AutoLottoQuantity private constructor(

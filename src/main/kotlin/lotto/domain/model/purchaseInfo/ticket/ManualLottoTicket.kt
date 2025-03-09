@@ -1,6 +1,6 @@
-package lotto.domain.model.lottoticket
+package lotto.domain.model.purchaseInfo.ticket
 
-import lotto.domain.valueobject.LottoNumber
+import lotto.domain.model.purchaseInfo.LottoNumber
 
 class ManualLottoTicket(
     private val _lottoNumbers: Collection<LottoNumber>,

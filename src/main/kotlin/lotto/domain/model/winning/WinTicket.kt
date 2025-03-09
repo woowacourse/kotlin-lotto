@@ -1,8 +1,8 @@
 package lotto.domain.model.winning
 
-import lotto.domain.model.lottoticket.LottoTicket
-import lotto.domain.valueobject.LottoNumber
-import lotto.domain.valueobject.WinningQuantity
+import lotto.domain.model.purchaseInfo.LottoNumber
+import lotto.domain.model.purchaseInfo.ticket.LottoTicket
+import lotto.domain.model.result.WinningQuantity
 
 class WinTicket(
     val winLottoTicket: LottoTicket,

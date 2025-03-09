@@ -1,4 +1,4 @@
-package lotto.domain.valueobject
+package lotto.domain.model.result
 
 @JvmInline
 value class EarningRate(

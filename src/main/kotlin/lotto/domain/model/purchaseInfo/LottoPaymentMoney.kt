@@ -1,5 +1,6 @@
-package lotto.domain.valueobject
+package lotto.domain.model.purchaseInfo
 
+import lotto.domain.model.purchaseInfo.quantity.LottoQuantity
 import kotlin.require
 
 @JvmInline

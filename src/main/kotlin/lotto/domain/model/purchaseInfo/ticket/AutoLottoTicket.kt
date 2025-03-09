@@ -1,6 +1,6 @@
-package lotto.domain.model.lottoticket
+package lotto.domain.model.purchaseInfo.ticket
 
-import lotto.domain.valueobject.LottoNumber
+import lotto.domain.model.purchaseInfo.LottoNumber
 
 class AutoLottoTicket : LottoTicket {
     private val _lottoNumbers = createRawAutoLottoNumbers().map { LottoNumber(it) }.toSet()

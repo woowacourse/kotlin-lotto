@@ -1,6 +1,6 @@
-package lottotest.domain.valueobject
+package lottotest.domain.model.result
 
-import lotto.domain.valueobject.EarningRate
+import lotto.domain.model.result.EarningRate
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
