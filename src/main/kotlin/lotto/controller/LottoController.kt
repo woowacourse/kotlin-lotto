@@ -68,10 +68,10 @@ class LottoController(
 
     private fun readLottoPaymentMoney(): LottoPaymentMoney = LottoPaymentMoney(inputView.readPayAmount())
 
-    private fun createWholeAutoLottoTickets(autoLottoQuantity: AutoLottoQuantity): List<LottoTicket> {
-        if (autoLottoQuantity.quantity == 0) return emptyList()
-        return List(autoLottoQuantity.quantity) { AutoLottoTicket() }
-    }
+    private fun createWholeAutoLottoTickets(autoLottoQuantity: AutoLottoQuantity): List<LottoTicket> =
+        List(autoLottoQuantity.quantity) {
+            AutoLottoTicket()
+        }
 
     private fun createWholeManualLottoTickets(manualLottoQuantity: ManualLottoQuantity): List<LottoTicket> {
         if (manualLottoQuantity.quantity == 0) return emptyList()
