@@ -6,8 +6,8 @@ import lotto.domain.model.result.PrizeMoney
 import lotto.domain.model.result.WinningQuantity
 
 class WinningStatistics(
-    val lottoPaymentMoney: LottoPaymentMoney,
-    val winRankCounts: Map<Rank, WinningQuantity>,
+    private val lottoPaymentMoney: LottoPaymentMoney,
+    private val winRankCounts: Map<Rank, WinningQuantity>,
 ) {
     fun getFullRanksWithoutMiss(): List<Pair<Rank, WinningQuantity>> {
         val emptyWinningStatus =
