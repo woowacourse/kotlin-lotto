@@ -5,7 +5,6 @@ import lotto.domain.LottoMachine
 import lotto.domain.LottoNumber
 import lotto.domain.LottoResult
 import lotto.domain.WinningLotto
-import lotto.generator.LottoRandomGenerator
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -17,26 +16,41 @@ class LottoController(
 
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val lottoTicket = prepareLottoTicket(purchaseAmount)
-        val winningLotto = readWinningLotto()
-        val lottoResult = createLottoResult(purchaseAmount, lottoTicket, winningLotto)
+        val lottoTickets = prepareLottoTicket()
+        val winningLotto = prepareWinningLotto()
+        val lottoResult = createLottoResult(purchaseAmount, lottoTickets, winningLotto)
         showResult(lottoResult)
     }
 
     private fun getPurchaseAmount(): Int {
-        return inputView.getPurchaseAmount().toInt()
+        val inputPurchaseAmount = inputView.getPurchaseAmount()
+        var purchaseAmount: Int = 0
+        runCatching {
+            purchaseAmount = lottoMachine.validPurchaseAmount(inputPurchaseAmount)
+        }.onFailure { exception ->
+            outputView.printErrorMessage(exception)
+            purchaseAmount = getPurchaseAmount()
+        }
+        return purchaseAmount
     }
 
-    private fun prepareLottoTicket(purchaseAmount: Int): List<Lotto> {
-        val lottoTickets = lottoMachine.buyLottoTickets(purchaseAmount, LottoRandomGenerator())
-        outputView.printPurchasedLottoTickets(lottoTickets)
+    private fun prepareLottoTicket(): List<Lotto> {
+        val manualLottoCount = getManualLottoCount()
+        val manualLottoTickets = getManualLottoTickets(manualLottoCount)
+        val lottoTickets = lottoMachine.createTotalLottoTicket(manualLottoTickets)
+        outputView.printPurchasedLottoTickets(manualLottoCount, lottoTickets)
         return lottoTickets
     }
 
-    private fun readWinningLotto(): WinningLotto {
-        val winningNumber = getWinningNumber()
+    private fun prepareWinningLotto(): WinningLotto {
+        val winningNumber = getInputLotto()
         val bonusNumber = getBonusNumber()
-        return WinningLotto(winningNumber, bonusNumber)
+        lateinit var winningLotto: WinningLotto
+        runCatching { winningLotto = WinningLotto.of(winningNumber, bonusNumber) }.onFailure { exception ->
+            outputView.printErrorMessage(exception)
+            winningLotto = prepareWinningLotto()
+        }
+        return winningLotto
     }
 
     private fun createLottoResult(
@@ -56,14 +70,53 @@ class LottoController(
         outputView.printProfit(lottoResult.getProfitRate())
     }
 
-    private fun getWinningNumber(): Lotto {
-        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber(it.trim().toInt()) }.toSet()
-        return Lotto(winningNumber)
+    private fun getManualLottoCount(): Int {
+        val inputManualLottoCount: Int = inputView.getManualLottoCount()
+        val manualLottoCount = lottoMachine.validManualLottoCount(inputManualLottoCount)
+        if (manualLottoCount == null) {
+            outputView.printInvalidLottoCountMessage(lottoMachine.totalLottoCount)
+            return getManualLottoCount()
+        }
+        return manualLottoCount
+    }
+
+    private fun getManualLottoTickets(manualLottoCount: Int): List<Lotto> {
+        val inputTickets: MutableList<Lotto> = mutableListOf()
+        inputView.getManualLottoTickets()
+        repeat(manualLottoCount) {
+            val manualLottoTicket = processManualLottoTicket()
+            inputTickets.add(manualLottoTicket)
+        }
+        return inputTickets
+    }
+
+    private fun processManualLottoTicket(): Lotto {
+        val input = inputView.getManualLotto()
+        lateinit var manualLotto: Lotto
+        runCatching {
+            manualLotto = lottoMachine.createManualLottoTicket(input.split(",").map { it.toInt() }.toSet())
+        }.onFailure { exception ->
+            outputView.printErrorMessage(exception)
+            manualLotto = processManualLottoTicket()
+        }
+        return manualLotto
+    }
+
+    private fun getInputLotto(): Lotto {
+        lateinit var lottoTicket: Lotto
+        runCatching {
+            val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber.from(it.trim().toInt()) }.toSet()
+            lottoTicket = Lotto.of(winningNumber)
+        }.onFailure { exception ->
+            outputView.printErrorMessage(exception)
+            lottoTicket = getInputLotto()
+        }
+        return lottoTicket
     }
 
     private fun getBonusNumber(): LottoNumber {
-        val bonusNumber = inputView.getBonusNumber()
-        return LottoNumber(bonusNumber.toInt())
+        val bonusNumber = inputView.getBonusNumber().toIntOrNull() ?: return getBonusNumber()
+        return LottoNumber.from(bonusNumber)
     }
 
     companion object {

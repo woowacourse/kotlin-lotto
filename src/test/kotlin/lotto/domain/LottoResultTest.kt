@@ -5,13 +5,13 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LottoResultTest {
-    val number1 = Lotto(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber(it) }.toSet()) // 5개 매치
-    val number2 = Lotto(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber(it) }.toSet()) // 6개 매치
-    val number3 = Lotto(listOf(3, 4, 5, 6, 7, 45).map { LottoNumber(it) }.toSet())
+    val number1 = Lotto.of(listOf(1, 2, 3, 4, 5, 6).map { LottoNumber.from(it) }.toSet()) // 5개 매치
+    val number2 = Lotto.of(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber.from(it) }.toSet()) // 6개 매치
+    val number3 = Lotto.of(listOf(3, 4, 5, 6, 7, 45).map { LottoNumber.from(it) }.toSet())
     val lottos = listOf(number1, number2, number3)
-    val winningNumber = Lotto(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber(it) }.toSet())
-    val winningBonusNumber = LottoNumber(45)
-    val lottoResult = LottoResult(WinningLotto(winningNumber, winningBonusNumber))
+    val winningNumber = Lotto.of(listOf(2, 3, 4, 5, 6, 7).map { LottoNumber.from(it) }.toSet())
+    val winningBonusNumber = LottoNumber.from(45)
+    val lottoResult = LottoResult(WinningLotto.of(winningNumber, winningBonusNumber))
 
     @Test
     fun `구입한 로또들의 당첨 통계를 알 수 있다`() {
@@ -38,7 +38,7 @@ class LottoResultTest {
     @Test
     fun `당첨 금액과 구입 금액으로 수익률을 계산한다`() {
         val totalPrize: Long = 5_000
-        val purchaseAmount = 14000
+        val purchaseAmount = 14_000
 
         lottoResult.calculateProfit(totalPrize, purchaseAmount)
 

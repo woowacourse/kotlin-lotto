@@ -1,29 +1,56 @@
 package lotto.domain
 
-import lotto.generator.LottoGenerator
+import lotto.generator.LottoManualGenerator
+import lotto.generator.LottoRandomGenerator
 
 class LottoMachine {
-    val price: Int = LOTTO_PRICE
+    var totalLottoCount = 0
+        private set
+    private var manualLottoCount = 0
 
-    fun buyLottoTickets(
-        purchaseAmount: Int,
-        lottoGenerator: LottoGenerator,
-    ): List<Lotto> {
-        require(purchaseAmount >= LOTTO_PRICE) { ERROR_UNDER_THOUSAND }
-        val lottoCount = getLottoCount(purchaseAmount)
-        val lottoTickets: MutableList<Lotto> = mutableListOf()
-        repeat(lottoCount) {
-            lottoTickets.add(lottoGenerator.generateLottoNumbers())
-        }
-        return lottoTickets.toList()
+    fun createManualLottoTicket(input: Set<Int>): Lotto {
+        val manualLottoTicket = LottoManualGenerator(input).generateLottoNumbers()
+        return manualLottoTicket
     }
 
-    private fun getLottoCount(purchaseAmount: Int): Int {
-        return purchaseAmount / LOTTO_PRICE
+    fun createTotalLottoTicket(manualLottoTickets: List<Lotto>): List<Lotto> {
+        val lottoTickets: MutableList<Lotto> = mutableListOf()
+        lottoTickets += manualLottoTickets
+        lottoTickets += createAutoLottoTickets()
+        return lottoTickets
+    }
+
+    private fun createAutoLottoTickets(): List<Lotto> {
+        val autoLottoCount = totalLottoCount - manualLottoCount
+        val lottoTickets: MutableList<Lotto> = mutableListOf()
+        repeat(autoLottoCount) {
+            lottoTickets.add(createAutoLottoTicket())
+        }
+        return lottoTickets
+    }
+
+    private fun createAutoLottoTicket(): Lotto {
+        return LottoRandomGenerator().generateLottoNumbers()
+    }
+
+    fun validPurchaseAmount(inputPurchaseAmount: Int): Int {
+        if (inputPurchaseAmount < LOTTO_TICKET_PRICE || inputPurchaseAmount % LOTTO_TICKET_PRICE != 0) {
+            throw IllegalArgumentException(ERROR_NOT_INVALID_PURCHASE_AMOUNT)
+        }
+        totalLottoCount = inputPurchaseAmount / LOTTO_TICKET_PRICE
+        return inputPurchaseAmount
+    }
+
+    fun validManualLottoCount(inputManualLottoCount: Int): Int? {
+        if (totalLottoCount < inputManualLottoCount) {
+            return null
+        }
+        manualLottoCount = inputManualLottoCount
+        return manualLottoCount
     }
 
     companion object {
-        const val LOTTO_PRICE: Int = 1_000
-        const val ERROR_UNDER_THOUSAND = "[ERROR] 최소 로또 구입 금액은 1,000원입니다."
+        const val LOTTO_TICKET_PRICE = 1_000
+        const val ERROR_NOT_INVALID_PURCHASE_AMOUNT = "[ERROR] 구입 금액이 올바르지 않습니다. 다시 입력해주세요."
     }
 }

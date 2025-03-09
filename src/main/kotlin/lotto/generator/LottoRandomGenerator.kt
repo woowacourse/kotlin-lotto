@@ -5,10 +5,10 @@ import lotto.domain.LottoNumber
 
 class LottoRandomGenerator : LottoGenerator {
     override fun generateLottoNumbers(): Lotto {
-        return Lotto(
+        return Lotto.of(
             (MIN_BOUND..MAX_BOUND)
                 .shuffled()
-                .take(NUMBER_OF_LOTTO_NUMBER).map { LottoNumber(it) }.toSet(),
+                .take(NUMBER_OF_LOTTO_NUMBER).map { LottoNumber.from(it) }.toSet(),
         )
     }
 
