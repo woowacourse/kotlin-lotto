@@ -43,7 +43,12 @@ class LottoController(
     private fun readWinningLotto(): WinningLotto {
         val winningNumber = getInputLotto()
         val bonusNumber = getBonusNumber()
-        return WinningLotto(winningNumber, bonusNumber)
+        lateinit var winningLotto: WinningLotto
+        runCatching { winningLotto = WinningLotto.of(winningNumber, bonusNumber) }.onFailure { exception ->
+            println(exception)
+            winningLotto = readWinningLotto()
+        }
+        return winningLotto
     }
 
     private fun createLottoResult(
@@ -96,8 +101,15 @@ class LottoController(
     }
 
     private fun getInputLotto(): Lotto {
-        val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber.from(it.trim().toInt()) }.toSet()
-        return Lotto(winningNumber)
+        lateinit var lottoTicket: Lotto
+        runCatching {
+            val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber.from(it.trim().toInt()) }.toSet()
+            lottoTicket = Lotto.of(winningNumber)
+        }.onFailure { exception ->
+            println(exception)
+            lottoTicket = getInputLotto()
+        }
+        return lottoTicket
     }
 
     private fun getBonusNumber(): LottoNumber {
