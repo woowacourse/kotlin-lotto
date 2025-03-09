@@ -60,6 +60,10 @@ class OutputView {
         println(MESSAGE_MATCH_COUNT_WITH_BONUS_BALL.format(state.countOfMatch, state.price, count))
     }
 
+    fun printErrorMessage(exception: Throwable) {
+        println(exception)
+    }
+
     companion object {
         const val MESSAGE_BUY_LOTTO = "\n수동으로 %d개, 자동으로 %d개를 구매했습니다."
         const val MESSAGE_WINNING_STATS = "\n당첨 통계\n---------"

@@ -17,7 +17,7 @@ class LottoController(
     fun run() {
         val purchaseAmount = getPurchaseAmount()
         val lottoTickets = prepareLottoTicket()
-        val winningLotto = readWinningLotto()
+        val winningLotto = prepareWinningLotto()
         val lottoResult = createLottoResult(purchaseAmount, lottoTickets, winningLotto)
         showResult(lottoResult)
     }
@@ -40,13 +40,13 @@ class LottoController(
         return lottoTickets
     }
 
-    private fun readWinningLotto(): WinningLotto {
+    private fun prepareWinningLotto(): WinningLotto {
         val winningNumber = getInputLotto()
         val bonusNumber = getBonusNumber()
         lateinit var winningLotto: WinningLotto
         runCatching { winningLotto = WinningLotto.of(winningNumber, bonusNumber) }.onFailure { exception ->
-            println(exception)
-            winningLotto = readWinningLotto()
+            outputView.printErrorMessage(exception)
+            winningLotto = prepareWinningLotto()
         }
         return winningLotto
     }
@@ -94,7 +94,7 @@ class LottoController(
         runCatching {
             manualLotto = lottoMachine.createManualLottoTicket(input.split(",").map { it.toInt() }.toSet())
         }.onFailure { exception ->
-            println(exception)
+            outputView.printErrorMessage(exception)
             manualLotto = processManualLottoTicket()
         }
         return manualLotto
@@ -106,7 +106,7 @@ class LottoController(
             val winningNumber = inputView.getWinningNumber().split(DELIMITERS).map { LottoNumber.from(it.trim().toInt()) }.toSet()
             lottoTicket = Lotto.of(winningNumber)
         }.onFailure { exception ->
-            println(exception)
+            outputView.printErrorMessage(exception)
             lottoTicket = getInputLotto()
         }
         return lottoTicket
