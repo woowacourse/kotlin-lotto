@@ -18,7 +18,7 @@ class LottoTicketTest {
         // given
         val exampleLottoNumbers: Set<LottoNumber> = numbers.map { LottoNumber(it) }.toSet()
         val actualLottoTicket =
-            object : LottoTicket {
+            object : LottoTicket() {
                 override val lottoNumbers: Set<LottoNumber> = exampleLottoNumbers
             }
         val expectedSortedLottoNumbers = sortedNumbers.map { LottoNumber(it) }
