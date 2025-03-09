@@ -55,5 +55,5 @@
 - [x] 패키지를 역할에 따라 구조화
 - [x] 로또 구입 금액은 최소 로또 한장의 이상의 금액이 필요하다는 요구사항 반영
 - [x] 컨트롤러의 `createWholeAutoLottoTickets`에서 불필요한 빈 리스트 반환 구문 삭제
-- [ ] LottoTicket를 interface에서 abstract class로 변경
-- [ ] 접근 제어자 신경써서 수정
+- [x] LottoTicket를 interface에서 abstract class로 변경
+- [x] 접근 제어자 신경써서 수정
