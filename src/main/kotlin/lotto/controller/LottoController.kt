@@ -16,26 +16,26 @@ class LottoController(
 
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val lottoTickets = prepareLottoTicket(purchaseAmount)
+        val lottoTickets = prepareLottoTicket()
         val winningLotto = readWinningLotto()
         val lottoResult = createLottoResult(purchaseAmount, lottoTickets, winningLotto)
         showResult(lottoResult)
     }
 
     private fun getPurchaseAmount(): Int {
-        val purchaseAmount = inputView.getPurchaseAmount()
-        if (purchaseAmount < 1_000 || purchaseAmount % 1_000 == 0) {
-            println("[ERROR] 구입 금액이 올바르지 않습니다. 다시 입력해주세요.")
+        val inputPurchaseAmount = inputView.getPurchaseAmount()
+        val purchaseAmount = lottoMachine.validPurchaseAmount(inputPurchaseAmount)
+        if (purchaseAmount == null) {
+            outputView.printInvalidPurchaseAmountMessage()
             return getPurchaseAmount()
         }
         return purchaseAmount
     }
 
-    private fun prepareLottoTicket(purchaseAmount: Int): List<Lotto> {
+    private fun prepareLottoTicket(): List<Lotto> {
         val manualLottoCount = getManualLottoCount()
-        val autoLottoTickets = lottoMachine.createLottoTicket(purchaseAmount, manualLottoCount)
         val manualLottoTickets = getManualLottoTickets(manualLottoCount)
-        val lottoTickets = manualLottoTickets + autoLottoTickets
+        val lottoTickets = lottoMachine.createTotalLottoTicket(manualLottoTickets)
         outputView.printPurchasedLottoTickets(manualLottoCount, lottoTickets)
         return lottoTickets
     }
@@ -64,17 +64,34 @@ class LottoController(
     }
 
     private fun getManualLottoCount(): Int {
-        return inputView.getManualLottoCount()
+        val inputManualLottoCount: Int = inputView.getManualLottoCount()
+        val manualLottoCount = lottoMachine.validManualLottoCount(inputManualLottoCount)
+        if (manualLottoCount == null) {
+            outputView.printInvalidLottoCountMessage(lottoMachine.totalLottoCount)
+            return getManualLottoCount()
+        }
+        return manualLottoCount
     }
 
     private fun getManualLottoTickets(manualLottoCount: Int): List<Lotto> {
-        val inputTickets: MutableList<Set<Int>> = mutableListOf()
+        val inputTickets: MutableList<Lotto> = mutableListOf()
         inputView.getManualLottoTickets()
         repeat(manualLottoCount) {
-            val input = inputView.getManualLotto()
-            inputTickets.add(input.split(",").map { it.trim().toInt() }.toSet())
+            val manualLottoTicket = processManualLottoTicket()
+            inputTickets.add(manualLottoTicket)
         }
-        val manualLotto = lottoMachine.createManualLottoTicket(inputTickets)
+        return inputTickets
+    }
+
+    private fun processManualLottoTicket(): Lotto {
+        val input = inputView.getManualLotto()
+        lateinit var manualLotto: Lotto
+        runCatching {
+            manualLotto = lottoMachine.createManualLottoTicket(input.split(",").map { it.toInt() }.toSet())
+        }.onFailure { exception ->
+            println(exception)
+            manualLotto = processManualLottoTicket()
+        }
         return manualLotto
     }
 
