@@ -14,8 +14,6 @@ sealed class LottoCreationResult {
     ) : LottoCreationResult()
 
     sealed class Failure : LottoCreationResult() {
-        object NotSorted : Failure()
-
         object InvalidCount : Failure()
 
         object DuplicatedNumbers : Failure()
@@ -26,7 +24,8 @@ class Lotto private constructor(
     val numberList: List<LottoNumber>,
 ) {
     init {
-        require(numberList.sortedBy { it.value } == numberList) { "[ERROR] 로또 번호는 정렬된 상태여야 합니다." }
+        require(numberList.size == LOTTO_NUMBER_QUANTITY) { "[ERROR] 로또 번호는 ${LOTTO_NUMBER_QUANTITY}개여야 합니다." }
+        require(numberList.distinctBy { it.value }.size == numberList.size) { "[ERROR] 중복된 로또 번호가 있습니다." }
     }
 
     companion object {
@@ -34,13 +33,17 @@ class Lotto private constructor(
         private val LOTTO_NUMBERS: List<LottoNumber> = (1..45).map { LottoNumber.valueOf(it) }
 
         fun valueOf(numberList: List<LottoNumber>): LottoCreationResult =
-            when {
-                numberList.size != LOTTO_NUMBER_QUANTITY -> LottoCreationResult.Failure.InvalidCount
-                numberList.distinctBy { it.value }.size != numberList.size -> LottoCreationResult.Failure.DuplicatedNumbers
-                else -> LottoCreationResult.Success(Lotto(numberList.sortedBy { it.value }))
-            }
-
-        fun valueOfOrNull(numberList: List<LottoNumber>): Lotto? = runCatching { Lotto(numberList.sortedBy { it.value }) }.getOrNull()
+            runCatching { Lotto(numberList.sortedBy { it.value }) }
+                .fold(
+                    onSuccess = { LottoCreationResult.Success(it) },
+                    onFailure = { throwable ->
+                        when (throwable.message) {
+                            "[ERROR] 로또 번호는 ${LOTTO_NUMBER_QUANTITY}개여야 합니다." -> LottoCreationResult.Failure.InvalidCount
+                            "[ERROR] 중복된 로또 번호가 있습니다." -> LottoCreationResult.Failure.DuplicatedNumbers
+                            else -> LottoCreationResult.Failure.InvalidCount
+                        }
+                    },
+                )
 
         fun createRandom(sortStrategy: SortStrategy = RandomSort()): Lotto =
             Lotto(sortStrategy.sort(LOTTO_NUMBERS).take(LOTTO_NUMBER_QUANTITY).sortedBy { it.value })

@@ -17,7 +17,7 @@ class LottoController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val amount = inputAmount()
+    private val amount = getAmount()
 
     fun run() {
         val count = getManualCount()
@@ -44,40 +44,56 @@ class LottoController(
 
     private fun getLottoList(count: Int): List<Lotto> {
         inputView.messageManualLotto()
-        return List(count) { inputLotto() }
+        return List(count) { getLotto() }
     }
 
-    private fun inputLotto(): Lotto {
+    private fun getLotto(): Lotto {
         val numbers = inputView.getManualLotto().mapNotNull { LottoNumber.valueOfOrNull(it) }
         val result = Lotto.valueOf(numbers)
-        if (result is LottoCreationResult.Success) return result.lotto
-
-        outputView.printErrorMessage(Message.errorInvalidLotto())
-        return inputLotto()
+        return when (result) {
+            is LottoCreationResult.Success -> result.lotto
+            is LottoCreationResult.Failure.InvalidCount -> {
+                outputView.printErrorMessage(Message.errorInvalidCount())
+                getLotto()
+            }
+            is LottoCreationResult.Failure.DuplicatedNumbers -> {
+                outputView.printErrorMessage(Message.errorDuplicatedNumbers())
+                getLotto()
+            }
+        }
     }
 
-    private fun inputAmount(): Amount {
+    private fun getAmount(): Amount {
         val amount = Amount.valueOfOrNull(inputView.getMoney())
         if (amount != null) return amount
 
         outputView.printErrorMessage(Message.errorInvalidAmount())
-        return inputAmount()
+        return getAmount()
     }
 
     private fun getWinningLotto(): WinningLotto {
         val numbers = inputView.getWinningLotto().mapNotNull { LottoNumber.valueOfOrNull(it) }
         val bonusNumber = LottoNumber.valueOfOrNull(inputView.getBonusNumber())
-
         if (bonusNumber == null) {
             outputView.printErrorMessage(Message.errorInvalidBonusNumber())
             return getWinningLotto()
         }
-
         val result = WinningLotto.valueOf(numbers, bonusNumber)
-        if (result is WinningLottoCreationResult.Success) return result.winningLotto
-
-        outputView.printErrorMessage(Message.errorInvalidWinningNumbers())
-        return getWinningLotto()
+        return when (result) {
+            is WinningLottoCreationResult.Success -> result.winningLotto
+            is WinningLottoCreationResult.Failure.NumberSizeError -> {
+                outputView.printErrorMessage(Message.errorWinningLottoNumberSize())
+                getWinningLotto()
+            }
+            is WinningLottoCreationResult.Failure.DuplicatedNumbers -> {
+                outputView.printErrorMessage(Message.errorWinningLottoDuplicatedNumbers())
+                getWinningLotto()
+            }
+            is WinningLottoCreationResult.Failure.BonusNumberDuplicated -> {
+                outputView.printErrorMessage(Message.errorWinningLottoBonusNumberDuplicated())
+                getWinningLotto()
+            }
+        }
     }
 
     private fun calculateEarningRate(ranks: Map<Rank, Int>): Double {

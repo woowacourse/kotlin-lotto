@@ -23,13 +23,19 @@ object Message {
 
     fun earningRate(rate: Double) = "총 수익률은 %.2f입니다.".format(rate)
 
-    fun errorInvalidLotto() = "[ERROR] 잘못된 로또 번호입니다. 다시 입력하세요."
+    fun errorInvalidCount(): String = "[ERROR] 로또 번호는 6개여야 합니다."
+
+    fun errorDuplicatedNumbers(): String = "[ERROR] 중복된 로또 번호가 있습니다."
 
     fun errorInvalidAmount() = "[ERROR] 금액은 0 이상이어야 합니다. 다시 입력하세요."
 
-    fun errorInvalidWinningNumbers() = "[ERROR] 잘못된 당첨 번호입니다. 다시 입력하세요."
+    fun errorWinningLottoNumberSize(): String = "[ERROR] 당첨 번호는 6개여야 합니다."
 
-    fun errorInvalidBonusNumber() = "[ERROR] 보너스 번호가 잘못되었습니다. 다시 입력하세요."
+    fun errorWinningLottoDuplicatedNumbers(): String = "[ERROR] 당첨 번호에 중복된 숫자가 있습니다."
+
+    fun errorWinningLottoBonusNumberDuplicated(): String = "[ERROR] 보너스 번호는 당첨 번호에 포함될 수 없습니다."
+
+    fun errorInvalidBonusNumber(): String = "[ERROR] 올바르지 않은 보너스 번호입니다."
 
     fun errorCountExceeded() = "[ERROR] 수동 로또 개수가 전체 구매 가능 개수를 초과할 수 없습니다. 다시 입력하세요."
 }
