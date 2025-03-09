@@ -31,10 +31,6 @@ class OutputView {
         println(ERROR_NOT_INVALID_MANUAL_LOTTO_COUNT.format(maxCount))
     }
 
-    fun printInvalidPurchaseAmountMessage() {
-        println(ERROR_NOT_INVALID_PURCHASE_AMOUNT)
-    }
-
     private fun printWinningStat(
         state: Rank,
         count: Int,
@@ -71,6 +67,5 @@ class OutputView {
         const val MESSAGE_MATCH_COUNT_WITH_BONUS_BALL = "%d개 일치, 보너스 볼 일치(%d원)- %d개"
         const val MESSAGE_PROFIT = "총 수익률은 %.2f입니다."
         const val ERROR_NOT_INVALID_MANUAL_LOTTO_COUNT = "[ERROR] 구입 가능한 수동 로또는 %d개 이하입니다. 다시 입력해주세요"
-        const val ERROR_NOT_INVALID_PURCHASE_AMOUNT = "[ERROR] 구입 금액이 올바르지 않습니다. 다시 입력해주세요."
     }
 }

@@ -24,10 +24,12 @@ class LottoController(
 
     private fun getPurchaseAmount(): Int {
         val inputPurchaseAmount = inputView.getPurchaseAmount()
-        val purchaseAmount = lottoMachine.validPurchaseAmount(inputPurchaseAmount)
-        if (purchaseAmount == null) {
-            outputView.printInvalidPurchaseAmountMessage()
-            return getPurchaseAmount()
+        var purchaseAmount: Int = 0
+        runCatching {
+            purchaseAmount = lottoMachine.validPurchaseAmount(inputPurchaseAmount)
+        }.onFailure { exception ->
+            outputView.printErrorMessage(exception)
+            purchaseAmount = getPurchaseAmount()
         }
         return purchaseAmount
     }

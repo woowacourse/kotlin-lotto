@@ -33,9 +33,9 @@ class LottoMachine {
         return LottoRandomGenerator().generateLottoNumbers()
     }
 
-    fun validPurchaseAmount(inputPurchaseAmount: Int): Int? {
+    fun validPurchaseAmount(inputPurchaseAmount: Int): Int {
         if (inputPurchaseAmount < LOTTO_TICKET_PRICE || inputPurchaseAmount % LOTTO_TICKET_PRICE != 0) {
-            return null
+            throw IllegalArgumentException(ERROR_NOT_INVALID_PURCHASE_AMOUNT)
         }
         totalLottoCount = inputPurchaseAmount / LOTTO_TICKET_PRICE
         return inputPurchaseAmount
@@ -51,5 +51,6 @@ class LottoMachine {
 
     companion object {
         const val LOTTO_TICKET_PRICE = 1_000
+        const val ERROR_NOT_INVALID_PURCHASE_AMOUNT = "[ERROR] 구입 금액이 올바르지 않습니다. 다시 입력해주세요."
     }
 }
