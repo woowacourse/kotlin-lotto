@@ -20,8 +20,7 @@ class LottoController(
         val purchaseAmount = getPurchaseAmount()
         val manualLottoQuantity = getManualQuantity()
 
-        val lottoMarket = purchaseLottos(purchaseAmount, manualLottoQuantity)
-        val lottoWallet = storeLottos(lottoMarket, manualLottoQuantity)
+        val lottoWallet = buyLottos(purchaseAmount, manualLottoQuantity)
 
         val winningDiscriminator = getWinningInfo()
         discriminateLottos(winningDiscriminator, lottoWallet, purchaseAmount)
@@ -39,34 +38,41 @@ class LottoController(
         return manualLottoQuantity
     }
 
-    private fun purchaseLottos(
+    private fun buyLottos(
         purchaseAmount: Amount,
         manualLottoQuantity: Int,
-    ): LottoMarket {
-        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity)
-        outputView.printManualLottoNumbersGuide(manualLottoQuantity > EMPTY_LOTTO_QUANTITY)
-
-        return lottoMarket
-    }
-
-    private fun storeLottos(
-        lottoMarket: LottoMarket,
-        manualLottoQuantity: Int,
     ): LottoWallet {
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity)
         val lottoWallet = LottoWallet()
 
-        if (manualLottoQuantity > EMPTY_LOTTO_QUANTITY) {
-            val manualLottoMachine = ManualLottoMachine()
-            val manualNumbers = List(manualLottoQuantity) { inputView.readLottoNumbers() }
-            lottoMarket.buy(manualLottoMachine, manualNumbers, lottoWallet)
-        }
-
-        val autoLottoMachine = AutoLottoMachine()
-        lottoMarket.buy(autoLottoMachine, emptyList(), lottoWallet)
+        buyManualLottos(lottoMarket, manualLottoQuantity, lottoWallet)
+        buyAutoLottos(lottoMarket, lottoWallet)
 
         outputView.printPurchaseLottoQuantity(manualLottoQuantity, lottoMarket.autoLottoQuantity)
         outputView.printLotto(lottoWallet.lottos)
         return lottoWallet
+    }
+
+    private fun buyManualLottos(
+        lottoMarket: LottoMarket,
+        manualLottoQuantity: Int,
+        lottoWallet: LottoWallet,
+    ) {
+        if (manualLottoQuantity > EMPTY_LOTTO_QUANTITY) {
+            outputView.printManualLottoNumbersGuide()
+
+            val manualNumbers = List(manualLottoQuantity) { inputView.readLottoNumbers() }
+            val manualLottoMachine = ManualLottoMachine()
+            lottoMarket.buy(manualLottoMachine, manualNumbers, lottoWallet)
+        }
+    }
+
+    private fun buyAutoLottos(
+        lottoMarket: LottoMarket,
+        lottoWallet: LottoWallet,
+    ) {
+        val autoLottoMachine = AutoLottoMachine()
+        lottoMarket.buy(autoLottoMachine, emptyList(), lottoWallet)
     }
 
     private fun discriminateLottos(
@@ -91,7 +97,6 @@ class LottoController(
         outputView.printBonusNumberGuide()
         val bonusNumber = inputView.readBonusNumber()
 
-        val winningDiscriminator = WinningDiscriminator(winningNumbers, bonusNumber)
-        return winningDiscriminator
+        return WinningDiscriminator(winningNumbers, bonusNumber)
     }
 }
