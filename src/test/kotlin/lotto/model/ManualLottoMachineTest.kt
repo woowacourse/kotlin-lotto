@@ -16,7 +16,7 @@ class ManualLottoMachineTest {
             )
 
         // when
-        val generatedLottos = manualLottoMachine.generate(manualTicket = manualTickets)
+        val generatedLottos = manualLottoMachine.generate(manualTickets, 0)
 
         // then
         assertEquals(manualTickets.size, generatedLottos.size)

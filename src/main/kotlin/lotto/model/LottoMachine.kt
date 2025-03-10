@@ -2,7 +2,7 @@ package lotto.model
 
 interface LottoMachine {
     fun generate(
-        manualTicket: List<List<Int>> = emptyList(),
-        quantity: Int = manualTicket.size,
+        manualTicket: List<List<Int>>,
+        quantity: Int,
     ): List<Lotto>
 }

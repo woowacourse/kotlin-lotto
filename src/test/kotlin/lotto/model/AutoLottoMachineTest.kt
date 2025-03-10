@@ -11,7 +11,7 @@ class AutoLottoMachineTest {
         val expectedQuantity = 5
 
         // when
-        val actualQuantity = lottoMachine.generate(quantity = expectedQuantity).size
+        val actualQuantity = lottoMachine.generate(emptyList(), expectedQuantity).size
 
         // then
         assertEquals(expectedQuantity, actualQuantity)

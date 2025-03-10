@@ -13,13 +13,13 @@ class LottoMarket(
     }
 
     fun buy(
-        manualNumbers: List<List<Int>> = emptyList(),
+        manualNumbers: List<List<Int>>,
         lottoWallet: LottoWallet,
     ) {
         lottoWallet.addAll(
             when (manualNumbers.isNotEmpty()) {
-                true -> manualLottoMachine.generate(manualTicket = manualNumbers)
-                false -> autoLottoMachine.generate(quantity = autoLottoQuantity)
+                true -> manualLottoMachine.generate(manualNumbers, EMPTY_LOTTO_QUANTITY)
+                false -> autoLottoMachine.generate(emptyList(), autoLottoQuantity)
             },
         )
     }
