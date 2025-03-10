@@ -1,19 +1,70 @@
 package lotto.model
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 class LottoMarketTest {
-    @ValueSource(ints = [-1, 0])
-    @ParameterizedTest
-    fun `입력한 금액은 0원 이상만 가능하다`(amount: Int) {
-        // given & when & then
+    private val manualLottoMachine = ManualLottoMachine()
+    private val autoLottoMachine = AutoLottoMachine()
+
+    @Test
+    fun `정상적으로 로또를 구매하면 올바른 개수의 로또가 생성된다`() {
+        // given
+        val purchaseAmount = Amount(10000)
+        val manualLottoNumbers =
+            listOf(
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(7, 8, 9, 10, 11, 12),
+            )
+
+        // when
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoNumbers)
+        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
+
+        // then
+        assertThat(lottoWallet.lottos.size).isEqualTo(10)
+    }
+
+    @Test
+    fun `10000원을 지불하고 수동 로또를 입력하지 않으면 10개의 자동 로또가 반환된다`() {
+        // given
+        val purchaseAmount = Amount(10000)
+        val manualLottoNumbers = emptyList<List<Int>>()
+
+        // when
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoNumbers)
+        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
+
+        // then
+        assertThat(lottoWallet.lottos.size).isEqualTo(10)
+    }
+
+    @Test
+    fun `구입 금액보다 많은 수동 로또를 요구하면 오류를 반환한다`() {
+        // given
+        val purchaseAmount = Amount(1000)
+        val manualLottoNumbers =
+            listOf(
+                listOf(1, 2, 3, 4, 5, 6),
+                listOf(7, 8, 9, 10, 11, 12),
+            )
+
+        // when & then
+        assertThrows<IllegalArgumentException> {
+            LottoMarket(purchaseAmount, manualLottoNumbers)
+        }
+    }
+
+    @Test
+    fun `입력한 금액은 0원 초과만 가능하다`() {
+        // given
+        val amount = 0
+
+        // when & then
         assertThatThrownBy {
-            LottoMarket(Amount(amount), 0)
+            LottoMarket(Amount(amount), emptyList())
         }.hasMessageContaining("0원 이상의 금액")
     }
 
@@ -24,32 +75,20 @@ class LottoMarketTest {
 
         // when & then
         assertThatThrownBy {
-            LottoMarket(Amount(amount), 0)
+            LottoMarket(Amount(amount), emptyList())
         }.hasMessageContaining("단위")
     }
 
     @Test
     fun `구입 금액이 5,000원이면 로또 구입 개수를 5개로 반환한다`() {
         // given
-        val amount = 5000
-        val lottoMarket = LottoMarket(Amount(amount), 0)
+        val purchaseAmount = Amount(5000)
 
         // when
-        val lottoQuantity = lottoMarket.autoLottoQuantity
+        val lottoMarket = LottoMarket(purchaseAmount, emptyList())
+        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
 
         // then
-        assertEquals(5, lottoQuantity)
-    }
-
-    @Test
-    fun `구입 금액보다 많은 수동 로또를 요구하면 오류를 반환한다`() {
-        // given
-        val amount = 1000
-        val manualQuantity = 2
-
-        // when & then
-        assertThrows<IllegalArgumentException> {
-            LottoMarket(Amount(amount), manualQuantity)
-        }
+        assertThat(lottoWallet.lottos.size).isEqualTo(5)
     }
 }

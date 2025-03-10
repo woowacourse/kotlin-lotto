@@ -1,10 +1,12 @@
 package lotto.controller
 
 import lotto.model.Amount
-import lotto.model.LottoCashier
+import lotto.model.AutoLottoMachine
+import lotto.model.LottoMarket
 import lotto.model.LottoMarket.Companion.EMPTY_LOTTO_QUANTITY
 import lotto.model.LottoProfitCalculator
 import lotto.model.LottoWallet
+import lotto.model.ManualLottoMachine
 import lotto.model.WinningDiscriminator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -17,7 +19,11 @@ class LottoController(
         val purchaseAmount = getPurchaseAmount()
         val manualLottoNumbers = getManualLottoNumbers()
 
-        val lottoWallet = LottoCashier().buyLottos(purchaseAmount, manualLottoNumbers)
+        val manualLottoMachine = ManualLottoMachine()
+        val autoLottoMachine = AutoLottoMachine()
+
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoNumbers)
+        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
 
         outputView.printPurchaseLottoQuantity(
             manualLottoNumbers.size,
