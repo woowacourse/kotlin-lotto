@@ -43,10 +43,9 @@ class LottoController(
         purchaseAmount: Amount,
         manualLottoQuantity: Int,
     ): LottoMarket {
-        val autoLottoMachine = AutoLottoMachine()
-        val manualLottoMachine = ManualLottoMachine()
-        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity, manualLottoMachine, autoLottoMachine)
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity)
         outputView.printManualLottoNumbersGuide(manualLottoQuantity > EMPTY_LOTTO_QUANTITY)
+
         return lottoMarket
     }
 
@@ -56,10 +55,14 @@ class LottoController(
     ): LottoWallet {
         val lottoWallet = LottoWallet()
 
-        lottoMarket.buy(
-            List(manualLottoQuantity) { inputView.readLottoNumbers() },
-            lottoWallet,
-        )
+        if (manualLottoQuantity > EMPTY_LOTTO_QUANTITY) {
+            val manualLottoMachine = ManualLottoMachine()
+            val manualNumbers = List(manualLottoQuantity) { inputView.readLottoNumbers() }
+            lottoMarket.buy(manualLottoMachine, manualNumbers, lottoWallet)
+        }
+
+        val autoLottoMachine = AutoLottoMachine()
+        lottoMarket.buy(autoLottoMachine, emptyList(), lottoWallet)
 
         outputView.printPurchaseLottoQuantity(manualLottoQuantity, lottoMarket.autoLottoQuantity)
         outputView.printLotto(lottoWallet.lottos)

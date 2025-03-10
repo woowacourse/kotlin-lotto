@@ -3,8 +3,6 @@ package lotto.model
 class LottoMarket(
     private val amount: Amount,
     private val manualQuantity: Int,
-    private val manualLottoMachine: ManualLottoMachine = ManualLottoMachine(),
-    private val autoLottoMachine: AutoLottoMachine = AutoLottoMachine(),
 ) {
     val autoLottoQuantity: Int = amount.getAutoLottoQuantity(manualQuantity)
 
@@ -13,14 +11,12 @@ class LottoMarket(
     }
 
     fun buy(
-        manualNumbers: List<List<Int>>,
+        lottoMachine: LottoMachine,
+        manualNumbers: List<List<Int>> = emptyList(),
         lottoWallet: LottoWallet,
     ) {
         lottoWallet.addAll(
-            when (manualNumbers.isNotEmpty()) {
-                true -> manualLottoMachine.generate(manualNumbers, EMPTY_LOTTO_QUANTITY)
-                false -> autoLottoMachine.generate(emptyList(), autoLottoQuantity)
-            },
+            lottoMachine.generate(manualNumbers, autoLottoQuantity),
         )
     }
 
