@@ -27,13 +27,11 @@ class LottoController(
     }
 
     private fun getPurchaseAmount(): Amount {
-        outputView.printPurchaseAmountGuide()
         val purchaseAmount = inputView.readPurchaseAmount()
         return Amount(purchaseAmount)
     }
 
     private fun getManualQuantity(): Int {
-        outputView.printManualLottoQuantityGuide()
         val manualLottoQuantity = inputView.readManualLottoQuantity()
         return manualLottoQuantity
     }
@@ -61,7 +59,7 @@ class LottoController(
         if (manualLottoQuantity > EMPTY_LOTTO_QUANTITY) {
             outputView.printManualLottoNumbersGuide()
 
-            val manualNumbers = List(manualLottoQuantity) { inputView.readLottoNumbers() }
+            val manualNumbers = List(manualLottoQuantity) { inputView.readManualLottoNumbers() }
             val manualLottoMachine = ManualLottoMachine()
             lottoMarket.buy(manualLottoMachine, manualNumbers, lottoWallet)
         }
@@ -81,7 +79,6 @@ class LottoController(
         purchaseAmount: Amount,
     ) {
         val winningResult = winningDiscriminator.getResult(lottoWallet)
-        outputView.printWinningResultTitle()
         outputView.printWinningLottoResult(winningResult)
 
         val lottoProfitCalculator = LottoProfitCalculator()
@@ -91,10 +88,7 @@ class LottoController(
     }
 
     private fun getWinningInfo(): WinningDiscriminator {
-        outputView.printWinningNumbersGuide()
-        val winningNumbers = inputView.readLottoNumbers()
-
-        outputView.printBonusNumberGuide()
+        val winningNumbers = inputView.readWinningLottoNumbers()
         val bonusNumber = inputView.readBonusNumber()
 
         return WinningDiscriminator(winningNumbers, bonusNumber)
