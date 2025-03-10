@@ -4,7 +4,7 @@ class LottoMarket(
     private val purchaseAmount: Amount,
     private val manualLottoNumbers: List<List<Int>>,
 ) {
-    private val manualQuantity = manualLottoNumbers.size
+    private val manualQuantity: Int = manualLottoNumbers.size
     private val autoLottoQuantity: Int = purchaseAmount.getAutoLottoQuantity(manualQuantity)
 
     init {
@@ -15,18 +15,16 @@ class LottoMarket(
         manualLottoMachine: ManualLottoMachine,
         autoLottoMachine: AutoLottoMachine,
     ): LottoWallet {
-        val lottoWallet = LottoWallet()
-
-        val manualLottos = generate(manualLottoMachine)
-        lottoWallet.addAll(manualLottos)
-
-        val autoLottos = generate(autoLottoMachine)
-        lottoWallet.addAll(autoLottos)
+        val lottoWallet =
+            LottoWallet().apply {
+                addAll(getLottos(manualLottoMachine))
+                addAll(getLottos(autoLottoMachine))
+            }
 
         return lottoWallet
     }
 
-    private fun generate(lottoMachine: LottoMachine): List<Lotto> = lottoMachine.generate(manualLottoNumbers, autoLottoQuantity)
+    private fun getLottos(lottoMachine: LottoMachine): List<Lotto> = lottoMachine.generate(manualLottoNumbers, autoLottoQuantity)
 
     private fun validateManualLottoQuantity() {
         require(purchaseAmount.isAffordable(manualQuantity)) {
