@@ -21,10 +21,10 @@ class LottoMarketTest {
 
         // when
         val lottoMarket = LottoMarket(purchaseAmount, manualLottoNumbers)
-        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
+        val lottos = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
 
         // then
-        assertThat(lottoWallet.lottos.size).isEqualTo(10)
+        assertThat(lottos.size).isEqualTo(10)
     }
 
     @Test
@@ -35,10 +35,10 @@ class LottoMarketTest {
 
         // when
         val lottoMarket = LottoMarket(purchaseAmount, manualLottoNumbers)
-        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
+        val lottos = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
 
         // then
-        assertThat(lottoWallet.lottos.size).isEqualTo(10)
+        assertThat(lottos.size).isEqualTo(10)
     }
 
     @Test
@@ -86,9 +86,9 @@ class LottoMarketTest {
 
         // when
         val lottoMarket = LottoMarket(purchaseAmount, emptyList())
-        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
+        val lottos = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
 
         // then
-        assertThat(lottoWallet.lottos.size).isEqualTo(5)
+        assertThat(lottos.size).isEqualTo(5)
     }
 }

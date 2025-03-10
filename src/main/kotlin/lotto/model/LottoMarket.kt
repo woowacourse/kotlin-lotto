@@ -14,15 +14,7 @@ class LottoMarket(
     fun buy(
         manualLottoMachine: ManualLottoMachine,
         autoLottoMachine: AutoLottoMachine,
-    ): LottoWallet {
-        val lottoWallet =
-            LottoWallet().apply {
-                addAll(getLottos(manualLottoMachine))
-                addAll(getLottos(autoLottoMachine))
-            }
-
-        return lottoWallet
-    }
+    ): List<Lotto> = getLottos(manualLottoMachine) + getLottos(autoLottoMachine)
 
     private fun getLottos(lottoMachine: LottoMachine): List<Lotto> = lottoMachine.generate(manualLottoNumbers, autoLottoQuantity)
 

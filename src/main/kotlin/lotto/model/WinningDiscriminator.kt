@@ -13,10 +13,10 @@ class WinningDiscriminator private constructor(
         validateWinningNumberAndBonusNumberDuplicate()
     }
 
-    fun getResult(lottoWallet: LottoWallet): Map<Rank, Int> {
+    fun getResult(lottos: List<Lotto>): Map<Rank, Int> {
         val countResult = Rank.entries.associateWith { 0 }.toMutableMap()
 
-        lottoWallet.lottos.forEach { lotto ->
+        lottos.forEach { lotto ->
             val rank = discriminate(lotto)
             countResult[rank] = countResult.getValue(rank) + 1
         }

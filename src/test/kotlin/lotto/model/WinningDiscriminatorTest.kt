@@ -11,12 +11,9 @@ class WinningDiscriminatorTest {
         val bonusNumber = 7
         val winningDiscriminator = WinningDiscriminator(lottoNumbers, bonusNumber)
 
-        val lottoWallet =
-            LottoWallet().apply {
-                addAll(listOf(Lotto.from(lottoNumbers)))
-            }
+        val lottos = listOf(Lotto.from(lottoNumbers))
 
-        val discriminateResult = winningDiscriminator.getResult(lottoWallet)
+        val discriminateResult = winningDiscriminator.getResult(lottos)
 
         assertEquals(1, discriminateResult[Rank.FIRST])
     }
@@ -28,12 +25,9 @@ class WinningDiscriminatorTest {
         val bonusNumber = 7
         val winningDiscriminator = WinningDiscriminator(winningNumbers, bonusNumber)
 
-        val lottoWallet =
-            LottoWallet().apply {
-                addAll(listOf(Lotto.from(lottoNumbers)))
-            }
+        val lottos = listOf(Lotto.from(lottoNumbers))
 
-        val discriminateResult = winningDiscriminator.getResult(lottoWallet)
+        val discriminateResult = winningDiscriminator.getResult(lottos)
 
         assertEquals(1, discriminateResult[Rank.THIRD])
     }
@@ -45,12 +39,9 @@ class WinningDiscriminatorTest {
         val bonusNumber = 7
         val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
 
-        val lottoWallet =
-            LottoWallet().apply {
-                addAll(listOf(Lotto.from(lottoNumbers)))
-            }
+        val lottos = listOf(Lotto.from(lottoNumbers))
 
-        val discriminateResult = winningDiscriminator.getResult(lottoWallet)
+        val discriminateResult = winningDiscriminator.getResult(lottos)
 
         assertEquals(1, discriminateResult[Rank.FOURTH])
     }
@@ -62,12 +53,9 @@ class WinningDiscriminatorTest {
         val bonusNumber = 7
         val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
 
-        val lottoWallet =
-            LottoWallet().apply {
-                addAll(listOf(Lotto.from(lottoNumbers)))
-            }
+        val lottos = listOf(Lotto.from(lottoNumbers))
 
-        val discriminateResult = winningDiscriminator.getResult(lottoWallet)
+        val discriminateResult = winningDiscriminator.getResult(lottos)
 
         assertEquals(1, discriminateResult[Rank.FIFTH])
     }
@@ -83,12 +71,9 @@ class WinningDiscriminatorTest {
             val bonusNumber = 7
             val winningDiscriminator = WinningDiscriminator(winningLotto, bonusNumber)
 
-            val lottoWallet =
-                LottoWallet().apply {
-                    addAll(listOf(Lotto.from(lottoNumbers)))
-                }
+            val lottos = listOf(Lotto.from(lottoNumbers))
 
-            val discriminateResult = winningDiscriminator.getResult(lottoWallet)
+            val discriminateResult = winningDiscriminator.getResult(lottos)
 
             assertEquals(1, discriminateResult[Rank.MISS])
         }
@@ -101,12 +86,9 @@ class WinningDiscriminatorTest {
         val bonusNumber = 7
         val winningDiscriminator = WinningDiscriminator(winningNumbers, bonusNumber)
 
-        val lottoWallet =
-            LottoWallet().apply {
-                addAll(listOf(Lotto.from(lottoNumbers)))
-            }
+        val lottos = listOf(Lotto.from(lottoNumbers))
 
-        val discriminateResult = winningDiscriminator.getResult(lottoWallet)
+        val discriminateResult = winningDiscriminator.getResult(lottos)
 
         assertEquals(1, discriminateResult[Rank.SECOND])
     }
