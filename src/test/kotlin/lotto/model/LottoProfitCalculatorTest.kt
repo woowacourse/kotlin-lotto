@@ -22,7 +22,7 @@ class LottoProfitCalculatorTest {
         val expectedProfitRate = totalProfit / totalAmount.value.toFloat()
 
         // when
-        val actualProfitRate = profitCalculator.getProfitRate(winningResult, totalAmount)
+        val actualProfitRate = profitCalculator.getProfitResult(winningResult, totalAmount).profitRate
 
         // then
         assertEquals(expectedProfitRate, actualProfitRate)

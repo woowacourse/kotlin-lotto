@@ -13,12 +13,7 @@ class LottoMarket(
     fun buy(
         lottoMachine: LottoMachine,
         manualNumbers: List<List<Int>> = emptyList(),
-        lottoWallet: LottoWallet,
-    ) {
-        lottoWallet.addAll(
-            lottoMachine.generate(manualNumbers, autoLottoQuantity),
-        )
-    }
+    ): List<Lotto> = lottoMachine.generate(manualNumbers, autoLottoQuantity)
 
     private fun validateManualLottoQuantity() {
         require(amount.isAffordable(manualQuantity)) {

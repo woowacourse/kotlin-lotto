@@ -8,10 +8,6 @@ import lotto.model.ProfitStatus.PROFIT
 import lotto.model.Rank
 
 class OutputView {
-    fun printManualLottoNumbersGuide() {
-        println("수동으로 구매할 번호를 입력해 주세요.")
-    }
-
     fun printPurchaseLottoQuantity(
         manualQuantity: Int,
         autoQuantity: Int,

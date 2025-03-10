@@ -1,13 +1,10 @@
 package lotto.controller
 
 import lotto.model.Amount
-import lotto.model.AutoLottoMachine
-import lotto.model.LottoMarket
+import lotto.model.LottoCashier
 import lotto.model.LottoMarket.Companion.EMPTY_LOTTO_QUANTITY
 import lotto.model.LottoProfitCalculator
 import lotto.model.LottoWallet
-import lotto.model.ManualLottoMachine
-import lotto.model.ProfitStatus
 import lotto.model.WinningDiscriminator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -18,9 +15,15 @@ class LottoController(
 ) {
     fun run() {
         val purchaseAmount = getPurchaseAmount()
-        val manualLottoQuantity = getManualQuantity()
+        val manualLottoNumbers = getManualLottoNumbers()
 
-        val lottoWallet = buyLottos(purchaseAmount, manualLottoQuantity)
+        val lottoWallet = LottoCashier().buyLottos(purchaseAmount, manualLottoNumbers)
+
+        outputView.printPurchaseLottoQuantity(
+            manualLottoNumbers.size,
+            purchaseAmount.getAutoLottoQuantity(manualLottoNumbers.size),
+        )
+        outputView.printLotto(lottoWallet.lottos)
 
         val winningDiscriminator = getWinningInfo()
         discriminateLottos(winningDiscriminator, lottoWallet, purchaseAmount)
@@ -31,46 +34,19 @@ class LottoController(
         return Amount(purchaseAmount)
     }
 
-    private fun getManualQuantity(): Int {
+    private fun getManualLottoNumbers(): List<List<Int>> {
         val manualLottoQuantity = inputView.readManualLottoQuantity()
-        return manualLottoQuantity
+
+        if (manualLottoQuantity <= EMPTY_LOTTO_QUANTITY) return emptyList()
+
+        return List(manualLottoQuantity) { inputView.readManualLottoNumbers() }
     }
 
-    private fun buyLottos(
-        purchaseAmount: Amount,
-        manualLottoQuantity: Int,
-    ): LottoWallet {
-        val lottoMarket = LottoMarket(purchaseAmount, manualLottoQuantity)
-        val lottoWallet = LottoWallet()
+    private fun getWinningInfo(): WinningDiscriminator {
+        val winningNumbers = inputView.readWinningLottoNumbers()
+        val bonusNumber = inputView.readBonusNumber()
 
-        buyManualLottos(lottoMarket, manualLottoQuantity, lottoWallet)
-        buyAutoLottos(lottoMarket, lottoWallet)
-
-        outputView.printPurchaseLottoQuantity(manualLottoQuantity, lottoMarket.autoLottoQuantity)
-        outputView.printLotto(lottoWallet.lottos)
-        return lottoWallet
-    }
-
-    private fun buyManualLottos(
-        lottoMarket: LottoMarket,
-        manualLottoQuantity: Int,
-        lottoWallet: LottoWallet,
-    ) {
-        if (manualLottoQuantity > EMPTY_LOTTO_QUANTITY) {
-            outputView.printManualLottoNumbersGuide()
-
-            val manualNumbers = List(manualLottoQuantity) { inputView.readManualLottoNumbers() }
-            val manualLottoMachine = ManualLottoMachine()
-            lottoMarket.buy(manualLottoMachine, manualNumbers, lottoWallet)
-        }
-    }
-
-    private fun buyAutoLottos(
-        lottoMarket: LottoMarket,
-        lottoWallet: LottoWallet,
-    ) {
-        val autoLottoMachine = AutoLottoMachine()
-        lottoMarket.buy(autoLottoMachine, emptyList(), lottoWallet)
+        return WinningDiscriminator(winningNumbers, bonusNumber)
     }
 
     private fun discriminateLottos(
@@ -82,15 +58,8 @@ class LottoController(
         outputView.printWinningLottoResult(winningResult)
 
         val lottoProfitCalculator = LottoProfitCalculator()
-        val profitRate = lottoProfitCalculator.getProfitRate(winningResult, purchaseAmount)
-        val profitStatus = ProfitStatus.from(profitRate)
-        outputView.printProfitRate(profitRate, profitStatus)
-    }
+        val profitResult = lottoProfitCalculator.getProfitResult(winningResult, purchaseAmount)
 
-    private fun getWinningInfo(): WinningDiscriminator {
-        val winningNumbers = inputView.readWinningLottoNumbers()
-        val bonusNumber = inputView.readBonusNumber()
-
-        return WinningDiscriminator(winningNumbers, bonusNumber)
+        outputView.printProfitRate(profitResult.profitRate, profitResult.profitStatus)
     }
 }
