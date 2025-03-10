@@ -7,6 +7,7 @@ import lotto.model.LottoMarket.Companion.EMPTY_LOTTO_QUANTITY
 import lotto.model.LottoProfitCalculator
 import lotto.model.LottoWallet
 import lotto.model.ManualLottoMachine
+import lotto.model.Rank
 import lotto.model.WinningDiscriminator
 import lotto.view.InputView
 import lotto.view.OutputView
@@ -18,12 +19,7 @@ class LottoController(
     fun run() {
         val purchaseAmount = getPurchaseAmount()
         val manualLottoNumbers = getManualLottoNumbers()
-
-        val manualLottoMachine = ManualLottoMachine()
-        val autoLottoMachine = AutoLottoMachine()
-
-        val lottoMarket = LottoMarket(purchaseAmount, manualLottoNumbers)
-        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
+        val lottoWallet = getLottoWallet(purchaseAmount, manualLottoNumbers)
 
         outputView.printPurchaseLottoQuantity(
             manualLottoNumbers.size,
@@ -31,8 +27,8 @@ class LottoController(
         )
         outputView.printLotto(lottoWallet.lottos)
 
-        val winningDiscriminator = getWinningInfo()
-        discriminateLottos(winningDiscriminator, lottoWallet, purchaseAmount)
+        val winningResult = getWinningResult(lottoWallet)
+        getProfitResult(winningResult, purchaseAmount)
     }
 
     private fun getPurchaseAmount(): Amount {
@@ -48,19 +44,30 @@ class LottoController(
         return List(manualLottoQuantity) { inputView.readManualLottoNumbers() }
     }
 
-    private fun getWinningInfo(): WinningDiscriminator {
+    private fun getLottoWallet(
+        purchaseAmount: Amount,
+        manualLottoNumbers: List<List<Int>>,
+    ): LottoWallet {
+        val manualLottoMachine = ManualLottoMachine()
+        val autoLottoMachine = AutoLottoMachine()
+
+        val lottoMarket = LottoMarket(purchaseAmount, manualLottoNumbers)
+        val lottoWallet = lottoMarket.buy(manualLottoMachine, autoLottoMachine)
+
+        return lottoWallet
+    }
+
+    private fun getWinningResult(lottoWallet: LottoWallet): Map<Rank, Int> {
         val winningNumbers = inputView.readWinningLottoNumbers()
         val bonusNumber = inputView.readBonusNumber()
 
-        return WinningDiscriminator(winningNumbers, bonusNumber)
+        return WinningDiscriminator(winningNumbers, bonusNumber).getResult(lottoWallet)
     }
 
-    private fun discriminateLottos(
-        winningDiscriminator: WinningDiscriminator,
-        lottoWallet: LottoWallet,
+    private fun getProfitResult(
+        winningResult: Map<Rank, Int>,
         purchaseAmount: Amount,
     ) {
-        val winningResult = winningDiscriminator.getResult(lottoWallet)
         outputView.printWinningLottoResult(winningResult)
 
         val lottoProfitCalculator = LottoProfitCalculator()
