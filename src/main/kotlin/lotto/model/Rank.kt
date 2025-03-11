@@ -16,17 +16,14 @@ enum class Rank(
         fun from(
             countOfMatch: Int,
             matchBonus: Boolean,
-        ): Rank {
+        ): Rank =
             when {
-                isMiss(countOfMatch) -> return MISS
-                countOfMatch == SECOND.countOfMatch && matchBonus -> return SECOND
+                countOfMatch < FIFTH.countOfMatch -> MISS
+                countOfMatch == SECOND.countOfMatch && matchBonus -> SECOND
+                else ->
+                    entries.find { rank ->
+                        rank.countOfMatch == countOfMatch
+                    } ?: throw IllegalArgumentException("[ERROR] 유효하지 않은 랭크입니다")
             }
-
-            return entries.find { rank ->
-                rank.countOfMatch == countOfMatch
-            } ?: MISS
-        }
-
-        private fun isMiss(countOfMatch: Int): Boolean = countOfMatch <= 2
     }
 }

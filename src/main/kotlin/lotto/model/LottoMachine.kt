@@ -1,17 +1,8 @@
 package lotto.model
 
-import lotto.model.Lotto.Companion.LOTTO_NUMBER_SIZE
-import lotto.model.LottoNumber.Companion.ALL_LOTTO_NUMBERS
-
-class LottoMachine {
-    fun getLottos(lottoQuantity: Int): Lottos {
-        val lottos = List(lottoQuantity) { Lotto.from(getLottoNumbers()) }
-        return Lottos(lottos)
-    }
-
-    private fun getLottoNumbers(): List<Int> =
-        ALL_LOTTO_NUMBERS
-            .shuffled()
-            .take(LOTTO_NUMBER_SIZE)
-            .sorted()
+interface LottoMachine {
+    fun generate(
+        manualTicket: List<List<Int>>,
+        quantity: Int,
+    ): List<Lotto>
 }
