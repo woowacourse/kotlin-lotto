@@ -23,6 +23,16 @@ sealed class LottoCreationResult {
 class Lotto private constructor(
     val numberList: List<LottoNumber>,
 ) {
+    fun countMatchNumbers(lotto: Lotto): Int {
+        var count = 0
+        lotto.numberList.forEach { lottoNumber ->
+            if (findNumber(lottoNumber)) count++
+        }
+        return count
+    }
+
+    fun findNumber(lottoNumber: LottoNumber): Boolean = numberList.contains(lottoNumber)
+
     init {
         require(numberList.size == LOTTO_NUMBER_QUANTITY) { "[ERROR] 로또 번호는 ${LOTTO_NUMBER_QUANTITY}개여야 합니다." }
         require(numberList.distinctBy { it.value }.size == numberList.size) { "[ERROR] 중복된 로또 번호가 있습니다." }

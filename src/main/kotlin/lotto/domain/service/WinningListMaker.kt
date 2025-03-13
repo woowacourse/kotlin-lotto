@@ -1,14 +1,15 @@
 package lotto.domain.service
 
 import lotto.domain.model.Lotto
+import lotto.domain.model.LottoNumber
 import lotto.domain.model.Rank
-import lotto.domain.model.WinningLotto
 
 class WinningListMaker(
-    private val winningLotto: WinningLotto,
+    private val winningLotto: Lotto,
+    private val winningLottoNumber: LottoNumber,
 ) {
     fun makeWinningList(lottos: List<Lotto>): Map<Rank, Int> {
-        val ranks = lottos.map { winningLotto.findRank(it) }
+        val ranks = lottos.map { Rank.valueOf(it.countMatchNumbers(winningLotto), it.findNumber(winningLottoNumber)) }
         val rankCounts =
             Rank.entries
                 .associateWith { 0 }
