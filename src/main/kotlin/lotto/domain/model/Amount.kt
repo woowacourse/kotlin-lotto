@@ -7,7 +7,7 @@ class Amount private constructor(
         require(money >= 0) { "[ERROR] 금액은 0 이상이어야 합니다." }
     }
 
-    fun getCount(lottoPrize: Int): Int = money / lottoPrize
+    fun getCount(unitMoney: Int): Int = money / unitMoney
 
     fun paymentOrNull(payMoney: Int): Amount? = runCatching { Amount(money - payMoney) }.getOrNull()
 
